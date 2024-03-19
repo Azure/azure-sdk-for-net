@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (StorageAccountName != null)
+            if (Optional.IsDefined(StorageAccountName))
             {
                 writer.WritePropertyName("storageAccountName"u8);
                 writer.WriteStringValue(StorageAccountName);
             }
-            if (StorageAccountKey != null)
+            if (Optional.IsDefined(StorageAccountKey))
             {
                 writer.WritePropertyName("storageAccountKey"u8);
                 writer.WriteStringValue(StorageAccountKey);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<string> storageAccountName = default;
-            Optional<string> storageAccountKey = default;
+            string storageAccountName = default;
+            string storageAccountKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScriptStorageConfiguration(storageAccountName.Value, storageAccountKey.Value, serializedAdditionalRawData);
+            return new ScriptStorageConfiguration(storageAccountName, storageAccountKey, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScriptStorageConfiguration>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (Id.HasValue)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id.Value);
             }
-            if (EventType != null)
+            if (Optional.IsDefined(EventType))
             {
                 writer.WritePropertyName("eventType"u8);
                 writer.WriteStringValue(EventType);
             }
-            if (CommitId != null)
+            if (Optional.IsDefined(CommitId))
             {
                 writer.WritePropertyName("commitId"u8);
                 writer.WriteStringValue(CommitId);
             }
-            if (PullRequestId != null)
+            if (Optional.IsDefined(PullRequestId))
             {
                 writer.WritePropertyName("pullRequestId"u8);
                 writer.WriteStringValue(PullRequestId);
             }
-            if (RepositoryUri != null)
+            if (Optional.IsDefined(RepositoryUri))
             {
                 writer.WritePropertyName("repositoryUrl"u8);
                 writer.WriteStringValue(RepositoryUri.AbsoluteUri);
             }
-            if (BranchName != null)
+            if (Optional.IsDefined(BranchName))
             {
                 writer.WritePropertyName("branchName"u8);
                 writer.WriteStringValue(BranchName);
             }
-            if (ProviderType != null)
+            if (Optional.IsDefined(ProviderType))
             {
                 writer.WritePropertyName("providerType"u8);
                 writer.WriteStringValue(ProviderType);
@@ -99,13 +100,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<Guid> id = default;
-            Optional<string> eventType = default;
-            Optional<string> commitId = default;
-            Optional<string> pullRequestId = default;
-            Optional<Uri> repositoryUrl = default;
-            Optional<string> branchName = default;
-            Optional<string> providerType = default;
+            Guid? id = default;
+            string eventType = default;
+            string commitId = default;
+            string pullRequestId = default;
+            Uri repositoryUrl = default;
+            string branchName = default;
+            string providerType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,13 +161,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ContainerRegistrySourceTriggerDescriptor(
-                Optional.ToNullable(id),
-                eventType.Value,
-                commitId.Value,
-                pullRequestId.Value,
-                repositoryUrl.Value,
-                branchName.Value,
-                providerType.Value,
+                id,
+                eventType,
+                commitId,
+                pullRequestId,
+                repositoryUrl,
+                branchName,
+                providerType,
                 serializedAdditionalRawData);
         }
 

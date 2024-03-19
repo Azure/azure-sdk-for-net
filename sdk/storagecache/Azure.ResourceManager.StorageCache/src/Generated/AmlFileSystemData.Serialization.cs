@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.StorageCache
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (!(Zones is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.StorageCache
                 }
                 writer.WriteEndArray();
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -76,59 +76,59 @@ namespace Azure.ResourceManager.StorageCache
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (StorageCapacityTiB.HasValue)
+            if (Optional.IsDefined(StorageCapacityTiB))
             {
                 writer.WritePropertyName("storageCapacityTiB"u8);
                 writer.WriteNumberValue(StorageCapacityTiB.Value);
             }
-            if (options.Format != "W" && Health != null)
+            if (options.Format != "W" && Optional.IsDefined(Health))
             {
                 writer.WritePropertyName("health"u8);
                 writer.WriteObjectValue(Health);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (FilesystemSubnet != null)
+            if (Optional.IsDefined(FilesystemSubnet))
             {
                 writer.WritePropertyName("filesystemSubnet"u8);
                 writer.WriteStringValue(FilesystemSubnet);
             }
-            if (options.Format != "W" && ClientInfo != null)
+            if (options.Format != "W" && Optional.IsDefined(ClientInfo))
             {
                 writer.WritePropertyName("clientInfo"u8);
                 writer.WriteObjectValue(ClientInfo);
             }
-            if (options.Format != "W" && ThroughputProvisionedMBps.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ThroughputProvisionedMBps))
             {
                 writer.WritePropertyName("throughputProvisionedMBps"u8);
                 writer.WriteNumberValue(ThroughputProvisionedMBps.Value);
             }
-            if (EncryptionSettings != null)
+            if (Optional.IsDefined(EncryptionSettings))
             {
                 writer.WritePropertyName("encryptionSettings"u8);
                 writer.WriteObjectValue(EncryptionSettings);
             }
-            if (MaintenanceWindow != null)
+            if (Optional.IsDefined(MaintenanceWindow))
             {
                 writer.WritePropertyName("maintenanceWindow"u8);
                 writer.WriteObjectValue(MaintenanceWindow);
             }
-            if (Hsm != null)
+            if (Optional.IsDefined(Hsm))
             {
                 writer.WritePropertyName("hsm"u8);
                 writer.WriteObjectValue(Hsm);
             }
-            if (RootSquashSettings != null)
+            if (Optional.IsDefined(RootSquashSettings))
             {
                 writer.WritePropertyName("rootSquashSettings"u8);
                 writer.WriteObjectValue(RootSquashSettings);
@@ -172,25 +172,25 @@ namespace Azure.ResourceManager.StorageCache
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<StorageCacheSkuName> sku = default;
+            ManagedServiceIdentity identity = default;
+            StorageCacheSkuName sku = default;
             IList<string> zones = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<float> storageCapacityTiB = default;
-            Optional<AmlFileSystemHealth> health = default;
-            Optional<AmlFileSystemProvisioningStateType> provisioningState = default;
-            Optional<string> filesystemSubnet = default;
-            Optional<AmlFileSystemClientInfo> clientInfo = default;
-            Optional<int> throughputProvisionedMBps = default;
-            Optional<AmlFileSystemEncryptionSettings> encryptionSettings = default;
-            Optional<AmlFileSystemPropertiesMaintenanceWindow> maintenanceWindow = default;
-            Optional<AmlFileSystemPropertiesHsm> hsm = default;
-            Optional<AmlFileSystemRootSquashSettings> rootSquashSettings = default;
+            SystemData systemData = default;
+            float? storageCapacityTiB = default;
+            AmlFileSystemHealth health = default;
+            AmlFileSystemProvisioningStateType? provisioningState = default;
+            string filesystemSubnet = default;
+            AmlFileSystemClientInfo clientInfo = default;
+            int? throughputProvisionedMBps = default;
+            AmlFileSystemEncryptionSettings encryptionSettings = default;
+            AmlFileSystemPropertiesMaintenanceWindow maintenanceWindow = default;
+            AmlFileSystemPropertiesHsm hsm = default;
+            AmlFileSystemRootSquashSettings rootSquashSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -378,22 +378,22 @@ namespace Azure.ResourceManager.StorageCache
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 identity,
-                sku.Value,
+                sku,
                 zones ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(storageCapacityTiB),
-                health.Value,
-                Optional.ToNullable(provisioningState),
-                filesystemSubnet.Value,
-                clientInfo.Value,
-                Optional.ToNullable(throughputProvisionedMBps),
-                encryptionSettings.Value,
-                maintenanceWindow.Value,
-                hsm.Value,
-                rootSquashSettings.Value,
+                storageCapacityTiB,
+                health,
+                provisioningState,
+                filesystemSubnet,
+                clientInfo,
+                throughputProvisionedMBps,
+                encryptionSettings,
+                maintenanceWindow,
+                hsm,
+                rootSquashSettings,
                 serializedAdditionalRawData);
         }
 

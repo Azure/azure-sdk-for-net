@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (TokenId != null)
+            if (Optional.IsDefined(TokenId))
             {
                 writer.WritePropertyName("tokenId"u8);
                 writer.WriteStringValue(TokenId);
             }
-            if (ExpireOn.HasValue)
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expiry"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (Name.HasValue)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name.Value.ToString());
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> tokenId = default;
-            Optional<DateTimeOffset> expiry = default;
-            Optional<ContainerRegistryTokenPasswordName> name = default;
+            ResourceIdentifier tokenId = default;
+            DateTimeOffset? expiry = default;
+            ContainerRegistryTokenPasswordName? name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryGenerateCredentialsContent(tokenId.Value, Optional.ToNullable(expiry), Optional.ToNullable(name), serializedAdditionalRawData);
+            return new ContainerRegistryGenerateCredentialsContent(tokenId, expiry, name, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryGenerateCredentialsContent>.Write(ModelReaderWriterOptions options)

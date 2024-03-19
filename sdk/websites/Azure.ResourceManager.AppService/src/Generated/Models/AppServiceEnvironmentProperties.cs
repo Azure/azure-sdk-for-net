@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetwork"/> is null. </exception>
         public AppServiceEnvironmentProperties(AppServiceVirtualNetworkProfile virtualNetwork)
         {
-            if (virtualNetwork == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetwork));
-            }
+            Argument.AssertNotNull(virtualNetwork, nameof(virtualNetwork));
 
             VirtualNetwork = virtualNetwork;
             ClusterSettings = new ChangeTrackingList<AppServiceNameValuePair>();

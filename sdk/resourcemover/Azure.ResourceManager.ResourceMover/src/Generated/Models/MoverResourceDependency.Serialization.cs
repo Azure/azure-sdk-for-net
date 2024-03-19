@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ResourceMover;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (ResolutionStatus != null)
+            if (Optional.IsDefined(ResolutionStatus))
             {
                 writer.WritePropertyName("resolutionStatus"u8);
                 writer.WriteStringValue(ResolutionStatus);
             }
-            if (ResolutionType.HasValue)
+            if (Optional.IsDefined(ResolutionType))
             {
                 writer.WritePropertyName("resolutionType"u8);
                 writer.WriteStringValue(ResolutionType.Value.ToString());
             }
-            if (DependencyType.HasValue)
+            if (Optional.IsDefined(DependencyType))
             {
                 writer.WritePropertyName("dependencyType"u8);
                 writer.WriteStringValue(DependencyType.Value.ToString());
             }
-            if (ManualResolution != null)
+            if (Optional.IsDefined(ManualResolution))
             {
                 writer.WritePropertyName("manualResolution"u8);
                 writer.WriteObjectValue(ManualResolution);
             }
-            if (AutomaticResolution != null)
+            if (Optional.IsDefined(AutomaticResolution))
             {
                 writer.WritePropertyName("automaticResolution"u8);
                 writer.WriteObjectValue(AutomaticResolution);
             }
-            if (IsDependencyOptional != null)
+            if (Optional.IsDefined(IsDependencyOptional))
             {
                 writer.WritePropertyName("isOptional"u8);
                 writer.WriteStringValue(IsDependencyOptional);
@@ -99,13 +100,13 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> resolutionStatus = default;
-            Optional<MoverResourceResolutionType> resolutionType = default;
-            Optional<MoverDependencyType> dependencyType = default;
-            Optional<ManualResolutionProperties> manualResolution = default;
-            Optional<AutomaticResolutionProperties> automaticResolution = default;
-            Optional<string> isOptional = default;
+            ResourceIdentifier id = default;
+            string resolutionStatus = default;
+            MoverResourceResolutionType? resolutionType = default;
+            MoverDependencyType? dependencyType = default;
+            ManualResolutionProperties manualResolution = default;
+            AutomaticResolutionProperties automaticResolution = default;
+            string isOptional = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -172,13 +173,13 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MoverResourceDependency(
-                id.Value,
-                resolutionStatus.Value,
-                Optional.ToNullable(resolutionType),
-                Optional.ToNullable(dependencyType),
-                manualResolution.Value,
-                automaticResolution.Value,
-                isOptional.Value,
+                id,
+                resolutionStatus,
+                resolutionType,
+                dependencyType,
+                manualResolution,
+                automaticResolution,
+                isOptional,
                 serializedAdditionalRawData);
         }
 

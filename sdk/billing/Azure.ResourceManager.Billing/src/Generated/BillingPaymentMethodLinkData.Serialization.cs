@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.Billing
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PaymentMethod != null)
+            if (Optional.IsDefined(PaymentMethod))
             {
                 writer.WritePropertyName("paymentMethod"u8);
                 writer.WriteObjectValue(PaymentMethod);
@@ -97,8 +97,8 @@ namespace Azure.ResourceManager.Billing
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<PaymentMethodProjectionProperties> paymentMethod = default;
+            SystemData systemData = default;
+            PaymentMethodProjectionProperties paymentMethod = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -158,8 +158,8 @@ namespace Azure.ResourceManager.Billing
                 id,
                 name,
                 type,
-                systemData.Value,
-                paymentMethod.Value,
+                systemData,
+                paymentMethod,
                 serializedAdditionalRawData);
         }
 

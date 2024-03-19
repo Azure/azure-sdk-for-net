@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Automation
             }
 
             writer.WriteStartObject();
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -62,64 +62,64 @@ namespace Azure.ResourceManager.Automation
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (IsGlobal.HasValue)
+            if (Optional.IsDefined(IsGlobal))
             {
                 writer.WritePropertyName("isGlobal"u8);
                 writer.WriteBooleanValue(IsGlobal.Value);
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (SizeInBytes.HasValue)
+            if (Optional.IsDefined(SizeInBytes))
             {
                 writer.WritePropertyName("sizeInBytes"u8);
                 writer.WriteNumberValue(SizeInBytes.Value);
             }
-            if (ActivityCount.HasValue)
+            if (Optional.IsDefined(ActivityCount))
             {
                 writer.WritePropertyName("activityCount"u8);
                 writer.WriteNumberValue(ActivityCount.Value);
             }
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
             }
-            if (ContentLink != null)
+            if (Optional.IsDefined(ContentLink))
             {
                 writer.WritePropertyName("contentLink"u8);
                 writer.WriteObjectValue(ContentLink);
             }
-            if (Error != null)
+            if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
             }
-            if (CreatedOn.HasValue)
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (LastModifiedOn.HasValue)
+            if (Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (IsComposite.HasValue)
+            if (Optional.IsDefined(IsComposite))
             {
                 writer.WritePropertyName("isComposite"u8);
                 writer.WriteBooleanValue(IsComposite.Value);
@@ -163,24 +163,24 @@ namespace Azure.ResourceManager.Automation
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> isGlobal = default;
-            Optional<string> version = default;
-            Optional<long> sizeInBytes = default;
-            Optional<int> activityCount = default;
-            Optional<ModuleProvisioningState> provisioningState = default;
-            Optional<AutomationContentLink> contentLink = default;
-            Optional<AutomationModuleErrorInfo> error = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<string> description = default;
-            Optional<bool> isComposite = default;
+            SystemData systemData = default;
+            bool? isGlobal = default;
+            string version = default;
+            long? sizeInBytes = default;
+            int? activityCount = default;
+            ModuleProvisioningState? provisioningState = default;
+            AutomationContentLink contentLink = default;
+            AutomationModuleErrorInfo error = default;
+            DateTimeOffset? creationTime = default;
+            DateTimeOffset? lastModifiedTime = default;
+            string description = default;
+            bool? isComposite = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -350,21 +350,21 @@ namespace Azure.ResourceManager.Automation
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(etag),
-                Optional.ToNullable(isGlobal),
-                version.Value,
-                Optional.ToNullable(sizeInBytes),
-                Optional.ToNullable(activityCount),
-                Optional.ToNullable(provisioningState),
-                contentLink.Value,
-                error.Value,
-                Optional.ToNullable(creationTime),
-                Optional.ToNullable(lastModifiedTime),
-                description.Value,
-                Optional.ToNullable(isComposite),
+                etag,
+                isGlobal,
+                version,
+                sizeInBytes,
+                activityCount,
+                provisioningState,
+                contentLink,
+                error,
+                creationTime,
+                lastModifiedTime,
+                description,
+                isComposite,
                 serializedAdditionalRawData);
         }
 

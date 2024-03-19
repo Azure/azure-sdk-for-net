@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (!(Value is ChangeTrackingList<BatchAccountPoolData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 writer.WriteEndArray();
             }
-            if (NextLink != null)
+            if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Batch.Models
                 return null;
             }
             IReadOnlyList<BatchAccountPoolData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ListPoolsResult(value ?? new ChangeTrackingList<BatchAccountPoolData>(), nextLink.Value, serializedAdditionalRawData);
+            return new ListPoolsResult(value ?? new ChangeTrackingList<BatchAccountPoolData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ListPoolsResult>.Write(ModelReaderWriterOptions options)

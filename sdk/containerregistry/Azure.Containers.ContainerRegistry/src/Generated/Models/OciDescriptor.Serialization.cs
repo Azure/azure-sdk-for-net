@@ -17,22 +17,22 @@ namespace Azure.Containers.ContainerRegistry
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (MediaType != null)
+            if (Optional.IsDefined(MediaType))
             {
                 writer.WritePropertyName("mediaType"u8);
                 writer.WriteStringValue(MediaType);
             }
-            if (SizeInBytes.HasValue)
+            if (Optional.IsDefined(SizeInBytes))
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteNumberValue(SizeInBytes.Value);
             }
-            if (Digest != null)
+            if (Optional.IsDefined(Digest))
             {
                 writer.WritePropertyName("digest"u8);
                 writer.WriteStringValue(Digest);
             }
-            if (!(Urls is ChangeTrackingList<Uri> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Urls))
             {
                 writer.WritePropertyName("urls"u8);
                 writer.WriteStartArray();
@@ -47,7 +47,7 @@ namespace Azure.Containers.ContainerRegistry
                 }
                 writer.WriteEndArray();
             }
-            if (Annotations != null)
+            if (Optional.IsDefined(Annotations))
             {
                 if (Annotations != null)
                 {
@@ -68,11 +68,11 @@ namespace Azure.Containers.ContainerRegistry
             {
                 return null;
             }
-            Optional<string> mediaType = default;
-            Optional<long> size = default;
-            Optional<string> digest = default;
+            string mediaType = default;
+            long? size = default;
+            string digest = default;
             IList<Uri> urls = default;
-            Optional<OciAnnotations> annotations = default;
+            OciAnnotations annotations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mediaType"u8))
@@ -126,7 +126,7 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new OciDescriptor(mediaType.Value, Optional.ToNullable(size), digest.Value, urls ?? new ChangeTrackingList<Uri>(), annotations.Value);
+            return new OciDescriptor(mediaType, size, digest, urls ?? new ChangeTrackingList<Uri>(), annotations);
         }
     }
 }

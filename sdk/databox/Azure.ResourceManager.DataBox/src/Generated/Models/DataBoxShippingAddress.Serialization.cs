@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -28,22 +29,22 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStartObject();
             writer.WritePropertyName("streetAddress1"u8);
             writer.WriteStringValue(StreetAddress1);
-            if (StreetAddress2 != null)
+            if (Optional.IsDefined(StreetAddress2))
             {
                 writer.WritePropertyName("streetAddress2"u8);
                 writer.WriteStringValue(StreetAddress2);
             }
-            if (StreetAddress3 != null)
+            if (Optional.IsDefined(StreetAddress3))
             {
                 writer.WritePropertyName("streetAddress3"u8);
                 writer.WriteStringValue(StreetAddress3);
             }
-            if (City != null)
+            if (Optional.IsDefined(City))
             {
                 writer.WritePropertyName("city"u8);
                 writer.WriteStringValue(City);
             }
-            if (StateOrProvince != null)
+            if (Optional.IsDefined(StateOrProvince))
             {
                 writer.WritePropertyName("stateOrProvince"u8);
                 writer.WriteStringValue(StateOrProvince);
@@ -52,27 +53,27 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStringValue(Country);
             writer.WritePropertyName("postalCode"u8);
             writer.WriteStringValue(PostalCode);
-            if (ZipExtendedCode != null)
+            if (Optional.IsDefined(ZipExtendedCode))
             {
                 writer.WritePropertyName("zipExtendedCode"u8);
                 writer.WriteStringValue(ZipExtendedCode);
             }
-            if (CompanyName != null)
+            if (Optional.IsDefined(CompanyName))
             {
                 writer.WritePropertyName("companyName"u8);
                 writer.WriteStringValue(CompanyName);
             }
-            if (AddressType.HasValue)
+            if (Optional.IsDefined(AddressType))
             {
                 writer.WritePropertyName("addressType"u8);
                 writer.WriteStringValue(AddressType.Value.ToSerialString());
             }
-            if (SkipAddressValidation.HasValue)
+            if (Optional.IsDefined(SkipAddressValidation))
             {
                 writer.WritePropertyName("skipAddressValidation"u8);
                 writer.WriteBooleanValue(SkipAddressValidation.Value);
             }
-            if (TaxIdentificationNumber != null)
+            if (Optional.IsDefined(TaxIdentificationNumber))
             {
                 writer.WritePropertyName("taxIdentificationNumber"u8);
                 writer.WriteStringValue(TaxIdentificationNumber);
@@ -116,17 +117,17 @@ namespace Azure.ResourceManager.DataBox.Models
                 return null;
             }
             string streetAddress1 = default;
-            Optional<string> streetAddress2 = default;
-            Optional<string> streetAddress3 = default;
-            Optional<string> city = default;
-            Optional<string> stateOrProvince = default;
+            string streetAddress2 = default;
+            string streetAddress3 = default;
+            string city = default;
+            string stateOrProvince = default;
             string country = default;
             string postalCode = default;
-            Optional<string> zipExtendedCode = default;
-            Optional<string> companyName = default;
-            Optional<DataBoxShippingAddressType> addressType = default;
-            Optional<bool> skipAddressValidation = default;
-            Optional<string> taxIdentificationNumber = default;
+            string zipExtendedCode = default;
+            string companyName = default;
+            DataBoxShippingAddressType? addressType = default;
+            bool? skipAddressValidation = default;
+            string taxIdentificationNumber = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -207,17 +208,17 @@ namespace Azure.ResourceManager.DataBox.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DataBoxShippingAddress(
                 streetAddress1,
-                streetAddress2.Value,
-                streetAddress3.Value,
-                city.Value,
-                stateOrProvince.Value,
+                streetAddress2,
+                streetAddress3,
+                city,
+                stateOrProvince,
                 country,
                 postalCode,
-                zipExtendedCode.Value,
-                companyName.Value,
-                Optional.ToNullable(addressType),
-                Optional.ToNullable(skipAddressValidation),
-                taxIdentificationNumber.Value,
+                zipExtendedCode,
+                companyName,
+                addressType,
+                skipAddressValidation,
+                taxIdentificationNumber,
                 serializedAdditionalRawData);
         }
 

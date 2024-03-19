@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Enabled.HasValue)
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(Enabled.Value);
             }
-            if (RestoreTimeout != null)
+            if (Optional.IsDefined(RestoreTimeout))
             {
                 writer.WritePropertyName("restoreTimeout"u8);
                 writer.WriteStringValue(RestoreTimeout);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<string> restoreTimeout = default;
+            bool? enabled = default;
+            string restoreTimeout = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SpotRestorePolicy(Optional.ToNullable(enabled), restoreTimeout.Value, serializedAdditionalRawData);
+            return new SpotRestorePolicy(enabled, restoreTimeout, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SpotRestorePolicy>.Write(ModelReaderWriterOptions options)

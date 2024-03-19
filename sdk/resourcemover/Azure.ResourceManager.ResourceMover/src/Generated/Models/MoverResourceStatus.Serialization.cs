@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ResourceMover;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && MoveState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MoveState))
             {
                 writer.WritePropertyName("moveState"u8);
                 writer.WriteStringValue(MoveState.Value.ToString());
             }
-            if (JobStatus != null)
+            if (Optional.IsDefined(JobStatus))
             {
                 if (JobStatus != null)
                 {
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     writer.WriteNull("jobStatus");
                 }
             }
-            if (Errors != null)
+            if (Optional.IsDefined(Errors))
             {
                 if (Errors != null)
                 {
@@ -93,9 +94,9 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<MoverResourceMoveState> moveState = default;
-            Optional<MoverResourceJobStatus> jobStatus = default;
-            Optional<MoveResourceError> errors = default;
+            MoverResourceMoveState? moveState = default;
+            MoverResourceJobStatus jobStatus = default;
+            MoveResourceError errors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -135,7 +136,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoverResourceStatus(Optional.ToNullable(moveState), jobStatus.Value, errors.Value, serializedAdditionalRawData);
+            return new MoverResourceStatus(moveState, jobStatus, errors, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MoverResourceStatus>.Write(ModelReaderWriterOptions options)

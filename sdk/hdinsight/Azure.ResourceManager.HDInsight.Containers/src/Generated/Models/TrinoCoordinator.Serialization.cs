@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -26,24 +27,24 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
 
             writer.WriteStartObject();
-            if (HighAvailabilityEnabled.HasValue)
+            if (Optional.IsDefined(HighAvailabilityEnabled))
             {
                 writer.WritePropertyName("highAvailabilityEnabled"u8);
                 writer.WriteBooleanValue(HighAvailabilityEnabled.Value);
             }
             writer.WritePropertyName("debug"u8);
             writer.WriteStartObject();
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enable"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Port.HasValue)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (Suspend.HasValue)
+            if (Optional.IsDefined(Suspend))
             {
                 writer.WritePropertyName("suspend"u8);
                 writer.WriteBooleanValue(Suspend.Value);
@@ -87,10 +88,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
-            Optional<bool> highAvailabilityEnabled = default;
-            Optional<bool> enable = default;
-            Optional<int> port = default;
-            Optional<bool> suspend = default;
+            bool? highAvailabilityEnabled = default;
+            bool? enable = default;
+            int? port = default;
+            bool? suspend = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +150,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrinoCoordinator(Optional.ToNullable(highAvailabilityEnabled), Optional.ToNullable(enable), Optional.ToNullable(port), Optional.ToNullable(suspend), serializedAdditionalRawData);
+            return new TrinoCoordinator(highAvailabilityEnabled, enable, port, suspend, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrinoCoordinator>.Write(ModelReaderWriterOptions options)

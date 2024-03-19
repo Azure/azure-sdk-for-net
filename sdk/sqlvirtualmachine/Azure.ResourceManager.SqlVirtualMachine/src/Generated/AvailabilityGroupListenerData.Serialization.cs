@@ -43,24 +43,24 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (AvailabilityGroupName != null)
+            if (Optional.IsDefined(AvailabilityGroupName))
             {
                 writer.WritePropertyName("availabilityGroupName"u8);
                 writer.WriteStringValue(AvailabilityGroupName);
             }
-            if (!(LoadBalancerConfigurations is ChangeTrackingList<AvailabilityGroupListenerLoadBalancerConfiguration> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(LoadBalancerConfigurations))
             {
                 writer.WritePropertyName("loadBalancerConfigurations"u8);
                 writer.WriteStartArray();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 }
                 writer.WriteEndArray();
             }
-            if (!(MultiSubnetIPConfigurations is ChangeTrackingList<MultiSubnetIPConfiguration> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(MultiSubnetIPConfigurations))
             {
                 writer.WritePropertyName("multiSubnetIpConfigurations"u8);
                 writer.WriteStartArray();
@@ -80,17 +80,17 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 }
                 writer.WriteEndArray();
             }
-            if (CreateDefaultAvailabilityGroupIfNotExist.HasValue)
+            if (Optional.IsDefined(CreateDefaultAvailabilityGroupIfNotExist))
             {
                 writer.WritePropertyName("createDefaultAvailabilityGroupIfNotExist"u8);
                 writer.WriteBooleanValue(CreateDefaultAvailabilityGroupIfNotExist.Value);
             }
-            if (Port.HasValue)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (AvailabilityGroupConfiguration != null)
+            if (Optional.IsDefined(AvailabilityGroupConfiguration))
             {
                 writer.WritePropertyName("availabilityGroupConfiguration"u8);
                 writer.WriteObjectValue(AvailabilityGroupConfiguration);
@@ -137,14 +137,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> provisioningState = default;
-            Optional<string> availabilityGroupName = default;
+            SystemData systemData = default;
+            string provisioningState = default;
+            string availabilityGroupName = default;
             IList<AvailabilityGroupListenerLoadBalancerConfiguration> loadBalancerConfigurations = default;
             IList<MultiSubnetIPConfiguration> multiSubnetIPConfigurations = default;
-            Optional<bool> createDefaultAvailabilityGroupIfNotExist = default;
-            Optional<int> port = default;
-            Optional<AvailabilityGroupConfiguration> availabilityGroupConfiguration = default;
+            bool? createDefaultAvailabilityGroupIfNotExist = default;
+            int? port = default;
+            AvailabilityGroupConfiguration availabilityGroupConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -260,14 +260,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 id,
                 name,
                 type,
-                systemData.Value,
-                provisioningState.Value,
-                availabilityGroupName.Value,
+                systemData,
+                provisioningState,
+                availabilityGroupName,
                 loadBalancerConfigurations ?? new ChangeTrackingList<AvailabilityGroupListenerLoadBalancerConfiguration>(),
                 multiSubnetIPConfigurations ?? new ChangeTrackingList<MultiSubnetIPConfiguration>(),
-                Optional.ToNullable(createDefaultAvailabilityGroupIfNotExist),
-                Optional.ToNullable(port),
-                availabilityGroupConfiguration.Value,
+                createDefaultAvailabilityGroupIfNotExist,
+                port,
+                availabilityGroupConfiguration,
                 serializedAdditionalRawData);
         }
 

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -47,39 +47,39 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Family != null)
+            if (options.Format != "W" && Optional.IsDefined(Family))
             {
                 writer.WritePropertyName("family"u8);
                 writer.WriteStringValue(Family);
             }
-            if (options.Format != "W" && FamilyLabel != null)
+            if (options.Format != "W" && Optional.IsDefined(FamilyLabel))
             {
                 writer.WritePropertyName("familyLabel"u8);
                 writer.WriteStringValue(FamilyLabel);
             }
-            if (options.Format != "W" && Version != null)
+            if (options.Format != "W" && Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (options.Format != "W" && Label != null)
+            if (options.Format != "W" && Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
-            if (options.Format != "W" && IsDefault.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsDefault))
             {
                 writer.WritePropertyName("isDefault"u8);
                 writer.WriteBooleanValue(IsDefault.Value);
             }
-            if (options.Format != "W" && IsActive.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsActive))
             {
                 writer.WritePropertyName("isActive"u8);
                 writer.WriteBooleanValue(IsActive.Value);
@@ -123,17 +123,17 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> family = default;
-            Optional<string> familyLabel = default;
-            Optional<string> version = default;
-            Optional<string> label = default;
-            Optional<bool> isDefault = default;
-            Optional<bool> isActive = default;
+            SystemData systemData = default;
+            string family = default;
+            string familyLabel = default;
+            string version = default;
+            string label = default;
+            bool? isDefault = default;
+            bool? isActive = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -231,14 +231,14 @@ namespace Azure.ResourceManager.Compute
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(location),
-                family.Value,
-                familyLabel.Value,
-                version.Value,
-                label.Value,
-                Optional.ToNullable(isDefault),
-                Optional.ToNullable(isActive),
+                systemData,
+                location,
+                family,
+                familyLabel,
+                version,
+                label,
+                isDefault,
+                isActive,
                 serializedAdditionalRawData);
         }
 

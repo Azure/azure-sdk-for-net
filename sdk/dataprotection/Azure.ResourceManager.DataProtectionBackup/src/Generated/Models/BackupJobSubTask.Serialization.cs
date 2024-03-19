@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (!(AdditionalDetails is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AdditionalDetails))
             {
                 writer.WritePropertyName("additionalDetails"u8);
                 writer.WriteStartObject();
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteNumberValue(TaskId);
             writer.WritePropertyName("taskName"u8);
             writer.WriteStringValue(TaskName);
-            if (options.Format != "W" && TaskProgress != null)
+            if (options.Format != "W" && Optional.IsDefined(TaskProgress))
             {
                 writer.WritePropertyName("taskProgress"u8);
                 writer.WriteStringValue(TaskProgress);
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             IReadOnlyDictionary<string, string> additionalDetails = default;
             int taskId = default;
             string taskName = default;
-            Optional<string> taskProgress = default;
+            string taskProgress = default;
             string taskStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -139,7 +140,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 additionalDetails ?? new ChangeTrackingDictionary<string, string>(),
                 taskId,
                 taskName,
-                taskProgress.Value,
+                taskProgress,
                 taskStatus,
                 serializedAdditionalRawData);
         }

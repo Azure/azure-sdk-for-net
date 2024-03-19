@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.Redis
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (LinkedRedisCacheId != null)
+            if (Optional.IsDefined(LinkedRedisCacheId))
             {
                 writer.WritePropertyName("linkedRedisCacheId"u8);
                 writer.WriteStringValue(LinkedRedisCacheId);
             }
-            if (LinkedRedisCacheLocation.HasValue)
+            if (Optional.IsDefined(LinkedRedisCacheLocation))
             {
                 writer.WritePropertyName("linkedRedisCacheLocation"u8);
                 writer.WriteStringValue(LinkedRedisCacheLocation.Value);
             }
-            if (ServerRole.HasValue)
+            if (Optional.IsDefined(ServerRole))
             {
                 writer.WritePropertyName("serverRole"u8);
                 writer.WriteStringValue(ServerRole.Value.ToSerialString());
             }
-            if (options.Format != "W" && GeoReplicatedPrimaryHostName != null)
+            if (options.Format != "W" && Optional.IsDefined(GeoReplicatedPrimaryHostName))
             {
                 writer.WritePropertyName("geoReplicatedPrimaryHostName"u8);
                 writer.WriteStringValue(GeoReplicatedPrimaryHostName);
             }
-            if (options.Format != "W" && PrimaryHostName != null)
+            if (options.Format != "W" && Optional.IsDefined(PrimaryHostName))
             {
                 writer.WritePropertyName("primaryHostName"u8);
                 writer.WriteStringValue(PrimaryHostName);
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
@@ -122,13 +122,13 @@ namespace Azure.ResourceManager.Redis
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> linkedRedisCacheId = default;
-            Optional<AzureLocation> linkedRedisCacheLocation = default;
-            Optional<RedisLinkedServerRole> serverRole = default;
-            Optional<string> geoReplicatedPrimaryHostName = default;
-            Optional<string> primaryHostName = default;
-            Optional<string> provisioningState = default;
+            SystemData systemData = default;
+            ResourceIdentifier linkedRedisCacheId = default;
+            AzureLocation? linkedRedisCacheLocation = default;
+            RedisLinkedServerRole? serverRole = default;
+            string geoReplicatedPrimaryHostName = default;
+            string primaryHostName = default;
+            string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -221,13 +221,13 @@ namespace Azure.ResourceManager.Redis
                 id,
                 name,
                 type,
-                systemData.Value,
-                linkedRedisCacheId.Value,
-                Optional.ToNullable(linkedRedisCacheLocation),
-                Optional.ToNullable(serverRole),
-                geoReplicatedPrimaryHostName.Value,
-                primaryHostName.Value,
-                provisioningState.Value,
+                systemData,
+                linkedRedisCacheId,
+                linkedRedisCacheLocation,
+                serverRole,
+                geoReplicatedPrimaryHostName,
+                primaryHostName,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

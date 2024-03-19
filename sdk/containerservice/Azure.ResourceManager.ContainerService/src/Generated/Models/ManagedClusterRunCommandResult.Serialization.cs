@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -26,39 +27,39 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && ExitCode.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExitCode))
             {
                 writer.WritePropertyName("exitCode"u8);
                 writer.WriteNumberValue(ExitCode.Value);
             }
-            if (options.Format != "W" && StartedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartedOn))
             {
                 writer.WritePropertyName("startedAt"u8);
                 writer.WriteStringValue(StartedOn.Value, "O");
             }
-            if (options.Format != "W" && FinishedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(FinishedOn))
             {
                 writer.WritePropertyName("finishedAt"u8);
                 writer.WriteStringValue(FinishedOn.Value, "O");
             }
-            if (options.Format != "W" && Logs != null)
+            if (options.Format != "W" && Optional.IsDefined(Logs))
             {
                 writer.WritePropertyName("logs"u8);
                 writer.WriteStringValue(Logs);
             }
-            if (options.Format != "W" && Reason != null)
+            if (options.Format != "W" && Optional.IsDefined(Reason))
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
@@ -102,13 +103,13 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> provisioningState = default;
-            Optional<int> exitCode = default;
-            Optional<DateTimeOffset> startedAt = default;
-            Optional<DateTimeOffset> finishedAt = default;
-            Optional<string> logs = default;
-            Optional<string> reason = default;
+            string id = default;
+            string provisioningState = default;
+            int? exitCode = default;
+            DateTimeOffset? startedAt = default;
+            DateTimeOffset? finishedAt = default;
+            string logs = default;
+            string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,13 +180,13 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ManagedClusterRunCommandResult(
-                id.Value,
-                provisioningState.Value,
-                Optional.ToNullable(exitCode),
-                Optional.ToNullable(startedAt),
-                Optional.ToNullable(finishedAt),
-                logs.Value,
-                reason.Value,
+                id,
+                provisioningState,
+                exitCode,
+                startedAt,
+                finishedAt,
+                logs,
+                reason,
                 serializedAdditionalRawData);
         }
 

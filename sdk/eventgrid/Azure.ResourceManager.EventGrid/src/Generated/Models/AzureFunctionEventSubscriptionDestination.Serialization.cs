@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -30,22 +31,22 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteStringValue(EndpointType.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (MaxEventsPerBatch.HasValue)
+            if (Optional.IsDefined(MaxEventsPerBatch))
             {
                 writer.WritePropertyName("maxEventsPerBatch"u8);
                 writer.WriteNumberValue(MaxEventsPerBatch.Value);
             }
-            if (PreferredBatchSizeInKilobytes.HasValue)
+            if (Optional.IsDefined(PreferredBatchSizeInKilobytes))
             {
                 writer.WritePropertyName("preferredBatchSizeInKilobytes"u8);
                 writer.WriteNumberValue(PreferredBatchSizeInKilobytes.Value);
             }
-            if (!(DeliveryAttributeMappings is ChangeTrackingList<DeliveryAttributeMapping> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DeliveryAttributeMappings))
             {
                 writer.WritePropertyName("deliveryAttributeMappings"u8);
                 writer.WriteStartArray();
@@ -95,9 +96,9 @@ namespace Azure.ResourceManager.EventGrid.Models
                 return null;
             }
             EndpointType endpointType = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<int> maxEventsPerBatch = default;
-            Optional<int> preferredBatchSizeInKilobytes = default;
+            ResourceIdentifier resourceId = default;
+            int? maxEventsPerBatch = default;
+            int? preferredBatchSizeInKilobytes = default;
             IList<DeliveryAttributeMapping> deliveryAttributeMappings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -170,9 +171,9 @@ namespace Azure.ResourceManager.EventGrid.Models
             return new AzureFunctionEventSubscriptionDestination(
                 endpointType,
                 serializedAdditionalRawData,
-                resourceId.Value,
-                Optional.ToNullable(maxEventsPerBatch),
-                Optional.ToNullable(preferredBatchSizeInKilobytes),
+                resourceId,
+                maxEventsPerBatch,
+                preferredBatchSizeInKilobytes,
                 deliveryAttributeMappings ?? new ChangeTrackingList<DeliveryAttributeMapping>());
         }
 

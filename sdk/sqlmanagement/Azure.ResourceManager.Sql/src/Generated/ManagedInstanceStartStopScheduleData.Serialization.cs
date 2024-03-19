@@ -43,24 +43,24 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (TimeZoneId != null)
+            if (Optional.IsDefined(TimeZoneId))
             {
                 writer.WritePropertyName("timeZoneId"u8);
                 writer.WriteStringValue(TimeZoneId);
             }
-            if (!(ScheduleList is ChangeTrackingList<SqlScheduleItem> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ScheduleList))
             {
                 writer.WritePropertyName("scheduleList"u8);
                 writer.WriteStartArray();
@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && NextRunAction != null)
+            if (options.Format != "W" && Optional.IsDefined(NextRunAction))
             {
                 writer.WritePropertyName("nextRunAction"u8);
                 writer.WriteStringValue(NextRunAction);
             }
-            if (options.Format != "W" && NextExecutionTime != null)
+            if (options.Format != "W" && Optional.IsDefined(NextExecutionTime))
             {
                 writer.WritePropertyName("nextExecutionTime"u8);
                 writer.WriteStringValue(NextExecutionTime);
@@ -122,12 +122,12 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<string> timeZoneId = default;
+            SystemData systemData = default;
+            string description = default;
+            string timeZoneId = default;
             IList<SqlScheduleItem> scheduleList = default;
-            Optional<string> nextRunAction = default;
-            Optional<string> nextExecutionTime = default;
+            string nextRunAction = default;
+            string nextExecutionTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -212,12 +212,12 @@ namespace Azure.ResourceManager.Sql
                 id,
                 name,
                 type,
-                systemData.Value,
-                description.Value,
-                timeZoneId.Value,
+                systemData,
+                description,
+                timeZoneId,
                 scheduleList ?? new ChangeTrackingList<SqlScheduleItem>(),
-                nextRunAction.Value,
-                nextExecutionTime.Value,
+                nextRunAction,
+                nextExecutionTime,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Used != null)
+            if (options.Format != "W" && Optional.IsDefined(Used))
             {
                 writer.WritePropertyName("used"u8);
                 writer.WriteStringValue(Used);
             }
-            if (options.Format != "W" && Available != null)
+            if (options.Format != "W" && Optional.IsDefined(Available))
             {
                 writer.WritePropertyName("available"u8);
                 writer.WriteStringValue(Available);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> used = default;
-            Optional<string> available = default;
+            string used = default;
+            string available = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IPPoolInfo(used.Value, available.Value, serializedAdditionalRawData);
+            return new IPPoolInfo(used, available, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IPPoolInfo>.Write(ModelReaderWriterOptions options)

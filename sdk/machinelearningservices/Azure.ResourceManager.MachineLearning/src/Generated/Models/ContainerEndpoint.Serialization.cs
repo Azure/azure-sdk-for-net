@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Protocol.HasValue)
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Target.HasValue)
+            if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteNumberValue(Target.Value);
             }
-            if (Published.HasValue)
+            if (Optional.IsDefined(Published))
             {
                 if (Published != null)
                 {
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("published");
                 }
             }
-            if (HostIP != null)
+            if (Optional.IsDefined(HostIP))
             {
                 if (HostIP != null)
                 {
@@ -103,11 +104,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<ContainerCommunicationProtocol> protocol = default;
-            Optional<string> name = default;
-            Optional<int> target = default;
-            Optional<int?> published = default;
-            Optional<string> hostIP = default;
+            ContainerCommunicationProtocol? protocol = default;
+            string name = default;
+            int? target = default;
+            int? published = default;
+            string hostIP = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -162,11 +163,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ContainerEndpoint(
-                Optional.ToNullable(protocol),
-                name.Value,
-                Optional.ToNullable(target),
-                Optional.ToNullable(published),
-                hostIP.Value,
+                protocol,
+                name,
+                target,
+                published,
+                hostIP,
                 serializedAdditionalRawData);
         }
 

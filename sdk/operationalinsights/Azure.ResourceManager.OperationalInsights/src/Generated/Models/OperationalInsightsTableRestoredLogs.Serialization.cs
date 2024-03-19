@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
 
             writer.WriteStartObject();
-            if (StartRestoreOn.HasValue)
+            if (Optional.IsDefined(StartRestoreOn))
             {
                 writer.WritePropertyName("startRestoreTime"u8);
                 writer.WriteStringValue(StartRestoreOn.Value, "O");
             }
-            if (EndRestoreOn.HasValue)
+            if (Optional.IsDefined(EndRestoreOn))
             {
                 writer.WritePropertyName("endRestoreTime"u8);
                 writer.WriteStringValue(EndRestoreOn.Value, "O");
             }
-            if (SourceTable != null)
+            if (Optional.IsDefined(SourceTable))
             {
                 writer.WritePropertyName("sourceTable"u8);
                 writer.WriteStringValue(SourceTable);
             }
-            if (options.Format != "W" && AzureAsyncOperationId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AzureAsyncOperationId))
             {
                 writer.WritePropertyName("azureAsyncOperationId"u8);
                 writer.WriteStringValue(AzureAsyncOperationId.Value);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> startRestoreTime = default;
-            Optional<DateTimeOffset> endRestoreTime = default;
-            Optional<string> sourceTable = default;
-            Optional<Guid> azureAsyncOperationId = default;
+            DateTimeOffset? startRestoreTime = default;
+            DateTimeOffset? endRestoreTime = default;
+            string sourceTable = default;
+            Guid? azureAsyncOperationId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalInsightsTableRestoredLogs(Optional.ToNullable(startRestoreTime), Optional.ToNullable(endRestoreTime), sourceTable.Value, Optional.ToNullable(azureAsyncOperationId), serializedAdditionalRawData);
+            return new OperationalInsightsTableRestoredLogs(startRestoreTime, endRestoreTime, sourceTable, azureAsyncOperationId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationalInsightsTableRestoredLogs>.Write(ModelReaderWriterOptions options)

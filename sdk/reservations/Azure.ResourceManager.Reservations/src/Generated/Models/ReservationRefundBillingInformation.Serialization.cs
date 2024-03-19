@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Reservations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (BillingPlan.HasValue)
+            if (Optional.IsDefined(BillingPlan))
             {
                 writer.WritePropertyName("billingPlan"u8);
                 writer.WriteStringValue(BillingPlan.Value.ToString());
             }
-            if (CompletedTransactions.HasValue)
+            if (Optional.IsDefined(CompletedTransactions))
             {
                 writer.WritePropertyName("completedTransactions"u8);
                 writer.WriteNumberValue(CompletedTransactions.Value);
             }
-            if (TotalTransactions.HasValue)
+            if (Optional.IsDefined(TotalTransactions))
             {
                 writer.WritePropertyName("totalTransactions"u8);
                 writer.WriteNumberValue(TotalTransactions.Value);
             }
-            if (BillingCurrencyTotalPaidAmount != null)
+            if (Optional.IsDefined(BillingCurrencyTotalPaidAmount))
             {
                 writer.WritePropertyName("billingCurrencyTotalPaidAmount"u8);
                 writer.WriteObjectValue(BillingCurrencyTotalPaidAmount);
             }
-            if (BillingCurrencyProratedAmount != null)
+            if (Optional.IsDefined(BillingCurrencyProratedAmount))
             {
                 writer.WritePropertyName("billingCurrencyProratedAmount"u8);
                 writer.WriteObjectValue(BillingCurrencyProratedAmount);
             }
-            if (BillingCurrencyRemainingCommitmentAmount != null)
+            if (Optional.IsDefined(BillingCurrencyRemainingCommitmentAmount))
             {
                 writer.WritePropertyName("billingCurrencyRemainingCommitmentAmount"u8);
                 writer.WriteObjectValue(BillingCurrencyRemainingCommitmentAmount);
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<ReservationBillingPlan> billingPlan = default;
-            Optional<int> completedTransactions = default;
-            Optional<int> totalTransactions = default;
-            Optional<PurchasePrice> billingCurrencyTotalPaidAmount = default;
-            Optional<PurchasePrice> billingCurrencyProratedAmount = default;
-            Optional<PurchasePrice> billingCurrencyRemainingCommitmentAmount = default;
+            ReservationBillingPlan? billingPlan = default;
+            int? completedTransactions = default;
+            int? totalTransactions = default;
+            PurchasePrice billingCurrencyTotalPaidAmount = default;
+            PurchasePrice billingCurrencyProratedAmount = default;
+            PurchasePrice billingCurrencyRemainingCommitmentAmount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,12 +166,12 @@ namespace Azure.ResourceManager.Reservations.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ReservationRefundBillingInformation(
-                Optional.ToNullable(billingPlan),
-                Optional.ToNullable(completedTransactions),
-                Optional.ToNullable(totalTransactions),
-                billingCurrencyTotalPaidAmount.Value,
-                billingCurrencyProratedAmount.Value,
-                billingCurrencyRemainingCommitmentAmount.Value,
+                billingPlan,
+                completedTransactions,
+                totalTransactions,
+                billingCurrencyTotalPaidAmount,
+                billingCurrencyProratedAmount,
+                billingCurrencyRemainingCommitmentAmount,
                 serializedAdditionalRawData);
         }
 

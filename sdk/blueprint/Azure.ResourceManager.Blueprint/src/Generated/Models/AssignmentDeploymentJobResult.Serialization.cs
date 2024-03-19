@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Blueprint;
 
 namespace Azure.ResourceManager.Blueprint.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Blueprint.Models
             }
 
             writer.WriteStartObject();
-            if (Error != null)
+            if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
             }
-            if (!(Resources is ChangeTrackingList<AssignmentJobCreatedResult> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Resources))
             {
                 writer.WritePropertyName("resources"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             {
                 return null;
             }
-            Optional<AzureResourceManagerError> error = default;
+            AzureResourceManagerError error = default;
             IList<AssignmentJobCreatedResult> resources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssignmentDeploymentJobResult(error.Value, resources ?? new ChangeTrackingList<AssignmentJobCreatedResult>(), serializedAdditionalRawData);
+            return new AssignmentDeploymentJobResult(error, resources ?? new ChangeTrackingList<AssignmentJobCreatedResult>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssignmentDeploymentJobResult>.Write(ModelReaderWriterOptions options)

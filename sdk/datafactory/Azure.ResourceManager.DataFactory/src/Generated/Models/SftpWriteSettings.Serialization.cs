@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -27,34 +28,34 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (OperationTimeout != null)
+            if (Optional.IsDefined(OperationTimeout))
             {
                 writer.WritePropertyName("operationTimeout"u8);
                 JsonSerializer.Serialize(writer, OperationTimeout);
             }
-            if (UseTempFileRename != null)
+            if (Optional.IsDefined(UseTempFileRename))
             {
                 writer.WritePropertyName("useTempFileRename"u8);
                 JsonSerializer.Serialize(writer, UseTempFileRename);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(StoreWriteSettingsType);
-            if (MaxConcurrentConnections != null)
+            if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 JsonSerializer.Serialize(writer, MaxConcurrentConnections);
             }
-            if (DisableMetricsCollection != null)
+            if (Optional.IsDefined(DisableMetricsCollection))
             {
                 writer.WritePropertyName("disableMetricsCollection"u8);
                 JsonSerializer.Serialize(writer, DisableMetricsCollection);
             }
-            if (CopyBehavior != null)
+            if (Optional.IsDefined(CopyBehavior))
             {
                 writer.WritePropertyName("copyBehavior"u8);
                 JsonSerializer.Serialize(writer, CopyBehavior);
             }
-            if (!(Metadata is ChangeTrackingList<DataFactoryMetadataItemInfo> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartArray();
@@ -99,12 +100,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<string>> operationTimeout = default;
-            Optional<DataFactoryElement<bool>> useTempFileRename = default;
+            DataFactoryElement<string> operationTimeout = default;
+            DataFactoryElement<bool> useTempFileRename = default;
             string type = default;
-            Optional<DataFactoryElement<int>> maxConcurrentConnections = default;
-            Optional<DataFactoryElement<bool>> disableMetricsCollection = default;
-            Optional<DataFactoryElement<string>> copyBehavior = default;
+            DataFactoryElement<int> maxConcurrentConnections = default;
+            DataFactoryElement<bool> disableMetricsCollection = default;
+            DataFactoryElement<string> copyBehavior = default;
             IList<DataFactoryMetadataItemInfo> metadata = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -179,13 +180,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new SftpWriteSettings(
                 type,
-                maxConcurrentConnections.Value,
-                disableMetricsCollection.Value,
-                copyBehavior.Value,
+                maxConcurrentConnections,
+                disableMetricsCollection,
+                copyBehavior,
                 metadata ?? new ChangeTrackingList<DataFactoryMetadataItemInfo>(),
                 additionalProperties,
-                operationTimeout.Value,
-                useTempFileRename.Value);
+                operationTimeout,
+                useTempFileRename);
         }
 
         BinaryData IPersistableModel<SftpWriteSettings>.Write(ModelReaderWriterOptions options)

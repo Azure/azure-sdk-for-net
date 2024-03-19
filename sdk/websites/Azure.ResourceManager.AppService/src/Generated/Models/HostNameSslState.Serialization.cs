@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (SslState.HasValue)
+            if (Optional.IsDefined(SslState))
             {
                 writer.WritePropertyName("sslState"u8);
                 writer.WriteStringValue(SslState.Value.ToSerialString());
             }
-            if (VirtualIP != null)
+            if (Optional.IsDefined(VirtualIP))
             {
                 writer.WritePropertyName("virtualIP"u8);
                 writer.WriteStringValue(VirtualIP);
             }
-            if (ThumbprintString != null)
+            if (Optional.IsDefined(ThumbprintString))
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(ThumbprintString);
             }
-            if (ToUpdate.HasValue)
+            if (Optional.IsDefined(ToUpdate))
             {
                 if (ToUpdate != null)
                 {
@@ -58,7 +59,7 @@ namespace Azure.ResourceManager.AppService.Models
                     writer.WriteNull("toUpdate");
                 }
             }
-            if (HostType.HasValue)
+            if (Optional.IsDefined(HostType))
             {
                 writer.WritePropertyName("hostType"u8);
                 writer.WriteStringValue(HostType.Value.ToSerialString());
@@ -101,12 +102,12 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<HostNameBindingSslState> sslState = default;
-            Optional<string> virtualIP = default;
-            Optional<string> thumbprint = default;
-            Optional<bool?> toUpdate = default;
-            Optional<AppServiceHostType> hostType = default;
+            string name = default;
+            HostNameBindingSslState? sslState = default;
+            string virtualIP = default;
+            string thumbprint = default;
+            bool? toUpdate = default;
+            AppServiceHostType? hostType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -161,12 +162,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new HostNameSslState(
-                name.Value,
-                Optional.ToNullable(sslState),
-                virtualIP.Value,
-                thumbprint.Value,
-                Optional.ToNullable(toUpdate),
-                Optional.ToNullable(hostType),
+                name,
+                sslState,
+                virtualIP,
+                thumbprint,
+                toUpdate,
+                hostType,
                 serializedAdditionalRawData);
         }
 

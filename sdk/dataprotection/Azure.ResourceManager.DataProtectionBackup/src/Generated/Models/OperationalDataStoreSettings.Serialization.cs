@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (ResourceGroupId != null)
+            if (Optional.IsDefined(ResourceGroupId))
             {
                 writer.WritePropertyName("resourceGroupId"u8);
                 writer.WriteStringValue(ResourceGroupId);
@@ -73,7 +74,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> resourceGroupId = default;
+            ResourceIdentifier resourceGroupId = default;
             string objectType = default;
             DataStoreType dataStoreType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -105,7 +106,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalDataStoreSettings(objectType, dataStoreType, serializedAdditionalRawData, resourceGroupId.Value);
+            return new OperationalDataStoreSettings(objectType, dataStoreType, serializedAdditionalRawData, resourceGroupId);
         }
 
         BinaryData IPersistableModel<OperationalDataStoreSettings>.Write(ModelReaderWriterOptions options)

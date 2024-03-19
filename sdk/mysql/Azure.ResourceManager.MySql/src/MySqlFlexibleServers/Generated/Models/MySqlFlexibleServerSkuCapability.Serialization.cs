@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MySql;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && VCores.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(VCores))
             {
                 writer.WritePropertyName("vCores"u8);
                 writer.WriteNumberValue(VCores.Value);
             }
-            if (options.Format != "W" && SupportedIops.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SupportedIops))
             {
                 writer.WritePropertyName("supportedIops"u8);
                 writer.WriteNumberValue(SupportedIops.Value);
             }
-            if (options.Format != "W" && SupportedMemoryPerVCoreInMB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SupportedMemoryPerVCoreInMB))
             {
                 writer.WritePropertyName("supportedMemoryPerVCoreMB"u8);
                 writer.WriteNumberValue(SupportedMemoryPerVCoreInMB.Value);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<long> vCores = default;
-            Optional<long> supportedIops = default;
-            Optional<long> supportedMemoryPerVCoreMB = default;
+            string name = default;
+            long? vCores = default;
+            long? supportedIops = default;
+            long? supportedMemoryPerVCoreMB = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlFlexibleServerSkuCapability(name.Value, Optional.ToNullable(vCores), Optional.ToNullable(supportedIops), Optional.ToNullable(supportedMemoryPerVCoreMB), serializedAdditionalRawData);
+            return new MySqlFlexibleServerSkuCapability(name, vCores, supportedIops, supportedMemoryPerVCoreMB, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFlexibleServerSkuCapability>.Write(ModelReaderWriterOptions options)

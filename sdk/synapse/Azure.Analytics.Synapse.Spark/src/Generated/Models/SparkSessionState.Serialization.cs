@@ -7,7 +7,7 @@
 
 using System;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Analytics.Synapse.Spark;
 
 namespace Azure.Analytics.Synapse.Spark.Models
 {
@@ -19,17 +19,17 @@ namespace Azure.Analytics.Synapse.Spark.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset?> notStartedAt = default;
-            Optional<DateTimeOffset?> startingAt = default;
-            Optional<DateTimeOffset?> idleAt = default;
-            Optional<DateTimeOffset?> deadAt = default;
-            Optional<DateTimeOffset?> shuttingDownAt = default;
-            Optional<DateTimeOffset?> killedAt = default;
-            Optional<DateTimeOffset?> recoveringAt = default;
-            Optional<DateTimeOffset?> busyAt = default;
-            Optional<DateTimeOffset?> errorAt = default;
-            Optional<string> currentState = default;
-            Optional<SparkRequest> jobCreationRequest = default;
+            DateTimeOffset? notStartedAt = default;
+            DateTimeOffset? startingAt = default;
+            DateTimeOffset? idleAt = default;
+            DateTimeOffset? deadAt = default;
+            DateTimeOffset? shuttingDownAt = default;
+            DateTimeOffset? killedAt = default;
+            DateTimeOffset? recoveringAt = default;
+            DateTimeOffset? busyAt = default;
+            DateTimeOffset? errorAt = default;
+            string currentState = default;
+            SparkRequest jobCreationRequest = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("notStartedAt"u8))
@@ -138,17 +138,17 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 }
             }
             return new SparkSessionState(
-                Optional.ToNullable(notStartedAt),
-                Optional.ToNullable(startingAt),
-                Optional.ToNullable(idleAt),
-                Optional.ToNullable(deadAt),
-                Optional.ToNullable(shuttingDownAt),
-                Optional.ToNullable(killedAt),
-                Optional.ToNullable(recoveringAt),
-                Optional.ToNullable(busyAt),
-                Optional.ToNullable(errorAt),
-                currentState.Value,
-                jobCreationRequest.Value);
+                notStartedAt,
+                startingAt,
+                idleAt,
+                deadAt,
+                shuttingDownAt,
+                killedAt,
+                recoveringAt,
+                busyAt,
+                errorAt,
+                currentState,
+                jobCreationRequest);
         }
     }
 }

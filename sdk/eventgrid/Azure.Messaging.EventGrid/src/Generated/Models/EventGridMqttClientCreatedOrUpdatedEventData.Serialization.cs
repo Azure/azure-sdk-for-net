@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
+using Azure.Messaging.EventGrid;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -22,13 +22,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<EventGridMqttClientState> state = default;
-            Optional<DateTimeOffset> createdOn = default;
-            Optional<DateTimeOffset> updatedOn = default;
+            EventGridMqttClientState? state = default;
+            DateTimeOffset? createdOn = default;
+            DateTimeOffset? updatedOn = default;
             IReadOnlyDictionary<string, string> attributes = default;
-            Optional<string> clientAuthenticationName = default;
-            Optional<string> clientName = default;
-            Optional<string> namespaceName = default;
+            string clientAuthenticationName = default;
+            string clientName = default;
+            string namespaceName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("state"u8))
@@ -89,12 +89,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new EventGridMqttClientCreatedOrUpdatedEventData(
-                clientAuthenticationName.Value,
-                clientName.Value,
-                namespaceName.Value,
-                Optional.ToNullable(state),
-                Optional.ToNullable(createdOn),
-                Optional.ToNullable(updatedOn),
+                clientAuthenticationName,
+                clientName,
+                namespaceName,
+                state,
+                createdOn,
+                updatedOn,
                 attributes ?? new ChangeTrackingDictionary<string, string>());
         }
 

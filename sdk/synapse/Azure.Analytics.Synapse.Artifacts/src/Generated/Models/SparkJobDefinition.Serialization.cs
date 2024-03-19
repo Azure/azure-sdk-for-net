@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -19,31 +20,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("targetBigDataPool"u8);
             writer.WriteObjectValue(TargetBigDataPool);
-            if (TargetSparkConfiguration != null)
+            if (Optional.IsDefined(TargetSparkConfiguration))
             {
                 writer.WritePropertyName("targetSparkConfiguration"u8);
                 writer.WriteObjectValue(TargetSparkConfiguration);
             }
-            if (RequiredSparkVersion != null)
+            if (Optional.IsDefined(RequiredSparkVersion))
             {
                 writer.WritePropertyName("requiredSparkVersion"u8);
                 writer.WriteStringValue(RequiredSparkVersion);
             }
-            if (Language != null)
+            if (Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
             }
             writer.WritePropertyName("jobProperties"u8);
             writer.WriteObjectValue(JobProperties);
-            if (Folder != null)
+            if (Optional.IsDefined(Folder))
             {
                 if (Folder != null)
                 {
@@ -69,13 +70,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> description = default;
+            string description = default;
             BigDataPoolReference targetBigDataPool = default;
-            Optional<SparkConfigurationReference> targetSparkConfiguration = default;
-            Optional<string> requiredSparkVersion = default;
-            Optional<string> language = default;
+            SparkConfigurationReference targetSparkConfiguration = default;
+            string requiredSparkVersion = default;
+            string language = default;
             SparkJobProperties jobProperties = default;
-            Optional<SparkJobDefinitionFolder> folder = default;
+            SparkJobDefinitionFolder folder = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -128,13 +129,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new SparkJobDefinition(
-                description.Value,
+                description,
                 targetBigDataPool,
-                targetSparkConfiguration.Value,
-                requiredSparkVersion.Value,
-                language.Value,
+                targetSparkConfiguration,
+                requiredSparkVersion,
+                language,
                 jobProperties,
-                folder.Value,
+                folder,
                 additionalProperties);
         }
 

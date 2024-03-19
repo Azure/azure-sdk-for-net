@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (EndOn.HasValue)
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Source != null)
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
-            if (Priority.HasValue)
+            if (Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
-            if (!(MetaData is ChangeTrackingList<IList<AppServiceNameValuePair>> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(MetaData))
             {
                 writer.WritePropertyName("metaData"u8);
                 writer.WriteStartArray();
@@ -71,12 +72,12 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IssueType.HasValue)
+            if (Optional.IsDefined(IssueType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(IssueType.Value.ToSerialString());
             }
-            if (!(Solutions is ChangeTrackingList<DiagnosticSolution> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Solutions))
             {
                 writer.WritePropertyName("solutions"u8);
                 writer.WriteStartArray();
@@ -124,13 +125,13 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<string> message = default;
-            Optional<string> source = default;
-            Optional<double> priority = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            string message = default;
+            string source = default;
+            double? priority = default;
             IList<IList<AppServiceNameValuePair>> metaData = default;
-            Optional<DetectorIssueType> type = default;
+            DetectorIssueType? type = default;
             IList<DiagnosticSolution> solutions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -229,13 +230,13 @@ namespace Azure.ResourceManager.AppService.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DetectorAbnormalTimePeriod(
-                Optional.ToNullable(startTime),
-                Optional.ToNullable(endTime),
-                message.Value,
-                source.Value,
-                Optional.ToNullable(priority),
+                startTime,
+                endTime,
+                message,
+                source,
+                priority,
                 metaData ?? new ChangeTrackingList<IList<AppServiceNameValuePair>>(),
-                Optional.ToNullable(type),
+                type,
                 solutions ?? new ChangeTrackingList<DiagnosticSolution>(),
                 serializedAdditionalRawData);
         }

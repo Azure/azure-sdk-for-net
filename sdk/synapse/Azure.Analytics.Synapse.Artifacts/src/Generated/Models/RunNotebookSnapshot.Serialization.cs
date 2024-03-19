@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
+using Azure.Analytics.Synapse.Artifacts;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -22,15 +22,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> exitValue = default;
+            string exitValue = default;
             string id = default;
             string notebook = default;
-            Optional<RunNotebookSparkSessionOptions> sessionOptions = default;
-            Optional<bool> honorSessionTimeToLive = default;
-            Optional<string> sessionId = default;
-            Optional<string> sparkPool = default;
+            RunNotebookSparkSessionOptions sessionOptions = default;
+            bool? honorSessionTimeToLive = default;
+            string sessionId = default;
+            string sparkPool = default;
             IReadOnlyDictionary<string, RunNotebookParameter> parameters = default;
-            Optional<NotebookResource> notebookContent = default;
+            NotebookResource notebookContent = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("exitValue"u8))
@@ -101,15 +101,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new RunNotebookSnapshot(
-                exitValue.Value,
+                exitValue,
                 id,
                 notebook,
-                sessionOptions.Value,
-                Optional.ToNullable(honorSessionTimeToLive),
-                sessionId.Value,
-                sparkPool.Value,
+                sessionOptions,
+                honorSessionTimeToLive,
+                sessionId,
+                sparkPool,
                 parameters ?? new ChangeTrackingDictionary<string, RunNotebookParameter>(),
-                notebookContent.Value);
+                notebookContent);
         }
 
         internal partial class RunNotebookSnapshotConverter : JsonConverter<RunNotebookSnapshot>

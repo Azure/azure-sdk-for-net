@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Username != null)
+            if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
             }
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (PublicKeyData != null)
+            if (Optional.IsDefined(PublicKeyData))
             {
                 writer.WritePropertyName("publicKeyData"u8);
                 writer.WriteStringValue(PublicKeyData);
             }
-            if (PrivateKeyData != null)
+            if (Optional.IsDefined(PrivateKeyData))
             {
                 writer.WritePropertyName("privateKeyData"u8);
                 writer.WriteStringValue(PrivateKeyData);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> username = default;
-            Optional<string> password = default;
-            Optional<string> publicKeyData = default;
-            Optional<string> privateKeyData = default;
+            string username = default;
+            string password = default;
+            string publicKeyData = default;
+            string privateKeyData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningVmSshCredentials(username.Value, password.Value, publicKeyData.Value, privateKeyData.Value, serializedAdditionalRawData);
+            return new MachineLearningVmSshCredentials(username, password, publicKeyData, privateKeyData, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningVmSshCredentials>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (FairPlay != null)
+            if (Optional.IsDefined(FairPlay))
             {
                 writer.WritePropertyName("fairPlay"u8);
                 writer.WriteObjectValue(FairPlay);
             }
-            if (PlayReady != null)
+            if (Optional.IsDefined(PlayReady))
             {
                 writer.WritePropertyName("playReady"u8);
                 writer.WriteObjectValue(PlayReady);
             }
-            if (Widevine != null)
+            if (Optional.IsDefined(Widevine))
             {
                 writer.WritePropertyName("widevine"u8);
                 writer.WriteObjectValue(Widevine);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<StreamingPolicyFairPlayConfiguration> fairPlay = default;
-            Optional<StreamingPolicyPlayReadyConfiguration> playReady = default;
-            Optional<StreamingPolicyWidevineConfiguration> widevine = default;
+            StreamingPolicyFairPlayConfiguration fairPlay = default;
+            StreamingPolicyPlayReadyConfiguration playReady = default;
+            StreamingPolicyWidevineConfiguration widevine = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CbcsDrmConfiguration(fairPlay.Value, playReady.Value, widevine.Value, serializedAdditionalRawData);
+            return new CbcsDrmConfiguration(fairPlay, playReady, widevine, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CbcsDrmConfiguration>.Write(ModelReaderWriterOptions options)

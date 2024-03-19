@@ -27,12 +27,12 @@ namespace Azure.AI.AnomalyDetector
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Period.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Period))
             {
                 writer.WritePropertyName("period"u8);
                 writer.WriteNumberValue(Period.Value);
             }
-            if (!(IsChangePoint is ChangeTrackingList<bool> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(IsChangePoint))
             {
                 writer.WritePropertyName("isChangePoint"u8);
                 writer.WriteStartArray();
@@ -42,7 +42,7 @@ namespace Azure.AI.AnomalyDetector
                 }
                 writer.WriteEndArray();
             }
-            if (!(ConfidenceScores is ChangeTrackingList<float> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ConfidenceScores))
             {
                 writer.WritePropertyName("confidenceScores"u8);
                 writer.WriteStartArray();
@@ -90,7 +90,7 @@ namespace Azure.AI.AnomalyDetector
             {
                 return null;
             }
-            Optional<int> period = default;
+            int? period = default;
             IReadOnlyList<bool> isChangePoint = default;
             IReadOnlyList<float> confidenceScores = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -140,7 +140,7 @@ namespace Azure.AI.AnomalyDetector
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnivariateChangePointDetectionResult(Optional.ToNullable(period), isChangePoint ?? new ChangeTrackingList<bool>(), confidenceScores ?? new ChangeTrackingList<float>(), serializedAdditionalRawData);
+            return new UnivariateChangePointDetectionResult(period, isChangePoint ?? new ChangeTrackingList<bool>(), confidenceScores ?? new ChangeTrackingList<float>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UnivariateChangePointDetectionResult>.Write(ModelReaderWriterOptions options)

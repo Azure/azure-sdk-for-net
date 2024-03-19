@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,44 +56,44 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (SqlImageOffer != null)
+            if (Optional.IsDefined(SqlImageOffer))
             {
                 writer.WritePropertyName("sqlImageOffer"u8);
                 writer.WriteStringValue(SqlImageOffer);
             }
-            if (SqlImageSku.HasValue)
+            if (Optional.IsDefined(SqlImageSku))
             {
                 writer.WritePropertyName("sqlImageSku"u8);
                 writer.WriteStringValue(SqlImageSku.Value.ToString());
             }
-            if (options.Format != "W" && ScaleType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ScaleType))
             {
                 writer.WritePropertyName("scaleType"u8);
                 writer.WriteStringValue(ScaleType.Value.ToString());
             }
-            if (options.Format != "W" && ClusterManagerType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ClusterManagerType))
             {
                 writer.WritePropertyName("clusterManagerType"u8);
                 writer.WriteStringValue(ClusterManagerType.Value.ToString());
             }
-            if (options.Format != "W" && ClusterConfiguration.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ClusterConfiguration))
             {
                 writer.WritePropertyName("clusterConfiguration"u8);
                 writer.WriteStringValue(ClusterConfiguration.Value.ToString());
             }
-            if (WindowsServerFailoverClusterDomainProfile != null)
+            if (Optional.IsDefined(WindowsServerFailoverClusterDomainProfile))
             {
                 writer.WritePropertyName("wsfcDomainProfile"u8);
                 writer.WriteObjectValue(WindowsServerFailoverClusterDomainProfile);
@@ -142,14 +142,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> provisioningState = default;
-            Optional<string> sqlImageOffer = default;
-            Optional<SqlVmGroupImageSku> sqlImageSku = default;
-            Optional<SqlVmGroupScaleType> scaleType = default;
-            Optional<SqlVmClusterManagerType> clusterManagerType = default;
-            Optional<SqlVmClusterConfiguration> clusterConfiguration = default;
-            Optional<WindowsServerFailoverClusterDomainProfile> windowsServerFailoverClusterDomainProfile = default;
+            SystemData systemData = default;
+            string provisioningState = default;
+            string sqlImageOffer = default;
+            SqlVmGroupImageSku? sqlImageSku = default;
+            SqlVmGroupScaleType? scaleType = default;
+            SqlVmClusterManagerType? clusterManagerType = default;
+            SqlVmClusterConfiguration? clusterConfiguration = default;
+            WindowsServerFailoverClusterDomainProfile windowsServerFailoverClusterDomainProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -274,16 +274,16 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                provisioningState.Value,
-                sqlImageOffer.Value,
-                Optional.ToNullable(sqlImageSku),
-                Optional.ToNullable(scaleType),
-                Optional.ToNullable(clusterManagerType),
-                Optional.ToNullable(clusterConfiguration),
-                windowsServerFailoverClusterDomainProfile.Value,
+                provisioningState,
+                sqlImageOffer,
+                sqlImageSku,
+                scaleType,
+                clusterManagerType,
+                clusterConfiguration,
+                windowsServerFailoverClusterDomainProfile,
                 serializedAdditionalRawData);
         }
 

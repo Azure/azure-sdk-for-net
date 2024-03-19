@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PlaywrightTesting;
 
 namespace Azure.ResourceManager.PlaywrightTesting.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,17 +40,17 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (RegionalAffinity.HasValue)
+            if (Optional.IsDefined(RegionalAffinity))
             {
                 writer.WritePropertyName("regionalAffinity"u8);
                 writer.WriteStringValue(RegionalAffinity.Value.ToString());
             }
-            if (ScalableExecution.HasValue)
+            if (Optional.IsDefined(ScalableExecution))
             {
                 writer.WritePropertyName("scalableExecution"u8);
                 writer.WriteStringValue(ScalableExecution.Value.ToString());
             }
-            if (Reporting.HasValue)
+            if (Optional.IsDefined(Reporting))
             {
                 writer.WritePropertyName("reporting"u8);
                 writer.WriteStringValue(Reporting.Value.ToString());
@@ -94,9 +95,9 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<EnablementStatus> regionalAffinity = default;
-            Optional<EnablementStatus> scalableExecution = default;
-            Optional<EnablementStatus> reporting = default;
+            EnablementStatus? regionalAffinity = default;
+            EnablementStatus? scalableExecution = default;
+            EnablementStatus? reporting = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +161,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PlaywrightTestingAccountPatch(tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(regionalAffinity), Optional.ToNullable(scalableExecution), Optional.ToNullable(reporting), serializedAdditionalRawData);
+            return new PlaywrightTestingAccountPatch(tags ?? new ChangeTrackingDictionary<string, string>(), regionalAffinity, scalableExecution, reporting, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PlaywrightTestingAccountPatch>.Write(ModelReaderWriterOptions options)

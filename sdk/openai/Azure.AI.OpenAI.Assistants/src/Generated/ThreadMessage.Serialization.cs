@@ -44,12 +44,12 @@ namespace Azure.AI.OpenAI.Assistants
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (AssistantId != null)
+            if (Optional.IsDefined(AssistantId))
             {
                 writer.WritePropertyName("assistant_id"u8);
                 writer.WriteStringValue(AssistantId);
             }
-            if (RunId != null)
+            if (Optional.IsDefined(RunId))
             {
                 writer.WritePropertyName("run_id"u8);
                 writer.WriteStringValue(RunId);
@@ -61,7 +61,7 @@ namespace Azure.AI.OpenAI.Assistants
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Metadata != null && !(Metadata is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Metadata != null && Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();
@@ -120,8 +120,8 @@ namespace Azure.AI.OpenAI.Assistants
             string threadId = default;
             MessageRole role = default;
             IReadOnlyList<MessageContent> content = default;
-            Optional<string> assistantId = default;
-            Optional<string> runId = default;
+            string assistantId = default;
+            string runId = default;
             IReadOnlyList<string> fileIds = default;
             IReadOnlyDictionary<string, string> metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -211,8 +211,8 @@ namespace Azure.AI.OpenAI.Assistants
                 threadId,
                 role,
                 content,
-                assistantId.Value,
-                runId.Value,
+                assistantId,
+                runId,
                 fileIds,
                 metadata,
                 serializedAdditionalRawData);

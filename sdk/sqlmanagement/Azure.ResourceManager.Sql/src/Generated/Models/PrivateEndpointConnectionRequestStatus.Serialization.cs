@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && PrivateLinkServiceId != null)
+            if (options.Format != "W" && Optional.IsDefined(PrivateLinkServiceId))
             {
                 writer.WritePropertyName("privateLinkServiceId"u8);
                 writer.WriteStringValue(PrivateLinkServiceId);
             }
-            if (options.Format != "W" && PrivateEndpointConnectionName != null)
+            if (options.Format != "W" && Optional.IsDefined(PrivateEndpointConnectionName))
             {
                 writer.WritePropertyName("privateEndpointConnectionName"u8);
                 writer.WriteStringValue(PrivateEndpointConnectionName);
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> privateLinkServiceId = default;
-            Optional<string> privateEndpointConnectionName = default;
-            Optional<string> status = default;
+            ResourceIdentifier privateLinkServiceId = default;
+            string privateEndpointConnectionName = default;
+            string status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateEndpointConnectionRequestStatus(privateLinkServiceId.Value, privateEndpointConnectionName.Value, status.Value, serializedAdditionalRawData);
+            return new PrivateEndpointConnectionRequestStatus(privateLinkServiceId, privateEndpointConnectionName, status, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateEndpointConnectionRequestStatus>.Write(ModelReaderWriterOptions options)

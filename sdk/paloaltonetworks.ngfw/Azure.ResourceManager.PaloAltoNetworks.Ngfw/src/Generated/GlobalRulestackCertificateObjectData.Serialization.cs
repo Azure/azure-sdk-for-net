@@ -44,36 +44,36 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (CertificateSignerResourceId != null)
+            if (Optional.IsDefined(CertificateSignerResourceId))
             {
                 writer.WritePropertyName("certificateSignerResourceId"u8);
                 writer.WriteStringValue(CertificateSignerResourceId);
             }
             writer.WritePropertyName("certificateSelfSigned"u8);
             writer.WriteStringValue(CertificateSelfSigned.ToString());
-            if (AuditComment != null)
+            if (Optional.IsDefined(AuditComment))
             {
                 writer.WritePropertyName("auditComment"u8);
                 writer.WriteStringValue(AuditComment);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -120,13 +120,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> certificateSignerResourceId = default;
+            SystemData systemData = default;
+            string certificateSignerResourceId = default;
             FirewallBooleanType certificateSelfSigned = default;
-            Optional<string> auditComment = default;
-            Optional<string> description = default;
-            Optional<ETag> etag = default;
-            Optional<FirewallProvisioningState> provisioningState = default;
+            string auditComment = default;
+            string description = default;
+            ETag? etag = default;
+            FirewallProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -215,13 +215,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 id,
                 name,
                 type,
-                systemData.Value,
-                certificateSignerResourceId.Value,
+                systemData,
+                certificateSignerResourceId,
                 certificateSelfSigned,
-                auditComment.Value,
-                description.Value,
-                Optional.ToNullable(etag),
-                Optional.ToNullable(provisioningState),
+                auditComment,
+                description,
+                etag,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

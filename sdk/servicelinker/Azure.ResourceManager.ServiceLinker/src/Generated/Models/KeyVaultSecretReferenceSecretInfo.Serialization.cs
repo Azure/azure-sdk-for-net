@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceLinker;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 if (Version != null)
                 {
@@ -83,8 +84,8 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> version = default;
+            string name = default;
+            string version = default;
             LinkerSecretType secretType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -116,7 +117,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KeyVaultSecretReferenceSecretInfo(secretType, serializedAdditionalRawData, name.Value, version.Value);
+            return new KeyVaultSecretReferenceSecretInfo(secretType, serializedAdditionalRawData, name, version);
         }
 
         BinaryData IPersistableModel<KeyVaultSecretReferenceSecretInfo>.Write(ModelReaderWriterOptions options)

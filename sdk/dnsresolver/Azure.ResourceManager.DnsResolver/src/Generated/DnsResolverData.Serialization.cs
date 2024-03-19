@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.DnsResolver
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DnsResolver
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -72,17 +72,17 @@ namespace Azure.ResourceManager.DnsResolver
             writer.WriteStartObject();
             writer.WritePropertyName("virtualNetwork"u8);
             JsonSerializer.Serialize(writer, VirtualNetwork);
-            if (options.Format != "W" && DnsResolverState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DnsResolverState))
             {
                 writer.WritePropertyName("dnsResolverState"u8);
                 writer.WriteStringValue(DnsResolverState.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && ResourceGuid.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
             {
                 writer.WritePropertyName("resourceGuid"u8);
                 writer.WriteStringValue(ResourceGuid.Value);
@@ -126,17 +126,17 @@ namespace Azure.ResourceManager.DnsResolver
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             WritableSubResource virtualNetwork = default;
-            Optional<DnsResolverState> dnsResolverState = default;
-            Optional<DnsResolverProvisioningState> provisioningState = default;
-            Optional<Guid> resourceGuid = default;
+            DnsResolverState? dnsResolverState = default;
+            DnsResolverProvisioningState? provisioningState = default;
+            Guid? resourceGuid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -247,14 +247,14 @@ namespace Azure.ResourceManager.DnsResolver
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(etag),
+                etag,
                 virtualNetwork,
-                Optional.ToNullable(dnsResolverState),
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(resourceGuid),
+                dnsResolverState,
+                provisioningState,
+                resourceGuid,
                 serializedAdditionalRawData);
         }
 

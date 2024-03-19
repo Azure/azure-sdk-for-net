@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (Uid.HasValue)
+            if (Optional.IsDefined(Uid))
             {
                 writer.WritePropertyName("uid"u8);
                 writer.WriteNumberValue(Uid.Value);
             }
-            if (Gid.HasValue)
+            if (Optional.IsDefined(Gid))
             {
                 writer.WritePropertyName("gid"u8);
                 writer.WriteNumberValue(Gid.Value);
             }
-            if (SshPrivateKey != null)
+            if (Optional.IsDefined(SshPrivateKey))
             {
                 writer.WritePropertyName("sshPrivateKey"u8);
                 writer.WriteStringValue(SshPrivateKey);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<int> uid = default;
-            Optional<int> gid = default;
-            Optional<string> sshPrivateKey = default;
+            int? uid = default;
+            int? gid = default;
+            string sshPrivateKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchLinuxUserConfiguration(Optional.ToNullable(uid), Optional.ToNullable(gid), sshPrivateKey.Value, serializedAdditionalRawData);
+            return new BatchLinuxUserConfiguration(uid, gid, sshPrivateKey, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchLinuxUserConfiguration>.Write(ModelReaderWriterOptions options)

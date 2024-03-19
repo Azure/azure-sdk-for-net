@@ -43,54 +43,54 @@ namespace Azure.ResourceManager.ContainerRegistry
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (RunId != null)
+            if (Optional.IsDefined(RunId))
             {
                 writer.WritePropertyName("runId"u8);
                 writer.WriteStringValue(RunId);
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (LastUpdatedOn.HasValue)
+            if (Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedTime"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (RunType.HasValue)
+            if (Optional.IsDefined(RunType))
             {
                 writer.WritePropertyName("runType"u8);
                 writer.WriteStringValue(RunType.Value.ToString());
             }
-            if (AgentPoolName != null)
+            if (Optional.IsDefined(AgentPoolName))
             {
                 writer.WritePropertyName("agentPoolName"u8);
                 writer.WriteStringValue(AgentPoolName);
             }
-            if (CreatedOn.HasValue)
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (FinishOn.HasValue)
+            if (Optional.IsDefined(FinishOn))
             {
                 writer.WritePropertyName("finishTime"u8);
                 writer.WriteStringValue(FinishOn.Value, "O");
             }
-            if (!(OutputImages is ChangeTrackingList<ContainerRegistryImageDescriptor> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(OutputImages))
             {
                 writer.WritePropertyName("outputImages"u8);
                 writer.WriteStartArray();
@@ -100,42 +100,42 @@ namespace Azure.ResourceManager.ContainerRegistry
                 }
                 writer.WriteEndArray();
             }
-            if (Task != null)
+            if (Optional.IsDefined(Task))
             {
                 writer.WritePropertyName("task"u8);
                 writer.WriteStringValue(Task);
             }
-            if (ImageUpdateTrigger != null)
+            if (Optional.IsDefined(ImageUpdateTrigger))
             {
                 writer.WritePropertyName("imageUpdateTrigger"u8);
                 writer.WriteObjectValue(ImageUpdateTrigger);
             }
-            if (SourceTrigger != null)
+            if (Optional.IsDefined(SourceTrigger))
             {
                 writer.WritePropertyName("sourceTrigger"u8);
                 writer.WriteObjectValue(SourceTrigger);
             }
-            if (TimerTrigger != null)
+            if (Optional.IsDefined(TimerTrigger))
             {
                 writer.WritePropertyName("timerTrigger"u8);
                 writer.WriteObjectValue(TimerTrigger);
             }
-            if (Platform != null)
+            if (Optional.IsDefined(Platform))
             {
                 writer.WritePropertyName("platform"u8);
                 writer.WriteObjectValue(Platform);
             }
-            if (AgentConfiguration != null)
+            if (Optional.IsDefined(AgentConfiguration))
             {
                 writer.WritePropertyName("agentConfiguration"u8);
                 writer.WriteObjectValue(AgentConfiguration);
             }
-            if (SourceRegistryAuth != null)
+            if (Optional.IsDefined(SourceRegistryAuth))
             {
                 writer.WritePropertyName("sourceRegistryAuth"u8);
                 writer.WriteStringValue(SourceRegistryAuth);
             }
-            if (!(CustomRegistries is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(CustomRegistries))
             {
                 writer.WritePropertyName("customRegistries"u8);
                 writer.WriteStartArray();
@@ -145,27 +145,27 @@ namespace Azure.ResourceManager.ContainerRegistry
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && RunErrorMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(RunErrorMessage))
             {
                 writer.WritePropertyName("runErrorMessage"u8);
                 writer.WriteStringValue(RunErrorMessage);
             }
-            if (UpdateTriggerToken != null)
+            if (Optional.IsDefined(UpdateTriggerToken))
             {
                 writer.WritePropertyName("updateTriggerToken"u8);
                 writer.WriteStringValue(UpdateTriggerToken);
             }
-            if (options.Format != "W" && LogArtifact != null)
+            if (options.Format != "W" && Optional.IsDefined(LogArtifact))
             {
                 writer.WritePropertyName("logArtifact"u8);
                 writer.WriteObjectValue(LogArtifact);
             }
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (IsArchiveEnabled.HasValue)
+            if (Optional.IsDefined(IsArchiveEnabled))
             {
                 writer.WritePropertyName("isArchiveEnabled"u8);
                 writer.WriteBooleanValue(IsArchiveEnabled.Value);
@@ -212,29 +212,29 @@ namespace Azure.ResourceManager.ContainerRegistry
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> runId = default;
-            Optional<ContainerRegistryRunStatus> status = default;
-            Optional<DateTimeOffset> lastUpdatedTime = default;
-            Optional<ContainerRegistryRunType> runType = default;
-            Optional<string> agentPoolName = default;
-            Optional<DateTimeOffset> createTime = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> finishTime = default;
+            SystemData systemData = default;
+            string runId = default;
+            ContainerRegistryRunStatus? status = default;
+            DateTimeOffset? lastUpdatedTime = default;
+            ContainerRegistryRunType? runType = default;
+            string agentPoolName = default;
+            DateTimeOffset? createTime = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? finishTime = default;
             IList<ContainerRegistryImageDescriptor> outputImages = default;
-            Optional<string> task = default;
-            Optional<ContainerRegistryImageUpdateTrigger> imageUpdateTrigger = default;
-            Optional<ContainerRegistrySourceTriggerDescriptor> sourceTrigger = default;
-            Optional<ContainerRegistryTimerTriggerDescriptor> timerTrigger = default;
-            Optional<ContainerRegistryPlatformProperties> platform = default;
-            Optional<ContainerRegistryAgentProperties> agentConfiguration = default;
-            Optional<string> sourceRegistryAuth = default;
+            string task = default;
+            ContainerRegistryImageUpdateTrigger imageUpdateTrigger = default;
+            ContainerRegistrySourceTriggerDescriptor sourceTrigger = default;
+            ContainerRegistryTimerTriggerDescriptor timerTrigger = default;
+            ContainerRegistryPlatformProperties platform = default;
+            ContainerRegistryAgentProperties agentConfiguration = default;
+            string sourceRegistryAuth = default;
             IList<string> customRegistries = default;
-            Optional<string> runErrorMessage = default;
-            Optional<string> updateTriggerToken = default;
-            Optional<ContainerRegistryImageDescriptor> logArtifact = default;
-            Optional<ContainerRegistryProvisioningState> provisioningState = default;
-            Optional<bool> isArchiveEnabled = default;
+            string runErrorMessage = default;
+            string updateTriggerToken = default;
+            ContainerRegistryImageDescriptor logArtifact = default;
+            ContainerRegistryProvisioningState? provisioningState = default;
+            bool? isArchiveEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -469,29 +469,29 @@ namespace Azure.ResourceManager.ContainerRegistry
                 id,
                 name,
                 type,
-                systemData.Value,
-                runId.Value,
-                Optional.ToNullable(status),
-                Optional.ToNullable(lastUpdatedTime),
-                Optional.ToNullable(runType),
-                agentPoolName.Value,
-                Optional.ToNullable(createTime),
-                Optional.ToNullable(startTime),
-                Optional.ToNullable(finishTime),
+                systemData,
+                runId,
+                status,
+                lastUpdatedTime,
+                runType,
+                agentPoolName,
+                createTime,
+                startTime,
+                finishTime,
                 outputImages ?? new ChangeTrackingList<ContainerRegistryImageDescriptor>(),
-                task.Value,
-                imageUpdateTrigger.Value,
-                sourceTrigger.Value,
-                timerTrigger.Value,
-                platform.Value,
-                agentConfiguration.Value,
-                sourceRegistryAuth.Value,
+                task,
+                imageUpdateTrigger,
+                sourceTrigger,
+                timerTrigger,
+                platform,
+                agentConfiguration,
+                sourceRegistryAuth,
                 customRegistries ?? new ChangeTrackingList<string>(),
-                runErrorMessage.Value,
-                updateTriggerToken.Value,
-                logArtifact.Value,
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(isArchiveEnabled),
+                runErrorMessage,
+                updateTriggerToken,
+                logArtifact,
+                provisioningState,
+                isArchiveEnabled,
                 serializedAdditionalRawData);
         }
 

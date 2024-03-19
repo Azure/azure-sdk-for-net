@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (TargetVmSecurityType.HasValue)
+            if (Optional.IsDefined(TargetVmSecurityType))
             {
                 writer.WritePropertyName("targetVmSecurityType"u8);
                 writer.WriteStringValue(TargetVmSecurityType.Value.ToString());
             }
-            if (IsTargetVmSecureBootEnabled != null)
+            if (Optional.IsDefined(IsTargetVmSecureBootEnabled))
             {
                 writer.WritePropertyName("isTargetVmSecureBootEnabled"u8);
                 writer.WriteStringValue(IsTargetVmSecureBootEnabled);
             }
-            if (IsTargetVmTpmEnabled != null)
+            if (Optional.IsDefined(IsTargetVmTpmEnabled))
             {
                 writer.WritePropertyName("isTargetVmTpmEnabled"u8);
                 writer.WriteStringValue(IsTargetVmTpmEnabled);
             }
-            if (IsTargetVmIntegrityMonitoringEnabled != null)
+            if (Optional.IsDefined(IsTargetVmIntegrityMonitoringEnabled))
             {
                 writer.WritePropertyName("isTargetVmIntegrityMonitoringEnabled"u8);
                 writer.WriteStringValue(IsTargetVmIntegrityMonitoringEnabled);
             }
-            if (IsTargetVmConfidentialEncryptionEnabled != null)
+            if (Optional.IsDefined(IsTargetVmConfidentialEncryptionEnabled))
             {
                 writer.WritePropertyName("isTargetVmConfidentialEncryptionEnabled"u8);
                 writer.WriteStringValue(IsTargetVmConfidentialEncryptionEnabled);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<SiteRecoveryVmSecurityType> targetVmSecurityType = default;
-            Optional<string> isTargetVmSecureBootEnabled = default;
-            Optional<string> isTargetVmTpmEnabled = default;
-            Optional<string> isTargetVmIntegrityMonitoringEnabled = default;
-            Optional<string> isTargetVmConfidentialEncryptionEnabled = default;
+            SiteRecoveryVmSecurityType? targetVmSecurityType = default;
+            string isTargetVmSecureBootEnabled = default;
+            string isTargetVmTpmEnabled = default;
+            string isTargetVmIntegrityMonitoringEnabled = default;
+            string isTargetVmConfidentialEncryptionEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,11 +135,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new VMwareCbtSecurityProfileProperties(
-                Optional.ToNullable(targetVmSecurityType),
-                isTargetVmSecureBootEnabled.Value,
-                isTargetVmTpmEnabled.Value,
-                isTargetVmIntegrityMonitoringEnabled.Value,
-                isTargetVmConfidentialEncryptionEnabled.Value,
+                targetVmSecurityType,
+                isTargetVmSecureBootEnabled,
+                isTargetVmTpmEnabled,
+                isTargetVmIntegrityMonitoringEnabled,
+                isTargetVmConfidentialEncryptionEnabled,
                 serializedAdditionalRawData);
         }
 

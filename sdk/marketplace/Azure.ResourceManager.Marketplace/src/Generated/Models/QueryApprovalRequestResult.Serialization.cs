@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Marketplace;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
@@ -27,12 +28,12 @@ namespace Azure.ResourceManager.Marketplace.Models
             }
 
             writer.WriteStartObject();
-            if (UniqueOfferId != null)
+            if (Optional.IsDefined(UniqueOfferId))
             {
                 writer.WritePropertyName("uniqueOfferId"u8);
                 writer.WriteStringValue(UniqueOfferId);
             }
-            if (!(PlansDetails is ChangeTrackingDictionary<string, PrivateStorePlanDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PlansDetails))
             {
                 writer.WritePropertyName("plansDetails"u8);
                 writer.WriteStartObject();
@@ -43,12 +44,12 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
                 writer.WriteEndObject();
             }
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (MessageCode.HasValue)
+            if (Optional.IsDefined(MessageCode))
             {
                 writer.WritePropertyName("messageCode"u8);
                 writer.WriteNumberValue(MessageCode.Value);
@@ -91,10 +92,10 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<string> uniqueOfferId = default;
+            string uniqueOfferId = default;
             IReadOnlyDictionary<string, PrivateStorePlanDetails> plansDetails = default;
-            Optional<ETag> etag = default;
-            Optional<long> messageCode = default;
+            ETag? etag = default;
+            long? messageCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QueryApprovalRequestResult(uniqueOfferId.Value, plansDetails ?? new ChangeTrackingDictionary<string, PrivateStorePlanDetails>(), Optional.ToNullable(etag), Optional.ToNullable(messageCode), serializedAdditionalRawData);
+            return new QueryApprovalRequestResult(uniqueOfferId, plansDetails ?? new ChangeTrackingDictionary<string, PrivateStorePlanDetails>(), etag, messageCode, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QueryApprovalRequestResult>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             writer.WriteNumberValue(MemoryInGB);
             writer.WritePropertyName("cpu"u8);
             writer.WriteNumberValue(Cpu);
-            if (Gpu != null)
+            if (Optional.IsDefined(Gpu))
             {
                 writer.WritePropertyName("gpu"u8);
                 writer.WriteObjectValue(Gpu);
@@ -75,7 +76,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
             double memoryInGB = default;
             double cpu = default;
-            Optional<ContainerGpuResourceInfo> gpu = default;
+            ContainerGpuResourceInfo gpu = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +106,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerResourceRequestsContent(memoryInGB, cpu, gpu.Value, serializedAdditionalRawData);
+            return new ContainerResourceRequestsContent(memoryInGB, cpu, gpu, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerResourceRequestsContent>.Write(ModelReaderWriterOptions options)

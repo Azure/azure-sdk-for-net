@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Workflow != null)
+            if (Optional.IsDefined(Workflow))
             {
                 writer.WritePropertyName("workflow"u8);
                 writer.WriteObjectValue(Workflow);
             }
-            if (Connector != null)
+            if (Optional.IsDefined(Connector))
             {
                 writer.WritePropertyName("connector"u8);
                 writer.WriteObjectValue(Connector);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<FlowEndpoints> workflow = default;
-            Optional<FlowEndpoints> connector = default;
+            FlowEndpoints workflow = default;
+            FlowEndpoints connector = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FlowEndpointsConfiguration(workflow.Value, connector.Value, serializedAdditionalRawData);
+            return new FlowEndpointsConfiguration(workflow, connector, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FlowEndpointsConfiguration>.Write(ModelReaderWriterOptions options)

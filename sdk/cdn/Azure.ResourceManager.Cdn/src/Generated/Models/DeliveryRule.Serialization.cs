@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -26,14 +27,14 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("order"u8);
             writer.WriteNumberValue(Order);
-            if (!(Conditions is ChangeTrackingList<DeliveryRuleCondition> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Conditions))
             {
                 writer.WritePropertyName("conditions"u8);
                 writer.WriteStartArray();
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<string> name = default;
+            string name = default;
             int order = default;
             IList<DeliveryRuleCondition> conditions = default;
             IList<DeliveryRuleAction> actions = default;
@@ -136,7 +137,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeliveryRule(name.Value, order, conditions ?? new ChangeTrackingList<DeliveryRuleCondition>(), actions, serializedAdditionalRawData);
+            return new DeliveryRule(name, order, conditions ?? new ChangeTrackingList<DeliveryRuleCondition>(), actions, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeliveryRule>.Write(ModelReaderWriterOptions options)

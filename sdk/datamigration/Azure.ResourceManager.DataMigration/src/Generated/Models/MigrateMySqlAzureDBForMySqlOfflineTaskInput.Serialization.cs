@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -37,17 +38,17 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (MakeSourceServerReadOnly.HasValue)
+            if (Optional.IsDefined(MakeSourceServerReadOnly))
             {
                 writer.WritePropertyName("makeSourceServerReadOnly"u8);
                 writer.WriteBooleanValue(MakeSourceServerReadOnly.Value);
             }
-            if (StartedOn.HasValue)
+            if (Optional.IsDefined(StartedOn))
             {
                 writer.WritePropertyName("startedOn"u8);
                 writer.WriteStringValue(StartedOn.Value, "O");
             }
-            if (!(OptionalAgentSettings is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(OptionalAgentSettings))
             {
                 writer.WritePropertyName("optionalAgentSettings"u8);
                 writer.WriteStartObject();
@@ -58,7 +59,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndObject();
             }
-            if (EncryptedKeyForSecureFields != null)
+            if (Optional.IsDefined(EncryptedKeyForSecureFields))
             {
                 writer.WritePropertyName("encryptedKeyForSecureFields"u8);
                 writer.WriteStringValue(EncryptedKeyForSecureFields);
@@ -104,10 +105,10 @@ namespace Azure.ResourceManager.DataMigration.Models
             MySqlConnectionInfo sourceConnectionInfo = default;
             MySqlConnectionInfo targetConnectionInfo = default;
             IList<MigrateMySqlAzureDBForMySqlOfflineDatabaseInput> selectedDatabases = default;
-            Optional<bool> makeSourceServerReadOnly = default;
-            Optional<DateTimeOffset> startedOn = default;
+            bool? makeSourceServerReadOnly = default;
+            DateTimeOffset? startedOn = default;
             IDictionary<string, string> optionalAgentSettings = default;
-            Optional<string> encryptedKeyForSecureFields = default;
+            string encryptedKeyForSecureFields = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,10 +180,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 sourceConnectionInfo,
                 targetConnectionInfo,
                 selectedDatabases,
-                Optional.ToNullable(makeSourceServerReadOnly),
-                Optional.ToNullable(startedOn),
+                makeSourceServerReadOnly,
+                startedOn,
                 optionalAgentSettings ?? new ChangeTrackingDictionary<string, string>(),
-                encryptedKeyForSecureFields.Value,
+                encryptedKeyForSecureFields,
                 serializedAdditionalRawData);
         }
 

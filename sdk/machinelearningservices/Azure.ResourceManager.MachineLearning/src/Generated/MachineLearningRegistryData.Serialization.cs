@@ -28,23 +28,23 @@ namespace Azure.ResourceManager.MachineLearning
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -72,14 +72,14 @@ namespace Azure.ResourceManager.MachineLearning
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DiscoveryUri != null)
+            if (Optional.IsDefined(DiscoveryUri))
             {
                 if (DiscoveryUri != null)
                 {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.MachineLearning
                     writer.WriteNull("discoveryUrl");
                 }
             }
-            if (IntellectualPropertyPublisher != null)
+            if (Optional.IsDefined(IntellectualPropertyPublisher))
             {
                 if (IntellectualPropertyPublisher != null)
                 {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.MachineLearning
                     writer.WriteNull("intellectualPropertyPublisher");
                 }
             }
-            if (ManagedResourceGroup != null)
+            if (Optional.IsDefined(ManagedResourceGroup))
             {
                 if (ManagedResourceGroup != null)
                 {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.MachineLearning
                     writer.WriteNull("managedResourceGroup");
                 }
             }
-            if (MlFlowRegistryUri != null)
+            if (Optional.IsDefined(MlFlowRegistryUri))
             {
                 if (MlFlowRegistryUri != null)
                 {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.MachineLearning
                     writer.WriteNull("mlFlowRegistryUri");
                 }
             }
-            if (!(PrivateEndpointConnections is ChangeTrackingList<RegistryPrivateEndpointConnection> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
                 if (PrivateEndpointConnections != null)
                 {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.MachineLearning
                     writer.WriteNull("privateEndpointConnections");
                 }
             }
-            if (PublicNetworkAccess != null)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 if (PublicNetworkAccess != null)
                 {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.MachineLearning
                     writer.WriteNull("publicNetworkAccess");
                 }
             }
-            if (!(RegionDetails is ChangeTrackingList<RegistryRegionArmDetails> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(RegionDetails))
             {
                 if (RegionDetails != null)
                 {
@@ -212,21 +212,21 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<string> kind = default;
-            Optional<MachineLearningSku> sku = default;
+            ManagedServiceIdentity identity = default;
+            string kind = default;
+            MachineLearningSku sku = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Uri> discoveryUrl = default;
-            Optional<string> intellectualPropertyPublisher = default;
-            Optional<ArmResourceId> managedResourceGroup = default;
-            Optional<Uri> mlFlowRegistryUri = default;
+            SystemData systemData = default;
+            Uri discoveryUrl = default;
+            string intellectualPropertyPublisher = default;
+            ArmResourceId managedResourceGroup = default;
+            Uri mlFlowRegistryUri = default;
             IList<RegistryPrivateEndpointConnection> privateEndpointConnections = default;
-            Optional<string> publicNetworkAccess = default;
+            string publicNetworkAccess = default;
             IList<RegistryRegionArmDetails> regionDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -401,18 +401,18 @@ namespace Azure.ResourceManager.MachineLearning
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 identity,
-                kind.Value,
-                sku.Value,
-                discoveryUrl.Value,
-                intellectualPropertyPublisher.Value,
-                managedResourceGroup.Value,
-                mlFlowRegistryUri.Value,
+                kind,
+                sku,
+                discoveryUrl,
+                intellectualPropertyPublisher,
+                managedResourceGroup,
+                mlFlowRegistryUri,
                 privateEndpointConnections ?? new ChangeTrackingList<RegistryPrivateEndpointConnection>(),
-                publicNetworkAccess.Value,
+                publicNetworkAccess,
                 regionDetails ?? new ChangeTrackingList<RegistryRegionArmDetails>(),
                 serializedAdditionalRawData);
         }

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Tier.HasValue)
+            if (Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier.Value.ToSerialString());
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             string name = default;
-            Optional<MachineLearningSkuTier> tier = default;
+            MachineLearningSkuTier? tier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningSkuSetting(name, Optional.ToNullable(tier), serializedAdditionalRawData);
+            return new MachineLearningSkuSetting(name, tier, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningSkuSetting>.Write(ModelReaderWriterOptions options)

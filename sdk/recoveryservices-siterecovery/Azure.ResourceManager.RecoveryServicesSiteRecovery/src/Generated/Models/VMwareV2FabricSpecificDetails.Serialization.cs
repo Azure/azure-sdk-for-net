@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && VMwareSiteId != null)
+            if (options.Format != "W" && Optional.IsDefined(VMwareSiteId))
             {
                 writer.WritePropertyName("vmwareSiteId"u8);
                 writer.WriteStringValue(VMwareSiteId);
             }
-            if (options.Format != "W" && PhysicalSiteId != null)
+            if (options.Format != "W" && Optional.IsDefined(PhysicalSiteId))
             {
                 writer.WritePropertyName("physicalSiteId"u8);
                 writer.WriteStringValue(PhysicalSiteId);
             }
-            if (options.Format != "W" && MigrationSolutionId != null)
+            if (options.Format != "W" && Optional.IsDefined(MigrationSolutionId))
             {
                 writer.WritePropertyName("migrationSolutionId"u8);
                 writer.WriteStringValue(MigrationSolutionId);
             }
-            if (options.Format != "W" && ServiceEndpoint != null)
+            if (options.Format != "W" && Optional.IsDefined(ServiceEndpoint))
             {
                 writer.WritePropertyName("serviceEndpoint"u8);
                 writer.WriteStringValue(ServiceEndpoint);
             }
-            if (options.Format != "W" && ServiceResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(ServiceResourceId))
             {
                 writer.WritePropertyName("serviceResourceId"u8);
                 writer.WriteStringValue(ServiceResourceId);
             }
-            if (options.Format != "W" && ServiceContainerId != null)
+            if (options.Format != "W" && Optional.IsDefined(ServiceContainerId))
             {
                 writer.WritePropertyName("serviceContainerId"u8);
                 writer.WriteStringValue(ServiceContainerId);
             }
-            if (options.Format != "W" && !(ProcessServers is ChangeTrackingList<SiteRecoveryProcessServerDetails> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ProcessServers))
             {
                 writer.WritePropertyName("processServers"u8);
                 writer.WriteStartArray();
@@ -106,12 +107,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> vmwareSiteId = default;
-            Optional<ResourceIdentifier> physicalSiteId = default;
-            Optional<ResourceIdentifier> migrationSolutionId = default;
-            Optional<string> serviceEndpoint = default;
-            Optional<ResourceIdentifier> serviceResourceId = default;
-            Optional<string> serviceContainerId = default;
+            ResourceIdentifier vmwareSiteId = default;
+            ResourceIdentifier physicalSiteId = default;
+            ResourceIdentifier migrationSolutionId = default;
+            string serviceEndpoint = default;
+            ResourceIdentifier serviceResourceId = default;
+            string serviceContainerId = default;
             IReadOnlyList<SiteRecoveryProcessServerDetails> processServers = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -192,12 +193,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new VMwareV2FabricSpecificDetails(
                 instanceType,
                 serializedAdditionalRawData,
-                vmwareSiteId.Value,
-                physicalSiteId.Value,
-                migrationSolutionId.Value,
-                serviceEndpoint.Value,
-                serviceResourceId.Value,
-                serviceContainerId.Value,
+                vmwareSiteId,
+                physicalSiteId,
+                migrationSolutionId,
+                serviceEndpoint,
+                serviceResourceId,
+                serviceContainerId,
                 processServers ?? new ChangeTrackingList<SiteRecoveryProcessServerDetails>());
         }
 

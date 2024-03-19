@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (!(SshAuthorizedKeys is ChangeTrackingList<StorageSshPublicKey> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SshAuthorizedKeys))
             {
                 writer.WritePropertyName("sshAuthorizedKeys"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && SharedKey != null)
+            if (options.Format != "W" && Optional.IsDefined(SharedKey))
             {
                 writer.WritePropertyName("sharedKey"u8);
                 writer.WriteStringValue(SharedKey);
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.Storage.Models
                 return null;
             }
             IReadOnlyList<StorageSshPublicKey> sshAuthorizedKeys = default;
-            Optional<string> sharedKey = default;
+            string sharedKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LocalUserKeys(sshAuthorizedKeys ?? new ChangeTrackingList<StorageSshPublicKey>(), sharedKey.Value, serializedAdditionalRawData);
+            return new LocalUserKeys(sshAuthorizedKeys ?? new ChangeTrackingList<StorageSshPublicKey>(), sharedKey, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LocalUserKeys>.Write(ModelReaderWriterOptions options)

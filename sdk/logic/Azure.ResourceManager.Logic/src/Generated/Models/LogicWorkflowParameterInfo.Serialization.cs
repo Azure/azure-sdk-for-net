@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (ParameterType.HasValue)
+            if (Optional.IsDefined(ParameterType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ParameterType.Value.ToString());
             }
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
 #if NET6_0_OR_GREATER
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
 #endif
             }
-            if (Metadata != null)
+            if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
 #if NET6_0_OR_GREATER
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
 #endif
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -98,10 +99,10 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<LogicWorkflowParameterType> type = default;
-            Optional<BinaryData> value = default;
-            Optional<BinaryData> metadata = default;
-            Optional<string> description = default;
+            LogicWorkflowParameterType? type = default;
+            BinaryData value = default;
+            BinaryData metadata = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicWorkflowParameterInfo(Optional.ToNullable(type), value.Value, metadata.Value, description.Value, serializedAdditionalRawData);
+            return new LogicWorkflowParameterInfo(type, value, metadata, description, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicWorkflowParameterInfo>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ResourceMover;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
                 writer.WriteEndObject();
             }
-            if (FaultDomain.HasValue)
+            if (Optional.IsDefined(FaultDomain))
             {
                 if (FaultDomain != null)
                 {
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     writer.WriteNull("faultDomain");
                 }
             }
-            if (UpdateDomain.HasValue)
+            if (Optional.IsDefined(UpdateDomain))
             {
                 if (UpdateDomain != null)
                 {
@@ -63,12 +64,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
             writer.WritePropertyName("resourceType"u8);
             writer.WriteStringValue(ResourceType);
-            if (TargetResourceName != null)
+            if (Optional.IsDefined(TargetResourceName))
             {
                 writer.WritePropertyName("targetResourceName"u8);
                 writer.WriteStringValue(TargetResourceName);
             }
-            if (TargetResourceGroupName != null)
+            if (Optional.IsDefined(TargetResourceGroupName))
             {
                 writer.WritePropertyName("targetResourceGroupName"u8);
                 writer.WriteStringValue(TargetResourceGroupName);
@@ -112,11 +113,11 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<int?> faultDomain = default;
-            Optional<int?> updateDomain = default;
+            int? faultDomain = default;
+            int? updateDomain = default;
             string resourceType = default;
-            Optional<string> targetResourceName = default;
-            Optional<string> targetResourceGroupName = default;
+            string targetResourceName = default;
+            string targetResourceGroupName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -178,12 +179,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MoverAvailabilitySetResourceSettings(
                 resourceType,
-                targetResourceName.Value,
-                targetResourceGroupName.Value,
+                targetResourceName,
+                targetResourceGroupName,
                 serializedAdditionalRawData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                Optional.ToNullable(faultDomain),
-                Optional.ToNullable(updateDomain));
+                faultDomain,
+                updateDomain);
         }
 
         BinaryData IPersistableModel<MoverAvailabilitySetResourceSettings>.Write(ModelReaderWriterOptions options)

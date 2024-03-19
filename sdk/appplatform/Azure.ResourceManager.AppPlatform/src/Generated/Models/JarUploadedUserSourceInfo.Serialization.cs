@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppPlatform;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -26,24 +27,24 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (RuntimeVersion != null)
+            if (Optional.IsDefined(RuntimeVersion))
             {
                 writer.WritePropertyName("runtimeVersion"u8);
                 writer.WriteStringValue(RuntimeVersion);
             }
-            if (JvmOptions != null)
+            if (Optional.IsDefined(JvmOptions))
             {
                 writer.WritePropertyName("jvmOptions"u8);
                 writer.WriteStringValue(JvmOptions);
             }
-            if (RelativePath != null)
+            if (Optional.IsDefined(RelativePath))
             {
                 writer.WritePropertyName("relativePath"u8);
                 writer.WriteStringValue(RelativePath);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(UserSourceInfoType);
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
@@ -86,11 +87,11 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> runtimeVersion = default;
-            Optional<string> jvmOptions = default;
-            Optional<string> relativePath = default;
+            string runtimeVersion = default;
+            string jvmOptions = default;
+            string relativePath = default;
             string type = default;
-            Optional<string> version = default;
+            string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -128,11 +129,11 @@ namespace Azure.ResourceManager.AppPlatform.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new JarUploadedUserSourceInfo(
                 type,
-                version.Value,
+                version,
                 serializedAdditionalRawData,
-                relativePath.Value,
-                runtimeVersion.Value,
-                jvmOptions.Value);
+                relativePath,
+                runtimeVersion,
+                jvmOptions);
         }
 
         BinaryData IPersistableModel<JarUploadedUserSourceInfo>.Write(ModelReaderWriterOptions options)

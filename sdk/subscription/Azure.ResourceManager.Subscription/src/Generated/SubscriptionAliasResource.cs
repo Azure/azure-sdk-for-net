@@ -280,10 +280,7 @@ namespace Azure.ResourceManager.Subscription
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<SubscriptionAliasResource>> UpdateAsync(WaitUntil waitUntil, SubscriptionAliasCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _subscriptionAliasAliasClientDiagnostics.CreateScope("SubscriptionAliasResource.Update");
             scope.Start();
@@ -329,10 +326,7 @@ namespace Azure.ResourceManager.Subscription
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<SubscriptionAliasResource> Update(WaitUntil waitUntil, SubscriptionAliasCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _subscriptionAliasAliasClientDiagnostics.CreateScope("SubscriptionAliasResource.Update");
             scope.Start();

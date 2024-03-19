@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
@@ -20,8 +19,8 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 return null;
             }
-            Optional<DateTimeRange> range = default;
-            Optional<TimeSpan> intervalSize = default;
+            DateTimeRange range = default;
+            TimeSpan? intervalSize = default;
             IReadOnlyDictionary<string, int> distribution = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -58,7 +57,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new Availability(range.Value, Optional.ToNullable(intervalSize), distribution ?? new ChangeTrackingDictionary<string, int>());
+            return new Availability(range, intervalSize, distribution ?? new ChangeTrackingDictionary<string, int>());
         }
     }
 }

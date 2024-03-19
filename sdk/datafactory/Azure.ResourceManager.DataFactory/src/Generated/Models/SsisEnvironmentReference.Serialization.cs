@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Id.HasValue)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteNumberValue(Id.Value);
             }
-            if (EnvironmentFolderName != null)
+            if (Optional.IsDefined(EnvironmentFolderName))
             {
                 writer.WritePropertyName("environmentFolderName"u8);
                 writer.WriteStringValue(EnvironmentFolderName);
             }
-            if (EnvironmentName != null)
+            if (Optional.IsDefined(EnvironmentName))
             {
                 writer.WritePropertyName("environmentName"u8);
                 writer.WriteStringValue(EnvironmentName);
             }
-            if (ReferenceType != null)
+            if (Optional.IsDefined(ReferenceType))
             {
                 writer.WritePropertyName("referenceType"u8);
                 writer.WriteStringValue(ReferenceType);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<long> id = default;
-            Optional<string> environmentFolderName = default;
-            Optional<string> environmentName = default;
-            Optional<string> referenceType = default;
+            long? id = default;
+            string environmentFolderName = default;
+            string environmentName = default;
+            string referenceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SsisEnvironmentReference(Optional.ToNullable(id), environmentFolderName.Value, environmentName.Value, referenceType.Value, serializedAdditionalRawData);
+            return new SsisEnvironmentReference(id, environmentFolderName, environmentName, referenceType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SsisEnvironmentReference>.Write(ModelReaderWriterOptions options)

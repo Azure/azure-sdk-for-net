@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (TierToCool != null)
+            if (Optional.IsDefined(TierToCool))
             {
                 writer.WritePropertyName("tierToCool"u8);
                 writer.WriteObjectValue(TierToCool);
             }
-            if (TierToArchive != null)
+            if (Optional.IsDefined(TierToArchive))
             {
                 writer.WritePropertyName("tierToArchive"u8);
                 writer.WriteObjectValue(TierToArchive);
             }
-            if (TierToCold != null)
+            if (Optional.IsDefined(TierToCold))
             {
                 writer.WritePropertyName("tierToCold"u8);
                 writer.WriteObjectValue(TierToCold);
             }
-            if (TierToHot != null)
+            if (Optional.IsDefined(TierToHot))
             {
                 writer.WritePropertyName("tierToHot"u8);
                 writer.WriteObjectValue(TierToHot);
             }
-            if (Delete != null)
+            if (Optional.IsDefined(Delete))
             {
                 writer.WritePropertyName("delete"u8);
                 writer.WriteObjectValue(Delete);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<DateAfterCreation> tierToCool = default;
-            Optional<DateAfterCreation> tierToArchive = default;
-            Optional<DateAfterCreation> tierToCold = default;
-            Optional<DateAfterCreation> tierToHot = default;
-            Optional<DateAfterCreation> delete = default;
+            DateAfterCreation tierToCool = default;
+            DateAfterCreation tierToArchive = default;
+            DateAfterCreation tierToCold = default;
+            DateAfterCreation tierToHot = default;
+            DateAfterCreation delete = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,11 +151,11 @@ namespace Azure.ResourceManager.Storage.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ManagementPolicySnapShot(
-                tierToCool.Value,
-                tierToArchive.Value,
-                tierToCold.Value,
-                tierToHot.Value,
-                delete.Value,
+                tierToCool,
+                tierToArchive,
+                tierToCold,
+                tierToHot,
+                delete,
                 serializedAdditionalRawData);
         }
 

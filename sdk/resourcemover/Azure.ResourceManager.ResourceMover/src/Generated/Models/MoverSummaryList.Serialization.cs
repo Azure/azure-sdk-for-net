@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ResourceMover;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             writer.WriteStartObject();
-            if (FieldName != null)
+            if (Optional.IsDefined(FieldName))
             {
                 writer.WritePropertyName("fieldName"u8);
                 writer.WriteStringValue(FieldName);
             }
-            if (!(Summary is ChangeTrackingList<MoverSummaryItemInfo> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Summary))
             {
                 writer.WritePropertyName("summary"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<string> fieldName = default;
+            string fieldName = default;
             IReadOnlyList<MoverSummaryItemInfo> summary = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoverSummaryList(fieldName.Value, summary ?? new ChangeTrackingList<MoverSummaryItemInfo>(), serializedAdditionalRawData);
+            return new MoverSummaryList(fieldName, summary ?? new ChangeTrackingList<MoverSummaryItemInfo>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MoverSummaryList>.Write(ModelReaderWriterOptions options)

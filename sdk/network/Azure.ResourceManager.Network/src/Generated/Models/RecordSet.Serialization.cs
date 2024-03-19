@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (RecordType != null)
+            if (Optional.IsDefined(RecordType))
             {
                 writer.WritePropertyName("recordType"u8);
                 writer.WriteStringValue(RecordType);
             }
-            if (RecordSetName != null)
+            if (Optional.IsDefined(RecordSetName))
             {
                 writer.WritePropertyName("recordSetName"u8);
                 writer.WriteStringValue(RecordSetName);
             }
-            if (Fqdn != null)
+            if (Optional.IsDefined(Fqdn))
             {
                 writer.WritePropertyName("fqdn"u8);
                 writer.WriteStringValue(Fqdn);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Ttl.HasValue)
+            if (Optional.IsDefined(Ttl))
             {
                 writer.WritePropertyName("ttl"u8);
                 writer.WriteNumberValue(Ttl.Value);
             }
-            if (!(IPAddresses is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(IPAddresses))
             {
                 writer.WritePropertyName("ipAddresses"u8);
                 writer.WriteStartArray();
@@ -99,11 +100,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> recordType = default;
-            Optional<string> recordSetName = default;
-            Optional<string> fqdn = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<int> ttl = default;
+            string recordType = default;
+            string recordSetName = default;
+            string fqdn = default;
+            NetworkProvisioningState? provisioningState = default;
+            int? ttl = default;
             IReadOnlyList<string> ipAddresses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -163,11 +164,11 @@ namespace Azure.ResourceManager.Network.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new RecordSet(
-                recordType.Value,
-                recordSetName.Value,
-                fqdn.Value,
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(ttl),
+                recordType,
+                recordSetName,
+                fqdn,
+                provisioningState,
+                ttl,
                 ipAddresses ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }

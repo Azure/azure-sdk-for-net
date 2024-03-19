@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,67 +27,67 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (DisplayDescription != null)
+            if (Optional.IsDefined(DisplayDescription))
             {
                 writer.WritePropertyName("displayDescription"u8);
                 writer.WriteStringValue(DisplayDescription);
             }
-            if (Unit != null)
+            if (Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit);
             }
-            if (AggregationType != null)
+            if (Optional.IsDefined(AggregationType))
             {
                 writer.WritePropertyName("aggregationType"u8);
                 writer.WriteStringValue(AggregationType);
             }
-            if (IsInstanceLevelAggregationSupported.HasValue)
+            if (Optional.IsDefined(IsInstanceLevelAggregationSupported))
             {
                 writer.WritePropertyName("supportsInstanceLevelAggregation"u8);
                 writer.WriteBooleanValue(IsInstanceLevelAggregationSupported.Value);
             }
-            if (IsRegionalMdmAccountEnabled.HasValue)
+            if (Optional.IsDefined(IsRegionalMdmAccountEnabled))
             {
                 writer.WritePropertyName("enableRegionalMdmAccount"u8);
                 writer.WriteBooleanValue(IsRegionalMdmAccountEnabled.Value);
             }
-            if (SourceMdmAccount != null)
+            if (Optional.IsDefined(SourceMdmAccount))
             {
                 writer.WritePropertyName("sourceMdmAccount"u8);
                 writer.WriteStringValue(SourceMdmAccount);
             }
-            if (SourceMdmNamespace != null)
+            if (Optional.IsDefined(SourceMdmNamespace))
             {
                 writer.WritePropertyName("sourceMdmNamespace"u8);
                 writer.WriteStringValue(SourceMdmNamespace);
             }
-            if (MetricFilterPattern != null)
+            if (Optional.IsDefined(MetricFilterPattern))
             {
                 writer.WritePropertyName("metricFilterPattern"u8);
                 writer.WriteStringValue(MetricFilterPattern);
             }
-            if (FillGapWithZero.HasValue)
+            if (Optional.IsDefined(FillGapWithZero))
             {
                 writer.WritePropertyName("fillGapWithZero"u8);
                 writer.WriteBooleanValue(FillGapWithZero.Value);
             }
-            if (IsInternal.HasValue)
+            if (Optional.IsDefined(IsInternal))
             {
                 writer.WritePropertyName("isInternal"u8);
                 writer.WriteBooleanValue(IsInternal.Value);
             }
-            if (!(Dimensions is ChangeTrackingList<MetricDimension> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Dimensions))
             {
                 writer.WritePropertyName("dimensions"u8);
                 writer.WriteStartArray();
@@ -96,12 +97,12 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Category != null)
+            if (Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (!(Availabilities is ChangeTrackingList<MetricAvailability> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Availabilities))
             {
                 writer.WritePropertyName("availabilities"u8);
                 writer.WriteStartArray();
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(SupportedTimeGrainTypes is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(SupportedTimeGrainTypes))
             {
                 writer.WritePropertyName("supportedTimeGrainTypes"u8);
                 writer.WriteStartArray();
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(SupportedAggregationTypes is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(SupportedAggregationTypes))
             {
                 writer.WritePropertyName("supportedAggregationTypes"u8);
                 writer.WriteStartArray();
@@ -169,20 +170,20 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> displayName = default;
-            Optional<string> displayDescription = default;
-            Optional<string> unit = default;
-            Optional<string> aggregationType = default;
-            Optional<bool> supportsInstanceLevelAggregation = default;
-            Optional<bool> enableRegionalMdmAccount = default;
-            Optional<string> sourceMdmAccount = default;
-            Optional<string> sourceMdmNamespace = default;
-            Optional<string> metricFilterPattern = default;
-            Optional<bool> fillGapWithZero = default;
-            Optional<bool> isInternal = default;
+            string name = default;
+            string displayName = default;
+            string displayDescription = default;
+            string unit = default;
+            string aggregationType = default;
+            bool? supportsInstanceLevelAggregation = default;
+            bool? enableRegionalMdmAccount = default;
+            string sourceMdmAccount = default;
+            string sourceMdmNamespace = default;
+            string metricFilterPattern = default;
+            bool? fillGapWithZero = default;
+            bool? isInternal = default;
             IReadOnlyList<MetricDimension> dimensions = default;
-            Optional<string> category = default;
+            string category = default;
             IReadOnlyList<MetricAvailability> availabilities = default;
             IReadOnlyList<string> supportedTimeGrainTypes = default;
             IReadOnlyList<string> supportedAggregationTypes = default;
@@ -334,20 +335,20 @@ namespace Azure.ResourceManager.AppService.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MetricSpecification(
-                name.Value,
-                displayName.Value,
-                displayDescription.Value,
-                unit.Value,
-                aggregationType.Value,
-                Optional.ToNullable(supportsInstanceLevelAggregation),
-                Optional.ToNullable(enableRegionalMdmAccount),
-                sourceMdmAccount.Value,
-                sourceMdmNamespace.Value,
-                metricFilterPattern.Value,
-                Optional.ToNullable(fillGapWithZero),
-                Optional.ToNullable(isInternal),
+                name,
+                displayName,
+                displayDescription,
+                unit,
+                aggregationType,
+                supportsInstanceLevelAggregation,
+                enableRegionalMdmAccount,
+                sourceMdmAccount,
+                sourceMdmNamespace,
+                metricFilterPattern,
+                fillGapWithZero,
+                isInternal,
                 dimensions ?? new ChangeTrackingList<MetricDimension>(),
-                category.Value,
+                category,
                 availabilities ?? new ChangeTrackingList<MetricAvailability>(),
                 supportedTimeGrainTypes ?? new ChangeTrackingList<string>(),
                 supportedAggregationTypes ?? new ChangeTrackingList<string>(),

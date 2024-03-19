@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (MetricLabelsAllowlist != null)
+            if (Optional.IsDefined(MetricLabelsAllowlist))
             {
                 writer.WritePropertyName("metricLabelsAllowlist"u8);
                 writer.WriteStringValue(MetricLabelsAllowlist);
             }
-            if (MetricAnnotationsAllowList != null)
+            if (Optional.IsDefined(MetricAnnotationsAllowList))
             {
                 writer.WritePropertyName("metricAnnotationsAllowList"u8);
                 writer.WriteStringValue(MetricAnnotationsAllowList);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<string> metricLabelsAllowlist = default;
-            Optional<string> metricAnnotationsAllowList = default;
+            string metricLabelsAllowlist = default;
+            string metricAnnotationsAllowList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterMonitorProfileKubeStateMetrics(metricLabelsAllowlist.Value, metricAnnotationsAllowList.Value, serializedAdditionalRawData);
+            return new ManagedClusterMonitorProfileKubeStateMetrics(metricLabelsAllowlist, metricAnnotationsAllowList, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterMonitorProfileKubeStateMetrics>.Write(ModelReaderWriterOptions options)

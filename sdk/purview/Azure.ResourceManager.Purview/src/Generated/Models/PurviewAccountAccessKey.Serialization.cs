@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Purview;
 
 namespace Azure.ResourceManager.Purview.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Purview.Models
             }
 
             writer.WriteStartObject();
-            if (AtlasKafkaPrimaryEndpoint != null)
+            if (Optional.IsDefined(AtlasKafkaPrimaryEndpoint))
             {
                 writer.WritePropertyName("atlasKafkaPrimaryEndpoint"u8);
                 writer.WriteStringValue(AtlasKafkaPrimaryEndpoint);
             }
-            if (AtlasKafkaSecondaryEndpoint != null)
+            if (Optional.IsDefined(AtlasKafkaSecondaryEndpoint))
             {
                 writer.WritePropertyName("atlasKafkaSecondaryEndpoint"u8);
                 writer.WriteStringValue(AtlasKafkaSecondaryEndpoint);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 return null;
             }
-            Optional<string> atlasKafkaPrimaryEndpoint = default;
-            Optional<string> atlasKafkaSecondaryEndpoint = default;
+            string atlasKafkaPrimaryEndpoint = default;
+            string atlasKafkaSecondaryEndpoint = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.Purview.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PurviewAccountAccessKey(atlasKafkaPrimaryEndpoint.Value, atlasKafkaSecondaryEndpoint.Value, serializedAdditionalRawData);
+            return new PurviewAccountAccessKey(atlasKafkaPrimaryEndpoint, atlasKafkaSecondaryEndpoint, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PurviewAccountAccessKey>.Write(ModelReaderWriterOptions options)

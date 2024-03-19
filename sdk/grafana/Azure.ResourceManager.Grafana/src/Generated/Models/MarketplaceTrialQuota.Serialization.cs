@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Grafana;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Grafana.Models
             }
 
             writer.WriteStartObject();
-            if (AvailablePromotion.HasValue)
+            if (Optional.IsDefined(AvailablePromotion))
             {
                 writer.WritePropertyName("availablePromotion"u8);
                 writer.WriteStringValue(AvailablePromotion.Value.ToString());
             }
-            if (GrafanaResourceId != null)
+            if (Optional.IsDefined(GrafanaResourceId))
             {
                 writer.WritePropertyName("grafanaResourceId"u8);
                 writer.WriteStringValue(GrafanaResourceId);
             }
-            if (TrialStartOn.HasValue)
+            if (Optional.IsDefined(TrialStartOn))
             {
                 writer.WritePropertyName("trialStartAt"u8);
                 writer.WriteStringValue(TrialStartOn.Value, "O");
             }
-            if (TrialEndOn.HasValue)
+            if (Optional.IsDefined(TrialEndOn))
             {
                 writer.WritePropertyName("trialEndAt"u8);
                 writer.WriteStringValue(TrialEndOn.Value, "O");
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Grafana.Models
             {
                 return null;
             }
-            Optional<AvailablePromotion> availablePromotion = default;
-            Optional<ResourceIdentifier> grafanaResourceId = default;
-            Optional<DateTimeOffset> trialStartAt = default;
-            Optional<DateTimeOffset> trialEndAt = default;
+            AvailablePromotion? availablePromotion = default;
+            ResourceIdentifier grafanaResourceId = default;
+            DateTimeOffset? trialStartAt = default;
+            DateTimeOffset? trialEndAt = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MarketplaceTrialQuota(Optional.ToNullable(availablePromotion), grafanaResourceId.Value, Optional.ToNullable(trialStartAt), Optional.ToNullable(trialEndAt), serializedAdditionalRawData);
+            return new MarketplaceTrialQuota(availablePromotion, grafanaResourceId, trialStartAt, trialEndAt, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MarketplaceTrialQuota>.Write(ModelReaderWriterOptions options)

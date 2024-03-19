@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && MinValue.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MinValue))
             {
                 writer.WritePropertyName("minValue"u8);
                 writer.WriteNumberValue(MinValue.Value);
             }
-            if (options.Format != "W" && MaxValue.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MaxValue))
             {
                 writer.WritePropertyName("maxValue"u8);
                 writer.WriteNumberValue(MaxValue.Value);
             }
-            if (options.Format != "W" && StepSize.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StepSize))
             {
                 writer.WritePropertyName("stepSize"u8);
                 writer.WriteNumberValue(StepSize.Value);
             }
-            if (options.Format != "W" && Default.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Default))
             {
                 writer.WritePropertyName("default"u8);
                 writer.WriteNumberValue(Default.Value);
             }
-            if (options.Format != "W" && Unit.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit.Value.ToString());
             }
-            if (options.Format != "W" && DoNotPauseValue.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DoNotPauseValue))
             {
                 writer.WritePropertyName("doNotPauseValue"u8);
                 writer.WriteNumberValue(DoNotPauseValue.Value);
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<int> minValue = default;
-            Optional<int> maxValue = default;
-            Optional<int> stepSize = default;
-            Optional<int> @default = default;
-            Optional<PauseDelayTimeUnit> unit = default;
-            Optional<int> doNotPauseValue = default;
+            int? minValue = default;
+            int? maxValue = default;
+            int? stepSize = default;
+            int? @default = default;
+            PauseDelayTimeUnit? unit = default;
+            int? doNotPauseValue = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,12 +166,12 @@ namespace Azure.ResourceManager.Sql.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AutoPauseDelayTimeRange(
-                Optional.ToNullable(minValue),
-                Optional.ToNullable(maxValue),
-                Optional.ToNullable(stepSize),
-                Optional.ToNullable(@default),
-                Optional.ToNullable(unit),
-                Optional.ToNullable(doNotPauseValue),
+                minValue,
+                maxValue,
+                stepSize,
+                @default,
+                unit,
+                doNotPauseValue,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (!(AzureVmDiskDetails is ChangeTrackingList<SiteRecoveryVmDiskDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AzureVmDiskDetails))
             {
                 writer.WritePropertyName("azureVmDiskDetails"u8);
                 writer.WriteStartArray();
@@ -36,62 +37,62 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (RecoveryAzureVmName != null)
+            if (Optional.IsDefined(RecoveryAzureVmName))
             {
                 writer.WritePropertyName("recoveryAzureVmName"u8);
                 writer.WriteStringValue(RecoveryAzureVmName);
             }
-            if (RecoveryAzureVmSize != null)
+            if (Optional.IsDefined(RecoveryAzureVmSize))
             {
                 writer.WritePropertyName("recoveryAzureVMSize"u8);
                 writer.WriteStringValue(RecoveryAzureVmSize);
             }
-            if (RecoveryAzureStorageAccount != null)
+            if (Optional.IsDefined(RecoveryAzureStorageAccount))
             {
                 writer.WritePropertyName("recoveryAzureStorageAccount"u8);
                 writer.WriteStringValue(RecoveryAzureStorageAccount);
             }
-            if (RecoveryAzureLogStorageAccountId != null)
+            if (Optional.IsDefined(RecoveryAzureLogStorageAccountId))
             {
                 writer.WritePropertyName("recoveryAzureLogStorageAccountId"u8);
                 writer.WriteStringValue(RecoveryAzureLogStorageAccountId);
             }
-            if (LastReplicatedOn.HasValue)
+            if (Optional.IsDefined(LastReplicatedOn))
             {
                 writer.WritePropertyName("lastReplicatedTime"u8);
                 writer.WriteStringValue(LastReplicatedOn.Value, "O");
             }
-            if (RpoInSeconds.HasValue)
+            if (Optional.IsDefined(RpoInSeconds))
             {
                 writer.WritePropertyName("rpoInSeconds"u8);
                 writer.WriteNumberValue(RpoInSeconds.Value);
             }
-            if (LastRpoCalculatedOn.HasValue)
+            if (Optional.IsDefined(LastRpoCalculatedOn))
             {
                 writer.WritePropertyName("lastRpoCalculatedTime"u8);
                 writer.WriteStringValue(LastRpoCalculatedOn.Value, "O");
             }
-            if (VmId != null)
+            if (Optional.IsDefined(VmId))
             {
                 writer.WritePropertyName("vmId"u8);
                 writer.WriteStringValue(VmId);
             }
-            if (VmProtectionState != null)
+            if (Optional.IsDefined(VmProtectionState))
             {
                 writer.WritePropertyName("vmProtectionState"u8);
                 writer.WriteStringValue(VmProtectionState);
             }
-            if (VmProtectionStateDescription != null)
+            if (Optional.IsDefined(VmProtectionStateDescription))
             {
                 writer.WritePropertyName("vmProtectionStateDescription"u8);
                 writer.WriteStringValue(VmProtectionStateDescription);
             }
-            if (InitialReplicationDetails != null)
+            if (Optional.IsDefined(InitialReplicationDetails))
             {
                 writer.WritePropertyName("initialReplicationDetails"u8);
                 writer.WriteObjectValue(InitialReplicationDetails);
             }
-            if (!(VmNics is ChangeTrackingList<VmNicDetails> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(VmNics))
             {
                 writer.WritePropertyName("vmNics"u8);
                 writer.WriteStartArray();
@@ -101,82 +102,82 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (SelectedRecoveryAzureNetworkId != null)
+            if (Optional.IsDefined(SelectedRecoveryAzureNetworkId))
             {
                 writer.WritePropertyName("selectedRecoveryAzureNetworkId"u8);
                 writer.WriteStringValue(SelectedRecoveryAzureNetworkId);
             }
-            if (SelectedSourceNicId != null)
+            if (Optional.IsDefined(SelectedSourceNicId))
             {
                 writer.WritePropertyName("selectedSourceNicId"u8);
                 writer.WriteStringValue(SelectedSourceNicId);
             }
-            if (Encryption != null)
+            if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteStringValue(Encryption);
             }
-            if (OSDetails != null)
+            if (Optional.IsDefined(OSDetails))
             {
                 writer.WritePropertyName("oSDetails"u8);
                 writer.WriteObjectValue(OSDetails);
             }
-            if (SourceVmRamSizeInMB.HasValue)
+            if (Optional.IsDefined(SourceVmRamSizeInMB))
             {
                 writer.WritePropertyName("sourceVmRamSizeInMB"u8);
                 writer.WriteNumberValue(SourceVmRamSizeInMB.Value);
             }
-            if (SourceVmCpuCount.HasValue)
+            if (Optional.IsDefined(SourceVmCpuCount))
             {
                 writer.WritePropertyName("sourceVmCpuCount"u8);
                 writer.WriteNumberValue(SourceVmCpuCount.Value);
             }
-            if (EnableRdpOnTargetOption != null)
+            if (Optional.IsDefined(EnableRdpOnTargetOption))
             {
                 writer.WritePropertyName("enableRdpOnTargetOption"u8);
                 writer.WriteStringValue(EnableRdpOnTargetOption);
             }
-            if (RecoveryAzureResourceGroupId != null)
+            if (Optional.IsDefined(RecoveryAzureResourceGroupId))
             {
                 writer.WritePropertyName("recoveryAzureResourceGroupId"u8);
                 writer.WriteStringValue(RecoveryAzureResourceGroupId);
             }
-            if (RecoveryAvailabilitySetId != null)
+            if (Optional.IsDefined(RecoveryAvailabilitySetId))
             {
                 writer.WritePropertyName("recoveryAvailabilitySetId"u8);
                 writer.WriteStringValue(RecoveryAvailabilitySetId);
             }
-            if (TargetAvailabilityZone != null)
+            if (Optional.IsDefined(TargetAvailabilityZone))
             {
                 writer.WritePropertyName("targetAvailabilityZone"u8);
                 writer.WriteStringValue(TargetAvailabilityZone);
             }
-            if (TargetProximityPlacementGroupId != null)
+            if (Optional.IsDefined(TargetProximityPlacementGroupId))
             {
                 writer.WritePropertyName("targetProximityPlacementGroupId"u8);
                 writer.WriteStringValue(TargetProximityPlacementGroupId);
             }
-            if (UseManagedDisks != null)
+            if (Optional.IsDefined(UseManagedDisks))
             {
                 writer.WritePropertyName("useManagedDisks"u8);
                 writer.WriteStringValue(UseManagedDisks);
             }
-            if (LicenseType != null)
+            if (Optional.IsDefined(LicenseType))
             {
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType);
             }
-            if (SqlServerLicenseType != null)
+            if (Optional.IsDefined(SqlServerLicenseType))
             {
                 writer.WritePropertyName("sqlServerLicenseType"u8);
                 writer.WriteStringValue(SqlServerLicenseType);
             }
-            if (options.Format != "W" && LastRecoveryPointReceived.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastRecoveryPointReceived))
             {
                 writer.WritePropertyName("lastRecoveryPointReceived"u8);
                 writer.WriteStringValue(LastRecoveryPointReceived.Value, "O");
             }
-            if (!(TargetVmTags is ChangeTrackingDictionary<string, string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(TargetVmTags))
             {
                 writer.WritePropertyName("targetVmTags"u8);
                 writer.WriteStartObject();
@@ -187,7 +188,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(SeedManagedDiskTags is ChangeTrackingDictionary<string, string> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(SeedManagedDiskTags))
             {
                 writer.WritePropertyName("seedManagedDiskTags"u8);
                 writer.WriteStartObject();
@@ -198,7 +199,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(TargetManagedDiskTags is ChangeTrackingDictionary<string, string> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(TargetManagedDiskTags))
             {
                 writer.WritePropertyName("targetManagedDiskTags"u8);
                 writer.WriteStartObject();
@@ -209,7 +210,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(TargetNicTags is ChangeTrackingDictionary<string, string> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(TargetNicTags))
             {
                 writer.WritePropertyName("targetNicTags"u8);
                 writer.WriteStartObject();
@@ -220,7 +221,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(ProtectedManagedDisks is ChangeTrackingList<HyperVReplicaAzureManagedDiskDetails> collection5 && collection5.IsUndefined))
+            if (Optional.IsCollectionDefined(ProtectedManagedDisks))
             {
                 writer.WritePropertyName("protectedManagedDisks"u8);
                 writer.WriteStartArray();
@@ -230,7 +231,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(AllAvailableOSUpgradeConfigurations is ChangeTrackingList<OSUpgradeSupportedVersions> collection6 && collection6.IsUndefined))
+            if (Optional.IsCollectionDefined(AllAvailableOSUpgradeConfigurations))
             {
                 writer.WritePropertyName("allAvailableOSUpgradeConfigurations"u8);
                 writer.WriteStartArray();
@@ -281,33 +282,33 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             IReadOnlyList<SiteRecoveryVmDiskDetails> azureVmDiskDetails = default;
-            Optional<string> recoveryAzureVmName = default;
-            Optional<string> recoveryAzureVmSize = default;
-            Optional<string> recoveryAzureStorageAccount = default;
-            Optional<ResourceIdentifier> recoveryAzureLogStorageAccountId = default;
-            Optional<DateTimeOffset> lastReplicatedTime = default;
-            Optional<long> rpoInSeconds = default;
-            Optional<DateTimeOffset> lastRpoCalculatedTime = default;
-            Optional<string> vmId = default;
-            Optional<string> vmProtectionState = default;
-            Optional<string> vmProtectionStateDescription = default;
-            Optional<InitialReplicationDetails> initialReplicationDetails = default;
+            string recoveryAzureVmName = default;
+            string recoveryAzureVmSize = default;
+            string recoveryAzureStorageAccount = default;
+            ResourceIdentifier recoveryAzureLogStorageAccountId = default;
+            DateTimeOffset? lastReplicatedTime = default;
+            long? rpoInSeconds = default;
+            DateTimeOffset? lastRpoCalculatedTime = default;
+            string vmId = default;
+            string vmProtectionState = default;
+            string vmProtectionStateDescription = default;
+            InitialReplicationDetails initialReplicationDetails = default;
             IReadOnlyList<VmNicDetails> vmNics = default;
-            Optional<ResourceIdentifier> selectedRecoveryAzureNetworkId = default;
-            Optional<string> selectedSourceNicId = default;
-            Optional<string> encryption = default;
-            Optional<SiteRecoveryOSDetails> osDetails = default;
-            Optional<int> sourceVmRamSizeInMB = default;
-            Optional<int> sourceVmCpuCount = default;
-            Optional<string> enableRdpOnTargetOption = default;
-            Optional<ResourceIdentifier> recoveryAzureResourceGroupId = default;
-            Optional<ResourceIdentifier> recoveryAvailabilitySetId = default;
-            Optional<string> targetAvailabilityZone = default;
-            Optional<ResourceIdentifier> targetProximityPlacementGroupId = default;
-            Optional<string> useManagedDisks = default;
-            Optional<string> licenseType = default;
-            Optional<string> sqlServerLicenseType = default;
-            Optional<DateTimeOffset> lastRecoveryPointReceived = default;
+            ResourceIdentifier selectedRecoveryAzureNetworkId = default;
+            string selectedSourceNicId = default;
+            string encryption = default;
+            SiteRecoveryOSDetails osDetails = default;
+            int? sourceVmRamSizeInMB = default;
+            int? sourceVmCpuCount = default;
+            string enableRdpOnTargetOption = default;
+            ResourceIdentifier recoveryAzureResourceGroupId = default;
+            ResourceIdentifier recoveryAvailabilitySetId = default;
+            string targetAvailabilityZone = default;
+            ResourceIdentifier targetProximityPlacementGroupId = default;
+            string useManagedDisks = default;
+            string licenseType = default;
+            string sqlServerLicenseType = default;
+            DateTimeOffset? lastRecoveryPointReceived = default;
             IReadOnlyDictionary<string, string> targetVmTags = default;
             IReadOnlyDictionary<string, string> seedManagedDiskTags = default;
             IReadOnlyDictionary<string, string> targetManagedDiskTags = default;
@@ -628,33 +629,33 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 instanceType,
                 serializedAdditionalRawData,
                 azureVmDiskDetails ?? new ChangeTrackingList<SiteRecoveryVmDiskDetails>(),
-                recoveryAzureVmName.Value,
-                recoveryAzureVmSize.Value,
-                recoveryAzureStorageAccount.Value,
-                recoveryAzureLogStorageAccountId.Value,
-                Optional.ToNullable(lastReplicatedTime),
-                Optional.ToNullable(rpoInSeconds),
-                Optional.ToNullable(lastRpoCalculatedTime),
-                vmId.Value,
-                vmProtectionState.Value,
-                vmProtectionStateDescription.Value,
-                initialReplicationDetails.Value,
+                recoveryAzureVmName,
+                recoveryAzureVmSize,
+                recoveryAzureStorageAccount,
+                recoveryAzureLogStorageAccountId,
+                lastReplicatedTime,
+                rpoInSeconds,
+                lastRpoCalculatedTime,
+                vmId,
+                vmProtectionState,
+                vmProtectionStateDescription,
+                initialReplicationDetails,
                 vmNics ?? new ChangeTrackingList<VmNicDetails>(),
-                selectedRecoveryAzureNetworkId.Value,
-                selectedSourceNicId.Value,
-                encryption.Value,
-                osDetails.Value,
-                Optional.ToNullable(sourceVmRamSizeInMB),
-                Optional.ToNullable(sourceVmCpuCount),
-                enableRdpOnTargetOption.Value,
-                recoveryAzureResourceGroupId.Value,
-                recoveryAvailabilitySetId.Value,
-                targetAvailabilityZone.Value,
-                targetProximityPlacementGroupId.Value,
-                useManagedDisks.Value,
-                licenseType.Value,
-                sqlServerLicenseType.Value,
-                Optional.ToNullable(lastRecoveryPointReceived),
+                selectedRecoveryAzureNetworkId,
+                selectedSourceNicId,
+                encryption,
+                osDetails,
+                sourceVmRamSizeInMB,
+                sourceVmCpuCount,
+                enableRdpOnTargetOption,
+                recoveryAzureResourceGroupId,
+                recoveryAvailabilitySetId,
+                targetAvailabilityZone,
+                targetProximityPlacementGroupId,
+                useManagedDisks,
+                licenseType,
+                sqlServerLicenseType,
+                lastRecoveryPointReceived,
                 targetVmTags ?? new ChangeTrackingDictionary<string, string>(),
                 seedManagedDiskTags ?? new ChangeTrackingDictionary<string, string>(),
                 targetManagedDiskTags ?? new ChangeTrackingDictionary<string, string>(),

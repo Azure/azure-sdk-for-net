@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (MinimumSeverityLevel != null)
+            if (Optional.IsDefined(MinimumSeverityLevel))
             {
                 writer.WritePropertyName("minimumSeverityLevel"u8);
                 writer.WriteStringValue(MinimumSeverityLevel);
             }
-            if (Category.HasValue)
+            if (Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category.Value.ToString());
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> minimumSeverityLevel = default;
-            Optional<RuleCategory> category = default;
+            string minimumSeverityLevel = default;
+            RuleCategory? category = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CategoryConfiguration(minimumSeverityLevel.Value, Optional.ToNullable(category), serializedAdditionalRawData);
+            return new CategoryConfiguration(minimumSeverityLevel, category, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CategoryConfiguration>.Write(ModelReaderWriterOptions options)

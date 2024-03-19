@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.Synapse
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ColumnType.HasValue)
+            if (Optional.IsDefined(ColumnType))
             {
                 writer.WritePropertyName("columnType"u8);
                 writer.WriteStringValue(ColumnType.Value.ToString());
             }
-            if (options.Format != "W" && IsComputed.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsComputed))
             {
                 writer.WritePropertyName("isComputed"u8);
                 writer.WriteBooleanValue(IsComputed.Value);
@@ -102,9 +102,9 @@ namespace Azure.ResourceManager.Synapse
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SqlPoolColumnDataType> columnType = default;
-            Optional<bool> isComputed = default;
+            SystemData systemData = default;
+            SqlPoolColumnDataType? columnType = default;
+            bool? isComputed = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -173,9 +173,9 @@ namespace Azure.ResourceManager.Synapse
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(columnType),
-                Optional.ToNullable(isComputed),
+                systemData,
+                columnType,
+                isComputed,
                 serializedAdditionalRawData);
         }
 

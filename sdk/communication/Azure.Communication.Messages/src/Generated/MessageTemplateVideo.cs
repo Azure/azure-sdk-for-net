@@ -14,26 +14,20 @@ namespace Azure.Communication.Messages
     public partial class MessageTemplateVideo : MessageTemplateValue
     {
         /// <summary> Initializes a new instance of <see cref="MessageTemplateVideo"/>. </summary>
-        /// <param name="name"> Name of the Template value. </param>
+        /// <param name="name"> Template binding reference name. </param>
         /// <param name="uri"> The (public) URL of the media. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="uri"/> is null. </exception>
         public MessageTemplateVideo(string name, Uri uri) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (uri == null)
-            {
-                throw new ArgumentNullException(nameof(uri));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(uri, nameof(uri));
 
             Kind = "video";
             Uri = uri;
         }
 
         /// <summary> Initializes a new instance of <see cref="MessageTemplateVideo"/>. </summary>
-        /// <param name="name"> Name of the Template value. </param>
+        /// <param name="name"> Template binding reference name. </param>
         /// <param name="kind"> The type discriminator describing a template parameter type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="uri"> The (public) URL of the media. </param>

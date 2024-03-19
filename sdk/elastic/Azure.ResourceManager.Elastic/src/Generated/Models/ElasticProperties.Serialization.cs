@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Elastic;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Elastic.Models
             }
 
             writer.WriteStartObject();
-            if (ElasticCloudUser != null)
+            if (Optional.IsDefined(ElasticCloudUser))
             {
                 writer.WritePropertyName("elasticCloudUser"u8);
                 writer.WriteObjectValue(ElasticCloudUser);
             }
-            if (ElasticCloudDeployment != null)
+            if (Optional.IsDefined(ElasticCloudDeployment))
             {
                 writer.WritePropertyName("elasticCloudDeployment"u8);
                 writer.WriteObjectValue(ElasticCloudDeployment);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 return null;
             }
-            Optional<ElasticCloudUser> elasticCloudUser = default;
-            Optional<ElasticCloudDeployment> elasticCloudDeployment = default;
+            ElasticCloudUser elasticCloudUser = default;
+            ElasticCloudDeployment elasticCloudDeployment = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Elastic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticProperties(elasticCloudUser.Value, elasticCloudDeployment.Value, serializedAdditionalRawData);
+            return new ElasticProperties(elasticCloudUser, elasticCloudDeployment, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticProperties>.Write(ModelReaderWriterOptions options)

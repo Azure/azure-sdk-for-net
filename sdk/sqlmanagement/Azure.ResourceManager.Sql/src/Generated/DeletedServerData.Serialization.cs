@@ -42,29 +42,29 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Version != null)
+            if (options.Format != "W" && Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (options.Format != "W" && DeletedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DeletedOn))
             {
                 writer.WritePropertyName("deletionTime"u8);
                 writer.WriteStringValue(DeletedOn.Value, "O");
             }
-            if (options.Format != "W" && OriginalId != null)
+            if (options.Format != "W" && Optional.IsDefined(OriginalId))
             {
                 writer.WritePropertyName("originalId"u8);
                 writer.WriteStringValue(OriginalId);
             }
-            if (options.Format != "W" && FullyQualifiedDomainName != null)
+            if (options.Format != "W" && Optional.IsDefined(FullyQualifiedDomainName))
             {
                 writer.WritePropertyName("fullyQualifiedDomainName"u8);
                 writer.WriteStringValue(FullyQualifiedDomainName);
@@ -111,11 +111,11 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> version = default;
-            Optional<DateTimeOffset> deletionTime = default;
-            Optional<ResourceIdentifier> originalId = default;
-            Optional<string> fullyQualifiedDomainName = default;
+            SystemData systemData = default;
+            string version = default;
+            DateTimeOffset? deletionTime = default;
+            ResourceIdentifier originalId = default;
+            string fullyQualifiedDomainName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -194,11 +194,11 @@ namespace Azure.ResourceManager.Sql
                 id,
                 name,
                 type,
-                systemData.Value,
-                version.Value,
-                Optional.ToNullable(deletionTime),
-                originalId.Value,
-                fullyQualifiedDomainName.Value,
+                systemData,
+                version,
+                deletionTime,
+                originalId,
+                fullyQualifiedDomainName,
                 serializedAdditionalRawData);
         }
 

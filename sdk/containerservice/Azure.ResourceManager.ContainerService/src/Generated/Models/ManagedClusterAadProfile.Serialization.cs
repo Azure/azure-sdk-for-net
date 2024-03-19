@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (IsManagedAadEnabled.HasValue)
+            if (Optional.IsDefined(IsManagedAadEnabled))
             {
                 writer.WritePropertyName("managed"u8);
                 writer.WriteBooleanValue(IsManagedAadEnabled.Value);
             }
-            if (IsAzureRbacEnabled.HasValue)
+            if (Optional.IsDefined(IsAzureRbacEnabled))
             {
                 writer.WritePropertyName("enableAzureRBAC"u8);
                 writer.WriteBooleanValue(IsAzureRbacEnabled.Value);
             }
-            if (!(AdminGroupObjectIds is ChangeTrackingList<Guid> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AdminGroupObjectIds))
             {
                 writer.WritePropertyName("adminGroupObjectIDs"u8);
                 writer.WriteStartArray();
@@ -46,22 +47,22 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ClientAppId.HasValue)
+            if (Optional.IsDefined(ClientAppId))
             {
                 writer.WritePropertyName("clientAppID"u8);
                 writer.WriteStringValue(ClientAppId.Value);
             }
-            if (ServerAppId.HasValue)
+            if (Optional.IsDefined(ServerAppId))
             {
                 writer.WritePropertyName("serverAppID"u8);
                 writer.WriteStringValue(ServerAppId.Value);
             }
-            if (ServerAppSecret != null)
+            if (Optional.IsDefined(ServerAppSecret))
             {
                 writer.WritePropertyName("serverAppSecret"u8);
                 writer.WriteStringValue(ServerAppSecret);
             }
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantID"u8);
                 writer.WriteStringValue(TenantId.Value);
@@ -104,13 +105,13 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<bool> managed = default;
-            Optional<bool> enableAzureRBAC = default;
+            bool? managed = default;
+            bool? enableAzureRBAC = default;
             IList<Guid> adminGroupObjectIds = default;
-            Optional<Guid> clientAppId = default;
-            Optional<Guid> serverAppId = default;
-            Optional<string> serverAppSecret = default;
-            Optional<Guid> tenantId = default;
+            Guid? clientAppId = default;
+            Guid? serverAppId = default;
+            string serverAppSecret = default;
+            Guid? tenantId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -186,13 +187,13 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ManagedClusterAadProfile(
-                Optional.ToNullable(managed),
-                Optional.ToNullable(enableAzureRBAC),
+                managed,
+                enableAzureRBAC,
                 adminGroupObjectIds ?? new ChangeTrackingList<Guid>(),
-                Optional.ToNullable(clientAppId),
-                Optional.ToNullable(serverAppId),
-                serverAppSecret.Value,
-                Optional.ToNullable(tenantId),
+                clientAppId,
+                serverAppId,
+                serverAppSecret,
+                tenantId,
                 serializedAdditionalRawData);
         }
 

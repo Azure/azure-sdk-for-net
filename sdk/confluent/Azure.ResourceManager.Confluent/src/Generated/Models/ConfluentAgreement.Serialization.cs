@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Confluent;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Confluent.Models
@@ -42,49 +43,49 @@ namespace Azure.ResourceManager.Confluent.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Publisher != null)
+            if (Optional.IsDefined(Publisher))
             {
                 writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
             }
-            if (Product != null)
+            if (Optional.IsDefined(Product))
             {
                 writer.WritePropertyName("product"u8);
                 writer.WriteStringValue(Product);
             }
-            if (Plan != null)
+            if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
                 writer.WriteStringValue(Plan);
             }
-            if (LicenseTextLink != null)
+            if (Optional.IsDefined(LicenseTextLink))
             {
                 writer.WritePropertyName("licenseTextLink"u8);
                 writer.WriteStringValue(LicenseTextLink);
             }
-            if (PrivacyPolicyLink != null)
+            if (Optional.IsDefined(PrivacyPolicyLink))
             {
                 writer.WritePropertyName("privacyPolicyLink"u8);
                 writer.WriteStringValue(PrivacyPolicyLink);
             }
-            if (RetrieveOn.HasValue)
+            if (Optional.IsDefined(RetrieveOn))
             {
                 writer.WritePropertyName("retrieveDatetime"u8);
                 writer.WriteStringValue(RetrieveOn.Value, "O");
             }
-            if (Signature != null)
+            if (Optional.IsDefined(Signature))
             {
                 writer.WritePropertyName("signature"u8);
                 writer.WriteStringValue(Signature);
             }
-            if (IsAccepted.HasValue)
+            if (Optional.IsDefined(IsAccepted))
             {
                 writer.WritePropertyName("accepted"u8);
                 writer.WriteBooleanValue(IsAccepted.Value);
@@ -131,15 +132,15 @@ namespace Azure.ResourceManager.Confluent.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> publisher = default;
-            Optional<string> product = default;
-            Optional<string> plan = default;
-            Optional<string> licenseTextLink = default;
-            Optional<string> privacyPolicyLink = default;
-            Optional<DateTimeOffset> retrieveDatetime = default;
-            Optional<string> signature = default;
-            Optional<bool> accepted = default;
+            SystemData systemData = default;
+            string publisher = default;
+            string product = default;
+            string plan = default;
+            string licenseTextLink = default;
+            string privacyPolicyLink = default;
+            DateTimeOffset? retrieveDatetime = default;
+            string signature = default;
+            bool? accepted = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -238,15 +239,15 @@ namespace Azure.ResourceManager.Confluent.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                publisher.Value,
-                product.Value,
-                plan.Value,
-                licenseTextLink.Value,
-                privacyPolicyLink.Value,
-                Optional.ToNullable(retrieveDatetime),
-                signature.Value,
-                Optional.ToNullable(accepted),
+                systemData,
+                publisher,
+                product,
+                plan,
+                licenseTextLink,
+                privacyPolicyLink,
+                retrieveDatetime,
+                signature,
+                accepted,
                 serializedAdditionalRawData);
         }
 

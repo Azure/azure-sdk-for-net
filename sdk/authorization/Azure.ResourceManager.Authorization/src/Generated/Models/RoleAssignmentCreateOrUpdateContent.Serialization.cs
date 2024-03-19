@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Authorization.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Scope != null)
+            if (options.Format != "W" && Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
@@ -37,47 +38,47 @@ namespace Azure.ResourceManager.Authorization.Models
             writer.WriteStringValue(RoleDefinitionId);
             writer.WritePropertyName("principalId"u8);
             writer.WriteStringValue(PrincipalId);
-            if (PrincipalType.HasValue)
+            if (Optional.IsDefined(PrincipalType))
             {
                 writer.WritePropertyName("principalType"u8);
                 writer.WriteStringValue(PrincipalType.Value.ToString());
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Condition != null)
+            if (Optional.IsDefined(Condition))
             {
                 writer.WritePropertyName("condition"u8);
                 writer.WriteStringValue(Condition);
             }
-            if (ConditionVersion != null)
+            if (Optional.IsDefined(ConditionVersion))
             {
                 writer.WritePropertyName("conditionVersion"u8);
                 writer.WriteStringValue(ConditionVersion);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdOn"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && UpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updatedOn"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && CreatedBy != null)
+            if (options.Format != "W" && Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("createdBy"u8);
                 writer.WriteStringValue(CreatedBy);
             }
-            if (options.Format != "W" && UpdatedBy != null)
+            if (options.Format != "W" && Optional.IsDefined(UpdatedBy))
             {
                 writer.WritePropertyName("updatedBy"u8);
                 writer.WriteStringValue(UpdatedBy);
             }
-            if (DelegatedManagedIdentityResourceId != null)
+            if (Optional.IsDefined(DelegatedManagedIdentityResourceId))
             {
                 if (DelegatedManagedIdentityResourceId != null)
                 {
@@ -128,18 +129,18 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            Optional<string> scope = default;
+            string scope = default;
             ResourceIdentifier roleDefinitionId = default;
             Guid principalId = default;
-            Optional<RoleManagementPrincipalType> principalType = default;
-            Optional<string> description = default;
-            Optional<string> condition = default;
-            Optional<string> conditionVersion = default;
-            Optional<DateTimeOffset> createdOn = default;
-            Optional<DateTimeOffset> updatedOn = default;
-            Optional<string> createdBy = default;
-            Optional<string> updatedBy = default;
-            Optional<ResourceIdentifier> delegatedManagedIdentityResourceId = default;
+            RoleManagementPrincipalType? principalType = default;
+            string description = default;
+            string condition = default;
+            string conditionVersion = default;
+            DateTimeOffset? createdOn = default;
+            DateTimeOffset? updatedOn = default;
+            string createdBy = default;
+            string updatedBy = default;
+            ResourceIdentifier delegatedManagedIdentityResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -240,18 +241,18 @@ namespace Azure.ResourceManager.Authorization.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new RoleAssignmentCreateOrUpdateContent(
-                scope.Value,
+                scope,
                 roleDefinitionId,
                 principalId,
-                Optional.ToNullable(principalType),
-                description.Value,
-                condition.Value,
-                conditionVersion.Value,
-                Optional.ToNullable(createdOn),
-                Optional.ToNullable(updatedOn),
-                createdBy.Value,
-                updatedBy.Value,
-                delegatedManagedIdentityResourceId.Value,
+                principalType,
+                description,
+                condition,
+                conditionVersion,
+                createdOn,
+                updatedOn,
+                createdBy,
+                updatedBy,
+                delegatedManagedIdentityResourceId,
                 serializedAdditionalRawData);
         }
 

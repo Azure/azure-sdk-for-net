@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataLakeStore;
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             }
 
             writer.WriteStartObject();
-            if (EncryptionKeyVersion != null)
+            if (Optional.IsDefined(EncryptionKeyVersion))
             {
                 writer.WritePropertyName("encryptionKeyVersion"u8);
                 writer.WriteStringValue(EncryptionKeyVersion);
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             {
                 return null;
             }
-            Optional<string> encryptionKeyVersion = default;
+            string encryptionKeyVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UpdateKeyVaultMetaInfo(encryptionKeyVersion.Value, serializedAdditionalRawData);
+            return new UpdateKeyVaultMetaInfo(encryptionKeyVersion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UpdateKeyVaultMetaInfo>.Write(ModelReaderWriterOptions options)

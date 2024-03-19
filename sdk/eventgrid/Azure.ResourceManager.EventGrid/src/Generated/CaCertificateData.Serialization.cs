@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (EncodedCertificate != null)
+            if (Optional.IsDefined(EncodedCertificate))
             {
                 writer.WritePropertyName("encodedCertificate"u8);
                 writer.WriteStringValue(EncodedCertificate);
             }
-            if (options.Format != "W" && IssueTimeInUtc.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IssueTimeInUtc))
             {
                 writer.WritePropertyName("issueTimeInUtc"u8);
                 writer.WriteStringValue(IssueTimeInUtc.Value, "O");
             }
-            if (options.Format != "W" && ExpiryTimeInUtc.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExpiryTimeInUtc))
             {
                 writer.WritePropertyName("expiryTimeInUtc"u8);
                 writer.WriteStringValue(ExpiryTimeInUtc.Value, "O");
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -117,12 +117,12 @@ namespace Azure.ResourceManager.EventGrid
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<string> encodedCertificate = default;
-            Optional<DateTimeOffset> issueTimeInUtc = default;
-            Optional<DateTimeOffset> expiryTimeInUtc = default;
-            Optional<CaCertificateProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            string description = default;
+            string encodedCertificate = default;
+            DateTimeOffset? issueTimeInUtc = default;
+            DateTimeOffset? expiryTimeInUtc = default;
+            CaCertificateProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -210,12 +210,12 @@ namespace Azure.ResourceManager.EventGrid
                 id,
                 name,
                 type,
-                systemData.Value,
-                description.Value,
-                encodedCertificate.Value,
-                Optional.ToNullable(issueTimeInUtc),
-                Optional.ToNullable(expiryTimeInUtc),
-                Optional.ToNullable(provisioningState),
+                systemData,
+                description,
+                encodedCertificate,
+                issueTimeInUtc,
+                expiryTimeInUtc,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             writer.WriteStartObject();
             writer.WritePropertyName("image"u8);
             writer.WriteStringValue(Image);
-            if (!(Command is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Command))
             {
                 writer.WritePropertyName("command"u8);
                 writer.WriteStartArray();
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Ports is ChangeTrackingList<ContainerPort> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Ports))
             {
                 writer.WritePropertyName("ports"u8);
                 writer.WriteStartArray();
@@ -52,7 +53,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(EnvironmentVariables is ChangeTrackingList<ContainerEnvironmentVariable> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(EnvironmentVariables))
             {
                 writer.WritePropertyName("environmentVariables"u8);
                 writer.WriteStartArray();
@@ -62,14 +63,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && InstanceView != null)
+            if (options.Format != "W" && Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
                 writer.WriteObjectValue(InstanceView);
             }
             writer.WritePropertyName("resources"u8);
             writer.WriteObjectValue(Resources);
-            if (!(VolumeMounts is ChangeTrackingList<ContainerVolumeMount> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(VolumeMounts))
             {
                 writer.WritePropertyName("volumeMounts"u8);
                 writer.WriteStartArray();
@@ -79,17 +80,17 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
                 writer.WriteEndArray();
             }
-            if (LivenessProbe != null)
+            if (Optional.IsDefined(LivenessProbe))
             {
                 writer.WritePropertyName("livenessProbe"u8);
                 writer.WriteObjectValue(LivenessProbe);
             }
-            if (ReadinessProbe != null)
+            if (Optional.IsDefined(ReadinessProbe))
             {
                 writer.WritePropertyName("readinessProbe"u8);
                 writer.WriteObjectValue(ReadinessProbe);
             }
-            if (SecurityContext != null)
+            if (Optional.IsDefined(SecurityContext))
             {
                 writer.WritePropertyName("securityContext"u8);
                 writer.WriteObjectValue(SecurityContext);
@@ -138,12 +139,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             IList<string> command = default;
             IList<ContainerPort> ports = default;
             IList<ContainerEnvironmentVariable> environmentVariables = default;
-            Optional<ContainerInstanceView> instanceView = default;
+            ContainerInstanceView instanceView = default;
             ContainerResourceRequirements resources = default;
             IList<ContainerVolumeMount> volumeMounts = default;
-            Optional<ContainerProbe> livenessProbe = default;
-            Optional<ContainerProbe> readinessProbe = default;
-            Optional<ContainerSecurityContextDefinition> securityContext = default;
+            ContainerProbe livenessProbe = default;
+            ContainerProbe readinessProbe = default;
+            ContainerSecurityContextDefinition securityContext = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -279,12 +280,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 command ?? new ChangeTrackingList<string>(),
                 ports ?? new ChangeTrackingList<ContainerPort>(),
                 environmentVariables ?? new ChangeTrackingList<ContainerEnvironmentVariable>(),
-                instanceView.Value,
+                instanceView,
                 resources,
                 volumeMounts ?? new ChangeTrackingList<ContainerVolumeMount>(),
-                livenessProbe.Value,
-                readinessProbe.Value,
-                securityContext.Value,
+                livenessProbe,
+                readinessProbe,
+                securityContext,
                 serializedAdditionalRawData);
         }
 

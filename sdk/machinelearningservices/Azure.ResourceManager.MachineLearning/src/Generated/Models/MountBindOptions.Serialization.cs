@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Propagation != null)
+            if (Optional.IsDefined(Propagation))
             {
                 if (Propagation != null)
                 {
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("propagation");
                 }
             }
-            if (DoesCreateHostPath.HasValue)
+            if (Optional.IsDefined(DoesCreateHostPath))
             {
                 if (DoesCreateHostPath != null)
                 {
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("createHostPath");
                 }
             }
-            if (Selinux != null)
+            if (Optional.IsDefined(Selinux))
             {
                 if (Selinux != null)
                 {
@@ -100,9 +101,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> propagation = default;
-            Optional<bool?> createHostPath = default;
-            Optional<string> selinux = default;
+            string propagation = default;
+            bool? createHostPath = default;
+            string selinux = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -143,7 +144,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MountBindOptions(propagation.Value, Optional.ToNullable(createHostPath), selinux.Value, serializedAdditionalRawData);
+            return new MountBindOptions(propagation, createHostPath, selinux, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MountBindOptions>.Write(ModelReaderWriterOptions options)

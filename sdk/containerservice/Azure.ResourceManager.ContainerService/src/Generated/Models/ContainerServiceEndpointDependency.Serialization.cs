@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (DomainName != null)
+            if (Optional.IsDefined(DomainName))
             {
                 writer.WritePropertyName("domainName"u8);
                 writer.WriteStringValue(DomainName);
             }
-            if (!(EndpointDetails is ChangeTrackingList<ContainerServiceEndpointDetail> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(EndpointDetails))
             {
                 writer.WritePropertyName("endpointDetails"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<string> domainName = default;
+            string domainName = default;
             IReadOnlyList<ContainerServiceEndpointDetail> endpointDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServiceEndpointDependency(domainName.Value, endpointDetails ?? new ChangeTrackingList<ContainerServiceEndpointDetail>(), serializedAdditionalRawData);
+            return new ContainerServiceEndpointDependency(domainName, endpointDetails ?? new ChangeTrackingList<ContainerServiceEndpointDetail>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServiceEndpointDependency>.Write(ModelReaderWriterOptions options)

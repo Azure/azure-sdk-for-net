@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ResourceMover;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (PrivateIPAddressStringValue != null)
+            if (Optional.IsDefined(PrivateIPAddressStringValue))
             {
                 writer.WritePropertyName("privateIpAddress"u8);
                 writer.WriteStringValue(PrivateIPAddressStringValue);
             }
-            if (PrivateIPAllocationMethod != null)
+            if (Optional.IsDefined(PrivateIPAllocationMethod))
             {
                 writer.WritePropertyName("privateIpAllocationMethod"u8);
                 writer.WriteStringValue(PrivateIPAllocationMethod);
             }
-            if (Subnet != null)
+            if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
                 writer.WriteObjectValue(Subnet);
             }
-            if (Zones != null)
+            if (Optional.IsDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStringValue(Zones);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> privateIPAddress = default;
-            Optional<string> privateIPAllocationMethod = default;
-            Optional<SubnetReferenceInfo> subnet = default;
-            Optional<string> zones = default;
+            string name = default;
+            string privateIPAddress = default;
+            string privateIPAllocationMethod = default;
+            SubnetReferenceInfo subnet = default;
+            string zones = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,11 +135,11 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new LoadBalancerFrontendIPConfigurationResourceSettings(
-                name.Value,
-                privateIPAddress.Value,
-                privateIPAllocationMethod.Value,
-                subnet.Value,
-                zones.Value,
+                name,
+                privateIPAddress,
+                privateIPAllocationMethod,
+                subnet,
+                zones,
                 serializedAdditionalRawData);
         }
 

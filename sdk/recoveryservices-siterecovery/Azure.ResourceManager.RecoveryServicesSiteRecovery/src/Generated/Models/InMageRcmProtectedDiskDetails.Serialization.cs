@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,77 +27,77 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && DiskId != null)
+            if (options.Format != "W" && Optional.IsDefined(DiskId))
             {
                 writer.WritePropertyName("diskId"u8);
                 writer.WriteStringValue(DiskId);
             }
-            if (options.Format != "W" && DiskName != null)
+            if (options.Format != "W" && Optional.IsDefined(DiskName))
             {
                 writer.WritePropertyName("diskName"u8);
                 writer.WriteStringValue(DiskName);
             }
-            if (options.Format != "W" && IsOSDisk != null)
+            if (options.Format != "W" && Optional.IsDefined(IsOSDisk))
             {
                 writer.WritePropertyName("isOSDisk"u8);
                 writer.WriteStringValue(IsOSDisk);
             }
-            if (options.Format != "W" && CapacityInBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CapacityInBytes))
             {
                 writer.WritePropertyName("capacityInBytes"u8);
                 writer.WriteNumberValue(CapacityInBytes.Value);
             }
-            if (options.Format != "W" && LogStorageAccountId != null)
+            if (options.Format != "W" && Optional.IsDefined(LogStorageAccountId))
             {
                 writer.WritePropertyName("logStorageAccountId"u8);
                 writer.WriteStringValue(LogStorageAccountId);
             }
-            if (options.Format != "W" && DiskEncryptionSetId != null)
+            if (options.Format != "W" && Optional.IsDefined(DiskEncryptionSetId))
             {
                 writer.WritePropertyName("diskEncryptionSetId"u8);
                 writer.WriteStringValue(DiskEncryptionSetId);
             }
-            if (options.Format != "W" && SeedManagedDiskId != null)
+            if (options.Format != "W" && Optional.IsDefined(SeedManagedDiskId))
             {
                 writer.WritePropertyName("seedManagedDiskId"u8);
                 writer.WriteStringValue(SeedManagedDiskId);
             }
-            if (options.Format != "W" && SeedBlobUri != null)
+            if (options.Format != "W" && Optional.IsDefined(SeedBlobUri))
             {
                 writer.WritePropertyName("seedBlobUri"u8);
                 writer.WriteStringValue(SeedBlobUri.AbsoluteUri);
             }
-            if (options.Format != "W" && TargetManagedDiskId != null)
+            if (options.Format != "W" && Optional.IsDefined(TargetManagedDiskId))
             {
                 writer.WritePropertyName("targetManagedDiskId"u8);
                 writer.WriteStringValue(TargetManagedDiskId);
             }
-            if (DiskType.HasValue)
+            if (Optional.IsDefined(DiskType))
             {
                 writer.WritePropertyName("diskType"u8);
                 writer.WriteStringValue(DiskType.Value.ToString());
             }
-            if (options.Format != "W" && DataPendingInLogDataStoreInMB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DataPendingInLogDataStoreInMB))
             {
                 writer.WritePropertyName("dataPendingInLogDataStoreInMB"u8);
                 writer.WriteNumberValue(DataPendingInLogDataStoreInMB.Value);
             }
-            if (options.Format != "W" && DataPendingAtSourceAgentInMB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DataPendingAtSourceAgentInMB))
             {
                 writer.WritePropertyName("dataPendingAtSourceAgentInMB"u8);
                 writer.WriteNumberValue(DataPendingAtSourceAgentInMB.Value);
             }
-            if (options.Format != "W" && IsInitialReplicationComplete != null)
+            if (options.Format != "W" && Optional.IsDefined(IsInitialReplicationComplete))
             {
                 writer.WritePropertyName("isInitialReplicationComplete"u8);
                 writer.WriteStringValue(IsInitialReplicationComplete);
             }
-            if (IrDetails != null)
+            if (Optional.IsDefined(IrDetails))
             {
                 writer.WritePropertyName("irDetails"u8);
                 writer.WriteObjectValue(IrDetails);
             }
-            if (ResyncDetails != null)
+            if (Optional.IsDefined(ResyncDetails))
             {
                 writer.WritePropertyName("resyncDetails"u8);
                 writer.WriteObjectValue(ResyncDetails);
@@ -139,21 +140,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> diskId = default;
-            Optional<string> diskName = default;
-            Optional<string> isOSDisk = default;
-            Optional<long> capacityInBytes = default;
-            Optional<ResourceIdentifier> logStorageAccountId = default;
-            Optional<ResourceIdentifier> diskEncryptionSetId = default;
-            Optional<string> seedManagedDiskId = default;
-            Optional<Uri> seedBlobUri = default;
-            Optional<string> targetManagedDiskId = default;
-            Optional<SiteRecoveryDiskAccountType> diskType = default;
-            Optional<double> dataPendingInLogDataStoreInMB = default;
-            Optional<double> dataPendingAtSourceAgentInMB = default;
-            Optional<string> isInitialReplicationComplete = default;
-            Optional<InMageRcmSyncDetails> irDetails = default;
-            Optional<InMageRcmSyncDetails> resyncDetails = default;
+            string diskId = default;
+            string diskName = default;
+            string isOSDisk = default;
+            long? capacityInBytes = default;
+            ResourceIdentifier logStorageAccountId = default;
+            ResourceIdentifier diskEncryptionSetId = default;
+            string seedManagedDiskId = default;
+            Uri seedBlobUri = default;
+            string targetManagedDiskId = default;
+            SiteRecoveryDiskAccountType? diskType = default;
+            double? dataPendingInLogDataStoreInMB = default;
+            double? dataPendingAtSourceAgentInMB = default;
+            string isInitialReplicationComplete = default;
+            InMageRcmSyncDetails irDetails = default;
+            InMageRcmSyncDetails resyncDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -276,21 +277,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new InMageRcmProtectedDiskDetails(
-                diskId.Value,
-                diskName.Value,
-                isOSDisk.Value,
-                Optional.ToNullable(capacityInBytes),
-                logStorageAccountId.Value,
-                diskEncryptionSetId.Value,
-                seedManagedDiskId.Value,
-                seedBlobUri.Value,
-                targetManagedDiskId.Value,
-                Optional.ToNullable(diskType),
-                Optional.ToNullable(dataPendingInLogDataStoreInMB),
-                Optional.ToNullable(dataPendingAtSourceAgentInMB),
-                isInitialReplicationComplete.Value,
-                irDetails.Value,
-                resyncDetails.Value,
+                diskId,
+                diskName,
+                isOSDisk,
+                capacityInBytes,
+                logStorageAccountId,
+                diskEncryptionSetId,
+                seedManagedDiskId,
+                seedBlobUri,
+                targetManagedDiskId,
+                diskType,
+                dataPendingInLogDataStoreInMB,
+                dataPendingAtSourceAgentInMB,
+                isInitialReplicationComplete,
+                irDetails,
+                resyncDetails,
                 serializedAdditionalRawData);
         }
 

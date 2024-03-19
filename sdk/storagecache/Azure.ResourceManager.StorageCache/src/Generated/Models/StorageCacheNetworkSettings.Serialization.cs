@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -27,12 +28,12 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
 
             writer.WriteStartObject();
-            if (Mtu.HasValue)
+            if (Optional.IsDefined(Mtu))
             {
                 writer.WritePropertyName("mtu"u8);
                 writer.WriteNumberValue(Mtu.Value);
             }
-            if (options.Format != "W" && !(UtilityAddresses is ChangeTrackingList<IPAddress> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(UtilityAddresses))
             {
                 writer.WritePropertyName("utilityAddresses"u8);
                 writer.WriteStartArray();
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(DnsServers is ChangeTrackingList<IPAddress> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(DnsServers))
             {
                 writer.WritePropertyName("dnsServers"u8);
                 writer.WriteStartArray();
@@ -62,12 +63,12 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
                 writer.WriteEndArray();
             }
-            if (DnsSearchDomain != null)
+            if (Optional.IsDefined(DnsSearchDomain))
             {
                 writer.WritePropertyName("dnsSearchDomain"u8);
                 writer.WriteStringValue(DnsSearchDomain);
             }
-            if (NtpServer != null)
+            if (Optional.IsDefined(NtpServer))
             {
                 writer.WritePropertyName("ntpServer"u8);
                 writer.WriteStringValue(NtpServer);
@@ -110,11 +111,11 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<int> mtu = default;
+            int? mtu = default;
             IReadOnlyList<IPAddress> utilityAddresses = default;
             IList<IPAddress> dnsServers = default;
-            Optional<string> dnsSearchDomain = default;
-            Optional<string> ntpServer = default;
+            string dnsSearchDomain = default;
+            string ntpServer = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -187,11 +188,11 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new StorageCacheNetworkSettings(
-                Optional.ToNullable(mtu),
+                mtu,
                 utilityAddresses ?? new ChangeTrackingList<IPAddress>(),
                 dnsServers ?? new ChangeTrackingList<IPAddress>(),
-                dnsSearchDomain.Value,
-                ntpServer.Value,
+                dnsSearchDomain,
+                ntpServer,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (ThroughputPolicy != null)
+            if (Optional.IsDefined(ThroughputPolicy))
             {
                 writer.WritePropertyName("throughputPolicy"u8);
                 writer.WriteObjectValue(ThroughputPolicy);
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<ThroughputPolicyResourceInfo> throughputPolicy = default;
+            ThroughputPolicyResourceInfo throughputPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutoUpgradePolicyResourceInfo(throughputPolicy.Value, serializedAdditionalRawData);
+            return new AutoUpgradePolicyResourceInfo(throughputPolicy, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutoUpgradePolicyResourceInfo>.Write(ModelReaderWriterOptions options)

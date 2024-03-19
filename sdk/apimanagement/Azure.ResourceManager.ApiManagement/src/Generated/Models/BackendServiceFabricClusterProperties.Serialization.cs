@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (ClientCertificateId != null)
+            if (Optional.IsDefined(ClientCertificateId))
             {
                 writer.WritePropertyName("clientCertificateId"u8);
                 writer.WriteStringValue(ClientCertificateId);
             }
-            if (ClientCertificatethumbprint != null)
+            if (Optional.IsDefined(ClientCertificatethumbprint))
             {
                 writer.WritePropertyName("clientCertificatethumbprint"u8);
                 writer.WriteStringValue(ClientCertificatethumbprint);
             }
-            if (MaxPartitionResolutionRetries.HasValue)
+            if (Optional.IsDefined(MaxPartitionResolutionRetries))
             {
                 writer.WritePropertyName("maxPartitionResolutionRetries"u8);
                 writer.WriteNumberValue(MaxPartitionResolutionRetries.Value);
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (!(ServerCertificateThumbprints is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ServerCertificateThumbprints))
             {
                 writer.WritePropertyName("serverCertificateThumbprints"u8);
                 writer.WriteStartArray();
@@ -58,7 +59,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ServerX509Names is ChangeTrackingList<X509CertificateName> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ServerX509Names))
             {
                 writer.WritePropertyName("serverX509Names"u8);
                 writer.WriteStartArray();
@@ -106,9 +107,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> clientCertificateId = default;
-            Optional<string> clientCertificatethumbprint = default;
-            Optional<int> maxPartitionResolutionRetries = default;
+            string clientCertificateId = default;
+            string clientCertificatethumbprint = default;
+            int? maxPartitionResolutionRetries = default;
             IList<string> managementEndpoints = default;
             IList<string> serverCertificateThumbprints = default;
             IList<X509CertificateName> serverX509Names = default;
@@ -180,9 +181,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new BackendServiceFabricClusterProperties(
-                clientCertificateId.Value,
-                clientCertificatethumbprint.Value,
-                Optional.ToNullable(maxPartitionResolutionRetries),
+                clientCertificateId,
+                clientCertificatethumbprint,
+                maxPartitionResolutionRetries,
                 managementEndpoints,
                 serverCertificateThumbprints ?? new ChangeTrackingList<string>(),
                 serverX509Names ?? new ChangeTrackingList<X509CertificateName>(),

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (ResultFormat.HasValue)
+            if (Optional.IsDefined(ResultFormat))
             {
                 writer.WritePropertyName("resultFormat"u8);
                 writer.WriteStringValue(ResultFormat.Value.ToSerialString());
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<WhatIfResultFormat> resultFormat = default;
+            WhatIfResultFormat? resultFormat = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmDeploymentWhatIfSettings(Optional.ToNullable(resultFormat), serializedAdditionalRawData);
+            return new ArmDeploymentWhatIfSettings(resultFormat, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmDeploymentWhatIfSettings>.Write(ModelReaderWriterOptions options)

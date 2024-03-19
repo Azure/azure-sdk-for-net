@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (CodeConfiguration != null)
+            if (Optional.IsDefined(CodeConfiguration))
             {
                 if (CodeConfiguration != null)
                 {
@@ -78,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<MachineLearningCodeConfiguration> codeConfiguration = default;
+            MachineLearningCodeConfiguration codeConfiguration = default;
             InferencingServerType serverType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -105,7 +106,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureMLBatchInferencingServer(serverType, serializedAdditionalRawData, codeConfiguration.Value);
+            return new AzureMLBatchInferencingServer(serverType, serializedAdditionalRawData, codeConfiguration);
         }
 
         BinaryData IPersistableModel<AzureMLBatchInferencingServer>.Write(ModelReaderWriterOptions options)

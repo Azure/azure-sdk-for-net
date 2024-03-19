@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.CostManagement;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CostManagement.Models
@@ -28,22 +29,22 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (options.Format != "W" && Sku != null)
+            if (options.Format != "W" && Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteStringValue(Sku);
             }
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (options.Format != "W" && !(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -69,29 +70,29 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && IsFilterEnabled.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsFilterEnabled))
             {
                 writer.WritePropertyName("filterEnabled"u8);
                 writer.WriteBooleanValue(IsFilterEnabled.Value);
             }
-            if (options.Format != "W" && IsGroupingEnabled.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsGroupingEnabled))
             {
                 writer.WritePropertyName("groupingEnabled"u8);
                 writer.WriteBooleanValue(IsGroupingEnabled.Value);
             }
-            if (!(Data is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Data))
             {
                 writer.WritePropertyName("data"u8);
                 writer.WriteStartArray();
@@ -101,27 +102,27 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Total.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Total))
             {
                 writer.WritePropertyName("total"u8);
                 writer.WriteNumberValue(Total.Value);
             }
-            if (options.Format != "W" && Category != null)
+            if (options.Format != "W" && Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (options.Format != "W" && UsageStart.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UsageStart))
             {
                 writer.WritePropertyName("usageStart"u8);
                 writer.WriteStringValue(UsageStart.Value, "O");
             }
-            if (options.Format != "W" && UsageEnd.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UsageEnd))
             {
                 writer.WritePropertyName("usageEnd"u8);
                 writer.WriteStringValue(UsageEnd.Value, "O");
             }
-            if (options.Format != "W" && NextLink != null)
+            if (options.Format != "W" && Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -165,23 +166,23 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<string> sku = default;
-            Optional<ETag> eTag = default;
+            AzureLocation? location = default;
+            string sku = default;
+            ETag? eTag = default;
             IReadOnlyDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<bool> filterEnabled = default;
-            Optional<bool> groupingEnabled = default;
+            SystemData systemData = default;
+            string description = default;
+            bool? filterEnabled = default;
+            bool? groupingEnabled = default;
             IReadOnlyList<string> data = default;
-            Optional<int> total = default;
-            Optional<string> category = default;
-            Optional<DateTimeOffset> usageStart = default;
-            Optional<DateTimeOffset> usageEnd = default;
-            Optional<string> nextLink = default;
+            int? total = default;
+            string category = default;
+            DateTimeOffset? usageStart = default;
+            DateTimeOffset? usageEnd = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -343,19 +344,19 @@ namespace Azure.ResourceManager.CostManagement.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                description.Value,
-                Optional.ToNullable(filterEnabled),
-                Optional.ToNullable(groupingEnabled),
+                systemData,
+                description,
+                filterEnabled,
+                groupingEnabled,
                 data ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(total),
-                category.Value,
-                Optional.ToNullable(usageStart),
-                Optional.ToNullable(usageEnd),
-                nextLink.Value,
-                Optional.ToNullable(location),
-                sku.Value,
-                Optional.ToNullable(eTag),
+                total,
+                category,
+                usageStart,
+                usageEnd,
+                nextLink,
+                location,
+                sku,
+                eTag,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }

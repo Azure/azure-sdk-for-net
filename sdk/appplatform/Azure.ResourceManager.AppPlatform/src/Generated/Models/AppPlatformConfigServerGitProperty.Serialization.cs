@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppPlatform;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (!(Repositories is ChangeTrackingList<ConfigServerGitPatternRepository> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Repositories))
             {
                 writer.WritePropertyName("repositories"u8);
                 writer.WriteStartArray();
@@ -38,12 +39,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
             writer.WritePropertyName("uri"u8);
             writer.WriteStringValue(Uri.AbsoluteUri);
-            if (Label != null)
+            if (Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
-            if (!(SearchPaths is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(SearchPaths))
             {
                 writer.WritePropertyName("searchPaths"u8);
                 writer.WriteStartArray();
@@ -53,32 +54,32 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Username != null)
+            if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
             }
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (HostKey != null)
+            if (Optional.IsDefined(HostKey))
             {
                 writer.WritePropertyName("hostKey"u8);
                 writer.WriteStringValue(HostKey);
             }
-            if (HostKeyAlgorithm != null)
+            if (Optional.IsDefined(HostKeyAlgorithm))
             {
                 writer.WritePropertyName("hostKeyAlgorithm"u8);
                 writer.WriteStringValue(HostKeyAlgorithm);
             }
-            if (PrivateKey != null)
+            if (Optional.IsDefined(PrivateKey))
             {
                 writer.WritePropertyName("privateKey"u8);
                 writer.WriteStringValue(PrivateKey);
             }
-            if (IsHostKeyCheckingStrict.HasValue)
+            if (Optional.IsDefined(IsHostKeyCheckingStrict))
             {
                 writer.WritePropertyName("strictHostKeyChecking"u8);
                 writer.WriteBooleanValue(IsHostKeyCheckingStrict.Value);
@@ -123,14 +124,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
             IList<ConfigServerGitPatternRepository> repositories = default;
             Uri uri = default;
-            Optional<string> label = default;
+            string label = default;
             IList<string> searchPaths = default;
-            Optional<string> username = default;
-            Optional<string> password = default;
-            Optional<string> hostKey = default;
-            Optional<string> hostKeyAlgorithm = default;
-            Optional<string> privateKey = default;
-            Optional<bool> strictHostKeyChecking = default;
+            string username = default;
+            string password = default;
+            string hostKey = default;
+            string hostKeyAlgorithm = default;
+            string privateKey = default;
+            bool? strictHostKeyChecking = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -216,14 +217,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformConfigServerGitProperty(
                 repositories ?? new ChangeTrackingList<ConfigServerGitPatternRepository>(),
                 uri,
-                label.Value,
+                label,
                 searchPaths ?? new ChangeTrackingList<string>(),
-                username.Value,
-                password.Value,
-                hostKey.Value,
-                hostKeyAlgorithm.Value,
-                privateKey.Value,
-                Optional.ToNullable(strictHostKeyChecking),
+                username,
+                password,
+                hostKey,
+                hostKeyAlgorithm,
+                privateKey,
+                strictHostKeyChecking,
                 serializedAdditionalRawData);
         }
 

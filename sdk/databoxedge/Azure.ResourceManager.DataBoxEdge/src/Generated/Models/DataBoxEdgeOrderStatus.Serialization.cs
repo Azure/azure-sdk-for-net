@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -28,22 +29,22 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteStartObject();
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
-            if (options.Format != "W" && UpdateOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UpdateOn))
             {
                 writer.WritePropertyName("updateDateTime"u8);
                 writer.WriteStringValue(UpdateOn.Value, "O");
             }
-            if (Comments != null)
+            if (Optional.IsDefined(Comments))
             {
                 writer.WritePropertyName("comments"u8);
                 writer.WriteStringValue(Comments);
             }
-            if (options.Format != "W" && TrackingInformation != null)
+            if (options.Format != "W" && Optional.IsDefined(TrackingInformation))
             {
                 writer.WritePropertyName("trackingInformation"u8);
                 writer.WriteObjectValue(TrackingInformation);
             }
-            if (options.Format != "W" && !(AdditionalOrderDetails is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AdditionalOrderDetails))
             {
                 writer.WritePropertyName("additionalOrderDetails"u8);
                 writer.WriteStartObject();
@@ -93,9 +94,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 return null;
             }
             DataBoxEdgeOrderState status = default;
-            Optional<DateTimeOffset> updateDateTime = default;
-            Optional<string> comments = default;
-            Optional<DataBoxEdgeTrackingInfo> trackingInformation = default;
+            DateTimeOffset? updateDateTime = default;
+            string comments = default;
+            DataBoxEdgeTrackingInfo trackingInformation = default;
             IReadOnlyDictionary<string, string> additionalOrderDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -151,9 +152,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DataBoxEdgeOrderStatus(
                 status,
-                Optional.ToNullable(updateDateTime),
-                comments.Value,
-                trackingInformation.Value,
+                updateDateTime,
+                comments,
+                trackingInformation,
                 additionalOrderDetails ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }

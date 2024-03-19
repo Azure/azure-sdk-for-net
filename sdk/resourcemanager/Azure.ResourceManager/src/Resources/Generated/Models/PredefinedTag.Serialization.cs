@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (TagName != null)
+            if (Optional.IsDefined(TagName))
             {
                 writer.WritePropertyName("tagName"u8);
                 writer.WriteStringValue(TagName);
             }
-            if (Count != null)
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteObjectValue(Count);
             }
-            if (!(Values is ChangeTrackingList<PredefinedTagValue> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Values))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
@@ -89,9 +90,9 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> tagName = default;
-            Optional<PredefinedTagCount> count = default;
+            string id = default;
+            string tagName = default;
+            PredefinedTagCount count = default;
             IReadOnlyList<PredefinedTagValue> values = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -136,7 +137,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PredefinedTag(id.Value, tagName.Value, count.Value, values ?? new ChangeTrackingList<PredefinedTagValue>(), serializedAdditionalRawData);
+            return new PredefinedTag(id, tagName, count, values ?? new ChangeTrackingList<PredefinedTagValue>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PredefinedTag>.Write(ModelReaderWriterOptions options)

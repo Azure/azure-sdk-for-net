@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -26,59 +27,59 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && TargetComputerId != null)
+            if (options.Format != "W" && Optional.IsDefined(TargetComputerId))
             {
                 writer.WritePropertyName("targetComputer"u8);
                 writer.WriteStringValue(TargetComputerId);
             }
-            if (options.Format != "W" && TargetComputerType != null)
+            if (options.Format != "W" && Optional.IsDefined(TargetComputerType))
             {
                 writer.WritePropertyName("targetComputerType"u8);
                 writer.WriteStringValue(TargetComputerType);
             }
-            if (SoftwareUpdateConfiguration != null)
+            if (Optional.IsDefined(SoftwareUpdateConfiguration))
             {
                 writer.WritePropertyName("softwareUpdateConfiguration"u8);
                 writer.WriteObjectValue(SoftwareUpdateConfiguration);
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && OSType != null)
+            if (options.Format != "W" && Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType);
             }
-            if (options.Format != "W" && CorrelationId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CorrelationId))
             {
                 writer.WritePropertyName("correlationId"u8);
                 writer.WriteStringValue(CorrelationId.Value);
             }
-            if (options.Format != "W" && SourceComputerId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SourceComputerId))
             {
                 writer.WritePropertyName("sourceComputerId"u8);
                 writer.WriteStringValue(SourceComputerId.Value);
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && EndOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndOn))
             {
                 if (EndOn != null)
                 {
@@ -90,37 +91,37 @@ namespace Azure.ResourceManager.Automation.Models
                     writer.WriteNull("endTime");
                 }
             }
-            if (options.Format != "W" && ConfiguredDuration.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ConfiguredDuration))
             {
                 writer.WritePropertyName("configuredDuration"u8);
                 writer.WriteStringValue(ConfiguredDuration.Value, "P");
             }
-            if (Job != null)
+            if (Optional.IsDefined(Job))
             {
                 writer.WritePropertyName("job"u8);
                 writer.WriteObjectValue(Job);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && CreatedBy != null)
+            if (options.Format != "W" && Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("createdBy"u8);
                 writer.WriteStringValue(CreatedBy);
             }
-            if (options.Format != "W" && LastModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (options.Format != "W" && LastModifiedBy != null)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedBy))
             {
                 writer.WritePropertyName("lastModifiedBy"u8);
                 writer.WriteStringValue(LastModifiedBy);
             }
-            if (Error != null)
+            if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
@@ -164,24 +165,24 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<ResourceIdentifier> targetComputer = default;
-            Optional<string> targetComputerType = default;
-            Optional<SoftwareUpdateConfigurationNavigation> softwareUpdateConfiguration = default;
-            Optional<string> status = default;
-            Optional<string> osType = default;
-            Optional<Guid> correlationId = default;
-            Optional<Guid> sourceComputerId = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset?> endTime = default;
-            Optional<TimeSpan> configuredDuration = default;
-            Optional<JobNavigation> job = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<string> createdBy = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<string> lastModifiedBy = default;
-            Optional<AutomationResponseError> error = default;
+            string name = default;
+            ResourceIdentifier id = default;
+            ResourceIdentifier targetComputer = default;
+            string targetComputerType = default;
+            SoftwareUpdateConfigurationNavigation softwareUpdateConfiguration = default;
+            string status = default;
+            string osType = default;
+            Guid? correlationId = default;
+            Guid? sourceComputerId = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            TimeSpan? configuredDuration = default;
+            JobNavigation job = default;
+            DateTimeOffset? creationTime = default;
+            string createdBy = default;
+            DateTimeOffset? lastModifiedTime = default;
+            string lastModifiedBy = default;
+            AutomationResponseError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -344,24 +345,24 @@ namespace Azure.ResourceManager.Automation.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SoftwareUpdateConfigurationMachineRun(
-                name.Value,
-                id.Value,
-                targetComputer.Value,
-                targetComputerType.Value,
-                softwareUpdateConfiguration.Value,
-                status.Value,
-                osType.Value,
-                Optional.ToNullable(correlationId),
-                Optional.ToNullable(sourceComputerId),
-                Optional.ToNullable(startTime),
-                Optional.ToNullable(endTime),
-                Optional.ToNullable(configuredDuration),
-                job.Value,
-                Optional.ToNullable(creationTime),
-                createdBy.Value,
-                Optional.ToNullable(lastModifiedTime),
-                lastModifiedBy.Value,
-                error.Value,
+                name,
+                id,
+                targetComputer,
+                targetComputerType,
+                softwareUpdateConfiguration,
+                status,
+                osType,
+                correlationId,
+                sourceComputerId,
+                startTime,
+                endTime,
+                configuredDuration,
+                job,
+                creationTime,
+                createdBy,
+                lastModifiedTime,
+                lastModifiedBy,
+                error,
                 serializedAdditionalRawData);
         }
 

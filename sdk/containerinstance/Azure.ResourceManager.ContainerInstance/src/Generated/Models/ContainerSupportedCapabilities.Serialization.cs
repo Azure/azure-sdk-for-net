@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && MaxMemoryInGB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MaxMemoryInGB))
             {
                 writer.WritePropertyName("maxMemoryInGB"u8);
                 writer.WriteNumberValue(MaxMemoryInGB.Value);
             }
-            if (options.Format != "W" && MaxCpu.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MaxCpu))
             {
                 writer.WritePropertyName("maxCpu"u8);
                 writer.WriteNumberValue(MaxCpu.Value);
             }
-            if (options.Format != "W" && MaxGpuCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MaxGpuCount))
             {
                 writer.WritePropertyName("maxGpuCount"u8);
                 writer.WriteNumberValue(MaxGpuCount.Value);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            Optional<float> maxMemoryInGB = default;
-            Optional<float> maxCpu = default;
-            Optional<float> maxGpuCount = default;
+            float? maxMemoryInGB = default;
+            float? maxCpu = default;
+            float? maxGpuCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerSupportedCapabilities(Optional.ToNullable(maxMemoryInGB), Optional.ToNullable(maxCpu), Optional.ToNullable(maxGpuCount), serializedAdditionalRawData);
+            return new ContainerSupportedCapabilities(maxMemoryInGB, maxCpu, maxGpuCount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerSupportedCapabilities>.Write(ModelReaderWriterOptions options)

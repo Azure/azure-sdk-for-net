@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppPlatform;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Thumbprint != null)
+            if (Optional.IsDefined(Thumbprint))
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(Thumbprint);
             }
-            if (options.Format != "W" && AppName != null)
+            if (options.Format != "W" && Optional.IsDefined(AppName))
             {
                 writer.WritePropertyName("appName"u8);
                 writer.WriteStringValue(AppName);
             }
-            if (CertName != null)
+            if (Optional.IsDefined(CertName))
             {
                 writer.WritePropertyName("certName"u8);
                 writer.WriteStringValue(CertName);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> thumbprint = default;
-            Optional<string> appName = default;
-            Optional<string> certName = default;
-            Optional<AppPlatformCustomDomainProvisioningState> provisioningState = default;
+            string thumbprint = default;
+            string appName = default;
+            string certName = default;
+            AppPlatformCustomDomainProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformCustomDomainProperties(thumbprint.Value, appName.Value, certName.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new AppPlatformCustomDomainProperties(thumbprint, appName, certName, provisioningState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformCustomDomainProperties>.Write(ModelReaderWriterOptions options)

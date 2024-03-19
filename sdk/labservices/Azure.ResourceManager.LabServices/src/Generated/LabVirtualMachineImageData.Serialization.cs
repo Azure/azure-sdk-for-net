@@ -43,84 +43,84 @@ namespace Azure.ResourceManager.LabServices
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (EnabledState.HasValue)
+            if (Optional.IsDefined(EnabledState))
             {
                 writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToSerialString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
             }
-            if (options.Format != "W" && DisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && IconUri != null)
+            if (options.Format != "W" && Optional.IsDefined(IconUri))
             {
                 writer.WritePropertyName("iconUrl"u8);
                 writer.WriteStringValue(IconUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Author != null)
+            if (options.Format != "W" && Optional.IsDefined(Author))
             {
                 writer.WritePropertyName("author"u8);
                 writer.WriteStringValue(Author);
             }
-            if (options.Format != "W" && OSType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToSerialString());
             }
-            if (options.Format != "W" && Plan != null)
+            if (options.Format != "W" && Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
                 writer.WriteStringValue(Plan);
             }
-            if (options.Format != "W" && TermsStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TermsStatus))
             {
                 writer.WritePropertyName("termsStatus"u8);
                 writer.WriteStringValue(TermsStatus.Value.ToSerialString());
             }
-            if (options.Format != "W" && Offer != null)
+            if (options.Format != "W" && Optional.IsDefined(Offer))
             {
                 writer.WritePropertyName("offer"u8);
                 writer.WriteStringValue(Offer);
             }
-            if (options.Format != "W" && Publisher != null)
+            if (options.Format != "W" && Optional.IsDefined(Publisher))
             {
                 writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
             }
-            if (options.Format != "W" && Sku != null)
+            if (options.Format != "W" && Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteStringValue(Sku);
             }
-            if (options.Format != "W" && Version != null)
+            if (options.Format != "W" && Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (options.Format != "W" && SharedGalleryId != null)
+            if (options.Format != "W" && Optional.IsDefined(SharedGalleryId))
             {
                 writer.WritePropertyName("sharedGalleryId"u8);
                 writer.WriteStringValue(SharedGalleryId);
             }
-            if (!(AvailableRegions is ChangeTrackingList<AzureLocation> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AvailableRegions))
             {
                 writer.WritePropertyName("availableRegions"u8);
                 writer.WriteStartArray();
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.LabServices
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && OSState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(OSState))
             {
                 writer.WritePropertyName("osState"u8);
                 writer.WriteStringValue(OSState.Value.ToSerialString());
@@ -177,23 +177,23 @@ namespace Azure.ResourceManager.LabServices
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<LabServicesEnableState> enabledState = default;
-            Optional<LabServicesProvisioningState> provisioningState = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<Uri> iconUrl = default;
-            Optional<string> author = default;
-            Optional<LabVirtualMachineImageOSType> osType = default;
-            Optional<string> plan = default;
-            Optional<LabServicesEnableState> termsStatus = default;
-            Optional<string> offer = default;
-            Optional<string> publisher = default;
-            Optional<string> sku = default;
-            Optional<string> version = default;
-            Optional<ResourceIdentifier> sharedGalleryId = default;
+            SystemData systemData = default;
+            LabServicesEnableState? enabledState = default;
+            LabServicesProvisioningState? provisioningState = default;
+            string displayName = default;
+            string description = default;
+            Uri iconUrl = default;
+            string author = default;
+            LabVirtualMachineImageOSType? osType = default;
+            string plan = default;
+            LabServicesEnableState? termsStatus = default;
+            string offer = default;
+            string publisher = default;
+            string sku = default;
+            string version = default;
+            ResourceIdentifier sharedGalleryId = default;
             IList<AzureLocation> availableRegions = default;
-            Optional<LabVirtualMachineImageOSState> osState = default;
+            LabVirtualMachineImageOSState? osState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -361,23 +361,23 @@ namespace Azure.ResourceManager.LabServices
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(enabledState),
-                Optional.ToNullable(provisioningState),
-                displayName.Value,
-                description.Value,
-                iconUrl.Value,
-                author.Value,
-                Optional.ToNullable(osType),
-                plan.Value,
-                Optional.ToNullable(termsStatus),
-                offer.Value,
-                publisher.Value,
-                sku.Value,
-                version.Value,
-                sharedGalleryId.Value,
+                systemData,
+                enabledState,
+                provisioningState,
+                displayName,
+                description,
+                iconUrl,
+                author,
+                osType,
+                plan,
+                termsStatus,
+                offer,
+                publisher,
+                sku,
+                version,
+                sharedGalleryId,
                 availableRegions ?? new ChangeTrackingList<AzureLocation>(),
-                Optional.ToNullable(osState),
+                osState,
                 serializedAdditionalRawData);
         }
 

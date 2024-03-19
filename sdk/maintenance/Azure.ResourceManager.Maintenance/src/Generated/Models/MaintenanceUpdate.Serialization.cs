@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Maintenance;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
@@ -26,34 +27,34 @@ namespace Azure.ResourceManager.Maintenance.Models
             }
 
             writer.WriteStartObject();
-            if (MaintenanceScope.HasValue)
+            if (Optional.IsDefined(MaintenanceScope))
             {
                 writer.WritePropertyName("maintenanceScope"u8);
                 writer.WriteStringValue(MaintenanceScope.Value.ToString());
             }
-            if (ImpactType.HasValue)
+            if (Optional.IsDefined(ImpactType))
             {
                 writer.WritePropertyName("impactType"u8);
                 writer.WriteStringValue(ImpactType.Value.ToString());
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (ImpactDurationInSec.HasValue)
+            if (Optional.IsDefined(ImpactDurationInSec))
             {
                 writer.WritePropertyName("impactDurationInSec"u8);
                 writer.WriteNumberValue(ImpactDurationInSec.Value);
             }
-            if (NotBefore.HasValue)
+            if (Optional.IsDefined(NotBefore))
             {
                 writer.WritePropertyName("notBefore"u8);
                 writer.WriteStringValue(NotBefore.Value, "O");
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
@@ -97,12 +98,12 @@ namespace Azure.ResourceManager.Maintenance.Models
             {
                 return null;
             }
-            Optional<MaintenanceScope> maintenanceScope = default;
-            Optional<MaintenanceImpactType> impactType = default;
-            Optional<MaintenanceUpdateStatus> status = default;
-            Optional<int> impactDurationInSec = default;
-            Optional<DateTimeOffset> notBefore = default;
-            Optional<ResourceIdentifier> resourceId = default;
+            MaintenanceScope? maintenanceScope = default;
+            MaintenanceImpactType? impactType = default;
+            MaintenanceUpdateStatus? status = default;
+            int? impactDurationInSec = default;
+            DateTimeOffset? notBefore = default;
+            ResourceIdentifier resourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -180,12 +181,12 @@ namespace Azure.ResourceManager.Maintenance.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MaintenanceUpdate(
-                Optional.ToNullable(maintenanceScope),
-                Optional.ToNullable(impactType),
-                Optional.ToNullable(status),
-                Optional.ToNullable(impactDurationInSec),
-                Optional.ToNullable(notBefore),
-                resourceId.Value,
+                maintenanceScope,
+                impactType,
+                status,
+                impactDurationInSec,
+                notBefore,
+                resourceId,
                 serializedAdditionalRawData);
         }
 

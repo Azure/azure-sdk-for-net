@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.IotHub.Models
             }
 
             writer.WriteStartObject();
-            if (RetentionTimeInDays.HasValue)
+            if (Optional.IsDefined(RetentionTimeInDays))
             {
                 writer.WritePropertyName("retentionTimeInDays"u8);
                 writer.WriteNumberValue(RetentionTimeInDays.Value);
             }
-            if (PartitionCount.HasValue)
+            if (Optional.IsDefined(PartitionCount))
             {
                 writer.WritePropertyName("partitionCount"u8);
                 writer.WriteNumberValue(PartitionCount.Value);
             }
-            if (options.Format != "W" && !(PartitionIds is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PartitionIds))
             {
                 writer.WritePropertyName("partitionIds"u8);
                 writer.WriteStartArray();
@@ -46,12 +47,12 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && EventHubCompatibleName != null)
+            if (options.Format != "W" && Optional.IsDefined(EventHubCompatibleName))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(EventHubCompatibleName);
             }
-            if (options.Format != "W" && Endpoint != null)
+            if (options.Format != "W" && Optional.IsDefined(Endpoint))
             {
                 writer.WritePropertyName("endpoint"u8);
                 writer.WriteStringValue(Endpoint);
@@ -94,11 +95,11 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<long> retentionTimeInDays = default;
-            Optional<int> partitionCount = default;
+            long? retentionTimeInDays = default;
+            int? partitionCount = default;
             IReadOnlyList<string> partitionIds = default;
-            Optional<string> path = default;
-            Optional<string> endpoint = default;
+            string path = default;
+            string endpoint = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,11 +153,11 @@ namespace Azure.ResourceManager.IotHub.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new EventHubCompatibleEndpointProperties(
-                Optional.ToNullable(retentionTimeInDays),
-                Optional.ToNullable(partitionCount),
+                retentionTimeInDays,
+                partitionCount,
                 partitionIds ?? new ChangeTrackingList<string>(),
-                path.Value,
-                endpoint.Value,
+                path,
+                endpoint,
                 serializedAdditionalRawData);
         }
 

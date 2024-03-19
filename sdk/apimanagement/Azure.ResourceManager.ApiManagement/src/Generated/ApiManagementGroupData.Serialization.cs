@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && IsBuiltIn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsBuiltIn))
             {
                 writer.WritePropertyName("builtIn"u8);
                 writer.WriteBooleanValue(IsBuiltIn.Value);
             }
-            if (GroupType.HasValue)
+            if (Optional.IsDefined(GroupType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(GroupType.Value.ToSerialString());
             }
-            if (ExternalId != null)
+            if (Optional.IsDefined(ExternalId))
             {
                 writer.WritePropertyName("externalId"u8);
                 writer.WriteStringValue(ExternalId);
@@ -117,12 +117,12 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<bool> builtIn = default;
-            Optional<ApiManagementGroupType> type0 = default;
-            Optional<string> externalId = default;
+            SystemData systemData = default;
+            string displayName = default;
+            string description = default;
+            bool? builtIn = default;
+            ApiManagementGroupType? type0 = default;
+            string externalId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -206,12 +206,12 @@ namespace Azure.ResourceManager.ApiManagement
                 id,
                 name,
                 type,
-                systemData.Value,
-                displayName.Value,
-                description.Value,
-                Optional.ToNullable(builtIn),
-                Optional.ToNullable(type0),
-                externalId.Value,
+                systemData,
+                displayName,
+                description,
+                builtIn,
+                type0,
+                externalId,
                 serializedAdditionalRawData);
         }
 

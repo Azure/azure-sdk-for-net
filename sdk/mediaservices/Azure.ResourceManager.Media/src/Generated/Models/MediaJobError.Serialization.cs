@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Code.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code.Value.ToString());
             }
-            if (options.Format != "W" && Message != null)
+            if (options.Format != "W" && Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && Category.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category.Value.ToString());
             }
-            if (options.Format != "W" && Retry.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Retry))
             {
                 writer.WritePropertyName("retry"u8);
                 writer.WriteStringValue(Retry.Value.ToString());
             }
-            if (options.Format != "W" && !(Details is ChangeTrackingList<MediaJobErrorDetail> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartArray();
@@ -94,10 +95,10 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<MediaJobErrorCode> code = default;
-            Optional<string> message = default;
-            Optional<MediaJobErrorCategory> category = default;
-            Optional<MediaJobRetry> retry = default;
+            MediaJobErrorCode? code = default;
+            string message = default;
+            MediaJobErrorCategory? category = default;
+            MediaJobRetry? retry = default;
             IReadOnlyList<MediaJobErrorDetail> details = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -156,10 +157,10 @@ namespace Azure.ResourceManager.Media.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MediaJobError(
-                Optional.ToNullable(code),
-                message.Value,
-                Optional.ToNullable(category),
-                Optional.ToNullable(retry),
+                code,
+                message,
+                category,
+                retry,
                 details ?? new ChangeTrackingList<MediaJobErrorDetail>(),
                 serializedAdditionalRawData);
         }

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DeviceUpdate;
 
 namespace Azure.ResourceManager.DeviceUpdate.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && GroupId != null)
+            if (options.Format != "W" && Optional.IsDefined(GroupId))
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
-            if (options.Format != "W" && MemberName != null)
+            if (options.Format != "W" && Optional.IsDefined(MemberName))
             {
                 writer.WritePropertyName("memberName"u8);
                 writer.WriteStringValue(MemberName);
             }
-            if (!(CustomerVisibleFqdns is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CustomerVisibleFqdns))
             {
                 writer.WritePropertyName("customerVisibleFqdns"u8);
                 writer.WriteStartArray();
@@ -46,17 +47,17 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && InternalFqdn != null)
+            if (options.Format != "W" && Optional.IsDefined(InternalFqdn))
             {
                 writer.WritePropertyName("internalFqdn"u8);
                 writer.WriteStringValue(InternalFqdn);
             }
-            if (RedirectMapId != null)
+            if (Optional.IsDefined(RedirectMapId))
             {
                 writer.WritePropertyName("redirectMapId"u8);
                 writer.WriteStringValue(RedirectMapId);
             }
-            if (PrivateLinkServiceArmRegion.HasValue)
+            if (Optional.IsDefined(PrivateLinkServiceArmRegion))
             {
                 writer.WritePropertyName("privateLinkServiceArmRegion"u8);
                 writer.WriteStringValue(PrivateLinkServiceArmRegion.Value);
@@ -99,12 +100,12 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             {
                 return null;
             }
-            Optional<string> groupId = default;
-            Optional<string> memberName = default;
+            string groupId = default;
+            string memberName = default;
             IList<string> customerVisibleFqdns = default;
-            Optional<string> internalFqdn = default;
-            Optional<string> redirectMapId = default;
-            Optional<AzureLocation> privateLinkServiceArmRegion = default;
+            string internalFqdn = default;
+            string redirectMapId = default;
+            AzureLocation? privateLinkServiceArmRegion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -159,12 +160,12 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new GroupConnectivityInformation(
-                groupId.Value,
-                memberName.Value,
+                groupId,
+                memberName,
                 customerVisibleFqdns ?? new ChangeTrackingList<string>(),
-                internalFqdn.Value,
-                redirectMapId.Value,
-                Optional.ToNullable(privateLinkServiceArmRegion),
+                internalFqdn,
+                redirectMapId,
+                privateLinkServiceArmRegion,
                 serializedAdditionalRawData);
         }
 

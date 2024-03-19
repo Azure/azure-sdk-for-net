@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
+using Azure.Messaging.EventGrid;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -22,10 +22,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> workerId = default;
+            string workerId = default;
             IReadOnlyList<AcsRouterQueueDetails> queueAssignments = default;
             IReadOnlyList<AcsRouterChannelConfiguration> channelConfigurations = default;
-            Optional<int> totalCapacity = default;
+            int? totalCapacity = default;
             IReadOnlyDictionary<string, string> labels = default;
             IReadOnlyDictionary<string, string> tags = default;
             foreach (var property in element.EnumerateObject())
@@ -102,10 +102,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new AcsRouterWorkerRegisteredEventData(
-                workerId.Value,
+                workerId,
                 queueAssignments ?? new ChangeTrackingList<AcsRouterQueueDetails>(),
                 channelConfigurations ?? new ChangeTrackingList<AcsRouterChannelConfiguration>(),
-                Optional.ToNullable(totalCapacity),
+                totalCapacity,
                 labels ?? new ChangeTrackingDictionary<string, string>(),
                 tags ?? new ChangeTrackingDictionary<string, string>());
         }

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (CanSelectParentNodes.HasValue)
+            if (Optional.IsDefined(CanSelectParentNodes))
             {
                 writer.WritePropertyName("CanSelectParentNodes"u8);
                 writer.WriteBooleanValue(CanSelectParentNodes.Value);
             }
-            if (CanSelectLeafNodes.HasValue)
+            if (Optional.IsDefined(CanSelectLeafNodes))
             {
                 writer.WritePropertyName("CanSelectLeafNodes"u8);
                 writer.WriteBooleanValue(CanSelectLeafNodes.Value);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<bool> canSelectParentNodes = default;
-            Optional<bool> canSelectLeafNodes = default;
+            bool? canSelectParentNodes = default;
+            bool? canSelectLeafNodes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SwaggerCustomDynamicTreeSettings(Optional.ToNullable(canSelectParentNodes), Optional.ToNullable(canSelectLeafNodes), serializedAdditionalRawData);
+            return new SwaggerCustomDynamicTreeSettings(canSelectParentNodes, canSelectLeafNodes, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SwaggerCustomDynamicTreeSettings>.Write(ModelReaderWriterOptions options)

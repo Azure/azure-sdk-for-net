@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (SecretRef != null)
+            if (Optional.IsDefined(SecretRef))
             {
                 writer.WritePropertyName("secretRef"u8);
                 writer.WriteStringValue(SecretRef);
             }
-            if (TriggerParameter != null)
+            if (Optional.IsDefined(TriggerParameter))
             {
                 writer.WritePropertyName("triggerParameter"u8);
                 writer.WriteStringValue(TriggerParameter);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> secretRef = default;
-            Optional<string> triggerParameter = default;
+            string secretRef = default;
+            string triggerParameter = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppScaleRuleAuth(secretRef.Value, triggerParameter.Value, serializedAdditionalRawData);
+            return new ContainerAppScaleRuleAuth(secretRef, triggerParameter, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppScaleRuleAuth>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ConfidentialLedger;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             }
 
             writer.WriteStartObject();
-            if (Cert != null)
+            if (Optional.IsDefined(Cert))
             {
                 writer.WritePropertyName("cert"u8);
                 writer.WriteStringValue(Cert);
             }
-            if (LedgerRoleName.HasValue)
+            if (Optional.IsDefined(LedgerRoleName))
             {
                 writer.WritePropertyName("ledgerRoleName"u8);
                 writer.WriteStringValue(LedgerRoleName.Value.ToString());
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             {
                 return null;
             }
-            Optional<string> cert = default;
-            Optional<ConfidentialLedgerRoleName> ledgerRoleName = default;
+            string cert = default;
+            ConfidentialLedgerRoleName? ledgerRoleName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CertBasedSecurityPrincipal(cert.Value, Optional.ToNullable(ledgerRoleName), serializedAdditionalRawData);
+            return new CertBasedSecurityPrincipal(cert, ledgerRoleName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CertBasedSecurityPrincipal>.Write(ModelReaderWriterOptions options)

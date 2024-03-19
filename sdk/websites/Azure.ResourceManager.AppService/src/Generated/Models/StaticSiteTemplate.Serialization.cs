@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (TemplateRepositoryUri != null)
+            if (Optional.IsDefined(TemplateRepositoryUri))
             {
                 writer.WritePropertyName("templateRepositoryUrl"u8);
                 writer.WriteStringValue(TemplateRepositoryUri.AbsoluteUri);
             }
-            if (Owner != null)
+            if (Optional.IsDefined(Owner))
             {
                 writer.WritePropertyName("owner"u8);
                 writer.WriteStringValue(Owner);
             }
-            if (RepositoryName != null)
+            if (Optional.IsDefined(RepositoryName))
             {
                 writer.WritePropertyName("repositoryName"u8);
                 writer.WriteStringValue(RepositoryName);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (IsPrivate.HasValue)
+            if (Optional.IsDefined(IsPrivate))
             {
                 writer.WritePropertyName("isPrivate"u8);
                 writer.WriteBooleanValue(IsPrivate.Value);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<Uri> templateRepositoryUrl = default;
-            Optional<string> owner = default;
-            Optional<string> repositoryName = default;
-            Optional<string> description = default;
-            Optional<bool> isPrivate = default;
+            Uri templateRepositoryUrl = default;
+            string owner = default;
+            string repositoryName = default;
+            string description = default;
+            bool? isPrivate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,11 +139,11 @@ namespace Azure.ResourceManager.AppService.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new StaticSiteTemplate(
-                templateRepositoryUrl.Value,
-                owner.Value,
-                repositoryName.Value,
-                description.Value,
-                Optional.ToNullable(isPrivate),
+                templateRepositoryUrl,
+                owner,
+                repositoryName,
+                description,
+                isPrivate,
                 serializedAdditionalRawData);
         }
 

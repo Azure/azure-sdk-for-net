@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -30,12 +31,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
             writer.WriteStringValue(MaximumDuration, "P");
             writer.WritePropertyName("rebootSetting"u8);
             writer.WriteStringValue(RebootSetting.ToString());
-            if (WindowsParameters != null)
+            if (Optional.IsDefined(WindowsParameters))
             {
                 writer.WritePropertyName("windowsParameters"u8);
                 writer.WriteObjectValue(WindowsParameters);
             }
-            if (LinuxParameters != null)
+            if (Optional.IsDefined(LinuxParameters))
             {
                 writer.WritePropertyName("linuxParameters"u8);
                 writer.WriteObjectValue(LinuxParameters);
@@ -80,8 +81,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
             TimeSpan maximumDuration = default;
             VmGuestPatchRebootSetting rebootSetting = default;
-            Optional<HybridComputeWindowsParameters> windowsParameters = default;
-            Optional<HybridComputeLinuxParameters> linuxParameters = default;
+            HybridComputeWindowsParameters windowsParameters = default;
+            HybridComputeLinuxParameters linuxParameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,7 +121,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineInstallPatchesContent(maximumDuration, rebootSetting, windowsParameters.Value, linuxParameters.Value, serializedAdditionalRawData);
+            return new MachineInstallPatchesContent(maximumDuration, rebootSetting, windowsParameters, linuxParameters, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineInstallPatchesContent>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,29 +27,29 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Tags != null)
+            if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStringValue(Tags);
             }
-            if (Order.HasValue)
+            if (Optional.IsDefined(Order))
             {
                 writer.WritePropertyName("order"u8);
                 writer.WriteNumberValue(Order.Value);
             }
             writer.WritePropertyName("packageReferenceId"u8);
             writer.WriteStringValue(PackageReferenceId);
-            if (ConfigurationReference != null)
+            if (Optional.IsDefined(ConfigurationReference))
             {
                 writer.WritePropertyName("configurationReference"u8);
                 writer.WriteStringValue(ConfigurationReference);
             }
-            if (TreatFailureAsDeploymentFailure.HasValue)
+            if (Optional.IsDefined(TreatFailureAsDeploymentFailure))
             {
                 writer.WritePropertyName("treatFailureAsDeploymentFailure"u8);
                 writer.WriteBooleanValue(TreatFailureAsDeploymentFailure.Value);
             }
-            if (EnableAutomaticUpgrade.HasValue)
+            if (Optional.IsDefined(EnableAutomaticUpgrade))
             {
                 writer.WritePropertyName("enableAutomaticUpgrade"u8);
                 writer.WriteBooleanValue(EnableAutomaticUpgrade.Value);
@@ -91,12 +92,12 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> tags = default;
-            Optional<int> order = default;
+            string tags = default;
+            int? order = default;
             string packageReferenceId = default;
-            Optional<string> configurationReference = default;
-            Optional<bool> treatFailureAsDeploymentFailure = default;
-            Optional<bool> enableAutomaticUpgrade = default;
+            string configurationReference = default;
+            bool? treatFailureAsDeploymentFailure = default;
+            bool? enableAutomaticUpgrade = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,12 +151,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new VirtualMachineGalleryApplication(
-                tags.Value,
-                Optional.ToNullable(order),
+                tags,
+                order,
                 packageReferenceId,
-                configurationReference.Value,
-                Optional.ToNullable(treatFailureAsDeploymentFailure),
-                Optional.ToNullable(enableAutomaticUpgrade),
+                configurationReference,
+                treatFailureAsDeploymentFailure,
+                enableAutomaticUpgrade,
                 serializedAdditionalRawData);
         }
 

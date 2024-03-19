@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && DownloadPhase.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DownloadPhase))
             {
                 writer.WritePropertyName("downloadPhase"u8);
                 writer.WriteStringValue(DownloadPhase.Value.ToString());
             }
-            if (options.Format != "W" && PercentComplete.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PercentComplete))
             {
                 writer.WritePropertyName("percentComplete"u8);
                 writer.WriteNumberValue(PercentComplete.Value);
             }
-            if (options.Format != "W" && TotalBytesToDownload.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalBytesToDownload))
             {
                 writer.WritePropertyName("totalBytesToDownload"u8);
                 writer.WriteNumberValue(TotalBytesToDownload.Value);
             }
-            if (options.Format != "W" && TotalBytesDownloaded.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalBytesDownloaded))
             {
                 writer.WritePropertyName("totalBytesDownloaded"u8);
                 writer.WriteNumberValue(TotalBytesDownloaded.Value);
             }
-            if (options.Format != "W" && NumberOfUpdatesToDownload.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NumberOfUpdatesToDownload))
             {
                 writer.WritePropertyName("numberOfUpdatesToDownload"u8);
                 writer.WriteNumberValue(NumberOfUpdatesToDownload.Value);
             }
-            if (options.Format != "W" && NumberOfUpdatesDownloaded.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NumberOfUpdatesDownloaded))
             {
                 writer.WritePropertyName("numberOfUpdatesDownloaded"u8);
                 writer.WriteNumberValue(NumberOfUpdatesDownloaded.Value);
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<DataBoxEdgeDownloadPhase> downloadPhase = default;
-            Optional<int> percentComplete = default;
-            Optional<double> totalBytesToDownload = default;
-            Optional<double> totalBytesDownloaded = default;
-            Optional<int> numberOfUpdatesToDownload = default;
-            Optional<int> numberOfUpdatesDownloaded = default;
+            DataBoxEdgeDownloadPhase? downloadPhase = default;
+            int? percentComplete = default;
+            double? totalBytesToDownload = default;
+            double? totalBytesDownloaded = default;
+            int? numberOfUpdatesToDownload = default;
+            int? numberOfUpdatesDownloaded = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,12 +166,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new UpdateDownloadProgress(
-                Optional.ToNullable(downloadPhase),
-                Optional.ToNullable(percentComplete),
-                Optional.ToNullable(totalBytesToDownload),
-                Optional.ToNullable(totalBytesDownloaded),
-                Optional.ToNullable(numberOfUpdatesToDownload),
-                Optional.ToNullable(numberOfUpdatesDownloaded),
+                downloadPhase,
+                percentComplete,
+                totalBytesToDownload,
+                totalBytesDownloaded,
+                numberOfUpdatesToDownload,
+                numberOfUpdatesDownloaded,
                 serializedAdditionalRawData);
         }
 

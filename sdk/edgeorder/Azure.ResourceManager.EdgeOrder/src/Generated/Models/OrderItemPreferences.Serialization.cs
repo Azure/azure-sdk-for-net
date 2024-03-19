@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
 
             writer.WriteStartObject();
-            if (!(NotificationPreferences is ChangeTrackingList<NotificationPreference> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(NotificationPreferences))
             {
                 writer.WritePropertyName("notificationPreferences"u8);
                 writer.WriteStartArray();
@@ -36,17 +37,17 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
                 writer.WriteEndArray();
             }
-            if (TransportPreferences != null)
+            if (Optional.IsDefined(TransportPreferences))
             {
                 writer.WritePropertyName("transportPreferences"u8);
                 writer.WriteObjectValue(TransportPreferences);
             }
-            if (EncryptionPreferences != null)
+            if (Optional.IsDefined(EncryptionPreferences))
             {
                 writer.WritePropertyName("encryptionPreferences"u8);
                 writer.WriteObjectValue(EncryptionPreferences);
             }
-            if (ManagementResourcePreferences != null)
+            if (Optional.IsDefined(ManagementResourcePreferences))
             {
                 writer.WritePropertyName("managementResourcePreferences"u8);
                 writer.WriteObjectValue(ManagementResourcePreferences);
@@ -90,9 +91,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 return null;
             }
             IList<NotificationPreference> notificationPreferences = default;
-            Optional<TransportPreferences> transportPreferences = default;
-            Optional<EncryptionPreferences> encryptionPreferences = default;
-            Optional<ManagementResourcePreferences> managementResourcePreferences = default;
+            TransportPreferences transportPreferences = default;
+            EncryptionPreferences encryptionPreferences = default;
+            ManagementResourcePreferences managementResourcePreferences = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OrderItemPreferences(notificationPreferences ?? new ChangeTrackingList<NotificationPreference>(), transportPreferences.Value, encryptionPreferences.Value, managementResourcePreferences.Value, serializedAdditionalRawData);
+            return new OrderItemPreferences(notificationPreferences ?? new ChangeTrackingList<NotificationPreference>(), transportPreferences, encryptionPreferences, managementResourcePreferences, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OrderItemPreferences>.Write(ModelReaderWriterOptions options)

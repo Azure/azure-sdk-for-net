@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
             writer.WriteObjectValue(ExtendedLocation);
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -58,43 +58,43 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && DetailedStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DetailedStatus))
             {
                 writer.WritePropertyName("detailedStatus"u8);
                 writer.WriteStringValue(DetailedStatus.Value.ToString());
             }
-            if (options.Format != "W" && DetailedStatusMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(DetailedStatusMessage))
             {
                 writer.WritePropertyName("detailedStatusMessage"u8);
                 writer.WriteStringValue(DetailedStatusMessage);
             }
             writer.WritePropertyName("enabled"u8);
             writer.WriteStringValue(Enabled.ToString());
-            if (ExpireOn.HasValue)
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expiration"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (options.Format != "W" && PrivateLinkServiceId != null)
+            if (options.Format != "W" && Optional.IsDefined(PrivateLinkServiceId))
             {
                 writer.WritePropertyName("privateLinkServiceId"u8);
                 writer.WriteStringValue(PrivateLinkServiceId);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("sshPublicKey"u8);
             writer.WriteObjectValue(SshPublicKey);
-            if (options.Format != "W" && VirtualMachineAccessId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(VirtualMachineAccessId))
             {
                 writer.WritePropertyName("virtualMachineAccessId"u8);
                 writer.WriteStringValue(VirtualMachineAccessId.Value);
@@ -144,15 +144,15 @@ namespace Azure.ResourceManager.NetworkCloud
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ConsoleDetailedStatus> detailedStatus = default;
-            Optional<string> detailedStatusMessage = default;
+            SystemData systemData = default;
+            ConsoleDetailedStatus? detailedStatus = default;
+            string detailedStatusMessage = default;
             ConsoleEnabled enabled = default;
-            Optional<DateTimeOffset> expiration = default;
-            Optional<ResourceIdentifier> privateLinkServiceId = default;
-            Optional<ConsoleProvisioningState> provisioningState = default;
+            DateTimeOffset? expiration = default;
+            ResourceIdentifier privateLinkServiceId = default;
+            ConsoleProvisioningState? provisioningState = default;
             NetworkCloudSshPublicKey sshPublicKey = default;
-            Optional<Guid> virtualMachineAccessId = default;
+            Guid? virtualMachineAccessId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -287,18 +287,18 @@ namespace Azure.ResourceManager.NetworkCloud
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 extendedLocation,
-                Optional.ToNullable(detailedStatus),
-                detailedStatusMessage.Value,
+                detailedStatus,
+                detailedStatusMessage,
                 enabled,
-                Optional.ToNullable(expiration),
-                privateLinkServiceId.Value,
-                Optional.ToNullable(provisioningState),
+                expiration,
+                privateLinkServiceId,
+                provisioningState,
                 sshPublicKey,
-                Optional.ToNullable(virtualMachineAccessId),
+                virtualMachineAccessId,
                 serializedAdditionalRawData);
         }
 

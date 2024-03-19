@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ResourceType != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Name.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name.Value.ToString());
             }
-            if (options.Format != "W" && Kind != null)
+            if (options.Format != "W" && Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (options.Format != "W" && Tier.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier.Value.ToString());
             }
-            if (options.Format != "W" && Size != null)
+            if (options.Format != "W" && Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteStringValue(Size);
             }
-            if (options.Format != "W" && Family != null)
+            if (options.Format != "W" && Optional.IsDefined(Family))
             {
                 writer.WritePropertyName("family"u8);
                 writer.WriteStringValue(Family);
             }
-            if (options.Format != "W" && !(Locations is ChangeTrackingList<AzureLocation> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Locations))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(ApiVersions is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ApiVersions))
             {
                 writer.WritePropertyName("apiVersions"u8);
                 writer.WriteStartArray();
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(LocationInfo is ChangeTrackingList<DataBoxEdgeSkuLocationInfo> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(LocationInfo))
             {
                 writer.WritePropertyName("locationInfo"u8);
                 writer.WriteStartArray();
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(Costs is ChangeTrackingList<DataBoxEdgeSkuCost> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Costs))
             {
                 writer.WritePropertyName("costs"u8);
                 writer.WriteStartArray();
@@ -96,22 +97,22 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && SignupOption.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SignupOption))
             {
                 writer.WritePropertyName("signupOption"u8);
                 writer.WriteStringValue(SignupOption.Value.ToString());
             }
-            if (options.Format != "W" && Version.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version.Value.ToString());
             }
-            if (options.Format != "W" && Availability.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Availability))
             {
                 writer.WritePropertyName("availability"u8);
                 writer.WriteStringValue(Availability.Value.ToString());
             }
-            if (options.Format != "W" && !(ShipmentTypes is ChangeTrackingList<DataBoxEdgeShipmentType> collection3 && collection3.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ShipmentTypes))
             {
                 writer.WritePropertyName("shipmentTypes"u8);
                 writer.WriteStartArray();
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(Capabilities is ChangeTrackingList<DataBoxEdgeSkuCapability> collection4 && collection4.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartArray();
@@ -169,19 +170,19 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<string> resourceType = default;
-            Optional<DataBoxEdgeSkuName> name = default;
-            Optional<string> kind = default;
-            Optional<DataBoxEdgeSkuTier> tier = default;
-            Optional<string> size = default;
-            Optional<string> family = default;
+            string resourceType = default;
+            DataBoxEdgeSkuName? name = default;
+            string kind = default;
+            DataBoxEdgeSkuTier? tier = default;
+            string size = default;
+            string family = default;
             IReadOnlyList<AzureLocation> locations = default;
             IReadOnlyList<string> apiVersions = default;
             IReadOnlyList<DataBoxEdgeSkuLocationInfo> locationInfo = default;
             IReadOnlyList<DataBoxEdgeSkuCost> costs = default;
-            Optional<DataBoxEdgeSkuSignupOption> signupOption = default;
-            Optional<DataBoxEdgeSkuVersion> version = default;
-            Optional<DataBoxEdgeSkuAvailability> availability = default;
+            DataBoxEdgeSkuSignupOption? signupOption = default;
+            DataBoxEdgeSkuVersion? version = default;
+            DataBoxEdgeSkuAvailability? availability = default;
             IReadOnlyList<DataBoxEdgeShipmentType> shipmentTypes = default;
             IReadOnlyList<DataBoxEdgeSkuCapability> capabilities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -344,19 +345,19 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AvailableDataBoxEdgeSku(
-                resourceType.Value,
-                Optional.ToNullable(name),
-                kind.Value,
-                Optional.ToNullable(tier),
-                size.Value,
-                family.Value,
+                resourceType,
+                name,
+                kind,
+                tier,
+                size,
+                family,
                 locations ?? new ChangeTrackingList<AzureLocation>(),
                 apiVersions ?? new ChangeTrackingList<string>(),
                 locationInfo ?? new ChangeTrackingList<DataBoxEdgeSkuLocationInfo>(),
                 costs ?? new ChangeTrackingList<DataBoxEdgeSkuCost>(),
-                Optional.ToNullable(signupOption),
-                Optional.ToNullable(version),
-                Optional.ToNullable(availability),
+                signupOption,
+                version,
+                availability,
                 shipmentTypes ?? new ChangeTrackingList<DataBoxEdgeShipmentType>(),
                 capabilities ?? new ChangeTrackingList<DataBoxEdgeSkuCapability>(),
                 serializedAdditionalRawData);

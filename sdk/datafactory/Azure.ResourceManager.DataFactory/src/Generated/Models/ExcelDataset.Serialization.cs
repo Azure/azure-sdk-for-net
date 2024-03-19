@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -29,24 +30,24 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DatasetType);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Structure != null)
+            if (Optional.IsDefined(Structure))
             {
                 writer.WritePropertyName("structure"u8);
                 JsonSerializer.Serialize(writer, Structure);
             }
-            if (Schema != null)
+            if (Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
                 JsonSerializer.Serialize(writer, Schema);
             }
             writer.WritePropertyName("linkedServiceName"u8);
             JsonSerializer.Serialize(writer, LinkedServiceName);
-            if (!(Parameters is ChangeTrackingDictionary<string, EntityParameterSpecification> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -57,7 +58,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(Annotations is ChangeTrackingList<BinaryData> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -79,44 +80,44 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Folder != null)
+            if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
                 writer.WriteObjectValue(Folder);
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (DataLocation != null)
+            if (Optional.IsDefined(DataLocation))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteObjectValue(DataLocation);
             }
-            if (SheetName != null)
+            if (Optional.IsDefined(SheetName))
             {
                 writer.WritePropertyName("sheetName"u8);
                 JsonSerializer.Serialize(writer, SheetName);
             }
-            if (SheetIndex != null)
+            if (Optional.IsDefined(SheetIndex))
             {
                 writer.WritePropertyName("sheetIndex"u8);
                 JsonSerializer.Serialize(writer, SheetIndex);
             }
-            if (Range != null)
+            if (Optional.IsDefined(Range))
             {
                 writer.WritePropertyName("range"u8);
                 JsonSerializer.Serialize(writer, Range);
             }
-            if (FirstRowAsHeader != null)
+            if (Optional.IsDefined(FirstRowAsHeader))
             {
                 writer.WritePropertyName("firstRowAsHeader"u8);
                 JsonSerializer.Serialize(writer, FirstRowAsHeader);
             }
-            if (Compression != null)
+            if (Optional.IsDefined(Compression))
             {
                 writer.WritePropertyName("compression"u8);
                 writer.WriteObjectValue(Compression);
             }
-            if (NullValue != null)
+            if (Optional.IsDefined(NullValue))
             {
                 writer.WritePropertyName("nullValue"u8);
                 JsonSerializer.Serialize(writer, NullValue);
@@ -158,20 +159,20 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Optional<string> description = default;
-            Optional<DataFactoryElement<IList<DatasetDataElement>>> structure = default;
-            Optional<DataFactoryElement<IList<DatasetSchemaDataElement>>> schema = default;
+            string description = default;
+            DataFactoryElement<IList<DatasetDataElement>> structure = default;
+            DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default;
             DataFactoryLinkedServiceReference linkedServiceName = default;
             IDictionary<string, EntityParameterSpecification> parameters = default;
             IList<BinaryData> annotations = default;
-            Optional<DatasetFolder> folder = default;
-            Optional<DatasetLocation> location = default;
-            Optional<DataFactoryElement<string>> sheetName = default;
-            Optional<DataFactoryElement<int>> sheetIndex = default;
-            Optional<DataFactoryElement<string>> range = default;
-            Optional<DataFactoryElement<bool>> firstRowAsHeader = default;
-            Optional<DatasetCompression> compression = default;
-            Optional<DataFactoryElement<string>> nullValue = default;
+            DatasetFolder folder = default;
+            DatasetLocation location = default;
+            DataFactoryElement<string> sheetName = default;
+            DataFactoryElement<int> sheetIndex = default;
+            DataFactoryElement<string> range = default;
+            DataFactoryElement<bool> firstRowAsHeader = default;
+            DatasetCompression compression = default;
+            DataFactoryElement<string> nullValue = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -333,21 +334,21 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new ExcelDataset(
                 type,
-                description.Value,
-                structure.Value,
-                schema.Value,
+                description,
+                structure,
+                schema,
                 linkedServiceName,
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 annotations ?? new ChangeTrackingList<BinaryData>(),
-                folder.Value,
+                folder,
                 additionalProperties,
-                location.Value,
-                sheetName.Value,
-                sheetIndex.Value,
-                range.Value,
-                firstRowAsHeader.Value,
-                compression.Value,
-                nullValue.Value);
+                location,
+                sheetName,
+                sheetIndex,
+                range,
+                firstRowAsHeader,
+                compression,
+                nullValue);
         }
 
         BinaryData IPersistableModel<ExcelDataset>.Write(ModelReaderWriterOptions options)

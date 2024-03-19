@@ -60,22 +60,10 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="threadId"/>, <paramref name="contentItems"/> or <paramref name="fileIds"/> is null. </exception>
         internal ThreadMessage(string id, DateTimeOffset createdAt, string threadId, MessageRole role, IEnumerable<MessageContent> contentItems, IEnumerable<string> fileIds, IReadOnlyDictionary<string, string> metadata)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (contentItems == null)
-            {
-                throw new ArgumentNullException(nameof(contentItems));
-            }
-            if (fileIds == null)
-            {
-                throw new ArgumentNullException(nameof(fileIds));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(threadId, nameof(threadId));
+            Argument.AssertNotNull(contentItems, nameof(contentItems));
+            Argument.AssertNotNull(fileIds, nameof(fileIds));
 
             Id = id;
             CreatedAt = createdAt;
@@ -133,7 +121,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <summary>
         /// The list of content items associated with the assistant thread message.
         /// Please note <see cref="MessageContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MessageTextContent"/> and <see cref="MessageImageFileContent"/>.
+        /// The available derived classes include <see cref="MessageImageFileContent"/> and <see cref="MessageTextContent"/>.
         /// </summary>
         public IReadOnlyList<MessageContent> ContentItems { get; }
         /// <summary> If applicable, the ID of the assistant that authored this message. </summary>

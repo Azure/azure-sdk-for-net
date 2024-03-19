@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,57 +27,57 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Mode.HasValue)
+            if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (RequestBodyCheck.HasValue)
+            if (Optional.IsDefined(RequestBodyCheck))
             {
                 writer.WritePropertyName("requestBodyCheck"u8);
                 writer.WriteBooleanValue(RequestBodyCheck.Value);
             }
-            if (RequestBodyInspectLimitInKB.HasValue)
+            if (Optional.IsDefined(RequestBodyInspectLimitInKB))
             {
                 writer.WritePropertyName("requestBodyInspectLimitInKB"u8);
                 writer.WriteNumberValue(RequestBodyInspectLimitInKB.Value);
             }
-            if (RequestBodyEnforcement.HasValue)
+            if (Optional.IsDefined(RequestBodyEnforcement))
             {
                 writer.WritePropertyName("requestBodyEnforcement"u8);
                 writer.WriteBooleanValue(RequestBodyEnforcement.Value);
             }
-            if (MaxRequestBodySizeInKb.HasValue)
+            if (Optional.IsDefined(MaxRequestBodySizeInKb))
             {
                 writer.WritePropertyName("maxRequestBodySizeInKb"u8);
                 writer.WriteNumberValue(MaxRequestBodySizeInKb.Value);
             }
-            if (FileUploadEnforcement.HasValue)
+            if (Optional.IsDefined(FileUploadEnforcement))
             {
                 writer.WritePropertyName("fileUploadEnforcement"u8);
                 writer.WriteBooleanValue(FileUploadEnforcement.Value);
             }
-            if (FileUploadLimitInMb.HasValue)
+            if (Optional.IsDefined(FileUploadLimitInMb))
             {
                 writer.WritePropertyName("fileUploadLimitInMb"u8);
                 writer.WriteNumberValue(FileUploadLimitInMb.Value);
             }
-            if (CustomBlockResponseStatusCode.HasValue)
+            if (Optional.IsDefined(CustomBlockResponseStatusCode))
             {
                 writer.WritePropertyName("customBlockResponseStatusCode"u8);
                 writer.WriteNumberValue(CustomBlockResponseStatusCode.Value);
             }
-            if (CustomBlockResponseBody != null)
+            if (Optional.IsDefined(CustomBlockResponseBody))
             {
                 writer.WritePropertyName("customBlockResponseBody"u8);
                 writer.WriteStringValue(CustomBlockResponseBody);
             }
-            if (LogScrubbing != null)
+            if (Optional.IsDefined(LogScrubbing))
             {
                 writer.WritePropertyName("logScrubbing"u8);
                 writer.WriteObjectValue(LogScrubbing);
@@ -119,17 +120,17 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<WebApplicationFirewallEnabledState> state = default;
-            Optional<WebApplicationFirewallMode> mode = default;
-            Optional<bool> requestBodyCheck = default;
-            Optional<int> requestBodyInspectLimitInKB = default;
-            Optional<bool> requestBodyEnforcement = default;
-            Optional<int> maxRequestBodySizeInKb = default;
-            Optional<bool> fileUploadEnforcement = default;
-            Optional<int> fileUploadLimitInMb = default;
-            Optional<int> customBlockResponseStatusCode = default;
-            Optional<string> customBlockResponseBody = default;
-            Optional<PolicySettingsLogScrubbing> logScrubbing = default;
+            WebApplicationFirewallEnabledState? state = default;
+            WebApplicationFirewallMode? mode = default;
+            bool? requestBodyCheck = default;
+            int? requestBodyInspectLimitInKB = default;
+            bool? requestBodyEnforcement = default;
+            int? maxRequestBodySizeInKb = default;
+            bool? fileUploadEnforcement = default;
+            int? fileUploadLimitInMb = default;
+            int? customBlockResponseStatusCode = default;
+            string customBlockResponseBody = default;
+            PolicySettingsLogScrubbing logScrubbing = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -236,17 +237,17 @@ namespace Azure.ResourceManager.Network.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new PolicySettings(
-                Optional.ToNullable(state),
-                Optional.ToNullable(mode),
-                Optional.ToNullable(requestBodyCheck),
-                Optional.ToNullable(requestBodyInspectLimitInKB),
-                Optional.ToNullable(requestBodyEnforcement),
-                Optional.ToNullable(maxRequestBodySizeInKb),
-                Optional.ToNullable(fileUploadEnforcement),
-                Optional.ToNullable(fileUploadLimitInMb),
-                Optional.ToNullable(customBlockResponseStatusCode),
-                customBlockResponseBody.Value,
-                logScrubbing.Value,
+                state,
+                mode,
+                requestBodyCheck,
+                requestBodyInspectLimitInKB,
+                requestBodyEnforcement,
+                maxRequestBodySizeInKb,
+                fileUploadEnforcement,
+                fileUploadLimitInMb,
+                customBlockResponseStatusCode,
+                customBlockResponseBody,
+                logScrubbing,
                 serializedAdditionalRawData);
         }
 

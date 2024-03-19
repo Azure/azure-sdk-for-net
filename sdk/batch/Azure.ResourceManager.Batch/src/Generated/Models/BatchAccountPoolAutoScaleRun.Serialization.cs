@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -29,12 +30,12 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStartObject();
             writer.WritePropertyName("evaluationTime"u8);
             writer.WriteStringValue(EvaluationOn, "O");
-            if (Results != null)
+            if (Optional.IsDefined(Results))
             {
                 writer.WritePropertyName("results"u8);
                 writer.WriteStringValue(Results);
             }
-            if (Error != null)
+            if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, Error);
@@ -78,8 +79,8 @@ namespace Azure.ResourceManager.Batch.Models
                 return null;
             }
             DateTimeOffset evaluationTime = default;
-            Optional<string> results = default;
-            Optional<ResponseError> error = default;
+            string results = default;
+            ResponseError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchAccountPoolAutoScaleRun(evaluationTime, results.Value, error.Value, serializedAdditionalRawData);
+            return new BatchAccountPoolAutoScaleRun(evaluationTime, results, error, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchAccountPoolAutoScaleRun>.Write(ModelReaderWriterOptions options)

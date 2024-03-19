@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DefenderEasm
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,19 +56,19 @@ namespace Azure.ResourceManager.DefenderEasm
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && DataPlaneEndpoint != null)
+            if (options.Format != "W" && Optional.IsDefined(DataPlaneEndpoint))
             {
                 writer.WritePropertyName("dataPlaneEndpoint"u8);
                 writer.WriteStringValue(DataPlaneEndpoint);
@@ -117,9 +117,9 @@ namespace Azure.ResourceManager.DefenderEasm
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<EasmResourceProvisioningState> provisioningState = default;
-            Optional<string> dataPlaneEndpoint = default;
+            SystemData systemData = default;
+            EasmResourceProvisioningState? provisioningState = default;
+            string dataPlaneEndpoint = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -203,11 +203,11 @@ namespace Azure.ResourceManager.DefenderEasm
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(provisioningState),
-                dataPlaneEndpoint.Value,
+                provisioningState,
+                dataPlaneEndpoint,
                 serializedAdditionalRawData);
         }
 

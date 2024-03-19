@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && PublisherName != null)
+            if (options.Format != "W" && Optional.IsDefined(PublisherName))
             {
                 writer.WritePropertyName("publisherName"u8);
                 writer.WriteStringValue(PublisherName);
             }
-            if (options.Format != "W" && PublisherScope.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PublisherScope))
             {
                 writer.WritePropertyName("publisherScope"u8);
                 writer.WriteStringValue(PublisherScope.Value.ToString());
             }
-            if (options.Format != "W" && ConfigurationGroupSchemaName != null)
+            if (options.Format != "W" && Optional.IsDefined(ConfigurationGroupSchemaName))
             {
                 writer.WritePropertyName("configurationGroupSchemaName"u8);
                 writer.WriteStringValue(ConfigurationGroupSchemaName);
             }
-            if (options.Format != "W" && ConfigurationGroupSchemaOfferingLocation != null)
+            if (options.Format != "W" && Optional.IsDefined(ConfigurationGroupSchemaOfferingLocation))
             {
                 writer.WritePropertyName("configurationGroupSchemaOfferingLocation"u8);
                 writer.WriteStringValue(ConfigurationGroupSchemaOfferingLocation);
             }
-            if (ConfigurationGroupSchemaResourceReference != null)
+            if (Optional.IsDefined(ConfigurationGroupSchemaResourceReference))
             {
                 writer.WritePropertyName("configurationGroupSchemaResourceReference"u8);
                 writer.WriteObjectValue(ConfigurationGroupSchemaResourceReference);
@@ -96,12 +97,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<string> publisherName = default;
-            Optional<PublisherScope> publisherScope = default;
-            Optional<string> configurationGroupSchemaName = default;
-            Optional<string> configurationGroupSchemaOfferingLocation = default;
-            Optional<DeploymentResourceIdReference> configurationGroupSchemaResourceReference = default;
+            ProvisioningState? provisioningState = default;
+            string publisherName = default;
+            PublisherScope? publisherScope = default;
+            string configurationGroupSchemaName = default;
+            string configurationGroupSchemaOfferingLocation = default;
+            DeploymentResourceIdReference configurationGroupSchemaResourceReference = default;
             ConfigurationGroupValueConfigurationType configurationType = "AutoRest.CSharp.Output.Models.Types.EnumTypeValue";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -161,12 +162,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new UnknownConfigurationGroupValuePropertiesFormat(
-                Optional.ToNullable(provisioningState),
-                publisherName.Value,
-                Optional.ToNullable(publisherScope),
-                configurationGroupSchemaName.Value,
-                configurationGroupSchemaOfferingLocation.Value,
-                configurationGroupSchemaResourceReference.Value,
+                provisioningState,
+                publisherName,
+                publisherScope,
+                configurationGroupSchemaName,
+                configurationGroupSchemaOfferingLocation,
+                configurationGroupSchemaResourceReference,
                 configurationType,
                 serializedAdditionalRawData);
         }

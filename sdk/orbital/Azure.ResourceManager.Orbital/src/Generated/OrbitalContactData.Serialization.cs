@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Orbital
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -50,94 +50,94 @@ namespace Azure.ResourceManager.Orbital
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (ReservationStartOn.HasValue)
+            if (Optional.IsDefined(ReservationStartOn))
             {
                 writer.WritePropertyName("reservationStartTime"u8);
                 writer.WriteStringValue(ReservationStartOn.Value, "O");
             }
-            if (ReservationEndOn.HasValue)
+            if (Optional.IsDefined(ReservationEndOn))
             {
                 writer.WritePropertyName("reservationEndTime"u8);
                 writer.WriteStringValue(ReservationEndOn.Value, "O");
             }
-            if (options.Format != "W" && RxStartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RxStartOn))
             {
                 writer.WritePropertyName("rxStartTime"u8);
                 writer.WriteStringValue(RxStartOn.Value, "O");
             }
-            if (options.Format != "W" && RxEndOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RxEndOn))
             {
                 writer.WritePropertyName("rxEndTime"u8);
                 writer.WriteStringValue(RxEndOn.Value, "O");
             }
-            if (options.Format != "W" && TxStartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TxStartOn))
             {
                 writer.WritePropertyName("txStartTime"u8);
                 writer.WriteStringValue(TxStartOn.Value, "O");
             }
-            if (options.Format != "W" && TxEndOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TxEndOn))
             {
                 writer.WritePropertyName("txEndTime"u8);
                 writer.WriteStringValue(TxEndOn.Value, "O");
             }
-            if (options.Format != "W" && ErrorMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(ErrorMessage))
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
             }
-            if (options.Format != "W" && MaximumElevationDegrees.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MaximumElevationDegrees))
             {
                 writer.WritePropertyName("maximumElevationDegrees"u8);
                 writer.WriteNumberValue(MaximumElevationDegrees.Value);
             }
-            if (options.Format != "W" && StartAzimuthDegrees.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartAzimuthDegrees))
             {
                 writer.WritePropertyName("startAzimuthDegrees"u8);
                 writer.WriteNumberValue(StartAzimuthDegrees.Value);
             }
-            if (options.Format != "W" && EndAzimuthDegrees.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndAzimuthDegrees))
             {
                 writer.WritePropertyName("endAzimuthDegrees"u8);
                 writer.WriteNumberValue(EndAzimuthDegrees.Value);
             }
-            if (GroundStationName != null)
+            if (Optional.IsDefined(GroundStationName))
             {
                 writer.WritePropertyName("groundStationName"u8);
                 writer.WriteStringValue(GroundStationName);
             }
-            if (options.Format != "W" && StartElevationDegrees.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartElevationDegrees))
             {
                 writer.WritePropertyName("startElevationDegrees"u8);
                 writer.WriteNumberValue(StartElevationDegrees.Value);
             }
-            if (options.Format != "W" && EndElevationDegrees.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndElevationDegrees))
             {
                 writer.WritePropertyName("endElevationDegrees"u8);
                 writer.WriteNumberValue(EndElevationDegrees.Value);
             }
-            if (options.Format != "W" && AntennaConfiguration != null)
+            if (options.Format != "W" && Optional.IsDefined(AntennaConfiguration))
             {
                 writer.WritePropertyName("antennaConfiguration"u8);
                 writer.WriteObjectValue(AntennaConfiguration);
             }
-            if (ContactProfile != null)
+            if (Optional.IsDefined(ContactProfile))
             {
                 writer.WritePropertyName("contactProfile"u8);
                 JsonSerializer.Serialize(writer, ContactProfile);
@@ -181,28 +181,28 @@ namespace Azure.ResourceManager.Orbital
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<OrbitalProvisioningState> provisioningState = default;
-            Optional<OrbitalContactStatus> status = default;
-            Optional<DateTimeOffset> reservationStartTime = default;
-            Optional<DateTimeOffset> reservationEndTime = default;
-            Optional<DateTimeOffset> rxStartTime = default;
-            Optional<DateTimeOffset> rxEndTime = default;
-            Optional<DateTimeOffset> txStartTime = default;
-            Optional<DateTimeOffset> txEndTime = default;
-            Optional<string> errorMessage = default;
-            Optional<float> maximumElevationDegrees = default;
-            Optional<float> startAzimuthDegrees = default;
-            Optional<float> endAzimuthDegrees = default;
-            Optional<string> groundStationName = default;
-            Optional<float> startElevationDegrees = default;
-            Optional<float> endElevationDegrees = default;
-            Optional<OrbitalContactAntennaConfiguration> antennaConfiguration = default;
-            Optional<WritableSubResource> contactProfile = default;
+            SystemData systemData = default;
+            OrbitalProvisioningState? provisioningState = default;
+            OrbitalContactStatus? status = default;
+            DateTimeOffset? reservationStartTime = default;
+            DateTimeOffset? reservationEndTime = default;
+            DateTimeOffset? rxStartTime = default;
+            DateTimeOffset? rxEndTime = default;
+            DateTimeOffset? txStartTime = default;
+            DateTimeOffset? txEndTime = default;
+            string errorMessage = default;
+            float? maximumElevationDegrees = default;
+            float? startAzimuthDegrees = default;
+            float? endAzimuthDegrees = default;
+            string groundStationName = default;
+            float? startElevationDegrees = default;
+            float? endElevationDegrees = default;
+            OrbitalContactAntennaConfiguration antennaConfiguration = default;
+            WritableSubResource contactProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -407,24 +407,24 @@ namespace Azure.ResourceManager.Orbital
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(etag),
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(status),
-                Optional.ToNullable(reservationStartTime),
-                Optional.ToNullable(reservationEndTime),
-                Optional.ToNullable(rxStartTime),
-                Optional.ToNullable(rxEndTime),
-                Optional.ToNullable(txStartTime),
-                Optional.ToNullable(txEndTime),
-                errorMessage.Value,
-                Optional.ToNullable(maximumElevationDegrees),
-                Optional.ToNullable(startAzimuthDegrees),
-                Optional.ToNullable(endAzimuthDegrees),
-                groundStationName.Value,
-                Optional.ToNullable(startElevationDegrees),
-                Optional.ToNullable(endElevationDegrees),
-                antennaConfiguration.Value,
+                systemData,
+                etag,
+                provisioningState,
+                status,
+                reservationStartTime,
+                reservationEndTime,
+                rxStartTime,
+                rxEndTime,
+                txStartTime,
+                txEndTime,
+                errorMessage,
+                maximumElevationDegrees,
+                startAzimuthDegrees,
+                endAzimuthDegrees,
+                groundStationName,
+                startElevationDegrees,
+                endElevationDegrees,
+                antennaConfiguration,
                 contactProfile,
                 serializedAdditionalRawData);
         }

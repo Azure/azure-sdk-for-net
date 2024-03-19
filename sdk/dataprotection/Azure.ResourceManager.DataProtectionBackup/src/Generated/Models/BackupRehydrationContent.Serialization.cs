@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStartObject();
             writer.WritePropertyName("recoveryPointId"u8);
             writer.WriteStringValue(RecoveryPointId);
-            if (RehydrationPriority.HasValue)
+            if (Optional.IsDefined(RehydrationPriority))
             {
                 writer.WritePropertyName("rehydrationPriority"u8);
                 writer.WriteStringValue(RehydrationPriority.Value.ToString());
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 return null;
             }
             string recoveryPointId = default;
-            Optional<BackupRehydrationPriority> rehydrationPriority = default;
+            BackupRehydrationPriority? rehydrationPriority = default;
             TimeSpan rehydrationRetentionDuration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -105,7 +106,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupRehydrationContent(recoveryPointId, Optional.ToNullable(rehydrationPriority), rehydrationRetentionDuration, serializedAdditionalRawData);
+            return new BackupRehydrationContent(recoveryPointId, rehydrationPriority, rehydrationRetentionDuration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupRehydrationContent>.Write(ModelReaderWriterOptions options)

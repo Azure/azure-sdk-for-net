@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (ErrorCode.HasValue)
+            if (Optional.IsDefined(ErrorCode))
             {
                 writer.WritePropertyName("errorCode"u8);
                 writer.WriteNumberValue(ErrorCode.Value);
             }
-            if (ErrorString != null)
+            if (Optional.IsDefined(ErrorString))
             {
                 writer.WritePropertyName("errorString"u8);
                 writer.WriteStringValue(ErrorString);
             }
-            if (ErrorTitle != null)
+            if (Optional.IsDefined(ErrorTitle))
             {
                 writer.WritePropertyName("errorTitle"u8);
                 writer.WriteStringValue(ErrorTitle);
             }
-            if (!(Recommendations is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Recommendations))
             {
                 writer.WritePropertyName("recommendations"u8);
                 writer.WriteStartArray();
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (AdditionalDetails != null)
+            if (Optional.IsDefined(AdditionalDetails))
             {
                 writer.WritePropertyName("additionalDetails"u8);
                 writer.WriteStringValue(AdditionalDetails);
@@ -94,11 +95,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<int> errorCode = default;
-            Optional<string> errorString = default;
-            Optional<string> errorTitle = default;
+            int? errorCode = default;
+            string errorString = default;
+            string errorTitle = default;
             IList<string> recommendations = default;
-            Optional<string> additionalDetails = default;
+            string additionalDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -148,11 +149,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new WorkloadErrorInfo(
-                Optional.ToNullable(errorCode),
-                errorString.Value,
-                errorTitle.Value,
+                errorCode,
+                errorString,
+                errorTitle,
                 recommendations ?? new ChangeTrackingList<string>(),
-                additionalDetails.Value,
+                additionalDetails,
                 serializedAdditionalRawData);
         }
 

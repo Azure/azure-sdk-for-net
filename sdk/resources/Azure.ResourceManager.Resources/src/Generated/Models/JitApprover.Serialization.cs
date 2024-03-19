@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -28,12 +29,12 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (ApproverType.HasValue)
+            if (Optional.IsDefined(ApproverType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ApproverType.Value.ToString());
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
@@ -77,8 +78,8 @@ namespace Azure.ResourceManager.Resources.Models
                 return null;
             }
             string id = default;
-            Optional<JitApproverType> type = default;
-            Optional<string> displayName = default;
+            JitApproverType? type = default;
+            string displayName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +109,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JitApprover(id, Optional.ToNullable(type), displayName.Value, serializedAdditionalRawData);
+            return new JitApprover(id, type, displayName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JitApprover>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataShare;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare.Models
@@ -44,38 +45,38 @@ namespace Azure.ResourceManager.DataShare.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdAt"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("recurrenceInterval"u8);
             writer.WriteStringValue(RecurrenceInterval.ToString());
-            if (SynchronizationMode.HasValue)
+            if (Optional.IsDefined(SynchronizationMode))
             {
                 writer.WritePropertyName("synchronizationMode"u8);
                 writer.WriteStringValue(SynchronizationMode.Value.ToString());
             }
             writer.WritePropertyName("synchronizationTime"u8);
             writer.WriteStringValue(SynchronizeOn, "O");
-            if (options.Format != "W" && TriggerStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TriggerStatus))
             {
                 writer.WritePropertyName("triggerStatus"u8);
                 writer.WriteStringValue(TriggerStatus.Value.ToString());
             }
-            if (options.Format != "W" && UserName != null)
+            if (options.Format != "W" && Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
                 writer.WriteStringValue(UserName);
@@ -123,14 +124,14 @@ namespace Azure.ResourceManager.DataShare.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<DataShareProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            DateTimeOffset? createdAt = default;
+            DataShareProvisioningState? provisioningState = default;
             DataShareSynchronizationRecurrenceInterval recurrenceInterval = default;
-            Optional<SynchronizationMode> synchronizationMode = default;
+            SynchronizationMode? synchronizationMode = default;
             DateTimeOffset synchronizationTime = default;
-            Optional<DataShareTriggerStatus> triggerStatus = default;
-            Optional<string> userName = default;
+            DataShareTriggerStatus? triggerStatus = default;
+            string userName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -237,16 +238,16 @@ namespace Azure.ResourceManager.DataShare.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 kind,
                 serializedAdditionalRawData,
-                Optional.ToNullable(createdAt),
-                Optional.ToNullable(provisioningState),
+                createdAt,
+                provisioningState,
                 recurrenceInterval,
-                Optional.ToNullable(synchronizationMode),
+                synchronizationMode,
                 synchronizationTime,
-                Optional.ToNullable(triggerStatus),
-                userName.Value);
+                triggerStatus,
+                userName);
         }
 
         BinaryData IPersistableModel<ScheduledTrigger>.Write(ModelReaderWriterOptions options)

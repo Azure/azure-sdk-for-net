@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (BackendHttpSettings != null)
+            if (Optional.IsDefined(BackendHttpSettings))
             {
                 writer.WritePropertyName("backendHttpSettings"u8);
                 writer.WriteObjectValue(BackendHttpSettings);
             }
-            if (!(Servers is ChangeTrackingList<ApplicationGatewayBackendHealthServer> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Servers))
             {
                 writer.WritePropertyName("servers"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ApplicationGatewayBackendHttpSettings> backendHttpSettings = default;
+            ApplicationGatewayBackendHttpSettings backendHttpSettings = default;
             IReadOnlyList<ApplicationGatewayBackendHealthServer> servers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayBackendHealthHttpSettings(backendHttpSettings.Value, servers ?? new ChangeTrackingList<ApplicationGatewayBackendHealthServer>(), serializedAdditionalRawData);
+            return new ApplicationGatewayBackendHealthHttpSettings(backendHttpSettings, servers ?? new ChangeTrackingList<ApplicationGatewayBackendHealthServer>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayBackendHealthHttpSettings>.Write(ModelReaderWriterOptions options)

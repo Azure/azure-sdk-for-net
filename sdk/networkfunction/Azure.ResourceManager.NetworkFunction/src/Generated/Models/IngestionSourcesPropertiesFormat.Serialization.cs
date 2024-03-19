@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkFunction;
 
 namespace Azure.ResourceManager.NetworkFunction.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.NetworkFunction.Models
             }
 
             writer.WriteStartObject();
-            if (SourceType.HasValue)
+            if (Optional.IsDefined(SourceType))
             {
                 writer.WritePropertyName("sourceType"u8);
                 writer.WriteStringValue(SourceType.Value.ToString());
             }
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.NetworkFunction.Models
             {
                 return null;
             }
-            Optional<IngestionSourceType> sourceType = default;
-            Optional<string> resourceId = default;
+            IngestionSourceType? sourceType = default;
+            string resourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IngestionSourcesPropertiesFormat(Optional.ToNullable(sourceType), resourceId.Value, serializedAdditionalRawData);
+            return new IngestionSourcesPropertiesFormat(sourceType, resourceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IngestionSourcesPropertiesFormat>.Write(ModelReaderWriterOptions options)

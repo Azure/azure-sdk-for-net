@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (ConfidentialVmEncryptionType.HasValue)
+            if (Optional.IsDefined(ConfidentialVmEncryptionType))
             {
                 writer.WritePropertyName("confidentialVMEncryptionType"u8);
                 writer.WriteStringValue(ConfidentialVmEncryptionType.Value.ToString());
             }
-            if (SecureVmDiskEncryptionSetId != null)
+            if (Optional.IsDefined(SecureVmDiskEncryptionSetId))
             {
                 writer.WritePropertyName("secureVMDiskEncryptionSetId"u8);
                 writer.WriteStringValue(SecureVmDiskEncryptionSetId);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<ConfidentialVmEncryptionType> confidentialVmEncryptionType = default;
-            Optional<string> secureVmDiskEncryptionSetId = default;
+            ConfidentialVmEncryptionType? confidentialVmEncryptionType = default;
+            string secureVmDiskEncryptionSetId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OSDiskImageSecurityProfile(Optional.ToNullable(confidentialVmEncryptionType), secureVmDiskEncryptionSetId.Value, serializedAdditionalRawData);
+            return new OSDiskImageSecurityProfile(confidentialVmEncryptionType, secureVmDiskEncryptionSetId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OSDiskImageSecurityProfile>.Write(ModelReaderWriterOptions options)

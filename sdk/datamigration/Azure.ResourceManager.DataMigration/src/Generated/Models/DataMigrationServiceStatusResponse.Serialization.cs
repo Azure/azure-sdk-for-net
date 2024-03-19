@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (AgentVersion != null)
+            if (Optional.IsDefined(AgentVersion))
             {
                 writer.WritePropertyName("agentVersion"u8);
                 writer.WriteStringValue(AgentVersion);
             }
-            if (AgentConfiguration != null)
+            if (Optional.IsDefined(AgentConfiguration))
             {
                 writer.WritePropertyName("agentConfiguration"u8);
 #if NET6_0_OR_GREATER
@@ -43,17 +44,17 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
 #endif
             }
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (VmSize != null)
+            if (Optional.IsDefined(VmSize))
             {
                 writer.WritePropertyName("vmSize"u8);
                 writer.WriteStringValue(VmSize);
             }
-            if (!(SupportedTaskTypes is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SupportedTaskTypes))
             {
                 writer.WritePropertyName("supportedTaskTypes"u8);
                 writer.WriteStartArray();
@@ -101,10 +102,10 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> agentVersion = default;
-            Optional<BinaryData> agentConfiguration = default;
-            Optional<string> status = default;
-            Optional<string> vmSize = default;
+            string agentVersion = default;
+            BinaryData agentConfiguration = default;
+            string status = default;
+            string vmSize = default;
             IReadOnlyList<string> supportedTaskTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -155,10 +156,10 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DataMigrationServiceStatusResponse(
-                agentVersion.Value,
-                agentConfiguration.Value,
-                status.Value,
-                vmSize.Value,
+                agentVersion,
+                agentConfiguration,
+                status,
+                vmSize,
                 supportedTaskTypes ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }

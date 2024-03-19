@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StreamAnalytics;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (DataType != null)
+            if (Optional.IsDefined(DataType))
             {
                 writer.WritePropertyName("dataType"u8);
                 writer.WriteStringValue(DataType);
             }
-            if (MapTo.HasValue)
+            if (Optional.IsDefined(MapTo))
             {
                 writer.WritePropertyName("mapTo"u8);
                 writer.WriteNumberValue(MapTo.Value);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> dataType = default;
-            Optional<int> mapTo = default;
+            string name = default;
+            string dataType = default;
+            int? mapTo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningStudioInputColumn(name.Value, dataType.Value, Optional.ToNullable(mapTo), serializedAdditionalRawData);
+            return new MachineLearningStudioInputColumn(name, dataType, mapTo, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningStudioInputColumn>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -28,17 +29,17 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && DisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteObjectValue(Description);
             }
-            if (options.Format != "W" && !(ImageInformation is ChangeTrackingList<EdgeOrderProductImageInformation> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ImageInformation))
             {
                 writer.WritePropertyName("imageInformation"u8);
                 writer.WriteStartArray();
@@ -48,22 +49,22 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && CostInformation != null)
+            if (options.Format != "W" && Optional.IsDefined(CostInformation))
             {
                 writer.WritePropertyName("costInformation"u8);
                 writer.WriteObjectValue(CostInformation);
             }
-            if (options.Format != "W" && AvailabilityInformation != null)
+            if (options.Format != "W" && Optional.IsDefined(AvailabilityInformation))
             {
                 writer.WritePropertyName("availabilityInformation"u8);
                 writer.WriteObjectValue(AvailabilityInformation);
             }
-            if (options.Format != "W" && HierarchyInformation != null)
+            if (options.Format != "W" && Optional.IsDefined(HierarchyInformation))
             {
                 writer.WritePropertyName("hierarchyInformation"u8);
                 writer.WriteObjectValue(HierarchyInformation);
             }
-            if (options.Format != "W" && !(FilterableProperties is ChangeTrackingList<FilterableProperty> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(FilterableProperties))
             {
                 writer.WritePropertyName("filterableProperties"u8);
                 writer.WriteStartArray();
@@ -73,7 +74,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(Products is ChangeTrackingList<EdgeOrderProduct> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Products))
             {
                 writer.WritePropertyName("products"u8);
                 writer.WriteStartArray();
@@ -122,12 +123,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<string> displayName = default;
-            Optional<ProductDescription> description = default;
+            string displayName = default;
+            ProductDescription description = default;
             IReadOnlyList<EdgeOrderProductImageInformation> imageInformation = default;
-            Optional<EdgeOrderProductCostInformation> costInformation = default;
-            Optional<ProductAvailabilityInformation> availabilityInformation = default;
-            Optional<HierarchyInformation> hierarchyInformation = default;
+            EdgeOrderProductCostInformation costInformation = default;
+            ProductAvailabilityInformation availabilityInformation = default;
+            HierarchyInformation hierarchyInformation = default;
             IReadOnlyList<FilterableProperty> filterableProperties = default;
             IReadOnlyList<EdgeOrderProduct> products = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -236,12 +237,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ProductLine(
-                displayName.Value,
-                description.Value,
+                displayName,
+                description,
                 imageInformation ?? new ChangeTrackingList<EdgeOrderProductImageInformation>(),
-                costInformation.Value,
-                availabilityInformation.Value,
-                hierarchyInformation.Value,
+                costInformation,
+                availabilityInformation,
+                hierarchyInformation,
                 filterableProperties ?? new ChangeTrackingList<FilterableProperty>(),
                 products ?? new ChangeTrackingList<EdgeOrderProduct>(),
                 serializedAdditionalRawData);

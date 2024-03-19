@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (ContainerName != null)
+            if (Optional.IsDefined(ContainerName))
             {
                 writer.WritePropertyName("containerName"u8);
                 writer.WriteStringValue(ContainerName);
             }
-            if (SourceProcessServerId.HasValue)
+            if (Optional.IsDefined(SourceProcessServerId))
             {
                 writer.WritePropertyName("sourceProcessServerId"u8);
                 writer.WriteStringValue(SourceProcessServerId.Value);
             }
-            if (TargetProcessServerId.HasValue)
+            if (Optional.IsDefined(TargetProcessServerId))
             {
                 writer.WritePropertyName("targetProcessServerId"u8);
                 writer.WriteStringValue(TargetProcessServerId.Value);
             }
-            if (!(VmsToMigrate is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(VmsToMigrate))
             {
                 writer.WritePropertyName("vmsToMigrate"u8);
                 writer.WriteStartArray();
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (UpdateType != null)
+            if (Optional.IsDefined(UpdateType))
             {
                 writer.WritePropertyName("updateType"u8);
                 writer.WriteStringValue(UpdateType);
@@ -94,11 +95,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> containerName = default;
-            Optional<Guid> sourceProcessServerId = default;
-            Optional<Guid> targetProcessServerId = default;
+            string containerName = default;
+            Guid? sourceProcessServerId = default;
+            Guid? targetProcessServerId = default;
             IList<string> vmsToMigrate = default;
-            Optional<string> updateType = default;
+            string updateType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,11 +153,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new FailoverProcessServerProperties(
-                containerName.Value,
-                Optional.ToNullable(sourceProcessServerId),
-                Optional.ToNullable(targetProcessServerId),
+                containerName,
+                sourceProcessServerId,
+                targetProcessServerId,
                 vmsToMigrate ?? new ChangeTrackingList<string>(),
-                updateType.Value,
+                updateType,
                 serializedAdditionalRawData);
         }
 

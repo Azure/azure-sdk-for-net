@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -30,12 +31,12 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("script"u8);
             writer.WriteStringValue(Script);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Parameters is ChangeTrackingList<GalleryApplicationCustomActionParameter> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             string name = default;
             string script = default;
-            Optional<string> description = default;
+            string description = default;
             IList<GalleryApplicationCustomActionParameter> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GalleryApplicationCustomAction(name, script, description.Value, parameters ?? new ChangeTrackingList<GalleryApplicationCustomActionParameter>(), serializedAdditionalRawData);
+            return new GalleryApplicationCustomAction(name, script, description, parameters ?? new ChangeTrackingList<GalleryApplicationCustomActionParameter>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GalleryApplicationCustomAction>.Write(ModelReaderWriterOptions options)

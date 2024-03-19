@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -30,12 +31,12 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStringValue(RuleSetType);
             writer.WritePropertyName("ruleSetVersion"u8);
             writer.WriteStringValue(RuleSetVersion);
-            if (AnomalyScore.HasValue)
+            if (Optional.IsDefined(AnomalyScore))
             {
                 writer.WritePropertyName("anomalyScore"u8);
                 writer.WriteNumberValue(AnomalyScore.Value);
             }
-            if (!(RuleGroupOverrides is ChangeTrackingList<ManagedRuleGroupOverrideSetting> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(RuleGroupOverrides))
             {
                 writer.WritePropertyName("ruleGroupOverrides"u8);
                 writer.WriteStartArray();
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             string ruleSetType = default;
             string ruleSetVersion = default;
-            Optional<int> anomalyScore = default;
+            int? anomalyScore = default;
             IList<ManagedRuleGroupOverrideSetting> ruleGroupOverrides = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WafPolicyManagedRuleSet(ruleSetType, ruleSetVersion, Optional.ToNullable(anomalyScore), ruleGroupOverrides ?? new ChangeTrackingList<ManagedRuleGroupOverrideSetting>(), serializedAdditionalRawData);
+            return new WafPolicyManagedRuleSet(ruleSetType, ruleSetVersion, anomalyScore, ruleGroupOverrides ?? new ChangeTrackingList<ManagedRuleGroupOverrideSetting>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WafPolicyManagedRuleSet>.Write(ModelReaderWriterOptions options)

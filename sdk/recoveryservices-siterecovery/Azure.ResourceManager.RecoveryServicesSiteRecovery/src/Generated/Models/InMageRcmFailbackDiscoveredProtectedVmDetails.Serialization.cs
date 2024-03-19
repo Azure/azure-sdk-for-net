@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -27,17 +28,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && VCenterId != null)
+            if (options.Format != "W" && Optional.IsDefined(VCenterId))
             {
                 writer.WritePropertyName("vCenterId"u8);
                 writer.WriteStringValue(VCenterId);
             }
-            if (options.Format != "W" && VCenterFqdn != null)
+            if (options.Format != "W" && Optional.IsDefined(VCenterFqdn))
             {
                 writer.WritePropertyName("vCenterFqdn"u8);
                 writer.WriteStringValue(VCenterFqdn);
             }
-            if (options.Format != "W" && !(Datastores is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Datastores))
             {
                 writer.WritePropertyName("datastores"u8);
                 writer.WriteStartArray();
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(IPAddresses is ChangeTrackingList<IPAddress> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(IPAddresses))
             {
                 writer.WritePropertyName("ipAddresses"u8);
                 writer.WriteStartArray();
@@ -62,42 +63,42 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && VMwareToolsStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(VMwareToolsStatus))
             {
                 writer.WritePropertyName("vmwareToolsStatus"u8);
                 writer.WriteStringValue(VMwareToolsStatus);
             }
-            if (options.Format != "W" && PowerStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(PowerStatus))
             {
                 writer.WritePropertyName("powerStatus"u8);
                 writer.WriteStringValue(PowerStatus);
             }
-            if (options.Format != "W" && VmFqdn != null)
+            if (options.Format != "W" && Optional.IsDefined(VmFqdn))
             {
                 writer.WritePropertyName("vmFqdn"u8);
                 writer.WriteStringValue(VmFqdn);
             }
-            if (options.Format != "W" && OSName != null)
+            if (options.Format != "W" && Optional.IsDefined(OSName))
             {
                 writer.WritePropertyName("osName"u8);
                 writer.WriteStringValue(OSName);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdTimestamp"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && UpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updatedTimestamp"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && IsDeleted.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsDeleted))
             {
                 writer.WritePropertyName("isDeleted"u8);
                 writer.WriteBooleanValue(IsDeleted.Value);
             }
-            if (options.Format != "W" && LastDiscoveredOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastDiscoveredOn))
             {
                 writer.WritePropertyName("lastDiscoveryTimeInUtc"u8);
                 writer.WriteStringValue(LastDiscoveredOn.Value, "O");
@@ -140,18 +141,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> vCenterId = default;
-            Optional<string> vCenterFqdn = default;
+            string vCenterId = default;
+            string vCenterFqdn = default;
             IReadOnlyList<string> datastores = default;
             IReadOnlyList<IPAddress> ipAddresses = default;
-            Optional<string> vmwareToolsStatus = default;
-            Optional<string> powerStatus = default;
-            Optional<string> vmFqdn = default;
-            Optional<string> osName = default;
-            Optional<DateTimeOffset> createdTimestamp = default;
-            Optional<DateTimeOffset> updatedTimestamp = default;
-            Optional<bool> isDeleted = default;
-            Optional<DateTimeOffset> lastDiscoveryTimeInUtc = default;
+            string vmwareToolsStatus = default;
+            string powerStatus = default;
+            string vmFqdn = default;
+            string osName = default;
+            DateTimeOffset? createdTimestamp = default;
+            DateTimeOffset? updatedTimestamp = default;
+            bool? isDeleted = default;
+            DateTimeOffset? lastDiscoveryTimeInUtc = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -264,18 +265,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new InMageRcmFailbackDiscoveredProtectedVmDetails(
-                vCenterId.Value,
-                vCenterFqdn.Value,
+                vCenterId,
+                vCenterFqdn,
                 datastores ?? new ChangeTrackingList<string>(),
                 ipAddresses ?? new ChangeTrackingList<IPAddress>(),
-                vmwareToolsStatus.Value,
-                powerStatus.Value,
-                vmFqdn.Value,
-                osName.Value,
-                Optional.ToNullable(createdTimestamp),
-                Optional.ToNullable(updatedTimestamp),
-                Optional.ToNullable(isDeleted),
-                Optional.ToNullable(lastDiscoveryTimeInUtc),
+                vmwareToolsStatus,
+                powerStatus,
+                vmFqdn,
+                osName,
+                createdTimestamp,
+                updatedTimestamp,
+                isDeleted,
+                lastDiscoveryTimeInUtc,
                 serializedAdditionalRawData);
         }
 

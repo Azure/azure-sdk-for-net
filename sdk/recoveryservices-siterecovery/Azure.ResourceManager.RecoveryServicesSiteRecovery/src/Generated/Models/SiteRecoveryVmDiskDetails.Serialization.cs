@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,52 +27,52 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (VhdType != null)
+            if (Optional.IsDefined(VhdType))
             {
                 writer.WritePropertyName("vhdType"u8);
                 writer.WriteStringValue(VhdType);
             }
-            if (VhdId != null)
+            if (Optional.IsDefined(VhdId))
             {
                 writer.WritePropertyName("vhdId"u8);
                 writer.WriteStringValue(VhdId);
             }
-            if (DiskId != null)
+            if (Optional.IsDefined(DiskId))
             {
                 writer.WritePropertyName("diskId"u8);
                 writer.WriteStringValue(DiskId);
             }
-            if (VhdName != null)
+            if (Optional.IsDefined(VhdName))
             {
                 writer.WritePropertyName("vhdName"u8);
                 writer.WriteStringValue(VhdName);
             }
-            if (MaxSizeMB != null)
+            if (Optional.IsDefined(MaxSizeMB))
             {
                 writer.WritePropertyName("maxSizeMB"u8);
                 writer.WriteStringValue(MaxSizeMB);
             }
-            if (TargetDiskLocation != null)
+            if (Optional.IsDefined(TargetDiskLocation))
             {
                 writer.WritePropertyName("targetDiskLocation"u8);
                 writer.WriteStringValue(TargetDiskLocation);
             }
-            if (TargetDiskName != null)
+            if (Optional.IsDefined(TargetDiskName))
             {
                 writer.WritePropertyName("targetDiskName"u8);
                 writer.WriteStringValue(TargetDiskName);
             }
-            if (LunId != null)
+            if (Optional.IsDefined(LunId))
             {
                 writer.WritePropertyName("lunId"u8);
                 writer.WriteStringValue(LunId);
             }
-            if (DiskEncryptionSetId != null)
+            if (Optional.IsDefined(DiskEncryptionSetId))
             {
                 writer.WritePropertyName("diskEncryptionSetId"u8);
                 writer.WriteStringValue(DiskEncryptionSetId);
             }
-            if (CustomTargetDiskName != null)
+            if (Optional.IsDefined(CustomTargetDiskName))
             {
                 writer.WritePropertyName("customTargetDiskName"u8);
                 writer.WriteStringValue(CustomTargetDiskName);
@@ -114,16 +115,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> vhdType = default;
-            Optional<string> vhdId = default;
-            Optional<string> diskId = default;
-            Optional<string> vhdName = default;
-            Optional<string> maxSizeMB = default;
-            Optional<string> targetDiskLocation = default;
-            Optional<string> targetDiskName = default;
-            Optional<string> lunId = default;
-            Optional<ResourceIdentifier> diskEncryptionSetId = default;
-            Optional<string> customTargetDiskName = default;
+            string vhdType = default;
+            string vhdId = default;
+            string diskId = default;
+            string vhdName = default;
+            string maxSizeMB = default;
+            string targetDiskLocation = default;
+            string targetDiskName = default;
+            string lunId = default;
+            ResourceIdentifier diskEncryptionSetId = default;
+            string customTargetDiskName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -189,16 +190,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SiteRecoveryVmDiskDetails(
-                vhdType.Value,
-                vhdId.Value,
-                diskId.Value,
-                vhdName.Value,
-                maxSizeMB.Value,
-                targetDiskLocation.Value,
-                targetDiskName.Value,
-                lunId.Value,
-                diskEncryptionSetId.Value,
-                customTargetDiskName.Value,
+                vhdType,
+                vhdId,
+                diskId,
+                vhdName,
+                maxSizeMB,
+                targetDiskLocation,
+                targetDiskName,
+                lunId,
+                diskEncryptionSetId,
+                customTargetDiskName,
                 serializedAdditionalRawData);
         }
 

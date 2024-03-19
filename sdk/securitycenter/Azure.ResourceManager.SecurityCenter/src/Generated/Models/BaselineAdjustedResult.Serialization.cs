@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Baseline != null)
+            if (Optional.IsDefined(Baseline))
             {
                 writer.WritePropertyName("baseline"u8);
                 writer.WriteObjectValue(Baseline);
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (!(ResultsNotInBaseline is ChangeTrackingList<IList<string>> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ResultsNotInBaseline))
             {
                 writer.WritePropertyName("resultsNotInBaseline"u8);
                 writer.WriteStartArray();
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ResultsOnlyInBaseline is ChangeTrackingList<IList<string>> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ResultsOnlyInBaseline))
             {
                 writer.WritePropertyName("resultsOnlyInBaseline"u8);
                 writer.WriteStartArray();
@@ -114,8 +115,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<SqlVulnerabilityAssessmentBaseline> baseline = default;
-            Optional<SqlVulnerabilityAssessmentScanResultRuleStatus> status = default;
+            SqlVulnerabilityAssessmentBaseline baseline = default;
+            SqlVulnerabilityAssessmentScanResultRuleStatus? status = default;
             IList<IList<string>> resultsNotInBaseline = default;
             IList<IList<string>> resultsOnlyInBaseline = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -198,7 +199,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BaselineAdjustedResult(baseline.Value, Optional.ToNullable(status), resultsNotInBaseline ?? new ChangeTrackingList<IList<string>>(), resultsOnlyInBaseline ?? new ChangeTrackingList<IList<string>>(), serializedAdditionalRawData);
+            return new BaselineAdjustedResult(baseline, status, resultsNotInBaseline ?? new ChangeTrackingList<IList<string>>(), resultsOnlyInBaseline ?? new ChangeTrackingList<IList<string>>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BaselineAdjustedResult>.Write(ModelReaderWriterOptions options)

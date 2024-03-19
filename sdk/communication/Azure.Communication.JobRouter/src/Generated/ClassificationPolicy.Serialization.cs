@@ -37,17 +37,17 @@ namespace Azure.Communication.JobRouter
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (FallbackQueueId != null)
+            if (Optional.IsDefined(FallbackQueueId))
             {
                 writer.WritePropertyName("fallbackQueueId"u8);
                 writer.WriteStringValue(FallbackQueueId);
             }
-            if (!(QueueSelectorAttachments is ChangeTrackingList<QueueSelectorAttachment> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(QueueSelectorAttachments))
             {
                 writer.WritePropertyName("queueSelectorAttachments"u8);
                 writer.WriteStartArray();
@@ -57,12 +57,12 @@ namespace Azure.Communication.JobRouter
                 }
                 writer.WriteEndArray();
             }
-            if (PrioritizationRule != null)
+            if (Optional.IsDefined(PrioritizationRule))
             {
                 writer.WritePropertyName("prioritizationRule"u8);
                 writer.WriteObjectValue(PrioritizationRule);
             }
-            if (!(WorkerSelectorAttachments is ChangeTrackingList<WorkerSelectorAttachment> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(WorkerSelectorAttachments))
             {
                 writer.WritePropertyName("workerSelectorAttachments"u8);
                 writer.WriteStartArray();
@@ -112,10 +112,10 @@ namespace Azure.Communication.JobRouter
             }
             ETag etag = default;
             string id = default;
-            Optional<string> name = default;
-            Optional<string> fallbackQueueId = default;
+            string name = default;
+            string fallbackQueueId = default;
             IList<QueueSelectorAttachment> queueSelectorAttachments = default;
-            Optional<RouterRule> prioritizationRule = default;
+            RouterRule prioritizationRule = default;
             IList<WorkerSelectorAttachment> workerSelectorAttachments = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -187,10 +187,10 @@ namespace Azure.Communication.JobRouter
             return new ClassificationPolicy(
                 etag,
                 id,
-                name.Value,
-                fallbackQueueId.Value,
+                name,
+                fallbackQueueId,
                 queueSelectorAttachments ?? new ChangeTrackingList<QueueSelectorAttachment>(),
-                prioritizationRule.Value,
+                prioritizationRule,
                 workerSelectorAttachments ?? new ChangeTrackingList<WorkerSelectorAttachment>(),
                 serializedAdditionalRawData);
         }

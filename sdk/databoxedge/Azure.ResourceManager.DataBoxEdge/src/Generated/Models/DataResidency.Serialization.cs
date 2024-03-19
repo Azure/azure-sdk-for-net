@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (ResidencyType.HasValue)
+            if (Optional.IsDefined(ResidencyType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResidencyType.Value.ToString());
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<DataBoxEdgeDataResidencyType> type = default;
+            DataBoxEdgeDataResidencyType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataResidency(Optional.ToNullable(type), serializedAdditionalRawData);
+            return new DataResidency(type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataResidency>.Write(ModelReaderWriterOptions options)

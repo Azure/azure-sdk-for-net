@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ElasticSan;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
@@ -28,12 +29,12 @@ namespace Azure.ResourceManager.ElasticSan.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (SizeGiB.HasValue)
+            if (Optional.IsDefined(SizeGiB))
             {
                 writer.WritePropertyName("sizeGiB"u8);
                 writer.WriteNumberValue(SizeGiB.Value);
             }
-            if (ManagedBy != null)
+            if (Optional.IsDefined(ManagedBy))
             {
                 writer.WritePropertyName("managedBy"u8);
                 writer.WriteObjectValue(ManagedBy);
@@ -77,8 +78,8 @@ namespace Azure.ResourceManager.ElasticSan.Models
             {
                 return null;
             }
-            Optional<long> sizeGiB = default;
-            Optional<ManagedByInfo> managedBy = default;
+            long? sizeGiB = default;
+            ManagedByInfo managedBy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticSanVolumePatch(Optional.ToNullable(sizeGiB), managedBy.Value, serializedAdditionalRawData);
+            return new ElasticSanVolumePatch(sizeGiB, managedBy, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticSanVolumePatch>.Write(ModelReaderWriterOptions options)

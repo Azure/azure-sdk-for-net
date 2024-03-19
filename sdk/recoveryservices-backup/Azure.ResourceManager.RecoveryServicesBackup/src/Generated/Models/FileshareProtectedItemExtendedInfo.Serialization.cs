@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (OldestRecoverOn.HasValue)
+            if (Optional.IsDefined(OldestRecoverOn))
             {
                 writer.WritePropertyName("oldestRecoveryPoint"u8);
                 writer.WriteStringValue(OldestRecoverOn.Value, "O");
             }
-            if (RecoveryPointCount.HasValue)
+            if (Optional.IsDefined(RecoveryPointCount))
             {
                 writer.WritePropertyName("recoveryPointCount"u8);
                 writer.WriteNumberValue(RecoveryPointCount.Value);
             }
-            if (PolicyState != null)
+            if (Optional.IsDefined(PolicyState))
             {
                 writer.WritePropertyName("policyState"u8);
                 writer.WriteStringValue(PolicyState);
             }
-            if (options.Format != "W" && ResourceState != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceState))
             {
                 writer.WritePropertyName("resourceState"u8);
                 writer.WriteStringValue(ResourceState);
             }
-            if (options.Format != "W" && ResourceStateSyncOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceStateSyncOn))
             {
                 writer.WritePropertyName("resourceStateSyncTime"u8);
                 writer.WriteStringValue(ResourceStateSyncOn.Value, "O");
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> oldestRecoveryPoint = default;
-            Optional<int> recoveryPointCount = default;
-            Optional<string> policyState = default;
-            Optional<string> resourceState = default;
-            Optional<DateTimeOffset> resourceStateSyncTime = default;
+            DateTimeOffset? oldestRecoveryPoint = default;
+            int? recoveryPointCount = default;
+            string policyState = default;
+            string resourceState = default;
+            DateTimeOffset? resourceStateSyncTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -142,11 +143,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new FileshareProtectedItemExtendedInfo(
-                Optional.ToNullable(oldestRecoveryPoint),
-                Optional.ToNullable(recoveryPointCount),
-                policyState.Value,
-                resourceState.Value,
-                Optional.ToNullable(resourceStateSyncTime),
+                oldestRecoveryPoint,
+                recoveryPointCount,
+                policyState,
+                resourceState,
+                resourceStateSyncTime,
                 serializedAdditionalRawData);
         }
 

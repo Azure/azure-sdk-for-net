@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Properties != null)
+            if (options.Format != "W" && Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (options.Format != "W" && UpgradeOperationHistoricalStatusInfoType != null)
+            if (options.Format != "W" && Optional.IsDefined(UpgradeOperationHistoricalStatusInfoType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(UpgradeOperationHistoricalStatusInfoType);
             }
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<UpgradeOperationHistoricalStatusInfoProperties> properties = default;
-            Optional<string> type = default;
-            Optional<AzureLocation> location = default;
+            UpgradeOperationHistoricalStatusInfoProperties properties = default;
+            string type = default;
+            AzureLocation? location = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UpgradeOperationHistoricalStatusInfo(properties.Value, type.Value, Optional.ToNullable(location), serializedAdditionalRawData);
+            return new UpgradeOperationHistoricalStatusInfo(properties, type, location, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UpgradeOperationHistoricalStatusInfo>.Write(ModelReaderWriterOptions options)

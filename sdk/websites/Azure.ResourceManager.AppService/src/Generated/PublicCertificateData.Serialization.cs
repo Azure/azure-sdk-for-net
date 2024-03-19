@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -48,24 +48,24 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Blob != null)
+            if (Optional.IsDefined(Blob))
             {
                 writer.WritePropertyName("blob"u8);
                 writer.WriteBase64StringValue(Blob, "D");
             }
-            if (PublicCertificateLocation.HasValue)
+            if (Optional.IsDefined(PublicCertificateLocation))
             {
                 writer.WritePropertyName("publicCertificateLocation"u8);
                 writer.WriteStringValue(PublicCertificateLocation.Value.ToSerialString());
             }
-            if (options.Format != "W" && ThumbprintString != null)
+            if (options.Format != "W" && Optional.IsDefined(ThumbprintString))
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(ThumbprintString);
@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<byte[]> blob = default;
-            Optional<PublicCertificateLocation> publicCertificateLocation = default;
-            Optional<string> thumbprint = default;
+            SystemData systemData = default;
+            byte[] blob = default;
+            PublicCertificateLocation? publicCertificateLocation = default;
+            string thumbprint = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -195,11 +195,11 @@ namespace Azure.ResourceManager.AppService
                 id,
                 name,
                 type,
-                systemData.Value,
-                blob.Value,
-                Optional.ToNullable(publicCertificateLocation),
-                thumbprint.Value,
-                kind.Value,
+                systemData,
+                blob,
+                publicCertificateLocation,
+                thumbprint,
+                kind,
                 serializedAdditionalRawData);
         }
 

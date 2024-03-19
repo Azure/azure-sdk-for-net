@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Billing.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && IsMoveEligible.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsMoveEligible))
             {
                 writer.WritePropertyName("isMoveEligible"u8);
                 writer.WriteBooleanValue(IsMoveEligible.Value);
             }
-            if (ErrorDetails != null)
+            if (Optional.IsDefined(ErrorDetails))
             {
                 writer.WritePropertyName("errorDetails"u8);
                 writer.WriteObjectValue(ErrorDetails);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 return null;
             }
-            Optional<bool> isMoveEligible = default;
-            Optional<BillingSubscriptionValidateMoveEligibilityError> errorDetails = default;
+            bool? isMoveEligible = default;
+            BillingSubscriptionValidateMoveEligibilityError errorDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Billing.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BillingSubscriptionValidateMoveEligibilityResult(Optional.ToNullable(isMoveEligible), errorDetails.Value, serializedAdditionalRawData);
+            return new BillingSubscriptionValidateMoveEligibilityResult(isMoveEligible, errorDetails, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BillingSubscriptionValidateMoveEligibilityResult>.Write(ModelReaderWriterOptions options)

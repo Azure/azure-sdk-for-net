@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearningCompute;
 
 namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && UpdatesAvailable.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UpdatesAvailable))
             {
                 writer.WritePropertyName("updatesAvailable"u8);
                 writer.WriteStringValue(UpdatesAvailable.Value.ToString());
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             {
                 return null;
             }
-            Optional<UpdatesAvailable> updatesAvailable = default;
+            UpdatesAvailable? updatesAvailable = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CheckSystemServicesUpdatesAvailableResponse(Optional.ToNullable(updatesAvailable), serializedAdditionalRawData);
+            return new CheckSystemServicesUpdatesAvailableResponse(updatesAvailable, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CheckSystemServicesUpdatesAvailableResponse>.Write(ModelReaderWriterOptions options)

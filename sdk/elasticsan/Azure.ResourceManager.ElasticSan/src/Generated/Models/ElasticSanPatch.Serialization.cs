@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ElasticSan;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,17 +40,17 @@ namespace Azure.ResourceManager.ElasticSan.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (BaseSizeTiB.HasValue)
+            if (Optional.IsDefined(BaseSizeTiB))
             {
                 writer.WritePropertyName("baseSizeTiB"u8);
                 writer.WriteNumberValue(BaseSizeTiB.Value);
             }
-            if (ExtendedCapacitySizeTiB.HasValue)
+            if (Optional.IsDefined(ExtendedCapacitySizeTiB))
             {
                 writer.WritePropertyName("extendedCapacitySizeTiB"u8);
                 writer.WriteNumberValue(ExtendedCapacitySizeTiB.Value);
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
@@ -94,9 +95,9 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<long> baseSizeTiB = default;
-            Optional<long> extendedCapacitySizeTiB = default;
-            Optional<ElasticSanPublicNetworkAccess> publicNetworkAccess = default;
+            long? baseSizeTiB = default;
+            long? extendedCapacitySizeTiB = default;
+            ElasticSanPublicNetworkAccess? publicNetworkAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +161,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticSanPatch(tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(baseSizeTiB), Optional.ToNullable(extendedCapacitySizeTiB), Optional.ToNullable(publicNetworkAccess), serializedAdditionalRawData);
+            return new ElasticSanPatch(tags ?? new ChangeTrackingDictionary<string, string>(), baseSizeTiB, extendedCapacitySizeTiB, publicNetworkAccess, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticSanPatch>.Write(ModelReaderWriterOptions options)

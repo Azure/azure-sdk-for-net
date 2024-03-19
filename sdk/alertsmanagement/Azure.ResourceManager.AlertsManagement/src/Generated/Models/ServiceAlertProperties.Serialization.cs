@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AlertsManagement;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Essentials != null)
+            if (Optional.IsDefined(Essentials))
             {
                 writer.WritePropertyName("essentials"u8);
                 writer.WriteObjectValue(Essentials);
             }
-            if (options.Format != "W" && Context != null)
+            if (options.Format != "W" && Optional.IsDefined(Context))
             {
                 writer.WritePropertyName("context"u8);
 #if NET6_0_OR_GREATER
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
 #endif
             }
-            if (options.Format != "W" && EgressConfig != null)
+            if (options.Format != "W" && Optional.IsDefined(EgressConfig))
             {
                 writer.WritePropertyName("egressConfig"u8);
 #if NET6_0_OR_GREATER
@@ -93,9 +94,9 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             {
                 return null;
             }
-            Optional<ServiceAlertEssentials> essentials = default;
-            Optional<BinaryData> context = default;
-            Optional<BinaryData> egressConfig = default;
+            ServiceAlertEssentials essentials = default;
+            BinaryData context = default;
+            BinaryData egressConfig = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +134,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceAlertProperties(essentials.Value, context.Value, egressConfig.Value, serializedAdditionalRawData);
+            return new ServiceAlertProperties(essentials, context, egressConfig, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceAlertProperties>.Write(ModelReaderWriterOptions options)

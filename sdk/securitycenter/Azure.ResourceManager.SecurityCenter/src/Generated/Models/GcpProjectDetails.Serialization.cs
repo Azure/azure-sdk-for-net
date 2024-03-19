@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (ProjectNumber != null)
+            if (Optional.IsDefined(ProjectNumber))
             {
                 writer.WritePropertyName("projectNumber"u8);
                 writer.WriteStringValue(ProjectNumber);
             }
-            if (ProjectId != null)
+            if (Optional.IsDefined(ProjectId))
             {
                 writer.WritePropertyName("projectId"u8);
                 writer.WriteStringValue(ProjectId);
             }
-            if (options.Format != "W" && WorkloadIdentityPoolId != null)
+            if (options.Format != "W" && Optional.IsDefined(WorkloadIdentityPoolId))
             {
                 writer.WritePropertyName("workloadIdentityPoolId"u8);
                 writer.WriteStringValue(WorkloadIdentityPoolId);
             }
-            if (options.Format != "W" && ProjectName != null)
+            if (options.Format != "W" && Optional.IsDefined(ProjectName))
             {
                 writer.WritePropertyName("projectName"u8);
                 writer.WriteStringValue(ProjectName);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> projectNumber = default;
-            Optional<string> projectId = default;
-            Optional<string> workloadIdentityPoolId = default;
-            Optional<string> projectName = default;
+            string projectNumber = default;
+            string projectId = default;
+            string workloadIdentityPoolId = default;
+            string projectName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GcpProjectDetails(projectNumber.Value, projectId.Value, workloadIdentityPoolId.Value, projectName.Value, serializedAdditionalRawData);
+            return new GcpProjectDetails(projectNumber, projectId, workloadIdentityPoolId, projectName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GcpProjectDetails>.Write(ModelReaderWriterOptions options)

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -19,39 +20,39 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (FilePattern != null)
+            if (Optional.IsDefined(FilePattern))
             {
                 writer.WritePropertyName("filePattern"u8);
                 writer.WriteObjectValue(FilePattern);
             }
-            if (NestingSeparator != null)
+            if (Optional.IsDefined(NestingSeparator))
             {
                 writer.WritePropertyName("nestingSeparator"u8);
                 writer.WriteObjectValue(NestingSeparator);
             }
-            if (EncodingName != null)
+            if (Optional.IsDefined(EncodingName))
             {
                 writer.WritePropertyName("encodingName"u8);
                 writer.WriteObjectValue(EncodingName);
             }
-            if (JsonNodeReference != null)
+            if (Optional.IsDefined(JsonNodeReference))
             {
                 writer.WritePropertyName("jsonNodeReference"u8);
                 writer.WriteObjectValue(JsonNodeReference);
             }
-            if (JsonPathDefinition != null)
+            if (Optional.IsDefined(JsonPathDefinition))
             {
                 writer.WritePropertyName("jsonPathDefinition"u8);
                 writer.WriteObjectValue(JsonPathDefinition);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Serializer != null)
+            if (Optional.IsDefined(Serializer))
             {
                 writer.WritePropertyName("serializer"u8);
                 writer.WriteObjectValue(Serializer);
             }
-            if (Deserializer != null)
+            if (Optional.IsDefined(Deserializer))
             {
                 writer.WritePropertyName("deserializer"u8);
                 writer.WriteObjectValue(Deserializer);
@@ -70,14 +71,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> filePattern = default;
-            Optional<object> nestingSeparator = default;
-            Optional<object> encodingName = default;
-            Optional<object> jsonNodeReference = default;
-            Optional<object> jsonPathDefinition = default;
+            object filePattern = default;
+            object nestingSeparator = default;
+            object encodingName = default;
+            object jsonNodeReference = default;
+            object jsonPathDefinition = default;
             string type = default;
-            Optional<object> serializer = default;
-            Optional<object> deserializer = default;
+            object serializer = default;
+            object deserializer = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -155,14 +156,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new JsonFormat(
                 type,
-                serializer.Value,
-                deserializer.Value,
+                serializer,
+                deserializer,
                 additionalProperties,
-                filePattern.Value,
-                nestingSeparator.Value,
-                encodingName.Value,
-                jsonNodeReference.Value,
-                jsonPathDefinition.Value);
+                filePattern,
+                nestingSeparator,
+                encodingName,
+                jsonNodeReference,
+                jsonPathDefinition);
         }
 
         internal partial class JsonFormatConverter : JsonConverter<JsonFormat>

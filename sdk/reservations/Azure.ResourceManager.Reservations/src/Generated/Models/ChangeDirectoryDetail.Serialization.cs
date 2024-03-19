@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Reservations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (ReservationOrder != null)
+            if (Optional.IsDefined(ReservationOrder))
             {
                 writer.WritePropertyName("reservationOrder"u8);
                 writer.WriteObjectValue(ReservationOrder);
             }
-            if (!(Reservations is ChangeTrackingList<ChangeDirectoryResult> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Reservations))
             {
                 writer.WritePropertyName("reservations"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<ChangeDirectoryResult> reservationOrder = default;
+            ChangeDirectoryResult reservationOrder = default;
             IReadOnlyList<ChangeDirectoryResult> reservations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChangeDirectoryDetail(reservationOrder.Value, reservations ?? new ChangeTrackingList<ChangeDirectoryResult>(), serializedAdditionalRawData);
+            return new ChangeDirectoryDetail(reservationOrder, reservations ?? new ChangeTrackingList<ChangeDirectoryResult>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChangeDirectoryDetail>.Write(ModelReaderWriterOptions options)

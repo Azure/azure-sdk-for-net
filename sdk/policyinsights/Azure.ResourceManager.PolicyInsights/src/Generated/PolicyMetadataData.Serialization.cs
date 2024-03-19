@@ -42,39 +42,39 @@ namespace Azure.ResourceManager.PolicyInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && MetadataId != null)
+            if (options.Format != "W" && Optional.IsDefined(MetadataId))
             {
                 writer.WritePropertyName("metadataId"u8);
                 writer.WriteStringValue(MetadataId);
             }
-            if (options.Format != "W" && Category != null)
+            if (options.Format != "W" && Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (options.Format != "W" && Title != null)
+            if (options.Format != "W" && Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (options.Format != "W" && Owner != null)
+            if (options.Format != "W" && Optional.IsDefined(Owner))
             {
                 writer.WritePropertyName("owner"u8);
                 writer.WriteStringValue(Owner);
             }
-            if (options.Format != "W" && AdditionalContentUri != null)
+            if (options.Format != "W" && Optional.IsDefined(AdditionalContentUri))
             {
                 writer.WritePropertyName("additionalContentUrl"u8);
                 writer.WriteStringValue(AdditionalContentUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Metadata != null)
+            if (options.Format != "W" && Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
 #if NET6_0_OR_GREATER
@@ -86,12 +86,12 @@ namespace Azure.ResourceManager.PolicyInsights
                 }
 #endif
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Requirements != null)
+            if (options.Format != "W" && Optional.IsDefined(Requirements))
             {
                 writer.WritePropertyName("requirements"u8);
                 writer.WriteStringValue(Requirements);
@@ -138,15 +138,15 @@ namespace Azure.ResourceManager.PolicyInsights
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> metadataId = default;
-            Optional<string> category = default;
-            Optional<string> title = default;
-            Optional<string> owner = default;
-            Optional<Uri> additionalContentUrl = default;
-            Optional<BinaryData> metadata = default;
-            Optional<string> description = default;
-            Optional<string> requirements = default;
+            SystemData systemData = default;
+            string metadataId = default;
+            string category = default;
+            string title = default;
+            string owner = default;
+            Uri additionalContentUrl = default;
+            BinaryData metadata = default;
+            string description = default;
+            string requirements = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -245,15 +245,15 @@ namespace Azure.ResourceManager.PolicyInsights
                 id,
                 name,
                 type,
-                systemData.Value,
-                metadataId.Value,
-                category.Value,
-                title.Value,
-                owner.Value,
-                additionalContentUrl.Value,
-                metadata.Value,
-                description.Value,
-                requirements.Value,
+                systemData,
+                metadataId,
+                category,
+                title,
+                owner,
+                additionalContentUrl,
+                metadata,
+                description,
+                requirements,
                 serializedAdditionalRawData);
         }
 

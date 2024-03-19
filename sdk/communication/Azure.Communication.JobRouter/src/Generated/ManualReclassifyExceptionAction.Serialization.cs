@@ -27,17 +27,17 @@ namespace Azure.Communication.JobRouter
             }
 
             writer.WriteStartObject();
-            if (QueueId != null)
+            if (Optional.IsDefined(QueueId))
             {
                 writer.WritePropertyName("queueId"u8);
                 writer.WriteStringValue(QueueId);
             }
-            if (Priority.HasValue)
+            if (Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
-            if (!(WorkerSelectors is ChangeTrackingList<RouterWorkerSelector> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(WorkerSelectors))
             {
                 writer.WritePropertyName("workerSelectors"u8);
                 writer.WriteStartArray();
@@ -47,7 +47,7 @@ namespace Azure.Communication.JobRouter
                 }
                 writer.WriteEndArray();
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -92,10 +92,10 @@ namespace Azure.Communication.JobRouter
             {
                 return null;
             }
-            Optional<string> queueId = default;
-            Optional<int> priority = default;
+            string queueId = default;
+            int? priority = default;
             IList<RouterWorkerSelector> workerSelectors = default;
-            Optional<string> id = default;
+            string id = default;
             ExceptionActionKind kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -146,11 +146,11 @@ namespace Azure.Communication.JobRouter
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ManualReclassifyExceptionAction(
-                id.Value,
+                id,
                 kind,
                 serializedAdditionalRawData,
-                queueId.Value,
-                Optional.ToNullable(priority),
+                queueId,
+                priority,
                 workerSelectors ?? new ChangeTrackingList<RouterWorkerSelector>());
         }
 

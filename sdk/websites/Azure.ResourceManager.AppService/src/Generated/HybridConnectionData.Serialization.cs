@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,49 +47,49 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ServiceBusNamespace != null)
+            if (Optional.IsDefined(ServiceBusNamespace))
             {
                 writer.WritePropertyName("serviceBusNamespace"u8);
                 writer.WriteStringValue(ServiceBusNamespace);
             }
-            if (RelayName != null)
+            if (Optional.IsDefined(RelayName))
             {
                 writer.WritePropertyName("relayName"u8);
                 writer.WriteStringValue(RelayName);
             }
-            if (RelayArmId != null)
+            if (Optional.IsDefined(RelayArmId))
             {
                 writer.WritePropertyName("relayArmUri"u8);
                 writer.WriteStringValue(RelayArmId);
             }
-            if (Hostname != null)
+            if (Optional.IsDefined(Hostname))
             {
                 writer.WritePropertyName("hostname"u8);
                 writer.WriteStringValue(Hostname);
             }
-            if (Port.HasValue)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (SendKeyName != null)
+            if (Optional.IsDefined(SendKeyName))
             {
                 writer.WritePropertyName("sendKeyName"u8);
                 writer.WriteStringValue(SendKeyName);
             }
-            if (SendKeyValue != null)
+            if (Optional.IsDefined(SendKeyValue))
             {
                 writer.WritePropertyName("sendKeyValue"u8);
                 writer.WriteStringValue(SendKeyValue);
             }
-            if (ServiceBusSuffix != null)
+            if (Optional.IsDefined(ServiceBusSuffix))
             {
                 writer.WritePropertyName("serviceBusSuffix"u8);
                 writer.WriteStringValue(ServiceBusSuffix);
@@ -133,19 +133,19 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> serviceBusNamespace = default;
-            Optional<string> relayName = default;
-            Optional<ResourceIdentifier> relayArmUri = default;
-            Optional<string> hostname = default;
-            Optional<int> port = default;
-            Optional<string> sendKeyName = default;
-            Optional<string> sendKeyValue = default;
-            Optional<string> serviceBusSuffix = default;
+            SystemData systemData = default;
+            string serviceBusNamespace = default;
+            string relayName = default;
+            ResourceIdentifier relayArmUri = default;
+            string hostname = default;
+            int? port = default;
+            string sendKeyName = default;
+            string sendKeyValue = default;
+            string serviceBusSuffix = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -249,16 +249,16 @@ namespace Azure.ResourceManager.AppService
                 id,
                 name,
                 type,
-                systemData.Value,
-                serviceBusNamespace.Value,
-                relayName.Value,
-                relayArmUri.Value,
-                hostname.Value,
-                Optional.ToNullable(port),
-                sendKeyName.Value,
-                sendKeyValue.Value,
-                serviceBusSuffix.Value,
-                kind.Value,
+                systemData,
+                serviceBusNamespace,
+                relayName,
+                relayArmUri,
+                hostname,
+                port,
+                sendKeyName,
+                sendKeyValue,
+                serviceBusSuffix,
+                kind,
                 serializedAdditionalRawData);
         }
 

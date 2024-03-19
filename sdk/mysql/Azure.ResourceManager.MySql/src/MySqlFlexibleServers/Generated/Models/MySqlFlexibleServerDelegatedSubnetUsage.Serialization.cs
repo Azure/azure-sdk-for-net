@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MySql;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && SubnetName != null)
+            if (options.Format != "W" && Optional.IsDefined(SubnetName))
             {
                 writer.WritePropertyName("subnetName"u8);
                 writer.WriteStringValue(SubnetName);
             }
-            if (options.Format != "W" && Usage.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Usage))
             {
                 writer.WritePropertyName("usage"u8);
                 writer.WriteNumberValue(Usage.Value);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<string> subnetName = default;
-            Optional<long> usage = default;
+            string subnetName = default;
+            long? usage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlFlexibleServerDelegatedSubnetUsage(subnetName.Value, Optional.ToNullable(usage), serializedAdditionalRawData);
+            return new MySqlFlexibleServerDelegatedSubnetUsage(subnetName, usage, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFlexibleServerDelegatedSubnetUsage>.Write(ModelReaderWriterOptions options)

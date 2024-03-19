@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.LabServices;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.LabServices.Models
             }
 
             writer.WriteStartObject();
-            if (CurrentValue.HasValue)
+            if (Optional.IsDefined(CurrentValue))
             {
                 writer.WritePropertyName("currentValue"u8);
                 writer.WriteNumberValue(CurrentValue.Value);
             }
-            if (Limit.HasValue)
+            if (Optional.IsDefined(Limit))
             {
                 writer.WritePropertyName("limit"u8);
                 writer.WriteNumberValue(Limit.Value);
             }
-            if (Unit.HasValue)
+            if (Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit.Value.ToString());
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteObjectValue(Name);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Optional<long> currentValue = default;
-            Optional<long> limit = default;
-            Optional<LabServicesUsageUnit> unit = default;
-            Optional<LabServicesUsageName> name = default;
-            Optional<ResourceIdentifier> id = default;
+            long? currentValue = default;
+            long? limit = default;
+            LabServicesUsageUnit? unit = default;
+            LabServicesUsageName name = default;
+            ResourceIdentifier id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,11 +151,11 @@ namespace Azure.ResourceManager.LabServices.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new LabServicesUsage(
-                Optional.ToNullable(currentValue),
-                Optional.ToNullable(limit),
-                Optional.ToNullable(unit),
-                name.Value,
-                id.Value,
+                currentValue,
+                limit,
+                unit,
+                name,
+                id,
                 serializedAdditionalRawData);
         }
 

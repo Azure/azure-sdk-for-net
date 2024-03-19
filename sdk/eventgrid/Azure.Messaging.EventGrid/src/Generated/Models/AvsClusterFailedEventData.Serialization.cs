@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
+using Azure.Messaging.EventGrid;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -22,8 +22,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> failureMessage = default;
-            Optional<string> operationId = default;
+            string failureMessage = default;
+            string operationId = default;
             IReadOnlyList<string> addedHostNames = default;
             IReadOnlyList<string> removedHostNames = default;
             IReadOnlyList<string> inMaintenanceHostNames = default;
@@ -82,7 +82,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AvsClusterFailedEventData(operationId.Value, addedHostNames ?? new ChangeTrackingList<string>(), removedHostNames ?? new ChangeTrackingList<string>(), inMaintenanceHostNames ?? new ChangeTrackingList<string>(), failureMessage.Value);
+            return new AvsClusterFailedEventData(operationId, addedHostNames ?? new ChangeTrackingList<string>(), removedHostNames ?? new ChangeTrackingList<string>(), inMaintenanceHostNames ?? new ChangeTrackingList<string>(), failureMessage);
         }
 
         internal partial class AvsClusterFailedEventDataConverter : JsonConverter<AvsClusterFailedEventData>

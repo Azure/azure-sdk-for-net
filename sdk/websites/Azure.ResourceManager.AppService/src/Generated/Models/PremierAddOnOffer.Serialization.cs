@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,59 +48,59 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteStringValue(Sku);
             }
-            if (Product != null)
+            if (Optional.IsDefined(Product))
             {
                 writer.WritePropertyName("product"u8);
                 writer.WriteStringValue(Product);
             }
-            if (Vendor != null)
+            if (Optional.IsDefined(Vendor))
             {
                 writer.WritePropertyName("vendor"u8);
                 writer.WriteStringValue(Vendor);
             }
-            if (IsPromoCodeRequired.HasValue)
+            if (Optional.IsDefined(IsPromoCodeRequired))
             {
                 writer.WritePropertyName("promoCodeRequired"u8);
                 writer.WriteBooleanValue(IsPromoCodeRequired.Value);
             }
-            if (Quota.HasValue)
+            if (Optional.IsDefined(Quota))
             {
                 writer.WritePropertyName("quota"u8);
                 writer.WriteNumberValue(Quota.Value);
             }
-            if (WebHostingPlanRestrictions.HasValue)
+            if (Optional.IsDefined(WebHostingPlanRestrictions))
             {
                 writer.WritePropertyName("webHostingPlanRestrictions"u8);
                 writer.WriteStringValue(WebHostingPlanRestrictions.Value.ToSerialString());
             }
-            if (PrivacyPolicyUri != null)
+            if (Optional.IsDefined(PrivacyPolicyUri))
             {
                 writer.WritePropertyName("privacyPolicyUrl"u8);
                 writer.WriteStringValue(PrivacyPolicyUri.AbsoluteUri);
             }
-            if (LegalTermsUri != null)
+            if (Optional.IsDefined(LegalTermsUri))
             {
                 writer.WritePropertyName("legalTermsUrl"u8);
                 writer.WriteStringValue(LegalTermsUri.AbsoluteUri);
             }
-            if (MarketplacePublisher != null)
+            if (Optional.IsDefined(MarketplacePublisher))
             {
                 writer.WritePropertyName("marketplacePublisher"u8);
                 writer.WriteStringValue(MarketplacePublisher);
             }
-            if (MarketplaceOffer != null)
+            if (Optional.IsDefined(MarketplaceOffer))
             {
                 writer.WritePropertyName("marketplaceOffer"u8);
                 writer.WriteStringValue(MarketplaceOffer);
@@ -143,21 +144,21 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> sku = default;
-            Optional<string> product = default;
-            Optional<string> vendor = default;
-            Optional<bool> promoCodeRequired = default;
-            Optional<int> quota = default;
-            Optional<AppServicePlanRestriction> webHostingPlanRestrictions = default;
-            Optional<Uri> privacyPolicyUrl = default;
-            Optional<Uri> legalTermsUrl = default;
-            Optional<string> marketplacePublisher = default;
-            Optional<string> marketplaceOffer = default;
+            SystemData systemData = default;
+            string sku = default;
+            string product = default;
+            string vendor = default;
+            bool? promoCodeRequired = default;
+            int? quota = default;
+            AppServicePlanRestriction? webHostingPlanRestrictions = default;
+            Uri privacyPolicyUrl = default;
+            Uri legalTermsUrl = default;
+            string marketplacePublisher = default;
+            string marketplaceOffer = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -283,18 +284,18 @@ namespace Azure.ResourceManager.AppService.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                sku.Value,
-                product.Value,
-                vendor.Value,
-                Optional.ToNullable(promoCodeRequired),
-                Optional.ToNullable(quota),
-                Optional.ToNullable(webHostingPlanRestrictions),
-                privacyPolicyUrl.Value,
-                legalTermsUrl.Value,
-                marketplacePublisher.Value,
-                marketplaceOffer.Value,
-                kind.Value,
+                systemData,
+                sku,
+                product,
+                vendor,
+                promoCodeRequired,
+                quota,
+                webHostingPlanRestrictions,
+                privacyPolicyUrl,
+                legalTermsUrl,
+                marketplacePublisher,
+                marketplaceOffer,
+                kind,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PolicyInsights;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
 
             writer.WriteStartObject();
-            if (!(EvaluatedExpressions is ChangeTrackingList<ExpressionEvaluationDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(EvaluatedExpressions))
             {
                 writer.WritePropertyName("evaluatedExpressions"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IfNotExistsDetails != null)
+            if (Optional.IsDefined(IfNotExistsDetails))
             {
                 writer.WritePropertyName("ifNotExistsDetails"u8);
                 writer.WriteObjectValue(IfNotExistsDetails);
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 return null;
             }
             IReadOnlyList<ExpressionEvaluationDetails> evaluatedExpressions = default;
-            Optional<IfNotExistsEvaluationDetails> ifNotExistsDetails = default;
+            IfNotExistsEvaluationDetails ifNotExistsDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyEvaluationDetails(evaluatedExpressions ?? new ChangeTrackingList<ExpressionEvaluationDetails>(), ifNotExistsDetails.Value, serializedAdditionalRawData);
+            return new PolicyEvaluationDetails(evaluatedExpressions ?? new ChangeTrackingList<ExpressionEvaluationDetails>(), ifNotExistsDetails, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicyEvaluationDetails>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (OSDisk != null)
+            if (Optional.IsDefined(OSDisk))
             {
                 writer.WritePropertyName("osDisk"u8);
                 writer.WriteObjectValue(OSDisk);
             }
-            if (!(DataDiskList is ChangeTrackingList<RestorePointSourceVmDataDisk> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DataDiskList))
             {
                 writer.WritePropertyName("dataDisks"u8);
                 writer.WriteStartArray();
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && DiskControllerType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DiskControllerType))
             {
                 writer.WritePropertyName("diskControllerType"u8);
                 writer.WriteStringValue(DiskControllerType.Value.ToString());
@@ -84,9 +85,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<RestorePointSourceVmOSDisk> osDisk = default;
+            RestorePointSourceVmOSDisk osDisk = default;
             IList<RestorePointSourceVmDataDisk> dataDisks = default;
-            Optional<DiskControllerType> diskControllerType = default;
+            DiskControllerType? diskControllerType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RestorePointSourceVmStorageProfile(osDisk.Value, dataDisks ?? new ChangeTrackingList<RestorePointSourceVmDataDisk>(), Optional.ToNullable(diskControllerType), serializedAdditionalRawData);
+            return new RestorePointSourceVmStorageProfile(osDisk, dataDisks ?? new ChangeTrackingList<RestorePointSourceVmDataDisk>(), diskControllerType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RestorePointSourceVmStorageProfile>.Write(ModelReaderWriterOptions options)

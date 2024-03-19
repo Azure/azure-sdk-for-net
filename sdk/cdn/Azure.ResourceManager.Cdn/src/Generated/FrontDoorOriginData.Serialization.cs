@@ -44,44 +44,44 @@ namespace Azure.ResourceManager.Cdn
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && OriginGroupName != null)
+            if (options.Format != "W" && Optional.IsDefined(OriginGroupName))
             {
                 writer.WritePropertyName("originGroupName"u8);
                 writer.WriteStringValue(OriginGroupName);
             }
-            if (Origin != null)
+            if (Optional.IsDefined(Origin))
             {
                 writer.WritePropertyName("azureOrigin"u8);
                 JsonSerializer.Serialize(writer, Origin);
             }
-            if (HostName != null)
+            if (Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (HttpPort.HasValue)
+            if (Optional.IsDefined(HttpPort))
             {
                 writer.WritePropertyName("httpPort"u8);
                 writer.WriteNumberValue(HttpPort.Value);
             }
-            if (HttpsPort.HasValue)
+            if (Optional.IsDefined(HttpsPort))
             {
                 writer.WritePropertyName("httpsPort"u8);
                 writer.WriteNumberValue(HttpsPort.Value);
             }
-            if (OriginHostHeader != null)
+            if (Optional.IsDefined(OriginHostHeader))
             {
                 writer.WritePropertyName("originHostHeader"u8);
                 writer.WriteStringValue(OriginHostHeader);
             }
-            if (Priority.HasValue)
+            if (Optional.IsDefined(Priority))
             {
                 if (Priority != null)
                 {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Cdn
                     writer.WriteNull("priority");
                 }
             }
-            if (Weight.HasValue)
+            if (Optional.IsDefined(Weight))
             {
                 if (Weight != null)
                 {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Cdn
                     writer.WriteNull("weight");
                 }
             }
-            if (SharedPrivateLinkResource != null)
+            if (Optional.IsDefined(SharedPrivateLinkResource))
             {
                 if (SharedPrivateLinkResource != null)
                 {
@@ -117,22 +117,22 @@ namespace Azure.ResourceManager.Cdn
                     writer.WriteNull("sharedPrivateLinkResource");
                 }
             }
-            if (EnabledState.HasValue)
+            if (Optional.IsDefined(EnabledState))
             {
                 writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToString());
             }
-            if (EnforceCertificateNameCheck.HasValue)
+            if (Optional.IsDefined(EnforceCertificateNameCheck))
             {
                 writer.WritePropertyName("enforceCertificateNameCheck"u8);
                 writer.WriteBooleanValue(EnforceCertificateNameCheck.Value);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && DeploymentStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DeploymentStatus))
             {
                 writer.WritePropertyName("deploymentStatus"u8);
                 writer.WriteStringValue(DeploymentStatus.Value.ToString());
@@ -179,20 +179,20 @@ namespace Azure.ResourceManager.Cdn
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> originGroupName = default;
-            Optional<WritableSubResource> azureOrigin = default;
-            Optional<string> hostName = default;
-            Optional<int> httpPort = default;
-            Optional<int> httpsPort = default;
-            Optional<string> originHostHeader = default;
-            Optional<int?> priority = default;
-            Optional<int?> weight = default;
-            Optional<SharedPrivateLinkResourceProperties> sharedPrivateLinkResource = default;
-            Optional<EnabledState> enabledState = default;
-            Optional<bool> enforceCertificateNameCheck = default;
-            Optional<FrontDoorProvisioningState> provisioningState = default;
-            Optional<FrontDoorDeploymentStatus> deploymentStatus = default;
+            SystemData systemData = default;
+            string originGroupName = default;
+            WritableSubResource azureOrigin = default;
+            string hostName = default;
+            int? httpPort = default;
+            int? httpsPort = default;
+            string originHostHeader = default;
+            int? priority = default;
+            int? weight = default;
+            SharedPrivateLinkResourceProperties sharedPrivateLinkResource = default;
+            EnabledState? enabledState = default;
+            bool? enforceCertificateNameCheck = default;
+            FrontDoorProvisioningState? provisioningState = default;
+            FrontDoorDeploymentStatus? deploymentStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -351,20 +351,20 @@ namespace Azure.ResourceManager.Cdn
                 id,
                 name,
                 type,
-                systemData.Value,
-                originGroupName.Value,
+                systemData,
+                originGroupName,
                 azureOrigin,
-                hostName.Value,
-                Optional.ToNullable(httpPort),
-                Optional.ToNullable(httpsPort),
-                originHostHeader.Value,
-                Optional.ToNullable(priority),
-                Optional.ToNullable(weight),
-                sharedPrivateLinkResource.Value,
-                Optional.ToNullable(enabledState),
-                Optional.ToNullable(enforceCertificateNameCheck),
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(deploymentStatus),
+                hostName,
+                httpPort,
+                httpsPort,
+                originHostHeader,
+                priority,
+                weight,
+                sharedPrivateLinkResource,
+                enabledState,
+                enforceCertificateNameCheck,
+                provisioningState,
+                deploymentStatus,
                 serializedAdditionalRawData);
         }
 

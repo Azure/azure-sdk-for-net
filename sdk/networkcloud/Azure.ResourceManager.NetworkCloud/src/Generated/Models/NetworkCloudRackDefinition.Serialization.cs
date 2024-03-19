@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (AvailabilityZone != null)
+            if (Optional.IsDefined(AvailabilityZone))
             {
                 writer.WritePropertyName("availabilityZone"u8);
                 writer.WriteStringValue(AvailabilityZone);
             }
-            if (!(BareMetalMachineConfigurationData is ChangeTrackingList<BareMetalMachineConfiguration> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(BareMetalMachineConfigurationData))
             {
                 writer.WritePropertyName("bareMetalMachineConfigurationData"u8);
                 writer.WriteStartArray();
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             writer.WritePropertyName("networkRackId"u8);
             writer.WriteStringValue(NetworkRackId);
-            if (RackLocation != null)
+            if (Optional.IsDefined(RackLocation))
             {
                 writer.WritePropertyName("rackLocation"u8);
                 writer.WriteStringValue(RackLocation);
@@ -52,7 +53,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             writer.WriteStringValue(RackSerialNumber);
             writer.WritePropertyName("rackSkuId"u8);
             writer.WriteStringValue(RackSkuId);
-            if (!(StorageApplianceConfigurationData is ChangeTrackingList<StorageApplianceConfiguration> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(StorageApplianceConfigurationData))
             {
                 writer.WritePropertyName("storageApplianceConfigurationData"u8);
                 writer.WriteStartArray();
@@ -100,10 +101,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<string> availabilityZone = default;
+            string availabilityZone = default;
             IList<BareMetalMachineConfiguration> bareMetalMachineConfigurationData = default;
             ResourceIdentifier networkRackId = default;
-            Optional<string> rackLocation = default;
+            string rackLocation = default;
             string rackSerialNumber = default;
             ResourceIdentifier rackSkuId = default;
             IList<StorageApplianceConfiguration> storageApplianceConfigurationData = default;
@@ -171,10 +172,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new NetworkCloudRackDefinition(
-                availabilityZone.Value,
+                availabilityZone,
                 bareMetalMachineConfigurationData ?? new ChangeTrackingList<BareMetalMachineConfiguration>(),
                 networkRackId,
-                rackLocation.Value,
+                rackLocation,
                 rackSerialNumber,
                 rackSkuId,
                 storageApplianceConfigurationData ?? new ChangeTrackingList<StorageApplianceConfiguration>(),

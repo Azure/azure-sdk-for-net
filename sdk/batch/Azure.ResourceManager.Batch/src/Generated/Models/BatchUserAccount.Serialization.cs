@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -30,17 +31,17 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("password"u8);
             writer.WriteStringValue(Password);
-            if (ElevationLevel.HasValue)
+            if (Optional.IsDefined(ElevationLevel))
             {
                 writer.WritePropertyName("elevationLevel"u8);
                 writer.WriteStringValue(ElevationLevel.Value.ToSerialString());
             }
-            if (LinuxUserConfiguration != null)
+            if (Optional.IsDefined(LinuxUserConfiguration))
             {
                 writer.WritePropertyName("linuxUserConfiguration"u8);
                 writer.WriteObjectValue(LinuxUserConfiguration);
             }
-            if (WindowsUserConfiguration != null)
+            if (Optional.IsDefined(WindowsUserConfiguration))
             {
                 writer.WritePropertyName("windowsUserConfiguration"u8);
                 writer.WriteObjectValue(WindowsUserConfiguration);
@@ -85,9 +86,9 @@ namespace Azure.ResourceManager.Batch.Models
             }
             string name = default;
             string password = default;
-            Optional<BatchUserAccountElevationLevel> elevationLevel = default;
-            Optional<BatchLinuxUserConfiguration> linuxUserConfiguration = default;
-            Optional<BatchWindowsUserConfiguration> windowsUserConfiguration = default;
+            BatchUserAccountElevationLevel? elevationLevel = default;
+            BatchLinuxUserConfiguration linuxUserConfiguration = default;
+            BatchWindowsUserConfiguration windowsUserConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,9 +139,9 @@ namespace Azure.ResourceManager.Batch.Models
             return new BatchUserAccount(
                 name,
                 password,
-                Optional.ToNullable(elevationLevel),
-                linuxUserConfiguration.Value,
-                windowsUserConfiguration.Value,
+                elevationLevel,
+                linuxUserConfiguration,
+                windowsUserConfiguration,
                 serializedAdditionalRawData);
         }
 

@@ -43,24 +43,24 @@ namespace Azure.ResourceManager.Maintenance
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (LastUpdatedOn.HasValue)
+            if (Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdateTime"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.Maintenance
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<MaintenanceUpdateStatus> status = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<DateTimeOffset> lastUpdateTime = default;
+            SystemData systemData = default;
+            MaintenanceUpdateStatus? status = default;
+            ResourceIdentifier resourceId = default;
+            DateTimeOffset? lastUpdateTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -188,10 +188,10 @@ namespace Azure.ResourceManager.Maintenance
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(status),
-                resourceId.Value,
-                Optional.ToNullable(lastUpdateTime),
+                systemData,
+                status,
+                resourceId,
+                lastUpdateTime,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -28,12 +29,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             writer.WritePropertyName("statusCode"u8);
             writer.WriteNumberValue(StatusCode);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Representations is ChangeTrackingList<RepresentationContract> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Representations))
             {
                 writer.WritePropertyName("representations"u8);
                 writer.WriteStartArray();
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Headers is ChangeTrackingList<ParameterContract> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Headers))
             {
                 writer.WritePropertyName("headers"u8);
                 writer.WriteStartArray();
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 return null;
             }
             int statusCode = default;
-            Optional<string> description = default;
+            string description = default;
             IList<RepresentationContract> representations = default;
             IList<ParameterContract> headers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -143,7 +144,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResponseContract(statusCode, description.Value, representations ?? new ChangeTrackingList<RepresentationContract>(), headers ?? new ChangeTrackingList<ParameterContract>(), serializedAdditionalRawData);
+            return new ResponseContract(statusCode, description, representations ?? new ChangeTrackingList<RepresentationContract>(), headers ?? new ChangeTrackingList<ParameterContract>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResponseContract>.Write(ModelReaderWriterOptions options)

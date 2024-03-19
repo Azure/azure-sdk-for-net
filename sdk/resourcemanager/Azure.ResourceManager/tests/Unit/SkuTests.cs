@@ -1,16 +1,15 @@
-﻿using System.IO;
-using System.Text;
+﻿using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Tests
 {
     [Parallelizable]
-    class SkuTests
+    public class SkuTests
     {
+        private static readonly ModelReaderWriterOptions _wireOptions = new("W");
+
         [TestCase(true, "name", "name")]
         [TestCase(true, "Name", "name")]
         [TestCase(true, null, null)]
@@ -149,40 +148,41 @@ namespace Azure.ResourceManager.Tests
         [Test]
         public void SerializationTest()
         {
-            string expected = "{\"properties\":{\"name\":\"NameForSku\",\"tier\":\"Basic\",\"size\":\"SizeForSku\",\"family\":\"FamilyForSku\",\"capacity\":123456789}}";
+            const string expected = "{\"name\":\"NameForSku\",\"tier\":\"Basic\",\"size\":\"SizeForSku\",\"family\":\"FamilyForSku\",\"capacity\":123456789}";
             ArmSku sku = new("NameForSku", ArmSkuTier.Basic, "SizeForSku", "FamilyForSku", 123456789);
-            var json = JsonHelper.SerializePropertiesToString(sku);
-            Assert.AreEqual(expected, json);
+            var binary = ModelReaderWriter.Write(sku, _wireOptions);
+            Assert.AreEqual(expected, binary.ToString());
         }
 
         [Test]
         public void InvalidSerializationTest()
         {
+            const string expected = "{\"name\":null}";
             ArmSku sku = new(null, null, null, null, null);
-            var json = JsonHelper.SerializePropertiesToString(sku);
-            Assert.AreEqual("{\"properties\":{\"name\":null}}", json);
+            var binary = ModelReaderWriter.Write(sku, _wireOptions);
+            Assert.AreEqual(expected, binary.ToString());
         }
 
         [Test]
         public void DeserializationTest()
         {
-            string json = "{\"name\":\"NameForSku\",\"tier\":\"Basic\",\"size\":\"SizeForSku\",\"family\":\"FamilyForSku\",\"capacity\":123456789}";
+            const string json = "{\"name\":\"NameForSku\",\"tier\":\"Basic\",\"size\":\"SizeForSku\",\"family\":\"FamilyForSku\",\"capacity\":123456789}";
             using var jsonDocument = JsonDocument.Parse(json);
             JsonElement element = jsonDocument.RootElement;
             ArmSku sku = ArmSku.DeserializeArmSku(element);
-            Assert.IsTrue(sku.Name.Equals("NameForSku"));
-            Assert.IsTrue(sku.Capacity == 123456789);
+            Assert.AreEqual("NameForSku", sku.Name);
+            Assert.AreEqual(123456789, sku.Capacity);
         }
 
         [Test]
         public void InvalidDeserializationTest()
         {
-            string json = "{\"name\":\"NameForSku\",\"notTier\":\"Basic\",\"size\":\"SizeForSku\",\"family\":\"FamilyForSku\"}";
+            const string json = "{\"name\":\"NameForSku\",\"notTier\":\"Basic\",\"size\":\"SizeForSku\",\"family\":\"FamilyForSku\"}";
             using var jsonDocument = JsonDocument.Parse(json);
             JsonElement element = jsonDocument.RootElement;
             ArmSku sku = ArmSku.DeserializeArmSku(element);
-            Assert.IsTrue(sku.Tier == null);
-            Assert.IsTrue(sku.Capacity == null);
+            Assert.IsNull(sku.Tier);
+            Assert.IsNull(sku.Capacity);
         }
     }
 }

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (!(InnerHealthErrors is ChangeTrackingList<SiteRecoveryInnerHealthError> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(InnerHealthErrors))
             {
                 writer.WritePropertyName("innerHealthErrors"u8);
                 writer.WriteStartArray();
@@ -36,72 +37,72 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ErrorSource != null)
+            if (Optional.IsDefined(ErrorSource))
             {
                 writer.WritePropertyName("errorSource"u8);
                 writer.WriteStringValue(ErrorSource);
             }
-            if (ErrorType != null)
+            if (Optional.IsDefined(ErrorType))
             {
                 writer.WritePropertyName("errorType"u8);
                 writer.WriteStringValue(ErrorType);
             }
-            if (ErrorLevel != null)
+            if (Optional.IsDefined(ErrorLevel))
             {
                 writer.WritePropertyName("errorLevel"u8);
                 writer.WriteStringValue(ErrorLevel);
             }
-            if (ErrorCategory != null)
+            if (Optional.IsDefined(ErrorCategory))
             {
                 writer.WritePropertyName("errorCategory"u8);
                 writer.WriteStringValue(ErrorCategory);
             }
-            if (ErrorCode != null)
+            if (Optional.IsDefined(ErrorCode))
             {
                 writer.WritePropertyName("errorCode"u8);
                 writer.WriteStringValue(ErrorCode);
             }
-            if (SummaryMessage != null)
+            if (Optional.IsDefined(SummaryMessage))
             {
                 writer.WritePropertyName("summaryMessage"u8);
                 writer.WriteStringValue(SummaryMessage);
             }
-            if (ErrorMessage != null)
+            if (Optional.IsDefined(ErrorMessage))
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
             }
-            if (PossibleCauses != null)
+            if (Optional.IsDefined(PossibleCauses))
             {
                 writer.WritePropertyName("possibleCauses"u8);
                 writer.WriteStringValue(PossibleCauses);
             }
-            if (RecommendedAction != null)
+            if (Optional.IsDefined(RecommendedAction))
             {
                 writer.WritePropertyName("recommendedAction"u8);
                 writer.WriteStringValue(RecommendedAction);
             }
-            if (CreationTimeUtc.HasValue)
+            if (Optional.IsDefined(CreationTimeUtc))
             {
                 writer.WritePropertyName("creationTimeUtc"u8);
                 writer.WriteStringValue(CreationTimeUtc.Value, "O");
             }
-            if (RecoveryProviderErrorMessage != null)
+            if (Optional.IsDefined(RecoveryProviderErrorMessage))
             {
                 writer.WritePropertyName("recoveryProviderErrorMessage"u8);
                 writer.WriteStringValue(RecoveryProviderErrorMessage);
             }
-            if (EntityId != null)
+            if (Optional.IsDefined(EntityId))
             {
                 writer.WritePropertyName("entityId"u8);
                 writer.WriteStringValue(EntityId);
             }
-            if (ErrorId != null)
+            if (Optional.IsDefined(ErrorId))
             {
                 writer.WritePropertyName("errorId"u8);
                 writer.WriteStringValue(ErrorId);
             }
-            if (CustomerResolvability.HasValue)
+            if (Optional.IsDefined(CustomerResolvability))
             {
                 writer.WritePropertyName("customerResolvability"u8);
                 writer.WriteStringValue(CustomerResolvability.Value.ToString());
@@ -145,20 +146,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             IReadOnlyList<SiteRecoveryInnerHealthError> innerHealthErrors = default;
-            Optional<string> errorSource = default;
-            Optional<string> errorType = default;
-            Optional<string> errorLevel = default;
-            Optional<string> errorCategory = default;
-            Optional<string> errorCode = default;
-            Optional<string> summaryMessage = default;
-            Optional<string> errorMessage = default;
-            Optional<string> possibleCauses = default;
-            Optional<string> recommendedAction = default;
-            Optional<DateTimeOffset> creationTimeUtc = default;
-            Optional<string> recoveryProviderErrorMessage = default;
-            Optional<string> entityId = default;
-            Optional<string> errorId = default;
-            Optional<HealthErrorCustomerResolvability> customerResolvability = default;
+            string errorSource = default;
+            string errorType = default;
+            string errorLevel = default;
+            string errorCategory = default;
+            string errorCode = default;
+            string summaryMessage = default;
+            string errorMessage = default;
+            string possibleCauses = default;
+            string recommendedAction = default;
+            DateTimeOffset? creationTimeUtc = default;
+            string recoveryProviderErrorMessage = default;
+            string entityId = default;
+            string errorId = default;
+            HealthErrorCustomerResolvability? customerResolvability = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -263,20 +264,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SiteRecoveryHealthError(
                 innerHealthErrors ?? new ChangeTrackingList<SiteRecoveryInnerHealthError>(),
-                errorSource.Value,
-                errorType.Value,
-                errorLevel.Value,
-                errorCategory.Value,
-                errorCode.Value,
-                summaryMessage.Value,
-                errorMessage.Value,
-                possibleCauses.Value,
-                recommendedAction.Value,
-                Optional.ToNullable(creationTimeUtc),
-                recoveryProviderErrorMessage.Value,
-                entityId.Value,
-                errorId.Value,
-                Optional.ToNullable(customerResolvability),
+                errorSource,
+                errorType,
+                errorLevel,
+                errorCategory,
+                errorCode,
+                summaryMessage,
+                errorMessage,
+                possibleCauses,
+                recommendedAction,
+                creationTimeUtc,
+                recoveryProviderErrorMessage,
+                entityId,
+                errorId,
+                customerResolvability,
                 serializedAdditionalRawData);
         }
 

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -27,22 +28,22 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (!(Errors is ChangeTrackingList<ResponseError> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
@@ -52,22 +53,22 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (CreatedOn.HasValue)
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (ModifiedOn.HasValue)
+            if (Optional.IsDefined(ModifiedOn))
             {
                 writer.WritePropertyName("modifiedTime"u8);
                 writer.WriteStringValue(ModifiedOn.Value, "O");
             }
-            if (ExpireOn.HasValue)
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationTime"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (GeoMasterOperationId.HasValue)
+            if (Optional.IsDefined(GeoMasterOperationId))
             {
                 writer.WritePropertyName("geoMasterOperationId"u8);
                 writer.WriteStringValue(GeoMasterOperationId.Value);
@@ -110,14 +111,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<AppServiceOperationStatus> status = default;
+            string id = default;
+            string name = default;
+            AppServiceOperationStatus? status = default;
             IReadOnlyList<ResponseError> errors = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<DateTimeOffset> modifiedTime = default;
-            Optional<DateTimeOffset> expirationTime = default;
-            Optional<Guid> geoMasterOperationId = default;
+            DateTimeOffset? createdTime = default;
+            DateTimeOffset? modifiedTime = default;
+            DateTimeOffset? expirationTime = default;
+            Guid? geoMasterOperationId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -198,14 +199,14 @@ namespace Azure.ResourceManager.AppService.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AppServiceOperation(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(status),
+                id,
+                name,
+                status,
                 errors ?? new ChangeTrackingList<ResponseError>(),
-                Optional.ToNullable(createdTime),
-                Optional.ToNullable(modifiedTime),
-                Optional.ToNullable(expirationTime),
-                Optional.ToNullable(geoMasterOperationId),
+                createdTime,
+                modifiedTime,
+                expirationTime,
+                geoMasterOperationId,
                 serializedAdditionalRawData);
         }
 

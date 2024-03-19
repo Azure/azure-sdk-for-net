@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Attestation;
 
 namespace Azure.ResourceManager.Attestation.Models
 {
@@ -26,79 +27,79 @@ namespace Azure.ResourceManager.Attestation.Models
             }
 
             writer.WriteStartObject();
-            if (Alg != null)
+            if (Optional.IsDefined(Alg))
             {
                 writer.WritePropertyName("alg"u8);
                 writer.WriteStringValue(Alg);
             }
-            if (Crv != null)
+            if (Optional.IsDefined(Crv))
             {
                 writer.WritePropertyName("crv"u8);
                 writer.WriteStringValue(Crv);
             }
-            if (D != null)
+            if (Optional.IsDefined(D))
             {
                 writer.WritePropertyName("d"u8);
                 writer.WriteStringValue(D);
             }
-            if (Dp != null)
+            if (Optional.IsDefined(Dp))
             {
                 writer.WritePropertyName("dp"u8);
                 writer.WriteStringValue(Dp);
             }
-            if (Dq != null)
+            if (Optional.IsDefined(Dq))
             {
                 writer.WritePropertyName("dq"u8);
                 writer.WriteStringValue(Dq);
             }
-            if (E != null)
+            if (Optional.IsDefined(E))
             {
                 writer.WritePropertyName("e"u8);
                 writer.WriteStringValue(E);
             }
-            if (K != null)
+            if (Optional.IsDefined(K))
             {
                 writer.WritePropertyName("k"u8);
                 writer.WriteStringValue(K);
             }
-            if (Kid != null)
+            if (Optional.IsDefined(Kid))
             {
                 writer.WritePropertyName("kid"u8);
                 writer.WriteStringValue(Kid);
             }
             writer.WritePropertyName("kty"u8);
             writer.WriteStringValue(Kty);
-            if (N != null)
+            if (Optional.IsDefined(N))
             {
                 writer.WritePropertyName("n"u8);
                 writer.WriteStringValue(N);
             }
-            if (P != null)
+            if (Optional.IsDefined(P))
             {
                 writer.WritePropertyName("p"u8);
                 writer.WriteStringValue(P);
             }
-            if (Q != null)
+            if (Optional.IsDefined(Q))
             {
                 writer.WritePropertyName("q"u8);
                 writer.WriteStringValue(Q);
             }
-            if (Qi != null)
+            if (Optional.IsDefined(Qi))
             {
                 writer.WritePropertyName("qi"u8);
                 writer.WriteStringValue(Qi);
             }
-            if (Use != null)
+            if (Optional.IsDefined(Use))
             {
                 writer.WritePropertyName("use"u8);
                 writer.WriteStringValue(Use);
             }
-            if (X != null)
+            if (Optional.IsDefined(X))
             {
                 writer.WritePropertyName("x"u8);
                 writer.WriteStringValue(X);
             }
-            if (!(X5C is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(X5C))
             {
                 writer.WritePropertyName("x5c"u8);
                 writer.WriteStartArray();
@@ -108,7 +109,7 @@ namespace Azure.ResourceManager.Attestation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Y != null)
+            if (Optional.IsDefined(Y))
             {
                 writer.WritePropertyName("y"u8);
                 writer.WriteStringValue(Y);
@@ -151,23 +152,23 @@ namespace Azure.ResourceManager.Attestation.Models
             {
                 return null;
             }
-            Optional<string> alg = default;
-            Optional<string> crv = default;
-            Optional<string> d = default;
-            Optional<string> dp = default;
-            Optional<string> dq = default;
-            Optional<string> e = default;
-            Optional<string> k = default;
-            Optional<string> kid = default;
+            string alg = default;
+            string crv = default;
+            string d = default;
+            string dp = default;
+            string dq = default;
+            string e = default;
+            string k = default;
+            string kid = default;
             string kty = default;
-            Optional<string> n = default;
-            Optional<string> p = default;
-            Optional<string> q = default;
-            Optional<string> qi = default;
-            Optional<string> use = default;
-            Optional<string> x = default;
+            string n = default;
+            string p = default;
+            string q = default;
+            string qi = default;
+            string use = default;
+            string x = default;
             IList<string> x5c = default;
-            Optional<string> y = default;
+            string y = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -273,23 +274,23 @@ namespace Azure.ResourceManager.Attestation.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new JsonWebKey(
-                alg.Value,
-                crv.Value,
-                d.Value,
-                dp.Value,
-                dq.Value,
-                e.Value,
-                k.Value,
-                kid.Value,
+                alg,
+                crv,
+                d,
+                dp,
+                dq,
+                e,
+                k,
+                kid,
                 kty,
-                n.Value,
-                p.Value,
-                q.Value,
-                qi.Value,
-                use.Value,
-                x.Value,
+                n,
+                p,
+                q,
+                qi,
+                use,
+                x,
                 x5c ?? new ChangeTrackingList<string>(),
-                y.Value,
+                y,
                 serializedAdditionalRawData);
         }
 

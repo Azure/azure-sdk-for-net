@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.Media
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && State.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Input != null)
+            if (Optional.IsDefined(Input))
             {
                 writer.WritePropertyName("input"u8);
                 writer.WriteObjectValue(Input);
             }
-            if (options.Format != "W" && LastModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModified"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (!(Outputs is ChangeTrackingList<MediaJobOutput> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Outputs))
             {
                 writer.WritePropertyName("outputs"u8);
                 writer.WriteStartArray();
@@ -85,12 +85,12 @@ namespace Azure.ResourceManager.Media
                 }
                 writer.WriteEndArray();
             }
-            if (Priority.HasValue)
+            if (Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteStringValue(Priority.Value.ToString());
             }
-            if (!(CorrelationData is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(CorrelationData))
             {
                 writer.WritePropertyName("correlationData"u8);
                 writer.WriteStartObject();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Media
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 if (StartOn != null)
                 {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Media
                     writer.WriteNull("startTime");
                 }
             }
-            if (options.Format != "W" && EndOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndOn))
             {
                 if (EndOn != null)
                 {
@@ -167,17 +167,17 @@ namespace Azure.ResourceManager.Media
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<MediaJobState> state = default;
-            Optional<string> description = default;
-            Optional<MediaJobInputBasicProperties> input = default;
-            Optional<DateTimeOffset> lastModified = default;
+            SystemData systemData = default;
+            DateTimeOffset? created = default;
+            MediaJobState? state = default;
+            string description = default;
+            MediaJobInputBasicProperties input = default;
+            DateTimeOffset? lastModified = default;
             IList<MediaJobOutput> outputs = default;
-            Optional<MediaJobPriority> priority = default;
+            MediaJobPriority? priority = default;
             IDictionary<string, string> correlationData = default;
-            Optional<DateTimeOffset?> startTime = default;
-            Optional<DateTimeOffset?> endTime = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -326,17 +326,17 @@ namespace Azure.ResourceManager.Media
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(created),
-                Optional.ToNullable(state),
-                description.Value,
-                input.Value,
-                Optional.ToNullable(lastModified),
+                systemData,
+                created,
+                state,
+                description,
+                input,
+                lastModified,
                 outputs ?? new ChangeTrackingList<MediaJobOutput>(),
-                Optional.ToNullable(priority),
+                priority,
                 correlationData ?? new ChangeTrackingDictionary<string, string>(),
-                Optional.ToNullable(startTime),
-                Optional.ToNullable(endTime),
+                startTime,
+                endTime,
                 serializedAdditionalRawData);
         }
 

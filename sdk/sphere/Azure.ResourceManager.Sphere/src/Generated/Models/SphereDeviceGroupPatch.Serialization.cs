@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sphere;
 
 namespace Azure.ResourceManager.Sphere.Models
 {
@@ -28,27 +29,27 @@ namespace Azure.ResourceManager.Sphere.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (OSFeedType.HasValue)
+            if (Optional.IsDefined(OSFeedType))
             {
                 writer.WritePropertyName("osFeedType"u8);
                 writer.WriteStringValue(OSFeedType.Value.ToString());
             }
-            if (UpdatePolicy.HasValue)
+            if (Optional.IsDefined(UpdatePolicy))
             {
                 writer.WritePropertyName("updatePolicy"u8);
                 writer.WriteStringValue(UpdatePolicy.Value.ToString());
             }
-            if (AllowCrashDumpsCollection.HasValue)
+            if (Optional.IsDefined(AllowCrashDumpsCollection))
             {
                 writer.WritePropertyName("allowCrashDumpsCollection"u8);
                 writer.WriteStringValue(AllowCrashDumpsCollection.Value.ToString());
             }
-            if (RegionalDataBoundary.HasValue)
+            if (Optional.IsDefined(RegionalDataBoundary))
             {
                 writer.WritePropertyName("regionalDataBoundary"u8);
                 writer.WriteStringValue(RegionalDataBoundary.Value.ToString());
@@ -92,11 +93,11 @@ namespace Azure.ResourceManager.Sphere.Models
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<SphereOSFeedType> osFeedType = default;
-            Optional<SphereUpdatePolicy> updatePolicy = default;
-            Optional<SphereAllowCrashDumpCollectionStatus> allowCrashDumpsCollection = default;
-            Optional<RegionalDataBoundary> regionalDataBoundary = default;
+            string description = default;
+            SphereOSFeedType? osFeedType = default;
+            SphereUpdatePolicy? updatePolicy = default;
+            SphereAllowCrashDumpCollectionStatus? allowCrashDumpsCollection = default;
+            RegionalDataBoundary? regionalDataBoundary = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -161,11 +162,11 @@ namespace Azure.ResourceManager.Sphere.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SphereDeviceGroupPatch(
-                description.Value,
-                Optional.ToNullable(osFeedType),
-                Optional.ToNullable(updatePolicy),
-                Optional.ToNullable(allowCrashDumpsCollection),
-                Optional.ToNullable(regionalDataBoundary),
+                description,
+                osFeedType,
+                updatePolicy,
+                allowCrashDumpsCollection,
+                regionalDataBoundary,
                 serializedAdditionalRawData);
         }
 

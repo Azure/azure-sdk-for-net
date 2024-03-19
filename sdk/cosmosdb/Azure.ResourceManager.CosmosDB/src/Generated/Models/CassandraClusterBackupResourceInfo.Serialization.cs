@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (BackupId != null)
+            if (Optional.IsDefined(BackupId))
             {
                 writer.WritePropertyName("backupId"u8);
                 writer.WriteStringValue(BackupId);
             }
-            if (BackupState.HasValue)
+            if (Optional.IsDefined(BackupState))
             {
                 writer.WritePropertyName("backupState"u8);
                 writer.WriteStringValue(BackupState.Value.ToString());
             }
-            if (BackupStartTimestamp.HasValue)
+            if (Optional.IsDefined(BackupStartTimestamp))
             {
                 writer.WritePropertyName("backupStartTimestamp"u8);
                 writer.WriteStringValue(BackupStartTimestamp.Value, "O");
             }
-            if (BackupStopTimestamp.HasValue)
+            if (Optional.IsDefined(BackupStopTimestamp))
             {
                 writer.WritePropertyName("backupStopTimestamp"u8);
                 writer.WriteStringValue(BackupStopTimestamp.Value, "O");
             }
-            if (BackupExpiryTimestamp.HasValue)
+            if (Optional.IsDefined(BackupExpiryTimestamp))
             {
                 writer.WritePropertyName("backupExpiryTimestamp"u8);
                 writer.WriteStringValue(BackupExpiryTimestamp.Value, "O");
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> backupId = default;
-            Optional<CassandraClusterBackupState> backupState = default;
-            Optional<DateTimeOffset> backupStartTimestamp = default;
-            Optional<DateTimeOffset> backupStopTimestamp = default;
-            Optional<DateTimeOffset> backupExpiryTimestamp = default;
+            string backupId = default;
+            CassandraClusterBackupState? backupState = default;
+            DateTimeOffset? backupStartTimestamp = default;
+            DateTimeOffset? backupStopTimestamp = default;
+            DateTimeOffset? backupExpiryTimestamp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,11 +147,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new CassandraClusterBackupResourceInfo(
-                backupId.Value,
-                Optional.ToNullable(backupState),
-                Optional.ToNullable(backupStartTimestamp),
-                Optional.ToNullable(backupStopTimestamp),
-                Optional.ToNullable(backupExpiryTimestamp),
+                backupId,
+                backupState,
+                backupStartTimestamp,
+                backupStopTimestamp,
+                backupExpiryTimestamp,
                 serializedAdditionalRawData);
         }
 

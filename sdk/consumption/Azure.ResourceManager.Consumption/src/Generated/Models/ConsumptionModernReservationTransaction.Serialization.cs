@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Consumption;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Consumption.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(Tags is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartArray();
@@ -52,109 +53,109 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Amount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Amount))
             {
                 writer.WritePropertyName("amount"u8);
                 writer.WriteNumberValue(Amount.Value);
             }
-            if (options.Format != "W" && ArmSkuName != null)
+            if (options.Format != "W" && Optional.IsDefined(ArmSkuName))
             {
                 writer.WritePropertyName("armSkuName"u8);
                 writer.WriteStringValue(ArmSkuName);
             }
-            if (options.Format != "W" && BillingFrequency != null)
+            if (options.Format != "W" && Optional.IsDefined(BillingFrequency))
             {
                 writer.WritePropertyName("billingFrequency"u8);
                 writer.WriteStringValue(BillingFrequency);
             }
-            if (options.Format != "W" && BillingProfileId != null)
+            if (options.Format != "W" && Optional.IsDefined(BillingProfileId))
             {
                 writer.WritePropertyName("billingProfileId"u8);
                 writer.WriteStringValue(BillingProfileId);
             }
-            if (options.Format != "W" && BillingProfileName != null)
+            if (options.Format != "W" && Optional.IsDefined(BillingProfileName))
             {
                 writer.WritePropertyName("billingProfileName"u8);
                 writer.WriteStringValue(BillingProfileName);
             }
-            if (options.Format != "W" && Currency != null)
+            if (options.Format != "W" && Optional.IsDefined(Currency))
             {
                 writer.WritePropertyName("currency"u8);
                 writer.WriteStringValue(Currency);
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && TransactOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TransactOn))
             {
                 writer.WritePropertyName("eventDate"u8);
                 writer.WriteStringValue(TransactOn.Value, "O");
             }
-            if (options.Format != "W" && EventType != null)
+            if (options.Format != "W" && Optional.IsDefined(EventType))
             {
                 writer.WritePropertyName("eventType"u8);
                 writer.WriteStringValue(EventType);
             }
-            if (options.Format != "W" && Invoice != null)
+            if (options.Format != "W" && Optional.IsDefined(Invoice))
             {
                 writer.WritePropertyName("invoice"u8);
                 writer.WriteStringValue(Invoice);
             }
-            if (options.Format != "W" && InvoiceId != null)
+            if (options.Format != "W" && Optional.IsDefined(InvoiceId))
             {
                 writer.WritePropertyName("invoiceId"u8);
                 writer.WriteStringValue(InvoiceId);
             }
-            if (options.Format != "W" && InvoiceSectionId != null)
+            if (options.Format != "W" && Optional.IsDefined(InvoiceSectionId))
             {
                 writer.WritePropertyName("invoiceSectionId"u8);
                 writer.WriteStringValue(InvoiceSectionId);
             }
-            if (options.Format != "W" && InvoiceSectionName != null)
+            if (options.Format != "W" && Optional.IsDefined(InvoiceSectionName))
             {
                 writer.WritePropertyName("invoiceSectionName"u8);
                 writer.WriteStringValue(InvoiceSectionName);
             }
-            if (options.Format != "W" && PurchasingSubscriptionGuid.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PurchasingSubscriptionGuid))
             {
                 writer.WritePropertyName("purchasingSubscriptionGuid"u8);
                 writer.WriteStringValue(PurchasingSubscriptionGuid.Value);
             }
-            if (options.Format != "W" && PurchasingSubscriptionName != null)
+            if (options.Format != "W" && Optional.IsDefined(PurchasingSubscriptionName))
             {
                 writer.WritePropertyName("purchasingSubscriptionName"u8);
                 writer.WriteStringValue(PurchasingSubscriptionName);
             }
-            if (options.Format != "W" && Quantity.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Quantity))
             {
                 writer.WritePropertyName("quantity"u8);
                 writer.WriteNumberValue(Quantity.Value);
             }
-            if (options.Format != "W" && Region != null)
+            if (options.Format != "W" && Optional.IsDefined(Region))
             {
                 writer.WritePropertyName("region"u8);
                 writer.WriteStringValue(Region);
             }
-            if (options.Format != "W" && ReservationOrderId != null)
+            if (options.Format != "W" && Optional.IsDefined(ReservationOrderId))
             {
                 writer.WritePropertyName("reservationOrderId"u8);
                 writer.WriteStringValue(ReservationOrderId);
             }
-            if (options.Format != "W" && ReservationOrderName != null)
+            if (options.Format != "W" && Optional.IsDefined(ReservationOrderName))
             {
                 writer.WritePropertyName("reservationOrderName"u8);
                 writer.WriteStringValue(ReservationOrderName);
             }
-            if (options.Format != "W" && Term != null)
+            if (options.Format != "W" && Optional.IsDefined(Term))
             {
                 writer.WritePropertyName("term"u8);
                 writer.WriteStringValue(Term);
@@ -202,27 +203,27 @@ namespace Azure.ResourceManager.Consumption.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<decimal> amount = default;
-            Optional<string> armSkuName = default;
-            Optional<string> billingFrequency = default;
-            Optional<ResourceIdentifier> billingProfileId = default;
-            Optional<string> billingProfileName = default;
-            Optional<string> currency = default;
-            Optional<string> description = default;
-            Optional<DateTimeOffset> eventDate = default;
-            Optional<string> eventType = default;
-            Optional<string> invoice = default;
-            Optional<ResourceIdentifier> invoiceId = default;
-            Optional<ResourceIdentifier> invoiceSectionId = default;
-            Optional<string> invoiceSectionName = default;
-            Optional<Guid> purchasingSubscriptionGuid = default;
-            Optional<string> purchasingSubscriptionName = default;
-            Optional<decimal> quantity = default;
-            Optional<string> region = default;
-            Optional<string> reservationOrderId = default;
-            Optional<string> reservationOrderName = default;
-            Optional<string> term = default;
+            SystemData systemData = default;
+            decimal? amount = default;
+            string armSkuName = default;
+            string billingFrequency = default;
+            ResourceIdentifier billingProfileId = default;
+            string billingProfileName = default;
+            string currency = default;
+            string description = default;
+            DateTimeOffset? eventDate = default;
+            string eventType = default;
+            string invoice = default;
+            ResourceIdentifier invoiceId = default;
+            ResourceIdentifier invoiceSectionId = default;
+            string invoiceSectionName = default;
+            Guid? purchasingSubscriptionGuid = default;
+            string purchasingSubscriptionName = default;
+            decimal? quantity = default;
+            string region = default;
+            string reservationOrderId = default;
+            string reservationOrderName = default;
+            string term = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -415,27 +416,27 @@ namespace Azure.ResourceManager.Consumption.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(amount),
-                armSkuName.Value,
-                billingFrequency.Value,
-                billingProfileId.Value,
-                billingProfileName.Value,
-                currency.Value,
-                description.Value,
-                Optional.ToNullable(eventDate),
-                eventType.Value,
-                invoice.Value,
-                invoiceId.Value,
-                invoiceSectionId.Value,
-                invoiceSectionName.Value,
-                Optional.ToNullable(purchasingSubscriptionGuid),
-                purchasingSubscriptionName.Value,
-                Optional.ToNullable(quantity),
-                region.Value,
-                reservationOrderId.Value,
-                reservationOrderName.Value,
-                term.Value,
+                systemData,
+                amount,
+                armSkuName,
+                billingFrequency,
+                billingProfileId,
+                billingProfileName,
+                currency,
+                description,
+                eventDate,
+                eventType,
+                invoice,
+                invoiceId,
+                invoiceSectionId,
+                invoiceSectionName,
+                purchasingSubscriptionGuid,
+                purchasingSubscriptionName,
+                quantity,
+                region,
+                reservationOrderId,
+                reservationOrderName,
+                term,
                 tags ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }

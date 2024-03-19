@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceFabric;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
 
             writer.WriteStartObject();
-            if (UpgradeReplicaSetCheckTimeout.HasValue)
+            if (Optional.IsDefined(UpgradeReplicaSetCheckTimeout))
             {
                 writer.WritePropertyName("upgradeReplicaSetCheckTimeout"u8);
                 writer.WriteStringValue(UpgradeReplicaSetCheckTimeout.Value, "c");
             }
-            if (ForceRestart.HasValue)
+            if (Optional.IsDefined(ForceRestart))
             {
                 writer.WritePropertyName("forceRestart"u8);
                 writer.WriteBooleanValue(ForceRestart.Value);
             }
-            if (RollingUpgradeMonitoringPolicy != null)
+            if (Optional.IsDefined(RollingUpgradeMonitoringPolicy))
             {
                 writer.WritePropertyName("rollingUpgradeMonitoringPolicy"u8);
                 writer.WriteObjectValue(RollingUpgradeMonitoringPolicy);
             }
-            if (ApplicationHealthPolicy != null)
+            if (Optional.IsDefined(ApplicationHealthPolicy))
             {
                 writer.WritePropertyName("applicationHealthPolicy"u8);
                 writer.WriteObjectValue(ApplicationHealthPolicy);
             }
-            if (UpgradeMode.HasValue)
+            if (Optional.IsDefined(UpgradeMode))
             {
                 writer.WritePropertyName("upgradeMode"u8);
                 writer.WriteStringValue(UpgradeMode.Value.ToString());
             }
-            if (RecreateApplication.HasValue)
+            if (Optional.IsDefined(RecreateApplication))
             {
                 writer.WritePropertyName("recreateApplication"u8);
                 writer.WriteBooleanValue(RecreateApplication.Value);
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 return null;
             }
-            Optional<TimeSpan> upgradeReplicaSetCheckTimeout = default;
-            Optional<bool> forceRestart = default;
-            Optional<ArmRollingUpgradeMonitoringPolicy> rollingUpgradeMonitoringPolicy = default;
-            Optional<ArmApplicationHealthPolicy> applicationHealthPolicy = default;
-            Optional<ApplicationRollingUpgradeMode> upgradeMode = default;
-            Optional<bool> recreateApplication = default;
+            TimeSpan? upgradeReplicaSetCheckTimeout = default;
+            bool? forceRestart = default;
+            ArmRollingUpgradeMonitoringPolicy rollingUpgradeMonitoringPolicy = default;
+            ArmApplicationHealthPolicy applicationHealthPolicy = default;
+            ApplicationRollingUpgradeMode? upgradeMode = default;
+            bool? recreateApplication = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,12 +166,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ApplicationUpgradePolicy(
-                Optional.ToNullable(upgradeReplicaSetCheckTimeout),
-                Optional.ToNullable(forceRestart),
-                rollingUpgradeMonitoringPolicy.Value,
-                applicationHealthPolicy.Value,
-                Optional.ToNullable(upgradeMode),
-                Optional.ToNullable(recreateApplication),
+                upgradeReplicaSetCheckTimeout,
+                forceRestart,
+                rollingUpgradeMonitoringPolicy,
+                applicationHealthPolicy,
+                upgradeMode,
+                recreateApplication,
                 serializedAdditionalRawData);
         }
 

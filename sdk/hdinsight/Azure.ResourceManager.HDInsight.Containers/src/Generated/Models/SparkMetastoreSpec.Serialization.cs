@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStringValue(DBPasswordSecretName);
             writer.WritePropertyName("keyVaultId"u8);
             writer.WriteStringValue(KeyVaultId);
-            if (ThriftUriString != null)
+            if (Optional.IsDefined(ThriftUriString))
             {
                 writer.WritePropertyName("thriftUrl"u8);
                 writer.WriteStringValue(ThriftUriString);
@@ -84,7 +85,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             string dbUserName = default;
             string dbPasswordSecretName = default;
             string keyVaultId = default;
-            Optional<string> thriftUrl = default;
+            string thriftUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -131,7 +132,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 dbUserName,
                 dbPasswordSecretName,
                 keyVaultId,
-                thriftUrl.Value,
+                thriftUrl,
                 serializedAdditionalRawData);
         }
 

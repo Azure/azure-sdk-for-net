@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (IsInEditMode.HasValue)
+            if (Optional.IsDefined(IsInEditMode))
             {
                 writer.WritePropertyName("inEdit"u8);
                 writer.WriteBooleanValue(IsInEditMode.Value);
             }
-            if (DraftContentLink != null)
+            if (Optional.IsDefined(DraftContentLink))
             {
                 writer.WritePropertyName("draftContentLink"u8);
                 writer.WriteObjectValue(DraftContentLink);
             }
-            if (CreatedOn.HasValue)
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (LastModifiedOn.HasValue)
+            if (Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, RunbookParameterDefinition> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -57,7 +58,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(OutputTypes is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(OutputTypes))
             {
                 writer.WritePropertyName("outputTypes"u8);
                 writer.WriteStartArray();
@@ -105,10 +106,10 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<bool> inEdit = default;
-            Optional<AutomationContentLink> draftContentLink = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
+            bool? inEdit = default;
+            AutomationContentLink draftContentLink = default;
+            DateTimeOffset? creationTime = default;
+            DateTimeOffset? lastModifiedTime = default;
             IDictionary<string, RunbookParameterDefinition> parameters = default;
             IList<string> outputTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -186,10 +187,10 @@ namespace Azure.ResourceManager.Automation.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AutomationRunbookDraft(
-                Optional.ToNullable(inEdit),
-                draftContentLink.Value,
-                Optional.ToNullable(creationTime),
-                Optional.ToNullable(lastModifiedTime),
+                inEdit,
+                draftContentLink,
+                creationTime,
+                lastModifiedTime,
                 parameters ?? new ChangeTrackingDictionary<string, RunbookParameterDefinition>(),
                 outputTypes ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);

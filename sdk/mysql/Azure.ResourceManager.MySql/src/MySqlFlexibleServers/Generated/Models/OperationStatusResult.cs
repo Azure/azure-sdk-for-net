@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.MySql;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
@@ -52,10 +53,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="status"/> is null. </exception>
         internal OperationStatusResult(string status)
         {
-            if (status == null)
-            {
-                throw new ArgumentNullException(nameof(status));
-            }
+            Argument.AssertNotNull(status, nameof(status));
 
             Status = status;
             Operations = new ChangeTrackingList<OperationStatusResult>();

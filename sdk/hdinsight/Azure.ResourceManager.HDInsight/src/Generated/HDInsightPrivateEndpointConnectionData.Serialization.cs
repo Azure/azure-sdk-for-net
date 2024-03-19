@@ -44,26 +44,26 @@ namespace Azure.ResourceManager.HDInsight
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && PrivateEndpoint != null)
+            if (options.Format != "W" && Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
                 JsonSerializer.Serialize(writer, PrivateEndpoint);
             }
             writer.WritePropertyName("privateLinkServiceConnectionState"u8);
             writer.WriteObjectValue(ConnectionState);
-            if (options.Format != "W" && LinkIdentifier != null)
+            if (options.Format != "W" && Optional.IsDefined(LinkIdentifier))
             {
                 writer.WritePropertyName("linkIdentifier"u8);
                 writer.WriteStringValue(LinkIdentifier);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -110,11 +110,11 @@ namespace Azure.ResourceManager.HDInsight
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SubResource> privateEndpoint = default;
+            SystemData systemData = default;
+            SubResource privateEndpoint = default;
             HDInsightPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
-            Optional<string> linkIdentifier = default;
-            Optional<HDInsightPrivateEndpointConnectionProvisioningState> provisioningState = default;
+            string linkIdentifier = default;
+            HDInsightPrivateEndpointConnectionProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -193,11 +193,11 @@ namespace Azure.ResourceManager.HDInsight
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 privateEndpoint,
                 privateLinkServiceConnectionState,
-                linkIdentifier.Value,
-                Optional.ToNullable(provisioningState),
+                linkIdentifier,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

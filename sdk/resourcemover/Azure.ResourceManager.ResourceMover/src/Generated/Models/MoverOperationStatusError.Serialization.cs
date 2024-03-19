@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ResourceMover;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Code != null)
+            if (options.Format != "W" && Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (options.Format != "W" && Message != null)
+            if (options.Format != "W" && Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && !(Details is ChangeTrackingList<MoverOperationStatusError> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartArray();
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(AdditionalInfo is ChangeTrackingList<MoverOperationErrorAdditionalInfo> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AdditionalInfo))
             {
                 if (AdditionalInfo != null)
                 {
@@ -101,8 +102,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<string> message = default;
+            string code = default;
+            string message = default;
             IReadOnlyList<MoverOperationStatusError> details = default;
             IReadOnlyList<MoverOperationErrorAdditionalInfo> additionalInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -154,7 +155,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoverOperationStatusError(code.Value, message.Value, details ?? new ChangeTrackingList<MoverOperationStatusError>(), additionalInfo ?? new ChangeTrackingList<MoverOperationErrorAdditionalInfo>(), serializedAdditionalRawData);
+            return new MoverOperationStatusError(code, message, details ?? new ChangeTrackingList<MoverOperationStatusError>(), additionalInfo ?? new ChangeTrackingList<MoverOperationErrorAdditionalInfo>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MoverOperationStatusError>.Write(ModelReaderWriterOptions options)

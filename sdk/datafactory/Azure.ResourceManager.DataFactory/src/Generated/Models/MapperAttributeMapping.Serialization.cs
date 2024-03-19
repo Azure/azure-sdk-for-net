@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (MappingType.HasValue)
+            if (Optional.IsDefined(MappingType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(MappingType.Value.ToString());
             }
-            if (FunctionName != null)
+            if (Optional.IsDefined(FunctionName))
             {
                 writer.WritePropertyName("functionName"u8);
                 writer.WriteStringValue(FunctionName);
             }
-            if (Expression != null)
+            if (Optional.IsDefined(Expression))
             {
                 writer.WritePropertyName("expression"u8);
                 writer.WriteStringValue(Expression);
             }
-            if (AttributeReference != null)
+            if (Optional.IsDefined(AttributeReference))
             {
                 writer.WritePropertyName("attributeReference"u8);
                 writer.WriteObjectValue(AttributeReference);
             }
-            if (!(AttributeReferences is ChangeTrackingList<MapperAttributeReference> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AttributeReferences))
             {
                 writer.WritePropertyName("attributeReferences"u8);
                 writer.WriteStartArray();
@@ -99,11 +100,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<MappingType> type = default;
-            Optional<string> functionName = default;
-            Optional<string> expression = default;
-            Optional<MapperAttributeReference> attributeReference = default;
+            string name = default;
+            MappingType? type = default;
+            string functionName = default;
+            string expression = default;
+            MapperAttributeReference attributeReference = default;
             IList<MapperAttributeReference> attributeReferences = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -163,11 +164,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MapperAttributeMapping(
-                name.Value,
-                Optional.ToNullable(type),
-                functionName.Value,
-                expression.Value,
-                attributeReference.Value,
+                name,
+                type,
+                functionName,
+                expression,
+                attributeReference,
                 attributeReferences ?? new ChangeTrackingList<MapperAttributeReference>(),
                 serializedAdditionalRawData);
         }

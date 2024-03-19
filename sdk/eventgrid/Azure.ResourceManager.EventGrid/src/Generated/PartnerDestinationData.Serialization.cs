@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.EventGrid
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,44 +56,44 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PartnerRegistrationImmutableId.HasValue)
+            if (Optional.IsDefined(PartnerRegistrationImmutableId))
             {
                 writer.WritePropertyName("partnerRegistrationImmutableId"u8);
                 writer.WriteStringValue(PartnerRegistrationImmutableId.Value);
             }
-            if (EndpointServiceContext != null)
+            if (Optional.IsDefined(EndpointServiceContext))
             {
                 writer.WritePropertyName("endpointServiceContext"u8);
                 writer.WriteStringValue(EndpointServiceContext);
             }
-            if (ExpirationTimeIfNotActivatedUtc.HasValue)
+            if (Optional.IsDefined(ExpirationTimeIfNotActivatedUtc))
             {
                 writer.WritePropertyName("expirationTimeIfNotActivatedUtc"u8);
                 writer.WriteStringValue(ExpirationTimeIfNotActivatedUtc.Value, "O");
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (ActivationState.HasValue)
+            if (Optional.IsDefined(ActivationState))
             {
                 writer.WritePropertyName("activationState"u8);
                 writer.WriteStringValue(ActivationState.Value.ToString());
             }
-            if (EndpointBaseUri != null)
+            if (Optional.IsDefined(EndpointBaseUri))
             {
                 writer.WritePropertyName("endpointBaseUrl"u8);
                 writer.WriteStringValue(EndpointBaseUri.AbsoluteUri);
             }
-            if (MessageForActivation != null)
+            if (Optional.IsDefined(MessageForActivation))
             {
                 writer.WritePropertyName("messageForActivation"u8);
                 writer.WriteStringValue(MessageForActivation);
@@ -142,14 +142,14 @@ namespace Azure.ResourceManager.EventGrid
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> partnerRegistrationImmutableId = default;
-            Optional<string> endpointServiceContext = default;
-            Optional<DateTimeOffset> expirationTimeIfNotActivatedUtc = default;
-            Optional<PartnerDestinationProvisioningState> provisioningState = default;
-            Optional<PartnerDestinationActivationState> activationState = default;
-            Optional<Uri> endpointBaseUri = default;
-            Optional<string> messageForActivation = default;
+            SystemData systemData = default;
+            Guid? partnerRegistrationImmutableId = default;
+            string endpointServiceContext = default;
+            DateTimeOffset? expirationTimeIfNotActivatedUtc = default;
+            PartnerDestinationProvisioningState? provisioningState = default;
+            PartnerDestinationActivationState? activationState = default;
+            Uri endpointBaseUri = default;
+            string messageForActivation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -274,16 +274,16 @@ namespace Azure.ResourceManager.EventGrid
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(partnerRegistrationImmutableId),
-                endpointServiceContext.Value,
-                Optional.ToNullable(expirationTimeIfNotActivatedUtc),
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(activationState),
-                endpointBaseUri.Value,
-                messageForActivation.Value,
+                partnerRegistrationImmutableId,
+                endpointServiceContext,
+                expirationTimeIfNotActivatedUtc,
+                provisioningState,
+                activationState,
+                endpointBaseUri,
+                messageForActivation,
                 serializedAdditionalRawData);
         }
 

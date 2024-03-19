@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SqlVirtualMachine;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             }
 
             writer.WriteStartObject();
-            if (!(Luns is ChangeTrackingList<int> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Luns))
             {
                 writer.WritePropertyName("luns"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
                 writer.WriteEndArray();
             }
-            if (DefaultFilePath != null)
+            if (Optional.IsDefined(DefaultFilePath))
             {
                 writer.WritePropertyName("defaultFilePath"u8);
                 writer.WriteStringValue(DefaultFilePath);
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 return null;
             }
             IList<int> luns = default;
-            Optional<string> defaultFilePath = default;
+            string defaultFilePath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlStorageSettings(luns ?? new ChangeTrackingList<int>(), defaultFilePath.Value, serializedAdditionalRawData);
+            return new SqlStorageSettings(luns ?? new ChangeTrackingList<int>(), defaultFilePath, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlStorageSettings>.Write(ModelReaderWriterOptions options)

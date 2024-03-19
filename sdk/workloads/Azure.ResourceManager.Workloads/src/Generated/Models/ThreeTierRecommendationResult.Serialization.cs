@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (DBVmSku != null)
+            if (Optional.IsDefined(DBVmSku))
             {
                 writer.WritePropertyName("dbVmSku"u8);
                 writer.WriteStringValue(DBVmSku);
             }
-            if (DatabaseInstanceCount.HasValue)
+            if (Optional.IsDefined(DatabaseInstanceCount))
             {
                 writer.WritePropertyName("databaseInstanceCount"u8);
                 writer.WriteNumberValue(DatabaseInstanceCount.Value);
             }
-            if (CentralServerVmSku != null)
+            if (Optional.IsDefined(CentralServerVmSku))
             {
                 writer.WritePropertyName("centralServerVmSku"u8);
                 writer.WriteStringValue(CentralServerVmSku);
             }
-            if (CentralServerInstanceCount.HasValue)
+            if (Optional.IsDefined(CentralServerInstanceCount))
             {
                 writer.WritePropertyName("centralServerInstanceCount"u8);
                 writer.WriteNumberValue(CentralServerInstanceCount.Value);
             }
-            if (ApplicationServerVmSku != null)
+            if (Optional.IsDefined(ApplicationServerVmSku))
             {
                 writer.WritePropertyName("applicationServerVmSku"u8);
                 writer.WriteStringValue(ApplicationServerVmSku);
             }
-            if (ApplicationServerInstanceCount.HasValue)
+            if (Optional.IsDefined(ApplicationServerInstanceCount))
             {
                 writer.WritePropertyName("applicationServerInstanceCount"u8);
                 writer.WriteNumberValue(ApplicationServerInstanceCount.Value);
@@ -96,12 +97,12 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<string> dbVmSku = default;
-            Optional<long> databaseInstanceCount = default;
-            Optional<string> centralServerVmSku = default;
-            Optional<long> centralServerInstanceCount = default;
-            Optional<string> applicationServerVmSku = default;
-            Optional<long> applicationServerInstanceCount = default;
+            string dbVmSku = default;
+            long? databaseInstanceCount = default;
+            string centralServerVmSku = default;
+            long? centralServerInstanceCount = default;
+            string applicationServerVmSku = default;
+            long? applicationServerInstanceCount = default;
             SapDeploymentType deploymentType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -163,12 +164,12 @@ namespace Azure.ResourceManager.Workloads.Models
             return new ThreeTierRecommendationResult(
                 deploymentType,
                 serializedAdditionalRawData,
-                dbVmSku.Value,
-                Optional.ToNullable(databaseInstanceCount),
-                centralServerVmSku.Value,
-                Optional.ToNullable(centralServerInstanceCount),
-                applicationServerVmSku.Value,
-                Optional.ToNullable(applicationServerInstanceCount));
+                dbVmSku,
+                databaseInstanceCount,
+                centralServerVmSku,
+                centralServerInstanceCount,
+                applicationServerVmSku,
+                applicationServerInstanceCount);
         }
 
         BinaryData IPersistableModel<ThreeTierRecommendationResult>.Write(ModelReaderWriterOptions options)

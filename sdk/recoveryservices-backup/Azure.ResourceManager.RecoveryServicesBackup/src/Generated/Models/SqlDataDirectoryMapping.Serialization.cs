@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (MappingType.HasValue)
+            if (Optional.IsDefined(MappingType))
             {
                 writer.WritePropertyName("mappingType"u8);
                 writer.WriteStringValue(MappingType.Value.ToString());
             }
-            if (SourceLogicalName != null)
+            if (Optional.IsDefined(SourceLogicalName))
             {
                 writer.WritePropertyName("sourceLogicalName"u8);
                 writer.WriteStringValue(SourceLogicalName);
             }
-            if (SourcePath != null)
+            if (Optional.IsDefined(SourcePath))
             {
                 writer.WritePropertyName("sourcePath"u8);
                 writer.WriteStringValue(SourcePath);
             }
-            if (TargetPath != null)
+            if (Optional.IsDefined(TargetPath))
             {
                 writer.WritePropertyName("targetPath"u8);
                 writer.WriteStringValue(TargetPath);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<SqlDataDirectoryType> mappingType = default;
-            Optional<string> sourceLogicalName = default;
-            Optional<string> sourcePath = default;
-            Optional<string> targetPath = default;
+            SqlDataDirectoryType? mappingType = default;
+            string sourceLogicalName = default;
+            string sourcePath = default;
+            string targetPath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlDataDirectoryMapping(Optional.ToNullable(mappingType), sourceLogicalName.Value, sourcePath.Value, targetPath.Value, serializedAdditionalRawData);
+            return new SqlDataDirectoryMapping(mappingType, sourceLogicalName, sourcePath, targetPath, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlDataDirectoryMapping>.Write(ModelReaderWriterOptions options)

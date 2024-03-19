@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && DriverName != null)
+            if (options.Format != "W" && Optional.IsDefined(DriverName))
             {
                 writer.WritePropertyName("driverName"u8);
                 writer.WriteStringValue(DriverName);
             }
-            if (options.Format != "W" && DriverSize != null)
+            if (options.Format != "W" && Optional.IsDefined(DriverSize))
             {
                 writer.WritePropertyName("driverSize"u8);
                 writer.WriteStringValue(DriverSize);
             }
-            if (options.Format != "W" && ArchiveChecksum != null)
+            if (options.Format != "W" && Optional.IsDefined(ArchiveChecksum))
             {
                 writer.WritePropertyName("archiveChecksum"u8);
                 writer.WriteStringValue(ArchiveChecksum);
             }
-            if (options.Format != "W" && OracleChecksum != null)
+            if (options.Format != "W" && Optional.IsDefined(OracleChecksum))
             {
                 writer.WritePropertyName("oracleChecksum"u8);
                 writer.WriteStringValue(OracleChecksum);
             }
-            if (options.Format != "W" && AssemblyVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(AssemblyVersion))
             {
                 writer.WritePropertyName("assemblyVersion"u8);
                 writer.WriteStringValue(AssemblyVersion);
             }
-            if (options.Format != "W" && !(SupportedOracleVersions is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedOracleVersions))
             {
                 writer.WritePropertyName("supportedOracleVersions"u8);
                 writer.WriteStartArray();
@@ -99,11 +100,11 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> driverName = default;
-            Optional<string> driverSize = default;
-            Optional<string> archiveChecksum = default;
-            Optional<string> oracleChecksum = default;
-            Optional<string> assemblyVersion = default;
+            string driverName = default;
+            string driverSize = default;
+            string archiveChecksum = default;
+            string oracleChecksum = default;
+            string assemblyVersion = default;
             IReadOnlyList<string> supportedOracleVersions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -155,11 +156,11 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new OracleOciDriverInfo(
-                driverName.Value,
-                driverSize.Value,
-                archiveChecksum.Value,
-                oracleChecksum.Value,
-                assemblyVersion.Value,
+                driverName,
+                driverSize,
+                archiveChecksum,
+                oracleChecksum,
+                assemblyVersion,
                 supportedOracleVersions ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }

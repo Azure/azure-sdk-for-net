@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.IoT.Hub.Service;
 
 namespace Azure.IoT.Hub.Service.Models
 {
@@ -16,77 +17,77 @@ namespace Azure.IoT.Hub.Service.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (JobId != null)
+            if (Optional.IsDefined(JobId))
             {
                 writer.WritePropertyName("jobId"u8);
                 writer.WriteStringValue(JobId);
             }
-            if (StartTimeUtc.HasValue)
+            if (Optional.IsDefined(StartTimeUtc))
             {
                 writer.WritePropertyName("startTimeUtc"u8);
                 writer.WriteStringValue(StartTimeUtc.Value, "O");
             }
-            if (EndTimeUtc.HasValue)
+            if (Optional.IsDefined(EndTimeUtc))
             {
                 writer.WritePropertyName("endTimeUtc"u8);
                 writer.WriteStringValue(EndTimeUtc.Value, "O");
             }
-            if (Type.HasValue)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(Type.Value.ToString());
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Progress.HasValue)
+            if (Optional.IsDefined(Progress))
             {
                 writer.WritePropertyName("progress"u8);
                 writer.WriteNumberValue(Progress.Value);
             }
-            if (InputBlobContainerUri != null)
+            if (Optional.IsDefined(InputBlobContainerUri))
             {
                 writer.WritePropertyName("inputBlobContainerUri"u8);
                 writer.WriteStringValue(InputBlobContainerUri);
             }
-            if (InputBlobName != null)
+            if (Optional.IsDefined(InputBlobName))
             {
                 writer.WritePropertyName("inputBlobName"u8);
                 writer.WriteStringValue(InputBlobName);
             }
-            if (OutputBlobContainerUri != null)
+            if (Optional.IsDefined(OutputBlobContainerUri))
             {
                 writer.WritePropertyName("outputBlobContainerUri"u8);
                 writer.WriteStringValue(OutputBlobContainerUri);
             }
-            if (OutputBlobName != null)
+            if (Optional.IsDefined(OutputBlobName))
             {
                 writer.WritePropertyName("outputBlobName"u8);
                 writer.WriteStringValue(OutputBlobName);
             }
-            if (ExcludeKeysInExport.HasValue)
+            if (Optional.IsDefined(ExcludeKeysInExport))
             {
                 writer.WritePropertyName("excludeKeysInExport"u8);
                 writer.WriteBooleanValue(ExcludeKeysInExport.Value);
             }
-            if (StorageAuthenticationType.HasValue)
+            if (Optional.IsDefined(StorageAuthenticationType))
             {
                 writer.WritePropertyName("storageAuthenticationType"u8);
                 writer.WriteStringValue(StorageAuthenticationType.Value.ToString());
             }
-            if (FailureReason != null)
+            if (Optional.IsDefined(FailureReason))
             {
                 writer.WritePropertyName("failureReason"u8);
                 writer.WriteStringValue(FailureReason);
             }
-            if (IncludeConfigurations.HasValue)
+            if (Optional.IsDefined(IncludeConfigurations))
             {
                 writer.WritePropertyName("includeConfigurations"u8);
                 writer.WriteBooleanValue(IncludeConfigurations.Value);
             }
-            if (ConfigurationsBlobName != null)
+            if (Optional.IsDefined(ConfigurationsBlobName))
             {
                 writer.WritePropertyName("configurationsBlobName"u8);
                 writer.WriteStringValue(ConfigurationsBlobName);
@@ -100,21 +101,21 @@ namespace Azure.IoT.Hub.Service.Models
             {
                 return null;
             }
-            Optional<string> jobId = default;
-            Optional<DateTimeOffset> startTimeUtc = default;
-            Optional<DateTimeOffset> endTimeUtc = default;
-            Optional<JobPropertiesType> type = default;
-            Optional<JobPropertiesStatus> status = default;
-            Optional<int> progress = default;
-            Optional<string> inputBlobContainerUri = default;
-            Optional<string> inputBlobName = default;
-            Optional<string> outputBlobContainerUri = default;
-            Optional<string> outputBlobName = default;
-            Optional<bool> excludeKeysInExport = default;
-            Optional<JobPropertiesStorageAuthenticationType> storageAuthenticationType = default;
-            Optional<string> failureReason = default;
-            Optional<bool> includeConfigurations = default;
-            Optional<string> configurationsBlobName = default;
+            string jobId = default;
+            DateTimeOffset? startTimeUtc = default;
+            DateTimeOffset? endTimeUtc = default;
+            JobPropertiesType? type = default;
+            JobPropertiesStatus? status = default;
+            int? progress = default;
+            string inputBlobContainerUri = default;
+            string inputBlobName = default;
+            string outputBlobContainerUri = default;
+            string outputBlobName = default;
+            bool? excludeKeysInExport = default;
+            JobPropertiesStorageAuthenticationType? storageAuthenticationType = default;
+            string failureReason = default;
+            bool? includeConfigurations = default;
+            string configurationsBlobName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jobId"u8))
@@ -226,21 +227,21 @@ namespace Azure.IoT.Hub.Service.Models
                 }
             }
             return new JobProperties(
-                jobId.Value,
-                Optional.ToNullable(startTimeUtc),
-                Optional.ToNullable(endTimeUtc),
-                Optional.ToNullable(type),
-                Optional.ToNullable(status),
-                Optional.ToNullable(progress),
-                inputBlobContainerUri.Value,
-                inputBlobName.Value,
-                outputBlobContainerUri.Value,
-                outputBlobName.Value,
-                Optional.ToNullable(excludeKeysInExport),
-                Optional.ToNullable(storageAuthenticationType),
-                failureReason.Value,
-                Optional.ToNullable(includeConfigurations),
-                configurationsBlobName.Value);
+                jobId,
+                startTimeUtc,
+                endTimeUtc,
+                type,
+                status,
+                progress,
+                inputBlobContainerUri,
+                inputBlobName,
+                outputBlobContainerUri,
+                outputBlobName,
+                excludeKeysInExport,
+                storageAuthenticationType,
+                failureReason,
+                includeConfigurations,
+                configurationsBlobName);
         }
     }
 }

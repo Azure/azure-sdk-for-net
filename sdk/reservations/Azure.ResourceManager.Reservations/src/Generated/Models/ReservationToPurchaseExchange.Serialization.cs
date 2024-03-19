@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Reservations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (ReservationOrderId != null)
+            if (Optional.IsDefined(ReservationOrderId))
             {
                 writer.WritePropertyName("reservationOrderId"u8);
                 writer.WriteStringValue(ReservationOrderId);
             }
-            if (ReservationId != null)
+            if (Optional.IsDefined(ReservationId))
             {
                 writer.WritePropertyName("reservationId"u8);
                 writer.WriteStringValue(ReservationId);
             }
-            if (Properties != null)
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (BillingCurrencyTotal != null)
+            if (Optional.IsDefined(BillingCurrencyTotal))
             {
                 writer.WritePropertyName("billingCurrencyTotal"u8);
                 writer.WriteObjectValue(BillingCurrencyTotal);
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> reservationOrderId = default;
-            Optional<ResourceIdentifier> reservationId = default;
-            Optional<ReservationPurchaseContent> properties = default;
-            Optional<PurchasePrice> billingCurrencyTotal = default;
-            Optional<ReservationOperationStatus> status = default;
+            ResourceIdentifier reservationOrderId = default;
+            ResourceIdentifier reservationId = default;
+            ReservationPurchaseContent properties = default;
+            PurchasePrice billingCurrencyTotal = default;
+            ReservationOperationStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,11 +151,11 @@ namespace Azure.ResourceManager.Reservations.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ReservationToPurchaseExchange(
-                reservationOrderId.Value,
-                reservationId.Value,
-                properties.Value,
-                billingCurrencyTotal.Value,
-                Optional.ToNullable(status),
+                reservationOrderId,
+                reservationId,
+                properties,
+                billingCurrencyTotal,
+                status,
                 serializedAdditionalRawData);
         }
 

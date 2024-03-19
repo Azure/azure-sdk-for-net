@@ -18,12 +18,12 @@ namespace Azure.Security.Attestation
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (CertificateThumbprint != null)
+            if (Optional.IsDefined(CertificateThumbprint))
             {
                 writer.WritePropertyName("x-ms-certificate-thumbprint"u8);
                 writer.WriteStringValue(CertificateThumbprint);
             }
-            if (CertificateResolution.HasValue)
+            if (Optional.IsDefined(CertificateResolution))
             {
                 writer.WritePropertyName("x-ms-policycertificates-result"u8);
                 writer.WriteStringValue(CertificateResolution.Value.ToString());
@@ -37,8 +37,8 @@ namespace Azure.Security.Attestation
             {
                 return null;
             }
-            Optional<string> xMsCertificateThumbprint = default;
-            Optional<PolicyCertificateResolution> xMsPolicycertificatesResult = default;
+            string xMsCertificateThumbprint = default;
+            PolicyCertificateResolution? xMsPolicycertificatesResult = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("x-ms-certificate-thumbprint"u8))
@@ -56,7 +56,7 @@ namespace Azure.Security.Attestation
                     continue;
                 }
             }
-            return new PolicyCertificatesModificationResult(xMsCertificateThumbprint.Value, Optional.ToNullable(xMsPolicycertificatesResult));
+            return new PolicyCertificatesModificationResult(xMsCertificateThumbprint, xMsPolicycertificatesResult);
         }
 
         internal partial class PolicyCertificatesModificationResultConverter : JsonConverter<PolicyCertificatesModificationResult>

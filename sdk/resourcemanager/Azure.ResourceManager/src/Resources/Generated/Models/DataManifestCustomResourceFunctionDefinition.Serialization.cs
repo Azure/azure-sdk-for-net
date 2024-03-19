@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (FullyQualifiedResourceType.HasValue)
+            if (Optional.IsDefined(FullyQualifiedResourceType))
             {
                 writer.WritePropertyName("fullyQualifiedResourceType"u8);
                 writer.WriteStringValue(FullyQualifiedResourceType.Value);
             }
-            if (!(DefaultProperties is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DefaultProperties))
             {
                 writer.WritePropertyName("defaultProperties"u8);
                 writer.WriteStartArray();
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
-            if (AllowCustomProperties.HasValue)
+            if (Optional.IsDefined(AllowCustomProperties))
             {
                 writer.WritePropertyName("allowCustomProperties"u8);
                 writer.WriteBooleanValue(AllowCustomProperties.Value);
@@ -89,10 +90,10 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ResourceType> fullyQualifiedResourceType = default;
+            string name = default;
+            ResourceType? fullyQualifiedResourceType = default;
             IReadOnlyList<string> defaultProperties = default;
-            Optional<bool> allowCustomProperties = default;
+            bool? allowCustomProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -140,7 +141,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataManifestCustomResourceFunctionDefinition(name.Value, Optional.ToNullable(fullyQualifiedResourceType), defaultProperties ?? new ChangeTrackingList<string>(), Optional.ToNullable(allowCustomProperties), serializedAdditionalRawData);
+            return new DataManifestCustomResourceFunctionDefinition(name, fullyQualifiedResourceType, defaultProperties ?? new ChangeTrackingList<string>(), allowCustomProperties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataManifestCustomResourceFunctionDefinition>.Write(ModelReaderWriterOptions options)

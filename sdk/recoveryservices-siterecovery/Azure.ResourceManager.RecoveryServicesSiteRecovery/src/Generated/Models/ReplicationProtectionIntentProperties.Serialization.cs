@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (FriendlyName != null)
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (options.Format != "W" && JobId != null)
+            if (options.Format != "W" && Optional.IsDefined(JobId))
             {
                 writer.WritePropertyName("jobId"u8);
                 writer.WriteStringValue(JobId);
             }
-            if (options.Format != "W" && JobState != null)
+            if (options.Format != "W" && Optional.IsDefined(JobState))
             {
                 writer.WritePropertyName("jobState"u8);
                 writer.WriteStringValue(JobState);
             }
-            if (options.Format != "W" && IsActive.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsActive))
             {
                 writer.WritePropertyName("isActive"u8);
                 writer.WriteBooleanValue(IsActive.Value);
             }
-            if (options.Format != "W" && CreatedOn != null)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTimeUTC"u8);
                 writer.WriteStringValue(CreatedOn);
             }
-            if (ProviderSpecificDetails != null)
+            if (Optional.IsDefined(ProviderSpecificDetails))
             {
                 writer.WritePropertyName("providerSpecificDetails"u8);
                 writer.WriteObjectValue(ProviderSpecificDetails);
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> friendlyName = default;
-            Optional<ResourceIdentifier> jobId = default;
-            Optional<string> jobState = default;
-            Optional<bool> isActive = default;
-            Optional<string> creationTimeUTC = default;
-            Optional<ReplicationProtectionIntentProviderSpecificSettings> providerSpecificDetails = default;
+            string friendlyName = default;
+            ResourceIdentifier jobId = default;
+            string jobState = default;
+            bool? isActive = default;
+            string creationTimeUTC = default;
+            ReplicationProtectionIntentProviderSpecificSettings providerSpecificDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -153,12 +154,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ReplicationProtectionIntentProperties(
-                friendlyName.Value,
-                jobId.Value,
-                jobState.Value,
-                Optional.ToNullable(isActive),
-                creationTimeUTC.Value,
-                providerSpecificDetails.Value,
+                friendlyName,
+                jobId,
+                jobState,
+                isActive,
+                creationTimeUTC,
+                providerSpecificDetails,
                 serializedAdditionalRawData);
         }
 

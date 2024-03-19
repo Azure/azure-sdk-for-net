@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,69 +48,69 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Identifier.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Identifier))
             {
                 writer.WritePropertyName("identifier"u8);
                 writer.WriteNumberValue(Identifier.Value);
             }
-            if (Href != null)
+            if (Optional.IsDefined(Href))
             {
                 writer.WritePropertyName("href"u8);
                 writer.WriteStringValue(Href);
             }
-            if (Process != null)
+            if (Optional.IsDefined(Process))
             {
                 writer.WritePropertyName("process"u8);
                 writer.WriteStringValue(Process);
             }
-            if (StartAddress != null)
+            if (Optional.IsDefined(StartAddress))
             {
                 writer.WritePropertyName("start_address"u8);
                 writer.WriteStringValue(StartAddress);
             }
-            if (CurrentPriority.HasValue)
+            if (Optional.IsDefined(CurrentPriority))
             {
                 writer.WritePropertyName("current_priority"u8);
                 writer.WriteNumberValue(CurrentPriority.Value);
             }
-            if (PriorityLevel != null)
+            if (Optional.IsDefined(PriorityLevel))
             {
                 writer.WritePropertyName("priority_level"u8);
                 writer.WriteStringValue(PriorityLevel);
             }
-            if (BasePriority.HasValue)
+            if (Optional.IsDefined(BasePriority))
             {
                 writer.WritePropertyName("base_priority"u8);
                 writer.WriteNumberValue(BasePriority.Value);
             }
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("start_time"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (TotalProcessorTime != null)
+            if (Optional.IsDefined(TotalProcessorTime))
             {
                 writer.WritePropertyName("total_processor_time"u8);
                 writer.WriteStringValue(TotalProcessorTime);
             }
-            if (UserProcessorTime != null)
+            if (Optional.IsDefined(UserProcessorTime))
             {
                 writer.WritePropertyName("user_processor_time"u8);
                 writer.WriteStringValue(UserProcessorTime);
             }
-            if (State != null)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
-            if (WaitReason != null)
+            if (Optional.IsDefined(WaitReason))
             {
                 writer.WritePropertyName("wait_reason"u8);
                 writer.WriteStringValue(WaitReason);
@@ -153,23 +154,23 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> identifier = default;
-            Optional<string> href = default;
-            Optional<string> process = default;
-            Optional<string> startAddress = default;
-            Optional<int> currentPriority = default;
-            Optional<string> priorityLevel = default;
-            Optional<int> basePriority = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<string> totalProcessorTime = default;
-            Optional<string> userProcessorTime = default;
-            Optional<string> state = default;
-            Optional<string> waitReason = default;
+            SystemData systemData = default;
+            int? identifier = default;
+            string href = default;
+            string process = default;
+            string startAddress = default;
+            int? currentPriority = default;
+            string priorityLevel = default;
+            int? basePriority = default;
+            DateTimeOffset? startTime = default;
+            string totalProcessorTime = default;
+            string userProcessorTime = default;
+            string state = default;
+            string waitReason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -301,20 +302,20 @@ namespace Azure.ResourceManager.AppService.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(identifier),
-                href.Value,
-                process.Value,
-                startAddress.Value,
-                Optional.ToNullable(currentPriority),
-                priorityLevel.Value,
-                Optional.ToNullable(basePriority),
-                Optional.ToNullable(startTime),
-                totalProcessorTime.Value,
-                userProcessorTime.Value,
-                state.Value,
-                waitReason.Value,
-                kind.Value,
+                systemData,
+                identifier,
+                href,
+                process,
+                startAddress,
+                currentPriority,
+                priorityLevel,
+                basePriority,
+                startTime,
+                totalProcessorTime,
+                userProcessorTime,
+                state,
+                waitReason,
+                kind,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Inputs != null)
+            if (options.Format != "W" && Optional.IsDefined(Inputs))
             {
                 writer.WritePropertyName("inputs"u8);
 #if NET6_0_OR_GREATER
@@ -43,12 +44,12 @@ namespace Azure.ResourceManager.Logic.Models
                 }
 #endif
             }
-            if (options.Format != "W" && InputsLink != null)
+            if (options.Format != "W" && Optional.IsDefined(InputsLink))
             {
                 writer.WritePropertyName("inputsLink"u8);
                 writer.WriteObjectValue(InputsLink);
             }
-            if (options.Format != "W" && Outputs != null)
+            if (options.Format != "W" && Optional.IsDefined(Outputs))
             {
                 writer.WritePropertyName("outputs"u8);
 #if NET6_0_OR_GREATER
@@ -60,47 +61,47 @@ namespace Azure.ResourceManager.Logic.Models
                 }
 #endif
             }
-            if (options.Format != "W" && OutputsLink != null)
+            if (options.Format != "W" && Optional.IsDefined(OutputsLink))
             {
                 writer.WritePropertyName("outputsLink"u8);
                 writer.WriteObjectValue(OutputsLink);
             }
-            if (options.Format != "W" && ScheduledOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ScheduledOn))
             {
                 writer.WritePropertyName("scheduledTime"u8);
                 writer.WriteStringValue(ScheduledOn.Value, "O");
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && EndOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (options.Format != "W" && TrackingId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TrackingId))
             {
                 writer.WritePropertyName("trackingId"u8);
                 writer.WriteStringValue(TrackingId.Value);
             }
-            if (Correlation != null)
+            if (Optional.IsDefined(Correlation))
             {
                 writer.WritePropertyName("correlation"u8);
                 writer.WriteObjectValue(Correlation);
             }
-            if (options.Format != "W" && Code != null)
+            if (options.Format != "W" && Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Error != null)
+            if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
 #if NET6_0_OR_GREATER
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
 #endif
             }
-            if (options.Format != "W" && TrackedProperties != null)
+            if (options.Format != "W" && Optional.IsDefined(TrackedProperties))
             {
                 writer.WritePropertyName("trackedProperties"u8);
 #if NET6_0_OR_GREATER
@@ -162,20 +163,20 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<BinaryData> inputs = default;
-            Optional<LogicContentLink> inputsLink = default;
-            Optional<BinaryData> outputs = default;
-            Optional<LogicContentLink> outputsLink = default;
-            Optional<DateTimeOffset> scheduledTime = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<Guid> trackingId = default;
-            Optional<Correlation> correlation = default;
-            Optional<string> code = default;
-            Optional<LogicWorkflowStatus> status = default;
-            Optional<BinaryData> error = default;
-            Optional<BinaryData> trackedProperties = default;
+            string name = default;
+            BinaryData inputs = default;
+            LogicContentLink inputsLink = default;
+            BinaryData outputs = default;
+            LogicContentLink outputsLink = default;
+            DateTimeOffset? scheduledTime = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            Guid? trackingId = default;
+            Correlation correlation = default;
+            string code = default;
+            LogicWorkflowStatus? status = default;
+            BinaryData error = default;
+            BinaryData trackedProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -305,20 +306,20 @@ namespace Azure.ResourceManager.Logic.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new LogicWorkflowRunTrigger(
-                name.Value,
-                inputs.Value,
-                inputsLink.Value,
-                outputs.Value,
-                outputsLink.Value,
-                Optional.ToNullable(scheduledTime),
-                Optional.ToNullable(startTime),
-                Optional.ToNullable(endTime),
-                Optional.ToNullable(trackingId),
-                correlation.Value,
-                code.Value,
-                Optional.ToNullable(status),
-                error.Value,
-                trackedProperties.Value,
+                name,
+                inputs,
+                inputsLink,
+                outputs,
+                outputsLink,
+                scheduledTime,
+                startTime,
+                endTime,
+                trackingId,
+                correlation,
+                code,
+                status,
+                error,
+                trackedProperties,
                 serializedAdditionalRawData);
         }
 

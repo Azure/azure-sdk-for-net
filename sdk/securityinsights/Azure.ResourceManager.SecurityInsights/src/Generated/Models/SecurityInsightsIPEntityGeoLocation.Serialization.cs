@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Asn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Asn))
             {
                 writer.WritePropertyName("asn"u8);
                 writer.WriteNumberValue(Asn.Value);
             }
-            if (options.Format != "W" && City != null)
+            if (options.Format != "W" && Optional.IsDefined(City))
             {
                 writer.WritePropertyName("city"u8);
                 writer.WriteStringValue(City);
             }
-            if (options.Format != "W" && CountryCode != null)
+            if (options.Format != "W" && Optional.IsDefined(CountryCode))
             {
                 writer.WritePropertyName("countryCode"u8);
                 writer.WriteStringValue(CountryCode);
             }
-            if (options.Format != "W" && CountryName != null)
+            if (options.Format != "W" && Optional.IsDefined(CountryName))
             {
                 writer.WritePropertyName("countryName"u8);
                 writer.WriteStringValue(CountryName);
             }
-            if (options.Format != "W" && Latitude.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Latitude))
             {
                 writer.WritePropertyName("latitude"u8);
                 writer.WriteNumberValue(Latitude.Value);
             }
-            if (options.Format != "W" && Longitude.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Longitude))
             {
                 writer.WritePropertyName("longitude"u8);
                 writer.WriteNumberValue(Longitude.Value);
             }
-            if (options.Format != "W" && State != null)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
@@ -99,13 +100,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<int> asn = default;
-            Optional<string> city = default;
-            Optional<string> countryCode = default;
-            Optional<string> countryName = default;
-            Optional<double> latitude = default;
-            Optional<double> longitude = default;
-            Optional<string> state = default;
+            int? asn = default;
+            string city = default;
+            string countryCode = default;
+            string countryName = default;
+            double? latitude = default;
+            double? longitude = default;
+            string state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,13 +165,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SecurityInsightsIPEntityGeoLocation(
-                Optional.ToNullable(asn),
-                city.Value,
-                countryCode.Value,
-                countryName.Value,
-                Optional.ToNullable(latitude),
-                Optional.ToNullable(longitude),
-                state.Value,
+                asn,
+                city,
+                countryCode,
+                countryName,
+                latitude,
+                longitude,
+                state,
                 serializedAdditionalRawData);
         }
 

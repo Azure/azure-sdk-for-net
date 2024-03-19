@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SelfHelp;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (AggregationType.HasValue)
+            if (Optional.IsDefined(AggregationType))
             {
                 writer.WritePropertyName("aggregationType"u8);
                 writer.WriteStringValue(AggregationType.Value.ToString());
             }
-            if (TimeSpanDuration.HasValue)
+            if (Optional.IsDefined(TimeSpanDuration))
             {
                 writer.WritePropertyName("timeSpanDuration"u8);
                 writer.WriteStringValue(TimeSpanDuration.Value, "P");
             }
-            if (Title != null)
+            if (Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (FilterGroup != null)
+            if (Optional.IsDefined(FilterGroup))
             {
                 writer.WritePropertyName("filterGroup"u8);
                 writer.WriteObjectValue(FilterGroup);
             }
-            if (ReplacementKey != null)
+            if (Optional.IsDefined(ReplacementKey))
             {
                 writer.WritePropertyName("replacementKey"u8);
                 writer.WriteStringValue(ReplacementKey);
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<AggregationType> aggregationType = default;
-            Optional<TimeSpan> timeSpanDuration = default;
-            Optional<string> title = default;
-            Optional<FilterGroup> filterGroup = default;
-            Optional<string> replacementKey = default;
+            string name = default;
+            AggregationType? aggregationType = default;
+            TimeSpan? timeSpanDuration = default;
+            string title = default;
+            FilterGroup filterGroup = default;
+            string replacementKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -153,12 +154,12 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MetricsBasedChart(
-                name.Value,
-                Optional.ToNullable(aggregationType),
-                Optional.ToNullable(timeSpanDuration),
-                title.Value,
-                filterGroup.Value,
-                replacementKey.Value,
+                name,
+                aggregationType,
+                timeSpanDuration,
+                title,
+                filterGroup,
+                replacementKey,
                 serializedAdditionalRawData);
         }
 

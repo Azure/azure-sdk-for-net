@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (GA != null)
+            if (Optional.IsDefined(GA))
             {
                 writer.WritePropertyName("GA"u8);
                 writer.WriteStringValue(GA);
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> ga = default;
+            string ga = default;
             string @public = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityAssessmentPublishDates(ga.Value, @public, serializedAdditionalRawData);
+            return new SecurityAssessmentPublishDates(ga, @public, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityAssessmentPublishDates>.Write(ModelReaderWriterOptions options)

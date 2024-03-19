@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (AuthorizationServerId != null)
+            if (Optional.IsDefined(AuthorizationServerId))
             {
                 writer.WritePropertyName("authorizationServerId"u8);
                 writer.WriteStringValue(AuthorizationServerId);
             }
-            if (Scope != null)
+            if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> authorizationServerId = default;
-            Optional<string> scope = default;
+            string authorizationServerId = default;
+            string scope = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OAuth2AuthenticationSettingsContract(authorizationServerId.Value, scope.Value, serializedAdditionalRawData);
+            return new OAuth2AuthenticationSettingsContract(authorizationServerId, scope, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OAuth2AuthenticationSettingsContract>.Write(ModelReaderWriterOptions options)

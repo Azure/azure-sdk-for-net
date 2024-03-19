@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,12 +40,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ControlPlaneNodeConfiguration != null)
+            if (Optional.IsDefined(ControlPlaneNodeConfiguration))
             {
                 writer.WritePropertyName("controlPlaneNodeConfiguration"u8);
                 writer.WriteObjectValue(ControlPlaneNodeConfiguration);
             }
-            if (KubernetesVersion != null)
+            if (Optional.IsDefined(KubernetesVersion))
             {
                 writer.WritePropertyName("kubernetesVersion"u8);
                 writer.WriteStringValue(KubernetesVersion);
@@ -89,8 +90,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<ControlPlaneNodePatchConfiguration> controlPlaneNodeConfiguration = default;
-            Optional<string> kubernetesVersion = default;
+            ControlPlaneNodePatchConfiguration controlPlaneNodeConfiguration = default;
+            string kubernetesVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudKubernetesClusterPatch(tags ?? new ChangeTrackingDictionary<string, string>(), controlPlaneNodeConfiguration.Value, kubernetesVersion.Value, serializedAdditionalRawData);
+            return new NetworkCloudKubernetesClusterPatch(tags ?? new ChangeTrackingDictionary<string, string>(), controlPlaneNodeConfiguration, kubernetesVersion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudKubernetesClusterPatch>.Write(ModelReaderWriterOptions options)

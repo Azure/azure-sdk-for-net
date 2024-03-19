@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MobileNetwork;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WriteStartObject();
             writer.WritePropertyName("authenticationType"u8);
             writer.WriteStringValue(AuthenticationType.ToString());
-            if (HttpsServerCertificate != null)
+            if (Optional.IsDefined(HttpsServerCertificate))
             {
                 writer.WritePropertyName("httpsServerCertificate"u8);
                 writer.WriteObjectValue(HttpsServerCertificate);
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 return null;
             }
             MobileNetworkAuthenticationType authenticationType = default;
-            Optional<MobileNetworkHttpsServerCertificate> httpsServerCertificate = default;
+            MobileNetworkHttpsServerCertificate httpsServerCertificate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MobileNetworkLocalDiagnosticsAccessConfiguration(authenticationType, httpsServerCertificate.Value, serializedAdditionalRawData);
+            return new MobileNetworkLocalDiagnosticsAccessConfiguration(authenticationType, httpsServerCertificate, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MobileNetworkLocalDiagnosticsAccessConfiguration>.Write(ModelReaderWriterOptions options)

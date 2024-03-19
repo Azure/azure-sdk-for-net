@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (PrimaryManagedInstanceId != null)
+            if (Optional.IsDefined(PrimaryManagedInstanceId))
             {
                 writer.WritePropertyName("primaryManagedInstanceId"u8);
                 writer.WriteStringValue(PrimaryManagedInstanceId);
             }
-            if (PartnerManagedInstanceId != null)
+            if (Optional.IsDefined(PartnerManagedInstanceId))
             {
                 writer.WritePropertyName("partnerManagedInstanceId"u8);
                 writer.WriteStringValue(PartnerManagedInstanceId);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> primaryManagedInstanceId = default;
-            Optional<ResourceIdentifier> partnerManagedInstanceId = default;
+            ResourceIdentifier primaryManagedInstanceId = default;
+            ResourceIdentifier partnerManagedInstanceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedInstancePairInfo(primaryManagedInstanceId.Value, partnerManagedInstanceId.Value, serializedAdditionalRawData);
+            return new ManagedInstancePairInfo(primaryManagedInstanceId, partnerManagedInstanceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedInstancePairInfo>.Write(ModelReaderWriterOptions options)

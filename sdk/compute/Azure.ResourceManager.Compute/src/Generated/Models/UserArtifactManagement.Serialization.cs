@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStringValue(Install);
             writer.WritePropertyName("remove"u8);
             writer.WriteStringValue(Remove);
-            if (Update != null)
+            if (Optional.IsDefined(Update))
             {
                 writer.WritePropertyName("update"u8);
                 writer.WriteStringValue(Update);
@@ -75,7 +76,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             string install = default;
             string @remove = default;
-            Optional<string> update = default;
+            string update = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UserArtifactManagement(install, @remove, update.Value, serializedAdditionalRawData);
+            return new UserArtifactManagement(install, @remove, update, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UserArtifactManagement>.Write(ModelReaderWriterOptions options)

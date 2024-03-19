@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && RestartCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RestartCount))
             {
                 writer.WritePropertyName("restartCount"u8);
                 writer.WriteNumberValue(RestartCount.Value);
             }
-            if (options.Format != "W" && CurrentState != null)
+            if (options.Format != "W" && Optional.IsDefined(CurrentState))
             {
                 writer.WritePropertyName("currentState"u8);
                 writer.WriteObjectValue(CurrentState);
             }
-            if (options.Format != "W" && PreviousState != null)
+            if (options.Format != "W" && Optional.IsDefined(PreviousState))
             {
                 writer.WritePropertyName("previousState"u8);
                 writer.WriteObjectValue(PreviousState);
             }
-            if (options.Format != "W" && !(Events is ChangeTrackingList<ContainerEvent> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Events))
             {
                 writer.WritePropertyName("events"u8);
                 writer.WriteStartArray();
@@ -89,9 +90,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            Optional<int> restartCount = default;
-            Optional<ContainerState> currentState = default;
-            Optional<ContainerState> previousState = default;
+            int? restartCount = default;
+            ContainerState currentState = default;
+            ContainerState previousState = default;
             IReadOnlyList<ContainerEvent> events = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InitContainerPropertiesDefinitionInstanceView(Optional.ToNullable(restartCount), currentState.Value, previousState.Value, events ?? new ChangeTrackingList<ContainerEvent>(), serializedAdditionalRawData);
+            return new InitContainerPropertiesDefinitionInstanceView(restartCount, currentState, previousState, events ?? new ChangeTrackingList<ContainerEvent>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InitContainerPropertiesDefinitionInstanceView>.Write(ModelReaderWriterOptions options)

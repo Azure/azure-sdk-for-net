@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -61,49 +61,49 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && PortPairDescriptor != null)
+            if (options.Format != "W" && Optional.IsDefined(PortPairDescriptor))
             {
                 writer.WritePropertyName("portPairDescriptor"u8);
                 writer.WriteStringValue(PortPairDescriptor);
             }
-            if (options.Format != "W" && PrimaryAzurePort != null)
+            if (options.Format != "W" && Optional.IsDefined(PrimaryAzurePort))
             {
                 writer.WritePropertyName("primaryAzurePort"u8);
                 writer.WriteStringValue(PrimaryAzurePort);
             }
-            if (options.Format != "W" && SecondaryAzurePort != null)
+            if (options.Format != "W" && Optional.IsDefined(SecondaryAzurePort))
             {
                 writer.WritePropertyName("secondaryAzurePort"u8);
                 writer.WriteStringValue(SecondaryAzurePort);
             }
-            if (PeeringLocation != null)
+            if (Optional.IsDefined(PeeringLocation))
             {
                 writer.WritePropertyName("peeringLocation"u8);
                 writer.WriteStringValue(PeeringLocation);
             }
-            if (OverprovisionFactor.HasValue)
+            if (Optional.IsDefined(OverprovisionFactor))
             {
                 writer.WritePropertyName("overprovisionFactor"u8);
                 writer.WriteNumberValue(OverprovisionFactor.Value);
             }
-            if (PortBandwidthInMbps.HasValue)
+            if (Optional.IsDefined(PortBandwidthInMbps))
             {
                 writer.WritePropertyName("portBandwidthInMbps"u8);
                 writer.WriteNumberValue(PortBandwidthInMbps.Value);
             }
-            if (UsedBandwidthInMbps.HasValue)
+            if (Optional.IsDefined(UsedBandwidthInMbps))
             {
                 writer.WritePropertyName("usedBandwidthInMbps"u8);
                 writer.WriteNumberValue(UsedBandwidthInMbps.Value);
             }
-            if (RemainingBandwidthInMbps.HasValue)
+            if (Optional.IsDefined(RemainingBandwidthInMbps))
             {
                 writer.WritePropertyName("remainingBandwidthInMbps"u8);
                 writer.WriteNumberValue(RemainingBandwidthInMbps.Value);
@@ -147,21 +147,21 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> portPairDescriptor = default;
-            Optional<string> primaryAzurePort = default;
-            Optional<string> secondaryAzurePort = default;
-            Optional<string> peeringLocation = default;
-            Optional<int> overprovisionFactor = default;
-            Optional<int> portBandwidthInMbps = default;
-            Optional<int> usedBandwidthInMbps = default;
-            Optional<int> remainingBandwidthInMbps = default;
+            SystemData systemData = default;
+            string portPairDescriptor = default;
+            string primaryAzurePort = default;
+            string secondaryAzurePort = default;
+            string peeringLocation = default;
+            int? overprovisionFactor = default;
+            int? portBandwidthInMbps = default;
+            int? usedBandwidthInMbps = default;
+            int? remainingBandwidthInMbps = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -296,18 +296,18 @@ namespace Azure.ResourceManager.Network
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(etag),
-                portPairDescriptor.Value,
-                primaryAzurePort.Value,
-                secondaryAzurePort.Value,
-                peeringLocation.Value,
-                Optional.ToNullable(overprovisionFactor),
-                Optional.ToNullable(portBandwidthInMbps),
-                Optional.ToNullable(usedBandwidthInMbps),
-                Optional.ToNullable(remainingBandwidthInMbps),
+                etag,
+                portPairDescriptor,
+                primaryAzurePort,
+                secondaryAzurePort,
+                peeringLocation,
+                overprovisionFactor,
+                portBandwidthInMbps,
+                usedBandwidthInMbps,
+                remainingBandwidthInMbps,
                 serializedAdditionalRawData);
         }
 

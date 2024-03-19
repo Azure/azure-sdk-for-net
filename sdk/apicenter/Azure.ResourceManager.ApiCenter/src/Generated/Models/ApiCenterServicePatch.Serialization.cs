@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiCenter;
 
 namespace Azure.ResourceManager.ApiCenter.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
             {
                 return null;
             }
-            Optional<ApiCenterProvisioningState> provisioningState = default;
+            ApiCenterProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiCenterServicePatch(Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new ApiCenterServicePatch(provisioningState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiCenterServicePatch>.Write(ModelReaderWriterOptions options)

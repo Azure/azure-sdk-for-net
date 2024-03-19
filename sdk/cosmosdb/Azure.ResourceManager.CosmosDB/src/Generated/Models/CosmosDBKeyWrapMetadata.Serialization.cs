@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (CosmosDBKeyWrapMetadataType != null)
+            if (Optional.IsDefined(CosmosDBKeyWrapMetadataType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(CosmosDBKeyWrapMetadataType);
             }
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (Algorithm != null)
+            if (Optional.IsDefined(Algorithm))
             {
                 writer.WritePropertyName("algorithm"u8);
                 writer.WriteStringValue(Algorithm);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<string> value = default;
-            Optional<string> algorithm = default;
+            string name = default;
+            string type = default;
+            string value = default;
+            string algorithm = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBKeyWrapMetadata(name.Value, type.Value, value.Value, algorithm.Value, serializedAdditionalRawData);
+            return new CosmosDBKeyWrapMetadata(name, type, value, algorithm, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBKeyWrapMetadata>.Write(ModelReaderWriterOptions options)

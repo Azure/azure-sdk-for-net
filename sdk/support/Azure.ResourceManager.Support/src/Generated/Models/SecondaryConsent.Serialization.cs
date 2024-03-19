@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Support;
 
 namespace Azure.ResourceManager.Support.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Support.Models
             }
 
             writer.WriteStartObject();
-            if (UserConsent.HasValue)
+            if (Optional.IsDefined(UserConsent))
             {
                 writer.WritePropertyName("userConsent"u8);
                 writer.WriteStringValue(UserConsent.Value.ToString());
             }
-            if (SecondaryConsentType != null)
+            if (Optional.IsDefined(SecondaryConsentType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(SecondaryConsentType);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Support.Models
             {
                 return null;
             }
-            Optional<UserConsent> userConsent = default;
-            Optional<string> type = default;
+            UserConsent? userConsent = default;
+            string type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.Support.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecondaryConsent(Optional.ToNullable(userConsent), type.Value, serializedAdditionalRawData);
+            return new SecondaryConsent(userConsent, type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecondaryConsent>.Write(ModelReaderWriterOptions options)

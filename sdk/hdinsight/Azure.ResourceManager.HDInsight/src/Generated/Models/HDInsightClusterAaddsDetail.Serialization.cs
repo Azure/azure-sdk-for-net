@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (DomainName != null)
+            if (Optional.IsDefined(DomainName))
             {
                 writer.WritePropertyName("domainName"u8);
                 writer.WriteStringValue(DomainName);
             }
-            if (IsInitialSyncComplete.HasValue)
+            if (Optional.IsDefined(IsInitialSyncComplete))
             {
                 writer.WritePropertyName("initialSyncComplete"u8);
                 writer.WriteBooleanValue(IsInitialSyncComplete.Value);
             }
-            if (IsLdapsEnabled.HasValue)
+            if (Optional.IsDefined(IsLdapsEnabled))
             {
                 writer.WritePropertyName("ldapsEnabled"u8);
                 writer.WriteBooleanValue(IsLdapsEnabled.Value);
             }
-            if (LdapsPublicCertificateInBase64 != null)
+            if (Optional.IsDefined(LdapsPublicCertificateInBase64))
             {
                 writer.WritePropertyName("ldapsPublicCertificateInBase64"u8);
                 writer.WriteStringValue(LdapsPublicCertificateInBase64);
             }
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (SubnetId != null)
+            if (Optional.IsDefined(SubnetId))
             {
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
@@ -99,13 +100,13 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<string> domainName = default;
-            Optional<bool> initialSyncComplete = default;
-            Optional<bool> ldapsEnabled = default;
-            Optional<string> ldapsPublicCertificateInBase64 = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<ResourceIdentifier> subnetId = default;
-            Optional<Guid> tenantId = default;
+            string domainName = default;
+            bool? initialSyncComplete = default;
+            bool? ldapsEnabled = default;
+            string ldapsPublicCertificateInBase64 = default;
+            ResourceIdentifier resourceId = default;
+            ResourceIdentifier subnetId = default;
+            Guid? tenantId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -172,13 +173,13 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new HDInsightClusterAaddsDetail(
-                domainName.Value,
-                Optional.ToNullable(initialSyncComplete),
-                Optional.ToNullable(ldapsEnabled),
-                ldapsPublicCertificateInBase64.Value,
-                resourceId.Value,
-                subnetId.Value,
-                Optional.ToNullable(tenantId),
+                domainName,
+                initialSyncComplete,
+                ldapsEnabled,
+                ldapsPublicCertificateInBase64,
+                resourceId,
+                subnetId,
+                tenantId,
                 serializedAdditionalRawData);
         }
 

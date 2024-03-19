@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStringValue(TargetRegion);
             writer.WritePropertyName("dataMoveLevel"u8);
             writer.WriteStringValue(DataMoveLevel.ToString());
-            if (!(SourceContainerArmIds is ChangeTrackingList<ResourceIdentifier> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SourceContainerArmIds))
             {
                 writer.WritePropertyName("sourceContainerArmIds"u8);
                 writer.WriteStartArray();
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IgnoreMoved.HasValue)
+            if (Optional.IsDefined(IgnoreMoved))
             {
                 writer.WritePropertyName("ignoreMoved"u8);
                 writer.WriteBooleanValue(IgnoreMoved.Value);
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             AzureLocation targetRegion = default;
             DataMoveLevel dataMoveLevel = default;
             IList<ResourceIdentifier> sourceContainerArmIds = default;
-            Optional<bool> ignoreMoved = default;
+            bool? ignoreMoved = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -155,7 +156,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 targetRegion,
                 dataMoveLevel,
                 sourceContainerArmIds ?? new ChangeTrackingList<ResourceIdentifier>(),
-                Optional.ToNullable(ignoreMoved),
+                ignoreMoved,
                 serializedAdditionalRawData);
         }
 

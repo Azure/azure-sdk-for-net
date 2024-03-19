@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The UnknownCustomDomainHttpsParameters. </summary>
+    /// <summary> Unknown version of CustomDomainHttpsParameters. </summary>
     internal partial class UnknownCustomDomainHttpsParameters : CustomDomainHttpsContent
     {
         /// <summary> Initializes a new instance of <see cref="UnknownCustomDomainHttpsParameters"/>. </summary>

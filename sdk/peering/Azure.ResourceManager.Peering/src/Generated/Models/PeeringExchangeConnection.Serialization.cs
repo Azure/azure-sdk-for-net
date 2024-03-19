@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Peering;
 
 namespace Azure.ResourceManager.Peering.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.Peering.Models
             }
 
             writer.WriteStartObject();
-            if (PeeringDBFacilityId.HasValue)
+            if (Optional.IsDefined(PeeringDBFacilityId))
             {
                 writer.WritePropertyName("peeringDBFacilityId"u8);
                 writer.WriteNumberValue(PeeringDBFacilityId.Value);
             }
-            if (options.Format != "W" && ConnectionState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("connectionState"u8);
                 writer.WriteStringValue(ConnectionState.Value.ToString());
             }
-            if (BgpSession != null)
+            if (Optional.IsDefined(BgpSession))
             {
                 writer.WritePropertyName("bgpSession"u8);
                 writer.WriteObjectValue(BgpSession);
             }
-            if (ConnectionIdentifier.HasValue)
+            if (Optional.IsDefined(ConnectionIdentifier))
             {
                 writer.WritePropertyName("connectionIdentifier"u8);
                 writer.WriteStringValue(ConnectionIdentifier.Value);
             }
-            if (options.Format != "W" && ErrorMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(ErrorMessage))
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<int> peeringDBFacilityId = default;
-            Optional<PeeringConnectionState> connectionState = default;
-            Optional<PeeringBgpSession> bgpSession = default;
-            Optional<Guid> connectionIdentifier = default;
-            Optional<string> errorMessage = default;
+            int? peeringDBFacilityId = default;
+            PeeringConnectionState? connectionState = default;
+            PeeringBgpSession bgpSession = default;
+            Guid? connectionIdentifier = default;
+            string errorMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,11 +147,11 @@ namespace Azure.ResourceManager.Peering.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new PeeringExchangeConnection(
-                Optional.ToNullable(peeringDBFacilityId),
-                Optional.ToNullable(connectionState),
-                bgpSession.Value,
-                Optional.ToNullable(connectionIdentifier),
-                errorMessage.Value,
+                peeringDBFacilityId,
+                connectionState,
+                bgpSession,
+                connectionIdentifier,
+                errorMessage,
                 serializedAdditionalRawData);
         }
 

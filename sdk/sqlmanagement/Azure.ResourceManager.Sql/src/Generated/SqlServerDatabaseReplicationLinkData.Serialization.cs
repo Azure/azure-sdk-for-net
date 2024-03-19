@@ -43,64 +43,64 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && PartnerServer != null)
+            if (options.Format != "W" && Optional.IsDefined(PartnerServer))
             {
                 writer.WritePropertyName("partnerServer"u8);
                 writer.WriteStringValue(PartnerServer);
             }
-            if (options.Format != "W" && PartnerDatabase != null)
+            if (options.Format != "W" && Optional.IsDefined(PartnerDatabase))
             {
                 writer.WritePropertyName("partnerDatabase"u8);
                 writer.WriteStringValue(PartnerDatabase);
             }
-            if (options.Format != "W" && PartnerLocation.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PartnerLocation))
             {
                 writer.WritePropertyName("partnerLocation"u8);
                 writer.WriteStringValue(PartnerLocation.Value);
             }
-            if (options.Format != "W" && Role.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Role))
             {
                 writer.WritePropertyName("role"u8);
                 writer.WriteStringValue(Role.Value.ToSerialString());
             }
-            if (options.Format != "W" && PartnerRole.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PartnerRole))
             {
                 writer.WritePropertyName("partnerRole"u8);
                 writer.WriteStringValue(PartnerRole.Value.ToSerialString());
             }
-            if (options.Format != "W" && ReplicationMode != null)
+            if (options.Format != "W" && Optional.IsDefined(ReplicationMode))
             {
                 writer.WritePropertyName("replicationMode"u8);
                 writer.WriteStringValue(ReplicationMode);
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && PercentComplete.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PercentComplete))
             {
                 writer.WritePropertyName("percentComplete"u8);
                 writer.WriteNumberValue(PercentComplete.Value);
             }
-            if (options.Format != "W" && ReplicationState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ReplicationState))
             {
                 writer.WritePropertyName("replicationState"u8);
                 writer.WriteStringValue(ReplicationState.Value.ToString());
             }
-            if (options.Format != "W" && IsTerminationAllowed.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsTerminationAllowed))
             {
                 writer.WritePropertyName("isTerminationAllowed"u8);
                 writer.WriteBooleanValue(IsTerminationAllowed.Value);
             }
-            if (options.Format != "W" && LinkType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LinkType))
             {
                 writer.WritePropertyName("linkType"u8);
                 writer.WriteStringValue(LinkType.Value.ToString());
@@ -147,18 +147,18 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> partnerServer = default;
-            Optional<string> partnerDatabase = default;
-            Optional<AzureLocation> partnerLocation = default;
-            Optional<SqlServerDatabaseReplicationRole> role = default;
-            Optional<SqlServerDatabaseReplicationRole> partnerRole = default;
-            Optional<string> replicationMode = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<int> percentComplete = default;
-            Optional<ReplicationLinkState> replicationState = default;
-            Optional<bool> isTerminationAllowed = default;
-            Optional<ReplicationLinkType> linkType = default;
+            SystemData systemData = default;
+            string partnerServer = default;
+            string partnerDatabase = default;
+            AzureLocation? partnerLocation = default;
+            SqlServerDatabaseReplicationRole? role = default;
+            SqlServerDatabaseReplicationRole? partnerRole = default;
+            string replicationMode = default;
+            DateTimeOffset? startTime = default;
+            int? percentComplete = default;
+            ReplicationLinkState? replicationState = default;
+            bool? isTerminationAllowed = default;
+            ReplicationLinkType? linkType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -296,18 +296,18 @@ namespace Azure.ResourceManager.Sql
                 id,
                 name,
                 type,
-                systemData.Value,
-                partnerServer.Value,
-                partnerDatabase.Value,
-                Optional.ToNullable(partnerLocation),
-                Optional.ToNullable(role),
-                Optional.ToNullable(partnerRole),
-                replicationMode.Value,
-                Optional.ToNullable(startTime),
-                Optional.ToNullable(percentComplete),
-                Optional.ToNullable(replicationState),
-                Optional.ToNullable(isTerminationAllowed),
-                Optional.ToNullable(linkType),
+                systemData,
+                partnerServer,
+                partnerDatabase,
+                partnerLocation,
+                role,
+                partnerRole,
+                replicationMode,
+                startTime,
+                percentComplete,
+                replicationState,
+                isTerminationAllowed,
+                linkType,
                 serializedAdditionalRawData);
         }
 

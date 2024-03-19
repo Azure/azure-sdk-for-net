@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (FileLocation != null)
+            if (Optional.IsDefined(FileLocation))
             {
                 writer.WritePropertyName("fileLocation"u8);
                 writer.WriteStringValue(FileLocation);
             }
-            if (FamilySequenceNumber.HasValue)
+            if (Optional.IsDefined(FamilySequenceNumber))
             {
                 writer.WritePropertyName("familySequenceNumber"u8);
                 writer.WriteNumberValue(FamilySequenceNumber.Value);
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> fileLocation = default;
-            Optional<int> familySequenceNumber = default;
-            Optional<BackupFileStatus> status = default;
+            string fileLocation = default;
+            int? familySequenceNumber = default;
+            BackupFileStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupFileInfo(fileLocation.Value, Optional.ToNullable(familySequenceNumber), Optional.ToNullable(status), serializedAdditionalRawData);
+            return new BackupFileInfo(fileLocation, familySequenceNumber, status, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupFileInfo>.Write(ModelReaderWriterOptions options)

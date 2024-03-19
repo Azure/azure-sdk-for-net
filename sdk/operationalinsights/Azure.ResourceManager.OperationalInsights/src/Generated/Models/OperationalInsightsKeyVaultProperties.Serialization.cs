@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
 
             writer.WriteStartObject();
-            if (KeyVaultUri != null)
+            if (Optional.IsDefined(KeyVaultUri))
             {
                 writer.WritePropertyName("keyVaultUri"u8);
                 writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
             }
-            if (KeyName != null)
+            if (Optional.IsDefined(KeyName))
             {
                 writer.WritePropertyName("keyName"u8);
                 writer.WriteStringValue(KeyName);
             }
-            if (KeyVersion != null)
+            if (Optional.IsDefined(KeyVersion))
             {
                 writer.WritePropertyName("keyVersion"u8);
                 writer.WriteStringValue(KeyVersion);
             }
-            if (KeyRsaSize.HasValue)
+            if (Optional.IsDefined(KeyRsaSize))
             {
                 writer.WritePropertyName("keyRsaSize"u8);
                 writer.WriteNumberValue(KeyRsaSize.Value);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Optional<Uri> keyVaultUri = default;
-            Optional<string> keyName = default;
-            Optional<string> keyVersion = default;
-            Optional<int> keyRsaSize = default;
+            Uri keyVaultUri = default;
+            string keyName = default;
+            string keyVersion = default;
+            int? keyRsaSize = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalInsightsKeyVaultProperties(keyVaultUri.Value, keyName.Value, keyVersion.Value, Optional.ToNullable(keyRsaSize), serializedAdditionalRawData);
+            return new OperationalInsightsKeyVaultProperties(keyVaultUri, keyName, keyVersion, keyRsaSize, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationalInsightsKeyVaultProperties>.Write(ModelReaderWriterOptions options)

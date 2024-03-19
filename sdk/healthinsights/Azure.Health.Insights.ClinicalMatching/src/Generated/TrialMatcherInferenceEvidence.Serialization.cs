@@ -27,22 +27,22 @@ namespace Azure.Health.Insights.ClinicalMatching
             }
 
             writer.WriteStartObject();
-            if (EligibilityCriteriaEvidence != null)
+            if (Optional.IsDefined(EligibilityCriteriaEvidence))
             {
                 writer.WritePropertyName("eligibilityCriteriaEvidence"u8);
                 writer.WriteStringValue(EligibilityCriteriaEvidence);
             }
-            if (PatientDataEvidence != null)
+            if (Optional.IsDefined(PatientDataEvidence))
             {
                 writer.WritePropertyName("patientDataEvidence"u8);
                 writer.WriteObjectValue(PatientDataEvidence);
             }
-            if (PatientInfoEvidence != null)
+            if (Optional.IsDefined(PatientInfoEvidence))
             {
                 writer.WritePropertyName("patientInfoEvidence"u8);
                 writer.WriteObjectValue(PatientInfoEvidence);
             }
-            if (Importance.HasValue)
+            if (Optional.IsDefined(Importance))
             {
                 writer.WritePropertyName("importance"u8);
                 writer.WriteNumberValue(Importance.Value);
@@ -85,10 +85,10 @@ namespace Azure.Health.Insights.ClinicalMatching
             {
                 return null;
             }
-            Optional<string> eligibilityCriteriaEvidence = default;
-            Optional<ClinicalNoteEvidence> patientDataEvidence = default;
-            Optional<ClinicalCodedElement> patientInfoEvidence = default;
-            Optional<float> importance = default;
+            string eligibilityCriteriaEvidence = default;
+            ClinicalNoteEvidence patientDataEvidence = default;
+            ClinicalCodedElement patientInfoEvidence = default;
+            float? importance = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -131,7 +131,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrialMatcherInferenceEvidence(eligibilityCriteriaEvidence.Value, patientDataEvidence.Value, patientInfoEvidence.Value, Optional.ToNullable(importance), serializedAdditionalRawData);
+            return new TrialMatcherInferenceEvidence(eligibilityCriteriaEvidence, patientDataEvidence, patientInfoEvidence, importance, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrialMatcherInferenceEvidence>.Write(ModelReaderWriterOptions options)

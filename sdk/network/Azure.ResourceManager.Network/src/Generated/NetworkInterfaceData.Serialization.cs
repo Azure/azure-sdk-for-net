@@ -29,37 +29,37 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (ExtendedLocation != null)
+            if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 JsonSerializer.Serialize(writer, ExtendedLocation);
             }
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -72,22 +72,22 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && VirtualMachine != null)
+            if (options.Format != "W" && Optional.IsDefined(VirtualMachine))
             {
                 writer.WritePropertyName("virtualMachine"u8);
                 JsonSerializer.Serialize(writer, VirtualMachine);
             }
-            if (NetworkSecurityGroup != null)
+            if (Optional.IsDefined(NetworkSecurityGroup))
             {
                 writer.WritePropertyName("networkSecurityGroup"u8);
                 writer.WriteObjectValue(NetworkSecurityGroup);
             }
-            if (options.Format != "W" && PrivateEndpoint != null)
+            if (options.Format != "W" && Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
                 writer.WriteObjectValue(PrivateEndpoint);
             }
-            if (!(IPConfigurations is ChangeTrackingList<NetworkInterfaceIPConfigurationData> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(IPConfigurations))
             {
                 writer.WritePropertyName("ipConfigurations"u8);
                 writer.WriteStartArray();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(TapConfigurations is ChangeTrackingList<NetworkInterfaceTapConfigurationData> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(TapConfigurations))
             {
                 writer.WritePropertyName("tapConfigurations"u8);
                 writer.WriteStartArray();
@@ -107,42 +107,42 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (DnsSettings != null)
+            if (Optional.IsDefined(DnsSettings))
             {
                 writer.WritePropertyName("dnsSettings"u8);
                 writer.WriteObjectValue(DnsSettings);
             }
-            if (options.Format != "W" && MacAddress != null)
+            if (options.Format != "W" && Optional.IsDefined(MacAddress))
             {
                 writer.WritePropertyName("macAddress"u8);
                 writer.WriteStringValue(MacAddress);
             }
-            if (options.Format != "W" && Primary.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Primary))
             {
                 writer.WritePropertyName("primary"u8);
                 writer.WriteBooleanValue(Primary.Value);
             }
-            if (options.Format != "W" && VnetEncryptionSupported.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(VnetEncryptionSupported))
             {
                 writer.WritePropertyName("vnetEncryptionSupported"u8);
                 writer.WriteBooleanValue(VnetEncryptionSupported.Value);
             }
-            if (EnableAcceleratedNetworking.HasValue)
+            if (Optional.IsDefined(EnableAcceleratedNetworking))
             {
                 writer.WritePropertyName("enableAcceleratedNetworking"u8);
                 writer.WriteBooleanValue(EnableAcceleratedNetworking.Value);
             }
-            if (DisableTcpStateTracking.HasValue)
+            if (Optional.IsDefined(DisableTcpStateTracking))
             {
                 writer.WritePropertyName("disableTcpStateTracking"u8);
                 writer.WriteBooleanValue(DisableTcpStateTracking.Value);
             }
-            if (EnableIPForwarding.HasValue)
+            if (Optional.IsDefined(EnableIPForwarding))
             {
                 writer.WritePropertyName("enableIPForwarding"u8);
                 writer.WriteBooleanValue(EnableIPForwarding.Value);
             }
-            if (options.Format != "W" && !(HostedWorkloads is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(HostedWorkloads))
             {
                 writer.WritePropertyName("hostedWorkloads"u8);
                 writer.WriteStartArray();
@@ -152,47 +152,47 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && DscpConfiguration != null)
+            if (options.Format != "W" && Optional.IsDefined(DscpConfiguration))
             {
                 writer.WritePropertyName("dscpConfiguration"u8);
                 JsonSerializer.Serialize(writer, DscpConfiguration);
             }
-            if (options.Format != "W" && ResourceGuid.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
             {
                 writer.WritePropertyName("resourceGuid"u8);
                 writer.WriteStringValue(ResourceGuid.Value);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (WorkloadType != null)
+            if (Optional.IsDefined(WorkloadType))
             {
                 writer.WritePropertyName("workloadType"u8);
                 writer.WriteStringValue(WorkloadType);
             }
-            if (NicType.HasValue)
+            if (Optional.IsDefined(NicType))
             {
                 writer.WritePropertyName("nicType"u8);
                 writer.WriteStringValue(NicType.Value.ToString());
             }
-            if (PrivateLinkService != null)
+            if (Optional.IsDefined(PrivateLinkService))
             {
                 writer.WritePropertyName("privateLinkService"u8);
                 writer.WriteObjectValue(PrivateLinkService);
             }
-            if (MigrationPhase.HasValue)
+            if (Optional.IsDefined(MigrationPhase))
             {
                 writer.WritePropertyName("migrationPhase"u8);
                 writer.WriteStringValue(MigrationPhase.Value.ToString());
             }
-            if (AuxiliaryMode.HasValue)
+            if (Optional.IsDefined(AuxiliaryMode))
             {
                 writer.WritePropertyName("auxiliaryMode"u8);
                 writer.WriteStringValue(AuxiliaryMode.Value.ToString());
             }
-            if (AuxiliarySku.HasValue)
+            if (Optional.IsDefined(AuxiliarySku))
             {
                 writer.WritePropertyName("auxiliarySku"u8);
                 writer.WriteStringValue(AuxiliarySku.Value.ToString());
@@ -236,35 +236,35 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ExtendedLocation> extendedLocation = default;
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
+            ExtendedLocation extendedLocation = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
             IDictionary<string, string> tags = default;
-            Optional<WritableSubResource> virtualMachine = default;
-            Optional<NetworkSecurityGroupData> networkSecurityGroup = default;
-            Optional<PrivateEndpointData> privateEndpoint = default;
+            WritableSubResource virtualMachine = default;
+            NetworkSecurityGroupData networkSecurityGroup = default;
+            PrivateEndpointData privateEndpoint = default;
             IList<NetworkInterfaceIPConfigurationData> ipConfigurations = default;
             IReadOnlyList<NetworkInterfaceTapConfigurationData> tapConfigurations = default;
-            Optional<NetworkInterfaceDnsSettings> dnsSettings = default;
-            Optional<string> macAddress = default;
-            Optional<bool> primary = default;
-            Optional<bool> vnetEncryptionSupported = default;
-            Optional<bool> enableAcceleratedNetworking = default;
-            Optional<bool> disableTcpStateTracking = default;
-            Optional<bool> enableIPForwarding = default;
+            NetworkInterfaceDnsSettings dnsSettings = default;
+            string macAddress = default;
+            bool? primary = default;
+            bool? vnetEncryptionSupported = default;
+            bool? enableAcceleratedNetworking = default;
+            bool? disableTcpStateTracking = default;
+            bool? enableIPForwarding = default;
             IReadOnlyList<string> hostedWorkloads = default;
-            Optional<WritableSubResource> dscpConfiguration = default;
-            Optional<Guid> resourceGuid = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<string> workloadType = default;
-            Optional<NetworkInterfaceNicType> nicType = default;
-            Optional<PrivateLinkServiceData> privateLinkService = default;
-            Optional<NetworkInterfaceMigrationPhase> migrationPhase = default;
-            Optional<NetworkInterfaceAuxiliaryMode> auxiliaryMode = default;
-            Optional<NetworkInterfaceAuxiliarySku> auxiliarySku = default;
+            WritableSubResource dscpConfiguration = default;
+            Guid? resourceGuid = default;
+            NetworkProvisioningState? provisioningState = default;
+            string workloadType = default;
+            NetworkInterfaceNicType? nicType = default;
+            PrivateLinkServiceData privateLinkService = default;
+            NetworkInterfaceMigrationPhase? migrationPhase = default;
+            NetworkInterfaceAuxiliaryMode? auxiliaryMode = default;
+            NetworkInterfaceAuxiliarySku? auxiliarySku = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -557,36 +557,36 @@ namespace Azure.ResourceManager.Network
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new NetworkInterfaceData(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
-                Optional.ToNullable(location),
+                id,
+                name,
+                type,
+                location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
                 extendedLocation,
-                Optional.ToNullable(etag),
+                etag,
                 virtualMachine,
-                networkSecurityGroup.Value,
-                privateEndpoint.Value,
+                networkSecurityGroup,
+                privateEndpoint,
                 ipConfigurations ?? new ChangeTrackingList<NetworkInterfaceIPConfigurationData>(),
                 tapConfigurations ?? new ChangeTrackingList<NetworkInterfaceTapConfigurationData>(),
-                dnsSettings.Value,
-                macAddress.Value,
-                Optional.ToNullable(primary),
-                Optional.ToNullable(vnetEncryptionSupported),
-                Optional.ToNullable(enableAcceleratedNetworking),
-                Optional.ToNullable(disableTcpStateTracking),
-                Optional.ToNullable(enableIPForwarding),
+                dnsSettings,
+                macAddress,
+                primary,
+                vnetEncryptionSupported,
+                enableAcceleratedNetworking,
+                disableTcpStateTracking,
+                enableIPForwarding,
                 hostedWorkloads ?? new ChangeTrackingList<string>(),
                 dscpConfiguration,
-                Optional.ToNullable(resourceGuid),
-                Optional.ToNullable(provisioningState),
-                workloadType.Value,
-                Optional.ToNullable(nicType),
-                privateLinkService.Value,
-                Optional.ToNullable(migrationPhase),
-                Optional.ToNullable(auxiliaryMode),
-                Optional.ToNullable(auxiliarySku));
+                resourceGuid,
+                provisioningState,
+                workloadType,
+                nicType,
+                privateLinkService,
+                migrationPhase,
+                auxiliaryMode,
+                auxiliarySku);
         }
 
         BinaryData IPersistableModel<NetworkInterfaceData>.Write(ModelReaderWriterOptions options)

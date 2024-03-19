@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Logic
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Logic
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -65,22 +65,22 @@ namespace Azure.ResourceManager.Logic
             writer.WriteStartObject();
             writer.WritePropertyName("mapType"u8);
             writer.WriteStringValue(MapType.ToString());
-            if (ParametersSchema != null)
+            if (Optional.IsDefined(ParametersSchema))
             {
                 writer.WritePropertyName("parametersSchema"u8);
                 writer.WriteObjectValue(ParametersSchema);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && ChangedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ChangedOn))
             {
                 writer.WritePropertyName("changedTime"u8);
                 writer.WriteStringValue(ChangedOn.Value, "O");
             }
-            if (Content != null)
+            if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
 #if NET6_0_OR_GREATER
@@ -92,17 +92,17 @@ namespace Azure.ResourceManager.Logic
                 }
 #endif
             }
-            if (ContentType.HasValue)
+            if (Optional.IsDefined(ContentType))
             {
                 writer.WritePropertyName("contentType"u8);
                 writer.WriteStringValue(ContentType.Value.ToString());
             }
-            if (options.Format != "W" && ContentLink != null)
+            if (options.Format != "W" && Optional.IsDefined(ContentLink))
             {
                 writer.WritePropertyName("contentLink"u8);
                 writer.WriteObjectValue(ContentLink);
             }
-            if (Metadata != null)
+            if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
 #if NET6_0_OR_GREATER
@@ -158,15 +158,15 @@ namespace Azure.ResourceManager.Logic
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IntegrationAccountMapType mapType = default;
-            Optional<IntegrationAccountMapPropertiesParametersSchema> parametersSchema = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<DateTimeOffset> changedTime = default;
-            Optional<BinaryData> content = default;
-            Optional<ContentType> contentType = default;
-            Optional<LogicContentLink> contentLink = default;
-            Optional<BinaryData> metadata = default;
+            IntegrationAccountMapPropertiesParametersSchema parametersSchema = default;
+            DateTimeOffset? createdTime = default;
+            DateTimeOffset? changedTime = default;
+            BinaryData content = default;
+            ContentType? contentType = default;
+            LogicContentLink contentLink = default;
+            BinaryData metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -304,17 +304,17 @@ namespace Azure.ResourceManager.Logic
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 mapType,
-                parametersSchema.Value,
-                Optional.ToNullable(createdTime),
-                Optional.ToNullable(changedTime),
-                content.Value,
-                Optional.ToNullable(contentType),
-                contentLink.Value,
-                metadata.Value,
+                parametersSchema,
+                createdTime,
+                changedTime,
+                content,
+                contentType,
+                contentLink,
+                metadata,
                 serializedAdditionalRawData);
         }
 

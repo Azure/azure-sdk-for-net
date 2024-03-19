@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -30,32 +31,32 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteStringValue(InputSchemaMappingType.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteObjectValue(Id);
             }
-            if (Topic != null)
+            if (Optional.IsDefined(Topic))
             {
                 writer.WritePropertyName("topic"u8);
                 writer.WriteObjectValue(Topic);
             }
-            if (EventTime != null)
+            if (Optional.IsDefined(EventTime))
             {
                 writer.WritePropertyName("eventTime"u8);
                 writer.WriteObjectValue(EventTime);
             }
-            if (EventType != null)
+            if (Optional.IsDefined(EventType))
             {
                 writer.WritePropertyName("eventType"u8);
                 writer.WriteObjectValue(EventType);
             }
-            if (Subject != null)
+            if (Optional.IsDefined(Subject))
             {
                 writer.WritePropertyName("subject"u8);
                 writer.WriteObjectValue(Subject);
             }
-            if (DataVersion != null)
+            if (Optional.IsDefined(DataVersion))
             {
                 writer.WritePropertyName("dataVersion"u8);
                 writer.WriteObjectValue(DataVersion);
@@ -100,12 +101,12 @@ namespace Azure.ResourceManager.EventGrid.Models
                 return null;
             }
             InputSchemaMappingType inputSchemaMappingType = default;
-            Optional<JsonField> id = default;
-            Optional<JsonField> topic = default;
-            Optional<JsonField> eventTime = default;
-            Optional<JsonFieldWithDefault> eventType = default;
-            Optional<JsonFieldWithDefault> subject = default;
-            Optional<JsonFieldWithDefault> dataVersion = default;
+            JsonField id = default;
+            JsonField topic = default;
+            JsonField eventTime = default;
+            JsonFieldWithDefault eventType = default;
+            JsonFieldWithDefault subject = default;
+            JsonFieldWithDefault dataVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -190,12 +191,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             return new EventGridJsonInputSchemaMapping(
                 inputSchemaMappingType,
                 serializedAdditionalRawData,
-                id.Value,
-                topic.Value,
-                eventTime.Value,
-                eventType.Value,
-                subject.Value,
-                dataVersion.Value);
+                id,
+                topic,
+                eventTime,
+                eventType,
+                subject,
+                dataVersion);
         }
 
         BinaryData IPersistableModel<EventGridJsonInputSchemaMapping>.Write(ModelReaderWriterOptions options)

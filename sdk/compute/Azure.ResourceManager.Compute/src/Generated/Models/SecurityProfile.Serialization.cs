@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (UefiSettings != null)
+            if (Optional.IsDefined(UefiSettings))
             {
                 writer.WritePropertyName("uefiSettings"u8);
                 writer.WriteObjectValue(UefiSettings);
             }
-            if (EncryptionAtHost.HasValue)
+            if (Optional.IsDefined(EncryptionAtHost))
             {
                 writer.WritePropertyName("encryptionAtHost"u8);
                 writer.WriteBooleanValue(EncryptionAtHost.Value);
             }
-            if (SecurityType.HasValue)
+            if (Optional.IsDefined(SecurityType))
             {
                 writer.WritePropertyName("securityType"u8);
                 writer.WriteStringValue(SecurityType.Value.ToString());
             }
-            if (EncryptionIdentity != null)
+            if (Optional.IsDefined(EncryptionIdentity))
             {
                 writer.WritePropertyName("encryptionIdentity"u8);
                 writer.WriteObjectValue(EncryptionIdentity);
             }
-            if (ProxyAgentSettings != null)
+            if (Optional.IsDefined(ProxyAgentSettings))
             {
                 writer.WritePropertyName("proxyAgentSettings"u8);
                 writer.WriteObjectValue(ProxyAgentSettings);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<UefiSettings> uefiSettings = default;
-            Optional<bool> encryptionAtHost = default;
-            Optional<SecurityType> securityType = default;
-            Optional<EncryptionIdentity> encryptionIdentity = default;
-            Optional<ProxyAgentSettings> proxyAgentSettings = default;
+            UefiSettings uefiSettings = default;
+            bool? encryptionAtHost = default;
+            SecurityType? securityType = default;
+            EncryptionIdentity encryptionIdentity = default;
+            ProxyAgentSettings proxyAgentSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,11 +151,11 @@ namespace Azure.ResourceManager.Compute.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SecurityProfile(
-                uefiSettings.Value,
-                Optional.ToNullable(encryptionAtHost),
-                Optional.ToNullable(securityType),
-                encryptionIdentity.Value,
-                proxyAgentSettings.Value,
+                uefiSettings,
+                encryptionAtHost,
+                securityType,
+                encryptionIdentity,
+                proxyAgentSettings,
                 serializedAdditionalRawData);
         }
 

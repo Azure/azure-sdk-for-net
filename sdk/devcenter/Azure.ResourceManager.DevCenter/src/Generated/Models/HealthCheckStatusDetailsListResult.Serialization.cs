@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(Value is ChangeTrackingList<HealthCheckStatusDetailData> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && NextLink != null)
+            if (options.Format != "W" && Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 return null;
             }
             IReadOnlyList<HealthCheckStatusDetailData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HealthCheckStatusDetailsListResult(value ?? new ChangeTrackingList<HealthCheckStatusDetailData>(), nextLink.Value, serializedAdditionalRawData);
+            return new HealthCheckStatusDetailsListResult(value ?? new ChangeTrackingList<HealthCheckStatusDetailData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HealthCheckStatusDetailsListResult>.Write(ModelReaderWriterOptions options)

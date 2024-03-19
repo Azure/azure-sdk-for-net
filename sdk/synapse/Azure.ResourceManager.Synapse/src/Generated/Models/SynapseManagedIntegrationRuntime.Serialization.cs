@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -26,31 +27,31 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && State.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(IntegrationRuntimeType.ToString());
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("managedVirtualNetwork"u8);
             writer.WriteStartObject();
-            if (ReferenceName != null)
+            if (Optional.IsDefined(ReferenceName))
             {
                 writer.WritePropertyName("referenceName"u8);
                 writer.WriteStringValue(ReferenceName);
             }
-            if (TypeManagedVirtualNetworkType != null)
+            if (Optional.IsDefined(TypeManagedVirtualNetworkType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(TypeManagedVirtualNetworkType);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -58,12 +59,12 @@ namespace Azure.ResourceManager.Synapse.Models
             writer.WriteEndObject();
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (ComputeProperties != null)
+            if (Optional.IsDefined(ComputeProperties))
             {
                 writer.WritePropertyName("computeProperties"u8);
                 writer.WriteObjectValue(ComputeProperties);
             }
-            if (SsisProperties != null)
+            if (Optional.IsDefined(SsisProperties))
             {
                 writer.WritePropertyName("ssisProperties"u8);
                 writer.WriteObjectValue(SsisProperties);
@@ -104,14 +105,14 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<SynapseIntegrationRuntimeState> state = default;
+            SynapseIntegrationRuntimeState? state = default;
             IntegrationRuntimeType type = default;
-            Optional<string> description = default;
-            Optional<string> referenceName = default;
-            Optional<string> type0 = default;
-            Optional<string> id = default;
-            Optional<SynapseIntegrationRuntimeComputeProperties> computeProperties = default;
-            Optional<SynapseIntegrationRuntimeSsisProperties> ssisProperties = default;
+            string description = default;
+            string referenceName = default;
+            string type0 = default;
+            string id = default;
+            SynapseIntegrationRuntimeComputeProperties computeProperties = default;
+            SynapseIntegrationRuntimeSsisProperties ssisProperties = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -197,14 +198,14 @@ namespace Azure.ResourceManager.Synapse.Models
             additionalProperties = additionalPropertiesDictionary;
             return new SynapseManagedIntegrationRuntime(
                 type,
-                description.Value,
+                description,
                 additionalProperties,
-                Optional.ToNullable(state),
-                referenceName.Value,
-                type0.Value,
-                id.Value,
-                computeProperties.Value,
-                ssisProperties.Value);
+                state,
+                referenceName,
+                type0,
+                id,
+                computeProperties,
+                ssisProperties);
         }
 
         BinaryData IPersistableModel<SynapseManagedIntegrationRuntime>.Write(ModelReaderWriterOptions options)

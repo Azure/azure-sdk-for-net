@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PartnerRegistrationImmutableId.HasValue)
+            if (Optional.IsDefined(PartnerRegistrationImmutableId))
             {
                 writer.WritePropertyName("partnerRegistrationImmutableId"u8);
                 writer.WriteStringValue(PartnerRegistrationImmutableId.Value);
             }
-            if (OrganizationName != null)
+            if (Optional.IsDefined(OrganizationName))
             {
                 writer.WritePropertyName("organizationName"u8);
                 writer.WriteStringValue(OrganizationName);
             }
-            if (PartnerDisplayName != null)
+            if (Optional.IsDefined(PartnerDisplayName))
             {
                 writer.WritePropertyName("partnerDisplayName"u8);
                 writer.WriteStringValue(PartnerDisplayName);
             }
-            if (PartnerTopicDetails != null)
+            if (Optional.IsDefined(PartnerTopicDetails))
             {
                 writer.WritePropertyName("partnerTopicDetails"u8);
                 writer.WriteObjectValue(PartnerTopicDetails);
             }
-            if (PartnerDestinationDetails != null)
+            if (Optional.IsDefined(PartnerDestinationDetails))
             {
                 writer.WritePropertyName("partnerDestinationDetails"u8);
                 writer.WriteObjectValue(PartnerDestinationDetails);
             }
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -122,13 +122,13 @@ namespace Azure.ResourceManager.EventGrid
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> partnerRegistrationImmutableId = default;
-            Optional<string> organizationName = default;
-            Optional<string> partnerDisplayName = default;
-            Optional<PartnerDetails> partnerTopicDetails = default;
-            Optional<PartnerDetails> partnerDestinationDetails = default;
-            Optional<VerifiedPartnerProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            Guid? partnerRegistrationImmutableId = default;
+            string organizationName = default;
+            string partnerDisplayName = default;
+            PartnerDetails partnerTopicDetails = default;
+            PartnerDetails partnerDestinationDetails = default;
+            VerifiedPartnerProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -225,13 +225,13 @@ namespace Azure.ResourceManager.EventGrid
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(partnerRegistrationImmutableId),
-                organizationName.Value,
-                partnerDisplayName.Value,
-                partnerTopicDetails.Value,
-                partnerDestinationDetails.Value,
-                Optional.ToNullable(provisioningState),
+                systemData,
+                partnerRegistrationImmutableId,
+                organizationName,
+                partnerDisplayName,
+                partnerTopicDetails,
+                partnerDestinationDetails,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.StorageMover
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && AgentVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(AgentVersion))
             {
                 writer.WritePropertyName("agentVersion"u8);
                 writer.WriteStringValue(AgentVersion);
@@ -64,42 +64,42 @@ namespace Azure.ResourceManager.StorageMover
             writer.WriteStringValue(ArcResourceId);
             writer.WritePropertyName("arcVmUuid"u8);
             writer.WriteStringValue(ArcVmUuid);
-            if (options.Format != "W" && AgentStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AgentStatus))
             {
                 writer.WritePropertyName("agentStatus"u8);
                 writer.WriteStringValue(AgentStatus.Value.ToString());
             }
-            if (options.Format != "W" && LastStatusUpdate.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastStatusUpdate))
             {
                 writer.WritePropertyName("lastStatusUpdate"u8);
                 writer.WriteStringValue(LastStatusUpdate.Value, "O");
             }
-            if (options.Format != "W" && LocalIPAddress != null)
+            if (options.Format != "W" && Optional.IsDefined(LocalIPAddress))
             {
                 writer.WritePropertyName("localIPAddress"u8);
                 writer.WriteStringValue(LocalIPAddress);
             }
-            if (options.Format != "W" && MemoryInMB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MemoryInMB))
             {
                 writer.WritePropertyName("memoryInMB"u8);
                 writer.WriteNumberValue(MemoryInMB.Value);
             }
-            if (options.Format != "W" && NumberOfCores.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NumberOfCores))
             {
                 writer.WritePropertyName("numberOfCores"u8);
                 writer.WriteNumberValue(NumberOfCores.Value);
             }
-            if (options.Format != "W" && UptimeInSeconds.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UptimeInSeconds))
             {
                 writer.WritePropertyName("uptimeInSeconds"u8);
                 writer.WriteNumberValue(UptimeInSeconds.Value);
             }
-            if (options.Format != "W" && ErrorDetails != null)
+            if (options.Format != "W" && Optional.IsDefined(ErrorDetails))
             {
                 writer.WritePropertyName("errorDetails"u8);
                 writer.WriteObjectValue(ErrorDetails);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -146,19 +146,19 @@ namespace Azure.ResourceManager.StorageMover
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<string> agentVersion = default;
+            SystemData systemData = default;
+            string description = default;
+            string agentVersion = default;
             string arcResourceId = default;
             string arcVmUuid = default;
-            Optional<StorageMoverAgentStatus> agentStatus = default;
-            Optional<DateTimeOffset> lastStatusUpdate = default;
-            Optional<string> localIPAddress = default;
-            Optional<long> memoryInMB = default;
-            Optional<long> numberOfCores = default;
-            Optional<long> uptimeInSeconds = default;
-            Optional<StorageMoverAgentPropertiesErrorDetails> errorDetails = default;
-            Optional<StorageMoverProvisioningState> provisioningState = default;
+            StorageMoverAgentStatus? agentStatus = default;
+            DateTimeOffset? lastStatusUpdate = default;
+            string localIPAddress = default;
+            long? memoryInMB = default;
+            long? numberOfCores = default;
+            long? uptimeInSeconds = default;
+            StorageMoverAgentPropertiesErrorDetails errorDetails = default;
+            StorageMoverProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -297,19 +297,19 @@ namespace Azure.ResourceManager.StorageMover
                 id,
                 name,
                 type,
-                systemData.Value,
-                description.Value,
-                agentVersion.Value,
+                systemData,
+                description,
+                agentVersion,
                 arcResourceId,
                 arcVmUuid,
-                Optional.ToNullable(agentStatus),
-                Optional.ToNullable(lastStatusUpdate),
-                localIPAddress.Value,
-                Optional.ToNullable(memoryInMB),
-                Optional.ToNullable(numberOfCores),
-                Optional.ToNullable(uptimeInSeconds),
-                errorDetails.Value,
-                Optional.ToNullable(provisioningState),
+                agentStatus,
+                lastStatusUpdate,
+                localIPAddress,
+                memoryInMB,
+                numberOfCores,
+                uptimeInSeconds,
+                errorDetails,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

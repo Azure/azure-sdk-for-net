@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -37,12 +38,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteObjectValue(TargetConnectionInfo);
             writer.WritePropertyName("sourceConnectionInfo"u8);
             writer.WriteObjectValue(SourceConnectionInfo);
-            if (EncryptedKeyForSecureFields != null)
+            if (Optional.IsDefined(EncryptedKeyForSecureFields))
             {
                 writer.WritePropertyName("encryptedKeyForSecureFields"u8);
                 writer.WriteStringValue(EncryptedKeyForSecureFields);
             }
-            if (options.Format != "W" && StartedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartedOn))
             {
                 writer.WritePropertyName("startedOn"u8);
                 writer.WriteStringValue(StartedOn.Value, "O");
@@ -88,8 +89,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             IList<MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput> selectedDatabases = default;
             PostgreSqlConnectionInfo targetConnectionInfo = default;
             PostgreSqlConnectionInfo sourceConnectionInfo = default;
-            Optional<string> encryptedKeyForSecureFields = default;
-            Optional<DateTimeOffset> startedOn = default;
+            string encryptedKeyForSecureFields = default;
+            DateTimeOffset? startedOn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,8 +139,8 @@ namespace Azure.ResourceManager.DataMigration.Models
                 selectedDatabases,
                 targetConnectionInfo,
                 sourceConnectionInfo,
-                encryptedKeyForSecureFields.Value,
-                Optional.ToNullable(startedOn),
+                encryptedKeyForSecureFields,
+                startedOn,
                 serializedAdditionalRawData);
         }
 

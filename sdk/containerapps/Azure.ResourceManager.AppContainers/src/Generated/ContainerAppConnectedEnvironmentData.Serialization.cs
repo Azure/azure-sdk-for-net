@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.AppContainers
             }
 
             writer.WriteStartObject();
-            if (ExtendedLocation != null)
+            if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 writer.WriteObjectValue(ExtendedLocation);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -62,39 +62,39 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && DeploymentErrors != null)
+            if (options.Format != "W" && Optional.IsDefined(DeploymentErrors))
             {
                 writer.WritePropertyName("deploymentErrors"u8);
                 writer.WriteStringValue(DeploymentErrors);
             }
-            if (options.Format != "W" && DefaultDomain != null)
+            if (options.Format != "W" && Optional.IsDefined(DefaultDomain))
             {
                 writer.WritePropertyName("defaultDomain"u8);
                 writer.WriteStringValue(DefaultDomain);
             }
-            if (StaticIP != null)
+            if (Optional.IsDefined(StaticIP))
             {
                 writer.WritePropertyName("staticIp"u8);
                 writer.WriteStringValue(StaticIP.ToString());
             }
-            if (DaprAIConnectionString != null)
+            if (Optional.IsDefined(DaprAIConnectionString))
             {
                 writer.WritePropertyName("daprAIConnectionString"u8);
                 writer.WriteStringValue(DaprAIConnectionString);
             }
-            if (CustomDomainConfiguration != null)
+            if (Optional.IsDefined(CustomDomainConfiguration))
             {
                 writer.WritePropertyName("customDomainConfiguration"u8);
                 writer.WriteObjectValue(CustomDomainConfiguration);
@@ -138,19 +138,19 @@ namespace Azure.ResourceManager.AppContainers
             {
                 return null;
             }
-            Optional<ContainerAppExtendedLocation> extendedLocation = default;
+            ContainerAppExtendedLocation extendedLocation = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ContainerAppConnectedEnvironmentProvisioningState> provisioningState = default;
-            Optional<string> deploymentErrors = default;
-            Optional<string> defaultDomain = default;
-            Optional<IPAddress> staticIP = default;
-            Optional<string> daprAIConnectionString = default;
-            Optional<ContainerAppCustomDomainConfiguration> customDomainConfiguration = default;
+            SystemData systemData = default;
+            ContainerAppConnectedEnvironmentProvisioningState? provisioningState = default;
+            string deploymentErrors = default;
+            string defaultDomain = default;
+            IPAddress staticIP = default;
+            string daprAIConnectionString = default;
+            ContainerAppCustomDomainConfiguration customDomainConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -271,16 +271,16 @@ namespace Azure.ResourceManager.AppContainers
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                extendedLocation.Value,
-                Optional.ToNullable(provisioningState),
-                deploymentErrors.Value,
-                defaultDomain.Value,
-                staticIP.Value,
-                daprAIConnectionString.Value,
-                customDomainConfiguration.Value,
+                extendedLocation,
+                provisioningState,
+                deploymentErrors,
+                defaultDomain,
+                staticIP,
+                daprAIConnectionString,
+                customDomainConfiguration,
                 serializedAdditionalRawData);
         }
 

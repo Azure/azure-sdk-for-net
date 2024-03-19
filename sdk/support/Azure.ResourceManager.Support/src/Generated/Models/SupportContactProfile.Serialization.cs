@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Support;
 
 namespace Azure.ResourceManager.Support.Models
 {
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.Support.Models
             writer.WriteStringValue(PreferredContactMethod.ToString());
             writer.WritePropertyName("primaryEmailAddress"u8);
             writer.WriteStringValue(PrimaryEmailAddress);
-            if (!(AdditionalEmailAddresses is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AdditionalEmailAddresses))
             {
                 writer.WritePropertyName("additionalEmailAddresses"u8);
                 writer.WriteStartArray();
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.Support.Models
                 }
                 writer.WriteEndArray();
             }
-            if (PhoneNumber != null)
+            if (Optional.IsDefined(PhoneNumber))
             {
                 writer.WritePropertyName("phoneNumber"u8);
                 writer.WriteStringValue(PhoneNumber);
@@ -98,7 +99,7 @@ namespace Azure.ResourceManager.Support.Models
             PreferredContactMethod preferredContactMethod = default;
             string primaryEmailAddress = default;
             IList<string> additionalEmailAddresses = default;
-            Optional<string> phoneNumber = default;
+            string phoneNumber = default;
             string preferredTimeZone = default;
             string country = default;
             string preferredSupportLanguage = default;
@@ -172,7 +173,7 @@ namespace Azure.ResourceManager.Support.Models
                 preferredContactMethod,
                 primaryEmailAddress,
                 additionalEmailAddresses ?? new ChangeTrackingList<string>(),
-                phoneNumber.Value,
+                phoneNumber,
                 preferredTimeZone,
                 country,
                 preferredSupportLanguage,

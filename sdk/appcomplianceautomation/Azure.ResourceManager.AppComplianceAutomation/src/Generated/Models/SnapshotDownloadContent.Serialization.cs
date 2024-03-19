@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppComplianceAutomation;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
@@ -26,14 +27,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
 
             writer.WriteStartObject();
-            if (ReportCreatorTenantId != null)
+            if (Optional.IsDefined(ReportCreatorTenantId))
             {
                 writer.WritePropertyName("reportCreatorTenantId"u8);
                 writer.WriteStringValue(ReportCreatorTenantId);
             }
             writer.WritePropertyName("downloadType"u8);
             writer.WriteStringValue(DownloadType.ToString());
-            if (OfferGuid != null)
+            if (Optional.IsDefined(OfferGuid))
             {
                 writer.WritePropertyName("offerGuid"u8);
                 writer.WriteStringValue(OfferGuid);
@@ -76,9 +77,9 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 return null;
             }
-            Optional<string> reportCreatorTenantId = default;
+            string reportCreatorTenantId = default;
             DownloadType downloadType = default;
-            Optional<string> offerGuid = default;
+            string offerGuid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SnapshotDownloadContent(reportCreatorTenantId.Value, downloadType, offerGuid.Value, serializedAdditionalRawData);
+            return new SnapshotDownloadContent(reportCreatorTenantId, downloadType, offerGuid, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SnapshotDownloadContent>.Write(ModelReaderWriterOptions options)

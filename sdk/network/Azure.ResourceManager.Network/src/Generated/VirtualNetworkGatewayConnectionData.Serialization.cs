@@ -29,32 +29,32 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -67,24 +67,24 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AuthorizationKey != null)
+            if (Optional.IsDefined(AuthorizationKey))
             {
                 writer.WritePropertyName("authorizationKey"u8);
                 writer.WriteStringValue(AuthorizationKey);
             }
             writer.WritePropertyName("virtualNetworkGateway1"u8);
             writer.WriteObjectValue(VirtualNetworkGateway1);
-            if (VirtualNetworkGateway2 != null)
+            if (Optional.IsDefined(VirtualNetworkGateway2))
             {
                 writer.WritePropertyName("virtualNetworkGateway2"u8);
                 writer.WriteObjectValue(VirtualNetworkGateway2);
             }
-            if (LocalNetworkGateway2 != null)
+            if (Optional.IsDefined(LocalNetworkGateway2))
             {
                 writer.WritePropertyName("localNetworkGateway2"u8);
                 writer.WriteObjectValue(LocalNetworkGateway2);
             }
-            if (!(IngressNatRules is ChangeTrackingList<WritableSubResource> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(IngressNatRules))
             {
                 writer.WritePropertyName("ingressNatRules"u8);
                 writer.WriteStartArray();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (!(EgressNatRules is ChangeTrackingList<WritableSubResource> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(EgressNatRules))
             {
                 writer.WritePropertyName("egressNatRules"u8);
                 writer.WriteStartArray();
@@ -106,37 +106,37 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("connectionType"u8);
             writer.WriteStringValue(ConnectionType.ToString());
-            if (ConnectionProtocol.HasValue)
+            if (Optional.IsDefined(ConnectionProtocol))
             {
                 writer.WritePropertyName("connectionProtocol"u8);
                 writer.WriteStringValue(ConnectionProtocol.Value.ToString());
             }
-            if (RoutingWeight.HasValue)
+            if (Optional.IsDefined(RoutingWeight))
             {
                 writer.WritePropertyName("routingWeight"u8);
                 writer.WriteNumberValue(RoutingWeight.Value);
             }
-            if (DpdTimeoutSeconds.HasValue)
+            if (Optional.IsDefined(DpdTimeoutSeconds))
             {
                 writer.WritePropertyName("dpdTimeoutSeconds"u8);
                 writer.WriteNumberValue(DpdTimeoutSeconds.Value);
             }
-            if (ConnectionMode.HasValue)
+            if (Optional.IsDefined(ConnectionMode))
             {
                 writer.WritePropertyName("connectionMode"u8);
                 writer.WriteStringValue(ConnectionMode.Value.ToString());
             }
-            if (SharedKey != null)
+            if (Optional.IsDefined(SharedKey))
             {
                 writer.WritePropertyName("sharedKey"u8);
                 writer.WriteStringValue(SharedKey);
             }
-            if (options.Format != "W" && ConnectionStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ConnectionStatus))
             {
                 writer.WritePropertyName("connectionStatus"u8);
                 writer.WriteStringValue(ConnectionStatus.Value.ToString());
             }
-            if (options.Format != "W" && !(TunnelConnectionStatus is ChangeTrackingList<TunnelConnectionHealth> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(TunnelConnectionStatus))
             {
                 writer.WritePropertyName("tunnelConnectionStatus"u8);
                 writer.WriteStartArray();
@@ -146,27 +146,27 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && EgressBytesTransferred.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EgressBytesTransferred))
             {
                 writer.WritePropertyName("egressBytesTransferred"u8);
                 writer.WriteNumberValue(EgressBytesTransferred.Value);
             }
-            if (options.Format != "W" && IngressBytesTransferred.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IngressBytesTransferred))
             {
                 writer.WritePropertyName("ingressBytesTransferred"u8);
                 writer.WriteNumberValue(IngressBytesTransferred.Value);
             }
-            if (Peer != null)
+            if (Optional.IsDefined(Peer))
             {
                 writer.WritePropertyName("peer"u8);
                 JsonSerializer.Serialize(writer, Peer);
             }
-            if (EnableBgp.HasValue)
+            if (Optional.IsDefined(EnableBgp))
             {
                 writer.WritePropertyName("enableBgp"u8);
                 writer.WriteBooleanValue(EnableBgp.Value);
             }
-            if (!(GatewayCustomBgpIPAddresses is ChangeTrackingList<GatewayCustomBgpIPAddressIPConfiguration> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(GatewayCustomBgpIPAddresses))
             {
                 writer.WritePropertyName("gatewayCustomBgpIpAddresses"u8);
                 writer.WriteStartArray();
@@ -176,17 +176,17 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (UseLocalAzureIPAddress.HasValue)
+            if (Optional.IsDefined(UseLocalAzureIPAddress))
             {
                 writer.WritePropertyName("useLocalAzureIpAddress"u8);
                 writer.WriteBooleanValue(UseLocalAzureIPAddress.Value);
             }
-            if (UsePolicyBasedTrafficSelectors.HasValue)
+            if (Optional.IsDefined(UsePolicyBasedTrafficSelectors))
             {
                 writer.WritePropertyName("usePolicyBasedTrafficSelectors"u8);
                 writer.WriteBooleanValue(UsePolicyBasedTrafficSelectors.Value);
             }
-            if (!(IPsecPolicies is ChangeTrackingList<IPsecPolicy> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(IPsecPolicies))
             {
                 writer.WritePropertyName("ipsecPolicies"u8);
                 writer.WriteStartArray();
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (!(TrafficSelectorPolicies is ChangeTrackingList<TrafficSelectorPolicy> collection5 && collection5.IsUndefined))
+            if (Optional.IsCollectionDefined(TrafficSelectorPolicies))
             {
                 writer.WritePropertyName("trafficSelectorPolicies"u8);
                 writer.WriteStartArray();
@@ -206,22 +206,22 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ResourceGuid.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
             {
                 writer.WritePropertyName("resourceGuid"u8);
                 writer.WriteStringValue(ResourceGuid.Value);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (ExpressRouteGatewayBypass.HasValue)
+            if (Optional.IsDefined(ExpressRouteGatewayBypass))
             {
                 writer.WritePropertyName("expressRouteGatewayBypass"u8);
                 writer.WriteBooleanValue(ExpressRouteGatewayBypass.Value);
             }
-            if (EnablePrivateLinkFastPath.HasValue)
+            if (Optional.IsDefined(EnablePrivateLinkFastPath))
             {
                 writer.WritePropertyName("enablePrivateLinkFastPath"u8);
                 writer.WriteBooleanValue(EnablePrivateLinkFastPath.Value);
@@ -265,39 +265,39 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
             IDictionary<string, string> tags = default;
-            Optional<string> authorizationKey = default;
+            string authorizationKey = default;
             VirtualNetworkGatewayData virtualNetworkGateway1 = default;
-            Optional<VirtualNetworkGatewayData> virtualNetworkGateway2 = default;
-            Optional<LocalNetworkGatewayData> localNetworkGateway2 = default;
+            VirtualNetworkGatewayData virtualNetworkGateway2 = default;
+            LocalNetworkGatewayData localNetworkGateway2 = default;
             IList<WritableSubResource> ingressNatRules = default;
             IList<WritableSubResource> egressNatRules = default;
             VirtualNetworkGatewayConnectionType connectionType = default;
-            Optional<VirtualNetworkGatewayConnectionProtocol> connectionProtocol = default;
-            Optional<int> routingWeight = default;
-            Optional<int> dpdTimeoutSeconds = default;
-            Optional<VirtualNetworkGatewayConnectionMode> connectionMode = default;
-            Optional<string> sharedKey = default;
-            Optional<VirtualNetworkGatewayConnectionStatus> connectionStatus = default;
+            VirtualNetworkGatewayConnectionProtocol? connectionProtocol = default;
+            int? routingWeight = default;
+            int? dpdTimeoutSeconds = default;
+            VirtualNetworkGatewayConnectionMode? connectionMode = default;
+            string sharedKey = default;
+            VirtualNetworkGatewayConnectionStatus? connectionStatus = default;
             IReadOnlyList<TunnelConnectionHealth> tunnelConnectionStatus = default;
-            Optional<long> egressBytesTransferred = default;
-            Optional<long> ingressBytesTransferred = default;
-            Optional<WritableSubResource> peer = default;
-            Optional<bool> enableBgp = default;
+            long? egressBytesTransferred = default;
+            long? ingressBytesTransferred = default;
+            WritableSubResource peer = default;
+            bool? enableBgp = default;
             IList<GatewayCustomBgpIPAddressIPConfiguration> gatewayCustomBgpIPAddresses = default;
-            Optional<bool> useLocalAzureIPAddress = default;
-            Optional<bool> usePolicyBasedTrafficSelectors = default;
+            bool? useLocalAzureIPAddress = default;
+            bool? usePolicyBasedTrafficSelectors = default;
             IList<IPsecPolicy> ipsecPolicies = default;
             IList<TrafficSelectorPolicy> trafficSelectorPolicies = default;
-            Optional<Guid> resourceGuid = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<bool> expressRouteGatewayBypass = default;
-            Optional<bool> enablePrivateLinkFastPath = default;
+            Guid? resourceGuid = default;
+            NetworkProvisioningState? provisioningState = default;
+            bool? expressRouteGatewayBypass = default;
+            bool? enablePrivateLinkFastPath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -633,40 +633,40 @@ namespace Azure.ResourceManager.Network
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new VirtualNetworkGatewayConnectionData(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
-                Optional.ToNullable(location),
+                id,
+                name,
+                type,
+                location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
-                Optional.ToNullable(etag),
-                authorizationKey.Value,
+                etag,
+                authorizationKey,
                 virtualNetworkGateway1,
-                virtualNetworkGateway2.Value,
-                localNetworkGateway2.Value,
+                virtualNetworkGateway2,
+                localNetworkGateway2,
                 ingressNatRules ?? new ChangeTrackingList<WritableSubResource>(),
                 egressNatRules ?? new ChangeTrackingList<WritableSubResource>(),
                 connectionType,
-                Optional.ToNullable(connectionProtocol),
-                Optional.ToNullable(routingWeight),
-                Optional.ToNullable(dpdTimeoutSeconds),
-                Optional.ToNullable(connectionMode),
-                sharedKey.Value,
-                Optional.ToNullable(connectionStatus),
+                connectionProtocol,
+                routingWeight,
+                dpdTimeoutSeconds,
+                connectionMode,
+                sharedKey,
+                connectionStatus,
                 tunnelConnectionStatus ?? new ChangeTrackingList<TunnelConnectionHealth>(),
-                Optional.ToNullable(egressBytesTransferred),
-                Optional.ToNullable(ingressBytesTransferred),
+                egressBytesTransferred,
+                ingressBytesTransferred,
                 peer,
-                Optional.ToNullable(enableBgp),
+                enableBgp,
                 gatewayCustomBgpIPAddresses ?? new ChangeTrackingList<GatewayCustomBgpIPAddressIPConfiguration>(),
-                Optional.ToNullable(useLocalAzureIPAddress),
-                Optional.ToNullable(usePolicyBasedTrafficSelectors),
+                useLocalAzureIPAddress,
+                usePolicyBasedTrafficSelectors,
                 ipsecPolicies ?? new ChangeTrackingList<IPsecPolicy>(),
                 trafficSelectorPolicies ?? new ChangeTrackingList<TrafficSelectorPolicy>(),
-                Optional.ToNullable(resourceGuid),
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(expressRouteGatewayBypass),
-                Optional.ToNullable(enablePrivateLinkFastPath));
+                resourceGuid,
+                provisioningState,
+                expressRouteGatewayBypass,
+                enablePrivateLinkFastPath);
         }
 
         BinaryData IPersistableModel<VirtualNetworkGatewayConnectionData>.Write(ModelReaderWriterOptions options)

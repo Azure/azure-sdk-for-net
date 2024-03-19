@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DigitalTwins;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 if (Tags != null)
                 {
@@ -45,13 +46,13 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     writer.WriteNull("tags");
                 }
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (Properties != null)
+            if (Optional.IsDefined(Properties))
             {
                 if (Properties != null)
                 {
@@ -102,8 +103,8 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<DigitalTwinsPatchProperties> properties = default;
+            ManagedServiceIdentity identity = default;
+            DigitalTwinsPatchProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +150,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DigitalTwinsDescriptionPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, properties.Value, serializedAdditionalRawData);
+            return new DigitalTwinsDescriptionPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DigitalTwinsDescriptionPatch>.Write(ModelReaderWriterOptions options)

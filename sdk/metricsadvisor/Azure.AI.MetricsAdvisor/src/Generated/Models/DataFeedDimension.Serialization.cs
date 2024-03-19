@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.AI.MetricsAdvisor;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -17,7 +18,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStartObject();
             writer.WritePropertyName("dimensionName"u8);
             writer.WriteStringValue(Name);
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("dimensionDisplayName"u8);
                 writer.WriteStringValue(DisplayName);
@@ -32,7 +33,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 return null;
             }
             string dimensionName = default;
-            Optional<string> dimensionDisplayName = default;
+            string dimensionDisplayName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dimensionName"u8))
@@ -46,7 +47,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new DataFeedDimension(dimensionName, dimensionDisplayName.Value);
+            return new DataFeedDimension(dimensionName, dimensionDisplayName);
         }
     }
 }

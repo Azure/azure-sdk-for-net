@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             writer.WriteStartObject();
             writer.WritePropertyName("applicationId"u8);
             writer.WriteStringValue(ApplicationId);
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             string applicationId = default;
-            Optional<string> password = default;
+            string password = default;
             string principalId = default;
             string tenantId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServicePrincipalInformation(applicationId, password.Value, principalId, tenantId, serializedAdditionalRawData);
+            return new ServicePrincipalInformation(applicationId, password, principalId, tenantId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServicePrincipalInformation>.Write(ModelReaderWriterOptions options)

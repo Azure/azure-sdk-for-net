@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
@@ -27,12 +28,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (IPConfiguration != null)
+            if (Optional.IsDefined(IPConfiguration))
             {
                 writer.WritePropertyName("ipConfiguration"u8);
                 JsonSerializer.Serialize(writer, IPConfiguration);
             }
-            if (IPAddress != null)
+            if (Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress);
@@ -75,8 +76,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<WritableSubResource> ipConfiguration = default;
-            Optional<string> ipAddress = default;
+            WritableSubResource ipConfiguration = default;
+            string ipAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QueryInboundNatRulePortMappingContent(ipConfiguration, ipAddress.Value, serializedAdditionalRawData);
+            return new QueryInboundNatRulePortMappingContent(ipConfiguration, ipAddress, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QueryInboundNatRulePortMappingContent>.Write(ModelReaderWriterOptions options)

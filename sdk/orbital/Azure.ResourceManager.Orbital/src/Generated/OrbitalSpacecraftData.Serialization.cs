@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Orbital
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -62,39 +62,39 @@ namespace Azure.ResourceManager.Orbital
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (NoradId != null)
+            if (Optional.IsDefined(NoradId))
             {
                 writer.WritePropertyName("noradId"u8);
                 writer.WriteStringValue(NoradId);
             }
-            if (TitleLine != null)
+            if (Optional.IsDefined(TitleLine))
             {
                 writer.WritePropertyName("titleLine"u8);
                 writer.WriteStringValue(TitleLine);
             }
-            if (TleLine1 != null)
+            if (Optional.IsDefined(TleLine1))
             {
                 writer.WritePropertyName("tleLine1"u8);
                 writer.WriteStringValue(TleLine1);
             }
-            if (TleLine2 != null)
+            if (Optional.IsDefined(TleLine2))
             {
                 writer.WritePropertyName("tleLine2"u8);
                 writer.WriteStringValue(TleLine2);
             }
-            if (!(Links is ChangeTrackingList<OrbitalSpacecraftLink> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Links))
             {
                 writer.WritePropertyName("links"u8);
                 writer.WriteStartArray();
@@ -143,18 +143,18 @@ namespace Azure.ResourceManager.Orbital
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<OrbitalProvisioningState> provisioningState = default;
-            Optional<string> noradId = default;
-            Optional<string> titleLine = default;
-            Optional<string> tleLine1 = default;
-            Optional<string> tleLine2 = default;
+            SystemData systemData = default;
+            OrbitalProvisioningState? provisioningState = default;
+            string noradId = default;
+            string titleLine = default;
+            string tleLine1 = default;
+            string tleLine2 = default;
             IList<OrbitalSpacecraftLink> links = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -277,15 +277,15 @@ namespace Azure.ResourceManager.Orbital
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(etag),
-                Optional.ToNullable(provisioningState),
-                noradId.Value,
-                titleLine.Value,
-                tleLine1.Value,
-                tleLine2.Value,
+                etag,
+                provisioningState,
+                noradId,
+                titleLine,
+                tleLine1,
+                tleLine2,
                 links ?? new ChangeTrackingList<OrbitalSpacecraftLink>(),
                 serializedAdditionalRawData);
         }

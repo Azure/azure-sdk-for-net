@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -42,29 +43,29 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Op.HasValue)
+            if (Optional.IsDefined(Op))
             {
                 writer.WritePropertyName("op"u8);
                 writer.WriteStringValue(Op.Value.ToSerialString());
             }
-            if (Schema != null)
+            if (Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
                 writer.WriteStringValue(Schema);
             }
-            if (Table != null)
+            if (Optional.IsDefined(Table))
             {
                 writer.WritePropertyName("table"u8);
                 writer.WriteStringValue(Table);
             }
-            if (Column != null)
+            if (Optional.IsDefined(Column))
             {
                 writer.WritePropertyName("column"u8);
                 writer.WriteStringValue(Column);
@@ -111,11 +112,11 @@ namespace Azure.ResourceManager.Synapse.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SynapseRecommendedSensitivityLabelUpdateKind> op = default;
-            Optional<string> schema = default;
-            Optional<string> table = default;
-            Optional<string> column = default;
+            SystemData systemData = default;
+            SynapseRecommendedSensitivityLabelUpdateKind? op = default;
+            string schema = default;
+            string table = default;
+            string column = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -190,11 +191,11 @@ namespace Azure.ResourceManager.Synapse.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(op),
-                schema.Value,
-                table.Value,
-                column.Value,
+                systemData,
+                op,
+                schema,
+                table,
+                column,
                 serializedAdditionalRawData);
         }
 

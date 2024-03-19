@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -28,12 +29,12 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartObject();
             writer.WritePropertyName("overrideGroupSigningCertificate"u8);
             writer.WriteBooleanValue(OverrideGroupSigningCertificate);
-            if (SigningCertificateName != null)
+            if (Optional.IsDefined(SigningCertificateName))
             {
                 writer.WritePropertyName("signingCertificateName"u8);
                 writer.WriteStringValue(SigningCertificateName);
             }
-            if (EncryptionCertificateName != null)
+            if (Optional.IsDefined(EncryptionCertificateName))
             {
                 writer.WritePropertyName("encryptionCertificateName"u8);
                 writer.WriteStringValue(EncryptionCertificateName);
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteBooleanValue(EnableNrrForOutboundDecodedMessages);
             writer.WritePropertyName("enableNRRForInboundMDN"u8);
             writer.WriteBooleanValue(EnableNrrForInboundMdn);
-            if (Sha2AlgorithmFormat != null)
+            if (Optional.IsDefined(Sha2AlgorithmFormat))
             {
                 writer.WritePropertyName("sha2AlgorithmFormat"u8);
                 writer.WriteStringValue(Sha2AlgorithmFormat);
@@ -94,15 +95,15 @@ namespace Azure.ResourceManager.Logic.Models
                 return null;
             }
             bool overrideGroupSigningCertificate = default;
-            Optional<string> signingCertificateName = default;
-            Optional<string> encryptionCertificateName = default;
+            string signingCertificateName = default;
+            string encryptionCertificateName = default;
             bool enableNrrForInboundEncodedMessages = default;
             bool enableNrrForInboundDecodedMessages = default;
             bool enableNrrForOutboundMdn = default;
             bool enableNrrForOutboundEncodedMessages = default;
             bool enableNrrForOutboundDecodedMessages = default;
             bool enableNrrForInboundMdn = default;
-            Optional<string> sha2AlgorithmFormat = default;
+            string sha2AlgorithmFormat = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,15 +166,15 @@ namespace Azure.ResourceManager.Logic.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AS2SecuritySettings(
                 overrideGroupSigningCertificate,
-                signingCertificateName.Value,
-                encryptionCertificateName.Value,
+                signingCertificateName,
+                encryptionCertificateName,
                 enableNrrForInboundEncodedMessages,
                 enableNrrForInboundDecodedMessages,
                 enableNrrForOutboundMdn,
                 enableNrrForOutboundEncodedMessages,
                 enableNrrForOutboundDecodedMessages,
                 enableNrrForInboundMdn,
-                sha2AlgorithmFormat.Value,
+                sha2AlgorithmFormat,
                 serializedAdditionalRawData);
         }
 

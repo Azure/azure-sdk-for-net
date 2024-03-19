@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
@@ -26,42 +27,42 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("Name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("DisplayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("Description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (HelpUri != null)
+            if (Optional.IsDefined(HelpUri))
             {
                 writer.WritePropertyName("HelpUrl"u8);
                 writer.WriteStringValue(HelpUri.AbsoluteUri);
             }
-            if (IsHidden.HasValue)
+            if (Optional.IsDefined(IsHidden))
             {
                 writer.WritePropertyName("IsHidden"u8);
                 writer.WriteBooleanValue(IsHidden.Value);
             }
-            if (IsEnabledByDefault.HasValue)
+            if (Optional.IsDefined(IsEnabledByDefault))
             {
                 writer.WritePropertyName("IsEnabledByDefault"u8);
                 writer.WriteBooleanValue(IsEnabledByDefault.Value);
             }
-            if (IsInPreview.HasValue)
+            if (Optional.IsDefined(IsInPreview))
             {
                 writer.WritePropertyName("IsInPreview"u8);
                 writer.WriteBooleanValue(IsInPreview.Value);
             }
-            if (SupportsEmailNotifications.HasValue)
+            if (Optional.IsDefined(SupportsEmailNotifications))
             {
                 writer.WritePropertyName("SupportsEmailNotifications"u8);
                 writer.WriteBooleanValue(SupportsEmailNotifications.Value);
@@ -104,14 +105,14 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<Uri> helpUrl = default;
-            Optional<bool> isHidden = default;
-            Optional<bool> isEnabledByDefault = default;
-            Optional<bool> isInPreview = default;
-            Optional<bool> supportsEmailNotifications = default;
+            string name = default;
+            string displayName = default;
+            string description = default;
+            Uri helpUrl = default;
+            bool? isHidden = default;
+            bool? isEnabledByDefault = default;
+            bool? isInPreview = default;
+            bool? supportsEmailNotifications = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -183,14 +184,14 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions(
-                name.Value,
-                displayName.Value,
-                description.Value,
-                helpUrl.Value,
-                Optional.ToNullable(isHidden),
-                Optional.ToNullable(isEnabledByDefault),
-                Optional.ToNullable(isInPreview),
-                Optional.ToNullable(supportsEmailNotifications),
+                name,
+                displayName,
+                description,
+                helpUrl,
+                isHidden,
+                isEnabledByDefault,
+                isInPreview,
+                supportsEmailNotifications,
                 serializedAdditionalRawData);
         }
 

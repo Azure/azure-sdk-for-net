@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.BotService;
 
 namespace Azure.ResourceManager.BotService.Models
 {
@@ -27,46 +28,46 @@ namespace Azure.ResourceManager.BotService.Models
             }
 
             writer.WriteStartObject();
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (options.Format != "W" && SiteId != null)
+            if (options.Format != "W" && Optional.IsDefined(SiteId))
             {
                 writer.WritePropertyName("siteId"u8);
                 writer.WriteStringValue(SiteId);
             }
             writer.WritePropertyName("siteName"u8);
             writer.WriteStringValue(SiteName);
-            if (options.Format != "W" && Key != null)
+            if (options.Format != "W" && Optional.IsDefined(Key))
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
             }
-            if (options.Format != "W" && Key2 != null)
+            if (options.Format != "W" && Optional.IsDefined(Key2))
             {
                 writer.WritePropertyName("key2"u8);
                 writer.WriteStringValue(Key2);
             }
             writer.WritePropertyName("isEnabled"u8);
             writer.WriteBooleanValue(IsEnabled);
-            if (options.Format != "W" && IsTokenEnabled.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsTokenEnabled))
             {
                 writer.WritePropertyName("isTokenEnabled"u8);
                 writer.WriteBooleanValue(IsTokenEnabled.Value);
             }
-            if (IsEndpointParametersEnabled.HasValue)
+            if (Optional.IsDefined(IsEndpointParametersEnabled))
             {
                 writer.WritePropertyName("isEndpointParametersEnabled"u8);
                 writer.WriteBooleanValue(IsEndpointParametersEnabled.Value);
             }
-            if (IsDetailedLoggingEnabled.HasValue)
+            if (Optional.IsDefined(IsDetailedLoggingEnabled))
             {
                 writer.WritePropertyName("isDetailedLoggingEnabled"u8);
                 writer.WriteBooleanValue(IsDetailedLoggingEnabled.Value);
             }
-            if (IsBlockUserUploadEnabled.HasValue)
+            if (Optional.IsDefined(IsBlockUserUploadEnabled))
             {
                 if (IsBlockUserUploadEnabled != null)
                 {
@@ -78,37 +79,37 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("isBlockUserUploadEnabled");
                 }
             }
-            if (IsNoStorageEnabled.HasValue)
+            if (Optional.IsDefined(IsNoStorageEnabled))
             {
                 writer.WritePropertyName("isNoStorageEnabled"u8);
                 writer.WriteBooleanValue(IsNoStorageEnabled.Value);
             }
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (AppId != null)
+            if (Optional.IsDefined(AppId))
             {
                 writer.WritePropertyName("appId"u8);
                 writer.WriteStringValue(AppId);
             }
-            if (IsV1Enabled.HasValue)
+            if (Optional.IsDefined(IsV1Enabled))
             {
                 writer.WritePropertyName("isV1Enabled"u8);
                 writer.WriteBooleanValue(IsV1Enabled.Value);
             }
-            if (IsV3Enabled.HasValue)
+            if (Optional.IsDefined(IsV3Enabled))
             {
                 writer.WritePropertyName("isV3Enabled"u8);
                 writer.WriteBooleanValue(IsV3Enabled.Value);
             }
-            if (IsSecureSiteEnabled.HasValue)
+            if (Optional.IsDefined(IsSecureSiteEnabled))
             {
                 writer.WritePropertyName("isSecureSiteEnabled"u8);
                 writer.WriteBooleanValue(IsSecureSiteEnabled.Value);
             }
-            if (!(TrustedOrigins is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(TrustedOrigins))
             {
                 writer.WritePropertyName("trustedOrigins"u8);
                 writer.WriteStartArray();
@@ -118,12 +119,12 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IsWebChatSpeechEnabled.HasValue)
+            if (Optional.IsDefined(IsWebChatSpeechEnabled))
             {
                 writer.WritePropertyName("isWebChatSpeechEnabled"u8);
                 writer.WriteBooleanValue(IsWebChatSpeechEnabled.Value);
             }
-            if (IsWebchatPreviewEnabled.HasValue)
+            if (Optional.IsDefined(IsWebchatPreviewEnabled))
             {
                 writer.WritePropertyName("isWebchatPreviewEnabled"u8);
                 writer.WriteBooleanValue(IsWebchatPreviewEnabled.Value);
@@ -166,25 +167,25 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Optional<Guid> tenantId = default;
-            Optional<string> siteId = default;
+            Guid? tenantId = default;
+            string siteId = default;
             string siteName = default;
-            Optional<string> key = default;
-            Optional<string> key2 = default;
+            string key = default;
+            string key2 = default;
             bool isEnabled = default;
-            Optional<bool> isTokenEnabled = default;
-            Optional<bool> isEndpointParametersEnabled = default;
-            Optional<bool> isDetailedLoggingEnabled = default;
-            Optional<bool?> isBlockUserUploadEnabled = default;
-            Optional<bool> isNoStorageEnabled = default;
-            Optional<ETag> eTag = default;
-            Optional<string> appId = default;
-            Optional<bool> isV1Enabled = default;
-            Optional<bool> isV3Enabled = default;
-            Optional<bool> isSecureSiteEnabled = default;
+            bool? isTokenEnabled = default;
+            bool? isEndpointParametersEnabled = default;
+            bool? isDetailedLoggingEnabled = default;
+            bool? isBlockUserUploadEnabled = default;
+            bool? isNoStorageEnabled = default;
+            ETag? eTag = default;
+            string appId = default;
+            bool? isV1Enabled = default;
+            bool? isV3Enabled = default;
+            bool? isSecureSiteEnabled = default;
             IList<string> trustedOrigins = default;
-            Optional<bool> isWebChatSpeechEnabled = default;
-            Optional<bool> isWebchatPreviewEnabled = default;
+            bool? isWebChatSpeechEnabled = default;
+            bool? isWebchatPreviewEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -349,25 +350,25 @@ namespace Azure.ResourceManager.BotService.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new WebChatSite(
-                Optional.ToNullable(tenantId),
-                siteId.Value,
+                tenantId,
+                siteId,
                 siteName,
-                key.Value,
-                key2.Value,
+                key,
+                key2,
                 isEnabled,
-                Optional.ToNullable(isTokenEnabled),
-                Optional.ToNullable(isEndpointParametersEnabled),
-                Optional.ToNullable(isDetailedLoggingEnabled),
-                Optional.ToNullable(isBlockUserUploadEnabled),
-                Optional.ToNullable(isNoStorageEnabled),
-                Optional.ToNullable(eTag),
-                appId.Value,
-                Optional.ToNullable(isV1Enabled),
-                Optional.ToNullable(isV3Enabled),
-                Optional.ToNullable(isSecureSiteEnabled),
+                isTokenEnabled,
+                isEndpointParametersEnabled,
+                isDetailedLoggingEnabled,
+                isBlockUserUploadEnabled,
+                isNoStorageEnabled,
+                eTag,
+                appId,
+                isV1Enabled,
+                isV3Enabled,
+                isSecureSiteEnabled,
                 trustedOrigins ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(isWebChatSpeechEnabled),
-                Optional.ToNullable(isWebchatPreviewEnabled),
+                isWebChatSpeechEnabled,
+                isWebchatPreviewEnabled,
                 serializedAdditionalRawData);
         }
 

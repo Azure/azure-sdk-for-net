@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Timestamp.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Timestamp))
             {
                 writer.WritePropertyName("timestamp"u8);
                 writer.WriteStringValue(Timestamp.Value, "O");
             }
-            if (options.Format != "W" && LogType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LogType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(LogType.Value.ToString());
             }
-            if (options.Format != "W" && Source != null)
+            if (options.Format != "W" && Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
-            if (options.Format != "W" && Details != null)
+            if (options.Format != "W" && Optional.IsDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStringValue(Details);
             }
-            if (options.Format != "W" && TracingId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TracingId))
             {
                 writer.WritePropertyName("tracingId"u8);
                 writer.WriteStringValue(TracingId.Value);
             }
-            if (options.Format != "W" && OperationStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(OperationStatus))
             {
                 writer.WritePropertyName("operationStatus"u8);
                 writer.WriteStringValue(OperationStatus);
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> timestamp = default;
-            Optional<SyncGroupLogType> type = default;
-            Optional<string> source = default;
-            Optional<string> details = default;
-            Optional<Guid> tracingId = default;
-            Optional<string> operationStatus = default;
+            DateTimeOffset? timestamp = default;
+            SyncGroupLogType? type = default;
+            string source = default;
+            string details = default;
+            Guid? tracingId = default;
+            string operationStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -153,12 +154,12 @@ namespace Azure.ResourceManager.Sql.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SyncGroupLogProperties(
-                Optional.ToNullable(timestamp),
-                Optional.ToNullable(type),
-                source.Value,
-                details.Value,
-                Optional.ToNullable(tracingId),
-                operationStatus.Value,
+                timestamp,
+                type,
+                source,
+                details,
+                tracingId,
+                operationStatus,
                 serializedAdditionalRawData);
         }
 

@@ -43,69 +43,69 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DatabaseType.HasValue)
+            if (Optional.IsDefined(DatabaseType))
             {
                 writer.WritePropertyName("databaseType"u8);
                 writer.WriteStringValue(DatabaseType.Value.ToString());
             }
-            if (SyncAgentId != null)
+            if (Optional.IsDefined(SyncAgentId))
             {
                 writer.WritePropertyName("syncAgentId"u8);
                 writer.WriteStringValue(SyncAgentId);
             }
-            if (SqlServerDatabaseId.HasValue)
+            if (Optional.IsDefined(SqlServerDatabaseId))
             {
                 writer.WritePropertyName("sqlServerDatabaseId"u8);
                 writer.WriteStringValue(SqlServerDatabaseId.Value);
             }
-            if (SyncMemberAzureDatabaseResourceId != null)
+            if (Optional.IsDefined(SyncMemberAzureDatabaseResourceId))
             {
                 writer.WritePropertyName("syncMemberAzureDatabaseResourceId"u8);
                 writer.WriteStringValue(SyncMemberAzureDatabaseResourceId);
             }
-            if (UsePrivateLinkConnection.HasValue)
+            if (Optional.IsDefined(UsePrivateLinkConnection))
             {
                 writer.WritePropertyName("usePrivateLinkConnection"u8);
                 writer.WriteBooleanValue(UsePrivateLinkConnection.Value);
             }
-            if (options.Format != "W" && PrivateEndpointName != null)
+            if (options.Format != "W" && Optional.IsDefined(PrivateEndpointName))
             {
                 writer.WritePropertyName("privateEndpointName"u8);
                 writer.WriteStringValue(PrivateEndpointName);
             }
-            if (ServerName != null)
+            if (Optional.IsDefined(ServerName))
             {
                 writer.WritePropertyName("serverName"u8);
                 writer.WriteStringValue(ServerName);
             }
-            if (DatabaseName != null)
+            if (Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (UserName != null)
+            if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
                 writer.WriteStringValue(UserName);
             }
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (SyncDirection.HasValue)
+            if (Optional.IsDefined(SyncDirection))
             {
                 writer.WritePropertyName("syncDirection"u8);
                 writer.WriteStringValue(SyncDirection.Value.ToString());
             }
-            if (options.Format != "W" && SyncState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SyncState))
             {
                 writer.WritePropertyName("syncState"u8);
                 writer.WriteStringValue(SyncState.Value.ToString());
@@ -152,19 +152,19 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SyncMemberDbType> databaseType = default;
-            Optional<ResourceIdentifier> syncAgentId = default;
-            Optional<Guid> sqlServerDatabaseId = default;
-            Optional<ResourceIdentifier> syncMemberAzureDatabaseResourceId = default;
-            Optional<bool> usePrivateLinkConnection = default;
-            Optional<string> privateEndpointName = default;
-            Optional<string> serverName = default;
-            Optional<string> databaseName = default;
-            Optional<string> userName = default;
-            Optional<string> password = default;
-            Optional<SyncDirection> syncDirection = default;
-            Optional<SyncMemberState> syncState = default;
+            SystemData systemData = default;
+            SyncMemberDbType? databaseType = default;
+            ResourceIdentifier syncAgentId = default;
+            Guid? sqlServerDatabaseId = default;
+            ResourceIdentifier syncMemberAzureDatabaseResourceId = default;
+            bool? usePrivateLinkConnection = default;
+            string privateEndpointName = default;
+            string serverName = default;
+            string databaseName = default;
+            string userName = default;
+            string password = default;
+            SyncDirection? syncDirection = default;
+            SyncMemberState? syncState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -303,19 +303,19 @@ namespace Azure.ResourceManager.Sql
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(databaseType),
-                syncAgentId.Value,
-                Optional.ToNullable(sqlServerDatabaseId),
-                syncMemberAzureDatabaseResourceId.Value,
-                Optional.ToNullable(usePrivateLinkConnection),
-                privateEndpointName.Value,
-                serverName.Value,
-                databaseName.Value,
-                userName.Value,
-                password.Value,
-                Optional.ToNullable(syncDirection),
-                Optional.ToNullable(syncState),
+                systemData,
+                databaseType,
+                syncAgentId,
+                sqlServerDatabaseId,
+                syncMemberAzureDatabaseResourceId,
+                usePrivateLinkConnection,
+                privateEndpointName,
+                serverName,
+                databaseName,
+                userName,
+                password,
+                syncDirection,
+                syncState,
                 serializedAdditionalRawData);
         }
 

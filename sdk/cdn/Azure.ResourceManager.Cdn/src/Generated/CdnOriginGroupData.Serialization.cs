@@ -44,14 +44,14 @@ namespace Azure.ResourceManager.Cdn
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (HealthProbeSettings != null)
+            if (Optional.IsDefined(HealthProbeSettings))
             {
                 if (HealthProbeSettings != null)
                 {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Cdn
                     writer.WriteNull("healthProbeSettings");
                 }
             }
-            if (!(Origins is ChangeTrackingList<WritableSubResource> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Origins))
             {
                 writer.WritePropertyName("origins"u8);
                 writer.WriteStartArray();
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Cdn
                 }
                 writer.WriteEndArray();
             }
-            if (TrafficRestorationTimeToHealedOrNewEndpointsInMinutes.HasValue)
+            if (Optional.IsDefined(TrafficRestorationTimeToHealedOrNewEndpointsInMinutes))
             {
                 if (TrafficRestorationTimeToHealedOrNewEndpointsInMinutes != null)
                 {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Cdn
                     writer.WriteNull("trafficRestorationTimeToHealedOrNewEndpointsInMinutes");
                 }
             }
-            if (ResponseBasedOriginErrorDetectionSettings != null)
+            if (Optional.IsDefined(ResponseBasedOriginErrorDetectionSettings))
             {
                 if (ResponseBasedOriginErrorDetectionSettings != null)
                 {
@@ -97,12 +97,12 @@ namespace Azure.ResourceManager.Cdn
                     writer.WriteNull("responseBasedOriginErrorDetectionSettings");
                 }
             }
-            if (options.Format != "W" && ResourceState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceState))
             {
                 writer.WritePropertyName("resourceState"u8);
                 writer.WriteStringValue(ResourceState.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -149,13 +149,13 @@ namespace Azure.ResourceManager.Cdn
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<HealthProbeSettings> healthProbeSettings = default;
+            SystemData systemData = default;
+            HealthProbeSettings healthProbeSettings = default;
             IList<WritableSubResource> origins = default;
-            Optional<int?> trafficRestorationTimeToHealedOrNewEndpointsInMinutes = default;
-            Optional<ResponseBasedOriginErrorDetectionSettings> responseBasedOriginErrorDetectionSettings = default;
-            Optional<OriginGroupResourceState> resourceState = default;
-            Optional<OriginGroupProvisioningState> provisioningState = default;
+            int? trafficRestorationTimeToHealedOrNewEndpointsInMinutes = default;
+            ResponseBasedOriginErrorDetectionSettings responseBasedOriginErrorDetectionSettings = default;
+            OriginGroupResourceState? resourceState = default;
+            OriginGroupProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -268,13 +268,13 @@ namespace Azure.ResourceManager.Cdn
                 id,
                 name,
                 type,
-                systemData.Value,
-                healthProbeSettings.Value,
+                systemData,
+                healthProbeSettings,
                 origins ?? new ChangeTrackingList<WritableSubResource>(),
-                Optional.ToNullable(trafficRestorationTimeToHealedOrNewEndpointsInMinutes),
-                responseBasedOriginErrorDetectionSettings.Value,
-                Optional.ToNullable(resourceState),
-                Optional.ToNullable(provisioningState),
+                trafficRestorationTimeToHealedOrNewEndpointsInMinutes,
+                responseBasedOriginErrorDetectionSettings,
+                resourceState,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

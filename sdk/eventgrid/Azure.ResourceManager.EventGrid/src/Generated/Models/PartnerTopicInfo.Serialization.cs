@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (AzureSubscriptionId.HasValue)
+            if (Optional.IsDefined(AzureSubscriptionId))
             {
                 writer.WritePropertyName("azureSubscriptionId"u8);
                 writer.WriteStringValue(AzureSubscriptionId.Value);
             }
-            if (ResourceGroupName != null)
+            if (Optional.IsDefined(ResourceGroupName))
             {
                 writer.WritePropertyName("resourceGroupName"u8);
                 writer.WriteStringValue(ResourceGroupName);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (EventTypeInfo != null)
+            if (Optional.IsDefined(EventTypeInfo))
             {
                 writer.WritePropertyName("eventTypeInfo"u8);
                 writer.WriteObjectValue(EventTypeInfo);
             }
-            if (Source != null)
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<Guid> azureSubscriptionId = default;
-            Optional<string> resourceGroupName = default;
-            Optional<string> name = default;
-            Optional<PartnerTopicEventTypeInfo> eventTypeInfo = default;
-            Optional<string> source = default;
+            Guid? azureSubscriptionId = default;
+            string resourceGroupName = default;
+            string name = default;
+            PartnerTopicEventTypeInfo eventTypeInfo = default;
+            string source = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,11 +139,11 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new PartnerTopicInfo(
-                Optional.ToNullable(azureSubscriptionId),
-                resourceGroupName.Value,
-                name.Value,
-                eventTypeInfo.Value,
-                source.Value,
+                azureSubscriptionId,
+                resourceGroupName,
+                name,
+                eventTypeInfo,
+                source,
                 serializedAdditionalRawData);
         }
 

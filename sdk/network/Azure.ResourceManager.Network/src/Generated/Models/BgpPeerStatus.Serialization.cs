@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,42 +27,42 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && LocalAddress != null)
+            if (options.Format != "W" && Optional.IsDefined(LocalAddress))
             {
                 writer.WritePropertyName("localAddress"u8);
                 writer.WriteStringValue(LocalAddress);
             }
-            if (options.Format != "W" && Neighbor != null)
+            if (options.Format != "W" && Optional.IsDefined(Neighbor))
             {
                 writer.WritePropertyName("neighbor"u8);
                 writer.WriteStringValue(Neighbor);
             }
-            if (options.Format != "W" && Asn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Asn))
             {
                 writer.WritePropertyName("asn"u8);
                 writer.WriteNumberValue(Asn.Value);
             }
-            if (options.Format != "W" && State.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && ConnectedDuration.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ConnectedDuration))
             {
                 writer.WritePropertyName("connectedDuration"u8);
                 writer.WriteStringValue(ConnectedDuration.Value, "c");
             }
-            if (options.Format != "W" && RoutesReceived.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RoutesReceived))
             {
                 writer.WritePropertyName("routesReceived"u8);
                 writer.WriteNumberValue(RoutesReceived.Value);
             }
-            if (options.Format != "W" && MessagesSent.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MessagesSent))
             {
                 writer.WritePropertyName("messagesSent"u8);
                 writer.WriteNumberValue(MessagesSent.Value);
             }
-            if (options.Format != "W" && MessagesReceived.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MessagesReceived))
             {
                 writer.WritePropertyName("messagesReceived"u8);
                 writer.WriteNumberValue(MessagesReceived.Value);
@@ -104,14 +105,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> localAddress = default;
-            Optional<string> neighbor = default;
-            Optional<long> asn = default;
-            Optional<BgpPeerState> state = default;
-            Optional<TimeSpan> connectedDuration = default;
-            Optional<long> routesReceived = default;
-            Optional<long> messagesSent = default;
-            Optional<long> messagesReceived = default;
+            string localAddress = default;
+            string neighbor = default;
+            long? asn = default;
+            BgpPeerState? state = default;
+            TimeSpan? connectedDuration = default;
+            long? routesReceived = default;
+            long? messagesSent = default;
+            long? messagesReceived = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -187,14 +188,14 @@ namespace Azure.ResourceManager.Network.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new BgpPeerStatus(
-                localAddress.Value,
-                neighbor.Value,
-                Optional.ToNullable(asn),
-                Optional.ToNullable(state),
-                Optional.ToNullable(connectedDuration),
-                Optional.ToNullable(routesReceived),
-                Optional.ToNullable(messagesSent),
-                Optional.ToNullable(messagesReceived),
+                localAddress,
+                neighbor,
+                asn,
+                state,
+                connectedDuration,
+                routesReceived,
+                messagesSent,
+                messagesReceived,
                 serializedAdditionalRawData);
         }
 

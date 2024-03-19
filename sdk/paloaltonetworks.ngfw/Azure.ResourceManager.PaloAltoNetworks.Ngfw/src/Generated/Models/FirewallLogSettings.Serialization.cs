@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
 
             writer.WriteStartObject();
-            if (LogType.HasValue)
+            if (Optional.IsDefined(LogType))
             {
                 writer.WritePropertyName("logType"u8);
                 writer.WriteStringValue(LogType.Value.ToString());
             }
-            if (LogOption.HasValue)
+            if (Optional.IsDefined(LogOption))
             {
                 writer.WritePropertyName("logOption"u8);
                 writer.WriteStringValue(LogOption.Value.ToString());
             }
-            if (ApplicationInsights != null)
+            if (Optional.IsDefined(ApplicationInsights))
             {
                 writer.WritePropertyName("applicationInsights"u8);
                 writer.WriteObjectValue(ApplicationInsights);
             }
-            if (CommonDestination != null)
+            if (Optional.IsDefined(CommonDestination))
             {
                 writer.WritePropertyName("commonDestination"u8);
                 writer.WriteObjectValue(CommonDestination);
             }
-            if (TrafficLogDestination != null)
+            if (Optional.IsDefined(TrafficLogDestination))
             {
                 writer.WritePropertyName("trafficLogDestination"u8);
                 writer.WriteObjectValue(TrafficLogDestination);
             }
-            if (ThreatLogDestination != null)
+            if (Optional.IsDefined(ThreatLogDestination))
             {
                 writer.WritePropertyName("threatLogDestination"u8);
                 writer.WriteObjectValue(ThreatLogDestination);
             }
-            if (DecryptLogDestination != null)
+            if (Optional.IsDefined(DecryptLogDestination))
             {
                 writer.WritePropertyName("decryptLogDestination"u8);
                 writer.WriteObjectValue(DecryptLogDestination);
@@ -99,13 +100,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 return null;
             }
-            Optional<FirewallLogType> logType = default;
-            Optional<FirewallLogOption> logOption = default;
-            Optional<FirewallApplicationInsights> applicationInsights = default;
-            Optional<FirewallLogDestination> commonDestination = default;
-            Optional<FirewallLogDestination> trafficLogDestination = default;
-            Optional<FirewallLogDestination> threatLogDestination = default;
-            Optional<FirewallLogDestination> decryptLogDestination = default;
+            FirewallLogType? logType = default;
+            FirewallLogOption? logOption = default;
+            FirewallApplicationInsights applicationInsights = default;
+            FirewallLogDestination commonDestination = default;
+            FirewallLogDestination trafficLogDestination = default;
+            FirewallLogDestination threatLogDestination = default;
+            FirewallLogDestination decryptLogDestination = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -180,13 +181,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new FirewallLogSettings(
-                Optional.ToNullable(logType),
-                Optional.ToNullable(logOption),
-                applicationInsights.Value,
-                commonDestination.Value,
-                trafficLogDestination.Value,
-                threatLogDestination.Value,
-                decryptLogDestination.Value,
+                logType,
+                logOption,
+                applicationInsights,
+                commonDestination,
+                trafficLogDestination,
+                threatLogDestination,
+                decryptLogDestination,
                 serializedAdditionalRawData);
         }
 

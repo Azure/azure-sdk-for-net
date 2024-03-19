@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -44,14 +45,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && !(AdditionalData is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AdditionalData))
             {
                 writer.WritePropertyName("additionalData"u8);
                 writer.WriteStartObject();
@@ -74,32 +75,32 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && FriendlyName != null)
+            if (options.Format != "W" && Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (CreatedOn.HasValue)
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (CreatedBy != null)
+            if (Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("createdBy"u8);
                 writer.WriteObjectValue(CreatedBy);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (EventOn.HasValue)
+            if (Optional.IsDefined(EventOn))
             {
                 writer.WritePropertyName("eventTime"u8);
                 writer.WriteStringValue(EventOn.Value, "O");
             }
-            if (!(Labels is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Labels))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartArray();
@@ -109,32 +110,32 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Notes != null)
+            if (Optional.IsDefined(Notes))
             {
                 writer.WritePropertyName("notes"u8);
                 writer.WriteStringValue(Notes);
             }
-            if (Query != null)
+            if (Optional.IsDefined(Query))
             {
                 writer.WritePropertyName("query"u8);
                 writer.WriteStringValue(Query);
             }
-            if (QueryResult != null)
+            if (Optional.IsDefined(QueryResult))
             {
                 writer.WritePropertyName("queryResult"u8);
                 writer.WriteStringValue(QueryResult);
             }
-            if (UpdatedOn.HasValue)
+            if (Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updated"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (UpdatedBy != null)
+            if (Optional.IsDefined(UpdatedBy))
             {
                 writer.WritePropertyName("updatedBy"u8);
                 writer.WriteObjectValue(UpdatedBy);
             }
-            if (IncidentInfo != null)
+            if (Optional.IsDefined(IncidentInfo))
             {
                 writer.WritePropertyName("incidentInfo"u8);
                 writer.WriteObjectValue(IncidentInfo);
@@ -182,20 +183,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IReadOnlyDictionary<string, BinaryData> additionalData = default;
-            Optional<string> friendlyName = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<SecurityInsightsUserInfo> createdBy = default;
-            Optional<string> displayName = default;
-            Optional<DateTimeOffset> eventTime = default;
+            string friendlyName = default;
+            DateTimeOffset? created = default;
+            SecurityInsightsUserInfo createdBy = default;
+            string displayName = default;
+            DateTimeOffset? eventTime = default;
             IList<string> labels = default;
-            Optional<string> notes = default;
-            Optional<string> query = default;
-            Optional<string> queryResult = default;
-            Optional<DateTimeOffset> updated = default;
-            Optional<SecurityInsightsUserInfo> updatedBy = default;
-            Optional<SecurityInsightsBookmarkIncidentInfo> incidentInfo = default;
+            string notes = default;
+            string query = default;
+            string queryResult = default;
+            DateTimeOffset? updated = default;
+            SecurityInsightsUserInfo updatedBy = default;
+            SecurityInsightsBookmarkIncidentInfo incidentInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -365,22 +366,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 kind,
                 serializedAdditionalRawData,
                 additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                friendlyName.Value,
-                Optional.ToNullable(created),
-                createdBy.Value,
-                displayName.Value,
-                Optional.ToNullable(eventTime),
+                friendlyName,
+                created,
+                createdBy,
+                displayName,
+                eventTime,
                 labels ?? new ChangeTrackingList<string>(),
-                notes.Value,
-                query.Value,
-                queryResult.Value,
-                Optional.ToNullable(updated),
-                updatedBy.Value,
-                incidentInfo.Value);
+                notes,
+                query,
+                queryResult,
+                updated,
+                updatedBy,
+                incidentInfo);
         }
 
         BinaryData IPersistableModel<SecurityInsightsHuntingBookmark>.Write(ModelReaderWriterOptions options)

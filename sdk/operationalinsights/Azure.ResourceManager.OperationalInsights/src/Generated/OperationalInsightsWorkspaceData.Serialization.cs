@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.OperationalInsights
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -67,29 +67,29 @@ namespace Azure.ResourceManager.OperationalInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && CustomerId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CustomerId))
             {
                 writer.WritePropertyName("customerId"u8);
                 writer.WriteStringValue(CustomerId.Value);
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (RetentionInDays.HasValue)
+            if (Optional.IsDefined(RetentionInDays))
             {
                 if (RetentionInDays != null)
                 {
@@ -101,37 +101,37 @@ namespace Azure.ResourceManager.OperationalInsights
                     writer.WriteNull("retentionInDays");
                 }
             }
-            if (WorkspaceCapping != null)
+            if (Optional.IsDefined(WorkspaceCapping))
             {
                 writer.WritePropertyName("workspaceCapping"u8);
                 writer.WriteObjectValue(WorkspaceCapping);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && ModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ModifiedOn))
             {
                 writer.WritePropertyName("modifiedDate"u8);
                 writer.WriteStringValue(ModifiedOn.Value, "O");
             }
-            if (PublicNetworkAccessForIngestion.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccessForIngestion))
             {
                 writer.WritePropertyName("publicNetworkAccessForIngestion"u8);
                 writer.WriteStringValue(PublicNetworkAccessForIngestion.Value.ToString());
             }
-            if (PublicNetworkAccessForQuery.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccessForQuery))
             {
                 writer.WritePropertyName("publicNetworkAccessForQuery"u8);
                 writer.WriteStringValue(PublicNetworkAccessForQuery.Value.ToString());
             }
-            if (ForceCmkForQuery.HasValue)
+            if (Optional.IsDefined(ForceCmkForQuery))
             {
                 writer.WritePropertyName("forceCmkForQuery"u8);
                 writer.WriteBooleanValue(ForceCmkForQuery.Value);
             }
-            if (options.Format != "W" && !(PrivateLinkScopedResources is ChangeTrackingList<OperationalInsightsPrivateLinkScopedResourceInfo> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateLinkScopedResources))
             {
                 writer.WritePropertyName("privateLinkScopedResources"u8);
                 writer.WriteStartArray();
@@ -141,12 +141,12 @@ namespace Azure.ResourceManager.OperationalInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Features != null)
+            if (Optional.IsDefined(Features))
             {
                 writer.WritePropertyName("features"u8);
                 writer.WriteObjectValue(Features);
             }
-            if (DefaultDataCollectionRuleResourceId != null)
+            if (Optional.IsDefined(DefaultDataCollectionRuleResourceId))
             {
                 writer.WritePropertyName("defaultDataCollectionRuleResourceId"u8);
                 writer.WriteStringValue(DefaultDataCollectionRuleResourceId);
@@ -190,27 +190,27 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<ETag> etag = default;
+            ManagedServiceIdentity identity = default;
+            ETag? etag = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<OperationalInsightsWorkspaceEntityStatus> provisioningState = default;
-            Optional<Guid> customerId = default;
-            Optional<OperationalInsightsWorkspaceSku> sku = default;
-            Optional<int?> retentionInDays = default;
-            Optional<OperationalInsightsWorkspaceCapping> workspaceCapping = default;
-            Optional<DateTimeOffset> createdDate = default;
-            Optional<DateTimeOffset> modifiedDate = default;
-            Optional<OperationalInsightsPublicNetworkAccessType> publicNetworkAccessForIngestion = default;
-            Optional<OperationalInsightsPublicNetworkAccessType> publicNetworkAccessForQuery = default;
-            Optional<bool> forceCmkForQuery = default;
+            SystemData systemData = default;
+            OperationalInsightsWorkspaceEntityStatus? provisioningState = default;
+            Guid? customerId = default;
+            OperationalInsightsWorkspaceSku sku = default;
+            int? retentionInDays = default;
+            OperationalInsightsWorkspaceCapping workspaceCapping = default;
+            DateTimeOffset? createdDate = default;
+            DateTimeOffset? modifiedDate = default;
+            OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion = default;
+            OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForQuery = default;
+            bool? forceCmkForQuery = default;
             IReadOnlyList<OperationalInsightsPrivateLinkScopedResourceInfo> privateLinkScopedResources = default;
-            Optional<OperationalInsightsWorkspaceFeatures> features = default;
-            Optional<ResourceIdentifier> defaultDataCollectionRuleResourceId = default;
+            OperationalInsightsWorkspaceFeatures features = default;
+            ResourceIdentifier defaultDataCollectionRuleResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -421,24 +421,24 @@ namespace Azure.ResourceManager.OperationalInsights
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 identity,
-                Optional.ToNullable(etag),
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(customerId),
-                sku.Value,
-                Optional.ToNullable(retentionInDays),
-                workspaceCapping.Value,
-                Optional.ToNullable(createdDate),
-                Optional.ToNullable(modifiedDate),
-                Optional.ToNullable(publicNetworkAccessForIngestion),
-                Optional.ToNullable(publicNetworkAccessForQuery),
-                Optional.ToNullable(forceCmkForQuery),
+                etag,
+                provisioningState,
+                customerId,
+                sku,
+                retentionInDays,
+                workspaceCapping,
+                createdDate,
+                modifiedDate,
+                publicNetworkAccessForIngestion,
+                publicNetworkAccessForQuery,
+                forceCmkForQuery,
                 privateLinkScopedResources ?? new ChangeTrackingList<OperationalInsightsPrivateLinkScopedResourceInfo>(),
-                features.Value,
-                defaultDataCollectionRuleResourceId.Value,
+                features,
+                defaultDataCollectionRuleResourceId,
                 serializedAdditionalRawData);
         }
 

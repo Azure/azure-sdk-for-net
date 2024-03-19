@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppPlatform;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             writer.WriteStartObject();
             writer.WritePropertyName("resourceId"u8);
             writer.WriteStringValue(ResourceId);
-            if (LoadTrustStore.HasValue)
+            if (Optional.IsDefined(LoadTrustStore))
             {
                 writer.WritePropertyName("loadTrustStore"u8);
                 writer.WriteBooleanValue(LoadTrustStore.Value);
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 return null;
             }
             ResourceIdentifier resourceId = default;
-            Optional<bool> loadTrustStore = default;
+            bool? loadTrustStore = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppLoadedCertificate(resourceId, Optional.ToNullable(loadTrustStore), serializedAdditionalRawData);
+            return new AppLoadedCertificate(resourceId, loadTrustStore, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppLoadedCertificate>.Write(ModelReaderWriterOptions options)

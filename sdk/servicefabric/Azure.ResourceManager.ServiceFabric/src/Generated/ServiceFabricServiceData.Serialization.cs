@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.ServiceFabric
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -62,19 +62,19 @@ namespace Azure.ResourceManager.ServiceFabric
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PlacementConstraints != null)
+            if (Optional.IsDefined(PlacementConstraints))
             {
                 writer.WritePropertyName("placementConstraints"u8);
                 writer.WriteStringValue(PlacementConstraints);
             }
-            if (!(CorrelationScheme is ChangeTrackingList<ServiceCorrelationDescription> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(CorrelationScheme))
             {
                 writer.WritePropertyName("correlationScheme"u8);
                 writer.WriteStartArray();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 }
                 writer.WriteEndArray();
             }
-            if (!(ServiceLoadMetrics is ChangeTrackingList<ServiceLoadMetricDescription> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(ServiceLoadMetrics))
             {
                 writer.WritePropertyName("serviceLoadMetrics"u8);
                 writer.WriteStartArray();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 }
                 writer.WriteEndArray();
             }
-            if (!(ServicePlacementPolicies is ChangeTrackingList<ServicePlacementPolicyDescription> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(ServicePlacementPolicies))
             {
                 writer.WritePropertyName("servicePlacementPolicies"u8);
                 writer.WriteStartArray();
@@ -104,37 +104,37 @@ namespace Azure.ResourceManager.ServiceFabric
                 }
                 writer.WriteEndArray();
             }
-            if (DefaultMoveCost.HasValue)
+            if (Optional.IsDefined(DefaultMoveCost))
             {
                 writer.WritePropertyName("defaultMoveCost"u8);
                 writer.WriteStringValue(DefaultMoveCost.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (ServiceKind.HasValue)
+            if (Optional.IsDefined(ServiceKind))
             {
                 writer.WritePropertyName("serviceKind"u8);
                 writer.WriteStringValue(ServiceKind.Value.ToString());
             }
-            if (ServiceTypeName != null)
+            if (Optional.IsDefined(ServiceTypeName))
             {
                 writer.WritePropertyName("serviceTypeName"u8);
                 writer.WriteStringValue(ServiceTypeName);
             }
-            if (PartitionDescription != null)
+            if (Optional.IsDefined(PartitionDescription))
             {
                 writer.WritePropertyName("partitionDescription"u8);
                 writer.WriteObjectValue(PartitionDescription);
             }
-            if (ServicePackageActivationMode.HasValue)
+            if (Optional.IsDefined(ServicePackageActivationMode))
             {
                 writer.WritePropertyName("servicePackageActivationMode"u8);
                 writer.WriteStringValue(ServicePackageActivationMode.Value.ToString());
             }
-            if (ServiceDnsName != null)
+            if (Optional.IsDefined(ServiceDnsName))
             {
                 writer.WritePropertyName("serviceDnsName"u8);
                 writer.WriteStringValue(ServiceDnsName);
@@ -178,24 +178,24 @@ namespace Azure.ResourceManager.ServiceFabric
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> placementConstraints = default;
+            SystemData systemData = default;
+            string placementConstraints = default;
             IList<ServiceCorrelationDescription> correlationScheme = default;
             IList<ServiceLoadMetricDescription> serviceLoadMetrics = default;
             IList<ServicePlacementPolicyDescription> servicePlacementPolicies = default;
-            Optional<ApplicationMoveCost> defaultMoveCost = default;
-            Optional<string> provisioningState = default;
-            Optional<ApplicationServiceKind> serviceKind = default;
-            Optional<string> serviceTypeName = default;
-            Optional<PartitionSchemeDescription> partitionDescription = default;
-            Optional<ArmServicePackageActivationMode> servicePackageActivationMode = default;
-            Optional<string> serviceDnsName = default;
+            ApplicationMoveCost? defaultMoveCost = default;
+            string provisioningState = default;
+            ApplicationServiceKind? serviceKind = default;
+            string serviceTypeName = default;
+            PartitionSchemeDescription partitionDescription = default;
+            ArmServicePackageActivationMode? servicePackageActivationMode = default;
+            string serviceDnsName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -372,21 +372,21 @@ namespace Azure.ResourceManager.ServiceFabric
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                placementConstraints.Value,
+                placementConstraints,
                 correlationScheme ?? new ChangeTrackingList<ServiceCorrelationDescription>(),
                 serviceLoadMetrics ?? new ChangeTrackingList<ServiceLoadMetricDescription>(),
                 servicePlacementPolicies ?? new ChangeTrackingList<ServicePlacementPolicyDescription>(),
-                Optional.ToNullable(defaultMoveCost),
-                provisioningState.Value,
-                Optional.ToNullable(serviceKind),
-                serviceTypeName.Value,
-                partitionDescription.Value,
-                Optional.ToNullable(servicePackageActivationMode),
-                serviceDnsName.Value,
-                Optional.ToNullable(etag),
+                defaultMoveCost,
+                provisioningState,
+                serviceKind,
+                serviceTypeName,
+                partitionDescription,
+                servicePackageActivationMode,
+                serviceDnsName,
+                etag,
                 serializedAdditionalRawData);
         }
 

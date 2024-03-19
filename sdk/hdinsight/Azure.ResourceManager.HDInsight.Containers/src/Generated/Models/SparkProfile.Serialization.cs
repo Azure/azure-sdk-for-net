@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
 
             writer.WriteStartObject();
-            if (DefaultStorageUriString != null)
+            if (Optional.IsDefined(DefaultStorageUriString))
             {
                 writer.WritePropertyName("defaultStorageUrl"u8);
                 writer.WriteStringValue(DefaultStorageUriString);
             }
-            if (MetastoreSpec != null)
+            if (Optional.IsDefined(MetastoreSpec))
             {
                 writer.WritePropertyName("metastoreSpec"u8);
                 writer.WriteObjectValue(MetastoreSpec);
             }
-            if (UserPluginsSpec != null)
+            if (Optional.IsDefined(UserPluginsSpec))
             {
                 writer.WritePropertyName("userPluginsSpec"u8);
                 writer.WriteObjectValue(UserPluginsSpec);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
-            Optional<string> defaultStorageUrl = default;
-            Optional<SparkMetastoreSpec> metastoreSpec = default;
-            Optional<SparkUserPluginListResult> userPluginsSpec = default;
+            string defaultStorageUrl = default;
+            SparkMetastoreSpec metastoreSpec = default;
+            SparkUserPluginListResult userPluginsSpec = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SparkProfile(defaultStorageUrl.Value, metastoreSpec.Value, userPluginsSpec.Value, serializedAdditionalRawData);
+            return new SparkProfile(defaultStorageUrl, metastoreSpec, userPluginsSpec, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SparkProfile>.Write(ModelReaderWriterOptions options)

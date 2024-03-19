@@ -43,29 +43,29 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ImagePath != null)
+            if (Optional.IsDefined(ImagePath))
             {
                 writer.WritePropertyName("imagePath"u8);
                 writer.WriteStringValue(ImagePath);
             }
-            if (PackageName != null)
+            if (Optional.IsDefined(PackageName))
             {
                 writer.WritePropertyName("packageName"u8);
                 writer.WriteStringValue(PackageName);
             }
-            if (PackageFamilyName != null)
+            if (Optional.IsDefined(PackageFamilyName))
             {
                 writer.WritePropertyName("packageFamilyName"u8);
                 writer.WriteStringValue(PackageFamilyName);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 if (DisplayName != null)
                 {
@@ -77,22 +77,22 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     writer.WriteNull("displayName");
                 }
             }
-            if (PackageRelativePath != null)
+            if (Optional.IsDefined(PackageRelativePath))
             {
                 writer.WritePropertyName("packageRelativePath"u8);
                 writer.WriteStringValue(PackageRelativePath);
             }
-            if (IsRegularRegistration.HasValue)
+            if (Optional.IsDefined(IsRegularRegistration))
             {
                 writer.WritePropertyName("isRegularRegistration"u8);
                 writer.WriteBooleanValue(IsRegularRegistration.Value);
             }
-            if (IsActive.HasValue)
+            if (Optional.IsDefined(IsActive))
             {
                 writer.WritePropertyName("isActive"u8);
                 writer.WriteBooleanValue(IsActive.Value);
             }
-            if (!(PackageDependencies is ChangeTrackingList<MsixPackageDependencies> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PackageDependencies))
             {
                 writer.WritePropertyName("packageDependencies"u8);
                 writer.WriteStartArray();
@@ -102,17 +102,17 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 }
                 writer.WriteEndArray();
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (LastUpdatedOn.HasValue)
+            if (Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdated"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (!(PackageApplications is ChangeTrackingList<MsixPackageApplications> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(PackageApplications))
             {
                 writer.WritePropertyName("packageApplications"u8);
                 writer.WriteStartArray();
@@ -164,17 +164,17 @@ namespace Azure.ResourceManager.DesktopVirtualization
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> imagePath = default;
-            Optional<string> packageName = default;
-            Optional<string> packageFamilyName = default;
-            Optional<string> displayName = default;
-            Optional<string> packageRelativePath = default;
-            Optional<bool> isRegularRegistration = default;
-            Optional<bool> isActive = default;
+            SystemData systemData = default;
+            string imagePath = default;
+            string packageName = default;
+            string packageFamilyName = default;
+            string displayName = default;
+            string packageRelativePath = default;
+            bool? isRegularRegistration = default;
+            bool? isActive = default;
             IList<MsixPackageDependencies> packageDependencies = default;
-            Optional<string> version = default;
-            Optional<DateTimeOffset> lastUpdated = default;
+            string version = default;
+            DateTimeOffset? lastUpdated = default;
             IList<MsixPackageApplications> packageApplications = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -316,17 +316,17 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 id,
                 name,
                 type,
-                systemData.Value,
-                imagePath.Value,
-                packageName.Value,
-                packageFamilyName.Value,
-                displayName.Value,
-                packageRelativePath.Value,
-                Optional.ToNullable(isRegularRegistration),
-                Optional.ToNullable(isActive),
+                systemData,
+                imagePath,
+                packageName,
+                packageFamilyName,
+                displayName,
+                packageRelativePath,
+                isRegularRegistration,
+                isActive,
                 packageDependencies ?? new ChangeTrackingList<MsixPackageDependencies>(),
-                version.Value,
-                Optional.ToNullable(lastUpdated),
+                version,
+                lastUpdated,
                 packageApplications ?? new ChangeTrackingList<MsixPackageApplications>(),
                 serializedAdditionalRawData);
         }

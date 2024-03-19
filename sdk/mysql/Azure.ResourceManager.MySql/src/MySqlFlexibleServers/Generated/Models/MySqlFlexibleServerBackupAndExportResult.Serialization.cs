@@ -12,6 +12,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.MySql;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
@@ -28,27 +29,27 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (EndOn.HasValue)
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (PercentComplete.HasValue)
+            if (Optional.IsDefined(PercentComplete))
             {
                 writer.WritePropertyName("percentComplete"u8);
                 writer.WriteNumberValue(PercentComplete.Value);
             }
-            if (Error != null)
+            if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, Error);
@@ -68,24 +69,24 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DatasourceSizeInBytes.HasValue)
+            if (Optional.IsDefined(DatasourceSizeInBytes))
             {
                 writer.WritePropertyName("datasourceSizeInBytes"u8);
                 writer.WriteNumberValue(DatasourceSizeInBytes.Value);
             }
-            if (DataTransferredInBytes.HasValue)
+            if (Optional.IsDefined(DataTransferredInBytes))
             {
                 writer.WritePropertyName("dataTransferredInBytes"u8);
                 writer.WriteNumberValue(DataTransferredInBytes.Value);
             }
-            if (BackupMetadata != null)
+            if (Optional.IsDefined(BackupMetadata))
             {
                 writer.WritePropertyName("backupMetadata"u8);
                 writer.WriteStringValue(BackupMetadata);
@@ -129,18 +130,18 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<MySqlFlexibleServerBackupAndExportOperationStatus> status = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<double> percentComplete = default;
-            Optional<ResponseError> error = default;
+            MySqlFlexibleServerBackupAndExportOperationStatus? status = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            double? percentComplete = default;
+            ResponseError error = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<long> datasourceSizeInBytes = default;
-            Optional<long> dataTransferredInBytes = default;
-            Optional<string> backupMetadata = default;
+            SystemData systemData = default;
+            long? datasourceSizeInBytes = default;
+            long? dataTransferredInBytes = default;
+            string backupMetadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -259,15 +260,15 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(status),
-                Optional.ToNullable(startTime),
-                Optional.ToNullable(endTime),
-                Optional.ToNullable(percentComplete),
-                Optional.ToNullable(datasourceSizeInBytes),
-                Optional.ToNullable(dataTransferredInBytes),
-                backupMetadata.Value,
-                error.Value,
+                systemData,
+                status,
+                startTime,
+                endTime,
+                percentComplete,
+                datasourceSizeInBytes,
+                dataTransferredInBytes,
+                backupMetadata,
+                error,
                 serializedAdditionalRawData);
         }
 

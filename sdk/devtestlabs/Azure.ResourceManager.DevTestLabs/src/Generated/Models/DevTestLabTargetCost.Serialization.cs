@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Target.HasValue)
+            if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteNumberValue(Target.Value);
             }
-            if (!(CostThresholds is ChangeTrackingList<DevTestLabCostThreshold> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CostThresholds))
             {
                 writer.WritePropertyName("costThresholds"u8);
                 writer.WriteStartArray();
@@ -46,17 +47,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
                 writer.WriteEndArray();
             }
-            if (CycleStartOn.HasValue)
+            if (Optional.IsDefined(CycleStartOn))
             {
                 writer.WritePropertyName("cycleStartDateTime"u8);
                 writer.WriteStringValue(CycleStartOn.Value, "O");
             }
-            if (CycleEndOn.HasValue)
+            if (Optional.IsDefined(CycleEndOn))
             {
                 writer.WritePropertyName("cycleEndDateTime"u8);
                 writer.WriteStringValue(CycleEndOn.Value, "O");
             }
-            if (CycleType.HasValue)
+            if (Optional.IsDefined(CycleType))
             {
                 writer.WritePropertyName("cycleType"u8);
                 writer.WriteStringValue(CycleType.Value.ToString());
@@ -99,12 +100,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<DevTestLabTargetCostStatus> status = default;
-            Optional<int> target = default;
+            DevTestLabTargetCostStatus? status = default;
+            int? target = default;
             IList<DevTestLabCostThreshold> costThresholds = default;
-            Optional<DateTimeOffset> cycleStartDateTime = default;
-            Optional<DateTimeOffset> cycleEndDateTime = default;
-            Optional<DevTestLabReportingCycleType> cycleType = default;
+            DateTimeOffset? cycleStartDateTime = default;
+            DateTimeOffset? cycleEndDateTime = default;
+            DevTestLabReportingCycleType? cycleType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -175,12 +176,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DevTestLabTargetCost(
-                Optional.ToNullable(status),
-                Optional.ToNullable(target),
+                status,
+                target,
                 costThresholds ?? new ChangeTrackingList<DevTestLabCostThreshold>(),
-                Optional.ToNullable(cycleStartDateTime),
-                Optional.ToNullable(cycleEndDateTime),
-                Optional.ToNullable(cycleType),
+                cycleStartDateTime,
+                cycleEndDateTime,
+                cycleType,
                 serializedAdditionalRawData);
         }
 

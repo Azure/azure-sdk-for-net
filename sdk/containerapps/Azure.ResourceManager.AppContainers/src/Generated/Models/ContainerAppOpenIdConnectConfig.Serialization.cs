@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (AuthorizationEndpoint != null)
+            if (Optional.IsDefined(AuthorizationEndpoint))
             {
                 writer.WritePropertyName("authorizationEndpoint"u8);
                 writer.WriteStringValue(AuthorizationEndpoint);
             }
-            if (TokenEndpoint != null)
+            if (Optional.IsDefined(TokenEndpoint))
             {
                 writer.WritePropertyName("tokenEndpoint"u8);
                 writer.WriteStringValue(TokenEndpoint);
             }
-            if (Issuer != null)
+            if (Optional.IsDefined(Issuer))
             {
                 writer.WritePropertyName("issuer"u8);
                 writer.WriteStringValue(Issuer);
             }
-            if (CertificationUri != null)
+            if (Optional.IsDefined(CertificationUri))
             {
                 writer.WritePropertyName("certificationUri"u8);
                 writer.WriteStringValue(CertificationUri.AbsoluteUri);
             }
-            if (WellKnownOpenIdConfiguration != null)
+            if (Optional.IsDefined(WellKnownOpenIdConfiguration))
             {
                 writer.WritePropertyName("wellKnownOpenIdConfiguration"u8);
                 writer.WriteStringValue(WellKnownOpenIdConfiguration);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> authorizationEndpoint = default;
-            Optional<string> tokenEndpoint = default;
-            Optional<string> issuer = default;
-            Optional<Uri> certificationUri = default;
-            Optional<string> wellKnownOpenIdConfiguration = default;
+            string authorizationEndpoint = default;
+            string tokenEndpoint = default;
+            string issuer = default;
+            Uri certificationUri = default;
+            string wellKnownOpenIdConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,11 +135,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ContainerAppOpenIdConnectConfig(
-                authorizationEndpoint.Value,
-                tokenEndpoint.Value,
-                issuer.Value,
-                certificationUri.Value,
-                wellKnownOpenIdConfiguration.Value,
+                authorizationEndpoint,
+                tokenEndpoint,
+                issuer,
+                certificationUri,
+                wellKnownOpenIdConfiguration,
                 serializedAdditionalRawData);
         }
 

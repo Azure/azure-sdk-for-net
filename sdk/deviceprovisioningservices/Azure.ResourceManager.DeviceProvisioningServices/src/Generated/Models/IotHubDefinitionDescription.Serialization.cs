@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DeviceProvisioningServices;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             }
 
             writer.WriteStartObject();
-            if (ApplyAllocationPolicy.HasValue)
+            if (Optional.IsDefined(ApplyAllocationPolicy))
             {
                 writer.WritePropertyName("applyAllocationPolicy"u8);
                 writer.WriteBooleanValue(ApplyAllocationPolicy.Value);
             }
-            if (AllocationWeight.HasValue)
+            if (Optional.IsDefined(AllocationWeight))
             {
                 writer.WritePropertyName("allocationWeight"u8);
                 writer.WriteNumberValue(AllocationWeight.Value);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -83,9 +84,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             {
                 return null;
             }
-            Optional<bool> applyAllocationPolicy = default;
-            Optional<int> allocationWeight = default;
-            Optional<string> name = default;
+            bool? applyAllocationPolicy = default;
+            int? allocationWeight = default;
+            string name = default;
             string connectionString = default;
             AzureLocation location = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -132,9 +133,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new IotHubDefinitionDescription(
-                Optional.ToNullable(applyAllocationPolicy),
-                Optional.ToNullable(allocationWeight),
-                name.Value,
+                applyAllocationPolicy,
+                allocationWeight,
+                name,
                 connectionString,
                 location,
                 serializedAdditionalRawData);

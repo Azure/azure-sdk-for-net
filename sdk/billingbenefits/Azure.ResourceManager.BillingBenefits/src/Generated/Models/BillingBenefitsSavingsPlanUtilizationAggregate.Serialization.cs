@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.BillingBenefits;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Grain.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Grain))
             {
                 writer.WritePropertyName("grain"u8);
                 writer.WriteNumberValue(Grain.Value);
             }
-            if (options.Format != "W" && GrainUnit != null)
+            if (options.Format != "W" && Optional.IsDefined(GrainUnit))
             {
                 writer.WritePropertyName("grainUnit"u8);
                 writer.WriteStringValue(GrainUnit);
             }
-            if (options.Format != "W" && Value.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteNumberValue(Value.Value);
             }
-            if (options.Format != "W" && ValueUnit != null)
+            if (options.Format != "W" && Optional.IsDefined(ValueUnit))
             {
                 writer.WritePropertyName("valueUnit"u8);
                 writer.WriteStringValue(ValueUnit);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             {
                 return null;
             }
-            Optional<float> grain = default;
-            Optional<string> grainUnit = default;
-            Optional<float> value = default;
-            Optional<string> valueUnit = default;
+            float? grain = default;
+            string grainUnit = default;
+            float? value = default;
+            string valueUnit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BillingBenefitsSavingsPlanUtilizationAggregate(Optional.ToNullable(grain), grainUnit.Value, Optional.ToNullable(value), valueUnit.Value, serializedAdditionalRawData);
+            return new BillingBenefitsSavingsPlanUtilizationAggregate(grain, grainUnit, value, valueUnit, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BillingBenefitsSavingsPlanUtilizationAggregate>.Write(ModelReaderWriterOptions options)

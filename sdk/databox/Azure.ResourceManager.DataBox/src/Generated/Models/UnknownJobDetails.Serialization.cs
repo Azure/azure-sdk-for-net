@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(JobStages is ChangeTrackingList<DataBoxJobStage> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(JobStages))
             {
                 writer.WritePropertyName("jobStages"u8);
                 writer.WriteStartArray();
@@ -38,22 +39,22 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             writer.WritePropertyName("contactDetails"u8);
             writer.WriteObjectValue(ContactDetails);
-            if (ShippingAddress != null)
+            if (Optional.IsDefined(ShippingAddress))
             {
                 writer.WritePropertyName("shippingAddress"u8);
                 writer.WriteObjectValue(ShippingAddress);
             }
-            if (options.Format != "W" && DeliveryPackage != null)
+            if (options.Format != "W" && Optional.IsDefined(DeliveryPackage))
             {
                 writer.WritePropertyName("deliveryPackage"u8);
                 writer.WriteObjectValue(DeliveryPackage);
             }
-            if (options.Format != "W" && ReturnPackage != null)
+            if (options.Format != "W" && Optional.IsDefined(ReturnPackage))
             {
                 writer.WritePropertyName("returnPackage"u8);
                 writer.WriteObjectValue(ReturnPackage);
             }
-            if (!(DataImportDetails is ChangeTrackingList<DataImportDetails> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(DataImportDetails))
             {
                 writer.WritePropertyName("dataImportDetails"u8);
                 writer.WriteStartArray();
@@ -63,7 +64,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(DataExportDetails is ChangeTrackingList<DataExportDetails> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(DataExportDetails))
             {
                 writer.WritePropertyName("dataExportDetails"u8);
                 writer.WriteStartArray();
@@ -75,17 +76,17 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             writer.WritePropertyName("jobDetailsType"u8);
             writer.WriteStringValue(JobDetailsType.ToSerialString());
-            if (Preferences != null)
+            if (Optional.IsDefined(Preferences))
             {
                 writer.WritePropertyName("preferences"u8);
                 writer.WriteObjectValue(Preferences);
             }
-            if (ReverseShippingDetails != null)
+            if (Optional.IsDefined(ReverseShippingDetails))
             {
                 writer.WritePropertyName("reverseShippingDetails"u8);
                 writer.WriteObjectValue(ReverseShippingDetails);
             }
-            if (options.Format != "W" && !(CopyLogDetails is ChangeTrackingList<CopyLogDetails> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(CopyLogDetails))
             {
                 writer.WritePropertyName("copyLogDetails"u8);
                 writer.WriteStartArray();
@@ -95,32 +96,32 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ReverseShipmentLabelSasKey != null)
+            if (options.Format != "W" && Optional.IsDefined(ReverseShipmentLabelSasKey))
             {
                 writer.WritePropertyName("reverseShipmentLabelSasKey"u8);
                 writer.WriteStringValue(ReverseShipmentLabelSasKey);
             }
-            if (options.Format != "W" && ChainOfCustodySasKey != null)
+            if (options.Format != "W" && Optional.IsDefined(ChainOfCustodySasKey))
             {
                 writer.WritePropertyName("chainOfCustodySasKey"u8);
                 writer.WriteStringValue(ChainOfCustodySasKey);
             }
-            if (options.Format != "W" && DeviceErasureDetails != null)
+            if (options.Format != "W" && Optional.IsDefined(DeviceErasureDetails))
             {
                 writer.WritePropertyName("deviceErasureDetails"u8);
                 writer.WriteObjectValue(DeviceErasureDetails);
             }
-            if (KeyEncryptionKey != null)
+            if (Optional.IsDefined(KeyEncryptionKey))
             {
                 writer.WritePropertyName("keyEncryptionKey"u8);
                 writer.WriteObjectValue(KeyEncryptionKey);
             }
-            if (ExpectedDataSizeInTerabytes.HasValue)
+            if (Optional.IsDefined(ExpectedDataSizeInTerabytes))
             {
                 writer.WritePropertyName("expectedDataSizeInTeraBytes"u8);
                 writer.WriteNumberValue(ExpectedDataSizeInTerabytes.Value);
             }
-            if (options.Format != "W" && !(Actions is ChangeTrackingList<CustomerResolutionCode> collection3 && collection3.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Actions))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
@@ -130,17 +131,17 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && LastMitigationActionOnJob != null)
+            if (options.Format != "W" && Optional.IsDefined(LastMitigationActionOnJob))
             {
                 writer.WritePropertyName("lastMitigationActionOnJob"u8);
                 writer.WriteObjectValue(LastMitigationActionOnJob);
             }
-            if (options.Format != "W" && DataCenterAddress != null)
+            if (options.Format != "W" && Optional.IsDefined(DataCenterAddress))
             {
                 writer.WritePropertyName("datacenterAddress"u8);
                 writer.WriteObjectValue(DataCenterAddress);
             }
-            if (options.Format != "W" && DataCenterCode.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DataCenterCode))
             {
                 writer.WritePropertyName("dataCenterCode"u8);
                 writer.WriteStringValue(DataCenterCode.Value.ToString());
@@ -185,24 +186,24 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             IReadOnlyList<DataBoxJobStage> jobStages = default;
             DataBoxContactDetails contactDetails = default;
-            Optional<DataBoxShippingAddress> shippingAddress = default;
-            Optional<PackageShippingDetails> deliveryPackage = default;
-            Optional<PackageShippingDetails> returnPackage = default;
+            DataBoxShippingAddress shippingAddress = default;
+            PackageShippingDetails deliveryPackage = default;
+            PackageShippingDetails returnPackage = default;
             IList<DataImportDetails> dataImportDetails = default;
             IList<DataExportDetails> dataExportDetails = default;
             DataBoxOrderType jobDetailsType = default;
-            Optional<DataBoxOrderPreferences> preferences = default;
-            Optional<ReverseShippingDetails> reverseShippingDetails = default;
+            DataBoxOrderPreferences preferences = default;
+            ReverseShippingDetails reverseShippingDetails = default;
             IReadOnlyList<CopyLogDetails> copyLogDetails = default;
-            Optional<string> reverseShipmentLabelSasKey = default;
-            Optional<string> chainOfCustodySasKey = default;
-            Optional<DeviceErasureDetails> deviceErasureDetails = default;
-            Optional<DataBoxKeyEncryptionKey> keyEncryptionKey = default;
-            Optional<int> expectedDataSizeInTerabytes = default;
+            string reverseShipmentLabelSasKey = default;
+            string chainOfCustodySasKey = default;
+            DeviceErasureDetails deviceErasureDetails = default;
+            DataBoxKeyEncryptionKey keyEncryptionKey = default;
+            int? expectedDataSizeInTerabytes = default;
             IReadOnlyList<CustomerResolutionCode> actions = default;
-            Optional<LastMitigationActionOnJob> lastMitigationActionOnJob = default;
-            Optional<DataCenterAddressResult> dataCenterAddress = default;
-            Optional<DataCenterCode> dataCenterCode = default;
+            LastMitigationActionOnJob lastMitigationActionOnJob = default;
+            DataCenterAddressResult dataCenterAddress = default;
+            DataCenterCode? dataCenterCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -405,24 +406,24 @@ namespace Azure.ResourceManager.DataBox.Models
             return new UnknownJobDetails(
                 jobStages ?? new ChangeTrackingList<DataBoxJobStage>(),
                 contactDetails,
-                shippingAddress.Value,
-                deliveryPackage.Value,
-                returnPackage.Value,
+                shippingAddress,
+                deliveryPackage,
+                returnPackage,
                 dataImportDetails ?? new ChangeTrackingList<DataImportDetails>(),
                 dataExportDetails ?? new ChangeTrackingList<DataExportDetails>(),
                 jobDetailsType,
-                preferences.Value,
-                reverseShippingDetails.Value,
+                preferences,
+                reverseShippingDetails,
                 copyLogDetails ?? new ChangeTrackingList<CopyLogDetails>(),
-                reverseShipmentLabelSasKey.Value,
-                chainOfCustodySasKey.Value,
-                deviceErasureDetails.Value,
-                keyEncryptionKey.Value,
-                Optional.ToNullable(expectedDataSizeInTerabytes),
+                reverseShipmentLabelSasKey,
+                chainOfCustodySasKey,
+                deviceErasureDetails,
+                keyEncryptionKey,
+                expectedDataSizeInTerabytes,
                 actions ?? new ChangeTrackingList<CustomerResolutionCode>(),
-                lastMitigationActionOnJob.Value,
-                dataCenterAddress.Value,
-                Optional.ToNullable(dataCenterCode),
+                lastMitigationActionOnJob,
+                dataCenterAddress,
+                dataCenterCode,
                 serializedAdditionalRawData);
         }
 

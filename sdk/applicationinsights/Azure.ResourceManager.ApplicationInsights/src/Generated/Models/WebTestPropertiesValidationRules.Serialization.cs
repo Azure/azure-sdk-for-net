@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (ContentValidation != null)
+            if (Optional.IsDefined(ContentValidation))
             {
                 writer.WritePropertyName("ContentValidation"u8);
                 writer.WriteObjectValue(ContentValidation);
             }
-            if (CheckSsl.HasValue)
+            if (Optional.IsDefined(CheckSsl))
             {
                 writer.WritePropertyName("SSLCheck"u8);
                 writer.WriteBooleanValue(CheckSsl.Value);
             }
-            if (SSLCertRemainingLifetimeCheck.HasValue)
+            if (Optional.IsDefined(SSLCertRemainingLifetimeCheck))
             {
                 writer.WritePropertyName("SSLCertRemainingLifetimeCheck"u8);
                 writer.WriteNumberValue(SSLCertRemainingLifetimeCheck.Value);
             }
-            if (ExpectedHttpStatusCode.HasValue)
+            if (Optional.IsDefined(ExpectedHttpStatusCode))
             {
                 writer.WritePropertyName("ExpectedHttpStatusCode"u8);
                 writer.WriteNumberValue(ExpectedHttpStatusCode.Value);
             }
-            if (IgnoreHttpStatusCode.HasValue)
+            if (Optional.IsDefined(IgnoreHttpStatusCode))
             {
                 writer.WritePropertyName("IgnoreHttpStatusCode"u8);
                 writer.WriteBooleanValue(IgnoreHttpStatusCode.Value);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<WebTestPropertiesValidationRulesContentValidation> contentValidation = default;
-            Optional<bool> sslCheck = default;
-            Optional<int> sslCertRemainingLifetimeCheck = default;
-            Optional<int> expectedHttpStatusCode = default;
-            Optional<bool> ignoreHttpStatusCode = default;
+            WebTestPropertiesValidationRulesContentValidation contentValidation = default;
+            bool? sslCheck = default;
+            int? sslCertRemainingLifetimeCheck = default;
+            int? expectedHttpStatusCode = default;
+            bool? ignoreHttpStatusCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,11 +151,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new WebTestPropertiesValidationRules(
-                contentValidation.Value,
-                Optional.ToNullable(sslCheck),
-                Optional.ToNullable(sslCertRemainingLifetimeCheck),
-                Optional.ToNullable(expectedHttpStatusCode),
-                Optional.ToNullable(ignoreHttpStatusCode),
+                contentValidation,
+                sslCheck,
+                sslCertRemainingLifetimeCheck,
+                expectedHttpStatusCode,
+                ignoreHttpStatusCode,
                 serializedAdditionalRawData);
         }
 

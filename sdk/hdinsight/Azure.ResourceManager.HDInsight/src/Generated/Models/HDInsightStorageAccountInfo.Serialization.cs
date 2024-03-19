@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (IsDefault.HasValue)
+            if (Optional.IsDefined(IsDefault))
             {
                 writer.WritePropertyName("isDefault"u8);
                 writer.WriteBooleanValue(IsDefault.Value);
             }
-            if (Container != null)
+            if (Optional.IsDefined(Container))
             {
                 writer.WritePropertyName("container"u8);
                 writer.WriteStringValue(Container);
             }
-            if (FileSystem != null)
+            if (Optional.IsDefined(FileSystem))
             {
                 writer.WritePropertyName("fileSystem"u8);
                 writer.WriteStringValue(FileSystem);
             }
-            if (Key != null)
+            if (Optional.IsDefined(Key))
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
             }
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 if (ResourceId != null)
                 {
@@ -63,7 +64,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     writer.WriteNull("resourceId");
                 }
             }
-            if (MsiResourceId != null)
+            if (Optional.IsDefined(MsiResourceId))
             {
                 if (MsiResourceId != null)
                 {
@@ -75,17 +76,17 @@ namespace Azure.ResourceManager.HDInsight.Models
                     writer.WriteNull("msiResourceId");
                 }
             }
-            if (SasKey != null)
+            if (Optional.IsDefined(SasKey))
             {
                 writer.WritePropertyName("saskey"u8);
                 writer.WriteStringValue(SasKey);
             }
-            if (Fileshare != null)
+            if (Optional.IsDefined(Fileshare))
             {
                 writer.WritePropertyName("fileshare"u8);
                 writer.WriteStringValue(Fileshare);
             }
-            if (EnableSecureChannel.HasValue)
+            if (Optional.IsDefined(EnableSecureChannel))
             {
                 writer.WritePropertyName("enableSecureChannel"u8);
                 writer.WriteBooleanValue(EnableSecureChannel.Value);
@@ -128,16 +129,16 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<bool> isDefault = default;
-            Optional<string> container = default;
-            Optional<string> fileSystem = default;
-            Optional<string> key = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<ResourceIdentifier> msiResourceId = default;
-            Optional<string> saskey = default;
-            Optional<string> fileshare = default;
-            Optional<bool> enableSecureChannel = default;
+            string name = default;
+            bool? isDefault = default;
+            string container = default;
+            string fileSystem = default;
+            string key = default;
+            ResourceIdentifier resourceId = default;
+            ResourceIdentifier msiResourceId = default;
+            string saskey = default;
+            string fileshare = default;
+            bool? enableSecureChannel = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -217,16 +218,16 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new HDInsightStorageAccountInfo(
-                name.Value,
-                Optional.ToNullable(isDefault),
-                container.Value,
-                fileSystem.Value,
-                key.Value,
-                resourceId.Value,
-                msiResourceId.Value,
-                saskey.Value,
-                fileshare.Value,
-                Optional.ToNullable(enableSecureChannel),
+                name,
+                isDefault,
+                container,
+                fileSystem,
+                key,
+                resourceId,
+                msiResourceId,
+                saskey,
+                fileshare,
+                enableSecureChannel,
                 serializedAdditionalRawData);
         }
 

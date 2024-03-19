@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StreamAnalytics;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStringValue(StreamInputDataSourceType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Payload != null)
+            if (Optional.IsDefined(Payload))
             {
                 writer.WritePropertyName("payload"u8);
 #if NET6_0_OR_GREATER
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
 #endif
             }
-            if (PayloadUri != null)
+            if (Optional.IsDefined(PayloadUri))
             {
                 writer.WritePropertyName("payloadUri"u8);
                 writer.WriteStringValue(PayloadUri.AbsoluteUri);
@@ -87,8 +88,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string type = default;
-            Optional<BinaryData> payload = default;
-            Optional<Uri> payloadUri = default;
+            BinaryData payload = default;
+            Uri payloadUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RawStreamInputDataSource(type, serializedAdditionalRawData, payload.Value, payloadUri.Value);
+            return new RawStreamInputDataSource(type, serializedAdditionalRawData, payload, payloadUri);
         }
 
         BinaryData IPersistableModel<RawStreamInputDataSource>.Write(ModelReaderWriterOptions options)

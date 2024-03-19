@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,27 +40,27 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AggregatorOrSingleRackDefinition != null)
+            if (Optional.IsDefined(AggregatorOrSingleRackDefinition))
             {
                 writer.WritePropertyName("aggregatorOrSingleRackDefinition"u8);
                 writer.WriteObjectValue(AggregatorOrSingleRackDefinition);
             }
-            if (ClusterLocation != null)
+            if (Optional.IsDefined(ClusterLocation))
             {
                 writer.WritePropertyName("clusterLocation"u8);
                 writer.WriteStringValue(ClusterLocation);
             }
-            if (ClusterServicePrincipal != null)
+            if (Optional.IsDefined(ClusterServicePrincipal))
             {
                 writer.WritePropertyName("clusterServicePrincipal"u8);
                 writer.WriteObjectValue(ClusterServicePrincipal);
             }
-            if (ComputeDeploymentThreshold != null)
+            if (Optional.IsDefined(ComputeDeploymentThreshold))
             {
                 writer.WritePropertyName("computeDeploymentThreshold"u8);
                 writer.WriteObjectValue(ComputeDeploymentThreshold);
             }
-            if (!(ComputeRackDefinitions is ChangeTrackingList<NetworkCloudRackDefinition> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ComputeRackDefinitions))
             {
                 writer.WritePropertyName("computeRackDefinitions"u8);
                 writer.WriteStartArray();
@@ -109,10 +110,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<NetworkCloudRackDefinition> aggregatorOrSingleRackDefinition = default;
-            Optional<string> clusterLocation = default;
-            Optional<ServicePrincipalInformation> clusterServicePrincipal = default;
-            Optional<ValidationThreshold> computeDeploymentThreshold = default;
+            NetworkCloudRackDefinition aggregatorOrSingleRackDefinition = default;
+            string clusterLocation = default;
+            ServicePrincipalInformation clusterServicePrincipal = default;
+            ValidationThreshold computeDeploymentThreshold = default;
             IList<NetworkCloudRackDefinition> computeRackDefinitions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -198,10 +199,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new NetworkCloudClusterPatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                aggregatorOrSingleRackDefinition.Value,
-                clusterLocation.Value,
-                clusterServicePrincipal.Value,
-                computeDeploymentThreshold.Value,
+                aggregatorOrSingleRackDefinition,
+                clusterLocation,
+                clusterServicePrincipal,
+                computeDeploymentThreshold,
                 computeRackDefinitions ?? new ChangeTrackingList<NetworkCloudRackDefinition>(),
                 serializedAdditionalRawData);
         }

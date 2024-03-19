@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (ContainerName != null)
+            if (Optional.IsDefined(ContainerName))
             {
                 writer.WritePropertyName("containerName"u8);
                 writer.WriteStringValue(ContainerName);
             }
-            if (UploadedOn.HasValue)
+            if (Optional.IsDefined(UploadedOn))
             {
                 writer.WritePropertyName("uploadedTimestamp"u8);
                 writer.WriteStringValue(UploadedOn.Value, "O");
             }
-            if (LibraryInfoType != null)
+            if (Optional.IsDefined(LibraryInfoType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(LibraryInfoType);
             }
-            if (options.Format != "W" && ProvisioningStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningStatus))
             {
                 writer.WritePropertyName("provisioningStatus"u8);
                 writer.WriteStringValue(ProvisioningStatus);
             }
-            if (options.Format != "W" && CreatorId != null)
+            if (options.Format != "W" && Optional.IsDefined(CreatorId))
             {
                 writer.WritePropertyName("creatorId"u8);
                 writer.WriteStringValue(CreatorId);
@@ -99,13 +100,13 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> path = default;
-            Optional<string> containerName = default;
-            Optional<DateTimeOffset> uploadedTimestamp = default;
-            Optional<string> type = default;
-            Optional<string> provisioningStatus = default;
-            Optional<string> creatorId = default;
+            string name = default;
+            string path = default;
+            string containerName = default;
+            DateTimeOffset? uploadedTimestamp = default;
+            string type = default;
+            string provisioningStatus = default;
+            string creatorId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -156,13 +157,13 @@ namespace Azure.ResourceManager.Synapse.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new BigDataPoolLibraryInfo(
-                name.Value,
-                path.Value,
-                containerName.Value,
-                Optional.ToNullable(uploadedTimestamp),
-                type.Value,
-                provisioningStatus.Value,
-                creatorId.Value,
+                name,
+                path,
+                containerName,
+                uploadedTimestamp,
+                type,
+                provisioningStatus,
+                creatorId,
                 serializedAdditionalRawData);
         }
 

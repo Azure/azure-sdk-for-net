@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.Monitor
             }
 
             writer.WriteStartObject();
-            if (Kind.HasValue)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -67,44 +67,44 @@ namespace Azure.ResourceManager.Monitor
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && CreatedWithApiVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(CreatedWithApiVersion))
             {
                 writer.WritePropertyName("createdWithApiVersion"u8);
                 writer.WriteStringValue(CreatedWithApiVersion);
             }
-            if (options.Format != "W" && IsLegacyLogAnalyticsRule.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsLegacyLogAnalyticsRule))
             {
                 writer.WritePropertyName("isLegacyLogAnalyticsRule"u8);
                 writer.WriteBooleanValue(IsLegacyLogAnalyticsRule.Value);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Severity.HasValue)
+            if (Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteNumberValue(Severity.Value.ToSerialInt64());
             }
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (!(Scopes is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Scopes))
             {
                 writer.WritePropertyName("scopes"u8);
                 writer.WriteStartArray();
@@ -114,22 +114,22 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndArray();
             }
-            if (EvaluationFrequency.HasValue)
+            if (Optional.IsDefined(EvaluationFrequency))
             {
                 writer.WritePropertyName("evaluationFrequency"u8);
                 writer.WriteStringValue(EvaluationFrequency.Value, "P");
             }
-            if (WindowSize.HasValue)
+            if (Optional.IsDefined(WindowSize))
             {
                 writer.WritePropertyName("windowSize"u8);
                 writer.WriteStringValue(WindowSize.Value, "P");
             }
-            if (OverrideQueryTimeRange.HasValue)
+            if (Optional.IsDefined(OverrideQueryTimeRange))
             {
                 writer.WritePropertyName("overrideQueryTimeRange"u8);
                 writer.WriteStringValue(OverrideQueryTimeRange.Value, "P");
             }
-            if (!(TargetResourceTypes is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(TargetResourceTypes))
             {
                 writer.WritePropertyName("targetResourceTypes"u8);
                 writer.WriteStartArray();
@@ -139,37 +139,37 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndArray();
             }
-            if (Criteria != null)
+            if (Optional.IsDefined(Criteria))
             {
                 writer.WritePropertyName("criteria"u8);
                 writer.WriteObjectValue(Criteria);
             }
-            if (MuteActionsDuration.HasValue)
+            if (Optional.IsDefined(MuteActionsDuration))
             {
                 writer.WritePropertyName("muteActionsDuration"u8);
                 writer.WriteStringValue(MuteActionsDuration.Value, "P");
             }
-            if (Actions != null)
+            if (Optional.IsDefined(Actions))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteObjectValue(Actions);
             }
-            if (options.Format != "W" && IsWorkspaceAlertsStorageConfigured.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsWorkspaceAlertsStorageConfigured))
             {
                 writer.WritePropertyName("isWorkspaceAlertsStorageConfigured"u8);
                 writer.WriteBooleanValue(IsWorkspaceAlertsStorageConfigured.Value);
             }
-            if (CheckWorkspaceAlertsStorageConfigured.HasValue)
+            if (Optional.IsDefined(CheckWorkspaceAlertsStorageConfigured))
             {
                 writer.WritePropertyName("checkWorkspaceAlertsStorageConfigured"u8);
                 writer.WriteBooleanValue(CheckWorkspaceAlertsStorageConfigured.Value);
             }
-            if (SkipQueryValidation.HasValue)
+            if (Optional.IsDefined(SkipQueryValidation))
             {
                 writer.WritePropertyName("skipQueryValidation"u8);
                 writer.WriteBooleanValue(SkipQueryValidation.Value);
             }
-            if (AutoMitigate.HasValue)
+            if (Optional.IsDefined(AutoMitigate))
             {
                 writer.WritePropertyName("autoMitigate"u8);
                 writer.WriteBooleanValue(AutoMitigate.Value);
@@ -213,32 +213,32 @@ namespace Azure.ResourceManager.Monitor
             {
                 return null;
             }
-            Optional<ScheduledQueryRuleKind> kind = default;
-            Optional<ETag> etag = default;
+            ScheduledQueryRuleKind? kind = default;
+            ETag? etag = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> createdWithApiVersion = default;
-            Optional<bool> isLegacyLogAnalyticsRule = default;
-            Optional<string> description = default;
-            Optional<string> displayName = default;
-            Optional<AlertSeverity> severity = default;
-            Optional<bool> enabled = default;
+            SystemData systemData = default;
+            string createdWithApiVersion = default;
+            bool? isLegacyLogAnalyticsRule = default;
+            string description = default;
+            string displayName = default;
+            AlertSeverity? severity = default;
+            bool? enabled = default;
             IList<string> scopes = default;
-            Optional<TimeSpan> evaluationFrequency = default;
-            Optional<TimeSpan> windowSize = default;
-            Optional<TimeSpan> overrideQueryTimeRange = default;
+            TimeSpan? evaluationFrequency = default;
+            TimeSpan? windowSize = default;
+            TimeSpan? overrideQueryTimeRange = default;
             IList<string> targetResourceTypes = default;
-            Optional<ScheduledQueryRuleCriteria> criteria = default;
-            Optional<TimeSpan> muteActionsDuration = default;
-            Optional<ScheduledQueryRuleActions> actions = default;
-            Optional<bool> isWorkspaceAlertsStorageConfigured = default;
-            Optional<bool> checkWorkspaceAlertsStorageConfigured = default;
-            Optional<bool> skipQueryValidation = default;
-            Optional<bool> autoMitigate = default;
+            ScheduledQueryRuleCriteria criteria = default;
+            TimeSpan? muteActionsDuration = default;
+            ScheduledQueryRuleActions actions = default;
+            bool? isWorkspaceAlertsStorageConfigured = default;
+            bool? checkWorkspaceAlertsStorageConfigured = default;
+            bool? skipQueryValidation = default;
+            bool? autoMitigate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -486,29 +486,29 @@ namespace Azure.ResourceManager.Monitor
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(kind),
-                Optional.ToNullable(etag),
-                createdWithApiVersion.Value,
-                Optional.ToNullable(isLegacyLogAnalyticsRule),
-                description.Value,
-                displayName.Value,
-                Optional.ToNullable(severity),
-                Optional.ToNullable(enabled),
+                kind,
+                etag,
+                createdWithApiVersion,
+                isLegacyLogAnalyticsRule,
+                description,
+                displayName,
+                severity,
+                enabled,
                 scopes ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(evaluationFrequency),
-                Optional.ToNullable(windowSize),
-                Optional.ToNullable(overrideQueryTimeRange),
+                evaluationFrequency,
+                windowSize,
+                overrideQueryTimeRange,
                 targetResourceTypes ?? new ChangeTrackingList<string>(),
-                criteria.Value,
-                Optional.ToNullable(muteActionsDuration),
-                actions.Value,
-                Optional.ToNullable(isWorkspaceAlertsStorageConfigured),
-                Optional.ToNullable(checkWorkspaceAlertsStorageConfigured),
-                Optional.ToNullable(skipQueryValidation),
-                Optional.ToNullable(autoMitigate),
+                criteria,
+                muteActionsDuration,
+                actions,
+                isWorkspaceAlertsStorageConfigured,
+                checkWorkspaceAlertsStorageConfigured,
+                skipQueryValidation,
+                autoMitigate,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ResourceHealth;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             }
 
             writer.WriteStartObject();
-            if (Summary != null)
+            if (Optional.IsDefined(Summary))
             {
                 writer.WritePropertyName("summary"u8);
                 writer.WriteStringValue(Summary);
             }
-            if (UpdatedOn.HasValue)
+            if (Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updateDateTime"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Optional<string> summary = default;
-            Optional<DateTimeOffset> updateDateTime = default;
+            string summary = default;
+            DateTimeOffset? updateDateTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceHealthEventUpdate(summary.Value, Optional.ToNullable(updateDateTime), serializedAdditionalRawData);
+            return new ResourceHealthEventUpdate(summary, updateDateTime, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceHealthEventUpdate>.Write(ModelReaderWriterOptions options)

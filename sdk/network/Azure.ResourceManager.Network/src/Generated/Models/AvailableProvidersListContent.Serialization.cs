@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (!(AzureLocations is ChangeTrackingList<AzureLocation> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AzureLocations))
             {
                 writer.WritePropertyName("azureLocations"u8);
                 writer.WriteStartArray();
@@ -36,17 +37,17 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Country != null)
+            if (Optional.IsDefined(Country))
             {
                 writer.WritePropertyName("country"u8);
                 writer.WriteStringValue(Country);
             }
-            if (State != null)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
-            if (City != null)
+            if (Optional.IsDefined(City))
             {
                 writer.WritePropertyName("city"u8);
                 writer.WriteStringValue(City);
@@ -90,9 +91,9 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             IList<AzureLocation> azureLocations = default;
-            Optional<string> country = default;
-            Optional<string> state = default;
-            Optional<string> city = default;
+            string country = default;
+            string state = default;
+            string city = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailableProvidersListContent(azureLocations ?? new ChangeTrackingList<AzureLocation>(), country.Value, state.Value, city.Value, serializedAdditionalRawData);
+            return new AvailableProvidersListContent(azureLocations ?? new ChangeTrackingList<AzureLocation>(), country, state, city, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailableProvidersListContent>.Write(ModelReaderWriterOptions options)

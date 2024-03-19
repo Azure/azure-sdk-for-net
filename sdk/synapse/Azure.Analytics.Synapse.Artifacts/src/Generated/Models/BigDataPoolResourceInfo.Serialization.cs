@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -19,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -34,62 +35,62 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ProvisioningState != null)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (AutoScale != null)
+            if (Optional.IsDefined(AutoScale))
             {
                 writer.WritePropertyName("autoScale"u8);
                 writer.WriteObjectValue(AutoScale);
             }
-            if (CreationDate.HasValue)
+            if (Optional.IsDefined(CreationDate))
             {
                 writer.WritePropertyName("creationDate"u8);
                 writer.WriteStringValue(CreationDate.Value, "O");
             }
-            if (AutoPause != null)
+            if (Optional.IsDefined(AutoPause))
             {
                 writer.WritePropertyName("autoPause"u8);
                 writer.WriteObjectValue(AutoPause);
             }
-            if (IsComputeIsolationEnabled.HasValue)
+            if (Optional.IsDefined(IsComputeIsolationEnabled))
             {
                 writer.WritePropertyName("isComputeIsolationEnabled"u8);
                 writer.WriteBooleanValue(IsComputeIsolationEnabled.Value);
             }
-            if (SessionLevelPackagesEnabled.HasValue)
+            if (Optional.IsDefined(SessionLevelPackagesEnabled))
             {
                 writer.WritePropertyName("sessionLevelPackagesEnabled"u8);
                 writer.WriteBooleanValue(SessionLevelPackagesEnabled.Value);
             }
-            if (CacheSize.HasValue)
+            if (Optional.IsDefined(CacheSize))
             {
                 writer.WritePropertyName("cacheSize"u8);
                 writer.WriteNumberValue(CacheSize.Value);
             }
-            if (DynamicExecutorAllocation != null)
+            if (Optional.IsDefined(DynamicExecutorAllocation))
             {
                 writer.WritePropertyName("dynamicExecutorAllocation"u8);
                 writer.WriteObjectValue(DynamicExecutorAllocation);
             }
-            if (SparkEventsFolder != null)
+            if (Optional.IsDefined(SparkEventsFolder))
             {
                 writer.WritePropertyName("sparkEventsFolder"u8);
                 writer.WriteStringValue(SparkEventsFolder);
             }
-            if (NodeCount.HasValue)
+            if (Optional.IsDefined(NodeCount))
             {
                 writer.WritePropertyName("nodeCount"u8);
                 writer.WriteNumberValue(NodeCount.Value);
             }
-            if (LibraryRequirements != null)
+            if (Optional.IsDefined(LibraryRequirements))
             {
                 writer.WritePropertyName("libraryRequirements"u8);
                 writer.WriteObjectValue(LibraryRequirements);
             }
-            if (!(CustomLibraries is ChangeTrackingList<LibraryInfo> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(CustomLibraries))
             {
                 writer.WritePropertyName("customLibraries"u8);
                 writer.WriteStartArray();
@@ -99,27 +100,27 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (SparkConfigProperties != null)
+            if (Optional.IsDefined(SparkConfigProperties))
             {
                 writer.WritePropertyName("sparkConfigProperties"u8);
                 writer.WriteObjectValue(SparkConfigProperties);
             }
-            if (SparkVersion != null)
+            if (Optional.IsDefined(SparkVersion))
             {
                 writer.WritePropertyName("sparkVersion"u8);
                 writer.WriteStringValue(SparkVersion);
             }
-            if (DefaultSparkLogFolder != null)
+            if (Optional.IsDefined(DefaultSparkLogFolder))
             {
                 writer.WritePropertyName("defaultSparkLogFolder"u8);
                 writer.WriteStringValue(DefaultSparkLogFolder);
             }
-            if (NodeSize.HasValue)
+            if (Optional.IsDefined(NodeSize))
             {
                 writer.WritePropertyName("nodeSize"u8);
                 writer.WriteStringValue(NodeSize.Value.ToString());
             }
-            if (NodeSizeFamily.HasValue)
+            if (Optional.IsDefined(NodeSizeFamily))
             {
                 writer.WritePropertyName("nodeSizeFamily"u8);
                 writer.WriteStringValue(NodeSizeFamily.Value.ToString());
@@ -136,27 +137,27 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             IDictionary<string, string> tags = default;
             string location = default;
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<string> provisioningState = default;
-            Optional<AutoScaleProperties> autoScale = default;
-            Optional<DateTimeOffset> creationDate = default;
-            Optional<AutoPauseProperties> autoPause = default;
-            Optional<bool> isComputeIsolationEnabled = default;
-            Optional<bool> sessionLevelPackagesEnabled = default;
-            Optional<int> cacheSize = default;
-            Optional<DynamicExecutorAllocation> dynamicExecutorAllocation = default;
-            Optional<string> sparkEventsFolder = default;
-            Optional<int> nodeCount = default;
-            Optional<LibraryRequirements> libraryRequirements = default;
+            string id = default;
+            string name = default;
+            string type = default;
+            string provisioningState = default;
+            AutoScaleProperties autoScale = default;
+            DateTimeOffset? creationDate = default;
+            AutoPauseProperties autoPause = default;
+            bool? isComputeIsolationEnabled = default;
+            bool? sessionLevelPackagesEnabled = default;
+            int? cacheSize = default;
+            DynamicExecutorAllocation dynamicExecutorAllocation = default;
+            string sparkEventsFolder = default;
+            int? nodeCount = default;
+            LibraryRequirements libraryRequirements = default;
             IList<LibraryInfo> customLibraries = default;
-            Optional<LibraryRequirements> sparkConfigProperties = default;
-            Optional<string> sparkVersion = default;
-            Optional<string> defaultSparkLogFolder = default;
-            Optional<NodeSize> nodeSize = default;
-            Optional<NodeSizeFamily> nodeSizeFamily = default;
-            Optional<DateTimeOffset> lastSucceededTimestamp = default;
+            LibraryRequirements sparkConfigProperties = default;
+            string sparkVersion = default;
+            string defaultSparkLogFolder = default;
+            NodeSize? nodeSize = default;
+            NodeSizeFamily? nodeSizeFamily = default;
+            DateTimeOffset? lastSucceededTimestamp = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -358,29 +359,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new BigDataPoolResourceInfo(
-                id.Value,
-                name.Value,
-                type.Value,
+                id,
+                name,
+                type,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                provisioningState.Value,
-                autoScale.Value,
-                Optional.ToNullable(creationDate),
-                autoPause.Value,
-                Optional.ToNullable(isComputeIsolationEnabled),
-                Optional.ToNullable(sessionLevelPackagesEnabled),
-                Optional.ToNullable(cacheSize),
-                dynamicExecutorAllocation.Value,
-                sparkEventsFolder.Value,
-                Optional.ToNullable(nodeCount),
-                libraryRequirements.Value,
+                provisioningState,
+                autoScale,
+                creationDate,
+                autoPause,
+                isComputeIsolationEnabled,
+                sessionLevelPackagesEnabled,
+                cacheSize,
+                dynamicExecutorAllocation,
+                sparkEventsFolder,
+                nodeCount,
+                libraryRequirements,
                 customLibraries ?? new ChangeTrackingList<LibraryInfo>(),
-                sparkConfigProperties.Value,
-                sparkVersion.Value,
-                defaultSparkLogFolder.Value,
-                Optional.ToNullable(nodeSize),
-                Optional.ToNullable(nodeSizeFamily),
-                Optional.ToNullable(lastSucceededTimestamp));
+                sparkConfigProperties,
+                sparkVersion,
+                defaultSparkLogFolder,
+                nodeSize,
+                nodeSizeFamily,
+                lastSucceededTimestamp);
         }
 
         internal partial class BigDataPoolResourceInfoConverter : JsonConverter<BigDataPoolResourceInfo>

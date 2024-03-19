@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (TierToCool != null)
+            if (Optional.IsDefined(TierToCool))
             {
                 writer.WritePropertyName("tierToCool"u8);
                 writer.WriteObjectValue(TierToCool);
             }
-            if (TierToArchive != null)
+            if (Optional.IsDefined(TierToArchive))
             {
                 writer.WritePropertyName("tierToArchive"u8);
                 writer.WriteObjectValue(TierToArchive);
             }
-            if (TierToCold != null)
+            if (Optional.IsDefined(TierToCold))
             {
                 writer.WritePropertyName("tierToCold"u8);
                 writer.WriteObjectValue(TierToCold);
             }
-            if (TierToHot != null)
+            if (Optional.IsDefined(TierToHot))
             {
                 writer.WritePropertyName("tierToHot"u8);
                 writer.WriteObjectValue(TierToHot);
             }
-            if (Delete != null)
+            if (Optional.IsDefined(Delete))
             {
                 writer.WritePropertyName("delete"u8);
                 writer.WriteObjectValue(Delete);
             }
-            if (EnableAutoTierToHotFromCool.HasValue)
+            if (Optional.IsDefined(EnableAutoTierToHotFromCool))
             {
                 writer.WritePropertyName("enableAutoTierToHotFromCool"u8);
                 writer.WriteBooleanValue(EnableAutoTierToHotFromCool.Value);
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<DateAfterModification> tierToCool = default;
-            Optional<DateAfterModification> tierToArchive = default;
-            Optional<DateAfterModification> tierToCold = default;
-            Optional<DateAfterModification> tierToHot = default;
-            Optional<DateAfterModification> delete = default;
-            Optional<bool> enableAutoTierToHotFromCool = default;
+            DateAfterModification tierToCool = default;
+            DateAfterModification tierToArchive = default;
+            DateAfterModification tierToCold = default;
+            DateAfterModification tierToHot = default;
+            DateAfterModification delete = default;
+            bool? enableAutoTierToHotFromCool = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,12 +166,12 @@ namespace Azure.ResourceManager.Storage.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ManagementPolicyBaseBlob(
-                tierToCool.Value,
-                tierToArchive.Value,
-                tierToCold.Value,
-                tierToHot.Value,
-                delete.Value,
-                Optional.ToNullable(enableAutoTierToHotFromCool),
+                tierToCool,
+                tierToArchive,
+                tierToCold,
+                tierToHot,
+                delete,
+                enableAutoTierToHotFromCool,
                 serializedAdditionalRawData);
         }
 

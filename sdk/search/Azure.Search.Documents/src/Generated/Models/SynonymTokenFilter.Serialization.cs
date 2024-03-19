@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -23,12 +24,12 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (IgnoreCase.HasValue)
+            if (Optional.IsDefined(IgnoreCase))
             {
                 writer.WritePropertyName("ignoreCase"u8);
                 writer.WriteBooleanValue(IgnoreCase.Value);
             }
-            if (Expand.HasValue)
+            if (Optional.IsDefined(Expand))
             {
                 writer.WritePropertyName("expand"u8);
                 writer.WriteBooleanValue(Expand.Value);
@@ -47,8 +48,8 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             IList<string> synonyms = default;
-            Optional<bool> ignoreCase = default;
-            Optional<bool> expand = default;
+            bool? ignoreCase = default;
+            bool? expand = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -92,7 +93,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SynonymTokenFilter(odataType, name, synonyms, Optional.ToNullable(ignoreCase), Optional.ToNullable(expand));
+            return new SynonymTokenFilter(odataType, name, synonyms, ignoreCase, expand);
         }
     }
 }

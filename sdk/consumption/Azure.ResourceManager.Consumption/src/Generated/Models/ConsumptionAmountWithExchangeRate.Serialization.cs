@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Consumption;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Consumption.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ExchangeRate.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExchangeRate))
             {
                 writer.WritePropertyName("exchangeRate"u8);
                 writer.WriteNumberValue(ExchangeRate.Value);
             }
-            if (options.Format != "W" && ExchangeRateMonth.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExchangeRateMonth))
             {
                 writer.WritePropertyName("exchangeRateMonth"u8);
                 writer.WriteNumberValue(ExchangeRateMonth.Value);
             }
-            if (options.Format != "W" && Currency != null)
+            if (options.Format != "W" && Optional.IsDefined(Currency))
             {
                 writer.WritePropertyName("currency"u8);
                 writer.WriteStringValue(Currency);
             }
-            if (options.Format != "W" && Value.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteNumberValue(Value.Value);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<decimal> exchangeRate = default;
-            Optional<int> exchangeRateMonth = default;
-            Optional<string> currency = default;
-            Optional<decimal> value = default;
+            decimal? exchangeRate = default;
+            int? exchangeRateMonth = default;
+            string currency = default;
+            decimal? value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionAmountWithExchangeRate(currency.Value, Optional.ToNullable(value), serializedAdditionalRawData, Optional.ToNullable(exchangeRate), Optional.ToNullable(exchangeRateMonth));
+            return new ConsumptionAmountWithExchangeRate(currency, value, serializedAdditionalRawData, exchangeRate, exchangeRateMonth);
         }
 
         BinaryData IPersistableModel<ConsumptionAmountWithExchangeRate>.Write(ModelReaderWriterOptions options)

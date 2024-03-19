@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -44,14 +45,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && !(AdditionalData is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AdditionalData))
             {
                 writer.WritePropertyName("additionalData"u8);
                 writer.WriteStartObject();
@@ -74,27 +75,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && FriendlyName != null)
+            if (options.Format != "W" && Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (options.Format != "W" && MailboxPrimaryAddress != null)
+            if (options.Format != "W" && Optional.IsDefined(MailboxPrimaryAddress))
             {
                 writer.WritePropertyName("mailboxPrimaryAddress"u8);
                 writer.WriteStringValue(MailboxPrimaryAddress);
             }
-            if (options.Format != "W" && DisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Upn != null)
+            if (options.Format != "W" && Optional.IsDefined(Upn))
             {
                 writer.WritePropertyName("upn"u8);
                 writer.WriteStringValue(Upn);
             }
-            if (options.Format != "W" && ExternalDirectoryObjectId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExternalDirectoryObjectId))
             {
                 writer.WritePropertyName("externalDirectoryObjectId"u8);
                 writer.WriteStringValue(ExternalDirectoryObjectId.Value);
@@ -142,13 +143,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IReadOnlyDictionary<string, BinaryData> additionalData = default;
-            Optional<string> friendlyName = default;
-            Optional<string> mailboxPrimaryAddress = default;
-            Optional<string> displayName = default;
-            Optional<string> upn = default;
-            Optional<Guid> externalDirectoryObjectId = default;
+            string friendlyName = default;
+            string mailboxPrimaryAddress = default;
+            string displayName = default;
+            string upn = default;
+            Guid? externalDirectoryObjectId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -254,15 +255,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 kind,
                 serializedAdditionalRawData,
                 additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                friendlyName.Value,
-                mailboxPrimaryAddress.Value,
-                displayName.Value,
-                upn.Value,
-                Optional.ToNullable(externalDirectoryObjectId));
+                friendlyName,
+                mailboxPrimaryAddress,
+                displayName,
+                upn,
+                externalDirectoryObjectId);
         }
 
         BinaryData IPersistableModel<SecurityInsightsMailboxEntity>.Write(ModelReaderWriterOptions options)

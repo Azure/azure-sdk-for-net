@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (HyperVHostVmId != null)
+            if (Optional.IsDefined(HyperVHostVmId))
             {
                 writer.WritePropertyName("hvHostVmId"u8);
                 writer.WriteStringValue(HyperVHostVmId);
             }
-            if (VmName != null)
+            if (Optional.IsDefined(VmName))
             {
                 writer.WritePropertyName("vmName"u8);
                 writer.WriteStringValue(VmName);
             }
-            if (OSType != null)
+            if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType);
             }
-            if (VhdId != null)
+            if (Optional.IsDefined(VhdId))
             {
                 writer.WritePropertyName("vHDId"u8);
                 writer.WriteStringValue(VhdId);
             }
-            if (StorageAccountId != null)
+            if (Optional.IsDefined(StorageAccountId))
             {
                 writer.WritePropertyName("storageAccountId"u8);
                 writer.WriteStringValue(StorageAccountId);
             }
-            if (LogStorageAccountId != null)
+            if (Optional.IsDefined(LogStorageAccountId))
             {
                 writer.WritePropertyName("logStorageAccountId"u8);
                 writer.WriteStringValue(LogStorageAccountId);
@@ -96,12 +97,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> hvHostVmId = default;
-            Optional<string> vmName = default;
-            Optional<string> osType = default;
-            Optional<string> vhdId = default;
-            Optional<ResourceIdentifier> storageAccountId = default;
-            Optional<ResourceIdentifier> logStorageAccountId = default;
+            string hvHostVmId = default;
+            string vmName = default;
+            string osType = default;
+            string vhdId = default;
+            ResourceIdentifier storageAccountId = default;
+            ResourceIdentifier logStorageAccountId = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -159,12 +160,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new HyperVReplicaAzureReprotectContent(
                 instanceType,
                 serializedAdditionalRawData,
-                hvHostVmId.Value,
-                vmName.Value,
-                osType.Value,
-                vhdId.Value,
-                storageAccountId.Value,
-                logStorageAccountId.Value);
+                hvHostVmId,
+                vmName,
+                osType,
+                vhdId,
+                storageAccountId,
+                logStorageAccountId);
         }
 
         BinaryData IPersistableModel<HyperVReplicaAzureReprotectContent>.Write(ModelReaderWriterOptions options)

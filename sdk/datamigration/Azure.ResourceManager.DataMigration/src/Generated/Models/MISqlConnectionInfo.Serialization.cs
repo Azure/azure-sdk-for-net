@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -30,12 +31,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStringValue(ManagedInstanceResourceId);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ConnectionInfoType);
-            if (UserName != null)
+            if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
                 writer.WriteStringValue(UserName);
             }
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
@@ -80,8 +81,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             string managedInstanceResourceId = default;
             string type = default;
-            Optional<string> userName = default;
-            Optional<string> password = default;
+            string userName = default;
+            string password = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MISqlConnectionInfo(type, userName.Value, password.Value, serializedAdditionalRawData, managedInstanceResourceId);
+            return new MISqlConnectionInfo(type, userName, password, serializedAdditionalRawData, managedInstanceResourceId);
         }
 
         BinaryData IPersistableModel<MISqlConnectionInfo>.Write(ModelReaderWriterOptions options)

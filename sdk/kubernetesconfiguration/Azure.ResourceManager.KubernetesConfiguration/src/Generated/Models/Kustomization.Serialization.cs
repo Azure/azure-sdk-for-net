@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.KubernetesConfiguration;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (!(DependsOn is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DependsOn))
             {
                 if (DependsOn != null)
                 {
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("dependsOn");
                 }
             }
-            if (TimeoutInSeconds.HasValue)
+            if (Optional.IsDefined(TimeoutInSeconds))
             {
                 if (TimeoutInSeconds != null)
                 {
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("timeoutInSeconds");
                 }
             }
-            if (SyncIntervalInSeconds.HasValue)
+            if (Optional.IsDefined(SyncIntervalInSeconds))
             {
                 if (SyncIntervalInSeconds != null)
                 {
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("syncIntervalInSeconds");
                 }
             }
-            if (RetryIntervalInSeconds.HasValue)
+            if (Optional.IsDefined(RetryIntervalInSeconds))
             {
                 if (RetryIntervalInSeconds != null)
                 {
@@ -89,12 +90,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("retryIntervalInSeconds");
                 }
             }
-            if (Prune.HasValue)
+            if (Optional.IsDefined(Prune))
             {
                 writer.WritePropertyName("prune"u8);
                 writer.WriteBooleanValue(Prune.Value);
             }
-            if (Force.HasValue)
+            if (Optional.IsDefined(Force))
             {
                 writer.WritePropertyName("force"u8);
                 writer.WriteBooleanValue(Force.Value);
@@ -137,14 +138,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> path = default;
+            string name = default;
+            string path = default;
             IList<string> dependsOn = default;
-            Optional<long?> timeoutInSeconds = default;
-            Optional<long?> syncIntervalInSeconds = default;
-            Optional<long?> retryIntervalInSeconds = default;
-            Optional<bool> prune = default;
-            Optional<bool> force = default;
+            long? timeoutInSeconds = default;
+            long? syncIntervalInSeconds = default;
+            long? retryIntervalInSeconds = default;
+            bool? prune = default;
+            bool? force = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -229,14 +230,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new Kustomization(
-                name.Value,
-                path.Value,
+                name,
+                path,
                 dependsOn ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(timeoutInSeconds),
-                Optional.ToNullable(syncIntervalInSeconds),
-                Optional.ToNullable(retryIntervalInSeconds),
-                Optional.ToNullable(prune),
-                Optional.ToNullable(force),
+                timeoutInSeconds,
+                syncIntervalInSeconds,
+                retryIntervalInSeconds,
+                prune,
+                force,
                 serializedAdditionalRawData);
         }
 

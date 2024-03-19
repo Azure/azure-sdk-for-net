@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (ProcessorArchitecture.HasValue)
+            if (Optional.IsDefined(ProcessorArchitecture))
             {
                 writer.WritePropertyName("processorArchitecture"u8);
                 writer.WriteStringValue(ProcessorArchitecture.Value.ToString());
             }
-            if (AuthenticationMethod.HasValue)
+            if (Optional.IsDefined(AuthenticationMethod))
             {
                 writer.WritePropertyName("authenticationMethod"u8);
                 writer.WriteStringValue(AuthenticationMethod.Value.ToString());
             }
-            if (RadiusServerAuthCertificate != null)
+            if (Optional.IsDefined(RadiusServerAuthCertificate))
             {
                 writer.WritePropertyName("radiusServerAuthCertificate"u8);
                 writer.WriteStringValue(RadiusServerAuthCertificate);
             }
-            if (!(ClientRootCertificates is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ClientRootCertificates))
             {
                 writer.WritePropertyName("clientRootCertificates"u8);
                 writer.WriteStartArray();
@@ -89,9 +90,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ProcessorArchitecture> processorArchitecture = default;
-            Optional<NetworkAuthenticationMethod> authenticationMethod = default;
-            Optional<string> radiusServerAuthCertificate = default;
+            ProcessorArchitecture? processorArchitecture = default;
+            NetworkAuthenticationMethod? authenticationMethod = default;
+            string radiusServerAuthCertificate = default;
             IList<string> clientRootCertificates = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -140,7 +141,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VpnClientContent(Optional.ToNullable(processorArchitecture), Optional.ToNullable(authenticationMethod), radiusServerAuthCertificate.Value, clientRootCertificates ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new VpnClientContent(processorArchitecture, authenticationMethod, radiusServerAuthCertificate, clientRootCertificates ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VpnClientContent>.Write(ModelReaderWriterOptions options)

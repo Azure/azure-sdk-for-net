@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -28,64 +29,64 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartObject();
             writer.WritePropertyName("connectionString"u8);
             writer.WriteStringValue(ConnectionString);
-            if (DataSource != null)
+            if (Optional.IsDefined(DataSource))
             {
                 writer.WritePropertyName("dataSource"u8);
                 writer.WriteStringValue(DataSource);
             }
-            if (EncryptConnection.HasValue)
+            if (Optional.IsDefined(EncryptConnection))
             {
                 writer.WritePropertyName("encryptConnection"u8);
                 writer.WriteBooleanValue(EncryptConnection.Value);
             }
-            if (ServerBrandVersion != null)
+            if (Optional.IsDefined(ServerBrandVersion))
             {
                 writer.WritePropertyName("serverBrandVersion"u8);
                 writer.WriteStringValue(ServerBrandVersion);
             }
-            if (ServerVersion != null)
+            if (Optional.IsDefined(ServerVersion))
             {
                 writer.WritePropertyName("serverVersion"u8);
                 writer.WriteStringValue(ServerVersion);
             }
-            if (ServerName != null)
+            if (Optional.IsDefined(ServerName))
             {
                 writer.WritePropertyName("serverName"u8);
                 writer.WriteStringValue(ServerName);
             }
-            if (TrustServerCertificate.HasValue)
+            if (Optional.IsDefined(TrustServerCertificate))
             {
                 writer.WritePropertyName("trustServerCertificate"u8);
                 writer.WriteBooleanValue(TrustServerCertificate.Value);
             }
-            if (EnforceSSL.HasValue)
+            if (Optional.IsDefined(EnforceSSL))
             {
                 writer.WritePropertyName("enforceSSL"u8);
                 writer.WriteBooleanValue(EnforceSSL.Value);
             }
-            if (Port.HasValue)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (AdditionalSettings != null)
+            if (Optional.IsDefined(AdditionalSettings))
             {
                 writer.WritePropertyName("additionalSettings"u8);
                 writer.WriteStringValue(AdditionalSettings);
             }
-            if (Authentication.HasValue)
+            if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
                 writer.WriteStringValue(Authentication.Value.ToString());
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ConnectionInfoType);
-            if (UserName != null)
+            if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
                 writer.WriteStringValue(UserName);
             }
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
@@ -129,19 +130,19 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             string connectionString = default;
-            Optional<string> dataSource = default;
-            Optional<bool> encryptConnection = default;
-            Optional<string> serverBrandVersion = default;
-            Optional<string> serverVersion = default;
-            Optional<string> serverName = default;
-            Optional<bool> trustServerCertificate = default;
-            Optional<bool> enforceSSL = default;
-            Optional<int> port = default;
-            Optional<string> additionalSettings = default;
-            Optional<AuthenticationType> authentication = default;
+            string dataSource = default;
+            bool? encryptConnection = default;
+            string serverBrandVersion = default;
+            string serverVersion = default;
+            string serverName = default;
+            bool? trustServerCertificate = default;
+            bool? enforceSSL = default;
+            int? port = default;
+            string additionalSettings = default;
+            AuthenticationType? authentication = default;
             string type = default;
-            Optional<string> userName = default;
-            Optional<string> password = default;
+            string userName = default;
+            string password = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -244,20 +245,20 @@ namespace Azure.ResourceManager.DataMigration.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MongoDBConnectionInfo(
                 type,
-                userName.Value,
-                password.Value,
+                userName,
+                password,
                 serializedAdditionalRawData,
                 connectionString,
-                dataSource.Value,
-                Optional.ToNullable(encryptConnection),
-                serverBrandVersion.Value,
-                serverVersion.Value,
-                serverName.Value,
-                Optional.ToNullable(trustServerCertificate),
-                Optional.ToNullable(enforceSSL),
-                Optional.ToNullable(port),
-                additionalSettings.Value,
-                Optional.ToNullable(authentication));
+                dataSource,
+                encryptConnection,
+                serverBrandVersion,
+                serverVersion,
+                serverName,
+                trustServerCertificate,
+                enforceSSL,
+                port,
+                additionalSettings,
+                authentication);
         }
 
         BinaryData IPersistableModel<MongoDBConnectionInfo>.Write(ModelReaderWriterOptions options)

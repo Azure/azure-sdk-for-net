@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Sql
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Kind != null)
+            if (options.Format != "W" && Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -53,39 +53,39 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Subregion != null)
+            if (options.Format != "W" && Optional.IsDefined(Subregion))
             {
                 writer.WritePropertyName("subregion"u8);
                 writer.WriteStringValue(Subregion);
             }
-            if (ServerKeyType.HasValue)
+            if (Optional.IsDefined(ServerKeyType))
             {
                 writer.WritePropertyName("serverKeyType"u8);
                 writer.WriteStringValue(ServerKeyType.Value.ToString());
             }
-            if (Uri != null)
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (options.Format != "W" && Thumbprint != null)
+            if (options.Format != "W" && Optional.IsDefined(Thumbprint))
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(Thumbprint);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && IsAutoRotationEnabled.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsAutoRotationEnabled))
             {
                 writer.WritePropertyName("autoRotationEnabled"u8);
                 writer.WriteBooleanValue(IsAutoRotationEnabled.Value);
@@ -129,18 +129,18 @@ namespace Azure.ResourceManager.Sql
             {
                 return null;
             }
-            Optional<string> kind = default;
-            Optional<AzureLocation> location = default;
+            string kind = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> subregion = default;
-            Optional<SqlServerKeyType> serverKeyType = default;
-            Optional<Uri> uri = default;
-            Optional<string> thumbprint = default;
-            Optional<DateTimeOffset> creationDate = default;
-            Optional<bool> autoRotationEnabled = default;
+            SystemData systemData = default;
+            string subregion = default;
+            SqlServerKeyType? serverKeyType = default;
+            Uri uri = default;
+            string thumbprint = default;
+            DateTimeOffset? creationDate = default;
+            bool? autoRotationEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -251,15 +251,15 @@ namespace Azure.ResourceManager.Sql
                 id,
                 name,
                 type,
-                systemData.Value,
-                kind.Value,
-                Optional.ToNullable(location),
-                subregion.Value,
-                Optional.ToNullable(serverKeyType),
-                uri.Value,
-                thumbprint.Value,
-                Optional.ToNullable(creationDate),
-                Optional.ToNullable(autoRotationEnabled),
+                systemData,
+                kind,
+                location,
+                subregion,
+                serverKeyType,
+                uri,
+                thumbprint,
+                creationDate,
+                autoRotationEnabled,
                 serializedAdditionalRawData);
         }
 

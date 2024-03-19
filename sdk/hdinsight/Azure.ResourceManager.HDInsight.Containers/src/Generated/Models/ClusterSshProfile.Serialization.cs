@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStartObject();
             writer.WritePropertyName("count"u8);
             writer.WriteNumberValue(Count);
-            if (options.Format != "W" && PodPrefix != null)
+            if (options.Format != "W" && Optional.IsDefined(PodPrefix))
             {
                 writer.WritePropertyName("podPrefix"u8);
                 writer.WriteStringValue(PodPrefix);
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 return null;
             }
             int count = default;
-            Optional<string> podPrefix = default;
+            string podPrefix = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterSshProfile(count, podPrefix.Value, serializedAdditionalRawData);
+            return new ClusterSshProfile(count, podPrefix, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterSshProfile>.Write(ModelReaderWriterOptions options)

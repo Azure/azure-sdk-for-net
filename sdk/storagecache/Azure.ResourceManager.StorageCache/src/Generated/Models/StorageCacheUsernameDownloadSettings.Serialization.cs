@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -26,62 +27,62 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
 
             writer.WriteStartObject();
-            if (EnableExtendedGroups.HasValue)
+            if (Optional.IsDefined(EnableExtendedGroups))
             {
                 writer.WritePropertyName("extendedGroups"u8);
                 writer.WriteBooleanValue(EnableExtendedGroups.Value);
             }
-            if (UsernameSource.HasValue)
+            if (Optional.IsDefined(UsernameSource))
             {
                 writer.WritePropertyName("usernameSource"u8);
                 writer.WriteStringValue(UsernameSource.Value.ToString());
             }
-            if (GroupFileUri != null)
+            if (Optional.IsDefined(GroupFileUri))
             {
                 writer.WritePropertyName("groupFileURI"u8);
                 writer.WriteStringValue(GroupFileUri.AbsoluteUri);
             }
-            if (UserFileUri != null)
+            if (Optional.IsDefined(UserFileUri))
             {
                 writer.WritePropertyName("userFileURI"u8);
                 writer.WriteStringValue(UserFileUri.AbsoluteUri);
             }
-            if (LdapServer != null)
+            if (Optional.IsDefined(LdapServer))
             {
                 writer.WritePropertyName("ldapServer"u8);
                 writer.WriteStringValue(LdapServer);
             }
-            if (LdapBaseDN != null)
+            if (Optional.IsDefined(LdapBaseDN))
             {
                 writer.WritePropertyName("ldapBaseDN"u8);
                 writer.WriteStringValue(LdapBaseDN);
             }
-            if (EncryptLdapConnection.HasValue)
+            if (Optional.IsDefined(EncryptLdapConnection))
             {
                 writer.WritePropertyName("encryptLdapConnection"u8);
                 writer.WriteBooleanValue(EncryptLdapConnection.Value);
             }
-            if (RequireValidCertificate.HasValue)
+            if (Optional.IsDefined(RequireValidCertificate))
             {
                 writer.WritePropertyName("requireValidCertificate"u8);
                 writer.WriteBooleanValue(RequireValidCertificate.Value);
             }
-            if (AutoDownloadCertificate.HasValue)
+            if (Optional.IsDefined(AutoDownloadCertificate))
             {
                 writer.WritePropertyName("autoDownloadCertificate"u8);
                 writer.WriteBooleanValue(AutoDownloadCertificate.Value);
             }
-            if (CaCertificateUri != null)
+            if (Optional.IsDefined(CaCertificateUri))
             {
                 writer.WritePropertyName("caCertificateURI"u8);
                 writer.WriteStringValue(CaCertificateUri.AbsoluteUri);
             }
-            if (options.Format != "W" && UsernameDownloaded.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UsernameDownloaded))
             {
                 writer.WritePropertyName("usernameDownloaded"u8);
                 writer.WriteStringValue(UsernameDownloaded.Value.ToString());
             }
-            if (Credentials != null)
+            if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
                 writer.WriteObjectValue(Credentials);
@@ -124,18 +125,18 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<bool> extendedGroups = default;
-            Optional<StorageCacheUsernameSourceType> usernameSource = default;
-            Optional<Uri> groupFileUri = default;
-            Optional<Uri> userFileUri = default;
-            Optional<string> ldapServer = default;
-            Optional<string> ldapBaseDN = default;
-            Optional<bool> encryptLdapConnection = default;
-            Optional<bool> requireValidCertificate = default;
-            Optional<bool> autoDownloadCertificate = default;
-            Optional<Uri> caCertificateUri = default;
-            Optional<StorageCacheUsernameDownloadedType> usernameDownloaded = default;
-            Optional<StorageCacheUsernameDownloadCredential> credentials = default;
+            bool? extendedGroups = default;
+            StorageCacheUsernameSourceType? usernameSource = default;
+            Uri groupFileUri = default;
+            Uri userFileUri = default;
+            string ldapServer = default;
+            string ldapBaseDN = default;
+            bool? encryptLdapConnection = default;
+            bool? requireValidCertificate = default;
+            bool? autoDownloadCertificate = default;
+            Uri caCertificateUri = default;
+            StorageCacheUsernameDownloadedType? usernameDownloaded = default;
+            StorageCacheUsernameDownloadCredential credentials = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -247,18 +248,18 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new StorageCacheUsernameDownloadSettings(
-                Optional.ToNullable(extendedGroups),
-                Optional.ToNullable(usernameSource),
-                groupFileUri.Value,
-                userFileUri.Value,
-                ldapServer.Value,
-                ldapBaseDN.Value,
-                Optional.ToNullable(encryptLdapConnection),
-                Optional.ToNullable(requireValidCertificate),
-                Optional.ToNullable(autoDownloadCertificate),
-                caCertificateUri.Value,
-                Optional.ToNullable(usernameDownloaded),
-                credentials.Value,
+                extendedGroups,
+                usernameSource,
+                groupFileUri,
+                userFileUri,
+                ldapServer,
+                ldapBaseDN,
+                encryptLdapConnection,
+                requireValidCertificate,
+                autoDownloadCertificate,
+                caCertificateUri,
+                usernameDownloaded,
+                credentials,
                 serializedAdditionalRawData);
         }
 

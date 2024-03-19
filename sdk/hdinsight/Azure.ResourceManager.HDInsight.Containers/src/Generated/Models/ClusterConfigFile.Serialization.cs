@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -28,22 +29,22 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStartObject();
             writer.WritePropertyName("fileName"u8);
             writer.WriteStringValue(FileName);
-            if (Content != null)
+            if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content);
             }
-            if (Encoding.HasValue)
+            if (Optional.IsDefined(Encoding))
             {
                 writer.WritePropertyName("encoding"u8);
                 writer.WriteStringValue(Encoding.Value.ToString());
             }
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (!(Values is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Values))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartObject();
@@ -93,9 +94,9 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 return null;
             }
             string fileName = default;
-            Optional<string> content = default;
-            Optional<HDInsightContentEncoding> encoding = default;
-            Optional<string> path = default;
+            string content = default;
+            HDInsightContentEncoding? encoding = default;
+            string path = default;
             IDictionary<string, string> values = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -147,9 +148,9 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ClusterConfigFile(
                 fileName,
-                content.Value,
-                Optional.ToNullable(encoding),
-                path.Value,
+                content,
+                encoding,
+                path,
                 values ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }

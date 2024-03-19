@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -30,12 +31,12 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStringValue(ConditionType.ToString());
             writer.WritePropertyName("operator"u8);
             writer.WriteStringValue(RequestSchemeOperator.ToString());
-            if (NegateCondition.HasValue)
+            if (Optional.IsDefined(NegateCondition))
             {
                 writer.WritePropertyName("negateCondition"u8);
                 writer.WriteBooleanValue(NegateCondition.Value);
             }
-            if (!(Transforms is ChangeTrackingList<PreTransformCategory> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Transforms))
             {
                 writer.WritePropertyName("transforms"u8);
                 writer.WriteStartArray();
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(MatchValues is ChangeTrackingList<RequestSchemeMatchConditionMatchValue> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(MatchValues))
             {
                 writer.WritePropertyName("matchValues"u8);
                 writer.WriteStartArray();
@@ -95,7 +96,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             RequestSchemeMatchConditionType typeName = default;
             RequestSchemeOperator @operator = default;
-            Optional<bool> negateCondition = default;
+            bool? negateCondition = default;
             IList<PreTransformCategory> transforms = default;
             IList<RequestSchemeMatchConditionMatchValue> matchValues = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -158,7 +159,7 @@ namespace Azure.ResourceManager.Cdn.Models
             return new RequestSchemeMatchCondition(
                 typeName,
                 @operator,
-                Optional.ToNullable(negateCondition),
+                negateCondition,
                 transforms ?? new ChangeTrackingList<PreTransformCategory>(),
                 matchValues ?? new ChangeTrackingList<RequestSchemeMatchConditionMatchValue>(),
                 serializedAdditionalRawData);

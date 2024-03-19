@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (StorageToNetworkProximity.HasValue)
+            if (Optional.IsDefined(StorageToNetworkProximity))
             {
                 writer.WritePropertyName("storageToNetworkProximity"u8);
                 writer.WriteStringValue(StorageToNetworkProximity.Value.ToString());
             }
-            if (!(AvailabilityZoneMappings is ChangeTrackingList<AvailabilityZoneMapping> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AvailabilityZoneMappings))
             {
                 writer.WritePropertyName("availabilityZoneMappings"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<RegionStorageToNetworkProximity> storageToNetworkProximity = default;
+            RegionStorageToNetworkProximity? storageToNetworkProximity = default;
             IReadOnlyList<AvailabilityZoneMapping> availabilityZoneMappings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppRegionInfo(Optional.ToNullable(storageToNetworkProximity), availabilityZoneMappings ?? new ChangeTrackingList<AvailabilityZoneMapping>(), serializedAdditionalRawData);
+            return new NetAppRegionInfo(storageToNetworkProximity, availabilityZoneMappings ?? new ChangeTrackingList<AvailabilityZoneMapping>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppRegionInfo>.Write(ModelReaderWriterOptions options)

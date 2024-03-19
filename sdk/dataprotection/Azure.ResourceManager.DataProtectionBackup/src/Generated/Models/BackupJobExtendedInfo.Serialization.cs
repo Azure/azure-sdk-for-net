@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (!(AdditionalDetails is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AdditionalDetails))
             {
                 writer.WritePropertyName("additionalDetails"u8);
                 writer.WriteStartObject();
@@ -37,27 +38,27 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && BackupInstanceState != null)
+            if (options.Format != "W" && Optional.IsDefined(BackupInstanceState))
             {
                 writer.WritePropertyName("backupInstanceState"u8);
                 writer.WriteStringValue(BackupInstanceState);
             }
-            if (options.Format != "W" && DataTransferredInBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DataTransferredInBytes))
             {
                 writer.WritePropertyName("dataTransferredInBytes"u8);
                 writer.WriteNumberValue(DataTransferredInBytes.Value);
             }
-            if (options.Format != "W" && RecoveryDestination != null)
+            if (options.Format != "W" && Optional.IsDefined(RecoveryDestination))
             {
                 writer.WritePropertyName("recoveryDestination"u8);
                 writer.WriteStringValue(RecoveryDestination);
             }
-            if (options.Format != "W" && SourceRecoverPoint != null)
+            if (options.Format != "W" && Optional.IsDefined(SourceRecoverPoint))
             {
                 writer.WritePropertyName("sourceRecoverPoint"u8);
                 writer.WriteObjectValue(SourceRecoverPoint);
             }
-            if (options.Format != "W" && !(SubTasks is ChangeTrackingList<BackupJobSubTask> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SubTasks))
             {
                 writer.WritePropertyName("subTasks"u8);
                 writer.WriteStartArray();
@@ -67,12 +68,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && TargetRecoverPoint != null)
+            if (options.Format != "W" && Optional.IsDefined(TargetRecoverPoint))
             {
                 writer.WritePropertyName("targetRecoverPoint"u8);
                 writer.WriteObjectValue(TargetRecoverPoint);
             }
-            if (options.Format != "W" && !(WarningDetails is ChangeTrackingList<UserFacingWarningDetail> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(WarningDetails))
             {
                 writer.WritePropertyName("warningDetails"u8);
                 writer.WriteStartArray();
@@ -121,12 +122,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 return null;
             }
             IReadOnlyDictionary<string, string> additionalDetails = default;
-            Optional<string> backupInstanceState = default;
-            Optional<double> dataTransferredInBytes = default;
-            Optional<string> recoveryDestination = default;
-            Optional<RestoreJobRecoveryPointDetails> sourceRecoverPoint = default;
+            string backupInstanceState = default;
+            double? dataTransferredInBytes = default;
+            string recoveryDestination = default;
+            RestoreJobRecoveryPointDetails sourceRecoverPoint = default;
             IReadOnlyList<BackupJobSubTask> subTasks = default;
-            Optional<RestoreJobRecoveryPointDetails> targetRecoverPoint = default;
+            RestoreJobRecoveryPointDetails targetRecoverPoint = default;
             IReadOnlyList<UserFacingWarningDetail> warningDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -219,12 +220,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new BackupJobExtendedInfo(
                 additionalDetails ?? new ChangeTrackingDictionary<string, string>(),
-                backupInstanceState.Value,
-                Optional.ToNullable(dataTransferredInBytes),
-                recoveryDestination.Value,
-                sourceRecoverPoint.Value,
+                backupInstanceState,
+                dataTransferredInBytes,
+                recoveryDestination,
+                sourceRecoverPoint,
                 subTasks ?? new ChangeTrackingList<BackupJobSubTask>(),
-                targetRecoverPoint.Value,
+                targetRecoverPoint,
                 warningDetails ?? new ChangeTrackingList<UserFacingWarningDetail>(),
                 serializedAdditionalRawData);
         }

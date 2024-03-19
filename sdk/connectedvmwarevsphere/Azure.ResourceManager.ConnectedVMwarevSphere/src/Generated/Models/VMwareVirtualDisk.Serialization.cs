@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ConnectedVMwarevSphere;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
@@ -26,52 +27,52 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Label != null)
+            if (options.Format != "W" && Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
-            if (options.Format != "W" && DiskObjectId != null)
+            if (options.Format != "W" && Optional.IsDefined(DiskObjectId))
             {
                 writer.WritePropertyName("diskObjectId"u8);
                 writer.WriteStringValue(DiskObjectId);
             }
-            if (DiskSizeGB.HasValue)
+            if (Optional.IsDefined(DiskSizeGB))
             {
                 writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
-            if (DeviceKey.HasValue)
+            if (Optional.IsDefined(DeviceKey))
             {
                 writer.WritePropertyName("deviceKey"u8);
                 writer.WriteNumberValue(DeviceKey.Value);
             }
-            if (DiskMode.HasValue)
+            if (Optional.IsDefined(DiskMode))
             {
                 writer.WritePropertyName("diskMode"u8);
                 writer.WriteStringValue(DiskMode.Value.ToString());
             }
-            if (ControllerKey.HasValue)
+            if (Optional.IsDefined(ControllerKey))
             {
                 writer.WritePropertyName("controllerKey"u8);
                 writer.WriteNumberValue(ControllerKey.Value);
             }
-            if (UnitNumber.HasValue)
+            if (Optional.IsDefined(UnitNumber))
             {
                 writer.WritePropertyName("unitNumber"u8);
                 writer.WriteNumberValue(UnitNumber.Value);
             }
-            if (DeviceName != null)
+            if (Optional.IsDefined(DeviceName))
             {
                 writer.WritePropertyName("deviceName"u8);
                 writer.WriteStringValue(DeviceName);
             }
-            if (DiskType.HasValue)
+            if (Optional.IsDefined(DiskType))
             {
                 writer.WritePropertyName("diskType"u8);
                 writer.WriteStringValue(DiskType.Value.ToString());
@@ -114,16 +115,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> label = default;
-            Optional<string> diskObjectId = default;
-            Optional<int> diskSizeGB = default;
-            Optional<int> deviceKey = default;
-            Optional<VMwareDiskMode> diskMode = default;
-            Optional<int> controllerKey = default;
-            Optional<int> unitNumber = default;
-            Optional<string> deviceName = default;
-            Optional<VMwareDiskType> diskType = default;
+            string name = default;
+            string label = default;
+            string diskObjectId = default;
+            int? diskSizeGB = default;
+            int? deviceKey = default;
+            VMwareDiskMode? diskMode = default;
+            int? controllerKey = default;
+            int? unitNumber = default;
+            string deviceName = default;
+            VMwareDiskType? diskType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -209,16 +210,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new VMwareVirtualDisk(
-                name.Value,
-                label.Value,
-                diskObjectId.Value,
-                Optional.ToNullable(diskSizeGB),
-                Optional.ToNullable(deviceKey),
-                Optional.ToNullable(diskMode),
-                Optional.ToNullable(controllerKey),
-                Optional.ToNullable(unitNumber),
-                deviceName.Value,
-                Optional.ToNullable(diskType),
+                name,
+                label,
+                diskObjectId,
+                diskSizeGB,
+                deviceKey,
+                diskMode,
+                controllerKey,
+                unitNumber,
+                deviceName,
+                diskType,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DevCenter;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -37,24 +38,24 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DevCenterId != null)
+            if (Optional.IsDefined(DevCenterId))
             {
                 writer.WritePropertyName("devCenterId"u8);
                 writer.WriteStringValue(DevCenterId);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (MaxDevBoxesPerUser.HasValue)
+            if (Optional.IsDefined(MaxDevBoxesPerUser))
             {
                 writer.WritePropertyName("maxDevBoxesPerUser"u8);
                 writer.WriteNumberValue(MaxDevBoxesPerUser.Value);
@@ -99,10 +100,10 @@ namespace Azure.ResourceManager.DevCenter.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<AzureLocation> location = default;
-            Optional<ResourceIdentifier> devCenterId = default;
-            Optional<string> description = default;
-            Optional<int> maxDevBoxesPerUser = default;
+            AzureLocation? location = default;
+            ResourceIdentifier devCenterId = default;
+            string description = default;
+            int? maxDevBoxesPerUser = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -173,11 +174,11 @@ namespace Azure.ResourceManager.DevCenter.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DevCenterProjectPatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                Optional.ToNullable(location),
+                location,
                 serializedAdditionalRawData,
-                devCenterId.Value,
-                description.Value,
-                Optional.ToNullable(maxDevBoxesPerUser));
+                devCenterId,
+                description,
+                maxDevBoxesPerUser);
         }
 
         BinaryData IPersistableModel<DevCenterProjectPatch>.Write(ModelReaderWriterOptions options)

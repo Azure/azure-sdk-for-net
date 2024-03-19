@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ConnectedVMwarevSphere;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (NetworkId != null)
+            if (Optional.IsDefined(NetworkId))
             {
                 writer.WritePropertyName("networkId"u8);
                 writer.WriteStringValue(NetworkId);
             }
-            if (NicType.HasValue)
+            if (Optional.IsDefined(NicType))
             {
                 writer.WritePropertyName("nicType"u8);
                 writer.WriteStringValue(NicType.Value.ToString());
             }
-            if (PowerOnBoot.HasValue)
+            if (Optional.IsDefined(PowerOnBoot))
             {
                 writer.WritePropertyName("powerOnBoot"u8);
                 writer.WriteStringValue(PowerOnBoot.Value.ToString());
             }
-            if (DeviceKey.HasValue)
+            if (Optional.IsDefined(DeviceKey))
             {
                 writer.WritePropertyName("deviceKey"u8);
                 writer.WriteNumberValue(DeviceKey.Value);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> networkId = default;
-            Optional<VMwareNicType> nicType = default;
-            Optional<PowerOnBootOption> powerOnBoot = default;
-            Optional<int> deviceKey = default;
+            string name = default;
+            string networkId = default;
+            VMwareNicType? nicType = default;
+            PowerOnBootOption? powerOnBoot = default;
+            int? deviceKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -142,11 +143,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new VMwareNetworkInterfaceUpdate(
-                name.Value,
-                networkId.Value,
-                Optional.ToNullable(nicType),
-                Optional.ToNullable(powerOnBoot),
-                Optional.ToNullable(deviceKey),
+                name,
+                networkId,
+                nicType,
+                powerOnBoot,
+                deviceKey,
                 serializedAdditionalRawData);
         }
 

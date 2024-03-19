@@ -43,54 +43,54 @@ namespace Azure.ResourceManager.Media
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && AssetId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AssetId))
             {
                 writer.WritePropertyName("assetId"u8);
                 writer.WriteStringValue(AssetId.Value);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && LastModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModified"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (AlternateId != null)
+            if (Optional.IsDefined(AlternateId))
             {
                 writer.WritePropertyName("alternateId"u8);
                 writer.WriteStringValue(AlternateId);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Container != null)
+            if (Optional.IsDefined(Container))
             {
                 writer.WritePropertyName("container"u8);
                 writer.WriteStringValue(Container);
             }
-            if (StorageAccountName != null)
+            if (Optional.IsDefined(StorageAccountName))
             {
                 writer.WritePropertyName("storageAccountName"u8);
                 writer.WriteStringValue(StorageAccountName);
             }
-            if (options.Format != "W" && StorageEncryptionFormat.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StorageEncryptionFormat))
             {
                 writer.WritePropertyName("storageEncryptionFormat"u8);
                 writer.WriteStringValue(StorageEncryptionFormat.Value.ToString());
             }
-            if (EncryptionScope != null)
+            if (Optional.IsDefined(EncryptionScope))
             {
                 writer.WritePropertyName("encryptionScope"u8);
                 writer.WriteStringValue(EncryptionScope);
@@ -137,16 +137,16 @@ namespace Azure.ResourceManager.Media
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> assetId = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<DateTimeOffset> lastModified = default;
-            Optional<string> alternateId = default;
-            Optional<string> description = default;
-            Optional<string> container = default;
-            Optional<string> storageAccountName = default;
-            Optional<MediaAssetStorageEncryptionFormat> storageEncryptionFormat = default;
-            Optional<string> encryptionScope = default;
+            SystemData systemData = default;
+            Guid? assetId = default;
+            DateTimeOffset? created = default;
+            DateTimeOffset? lastModified = default;
+            string alternateId = default;
+            string description = default;
+            string container = default;
+            string storageAccountName = default;
+            MediaAssetStorageEncryptionFormat? storageEncryptionFormat = default;
+            string encryptionScope = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -258,16 +258,16 @@ namespace Azure.ResourceManager.Media
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(assetId),
-                Optional.ToNullable(created),
-                Optional.ToNullable(lastModified),
-                alternateId.Value,
-                description.Value,
-                container.Value,
-                storageAccountName.Value,
-                Optional.ToNullable(storageEncryptionFormat),
-                encryptionScope.Value,
+                systemData,
+                assetId,
+                created,
+                lastModified,
+                alternateId,
+                description,
+                container,
+                storageAccountName,
+                storageEncryptionFormat,
+                encryptionScope,
                 serializedAdditionalRawData);
         }
 

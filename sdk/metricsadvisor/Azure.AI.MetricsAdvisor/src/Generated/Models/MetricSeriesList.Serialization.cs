@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.AI.MetricsAdvisor;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
@@ -19,7 +19,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IReadOnlyList<MetricSeriesDefinition> value = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -43,7 +43,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new MetricSeriesList(nextLink.Value, value ?? new ChangeTrackingList<MetricSeriesDefinition>());
+            return new MetricSeriesList(nextLink, value ?? new ChangeTrackingList<MetricSeriesDefinition>());
         }
     }
 }

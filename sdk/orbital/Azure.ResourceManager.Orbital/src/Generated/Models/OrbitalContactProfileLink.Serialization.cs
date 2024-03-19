@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Orbital;
 
 namespace Azure.ResourceManager.Orbital.Models
 {
@@ -32,12 +33,12 @@ namespace Azure.ResourceManager.Orbital.Models
             writer.WriteStringValue(Polarization.ToString());
             writer.WritePropertyName("direction"u8);
             writer.WriteStringValue(Direction.ToString());
-            if (GainOverTemperature.HasValue)
+            if (Optional.IsDefined(GainOverTemperature))
             {
                 writer.WritePropertyName("gainOverTemperature"u8);
                 writer.WriteNumberValue(GainOverTemperature.Value);
             }
-            if (EirpdBW.HasValue)
+            if (Optional.IsDefined(EirpdBW))
             {
                 writer.WritePropertyName("eirpdBW"u8);
                 writer.WriteNumberValue(EirpdBW.Value);
@@ -90,8 +91,8 @@ namespace Azure.ResourceManager.Orbital.Models
             string name = default;
             OrbitalLinkPolarization polarization = default;
             OrbitalLinkDirection direction = default;
-            Optional<float> gainOverTemperature = default;
-            Optional<float> eirpdBW = default;
+            float? gainOverTemperature = default;
+            float? eirpdBW = default;
             IList<OrbitalContactProfileLinkChannel> channels = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -150,8 +151,8 @@ namespace Azure.ResourceManager.Orbital.Models
                 name,
                 polarization,
                 direction,
-                Optional.ToNullable(gainOverTemperature),
-                Optional.ToNullable(eirpdBW),
+                gainOverTemperature,
+                eirpdBW,
                 channels,
                 serializedAdditionalRawData);
         }

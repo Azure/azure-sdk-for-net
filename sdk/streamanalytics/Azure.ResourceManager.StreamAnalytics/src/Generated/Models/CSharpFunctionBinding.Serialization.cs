@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StreamAnalytics;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
@@ -30,22 +31,22 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStringValue(FunctionBindingType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DllPath != null)
+            if (Optional.IsDefined(DllPath))
             {
                 writer.WritePropertyName("dllPath"u8);
                 writer.WriteStringValue(DllPath);
             }
-            if (Class != null)
+            if (Optional.IsDefined(Class))
             {
                 writer.WritePropertyName("class"u8);
                 writer.WriteStringValue(Class);
             }
-            if (Method != null)
+            if (Optional.IsDefined(Method))
             {
                 writer.WritePropertyName("method"u8);
                 writer.WriteStringValue(Method);
             }
-            if (UpdateMode.HasValue)
+            if (Optional.IsDefined(UpdateMode))
             {
                 writer.WritePropertyName("updateMode"u8);
                 writer.WriteStringValue(UpdateMode.Value.ToString());
@@ -90,10 +91,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string type = default;
-            Optional<string> dllPath = default;
-            Optional<string> @class = default;
-            Optional<string> method = default;
-            Optional<StreamingJobFunctionUpdateMode> updateMode = default;
+            string dllPath = default;
+            string @class = default;
+            string method = default;
+            StreamingJobFunctionUpdateMode? updateMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -148,10 +149,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             return new CSharpFunctionBinding(
                 type,
                 serializedAdditionalRawData,
-                dllPath.Value,
-                @class.Value,
-                method.Value,
-                Optional.ToNullable(updateMode));
+                dllPath,
+                @class,
+                method,
+                updateMode);
         }
 
         BinaryData IPersistableModel<CSharpFunctionBinding>.Write(ModelReaderWriterOptions options)

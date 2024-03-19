@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (WorkspaceId != null)
+            if (Optional.IsDefined(WorkspaceId))
             {
                 writer.WritePropertyName("workspaceId"u8);
                 writer.WriteStringValue(WorkspaceId);
             }
-            if (PrimaryKey != null)
+            if (Optional.IsDefined(PrimaryKey))
             {
                 writer.WritePropertyName("primaryKey"u8);
                 writer.WriteStringValue(PrimaryKey);
             }
-            if (SelectedConfigurations != null)
+            if (Optional.IsDefined(SelectedConfigurations))
             {
                 writer.WritePropertyName("selectedConfigurations"u8);
                 writer.WriteObjectValue(SelectedConfigurations);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<string> workspaceId = default;
-            Optional<string> primaryKey = default;
-            Optional<HDInsightAzureMonitorSelectedConfigurations> selectedConfigurations = default;
+            string workspaceId = default;
+            string primaryKey = default;
+            HDInsightAzureMonitorSelectedConfigurations selectedConfigurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightAzureMonitorExtensionEnableContent(workspaceId.Value, primaryKey.Value, selectedConfigurations.Value, serializedAdditionalRawData);
+            return new HDInsightAzureMonitorExtensionEnableContent(workspaceId, primaryKey, selectedConfigurations, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightAzureMonitorExtensionEnableContent>.Write(ModelReaderWriterOptions options)

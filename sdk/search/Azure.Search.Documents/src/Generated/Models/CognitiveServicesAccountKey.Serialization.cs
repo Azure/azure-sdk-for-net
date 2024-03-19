@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -19,7 +20,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(Key);
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -35,7 +36,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             string key = default;
             string odataType = default;
-            Optional<string> description = default;
+            string description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("key"u8))
@@ -54,7 +55,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new CognitiveServicesAccountKey(odataType, description.Value, key);
+            return new CognitiveServicesAccountKey(odataType, description, key);
         }
     }
 }

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -19,7 +18,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             long usage = default;
-            Optional<long?> quota = default;
+            long? quota = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("usage"u8))
@@ -38,7 +37,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SearchResourceCounter(usage, Optional.ToNullable(quota));
+            return new SearchResourceCounter(usage, quota);
         }
     }
 }

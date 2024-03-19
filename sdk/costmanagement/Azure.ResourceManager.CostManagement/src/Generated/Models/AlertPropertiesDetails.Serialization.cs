@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
 
             writer.WriteStartObject();
-            if (TimeGrainType.HasValue)
+            if (Optional.IsDefined(TimeGrainType))
             {
                 writer.WritePropertyName("timeGrainType"u8);
                 writer.WriteStringValue(TimeGrainType.Value.ToString());
             }
-            if (PeriodStartDate != null)
+            if (Optional.IsDefined(PeriodStartDate))
             {
                 writer.WritePropertyName("periodStartDate"u8);
                 writer.WriteStringValue(PeriodStartDate);
             }
-            if (TriggeredBy != null)
+            if (Optional.IsDefined(TriggeredBy))
             {
                 writer.WritePropertyName("triggeredBy"u8);
                 writer.WriteStringValue(TriggeredBy);
             }
-            if (!(ResourceGroupFilter is ChangeTrackingList<BinaryData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ResourceGroupFilter))
             {
                 writer.WritePropertyName("resourceGroupFilter"u8);
                 writer.WriteStartArray();
@@ -63,7 +64,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ResourceFilter is ChangeTrackingList<BinaryData> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ResourceFilter))
             {
                 writer.WritePropertyName("resourceFilter"u8);
                 writer.WriteStartArray();
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(MeterFilter is ChangeTrackingList<BinaryData> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(MeterFilter))
             {
                 writer.WritePropertyName("meterFilter"u8);
                 writer.WriteStartArray();
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (TagFilter != null)
+            if (Optional.IsDefined(TagFilter))
             {
                 writer.WritePropertyName("tagFilter"u8);
 #if NET6_0_OR_GREATER
@@ -119,32 +120,32 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
 #endif
             }
-            if (Threshold.HasValue)
+            if (Optional.IsDefined(Threshold))
             {
                 writer.WritePropertyName("threshold"u8);
                 writer.WriteNumberValue(Threshold.Value);
             }
-            if (Operator.HasValue)
+            if (Optional.IsDefined(Operator))
             {
                 writer.WritePropertyName("operator"u8);
                 writer.WriteStringValue(Operator.Value.ToString());
             }
-            if (Amount.HasValue)
+            if (Optional.IsDefined(Amount))
             {
                 writer.WritePropertyName("amount"u8);
                 writer.WriteNumberValue(Amount.Value);
             }
-            if (Unit != null)
+            if (Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit);
             }
-            if (CurrentSpend.HasValue)
+            if (Optional.IsDefined(CurrentSpend))
             {
                 writer.WritePropertyName("currentSpend"u8);
                 writer.WriteNumberValue(CurrentSpend.Value);
             }
-            if (!(ContactEmails is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(ContactEmails))
             {
                 writer.WritePropertyName("contactEmails"u8);
                 writer.WriteStartArray();
@@ -154,7 +155,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ContactGroups is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(ContactGroups))
             {
                 writer.WritePropertyName("contactGroups"u8);
                 writer.WriteStartArray();
@@ -164,7 +165,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ContactRoles is ChangeTrackingList<string> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(ContactRoles))
             {
                 writer.WritePropertyName("contactRoles"u8);
                 writer.WriteStartArray();
@@ -174,37 +175,37 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (OverridingAlert != null)
+            if (Optional.IsDefined(OverridingAlert))
             {
                 writer.WritePropertyName("overridingAlert"u8);
                 writer.WriteStringValue(OverridingAlert);
             }
-            if (DepartmentName != null)
+            if (Optional.IsDefined(DepartmentName))
             {
                 writer.WritePropertyName("departmentName"u8);
                 writer.WriteStringValue(DepartmentName);
             }
-            if (CompanyName != null)
+            if (Optional.IsDefined(CompanyName))
             {
                 writer.WritePropertyName("companyName"u8);
                 writer.WriteStringValue(CompanyName);
             }
-            if (EnrollmentNumber != null)
+            if (Optional.IsDefined(EnrollmentNumber))
             {
                 writer.WritePropertyName("enrollmentNumber"u8);
                 writer.WriteStringValue(EnrollmentNumber);
             }
-            if (EnrollmentStartDate != null)
+            if (Optional.IsDefined(EnrollmentStartDate))
             {
                 writer.WritePropertyName("enrollmentStartDate"u8);
                 writer.WriteStringValue(EnrollmentStartDate);
             }
-            if (EnrollmentEndDate != null)
+            if (Optional.IsDefined(EnrollmentEndDate))
             {
                 writer.WritePropertyName("enrollmentEndDate"u8);
                 writer.WriteStringValue(EnrollmentEndDate);
             }
-            if (InvoicingThreshold.HasValue)
+            if (Optional.IsDefined(InvoicingThreshold))
             {
                 writer.WritePropertyName("invoicingThreshold"u8);
                 writer.WriteNumberValue(InvoicingThreshold.Value);
@@ -247,28 +248,28 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<AlertTimeGrainType> timeGrainType = default;
-            Optional<string> periodStartDate = default;
-            Optional<string> triggeredBy = default;
+            AlertTimeGrainType? timeGrainType = default;
+            string periodStartDate = default;
+            string triggeredBy = default;
             IList<BinaryData> resourceGroupFilter = default;
             IList<BinaryData> resourceFilter = default;
             IList<BinaryData> meterFilter = default;
-            Optional<BinaryData> tagFilter = default;
-            Optional<decimal> threshold = default;
-            Optional<CostManagementAlertOperator> @operator = default;
-            Optional<decimal> amount = default;
-            Optional<string> unit = default;
-            Optional<decimal> currentSpend = default;
+            BinaryData tagFilter = default;
+            decimal? threshold = default;
+            CostManagementAlertOperator? @operator = default;
+            decimal? amount = default;
+            string unit = default;
+            decimal? currentSpend = default;
             IList<string> contactEmails = default;
             IList<string> contactGroups = default;
             IList<string> contactRoles = default;
-            Optional<string> overridingAlert = default;
-            Optional<string> departmentName = default;
-            Optional<string> companyName = default;
-            Optional<string> enrollmentNumber = default;
-            Optional<string> enrollmentStartDate = default;
-            Optional<string> enrollmentEndDate = default;
-            Optional<decimal> invoicingThreshold = default;
+            string overridingAlert = default;
+            string departmentName = default;
+            string companyName = default;
+            string enrollmentNumber = default;
+            string enrollmentStartDate = default;
+            string enrollmentEndDate = default;
+            decimal? invoicingThreshold = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -493,28 +494,28 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AlertPropertiesDetails(
-                Optional.ToNullable(timeGrainType),
-                periodStartDate.Value,
-                triggeredBy.Value,
+                timeGrainType,
+                periodStartDate,
+                triggeredBy,
                 resourceGroupFilter ?? new ChangeTrackingList<BinaryData>(),
                 resourceFilter ?? new ChangeTrackingList<BinaryData>(),
                 meterFilter ?? new ChangeTrackingList<BinaryData>(),
-                tagFilter.Value,
-                Optional.ToNullable(threshold),
-                Optional.ToNullable(@operator),
-                Optional.ToNullable(amount),
-                unit.Value,
-                Optional.ToNullable(currentSpend),
+                tagFilter,
+                threshold,
+                @operator,
+                amount,
+                unit,
+                currentSpend,
                 contactEmails ?? new ChangeTrackingList<string>(),
                 contactGroups ?? new ChangeTrackingList<string>(),
                 contactRoles ?? new ChangeTrackingList<string>(),
-                overridingAlert.Value,
-                departmentName.Value,
-                companyName.Value,
-                enrollmentNumber.Value,
-                enrollmentStartDate.Value,
-                enrollmentEndDate.Value,
-                Optional.ToNullable(invoicingThreshold),
+                overridingAlert,
+                departmentName,
+                companyName,
+                enrollmentNumber,
+                enrollmentStartDate,
+                enrollmentEndDate,
+                invoicingThreshold,
                 serializedAdditionalRawData);
         }
 

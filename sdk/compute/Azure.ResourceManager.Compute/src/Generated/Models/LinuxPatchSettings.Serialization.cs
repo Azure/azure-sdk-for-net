@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (PatchMode.HasValue)
+            if (Optional.IsDefined(PatchMode))
             {
                 writer.WritePropertyName("patchMode"u8);
                 writer.WriteStringValue(PatchMode.Value.ToString());
             }
-            if (AssessmentMode.HasValue)
+            if (Optional.IsDefined(AssessmentMode))
             {
                 writer.WritePropertyName("assessmentMode"u8);
                 writer.WriteStringValue(AssessmentMode.Value.ToString());
             }
-            if (AutomaticByPlatformSettings != null)
+            if (Optional.IsDefined(AutomaticByPlatformSettings))
             {
                 writer.WritePropertyName("automaticByPlatformSettings"u8);
                 writer.WriteObjectValue(AutomaticByPlatformSettings);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<LinuxVmGuestPatchMode> patchMode = default;
-            Optional<LinuxPatchAssessmentMode> assessmentMode = default;
-            Optional<LinuxVmGuestPatchAutomaticByPlatformSettings> automaticByPlatformSettings = default;
+            LinuxVmGuestPatchMode? patchMode = default;
+            LinuxPatchAssessmentMode? assessmentMode = default;
+            LinuxVmGuestPatchAutomaticByPlatformSettings automaticByPlatformSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LinuxPatchSettings(Optional.ToNullable(patchMode), Optional.ToNullable(assessmentMode), automaticByPlatformSettings.Value, serializedAdditionalRawData);
+            return new LinuxPatchSettings(patchMode, assessmentMode, automaticByPlatformSettings, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LinuxPatchSettings>.Write(ModelReaderWriterOptions options)

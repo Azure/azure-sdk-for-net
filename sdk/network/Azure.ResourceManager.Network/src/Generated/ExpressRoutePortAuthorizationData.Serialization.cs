@@ -28,44 +28,44 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && AuthorizationKey != null)
+            if (options.Format != "W" && Optional.IsDefined(AuthorizationKey))
             {
                 writer.WritePropertyName("authorizationKey"u8);
                 writer.WriteStringValue(AuthorizationKey);
             }
-            if (options.Format != "W" && AuthorizationUseStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AuthorizationUseStatus))
             {
                 writer.WritePropertyName("authorizationUseStatus"u8);
                 writer.WriteStringValue(AuthorizationUseStatus.Value.ToString());
             }
-            if (options.Format != "W" && CircuitResourceUri != null)
+            if (options.Format != "W" && Optional.IsDefined(CircuitResourceUri))
             {
                 writer.WritePropertyName("circuitResourceUri"u8);
                 writer.WriteStringValue(CircuitResourceUri.AbsoluteUri);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<string> authorizationKey = default;
-            Optional<ExpressRoutePortAuthorizationUseStatus> authorizationUseStatus = default;
-            Optional<Uri> circuitResourceUri = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            string authorizationKey = default;
+            ExpressRoutePortAuthorizationUseStatus? authorizationUseStatus = default;
+            Uri circuitResourceUri = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -204,15 +204,15 @@ namespace Azure.ResourceManager.Network
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ExpressRoutePortAuthorizationData(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
+                id,
+                name,
+                type,
                 serializedAdditionalRawData,
-                Optional.ToNullable(etag),
-                authorizationKey.Value,
-                Optional.ToNullable(authorizationUseStatus),
-                circuitResourceUri.Value,
-                Optional.ToNullable(provisioningState));
+                etag,
+                authorizationKey,
+                authorizationUseStatus,
+                circuitResourceUri,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<ExpressRoutePortAuthorizationData>.Write(ModelReaderWriterOptions options)

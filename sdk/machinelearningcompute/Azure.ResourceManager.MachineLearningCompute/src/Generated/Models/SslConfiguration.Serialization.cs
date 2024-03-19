@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearningCompute;
 
 namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             }
 
             writer.WriteStartObject();
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Cert != null)
+            if (Optional.IsDefined(Cert))
             {
                 writer.WritePropertyName("cert"u8);
                 writer.WriteStringValue(Cert);
             }
-            if (Key != null)
+            if (Optional.IsDefined(Key))
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
             }
-            if (Cname != null)
+            if (Optional.IsDefined(Cname))
             {
                 writer.WritePropertyName("cname"u8);
                 writer.WriteStringValue(Cname);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             {
                 return null;
             }
-            Optional<Status> status = default;
-            Optional<string> cert = default;
-            Optional<string> key = default;
-            Optional<string> cname = default;
+            Status? status = default;
+            string cert = default;
+            string key = default;
+            string cname = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SslConfiguration(Optional.ToNullable(status), cert.Value, key.Value, cname.Value, serializedAdditionalRawData);
+            return new SslConfiguration(status, cert, key, cname, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SslConfiguration>.Write(ModelReaderWriterOptions options)

@@ -29,32 +29,32 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -67,12 +67,12 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (VirtualHub != null)
+            if (Optional.IsDefined(VirtualHub))
             {
                 writer.WritePropertyName("virtualHub"u8);
                 JsonSerializer.Serialize(writer, VirtualHub);
             }
-            if (!(Connections is ChangeTrackingList<VpnConnectionData> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Connections))
             {
                 writer.WritePropertyName("connections"u8);
                 writer.WriteStartArray();
@@ -82,22 +82,22 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (BgpSettings != null)
+            if (Optional.IsDefined(BgpSettings))
             {
                 writer.WritePropertyName("bgpSettings"u8);
                 writer.WriteObjectValue(BgpSettings);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (VpnGatewayScaleUnit.HasValue)
+            if (Optional.IsDefined(VpnGatewayScaleUnit))
             {
                 writer.WritePropertyName("vpnGatewayScaleUnit"u8);
                 writer.WriteNumberValue(VpnGatewayScaleUnit.Value);
             }
-            if (options.Format != "W" && !(IPConfigurations is ChangeTrackingList<VpnGatewayIPConfiguration> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(IPConfigurations))
             {
                 writer.WritePropertyName("ipConfigurations"u8);
                 writer.WriteStartArray();
@@ -107,17 +107,17 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (EnableBgpRouteTranslationForNat.HasValue)
+            if (Optional.IsDefined(EnableBgpRouteTranslationForNat))
             {
                 writer.WritePropertyName("enableBgpRouteTranslationForNat"u8);
                 writer.WriteBooleanValue(EnableBgpRouteTranslationForNat.Value);
             }
-            if (IsRoutingPreferenceInternet.HasValue)
+            if (Optional.IsDefined(IsRoutingPreferenceInternet))
             {
                 writer.WritePropertyName("isRoutingPreferenceInternet"u8);
                 writer.WriteBooleanValue(IsRoutingPreferenceInternet.Value);
             }
-            if (!(NatRules is ChangeTrackingList<VpnGatewayNatRuleData> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(NatRules))
             {
                 writer.WritePropertyName("natRules"u8);
                 writer.WriteStartArray();
@@ -166,20 +166,20 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
             IDictionary<string, string> tags = default;
-            Optional<WritableSubResource> virtualHub = default;
+            WritableSubResource virtualHub = default;
             IList<VpnConnectionData> connections = default;
-            Optional<BgpSettings> bgpSettings = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<int> vpnGatewayScaleUnit = default;
+            BgpSettings bgpSettings = default;
+            NetworkProvisioningState? provisioningState = default;
+            int? vpnGatewayScaleUnit = default;
             IReadOnlyList<VpnGatewayIPConfiguration> ipConfigurations = default;
-            Optional<bool> enableBgpRouteTranslationForNat = default;
-            Optional<bool> isRoutingPreferenceInternet = default;
+            bool? enableBgpRouteTranslationForNat = default;
+            bool? isRoutingPreferenceInternet = default;
             IList<VpnGatewayNatRuleData> natRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -355,21 +355,21 @@ namespace Azure.ResourceManager.Network
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new VpnGatewayData(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
-                Optional.ToNullable(location),
+                id,
+                name,
+                type,
+                location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
-                Optional.ToNullable(etag),
+                etag,
                 virtualHub,
                 connections ?? new ChangeTrackingList<VpnConnectionData>(),
-                bgpSettings.Value,
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(vpnGatewayScaleUnit),
+                bgpSettings,
+                provisioningState,
+                vpnGatewayScaleUnit,
                 ipConfigurations ?? new ChangeTrackingList<VpnGatewayIPConfiguration>(),
-                Optional.ToNullable(enableBgpRouteTranslationForNat),
-                Optional.ToNullable(isRoutingPreferenceInternet),
+                enableBgpRouteTranslationForNat,
+                isRoutingPreferenceInternet,
                 natRules ?? new ChangeTrackingList<VpnGatewayNatRuleData>());
         }
 

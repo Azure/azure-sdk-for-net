@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DevSpaces;
 
 namespace Azure.ResourceManager.DevSpaces.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.DevSpaces.Models
             }
 
             writer.WriteStartObject();
-            if (ContainerHostResourceId != null)
+            if (Optional.IsDefined(ContainerHostResourceId))
             {
                 writer.WritePropertyName("containerHostResourceId"u8);
                 writer.WriteStringValue(ContainerHostResourceId);
             }
-            if (options.Format != "W" && MappedControllerResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(MappedControllerResourceId))
             {
                 writer.WritePropertyName("mappedControllerResourceId"u8);
                 writer.WriteStringValue(MappedControllerResourceId);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.DevSpaces.Models
             {
                 return null;
             }
-            Optional<string> containerHostResourceId = default;
-            Optional<string> mappedControllerResourceId = default;
+            string containerHostResourceId = default;
+            string mappedControllerResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerHostMapping(containerHostResourceId.Value, mappedControllerResourceId.Value, serializedAdditionalRawData);
+            return new ContainerHostMapping(containerHostResourceId, mappedControllerResourceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerHostMapping>.Write(ModelReaderWriterOptions options)

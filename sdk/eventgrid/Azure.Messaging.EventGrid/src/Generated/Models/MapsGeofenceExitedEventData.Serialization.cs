@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
+using Azure.Messaging.EventGrid;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -25,7 +25,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             IReadOnlyList<string> expiredGeofenceGeometryId = default;
             IReadOnlyList<MapsGeofenceGeometry> geometries = default;
             IReadOnlyList<string> invalidPeriodGeofenceGeometryId = default;
-            Optional<bool> isEventPublished = default;
+            bool? isEventPublished = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("expiredGeofenceGeometryId"u8))
@@ -80,7 +80,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new MapsGeofenceExitedEventData(expiredGeofenceGeometryId ?? new ChangeTrackingList<string>(), geometries ?? new ChangeTrackingList<MapsGeofenceGeometry>(), invalidPeriodGeofenceGeometryId ?? new ChangeTrackingList<string>(), Optional.ToNullable(isEventPublished));
+            return new MapsGeofenceExitedEventData(expiredGeofenceGeometryId ?? new ChangeTrackingList<string>(), geometries ?? new ChangeTrackingList<MapsGeofenceGeometry>(), invalidPeriodGeofenceGeometryId ?? new ChangeTrackingList<string>(), isEventPublished);
         }
 
         internal partial class MapsGeofenceExitedEventDataConverter : JsonConverter<MapsGeofenceExitedEventData>

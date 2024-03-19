@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (ThresholdId != null)
+            if (Optional.IsDefined(ThresholdId))
             {
                 writer.WritePropertyName("thresholdId"u8);
                 writer.WriteStringValue(ThresholdId);
             }
-            if (PercentageThreshold != null)
+            if (Optional.IsDefined(PercentageThreshold))
             {
                 writer.WritePropertyName("percentageThreshold"u8);
                 writer.WriteObjectValue(PercentageThreshold);
             }
-            if (DisplayOnChart.HasValue)
+            if (Optional.IsDefined(DisplayOnChart))
             {
                 writer.WritePropertyName("displayOnChart"u8);
                 writer.WriteStringValue(DisplayOnChart.Value.ToString());
             }
-            if (SendNotificationWhenExceeded.HasValue)
+            if (Optional.IsDefined(SendNotificationWhenExceeded))
             {
                 writer.WritePropertyName("sendNotificationWhenExceeded"u8);
                 writer.WriteStringValue(SendNotificationWhenExceeded.Value.ToString());
             }
-            if (NotificationSent != null)
+            if (Optional.IsDefined(NotificationSent))
             {
                 writer.WritePropertyName("notificationSent"u8);
                 writer.WriteStringValue(NotificationSent);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<string> thresholdId = default;
-            Optional<PercentageCostThresholdProperties> percentageThreshold = default;
-            Optional<DevTestLabCostThresholdStatus> displayOnChart = default;
-            Optional<DevTestLabCostThresholdStatus> sendNotificationWhenExceeded = default;
-            Optional<string> notificationSent = default;
+            string thresholdId = default;
+            PercentageCostThresholdProperties percentageThreshold = default;
+            DevTestLabCostThresholdStatus? displayOnChart = default;
+            DevTestLabCostThresholdStatus? sendNotificationWhenExceeded = default;
+            string notificationSent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -142,11 +143,11 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DevTestLabCostThreshold(
-                thresholdId.Value,
-                percentageThreshold.Value,
-                Optional.ToNullable(displayOnChart),
-                Optional.ToNullable(sendNotificationWhenExceeded),
-                notificationSent.Value,
+                thresholdId,
+                percentageThreshold,
+                displayOnChart,
+                sendNotificationWhenExceeded,
+                notificationSent,
                 serializedAdditionalRawData);
         }
 

@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ContainerService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ContainerService
             writer.WriteStringValue(KubernetesVersion);
             writer.WritePropertyName("osType"u8);
             writer.WriteStringValue(OSType.ToString());
-            if (!(Upgrades is ChangeTrackingList<AgentPoolUpgradeProfilePropertiesUpgradesItem> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Upgrades))
             {
                 writer.WritePropertyName("upgrades"u8);
                 writer.WriteStartArray();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ContainerService
                 }
                 writer.WriteEndArray();
             }
-            if (LatestNodeImageVersion != null)
+            if (Optional.IsDefined(LatestNodeImageVersion))
             {
                 writer.WritePropertyName("latestNodeImageVersion"u8);
                 writer.WriteStringValue(LatestNodeImageVersion);
@@ -111,11 +111,11 @@ namespace Azure.ResourceManager.ContainerService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             string kubernetesVersion = default;
             ContainerServiceOSType osType = default;
             IReadOnlyList<AgentPoolUpgradeProfilePropertiesUpgradesItem> upgrades = default;
-            Optional<string> latestNodeImageVersion = default;
+            string latestNodeImageVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -195,11 +195,11 @@ namespace Azure.ResourceManager.ContainerService
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 kubernetesVersion,
                 osType,
                 upgrades ?? new ChangeTrackingList<AgentPoolUpgradeProfilePropertiesUpgradesItem>(),
-                latestNodeImageVersion.Value,
+                latestNodeImageVersion,
                 serializedAdditionalRawData);
         }
 

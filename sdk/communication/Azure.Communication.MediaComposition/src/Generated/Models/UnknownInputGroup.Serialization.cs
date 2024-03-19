@@ -18,27 +18,27 @@ namespace Azure.Communication.MediaComposition
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Position != null)
+            if (Optional.IsDefined(Position))
             {
                 writer.WritePropertyName("position"u8);
                 writer.WriteObjectValue(Position);
             }
-            if (Width != null)
+            if (Optional.IsDefined(Width))
             {
                 writer.WritePropertyName("width"u8);
                 writer.WriteStringValue(Width);
             }
-            if (Height != null)
+            if (Optional.IsDefined(Height))
             {
                 writer.WritePropertyName("height"u8);
                 writer.WriteStringValue(Height);
             }
-            if (Layer != null)
+            if (Optional.IsDefined(Layer))
             {
                 writer.WritePropertyName("layer"u8);
                 writer.WriteStringValue(Layer);
             }
-            if (ScalingMode.HasValue)
+            if (Optional.IsDefined(ScalingMode))
             {
                 writer.WritePropertyName("scalingMode"u8);
                 writer.WriteStringValue(ScalingMode.Value.ToString());
@@ -53,11 +53,11 @@ namespace Azure.Communication.MediaComposition
                 return null;
             }
             InputGroupType kind = "Unknown";
-            Optional<InputPosition> position = default;
-            Optional<string> width = default;
-            Optional<string> height = default;
-            Optional<string> layer = default;
-            Optional<ScalingMode> scalingMode = default;
+            InputPosition position = default;
+            string width = default;
+            string height = default;
+            string layer = default;
+            ScalingMode? scalingMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -101,11 +101,11 @@ namespace Azure.Communication.MediaComposition
             }
             return new UnknownInputGroup(
                 kind,
-                position.Value,
-                width.Value,
-                height.Value,
-                layer.Value,
-                Optional.ToNullable(scalingMode));
+                position,
+                width,
+                height,
+                layer,
+                scalingMode);
         }
     }
 }

@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.SignalR
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.SignalR
             writer.WriteStringValue(KeyVaultBaseUri.AbsoluteUri);
             writer.WritePropertyName("keyVaultSecretName"u8);
             writer.WriteStringValue(KeyVaultSecretName);
-            if (KeyVaultSecretVersion != null)
+            if (Optional.IsDefined(KeyVaultSecretVersion))
             {
                 writer.WritePropertyName("keyVaultSecretVersion"u8);
                 writer.WriteStringValue(KeyVaultSecretVersion);
@@ -106,11 +106,11 @@ namespace Azure.ResourceManager.SignalR
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SignalRProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            SignalRProvisioningState? provisioningState = default;
             Uri keyVaultBaseUri = default;
             string keyVaultSecretName = default;
-            Optional<string> keyVaultSecretVersion = default;
+            string keyVaultSecretVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -185,11 +185,11 @@ namespace Azure.ResourceManager.SignalR
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(provisioningState),
+                systemData,
+                provisioningState,
                 keyVaultBaseUri,
                 keyVaultSecretName,
-                keyVaultSecretVersion.Value,
+                keyVaultSecretVersion,
                 serializedAdditionalRawData);
         }
 

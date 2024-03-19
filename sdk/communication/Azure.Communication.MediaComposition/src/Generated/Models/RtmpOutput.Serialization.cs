@@ -22,7 +22,7 @@ namespace Azure.Communication.MediaComposition
             writer.WriteObjectValue(Resolution);
             writer.WritePropertyName("streamUrl"u8);
             writer.WriteStringValue(StreamUrl);
-            if (Mode.HasValue)
+            if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
@@ -41,7 +41,7 @@ namespace Azure.Communication.MediaComposition
             string streamKey = default;
             LayoutResolution resolution = default;
             string streamUrl = default;
-            Optional<RtmpMode> mode = default;
+            RtmpMode? mode = default;
             MediaOutputType kind = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -75,7 +75,7 @@ namespace Azure.Communication.MediaComposition
                     continue;
                 }
             }
-            return new RtmpOutput(kind, streamKey, resolution, streamUrl, Optional.ToNullable(mode));
+            return new RtmpOutput(kind, streamKey, resolution, streamUrl, mode);
         }
     }
 }

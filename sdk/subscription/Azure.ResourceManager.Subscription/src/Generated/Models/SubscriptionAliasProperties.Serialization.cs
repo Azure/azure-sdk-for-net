@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Subscription;
 
 namespace Azure.ResourceManager.Subscription.Models
 {
@@ -26,62 +27,62 @@ namespace Azure.ResourceManager.Subscription.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && SubscriptionId != null)
+            if (options.Format != "W" && Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && AcceptOwnershipUri != null)
+            if (options.Format != "W" && Optional.IsDefined(AcceptOwnershipUri))
             {
                 writer.WritePropertyName("acceptOwnershipUrl"u8);
                 writer.WriteStringValue(AcceptOwnershipUri.AbsoluteUri);
             }
-            if (options.Format != "W" && AcceptOwnershipState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AcceptOwnershipState))
             {
                 writer.WritePropertyName("acceptOwnershipState"u8);
                 writer.WriteStringValue(AcceptOwnershipState.Value.ToString());
             }
-            if (BillingScope != null)
+            if (Optional.IsDefined(BillingScope))
             {
                 writer.WritePropertyName("billingScope"u8);
                 writer.WriteStringValue(BillingScope);
             }
-            if (Workload.HasValue)
+            if (Optional.IsDefined(Workload))
             {
                 writer.WritePropertyName("workload"u8);
                 writer.WriteStringValue(Workload.Value.ToString());
             }
-            if (ResellerId != null)
+            if (Optional.IsDefined(ResellerId))
             {
                 writer.WritePropertyName("resellerId"u8);
                 writer.WriteStringValue(ResellerId);
             }
-            if (SubscriptionOwnerId != null)
+            if (Optional.IsDefined(SubscriptionOwnerId))
             {
                 writer.WritePropertyName("subscriptionOwnerId"u8);
                 writer.WriteStringValue(SubscriptionOwnerId);
             }
-            if (ManagementGroupId != null)
+            if (Optional.IsDefined(ManagementGroupId))
             {
                 writer.WritePropertyName("managementGroupId"u8);
                 writer.WriteStringValue(ManagementGroupId);
             }
-            if (CreatedOn.HasValue)
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -130,17 +131,17 @@ namespace Azure.ResourceManager.Subscription.Models
             {
                 return null;
             }
-            Optional<string> subscriptionId = default;
-            Optional<string> displayName = default;
-            Optional<SubscriptionProvisioningState> provisioningState = default;
-            Optional<Uri> acceptOwnershipUrl = default;
-            Optional<AcceptOwnershipState> acceptOwnershipState = default;
-            Optional<string> billingScope = default;
-            Optional<SubscriptionWorkload> workload = default;
-            Optional<string> resellerId = default;
-            Optional<string> subscriptionOwnerId = default;
-            Optional<string> managementGroupId = default;
-            Optional<DateTimeOffset> createdTime = default;
+            string subscriptionId = default;
+            string displayName = default;
+            SubscriptionProvisioningState? provisioningState = default;
+            Uri acceptOwnershipUrl = default;
+            AcceptOwnershipState? acceptOwnershipState = default;
+            string billingScope = default;
+            SubscriptionWorkload? workload = default;
+            string resellerId = default;
+            string subscriptionOwnerId = default;
+            string managementGroupId = default;
+            DateTimeOffset? createdTime = default;
             IReadOnlyDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -242,17 +243,17 @@ namespace Azure.ResourceManager.Subscription.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SubscriptionAliasProperties(
-                subscriptionId.Value,
-                displayName.Value,
-                Optional.ToNullable(provisioningState),
-                acceptOwnershipUrl.Value,
-                Optional.ToNullable(acceptOwnershipState),
-                billingScope.Value,
-                Optional.ToNullable(workload),
-                resellerId.Value,
-                subscriptionOwnerId.Value,
-                managementGroupId.Value,
-                Optional.ToNullable(createdTime),
+                subscriptionId,
+                displayName,
+                provisioningState,
+                acceptOwnershipUrl,
+                acceptOwnershipState,
+                billingScope,
+                workload,
+                resellerId,
+                subscriptionOwnerId,
+                managementGroupId,
+                createdTime,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }

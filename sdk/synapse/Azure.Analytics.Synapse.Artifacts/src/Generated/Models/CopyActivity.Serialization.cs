@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -19,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (!(Inputs is ChangeTrackingList<DatasetReference> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Inputs))
             {
                 writer.WritePropertyName("inputs"u8);
                 writer.WriteStartArray();
@@ -29,7 +30,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Outputs is ChangeTrackingList<DatasetReference> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Outputs))
             {
                 writer.WritePropertyName("outputs"u8);
                 writer.WriteStartArray();
@@ -39,12 +40,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (LinkedServiceName != null)
+            if (Optional.IsDefined(LinkedServiceName))
             {
                 writer.WritePropertyName("linkedServiceName"u8);
                 writer.WriteObjectValue(LinkedServiceName);
             }
-            if (Policy != null)
+            if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
                 writer.WriteObjectValue(Policy);
@@ -53,22 +54,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (OnInactiveMarkAs.HasValue)
+            if (Optional.IsDefined(OnInactiveMarkAs))
             {
                 writer.WritePropertyName("onInactiveMarkAs"u8);
                 writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
             }
-            if (!(DependsOn is ChangeTrackingList<ActivityDependency> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
@@ -78,7 +79,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(UserProperties is ChangeTrackingList<UserProperty> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(UserProperties))
             {
                 writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
@@ -94,52 +95,52 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteObjectValue(Source);
             writer.WritePropertyName("sink"u8);
             writer.WriteObjectValue(Sink);
-            if (Translator != null)
+            if (Optional.IsDefined(Translator))
             {
                 writer.WritePropertyName("translator"u8);
                 writer.WriteObjectValue(Translator);
             }
-            if (EnableStaging != null)
+            if (Optional.IsDefined(EnableStaging))
             {
                 writer.WritePropertyName("enableStaging"u8);
                 writer.WriteObjectValue(EnableStaging);
             }
-            if (StagingSettings != null)
+            if (Optional.IsDefined(StagingSettings))
             {
                 writer.WritePropertyName("stagingSettings"u8);
                 writer.WriteObjectValue(StagingSettings);
             }
-            if (ParallelCopies != null)
+            if (Optional.IsDefined(ParallelCopies))
             {
                 writer.WritePropertyName("parallelCopies"u8);
                 writer.WriteObjectValue(ParallelCopies);
             }
-            if (DataIntegrationUnits != null)
+            if (Optional.IsDefined(DataIntegrationUnits))
             {
                 writer.WritePropertyName("dataIntegrationUnits"u8);
                 writer.WriteObjectValue(DataIntegrationUnits);
             }
-            if (EnableSkipIncompatibleRow != null)
+            if (Optional.IsDefined(EnableSkipIncompatibleRow))
             {
                 writer.WritePropertyName("enableSkipIncompatibleRow"u8);
                 writer.WriteObjectValue(EnableSkipIncompatibleRow);
             }
-            if (RedirectIncompatibleRowSettings != null)
+            if (Optional.IsDefined(RedirectIncompatibleRowSettings))
             {
                 writer.WritePropertyName("redirectIncompatibleRowSettings"u8);
                 writer.WriteObjectValue(RedirectIncompatibleRowSettings);
             }
-            if (LogStorageSettings != null)
+            if (Optional.IsDefined(LogStorageSettings))
             {
                 writer.WritePropertyName("logStorageSettings"u8);
                 writer.WriteObjectValue(LogStorageSettings);
             }
-            if (LogSettings != null)
+            if (Optional.IsDefined(LogSettings))
             {
                 writer.WritePropertyName("logSettings"u8);
                 writer.WriteObjectValue(LogSettings);
             }
-            if (!(PreserveRules is ChangeTrackingList<object> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(PreserveRules))
             {
                 writer.WritePropertyName("preserveRules"u8);
                 writer.WriteStartArray();
@@ -154,7 +155,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Preserve is ChangeTrackingList<object> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(Preserve))
             {
                 writer.WritePropertyName("preserve"u8);
                 writer.WriteStartArray();
@@ -169,12 +170,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ValidateDataConsistency != null)
+            if (Optional.IsDefined(ValidateDataConsistency))
             {
                 writer.WritePropertyName("validateDataConsistency"u8);
                 writer.WriteObjectValue(ValidateDataConsistency);
             }
-            if (SkipErrorFile != null)
+            if (Optional.IsDefined(SkipErrorFile))
             {
                 writer.WritePropertyName("skipErrorFile"u8);
                 writer.WriteObjectValue(SkipErrorFile);
@@ -196,30 +197,30 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             IList<DatasetReference> inputs = default;
             IList<DatasetReference> outputs = default;
-            Optional<LinkedServiceReference> linkedServiceName = default;
-            Optional<ActivityPolicy> policy = default;
+            LinkedServiceReference linkedServiceName = default;
+            ActivityPolicy policy = default;
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<ActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
+            string description = default;
+            ActivityState? state = default;
+            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
             IList<ActivityDependency> dependsOn = default;
             IList<UserProperty> userProperties = default;
             CopySource source = default;
             CopySink sink = default;
-            Optional<object> translator = default;
-            Optional<object> enableStaging = default;
-            Optional<StagingSettings> stagingSettings = default;
-            Optional<object> parallelCopies = default;
-            Optional<object> dataIntegrationUnits = default;
-            Optional<object> enableSkipIncompatibleRow = default;
-            Optional<RedirectIncompatibleRowSettings> redirectIncompatibleRowSettings = default;
-            Optional<LogStorageSettings> logStorageSettings = default;
-            Optional<LogSettings> logSettings = default;
+            object translator = default;
+            object enableStaging = default;
+            StagingSettings stagingSettings = default;
+            object parallelCopies = default;
+            object dataIntegrationUnits = default;
+            object enableSkipIncompatibleRow = default;
+            RedirectIncompatibleRowSettings redirectIncompatibleRowSettings = default;
+            LogStorageSettings logStorageSettings = default;
+            LogSettings logSettings = default;
             IList<object> preserveRules = default;
             IList<object> preserve = default;
-            Optional<object> validateDataConsistency = default;
-            Optional<SkipErrorFile> skipErrorFile = default;
+            object validateDataConsistency = default;
+            SkipErrorFile skipErrorFile = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -500,31 +501,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new CopyActivity(
                 name,
                 type,
-                description.Value,
-                Optional.ToNullable(state),
-                Optional.ToNullable(onInactiveMarkAs),
+                description,
+                state,
+                onInactiveMarkAs,
                 dependsOn ?? new ChangeTrackingList<ActivityDependency>(),
                 userProperties ?? new ChangeTrackingList<UserProperty>(),
                 additionalProperties,
-                linkedServiceName.Value,
-                policy.Value,
+                linkedServiceName,
+                policy,
                 inputs ?? new ChangeTrackingList<DatasetReference>(),
                 outputs ?? new ChangeTrackingList<DatasetReference>(),
                 source,
                 sink,
-                translator.Value,
-                enableStaging.Value,
-                stagingSettings.Value,
-                parallelCopies.Value,
-                dataIntegrationUnits.Value,
-                enableSkipIncompatibleRow.Value,
-                redirectIncompatibleRowSettings.Value,
-                logStorageSettings.Value,
-                logSettings.Value,
+                translator,
+                enableStaging,
+                stagingSettings,
+                parallelCopies,
+                dataIntegrationUnits,
+                enableSkipIncompatibleRow,
+                redirectIncompatibleRowSettings,
+                logStorageSettings,
+                logSettings,
                 preserveRules ?? new ChangeTrackingList<object>(),
                 preserve ?? new ChangeTrackingList<object>(),
-                validateDataConsistency.Value,
-                skipErrorFile.Value);
+                validateDataConsistency,
+                skipErrorFile);
         }
 
         internal partial class CopyActivityConverter : JsonConverter<CopyActivity>

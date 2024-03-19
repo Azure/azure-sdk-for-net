@@ -29,29 +29,29 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && !(LoadBalancingRules is ChangeTrackingList<WritableSubResource> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(LoadBalancingRules))
             {
                 writer.WritePropertyName("loadBalancingRules"u8);
                 writer.WriteStartArray();
@@ -61,37 +61,37 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Protocol.HasValue)
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (Port.HasValue)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (IntervalInSeconds.HasValue)
+            if (Optional.IsDefined(IntervalInSeconds))
             {
                 writer.WritePropertyName("intervalInSeconds"u8);
                 writer.WriteNumberValue(IntervalInSeconds.Value);
             }
-            if (NumberOfProbes.HasValue)
+            if (Optional.IsDefined(NumberOfProbes))
             {
                 writer.WritePropertyName("numberOfProbes"u8);
                 writer.WriteNumberValue(NumberOfProbes.Value);
             }
-            if (ProbeThreshold.HasValue)
+            if (Optional.IsDefined(ProbeThreshold))
             {
                 writer.WritePropertyName("probeThreshold"u8);
                 writer.WriteNumberValue(ProbeThreshold.Value);
             }
-            if (RequestPath != null)
+            if (Optional.IsDefined(RequestPath))
             {
                 writer.WritePropertyName("requestPath"u8);
                 writer.WriteStringValue(RequestPath);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -135,18 +135,18 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
             IReadOnlyList<WritableSubResource> loadBalancingRules = default;
-            Optional<ProbeProtocol> protocol = default;
-            Optional<int> port = default;
-            Optional<int> intervalInSeconds = default;
-            Optional<int> numberOfProbes = default;
-            Optional<int> probeThreshold = default;
-            Optional<string> requestPath = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            ProbeProtocol? protocol = default;
+            int? port = default;
+            int? intervalInSeconds = default;
+            int? numberOfProbes = default;
+            int? probeThreshold = default;
+            string requestPath = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -275,19 +275,19 @@ namespace Azure.ResourceManager.Network
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ProbeData(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
+                id,
+                name,
+                type,
                 serializedAdditionalRawData,
-                Optional.ToNullable(etag),
+                etag,
                 loadBalancingRules ?? new ChangeTrackingList<WritableSubResource>(),
-                Optional.ToNullable(protocol),
-                Optional.ToNullable(port),
-                Optional.ToNullable(intervalInSeconds),
-                Optional.ToNullable(numberOfProbes),
-                Optional.ToNullable(probeThreshold),
-                requestPath.Value,
-                Optional.ToNullable(provisioningState));
+                protocol,
+                port,
+                intervalInSeconds,
+                numberOfProbes,
+                probeThreshold,
+                requestPath,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<ProbeData>.Write(ModelReaderWriterOptions options)

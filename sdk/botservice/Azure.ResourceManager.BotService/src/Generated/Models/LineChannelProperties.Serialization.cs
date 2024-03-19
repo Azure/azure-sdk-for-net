@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.BotService;
 
 namespace Azure.ResourceManager.BotService.Models
 {
@@ -33,12 +34,12 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && CallbackUri != null)
+            if (options.Format != "W" && Optional.IsDefined(CallbackUri))
             {
                 writer.WritePropertyName("callbackUrl"u8);
                 writer.WriteStringValue(CallbackUri.AbsoluteUri);
             }
-            if (options.Format != "W" && IsValidated.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsValidated))
             {
                 writer.WritePropertyName("isValidated"u8);
                 writer.WriteBooleanValue(IsValidated.Value);
@@ -82,8 +83,8 @@ namespace Azure.ResourceManager.BotService.Models
                 return null;
             }
             IList<LineRegistration> lineRegistrations = default;
-            Optional<Uri> callbackUrl = default;
-            Optional<bool> isValidated = default;
+            Uri callbackUrl = default;
+            bool? isValidated = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LineChannelProperties(lineRegistrations, callbackUrl.Value, Optional.ToNullable(isValidated), serializedAdditionalRawData);
+            return new LineChannelProperties(lineRegistrations, callbackUrl, isValidated, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LineChannelProperties>.Write(ModelReaderWriterOptions options)

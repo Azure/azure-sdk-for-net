@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,24 +56,24 @@ namespace Azure.ResourceManager.ApplicationInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Priority.HasValue)
+            if (Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
-            if (Author != null)
+            if (Optional.IsDefined(Author))
             {
                 writer.WritePropertyName("author"u8);
                 writer.WriteStringValue(Author);
             }
-            if (TemplateData != null)
+            if (Optional.IsDefined(TemplateData))
             {
                 writer.WritePropertyName("templateData"u8);
 #if NET6_0_OR_GREATER
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 }
 #endif
             }
-            if (!(Galleries is ChangeTrackingList<WorkbookTemplateGallery> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Galleries))
             {
                 writer.WritePropertyName("galleries"u8);
                 writer.WriteStartArray();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 }
                 writer.WriteEndArray();
             }
-            if (!(LocalizedGalleries is ChangeTrackingDictionary<string, IList<WorkbookTemplateLocalizedGallery>> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(LocalizedGalleries))
             {
                 writer.WritePropertyName("localized"u8);
                 writer.WriteStartObject();
@@ -160,10 +160,10 @@ namespace Azure.ResourceManager.ApplicationInsights
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> priority = default;
-            Optional<string> author = default;
-            Optional<BinaryData> templateData = default;
+            SystemData systemData = default;
+            int? priority = default;
+            string author = default;
+            BinaryData templateData = default;
             IList<WorkbookTemplateGallery> galleries = default;
             IDictionary<string, IList<WorkbookTemplateLocalizedGallery>> localized = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -298,12 +298,12 @@ namespace Azure.ResourceManager.ApplicationInsights
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(priority),
-                author.Value,
-                templateData.Value,
+                priority,
+                author,
+                templateData,
                 galleries ?? new ChangeTrackingList<WorkbookTemplateGallery>(),
                 localized ?? new ChangeTrackingDictionary<string, IList<WorkbookTemplateLocalizedGallery>>(),
                 serializedAdditionalRawData);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -27,17 +28,17 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Encryption != null)
+            if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (SourceDiskRestorePoint != null)
+            if (Optional.IsDefined(SourceDiskRestorePoint))
             {
                 writer.WritePropertyName("sourceDiskRestorePoint"u8);
                 JsonSerializer.Serialize(writer, SourceDiskRestorePoint);
             }
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -80,9 +81,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<RestorePointEncryption> encryption = default;
-            Optional<WritableSubResource> sourceDiskRestorePoint = default;
-            Optional<ResourceIdentifier> id = default;
+            RestorePointEncryption encryption = default;
+            WritableSubResource sourceDiskRestorePoint = default;
+            ResourceIdentifier id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,7 +121,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiskRestorePointAttributes(id.Value, serializedAdditionalRawData, encryption.Value, sourceDiskRestorePoint);
+            return new DiskRestorePointAttributes(id, serializedAdditionalRawData, encryption, sourceDiskRestorePoint);
         }
 
         BinaryData IPersistableModel<DiskRestorePointAttributes>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (ExpireAfterSeconds.HasValue)
+            if (Optional.IsDefined(ExpireAfterSeconds))
             {
                 writer.WritePropertyName("expireAfterSeconds"u8);
                 writer.WriteNumberValue(ExpireAfterSeconds.Value);
             }
-            if (IsUnique.HasValue)
+            if (Optional.IsDefined(IsUnique))
             {
                 writer.WritePropertyName("unique"u8);
                 writer.WriteBooleanValue(IsUnique.Value);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<int> expireAfterSeconds = default;
-            Optional<bool> unique = default;
+            int? expireAfterSeconds = default;
+            bool? unique = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MongoDBIndexConfig(Optional.ToNullable(expireAfterSeconds), Optional.ToNullable(unique), serializedAdditionalRawData);
+            return new MongoDBIndexConfig(expireAfterSeconds, unique, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MongoDBIndexConfig>.Write(ModelReaderWriterOptions options)

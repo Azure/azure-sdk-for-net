@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (SnapshotsToKeep.HasValue)
+            if (Optional.IsDefined(SnapshotsToKeep))
             {
                 writer.WritePropertyName("snapshotsToKeep"u8);
                 writer.WriteNumberValue(SnapshotsToKeep.Value);
             }
-            if (DaysOfMonth != null)
+            if (Optional.IsDefined(DaysOfMonth))
             {
                 writer.WritePropertyName("daysOfMonth"u8);
                 writer.WriteStringValue(DaysOfMonth);
             }
-            if (Hour.HasValue)
+            if (Optional.IsDefined(Hour))
             {
                 writer.WritePropertyName("hour"u8);
                 writer.WriteNumberValue(Hour.Value);
             }
-            if (Minute.HasValue)
+            if (Optional.IsDefined(Minute))
             {
                 writer.WritePropertyName("minute"u8);
                 writer.WriteNumberValue(Minute.Value);
             }
-            if (UsedBytes.HasValue)
+            if (Optional.IsDefined(UsedBytes))
             {
                 writer.WritePropertyName("usedBytes"u8);
                 writer.WriteNumberValue(UsedBytes.Value);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<int> snapshotsToKeep = default;
-            Optional<string> daysOfMonth = default;
-            Optional<int> hour = default;
-            Optional<int> minute = default;
-            Optional<long> usedBytes = default;
+            int? snapshotsToKeep = default;
+            string daysOfMonth = default;
+            int? hour = default;
+            int? minute = default;
+            long? usedBytes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,11 +147,11 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SnapshotPolicyMonthlySchedule(
-                Optional.ToNullable(snapshotsToKeep),
-                daysOfMonth.Value,
-                Optional.ToNullable(hour),
-                Optional.ToNullable(minute),
-                Optional.ToNullable(usedBytes),
+                snapshotsToKeep,
+                daysOfMonth,
+                hour,
+                minute,
+                usedBytes,
                 serializedAdditionalRawData);
         }
 

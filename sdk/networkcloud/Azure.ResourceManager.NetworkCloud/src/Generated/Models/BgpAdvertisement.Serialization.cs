@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (AdvertiseToFabric.HasValue)
+            if (Optional.IsDefined(AdvertiseToFabric))
             {
                 writer.WritePropertyName("advertiseToFabric"u8);
                 writer.WriteStringValue(AdvertiseToFabric.Value.ToString());
             }
-            if (!(Communities is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Communities))
             {
                 writer.WritePropertyName("communities"u8);
                 writer.WriteStartArray();
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (!(Peers is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Peers))
             {
                 writer.WritePropertyName("peers"u8);
                 writer.WriteStartArray();
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<AdvertiseToFabric> advertiseToFabric = default;
+            AdvertiseToFabric? advertiseToFabric = default;
             IList<string> communities = default;
             IList<string> ipAddressPools = default;
             IList<string> peers = default;
@@ -157,7 +158,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BgpAdvertisement(Optional.ToNullable(advertiseToFabric), communities ?? new ChangeTrackingList<string>(), ipAddressPools, peers ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new BgpAdvertisement(advertiseToFabric, communities ?? new ChangeTrackingList<string>(), ipAddressPools, peers ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BgpAdvertisement>.Write(ModelReaderWriterOptions options)

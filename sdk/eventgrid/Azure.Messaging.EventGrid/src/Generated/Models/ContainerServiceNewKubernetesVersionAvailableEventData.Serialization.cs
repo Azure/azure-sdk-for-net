@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -21,10 +20,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> latestSupportedKubernetesVersion = default;
-            Optional<string> latestStableKubernetesVersion = default;
-            Optional<string> lowestMinorKubernetesVersion = default;
-            Optional<string> latestPreviewKubernetesVersion = default;
+            string latestSupportedKubernetesVersion = default;
+            string latestStableKubernetesVersion = default;
+            string lowestMinorKubernetesVersion = default;
+            string latestPreviewKubernetesVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("latestSupportedKubernetesVersion"u8))
@@ -48,7 +47,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new ContainerServiceNewKubernetesVersionAvailableEventData(latestSupportedKubernetesVersion.Value, latestStableKubernetesVersion.Value, lowestMinorKubernetesVersion.Value, latestPreviewKubernetesVersion.Value);
+            return new ContainerServiceNewKubernetesVersionAvailableEventData(latestSupportedKubernetesVersion, latestStableKubernetesVersion, lowestMinorKubernetesVersion, latestPreviewKubernetesVersion);
         }
 
         internal partial class ContainerServiceNewKubernetesVersionAvailableEventDataConverter : JsonConverter<ContainerServiceNewKubernetesVersionAvailableEventData>

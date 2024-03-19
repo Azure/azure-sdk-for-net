@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && TotalSteps != null)
+            if (options.Format != "W" && Optional.IsDefined(TotalSteps))
             {
                 writer.WritePropertyName("totalSteps"u8);
                 writer.WriteStringValue(TotalSteps);
             }
-            if (options.Format != "W" && CurrentStep.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CurrentStep))
             {
                 writer.WritePropertyName("currentStep"u8);
                 writer.WriteNumberValue(CurrentStep.Value);
             }
-            if (options.Format != "W" && !(StepsList is ChangeTrackingList<UpsertManagedServerOperationStep> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(StepsList))
             {
                 writer.WritePropertyName("stepsList"u8);
                 writer.WriteStartArray();
@@ -84,8 +85,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> totalSteps = default;
-            Optional<int> currentStep = default;
+            string totalSteps = default;
+            int? currentStep = default;
             IReadOnlyList<UpsertManagedServerOperationStep> stepsList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedInstanceOperationSteps(totalSteps.Value, Optional.ToNullable(currentStep), stepsList ?? new ChangeTrackingList<UpsertManagedServerOperationStep>(), serializedAdditionalRawData);
+            return new ManagedInstanceOperationSteps(totalSteps, currentStep, stepsList ?? new ChangeTrackingList<UpsertManagedServerOperationStep>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedInstanceOperationSteps>.Write(ModelReaderWriterOptions options)

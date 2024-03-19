@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Nginx;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Nginx.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (KeyVirtualPath != null)
+            if (Optional.IsDefined(KeyVirtualPath))
             {
                 writer.WritePropertyName("keyVirtualPath"u8);
                 writer.WriteStringValue(KeyVirtualPath);
             }
-            if (CertificateVirtualPath != null)
+            if (Optional.IsDefined(CertificateVirtualPath))
             {
                 writer.WritePropertyName("certificateVirtualPath"u8);
                 writer.WriteStringValue(CertificateVirtualPath);
             }
-            if (KeyVaultSecretId != null)
+            if (Optional.IsDefined(KeyVaultSecretId))
             {
                 writer.WritePropertyName("keyVaultSecretId"u8);
                 writer.WriteStringValue(KeyVaultSecretId);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Nginx.Models
             {
                 return null;
             }
-            Optional<NginxProvisioningState> provisioningState = default;
-            Optional<string> keyVirtualPath = default;
-            Optional<string> certificateVirtualPath = default;
-            Optional<string> keyVaultSecretId = default;
+            NginxProvisioningState? provisioningState = default;
+            string keyVirtualPath = default;
+            string certificateVirtualPath = default;
+            string keyVaultSecretId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NginxCertificateProperties(Optional.ToNullable(provisioningState), keyVirtualPath.Value, certificateVirtualPath.Value, keyVaultSecretId.Value, serializedAdditionalRawData);
+            return new NginxCertificateProperties(provisioningState, keyVirtualPath, certificateVirtualPath, keyVaultSecretId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NginxCertificateProperties>.Write(ModelReaderWriterOptions options)

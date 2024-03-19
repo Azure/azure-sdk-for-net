@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Convention.HasValue)
+            if (Optional.IsDefined(Convention))
             {
                 writer.WritePropertyName("convention"u8);
                 writer.WriteStringValue(Convention.Value.ToSerialString());
             }
-            if (CustomHostHeaderName != null)
+            if (Optional.IsDefined(CustomHostHeaderName))
             {
                 writer.WritePropertyName("customHostHeaderName"u8);
                 writer.WriteStringValue(CustomHostHeaderName);
             }
-            if (CustomProtoHeaderName != null)
+            if (Optional.IsDefined(CustomProtoHeaderName))
             {
                 writer.WritePropertyName("customProtoHeaderName"u8);
                 writer.WriteStringValue(CustomProtoHeaderName);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<ForwardProxyConvention> convention = default;
-            Optional<string> customHostHeaderName = default;
-            Optional<string> customProtoHeaderName = default;
+            ForwardProxyConvention? convention = default;
+            string customHostHeaderName = default;
+            string customProtoHeaderName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceForwardProxy(Optional.ToNullable(convention), customHostHeaderName.Value, customProtoHeaderName.Value, serializedAdditionalRawData);
+            return new AppServiceForwardProxy(convention, customHostHeaderName, customProtoHeaderName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceForwardProxy>.Write(ModelReaderWriterOptions options)

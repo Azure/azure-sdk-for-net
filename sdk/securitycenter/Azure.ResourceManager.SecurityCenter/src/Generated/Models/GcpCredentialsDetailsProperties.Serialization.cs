@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -48,12 +49,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStringValue(AuthProviderX509CertUri.AbsoluteUri);
             writer.WritePropertyName("clientX509CertUrl"u8);
             writer.WriteStringValue(ClientX509CertUri.AbsoluteUri);
-            if (options.Format != "W" && AuthenticationProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AuthenticationProvisioningState))
             {
                 writer.WritePropertyName("authenticationProvisioningState"u8);
                 writer.WriteStringValue(AuthenticationProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && !(GrantedPermissions is ChangeTrackingList<SecurityCenterCloudPermission> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(GrantedPermissions))
             {
                 writer.WritePropertyName("grantedPermissions"u8);
                 writer.WriteStartArray();
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Uri tokenUri = default;
             Uri authProviderX509CertUrl = default;
             Uri clientX509CertUrl = default;
-            Optional<AuthenticationProvisioningState> authenticationProvisioningState = default;
+            AuthenticationProvisioningState? authenticationProvisioningState = default;
             IReadOnlyList<SecurityCenterCloudPermission> grantedPermissions = default;
             AuthenticationType authenticationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -211,7 +212,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new GcpCredentialsDetailsProperties(
-                Optional.ToNullable(authenticationProvisioningState),
+                authenticationProvisioningState,
                 grantedPermissions ?? new ChangeTrackingList<SecurityCenterCloudPermission>(),
                 authenticationType,
                 serializedAdditionalRawData,

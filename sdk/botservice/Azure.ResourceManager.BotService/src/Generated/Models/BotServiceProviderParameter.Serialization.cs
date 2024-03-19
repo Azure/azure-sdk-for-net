@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.BotService;
 
 namespace Azure.ResourceManager.BotService.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.BotService.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ServiceProviderParameterType != null)
+            if (options.Format != "W" && Optional.IsDefined(ServiceProviderParameterType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ServiceProviderParameterType);
             }
-            if (options.Format != "W" && DisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && HelpUri != null)
+            if (options.Format != "W" && Optional.IsDefined(HelpUri))
             {
                 writer.WritePropertyName("helpUrl"u8);
                 writer.WriteStringValue(HelpUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Default != null)
+            if (options.Format != "W" && Optional.IsDefined(Default))
             {
                 writer.WritePropertyName("default"u8);
                 writer.WriteStringValue(Default);
             }
-            if (options.Format != "W" && Metadata != null)
+            if (options.Format != "W" && Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteObjectValue(Metadata);
@@ -99,13 +100,13 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<Uri> helpUrl = default;
-            Optional<string> @default = default;
-            Optional<ServiceProviderParameterMetadata> metadata = default;
+            string name = default;
+            string type = default;
+            string displayName = default;
+            string description = default;
+            Uri helpUrl = default;
+            string @default = default;
+            ServiceProviderParameterMetadata metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,13 +161,13 @@ namespace Azure.ResourceManager.BotService.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new BotServiceProviderParameter(
-                name.Value,
-                type.Value,
-                displayName.Value,
-                description.Value,
-                helpUrl.Value,
-                @default.Value,
-                metadata.Value,
+                name,
+                type,
+                displayName,
+                description,
+                helpUrl,
+                @default,
+                metadata,
                 serializedAdditionalRawData);
         }
 

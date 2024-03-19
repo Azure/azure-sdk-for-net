@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (BackendAddressPool != null)
+            if (Optional.IsDefined(BackendAddressPool))
             {
                 writer.WritePropertyName("backendAddressPool"u8);
                 writer.WriteObjectValue(BackendAddressPool);
             }
-            if (BackendHealthHttpSettings != null)
+            if (Optional.IsDefined(BackendHealthHttpSettings))
             {
                 writer.WritePropertyName("backendHealthHttpSettings"u8);
                 writer.WriteObjectValue(BackendHealthHttpSettings);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ApplicationGatewayBackendAddressPool> backendAddressPool = default;
-            Optional<ApplicationGatewayBackendHealthHttpSettings> backendHealthHttpSettings = default;
+            ApplicationGatewayBackendAddressPool backendAddressPool = default;
+            ApplicationGatewayBackendHealthHttpSettings backendHealthHttpSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayBackendHealthOnDemand(backendAddressPool.Value, backendHealthHttpSettings.Value, serializedAdditionalRawData);
+            return new ApplicationGatewayBackendHealthOnDemand(backendAddressPool, backendHealthHttpSettings, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayBackendHealthOnDemand>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Prefix != null)
+            if (Optional.IsDefined(Prefix))
             {
                 writer.WritePropertyName("prefix"u8);
                 writer.WriteStringValue(Prefix);
             }
-            if (BgpCommunities != null)
+            if (Optional.IsDefined(BgpCommunities))
             {
                 writer.WritePropertyName("bgpCommunities"u8);
                 writer.WriteStringValue(BgpCommunities);
             }
-            if (AsPath != null)
+            if (Optional.IsDefined(AsPath))
             {
                 writer.WritePropertyName("asPath"u8);
                 writer.WriteStringValue(AsPath);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> prefix = default;
-            Optional<string> bgpCommunities = default;
-            Optional<string> asPath = default;
+            string prefix = default;
+            string bgpCommunities = default;
+            string asPath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EffectiveRouteMapRoute(prefix.Value, bgpCommunities.Value, asPath.Value, serializedAdditionalRawData);
+            return new EffectiveRouteMapRoute(prefix, bgpCommunities, asPath, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EffectiveRouteMapRoute>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Consumption;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
@@ -26,47 +27,47 @@ namespace Azure.ResourceManager.Consumption.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && MeterName != null)
+            if (options.Format != "W" && Optional.IsDefined(MeterName))
             {
                 writer.WritePropertyName("meterName"u8);
                 writer.WriteStringValue(MeterName);
             }
-            if (options.Format != "W" && MeterCategory != null)
+            if (options.Format != "W" && Optional.IsDefined(MeterCategory))
             {
                 writer.WritePropertyName("meterCategory"u8);
                 writer.WriteStringValue(MeterCategory);
             }
-            if (options.Format != "W" && MeterSubCategory != null)
+            if (options.Format != "W" && Optional.IsDefined(MeterSubCategory))
             {
                 writer.WritePropertyName("meterSubCategory"u8);
                 writer.WriteStringValue(MeterSubCategory);
             }
-            if (options.Format != "W" && Unit != null)
+            if (options.Format != "W" && Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit);
             }
-            if (options.Format != "W" && MeterLocation != null)
+            if (options.Format != "W" && Optional.IsDefined(MeterLocation))
             {
                 writer.WritePropertyName("meterLocation"u8);
                 writer.WriteStringValue(MeterLocation);
             }
-            if (options.Format != "W" && TotalIncludedQuantity.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalIncludedQuantity))
             {
                 writer.WritePropertyName("totalIncludedQuantity"u8);
                 writer.WriteNumberValue(TotalIncludedQuantity.Value);
             }
-            if (options.Format != "W" && PretaxStandardRate.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PretaxStandardRate))
             {
                 writer.WritePropertyName("pretaxStandardRate"u8);
                 writer.WriteNumberValue(PretaxStandardRate.Value);
             }
-            if (options.Format != "W" && ServiceName != null)
+            if (options.Format != "W" && Optional.IsDefined(ServiceName))
             {
                 writer.WritePropertyName("serviceName"u8);
                 writer.WriteStringValue(ServiceName);
             }
-            if (options.Format != "W" && ServiceTier != null)
+            if (options.Format != "W" && Optional.IsDefined(ServiceTier))
             {
                 writer.WritePropertyName("serviceTier"u8);
                 writer.WriteStringValue(ServiceTier);
@@ -109,15 +110,15 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<string> meterName = default;
-            Optional<string> meterCategory = default;
-            Optional<string> meterSubCategory = default;
-            Optional<string> unit = default;
-            Optional<string> meterLocation = default;
-            Optional<decimal> totalIncludedQuantity = default;
-            Optional<decimal> pretaxStandardRate = default;
-            Optional<string> serviceName = default;
-            Optional<string> serviceTier = default;
+            string meterName = default;
+            string meterCategory = default;
+            string meterSubCategory = default;
+            string unit = default;
+            string meterLocation = default;
+            decimal? totalIncludedQuantity = default;
+            decimal? pretaxStandardRate = default;
+            string serviceName = default;
+            string serviceTier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -182,15 +183,15 @@ namespace Azure.ResourceManager.Consumption.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ConsumptionMeterDetails(
-                meterName.Value,
-                meterCategory.Value,
-                meterSubCategory.Value,
-                unit.Value,
-                meterLocation.Value,
-                Optional.ToNullable(totalIncludedQuantity),
-                Optional.ToNullable(pretaxStandardRate),
-                serviceName.Value,
-                serviceTier.Value,
+                meterName,
+                meterCategory,
+                meterSubCategory,
+                unit,
+                meterLocation,
+                totalIncludedQuantity,
+                pretaxStandardRate,
+                serviceName,
+                serviceTier,
                 serializedAdditionalRawData);
         }
 

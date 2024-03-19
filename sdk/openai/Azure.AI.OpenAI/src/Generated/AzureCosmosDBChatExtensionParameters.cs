@@ -57,26 +57,11 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/>, <paramref name="containerName"/>, <paramref name="indexName"/>, <paramref name="fieldMappingOptions"/> or <paramref name="embeddingDependency"/> is null. </exception>
         public AzureCosmosDBChatExtensionParameters(string databaseName, string containerName, string indexName, AzureCosmosDBFieldMappingOptions fieldMappingOptions, OnYourDataVectorizationSource embeddingDependency)
         {
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
-            if (indexName == null)
-            {
-                throw new ArgumentNullException(nameof(indexName));
-            }
-            if (fieldMappingOptions == null)
-            {
-                throw new ArgumentNullException(nameof(fieldMappingOptions));
-            }
-            if (embeddingDependency == null)
-            {
-                throw new ArgumentNullException(nameof(embeddingDependency));
-            }
+            Argument.AssertNotNull(databaseName, nameof(databaseName));
+            Argument.AssertNotNull(containerName, nameof(containerName));
+            Argument.AssertNotNull(indexName, nameof(indexName));
+            Argument.AssertNotNull(fieldMappingOptions, nameof(fieldMappingOptions));
+            Argument.AssertNotNull(embeddingDependency, nameof(embeddingDependency));
 
             DatabaseName = databaseName;
             ContainerName = containerName;
@@ -125,7 +110,7 @@ namespace Azure.AI.OpenAI
         /// If not otherwise provided, On Your Data will attempt to use System Managed Identity (default credential)
         /// authentication.
         /// Please note <see cref="OnYourDataAuthenticationOptions"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="OnYourDataApiKeyAuthenticationOptions"/>, <see cref="OnYourDataConnectionStringAuthenticationOptions"/>, <see cref="OnYourDataKeyAndKeyIdAuthenticationOptions"/>, <see cref="OnYourDataEncodedApiKeyAuthenticationOptions"/>, <see cref="OnYourDataAccessTokenAuthenticationOptions"/>, <see cref="OnYourDataSystemAssignedManagedIdentityAuthenticationOptions"/> and <see cref="OnYourDataUserAssignedManagedIdentityAuthenticationOptions"/>.
+        /// The available derived classes include <see cref="OnYourDataAccessTokenAuthenticationOptions"/>, <see cref="OnYourDataApiKeyAuthenticationOptions"/>, <see cref="OnYourDataConnectionStringAuthenticationOptions"/>, <see cref="OnYourDataEncodedApiKeyAuthenticationOptions"/>, <see cref="OnYourDataKeyAndKeyIdAuthenticationOptions"/>, <see cref="OnYourDataSystemAssignedManagedIdentityAuthenticationOptions"/> and <see cref="OnYourDataUserAssignedManagedIdentityAuthenticationOptions"/>.
         /// </summary>
         public OnYourDataAuthenticationOptions Authentication { get; set; }
         /// <summary> The configured top number of documents to feature for the configured query. </summary>

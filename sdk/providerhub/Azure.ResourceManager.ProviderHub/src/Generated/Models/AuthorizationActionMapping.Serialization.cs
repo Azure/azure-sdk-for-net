@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
 
             writer.WriteStartObject();
-            if (Original != null)
+            if (Optional.IsDefined(Original))
             {
                 writer.WritePropertyName("original"u8);
                 writer.WriteStringValue(Original);
             }
-            if (Desired != null)
+            if (Optional.IsDefined(Desired))
             {
                 writer.WritePropertyName("desired"u8);
                 writer.WriteStringValue(Desired);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<string> original = default;
-            Optional<string> desired = default;
+            string original = default;
+            string desired = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AuthorizationActionMapping(original.Value, desired.Value, serializedAdditionalRawData);
+            return new AuthorizationActionMapping(original, desired, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AuthorizationActionMapping>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppPlatform;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (ReadTimeoutInSeconds.HasValue)
+            if (Optional.IsDefined(ReadTimeoutInSeconds))
             {
                 writer.WritePropertyName("readTimeoutInSeconds"u8);
                 writer.WriteNumberValue(ReadTimeoutInSeconds.Value);
             }
-            if (SendTimeoutInSeconds.HasValue)
+            if (Optional.IsDefined(SendTimeoutInSeconds))
             {
                 writer.WritePropertyName("sendTimeoutInSeconds"u8);
                 writer.WriteNumberValue(SendTimeoutInSeconds.Value);
             }
-            if (SessionAffinity.HasValue)
+            if (Optional.IsDefined(SessionAffinity))
             {
                 writer.WritePropertyName("sessionAffinity"u8);
                 writer.WriteStringValue(SessionAffinity.Value.ToString());
             }
-            if (SessionCookieMaxAge.HasValue)
+            if (Optional.IsDefined(SessionCookieMaxAge))
             {
                 writer.WritePropertyName("sessionCookieMaxAge"u8);
                 writer.WriteNumberValue(SessionCookieMaxAge.Value);
             }
-            if (BackendProtocol.HasValue)
+            if (Optional.IsDefined(BackendProtocol))
             {
                 writer.WritePropertyName("backendProtocol"u8);
                 writer.WriteStringValue(BackendProtocol.Value.ToString());
             }
-            if (ClientAuth != null)
+            if (Optional.IsDefined(ClientAuth))
             {
                 writer.WritePropertyName("clientAuth"u8);
                 writer.WriteObjectValue(ClientAuth);
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<int> readTimeoutInSeconds = default;
-            Optional<int> sendTimeoutInSeconds = default;
-            Optional<AppSessionAffinity> sessionAffinity = default;
-            Optional<int> sessionCookieMaxAge = default;
-            Optional<AppBackendProtocol> backendProtocol = default;
-            Optional<IngressSettingsClientAuth> clientAuth = default;
+            int? readTimeoutInSeconds = default;
+            int? sendTimeoutInSeconds = default;
+            AppSessionAffinity? sessionAffinity = default;
+            int? sessionCookieMaxAge = default;
+            AppBackendProtocol? backendProtocol = default;
+            IngressSettingsClientAuth clientAuth = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,12 +166,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AppIngressSettings(
-                Optional.ToNullable(readTimeoutInSeconds),
-                Optional.ToNullable(sendTimeoutInSeconds),
-                Optional.ToNullable(sessionAffinity),
-                Optional.ToNullable(sessionCookieMaxAge),
-                Optional.ToNullable(backendProtocol),
-                clientAuth.Value,
+                readTimeoutInSeconds,
+                sendTimeoutInSeconds,
+                sessionAffinity,
+                sessionCookieMaxAge,
+                backendProtocol,
+                clientAuth,
                 serializedAdditionalRawData);
         }
 

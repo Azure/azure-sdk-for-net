@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && DomainOwnershipIdentifier != null)
+            if (options.Format != "W" && Optional.IsDefined(DomainOwnershipIdentifier))
             {
                 writer.WritePropertyName("domainOwnershipIdentifier"u8);
                 writer.WriteStringValue(DomainOwnershipIdentifier);
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> domainOwnershipIdentifier = default;
+            string domainOwnershipIdentifier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementServiceGetDomainOwnershipIdentifierResult(domainOwnershipIdentifier.Value, serializedAdditionalRawData);
+            return new ApiManagementServiceGetDomainOwnershipIdentifierResult(domainOwnershipIdentifier, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementServiceGetDomainOwnershipIdentifierResult>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,57 +27,57 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Family != null)
+            if (options.Format != "W" && Optional.IsDefined(Family))
             {
                 writer.WritePropertyName("family"u8);
                 writer.WriteStringValue(Family);
             }
-            if (options.Format != "W" && VCpus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(VCpus))
             {
                 writer.WritePropertyName("vCPUs"u8);
                 writer.WriteNumberValue(VCpus.Value);
             }
-            if (options.Format != "W" && Gpus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Gpus))
             {
                 writer.WritePropertyName("gpus"u8);
                 writer.WriteNumberValue(Gpus.Value);
             }
-            if (options.Format != "W" && OSVhdSizeMB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(OSVhdSizeMB))
             {
                 writer.WritePropertyName("osVhdSizeMB"u8);
                 writer.WriteNumberValue(OSVhdSizeMB.Value);
             }
-            if (options.Format != "W" && MaxResourceVolumeMB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MaxResourceVolumeMB))
             {
                 writer.WritePropertyName("maxResourceVolumeMB"u8);
                 writer.WriteNumberValue(MaxResourceVolumeMB.Value);
             }
-            if (options.Format != "W" && MemoryGB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MemoryGB))
             {
                 writer.WritePropertyName("memoryGB"u8);
                 writer.WriteNumberValue(MemoryGB.Value);
             }
-            if (options.Format != "W" && LowPriorityCapable.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LowPriorityCapable))
             {
                 writer.WritePropertyName("lowPriorityCapable"u8);
                 writer.WriteBooleanValue(LowPriorityCapable.Value);
             }
-            if (options.Format != "W" && IsPremiumIOSupported.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsPremiumIOSupported))
             {
                 writer.WritePropertyName("premiumIO"u8);
                 writer.WriteBooleanValue(IsPremiumIOSupported.Value);
             }
-            if (EstimatedVmPrices != null)
+            if (Optional.IsDefined(EstimatedVmPrices))
             {
                 writer.WritePropertyName("estimatedVMPrices"u8);
                 writer.WriteObjectValue(EstimatedVmPrices);
             }
-            if (!(SupportedComputeTypes is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SupportedComputeTypes))
             {
                 writer.WritePropertyName("supportedComputeTypes"u8);
                 writer.WriteStartArray();
@@ -124,16 +125,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> family = default;
-            Optional<int> vCpus = default;
-            Optional<int> gpus = default;
-            Optional<int> osVhdSizeMB = default;
-            Optional<int> maxResourceVolumeMB = default;
-            Optional<double> memoryGB = default;
-            Optional<bool> lowPriorityCapable = default;
-            Optional<bool> premiumIO = default;
-            Optional<MachineLearningEstimatedVmPrices> estimatedVmPrices = default;
+            string name = default;
+            string family = default;
+            int? vCpus = default;
+            int? gpus = default;
+            int? osVhdSizeMB = default;
+            int? maxResourceVolumeMB = default;
+            double? memoryGB = default;
+            bool? lowPriorityCapable = default;
+            bool? premiumIO = default;
+            MachineLearningEstimatedVmPrices estimatedVmPrices = default;
             IReadOnlyList<string> supportedComputeTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -242,16 +243,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MachineLearningVmSize(
-                name.Value,
-                family.Value,
-                Optional.ToNullable(vCpus),
-                Optional.ToNullable(gpus),
-                Optional.ToNullable(osVhdSizeMB),
-                Optional.ToNullable(maxResourceVolumeMB),
-                Optional.ToNullable(memoryGB),
-                Optional.ToNullable(lowPriorityCapable),
-                Optional.ToNullable(premiumIO),
-                estimatedVmPrices.Value,
+                name,
+                family,
+                vCpus,
+                gpus,
+                osVhdSizeMB,
+                maxResourceVolumeMB,
+                memoryGB,
+                lowPriorityCapable,
+                premiumIO,
+                estimatedVmPrices,
                 supportedComputeTypes ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }

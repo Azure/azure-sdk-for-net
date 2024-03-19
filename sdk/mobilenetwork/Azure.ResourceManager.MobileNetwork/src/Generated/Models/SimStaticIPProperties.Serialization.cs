@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MobileNetwork;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
@@ -27,17 +28,17 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (AttachedDataNetwork != null)
+            if (Optional.IsDefined(AttachedDataNetwork))
             {
                 writer.WritePropertyName("attachedDataNetwork"u8);
                 JsonSerializer.Serialize(writer, AttachedDataNetwork);
             }
-            if (Slice != null)
+            if (Optional.IsDefined(Slice))
             {
                 writer.WritePropertyName("slice"u8);
                 JsonSerializer.Serialize(writer, Slice);
             }
-            if (StaticIP != null)
+            if (Optional.IsDefined(StaticIP))
             {
                 writer.WritePropertyName("staticIp"u8);
                 writer.WriteObjectValue(StaticIP);
@@ -80,9 +81,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            Optional<WritableSubResource> attachedDataNetwork = default;
-            Optional<WritableSubResource> slice = default;
-            Optional<SimStaticIPPropertiesStaticIP> staticIP = default;
+            WritableSubResource attachedDataNetwork = default;
+            WritableSubResource slice = default;
+            SimStaticIPPropertiesStaticIP staticIP = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,7 +121,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SimStaticIPProperties(attachedDataNetwork, slice, staticIP.Value, serializedAdditionalRawData);
+            return new SimStaticIPProperties(attachedDataNetwork, slice, staticIP, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SimStaticIPProperties>.Write(ModelReaderWriterOptions options)

@@ -29,22 +29,22 @@ namespace Azure.ResourceManager.Compute
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && InstanceId != null)
+            if (options.Format != "W" && Optional.IsDefined(InstanceId))
             {
                 writer.WritePropertyName("instanceId"u8);
                 writer.WriteStringValue(InstanceId);
             }
-            if (options.Format != "W" && Sku != null)
+            if (options.Format != "W" && Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Plan != null)
+            if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
                 writer.WriteObjectValue(Plan);
             }
-            if (options.Format != "W" && !(Resources is ChangeTrackingList<VirtualMachineExtensionData> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Resources))
             {
                 writer.WritePropertyName("resources"u8);
                 writer.WriteStartArray();
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Compute
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(Zones is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -64,17 +64,17 @@ namespace Azure.ResourceManager.Compute
                 }
                 writer.WriteEndArray();
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (options.Format != "W" && ETag != null)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -102,99 +102,99 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && LatestModelApplied.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LatestModelApplied))
             {
                 writer.WritePropertyName("latestModelApplied"u8);
                 writer.WriteBooleanValue(LatestModelApplied.Value);
             }
-            if (options.Format != "W" && VmId != null)
+            if (options.Format != "W" && Optional.IsDefined(VmId))
             {
                 writer.WritePropertyName("vmId"u8);
                 writer.WriteStringValue(VmId);
             }
-            if (options.Format != "W" && InstanceView != null)
+            if (options.Format != "W" && Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
                 writer.WriteObjectValue(InstanceView);
             }
-            if (HardwareProfile != null)
+            if (Optional.IsDefined(HardwareProfile))
             {
                 writer.WritePropertyName("hardwareProfile"u8);
                 writer.WriteObjectValue(HardwareProfile);
             }
-            if (StorageProfile != null)
+            if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
                 writer.WriteObjectValue(StorageProfile);
             }
-            if (AdditionalCapabilities != null)
+            if (Optional.IsDefined(AdditionalCapabilities))
             {
                 writer.WritePropertyName("additionalCapabilities"u8);
                 writer.WriteObjectValue(AdditionalCapabilities);
             }
-            if (OSProfile != null)
+            if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
                 writer.WriteObjectValue(OSProfile);
             }
-            if (SecurityProfile != null)
+            if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
                 writer.WriteObjectValue(SecurityProfile);
             }
-            if (NetworkProfile != null)
+            if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
                 writer.WriteObjectValue(NetworkProfile);
             }
-            if (NetworkProfileConfiguration != null)
+            if (Optional.IsDefined(NetworkProfileConfiguration))
             {
                 writer.WritePropertyName("networkProfileConfiguration"u8);
                 writer.WriteObjectValue(NetworkProfileConfiguration);
             }
-            if (DiagnosticsProfile != null)
+            if (Optional.IsDefined(DiagnosticsProfile))
             {
                 writer.WritePropertyName("diagnosticsProfile"u8);
                 writer.WriteObjectValue(DiagnosticsProfile);
             }
-            if (AvailabilitySet != null)
+            if (Optional.IsDefined(AvailabilitySet))
             {
                 writer.WritePropertyName("availabilitySet"u8);
                 JsonSerializer.Serialize(writer, AvailabilitySet);
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (LicenseType != null)
+            if (Optional.IsDefined(LicenseType))
             {
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType);
             }
-            if (options.Format != "W" && ModelDefinitionApplied != null)
+            if (options.Format != "W" && Optional.IsDefined(ModelDefinitionApplied))
             {
                 writer.WritePropertyName("modelDefinitionApplied"u8);
                 writer.WriteStringValue(ModelDefinitionApplied);
             }
-            if (ProtectionPolicy != null)
+            if (Optional.IsDefined(ProtectionPolicy))
             {
                 writer.WritePropertyName("protectionPolicy"u8);
                 writer.WriteObjectValue(ProtectionPolicy);
             }
-            if (UserData != null)
+            if (Optional.IsDefined(UserData))
             {
                 writer.WritePropertyName("userData"u8);
                 writer.WriteStringValue(UserData);
             }
-            if (options.Format != "W" && TimeCreated.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TimeCreated))
             {
                 writer.WritePropertyName("timeCreated"u8);
                 writer.WriteStringValue(TimeCreated.Value, "O");
@@ -238,37 +238,37 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Optional<string> instanceId = default;
-            Optional<ComputeSku> sku = default;
-            Optional<ComputePlan> plan = default;
+            string instanceId = default;
+            ComputeSku sku = default;
+            ComputePlan plan = default;
             IReadOnlyList<VirtualMachineExtensionData> resources = default;
             IReadOnlyList<string> zones = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<string> etag = default;
+            ManagedServiceIdentity identity = default;
+            string etag = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> latestModelApplied = default;
-            Optional<string> vmId = default;
-            Optional<VirtualMachineScaleSetVmInstanceView> instanceView = default;
-            Optional<VirtualMachineHardwareProfile> hardwareProfile = default;
-            Optional<VirtualMachineStorageProfile> storageProfile = default;
-            Optional<AdditionalCapabilities> additionalCapabilities = default;
-            Optional<VirtualMachineOSProfile> osProfile = default;
-            Optional<SecurityProfile> securityProfile = default;
-            Optional<VirtualMachineNetworkProfile> networkProfile = default;
-            Optional<VirtualMachineScaleSetVmNetworkProfileConfiguration> networkProfileConfiguration = default;
-            Optional<DiagnosticsProfile> diagnosticsProfile = default;
-            Optional<WritableSubResource> availabilitySet = default;
-            Optional<string> provisioningState = default;
-            Optional<string> licenseType = default;
-            Optional<string> modelDefinitionApplied = default;
-            Optional<VirtualMachineScaleSetVmProtectionPolicy> protectionPolicy = default;
-            Optional<string> userData = default;
-            Optional<DateTimeOffset> timeCreated = default;
+            SystemData systemData = default;
+            bool? latestModelApplied = default;
+            string vmId = default;
+            VirtualMachineScaleSetVmInstanceView instanceView = default;
+            VirtualMachineHardwareProfile hardwareProfile = default;
+            VirtualMachineStorageProfile storageProfile = default;
+            AdditionalCapabilities additionalCapabilities = default;
+            VirtualMachineOSProfile osProfile = default;
+            SecurityProfile securityProfile = default;
+            VirtualMachineNetworkProfile networkProfile = default;
+            VirtualMachineScaleSetVmNetworkProfileConfiguration networkProfileConfiguration = default;
+            DiagnosticsProfile diagnosticsProfile = default;
+            WritableSubResource availabilitySet = default;
+            string provisioningState = default;
+            string licenseType = default;
+            string modelDefinitionApplied = default;
+            VirtualMachineScaleSetVmProtectionPolicy protectionPolicy = default;
+            string userData = default;
+            DateTimeOffset? timeCreated = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -545,34 +545,34 @@ namespace Azure.ResourceManager.Compute
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                instanceId.Value,
-                sku.Value,
-                plan.Value,
+                instanceId,
+                sku,
+                plan,
                 resources ?? new ChangeTrackingList<VirtualMachineExtensionData>(),
                 zones ?? new ChangeTrackingList<string>(),
                 identity,
-                etag.Value,
-                Optional.ToNullable(latestModelApplied),
-                vmId.Value,
-                instanceView.Value,
-                hardwareProfile.Value,
-                storageProfile.Value,
-                additionalCapabilities.Value,
-                osProfile.Value,
-                securityProfile.Value,
-                networkProfile.Value,
-                networkProfileConfiguration.Value,
-                diagnosticsProfile.Value,
+                etag,
+                latestModelApplied,
+                vmId,
+                instanceView,
+                hardwareProfile,
+                storageProfile,
+                additionalCapabilities,
+                osProfile,
+                securityProfile,
+                networkProfile,
+                networkProfileConfiguration,
+                diagnosticsProfile,
                 availabilitySet,
-                provisioningState.Value,
-                licenseType.Value,
-                modelDefinitionApplied.Value,
-                protectionPolicy.Value,
-                userData.Value,
-                Optional.ToNullable(timeCreated),
+                provisioningState,
+                licenseType,
+                modelDefinitionApplied,
+                protectionPolicy,
+                userData,
+                timeCreated,
                 serializedAdditionalRawData);
         }
 

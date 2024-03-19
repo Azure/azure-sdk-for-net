@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataLakeStore;
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ConfigType.ToSerialString());
-            if (KeyVaultMetaInfo != null)
+            if (Optional.IsDefined(KeyVaultMetaInfo))
             {
                 writer.WritePropertyName("keyVaultMetaInfo"u8);
                 writer.WriteObjectValue(KeyVaultMetaInfo);
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 return null;
             }
             DataLakeStoreAccountEncryptionConfigType type = default;
-            Optional<DataLakeStoreAccountKeyVaultMetaInfo> keyVaultMetaInfo = default;
+            DataLakeStoreAccountKeyVaultMetaInfo keyVaultMetaInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLakeStoreAccountEncryptionConfig(type, keyVaultMetaInfo.Value, serializedAdditionalRawData);
+            return new DataLakeStoreAccountEncryptionConfig(type, keyVaultMetaInfo, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataLakeStoreAccountEncryptionConfig>.Write(ModelReaderWriterOptions options)

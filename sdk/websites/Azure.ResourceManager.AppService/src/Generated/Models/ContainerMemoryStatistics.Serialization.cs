@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Usage.HasValue)
+            if (Optional.IsDefined(Usage))
             {
                 writer.WritePropertyName("usage"u8);
                 writer.WriteNumberValue(Usage.Value);
             }
-            if (MaxUsage.HasValue)
+            if (Optional.IsDefined(MaxUsage))
             {
                 writer.WritePropertyName("maxUsage"u8);
                 writer.WriteNumberValue(MaxUsage.Value);
             }
-            if (Limit.HasValue)
+            if (Optional.IsDefined(Limit))
             {
                 writer.WritePropertyName("limit"u8);
                 writer.WriteNumberValue(Limit.Value);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<long> usage = default;
-            Optional<long> maxUsage = default;
-            Optional<long> limit = default;
+            long? usage = default;
+            long? maxUsage = default;
+            long? limit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerMemoryStatistics(Optional.ToNullable(usage), Optional.ToNullable(maxUsage), Optional.ToNullable(limit), serializedAdditionalRawData);
+            return new ContainerMemoryStatistics(usage, maxUsage, limit, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerMemoryStatistics>.Write(ModelReaderWriterOptions options)

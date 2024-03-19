@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (UsageName != null)
+            if (Optional.IsDefined(UsageName))
             {
                 writer.WritePropertyName("usageName"u8);
                 writer.WriteStringValue(UsageName);
             }
-            if (DeprecationOn.HasValue)
+            if (Optional.IsDefined(DeprecationOn))
             {
                 writer.WritePropertyName("deprecationDate"u8);
                 writer.WriteStringValue(DeprecationOn.Value, "O");
             }
-            if (Capacity != null)
+            if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteObjectValue(Capacity);
             }
-            if (options.Format != "W" && !(RateLimits is ChangeTrackingList<ServiceAccountCallRateLimit> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(RateLimits))
             {
                 writer.WritePropertyName("rateLimits"u8);
                 writer.WriteStartArray();
@@ -94,10 +95,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> usageName = default;
-            Optional<DateTimeOffset> deprecationDate = default;
-            Optional<CognitiveServicesCapacityConfig> capacity = default;
+            string name = default;
+            string usageName = default;
+            DateTimeOffset? deprecationDate = default;
+            CognitiveServicesCapacityConfig capacity = default;
             IReadOnlyList<ServiceAccountCallRateLimit> rateLimits = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -152,10 +153,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new CognitiveServicesModelSku(
-                name.Value,
-                usageName.Value,
-                Optional.ToNullable(deprecationDate),
-                capacity.Value,
+                name,
+                usageName,
+                deprecationDate,
+                capacity,
                 rateLimits ?? new ChangeTrackingList<ServiceAccountCallRateLimit>(),
                 serializedAdditionalRawData);
         }

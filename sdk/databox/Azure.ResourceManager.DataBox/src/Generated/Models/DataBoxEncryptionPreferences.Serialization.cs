@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (DoubleEncryption.HasValue)
+            if (Optional.IsDefined(DoubleEncryption))
             {
                 writer.WritePropertyName("doubleEncryption"u8);
                 writer.WriteStringValue(DoubleEncryption.Value.ToSerialString());
             }
-            if (HardwareEncryption.HasValue)
+            if (Optional.IsDefined(HardwareEncryption))
             {
                 writer.WritePropertyName("hardwareEncryption"u8);
                 writer.WriteStringValue(HardwareEncryption.Value.ToSerialString());
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<DataBoxDoubleEncryption> doubleEncryption = default;
-            Optional<HardwareEncryption> hardwareEncryption = default;
+            DataBoxDoubleEncryption? doubleEncryption = default;
+            HardwareEncryption? hardwareEncryption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEncryptionPreferences(Optional.ToNullable(doubleEncryption), Optional.ToNullable(hardwareEncryption), serializedAdditionalRawData);
+            return new DataBoxEncryptionPreferences(doubleEncryption, hardwareEncryption, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEncryptionPreferences>.Write(ModelReaderWriterOptions options)

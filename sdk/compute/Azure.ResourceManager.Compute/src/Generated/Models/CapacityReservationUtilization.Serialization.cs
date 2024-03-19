@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -27,12 +28,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && CurrentCapacity.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CurrentCapacity))
             {
                 writer.WritePropertyName("currentCapacity"u8);
                 writer.WriteNumberValue(CurrentCapacity.Value);
             }
-            if (options.Format != "W" && !(VirtualMachinesAllocated is ChangeTrackingList<SubResource> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(VirtualMachinesAllocated))
             {
                 writer.WritePropertyName("virtualMachinesAllocated"u8);
                 writer.WriteStartArray();
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<int> currentCapacity = default;
+            int? currentCapacity = default;
             IReadOnlyList<SubResource> virtualMachinesAllocated = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CapacityReservationUtilization(Optional.ToNullable(currentCapacity), virtualMachinesAllocated ?? new ChangeTrackingList<SubResource>(), serializedAdditionalRawData);
+            return new CapacityReservationUtilization(currentCapacity, virtualMachinesAllocated ?? new ChangeTrackingList<SubResource>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CapacityReservationUtilization>.Write(ModelReaderWriterOptions options)

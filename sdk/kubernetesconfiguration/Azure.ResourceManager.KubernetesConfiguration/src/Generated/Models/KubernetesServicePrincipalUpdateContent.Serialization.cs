@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.KubernetesConfiguration;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (ClientId.HasValue)
+            if (Optional.IsDefined(ClientId))
             {
                 if (ClientId != null)
                 {
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("clientId");
                 }
             }
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 if (TenantId != null)
                 {
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("tenantId");
                 }
             }
-            if (ClientSecret != null)
+            if (Optional.IsDefined(ClientSecret))
             {
                 if (ClientSecret != null)
                 {
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("clientSecret");
                 }
             }
-            if (ClientCertificate != null)
+            if (Optional.IsDefined(ClientCertificate))
             {
                 if (ClientCertificate != null)
                 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("clientCertificate");
                 }
             }
-            if (ClientCertificatePassword != null)
+            if (Optional.IsDefined(ClientCertificatePassword))
             {
                 if (ClientCertificatePassword != null)
                 {
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("clientCertificatePassword");
                 }
             }
-            if (ClientCertificateSendChain.HasValue)
+            if (Optional.IsDefined(ClientCertificateSendChain))
             {
                 writer.WritePropertyName("clientCertificateSendChain"u8);
                 writer.WriteBooleanValue(ClientCertificateSendChain.Value);
@@ -129,12 +130,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 return null;
             }
-            Optional<Guid?> clientId = default;
-            Optional<Guid?> tenantId = default;
-            Optional<string> clientSecret = default;
-            Optional<string> clientCertificate = default;
-            Optional<string> clientCertificatePassword = default;
-            Optional<bool> clientCertificateSendChain = default;
+            Guid? clientId = default;
+            Guid? tenantId = default;
+            string clientSecret = default;
+            string clientCertificate = default;
+            string clientCertificatePassword = default;
+            bool? clientCertificateSendChain = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -205,12 +206,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new KubernetesServicePrincipalUpdateContent(
-                Optional.ToNullable(clientId),
-                Optional.ToNullable(tenantId),
-                clientSecret.Value,
-                clientCertificate.Value,
-                clientCertificatePassword.Value,
-                Optional.ToNullable(clientCertificateSendChain),
+                clientId,
+                tenantId,
+                clientSecret,
+                clientCertificate,
+                clientCertificatePassword,
+                clientCertificateSendChain,
                 serializedAdditionalRawData);
         }
 

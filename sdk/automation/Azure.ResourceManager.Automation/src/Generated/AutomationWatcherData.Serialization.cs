@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Automation
             }
 
             writer.WriteStartObject();
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -61,24 +61,24 @@ namespace Azure.ResourceManager.Automation
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ExecutionFrequencyInSeconds.HasValue)
+            if (Optional.IsDefined(ExecutionFrequencyInSeconds))
             {
                 writer.WritePropertyName("executionFrequencyInSeconds"u8);
                 writer.WriteNumberValue(ExecutionFrequencyInSeconds.Value);
             }
-            if (ScriptName != null)
+            if (Optional.IsDefined(ScriptName))
             {
                 writer.WritePropertyName("scriptName"u8);
                 writer.WriteStringValue(ScriptName);
             }
-            if (!(ScriptParameters is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ScriptParameters))
             {
                 writer.WritePropertyName("scriptParameters"u8);
                 writer.WriteStartObject();
@@ -89,32 +89,32 @@ namespace Azure.ResourceManager.Automation
                 }
                 writer.WriteEndObject();
             }
-            if (ScriptRunOn != null)
+            if (Optional.IsDefined(ScriptRunOn))
             {
                 writer.WritePropertyName("scriptRunOn"u8);
                 writer.WriteStringValue(ScriptRunOn);
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && LastModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (options.Format != "W" && LastModifiedBy != null)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedBy))
             {
                 writer.WritePropertyName("lastModifiedBy"u8);
                 writer.WriteStringValue(LastModifiedBy);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -158,22 +158,22 @@ namespace Azure.ResourceManager.Automation
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<long> executionFrequencyInSeconds = default;
-            Optional<string> scriptName = default;
+            SystemData systemData = default;
+            long? executionFrequencyInSeconds = default;
+            string scriptName = default;
             IDictionary<string, string> scriptParameters = default;
-            Optional<string> scriptRunOn = default;
-            Optional<string> status = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<string> lastModifiedBy = default;
-            Optional<string> description = default;
+            string scriptRunOn = default;
+            string status = default;
+            DateTimeOffset? creationTime = default;
+            DateTimeOffset? lastModifiedTime = default;
+            string lastModifiedBy = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -318,19 +318,19 @@ namespace Azure.ResourceManager.Automation
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(etag),
-                Optional.ToNullable(executionFrequencyInSeconds),
-                scriptName.Value,
+                etag,
+                executionFrequencyInSeconds,
+                scriptName,
                 scriptParameters ?? new ChangeTrackingDictionary<string, string>(),
-                scriptRunOn.Value,
-                status.Value,
-                Optional.ToNullable(creationTime),
-                Optional.ToNullable(lastModifiedTime),
-                lastModifiedBy.Value,
-                description.Value,
+                scriptRunOn,
+                status,
+                creationTime,
+                lastModifiedTime,
+                lastModifiedBy,
+                description,
                 serializedAdditionalRawData);
         }
 

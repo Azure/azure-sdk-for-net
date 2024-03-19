@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.TextAnalytics.Legacy.Models;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
@@ -21,11 +20,11 @@ namespace Azure.AI.TextAnalytics.Legacy
             {
                 return null;
             }
-            Optional<HealthcareResult> results = default;
+            HealthcareResult results = default;
             IReadOnlyList<TextAnalyticsError> errors = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             DateTimeOffset createdDateTime = default;
-            Optional<DateTimeOffset> expirationDateTime = default;
+            DateTimeOffset? expirationDateTime = default;
             Guid jobId = default;
             DateTimeOffset lastUpdateDateTime = default;
             State status = default;
@@ -91,13 +90,13 @@ namespace Azure.AI.TextAnalytics.Legacy
             }
             return new HealthcareJobState(
                 createdDateTime,
-                Optional.ToNullable(expirationDateTime),
+                expirationDateTime,
                 jobId,
                 lastUpdateDateTime,
                 status,
-                results.Value,
+                results,
                 errors ?? new ChangeTrackingList<TextAnalyticsError>(),
-                nextLink.Value);
+                nextLink);
         }
     }
 }

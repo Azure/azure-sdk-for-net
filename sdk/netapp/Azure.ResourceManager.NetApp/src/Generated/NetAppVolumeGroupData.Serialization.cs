@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.NetApp
             }
 
             writer.WriteStartObject();
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -48,24 +48,24 @@ namespace Azure.ResourceManager.NetApp
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (GroupMetaData != null)
+            if (Optional.IsDefined(GroupMetaData))
             {
                 writer.WritePropertyName("groupMetaData"u8);
                 writer.WriteObjectValue(GroupMetaData);
             }
-            if (!(Volumes is ChangeTrackingList<NetAppVolumeGroupVolume> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Volumes))
             {
                 writer.WritePropertyName("volumes"u8);
                 writer.WriteStartArray();
@@ -114,13 +114,13 @@ namespace Azure.ResourceManager.NetApp
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> provisioningState = default;
-            Optional<NetAppVolumeGroupMetadata> groupMetaData = default;
+            SystemData systemData = default;
+            string provisioningState = default;
+            NetAppVolumeGroupMetadata groupMetaData = default;
             IList<NetAppVolumeGroupVolume> volumes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -209,10 +209,10 @@ namespace Azure.ResourceManager.NetApp
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(location),
-                provisioningState.Value,
-                groupMetaData.Value,
+                systemData,
+                location,
+                provisioningState,
+                groupMetaData,
                 volumes ?? new ChangeTrackingList<NetAppVolumeGroupVolume>(),
                 serializedAdditionalRawData);
         }

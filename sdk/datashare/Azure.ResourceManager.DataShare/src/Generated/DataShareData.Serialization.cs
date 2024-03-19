@@ -43,44 +43,44 @@ namespace Azure.ResourceManager.DataShare
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdAt"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (ShareKind.HasValue)
+            if (Optional.IsDefined(ShareKind))
             {
                 writer.WritePropertyName("shareKind"u8);
                 writer.WriteStringValue(ShareKind.Value.ToString());
             }
-            if (Terms != null)
+            if (Optional.IsDefined(Terms))
             {
                 writer.WritePropertyName("terms"u8);
                 writer.WriteStringValue(Terms);
             }
-            if (options.Format != "W" && UserEmail != null)
+            if (options.Format != "W" && Optional.IsDefined(UserEmail))
             {
                 writer.WritePropertyName("userEmail"u8);
                 writer.WriteStringValue(UserEmail);
             }
-            if (options.Format != "W" && UserName != null)
+            if (options.Format != "W" && Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
                 writer.WriteStringValue(UserName);
@@ -127,14 +127,14 @@ namespace Azure.ResourceManager.DataShare
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<string> description = default;
-            Optional<DataShareProvisioningState> provisioningState = default;
-            Optional<DataShareKind> shareKind = default;
-            Optional<string> terms = default;
-            Optional<string> userEmail = default;
-            Optional<string> userName = default;
+            SystemData systemData = default;
+            DateTimeOffset? createdAt = default;
+            string description = default;
+            DataShareProvisioningState? provisioningState = default;
+            DataShareKind? shareKind = default;
+            string terms = default;
+            string userEmail = default;
+            string userName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -232,14 +232,14 @@ namespace Azure.ResourceManager.DataShare
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(createdAt),
-                description.Value,
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(shareKind),
-                terms.Value,
-                userEmail.Value,
-                userName.Value,
+                systemData,
+                createdAt,
+                description,
+                provisioningState,
+                shareKind,
+                terms,
+                userEmail,
+                userName,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Region.HasValue)
+            if (Optional.IsDefined(Region))
             {
                 writer.WritePropertyName("regionName"u8);
                 writer.WriteStringValue(Region.Value);
             }
-            if (CoresUsed.HasValue)
+            if (Optional.IsDefined(CoresUsed))
             {
                 writer.WritePropertyName("coresUsed"u8);
                 writer.WriteNumberValue(CoresUsed.Value);
             }
-            if (CoresAvailable.HasValue)
+            if (Optional.IsDefined(CoresAvailable))
             {
                 writer.WritePropertyName("coresAvailable"u8);
                 writer.WriteNumberValue(CoresAvailable.Value);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<AzureLocation> regionName = default;
-            Optional<long> coresUsed = default;
-            Optional<long> coresAvailable = default;
+            AzureLocation? regionName = default;
+            long? coresUsed = default;
+            long? coresAvailable = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RegionalQuotaCapability(Optional.ToNullable(regionName), Optional.ToNullable(coresUsed), Optional.ToNullable(coresAvailable), serializedAdditionalRawData);
+            return new RegionalQuotaCapability(regionName, coresUsed, coresAvailable, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RegionalQuotaCapability>.Write(ModelReaderWriterOptions options)

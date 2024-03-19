@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (TotalUsage.HasValue)
+            if (Optional.IsDefined(TotalUsage))
             {
                 writer.WritePropertyName("totalUsage"u8);
                 writer.WriteNumberValue(TotalUsage.Value);
             }
-            if (!(PerCpuUsage is ChangeTrackingList<long> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PerCpuUsage))
             {
                 writer.WritePropertyName("perCpuUsage"u8);
                 writer.WriteStartArray();
@@ -41,12 +42,12 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (KernelModeUsage.HasValue)
+            if (Optional.IsDefined(KernelModeUsage))
             {
                 writer.WritePropertyName("kernelModeUsage"u8);
                 writer.WriteNumberValue(KernelModeUsage.Value);
             }
-            if (UserModeUsage.HasValue)
+            if (Optional.IsDefined(UserModeUsage))
             {
                 writer.WritePropertyName("userModeUsage"u8);
                 writer.WriteNumberValue(UserModeUsage.Value);
@@ -89,10 +90,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<long> totalUsage = default;
+            long? totalUsage = default;
             IList<long> perCpuUsage = default;
-            Optional<long> kernelModeUsage = default;
-            Optional<long> userModeUsage = default;
+            long? kernelModeUsage = default;
+            long? userModeUsage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerCpuUsage(Optional.ToNullable(totalUsage), perCpuUsage ?? new ChangeTrackingList<long>(), Optional.ToNullable(kernelModeUsage), Optional.ToNullable(userModeUsage), serializedAdditionalRawData);
+            return new ContainerCpuUsage(totalUsage, perCpuUsage ?? new ChangeTrackingList<long>(), kernelModeUsage, userModeUsage, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerCpuUsage>.Write(ModelReaderWriterOptions options)

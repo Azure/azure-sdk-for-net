@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (!(AddressPrefixes is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AddressPrefixes))
             {
                 writer.WritePropertyName("addressPrefixes"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(NextHops is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(NextHops))
             {
                 writer.WritePropertyName("nextHops"u8);
                 writer.WriteStartArray();
@@ -46,17 +47,17 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (NextHopType != null)
+            if (Optional.IsDefined(NextHopType))
             {
                 writer.WritePropertyName("nextHopType"u8);
                 writer.WriteStringValue(NextHopType);
             }
-            if (AsPath != null)
+            if (Optional.IsDefined(AsPath))
             {
                 writer.WritePropertyName("asPath"u8);
                 writer.WriteStringValue(AsPath);
             }
-            if (RouteOrigin != null)
+            if (Optional.IsDefined(RouteOrigin))
             {
                 writer.WritePropertyName("routeOrigin"u8);
                 writer.WriteStringValue(RouteOrigin);
@@ -101,9 +102,9 @@ namespace Azure.ResourceManager.Network.Models
             }
             IReadOnlyList<string> addressPrefixes = default;
             IReadOnlyList<string> nextHops = default;
-            Optional<string> nextHopType = default;
-            Optional<string> asPath = default;
-            Optional<string> routeOrigin = default;
+            string nextHopType = default;
+            string asPath = default;
+            string routeOrigin = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,9 +161,9 @@ namespace Azure.ResourceManager.Network.Models
             return new VirtualHubEffectiveRoute(
                 addressPrefixes ?? new ChangeTrackingList<string>(),
                 nextHops ?? new ChangeTrackingList<string>(),
-                nextHopType.Value,
-                asPath.Value,
-                routeOrigin.Value,
+                nextHopType,
+                asPath,
+                routeOrigin,
                 serializedAdditionalRawData);
         }
 

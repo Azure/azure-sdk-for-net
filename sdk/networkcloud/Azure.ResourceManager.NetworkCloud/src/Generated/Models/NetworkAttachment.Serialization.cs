@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -28,29 +29,29 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             writer.WriteStartObject();
             writer.WritePropertyName("attachedNetworkId"u8);
             writer.WriteStringValue(AttachedNetworkId);
-            if (DefaultGateway.HasValue)
+            if (Optional.IsDefined(DefaultGateway))
             {
                 writer.WritePropertyName("defaultGateway"u8);
                 writer.WriteStringValue(DefaultGateway.Value.ToString());
             }
             writer.WritePropertyName("ipAllocationMethod"u8);
             writer.WriteStringValue(IPAllocationMethod.ToString());
-            if (IPv4Address != null)
+            if (Optional.IsDefined(IPv4Address))
             {
                 writer.WritePropertyName("ipv4Address"u8);
                 writer.WriteStringValue(IPv4Address);
             }
-            if (IPv6Address != null)
+            if (Optional.IsDefined(IPv6Address))
             {
                 writer.WritePropertyName("ipv6Address"u8);
                 writer.WriteStringValue(IPv6Address);
             }
-            if (options.Format != "W" && MacAddress != null)
+            if (options.Format != "W" && Optional.IsDefined(MacAddress))
             {
                 writer.WritePropertyName("macAddress"u8);
                 writer.WriteStringValue(MacAddress);
             }
-            if (NetworkAttachmentName != null)
+            if (Optional.IsDefined(NetworkAttachmentName))
             {
                 writer.WritePropertyName("networkAttachmentName"u8);
                 writer.WriteStringValue(NetworkAttachmentName);
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             string attachedNetworkId = default;
-            Optional<DefaultGateway> defaultGateway = default;
+            DefaultGateway? defaultGateway = default;
             VirtualMachineIPAllocationMethod ipAllocationMethod = default;
-            Optional<string> ipv4Address = default;
-            Optional<string> ipv6Address = default;
-            Optional<string> macAddress = default;
-            Optional<string> networkAttachmentName = default;
+            string ipv4Address = default;
+            string ipv6Address = default;
+            string macAddress = default;
+            string networkAttachmentName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -151,12 +152,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new NetworkAttachment(
                 attachedNetworkId,
-                Optional.ToNullable(defaultGateway),
+                defaultGateway,
                 ipAllocationMethod,
-                ipv4Address.Value,
-                ipv6Address.Value,
-                macAddress.Value,
-                networkAttachmentName.Value,
+                ipv4Address,
+                ipv6Address,
+                macAddress,
+                networkAttachmentName,
                 serializedAdditionalRawData);
         }
 

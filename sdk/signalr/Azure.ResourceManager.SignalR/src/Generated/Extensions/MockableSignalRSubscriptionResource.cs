@@ -76,10 +76,7 @@ namespace Azure.ResourceManager.SignalR.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<SignalRNameAvailabilityResult>> CheckSignalRNameAvailabilityAsync(AzureLocation location, SignalRNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = SignalRClientDiagnostics.CreateScope("MockableSignalRSubscriptionResource.CheckSignalRNameAvailability");
             scope.Start();
@@ -122,10 +119,7 @@ namespace Azure.ResourceManager.SignalR.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<SignalRNameAvailabilityResult> CheckSignalRNameAvailability(AzureLocation location, SignalRNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = SignalRClientDiagnostics.CreateScope("MockableSignalRSubscriptionResource.CheckSignalRNameAvailability");
             scope.Start();

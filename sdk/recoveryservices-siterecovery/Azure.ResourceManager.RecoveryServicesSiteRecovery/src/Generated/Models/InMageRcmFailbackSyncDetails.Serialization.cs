@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,42 +27,42 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProgressHealth.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProgressHealth))
             {
                 writer.WritePropertyName("progressHealth"u8);
                 writer.WriteStringValue(ProgressHealth.Value.ToString());
             }
-            if (options.Format != "W" && TransferredBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TransferredBytes))
             {
                 writer.WritePropertyName("transferredBytes"u8);
                 writer.WriteNumberValue(TransferredBytes.Value);
             }
-            if (options.Format != "W" && Last15MinutesTransferredBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Last15MinutesTransferredBytes))
             {
                 writer.WritePropertyName("last15MinutesTransferredBytes"u8);
                 writer.WriteNumberValue(Last15MinutesTransferredBytes.Value);
             }
-            if (options.Format != "W" && LastDataTransferOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastDataTransferOn))
             {
                 writer.WritePropertyName("lastDataTransferTimeUtc"u8);
                 writer.WriteStringValue(LastDataTransferOn.Value, "O");
             }
-            if (options.Format != "W" && ProcessedBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProcessedBytes))
             {
                 writer.WritePropertyName("processedBytes"u8);
                 writer.WriteNumberValue(ProcessedBytes.Value);
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && LastRefreshedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastRefreshedOn))
             {
                 writer.WritePropertyName("lastRefreshTime"u8);
                 writer.WriteStringValue(LastRefreshedOn.Value, "O");
             }
-            if (options.Format != "W" && ProgressPercentage.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProgressPercentage))
             {
                 writer.WritePropertyName("progressPercentage"u8);
                 writer.WriteNumberValue(ProgressPercentage.Value);
@@ -104,14 +105,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<SiteRecoveryDiskReplicationProgressHealth> progressHealth = default;
-            Optional<long> transferredBytes = default;
-            Optional<long> last15MinutesTransferredBytes = default;
-            Optional<DateTimeOffset> lastDataTransferTimeUtc = default;
-            Optional<long> processedBytes = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> lastRefreshTime = default;
-            Optional<int> progressPercentage = default;
+            SiteRecoveryDiskReplicationProgressHealth? progressHealth = default;
+            long? transferredBytes = default;
+            long? last15MinutesTransferredBytes = default;
+            DateTimeOffset? lastDataTransferTimeUtc = default;
+            long? processedBytes = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? lastRefreshTime = default;
+            int? progressPercentage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -195,14 +196,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new InMageRcmFailbackSyncDetails(
-                Optional.ToNullable(progressHealth),
-                Optional.ToNullable(transferredBytes),
-                Optional.ToNullable(last15MinutesTransferredBytes),
-                Optional.ToNullable(lastDataTransferTimeUtc),
-                Optional.ToNullable(processedBytes),
-                Optional.ToNullable(startTime),
-                Optional.ToNullable(lastRefreshTime),
-                Optional.ToNullable(progressPercentage),
+                progressHealth,
+                transferredBytes,
+                last15MinutesTransferredBytes,
+                lastDataTransferTimeUtc,
+                processedBytes,
+                startTime,
+                lastRefreshTime,
+                progressPercentage,
                 serializedAdditionalRawData);
         }
 

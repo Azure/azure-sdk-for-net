@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartObject();
             writer.WritePropertyName("commandType"u8);
             writer.WriteStringValue(CommandType.ToString());
-            if (options.Format != "W" && !(Errors is ChangeTrackingList<ODataError> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && State.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
@@ -85,10 +86,10 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Migrate.SqlServer.AzureDbSqlMi.Complete": return MigrateMISyncCompleteCommandProperties.DeserializeMigrateMISyncCompleteCommandProperties(element, options);
-                    case "Migrate.Sync.Complete.Database": return MigrateSyncCompleteCommandProperties.DeserializeMigrateSyncCompleteCommandProperties(element, options);
                     case "cancel": return MongoDBCancelCommand.DeserializeMongoDBCancelCommand(element, options);
                     case "finish": return MongoDBFinishCommand.DeserializeMongoDBFinishCommand(element, options);
+                    case "Migrate.SqlServer.AzureDbSqlMi.Complete": return MigrateMISyncCompleteCommandProperties.DeserializeMigrateMISyncCompleteCommandProperties(element, options);
+                    case "Migrate.Sync.Complete.Database": return MigrateSyncCompleteCommandProperties.DeserializeMigrateSyncCompleteCommandProperties(element, options);
                     case "restart": return MongoDBRestartCommand.DeserializeMongoDBRestartCommand(element, options);
                 }
             }

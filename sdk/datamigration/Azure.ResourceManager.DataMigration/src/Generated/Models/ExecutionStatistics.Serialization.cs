@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (ExecutionCount.HasValue)
+            if (Optional.IsDefined(ExecutionCount))
             {
                 writer.WritePropertyName("executionCount"u8);
                 writer.WriteNumberValue(ExecutionCount.Value);
             }
-            if (CpuTimeMs.HasValue)
+            if (Optional.IsDefined(CpuTimeMs))
             {
                 writer.WritePropertyName("cpuTimeMs"u8);
                 writer.WriteNumberValue(CpuTimeMs.Value);
             }
-            if (ElapsedTimeMs.HasValue)
+            if (Optional.IsDefined(ElapsedTimeMs))
             {
                 writer.WritePropertyName("elapsedTimeMs"u8);
                 writer.WriteNumberValue(ElapsedTimeMs.Value);
             }
-            if (!(WaitStats is ChangeTrackingDictionary<string, WaitStatistics> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(WaitStats))
             {
                 writer.WritePropertyName("waitStats"u8);
                 writer.WriteStartObject();
@@ -52,12 +53,12 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndObject();
             }
-            if (HasErrors.HasValue)
+            if (Optional.IsDefined(HasErrors))
             {
                 writer.WritePropertyName("hasErrors"u8);
                 writer.WriteBooleanValue(HasErrors.Value);
             }
-            if (!(SqlErrors is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(SqlErrors))
             {
                 writer.WritePropertyName("sqlErrors"u8);
                 writer.WriteStartArray();
@@ -105,11 +106,11 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<long> executionCount = default;
-            Optional<float> cpuTimeMs = default;
-            Optional<float> elapsedTimeMs = default;
+            long? executionCount = default;
+            float? cpuTimeMs = default;
+            float? elapsedTimeMs = default;
             IReadOnlyDictionary<string, WaitStatistics> waitStats = default;
-            Optional<bool> hasErrors = default;
+            bool? hasErrors = default;
             IReadOnlyList<string> sqlErrors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -186,11 +187,11 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ExecutionStatistics(
-                Optional.ToNullable(executionCount),
-                Optional.ToNullable(cpuTimeMs),
-                Optional.ToNullable(elapsedTimeMs),
+                executionCount,
+                cpuTimeMs,
+                elapsedTimeMs,
                 waitStats ?? new ChangeTrackingDictionary<string, WaitStatistics>(),
-                Optional.ToNullable(hasErrors),
+                hasErrors,
                 sqlErrors ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }

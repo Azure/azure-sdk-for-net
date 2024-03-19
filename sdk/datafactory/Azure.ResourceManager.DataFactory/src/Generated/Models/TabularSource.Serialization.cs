@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -27,12 +28,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (QueryTimeout != null)
+            if (Optional.IsDefined(QueryTimeout))
             {
                 writer.WritePropertyName("queryTimeout"u8);
                 JsonSerializer.Serialize(writer, QueryTimeout);
             }
-            if (AdditionalColumns != null)
+            if (Optional.IsDefined(AdditionalColumns))
             {
                 writer.WritePropertyName("additionalColumns"u8);
 #if NET6_0_OR_GREATER
@@ -46,22 +47,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CopySourceType);
-            if (SourceRetryCount != null)
+            if (Optional.IsDefined(SourceRetryCount))
             {
                 writer.WritePropertyName("sourceRetryCount"u8);
                 JsonSerializer.Serialize(writer, SourceRetryCount);
             }
-            if (SourceRetryWait != null)
+            if (Optional.IsDefined(SourceRetryWait))
             {
                 writer.WritePropertyName("sourceRetryWait"u8);
                 JsonSerializer.Serialize(writer, SourceRetryWait);
             }
-            if (MaxConcurrentConnections != null)
+            if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 JsonSerializer.Serialize(writer, MaxConcurrentConnections);
             }
-            if (DisableMetricsCollection != null)
+            if (Optional.IsDefined(DisableMetricsCollection))
             {
                 writer.WritePropertyName("disableMetricsCollection"u8);
                 JsonSerializer.Serialize(writer, DisableMetricsCollection);
@@ -122,6 +123,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "EloquaSource": return EloquaSource.DeserializeEloquaSource(element, options);
                     case "GoogleAdWordsSource": return GoogleAdWordsSource.DeserializeGoogleAdWordsSource(element, options);
                     case "GoogleBigQuerySource": return GoogleBigQuerySource.DeserializeGoogleBigQuerySource(element, options);
+                    case "GoogleBigQueryV2Source": return GoogleBigQueryV2Source.DeserializeGoogleBigQueryV2Source(element, options);
                     case "GreenplumSource": return GreenplumSource.DeserializeGreenplumSource(element, options);
                     case "HBaseSource": return HBaseSource.DeserializeHBaseSource(element, options);
                     case "HiveSource": return HiveSource.DeserializeHiveSource(element, options);
@@ -139,6 +141,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "PaypalSource": return PaypalSource.DeserializePaypalSource(element, options);
                     case "PhoenixSource": return PhoenixSource.DeserializePhoenixSource(element, options);
                     case "PostgreSqlSource": return PostgreSqlSource.DeserializePostgreSqlSource(element, options);
+                    case "PostgreSqlV2Source": return PostgreSqlV2Source.DeserializePostgreSqlV2Source(element, options);
                     case "PrestoSource": return PrestoSource.DeserializePrestoSource(element, options);
                     case "QuickBooksSource": return QuickBooksSource.DeserializeQuickBooksSource(element, options);
                     case "ResponsysSource": return ResponsysSource.DeserializeResponsysSource(element, options);
@@ -153,6 +156,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "SapOpenHubSource": return SapOpenHubSource.DeserializeSapOpenHubSource(element, options);
                     case "SapTableSource": return SapTableSource.DeserializeSapTableSource(element, options);
                     case "ServiceNowSource": return ServiceNowSource.DeserializeServiceNowSource(element, options);
+                    case "ServiceNowV2Source": return ServiceNowV2Source.DeserializeServiceNowV2Source(element, options);
                     case "ShopifySource": return ShopifySource.DeserializeShopifySource(element, options);
                     case "SparkSource": return SparkSource.DeserializeSparkSource(element, options);
                     case "SqlDWSource": return SqlDWSource.DeserializeSqlDWSource(element, options);
@@ -168,13 +172,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "ZohoSource": return ZohoSource.DeserializeZohoSource(element, options);
                 }
             }
-            Optional<DataFactoryElement<string>> queryTimeout = default;
-            Optional<BinaryData> additionalColumns = default;
+            DataFactoryElement<string> queryTimeout = default;
+            BinaryData additionalColumns = default;
             string type = "TabularSource";
-            Optional<DataFactoryElement<int>> sourceRetryCount = default;
-            Optional<DataFactoryElement<string>> sourceRetryWait = default;
-            Optional<DataFactoryElement<int>> maxConcurrentConnections = default;
-            Optional<DataFactoryElement<bool>> disableMetricsCollection = default;
+            DataFactoryElement<int> sourceRetryCount = default;
+            DataFactoryElement<string> sourceRetryWait = default;
+            DataFactoryElement<int> maxConcurrentConnections = default;
+            DataFactoryElement<bool> disableMetricsCollection = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -243,13 +247,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new TabularSource(
                 type,
-                sourceRetryCount.Value,
-                sourceRetryWait.Value,
-                maxConcurrentConnections.Value,
-                disableMetricsCollection.Value,
+                sourceRetryCount,
+                sourceRetryWait,
+                maxConcurrentConnections,
+                disableMetricsCollection,
                 additionalProperties,
-                queryTimeout.Value,
-                additionalColumns.Value);
+                queryTimeout,
+                additionalColumns);
         }
 
         BinaryData IPersistableModel<TabularSource>.Write(ModelReaderWriterOptions options)

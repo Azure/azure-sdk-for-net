@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("logDestination"u8);
             writer.WriteStringValue(LogDestination.ToString());
-            if (LogLocationSettings != null)
+            if (Optional.IsDefined(LogLocationSettings))
             {
                 writer.WritePropertyName("logLocationSettings"u8);
                 writer.WriteObjectValue(LogLocationSettings);
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             ScriptActivityLogDestination logDestination = default;
-            Optional<LogLocationSettings> logLocationSettings = default;
+            LogLocationSettings logLocationSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScriptActivityTypeLogSettings(logDestination, logLocationSettings.Value, serializedAdditionalRawData);
+            return new ScriptActivityTypeLogSettings(logDestination, logLocationSettings, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScriptActivityTypeLogSettings>.Write(ModelReaderWriterOptions options)

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.PostgreSql
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Properties != null)
+            if (options.Format != "W" && Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.PostgreSql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -91,11 +91,11 @@ namespace Azure.ResourceManager.PostgreSql
             {
                 return null;
             }
-            Optional<PostgreSqlPrivateLinkResourceProperties> properties = default;
+            PostgreSqlPrivateLinkResourceProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -143,8 +143,8 @@ namespace Azure.ResourceManager.PostgreSql
                 id,
                 name,
                 type,
-                systemData.Value,
-                properties.Value,
+                systemData,
+                properties,
                 serializedAdditionalRawData);
         }
 

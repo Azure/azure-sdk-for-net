@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -48,24 +48,24 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && MigrationOperationStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MigrationOperationStatus))
             {
                 writer.WritePropertyName("migrationOperationStatus"u8);
                 writer.WriteStringValue(MigrationOperationStatus.Value.ToSerialString());
             }
-            if (options.Format != "W" && OperationId != null)
+            if (options.Format != "W" && Optional.IsDefined(OperationId))
             {
                 writer.WritePropertyName("operationId"u8);
                 writer.WriteStringValue(OperationId);
             }
-            if (options.Format != "W" && IsLocalMySqlEnabled.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsLocalMySqlEnabled))
             {
                 writer.WritePropertyName("localMySqlEnabled"u8);
                 writer.WriteBooleanValue(IsLocalMySqlEnabled.Value);
@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<AppServiceOperationStatus> migrationOperationStatus = default;
-            Optional<string> operationId = default;
-            Optional<bool> localMySqlEnabled = default;
+            SystemData systemData = default;
+            AppServiceOperationStatus? migrationOperationStatus = default;
+            string operationId = default;
+            bool? localMySqlEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -195,11 +195,11 @@ namespace Azure.ResourceManager.AppService
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(migrationOperationStatus),
-                operationId.Value,
-                Optional.ToNullable(localMySqlEnabled),
-                kind.Value,
+                systemData,
+                migrationOperationStatus,
+                operationId,
+                localMySqlEnabled,
+                kind,
                 serializedAdditionalRawData);
         }
 

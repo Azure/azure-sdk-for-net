@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -26,42 +27,42 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && HostName != null)
+            if (options.Format != "W" && Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (options.Format != "W" && IsHostnameAlreadyVerified.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsHostnameAlreadyVerified))
             {
                 writer.WritePropertyName("isHostnameAlreadyVerified"u8);
                 writer.WriteBooleanValue(IsHostnameAlreadyVerified.Value);
             }
-            if (options.Format != "W" && CustomDomainVerificationTest.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CustomDomainVerificationTest))
             {
                 writer.WritePropertyName("customDomainVerificationTest"u8);
                 writer.WriteStringValue(CustomDomainVerificationTest.Value.ToSerialString());
             }
-            if (options.Format != "W" && CustomDomainVerificationFailureInfo != null)
+            if (options.Format != "W" && Optional.IsDefined(CustomDomainVerificationFailureInfo))
             {
                 writer.WritePropertyName("customDomainVerificationFailureInfo"u8);
                 writer.WriteObjectValue(CustomDomainVerificationFailureInfo);
             }
-            if (options.Format != "W" && HasConflictOnManagedEnvironment.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(HasConflictOnManagedEnvironment))
             {
                 writer.WritePropertyName("hasConflictOnManagedEnvironment"u8);
                 writer.WriteBooleanValue(HasConflictOnManagedEnvironment.Value);
             }
-            if (options.Format != "W" && ConflictWithEnvironmentCustomDomain.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ConflictWithEnvironmentCustomDomain))
             {
                 writer.WritePropertyName("conflictWithEnvironmentCustomDomain"u8);
                 writer.WriteBooleanValue(ConflictWithEnvironmentCustomDomain.Value);
             }
-            if (options.Format != "W" && ConflictingContainerAppResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(ConflictingContainerAppResourceId))
             {
                 writer.WritePropertyName("conflictingContainerAppResourceId"u8);
                 writer.WriteStringValue(ConflictingContainerAppResourceId);
             }
-            if (!(CNameRecords is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CNameRecords))
             {
                 writer.WritePropertyName("cNameRecords"u8);
                 writer.WriteStartArray();
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(TxtRecords is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(TxtRecords))
             {
                 writer.WritePropertyName("txtRecords"u8);
                 writer.WriteStartArray();
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ARecords is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(ARecords))
             {
                 writer.WritePropertyName("aRecords"u8);
                 writer.WriteStartArray();
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(AlternateCNameRecords is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(AlternateCNameRecords))
             {
                 writer.WritePropertyName("alternateCNameRecords"u8);
                 writer.WriteStartArray();
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(AlternateTxtRecords is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(AlternateTxtRecords))
             {
                 writer.WritePropertyName("alternateTxtRecords"u8);
                 writer.WriteStartArray();
@@ -149,13 +150,13 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> hostName = default;
-            Optional<bool> isHostnameAlreadyVerified = default;
-            Optional<ContainerAppDnsVerificationTestResult> customDomainVerificationTest = default;
-            Optional<ContainerAppCustomDomainVerificationFailureInfo> customDomainVerificationFailureInfo = default;
-            Optional<bool> hasConflictOnManagedEnvironment = default;
-            Optional<bool> conflictWithEnvironmentCustomDomain = default;
-            Optional<string> conflictingContainerAppResourceId = default;
+            string hostName = default;
+            bool? isHostnameAlreadyVerified = default;
+            ContainerAppDnsVerificationTestResult? customDomainVerificationTest = default;
+            ContainerAppCustomDomainVerificationFailureInfo customDomainVerificationFailureInfo = default;
+            bool? hasConflictOnManagedEnvironment = default;
+            bool? conflictWithEnvironmentCustomDomain = default;
+            string conflictingContainerAppResourceId = default;
             IReadOnlyList<string> cNameRecords = default;
             IReadOnlyList<string> txtRecords = default;
             IReadOnlyList<string> aRecords = default;
@@ -297,13 +298,13 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ContainerAppCustomHostnameAnalysisResult(
-                hostName.Value,
-                Optional.ToNullable(isHostnameAlreadyVerified),
-                Optional.ToNullable(customDomainVerificationTest),
-                customDomainVerificationFailureInfo.Value,
-                Optional.ToNullable(hasConflictOnManagedEnvironment),
-                Optional.ToNullable(conflictWithEnvironmentCustomDomain),
-                conflictingContainerAppResourceId.Value,
+                hostName,
+                isHostnameAlreadyVerified,
+                customDomainVerificationTest,
+                customDomainVerificationFailureInfo,
+                hasConflictOnManagedEnvironment,
+                conflictWithEnvironmentCustomDomain,
+                conflictingContainerAppResourceId,
                 cNameRecords ?? new ChangeTrackingList<string>(),
                 txtRecords ?? new ChangeTrackingList<string>(),
                 aRecords ?? new ChangeTrackingList<string>(),

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (ShouldUseAlternateTargetLocation.HasValue)
+            if (Optional.IsDefined(ShouldUseAlternateTargetLocation))
             {
                 writer.WritePropertyName("shouldUseAlternateTargetLocation"u8);
                 writer.WriteBooleanValue(ShouldUseAlternateTargetLocation.Value);
             }
-            if (IsNonRecoverable.HasValue)
+            if (Optional.IsDefined(IsNonRecoverable))
             {
                 writer.WritePropertyName("isNonRecoverable"u8);
                 writer.WriteBooleanValue(IsNonRecoverable.Value);
             }
-            if (!(AlternateDirectoryPaths is ChangeTrackingList<SqlDataDirectoryMapping> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AlternateDirectoryPaths))
             {
                 writer.WritePropertyName("alternateDirectoryPaths"u8);
                 writer.WriteStartArray();
@@ -46,17 +47,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (RecoveryType.HasValue)
+            if (Optional.IsDefined(RecoveryType))
             {
                 writer.WritePropertyName("recoveryType"u8);
                 writer.WriteStringValue(RecoveryType.Value.ToString());
             }
-            if (SourceResourceId != null)
+            if (Optional.IsDefined(SourceResourceId))
             {
                 writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
             }
-            if (!(PropertyBag is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(PropertyBag))
             {
                 writer.WritePropertyName("propertyBag"u8);
                 writer.WriteStartObject();
@@ -67,32 +68,32 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndObject();
             }
-            if (TargetInfo != null)
+            if (Optional.IsDefined(TargetInfo))
             {
                 writer.WritePropertyName("targetInfo"u8);
                 writer.WriteObjectValue(TargetInfo);
             }
-            if (RecoveryMode.HasValue)
+            if (Optional.IsDefined(RecoveryMode))
             {
                 writer.WritePropertyName("recoveryMode"u8);
                 writer.WriteStringValue(RecoveryMode.Value.ToString());
             }
-            if (TargetResourceGroupName != null)
+            if (Optional.IsDefined(TargetResourceGroupName))
             {
                 writer.WritePropertyName("targetResourceGroupName"u8);
                 writer.WriteStringValue(TargetResourceGroupName);
             }
-            if (UserAssignedManagedIdentityDetails != null)
+            if (Optional.IsDefined(UserAssignedManagedIdentityDetails))
             {
                 writer.WritePropertyName("userAssignedManagedIdentityDetails"u8);
                 writer.WriteObjectValue(UserAssignedManagedIdentityDetails);
             }
-            if (SnapshotRestoreParameters != null)
+            if (Optional.IsDefined(SnapshotRestoreParameters))
             {
                 writer.WritePropertyName("snapshotRestoreParameters"u8);
                 writer.WriteObjectValue(SnapshotRestoreParameters);
             }
-            if (TargetVirtualMachineId != null)
+            if (Optional.IsDefined(TargetVirtualMachineId))
             {
                 writer.WritePropertyName("targetVirtualMachineId"u8);
                 writer.WriteStringValue(TargetVirtualMachineId);
@@ -146,18 +147,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     case "AzureWorkloadSQLRestoreWithRehydrateRequest": return WorkloadSqlRestoreWithRehydrateContent.DeserializeWorkloadSqlRestoreWithRehydrateContent(element, options);
                 }
             }
-            Optional<bool> shouldUseAlternateTargetLocation = default;
-            Optional<bool> isNonRecoverable = default;
+            bool? shouldUseAlternateTargetLocation = default;
+            bool? isNonRecoverable = default;
             IList<SqlDataDirectoryMapping> alternateDirectoryPaths = default;
-            Optional<FileShareRecoveryType> recoveryType = default;
-            Optional<ResourceIdentifier> sourceResourceId = default;
+            FileShareRecoveryType? recoveryType = default;
+            ResourceIdentifier sourceResourceId = default;
             IDictionary<string, string> propertyBag = default;
-            Optional<TargetRestoreInfo> targetInfo = default;
-            Optional<RecoveryMode> recoveryMode = default;
-            Optional<string> targetResourceGroupName = default;
-            Optional<UserAssignedManagedIdentityDetails> userAssignedManagedIdentityDetails = default;
-            Optional<SnapshotRestoreContent> snapshotRestoreParameters = default;
-            Optional<ResourceIdentifier> targetVirtualMachineId = default;
+            TargetRestoreInfo targetInfo = default;
+            RecoveryMode? recoveryMode = default;
+            string targetResourceGroupName = default;
+            UserAssignedManagedIdentityDetails userAssignedManagedIdentityDetails = default;
+            SnapshotRestoreContent snapshotRestoreParameters = default;
+            ResourceIdentifier targetVirtualMachineId = default;
             string objectType = "AzureWorkloadSQLRestoreRequest";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -291,17 +292,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new WorkloadSqlRestoreContent(
                 objectType,
                 serializedAdditionalRawData,
-                Optional.ToNullable(recoveryType),
-                sourceResourceId.Value,
+                recoveryType,
+                sourceResourceId,
                 propertyBag ?? new ChangeTrackingDictionary<string, string>(),
-                targetInfo.Value,
-                Optional.ToNullable(recoveryMode),
-                targetResourceGroupName.Value,
-                userAssignedManagedIdentityDetails.Value,
-                snapshotRestoreParameters.Value,
-                targetVirtualMachineId.Value,
-                Optional.ToNullable(shouldUseAlternateTargetLocation),
-                Optional.ToNullable(isNonRecoverable),
+                targetInfo,
+                recoveryMode,
+                targetResourceGroupName,
+                userAssignedManagedIdentityDetails,
+                snapshotRestoreParameters,
+                targetVirtualMachineId,
+                shouldUseAlternateTargetLocation,
+                isNonRecoverable,
                 alternateDirectoryPaths ?? new ChangeTrackingList<SqlDataDirectoryMapping>());
         }
 

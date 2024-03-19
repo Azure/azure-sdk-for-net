@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -16,52 +17,52 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (GenerateWordParts.HasValue)
+            if (Optional.IsDefined(GenerateWordParts))
             {
                 writer.WritePropertyName("generateWordParts"u8);
                 writer.WriteBooleanValue(GenerateWordParts.Value);
             }
-            if (GenerateNumberParts.HasValue)
+            if (Optional.IsDefined(GenerateNumberParts))
             {
                 writer.WritePropertyName("generateNumberParts"u8);
                 writer.WriteBooleanValue(GenerateNumberParts.Value);
             }
-            if (CatenateWords.HasValue)
+            if (Optional.IsDefined(CatenateWords))
             {
                 writer.WritePropertyName("catenateWords"u8);
                 writer.WriteBooleanValue(CatenateWords.Value);
             }
-            if (CatenateNumbers.HasValue)
+            if (Optional.IsDefined(CatenateNumbers))
             {
                 writer.WritePropertyName("catenateNumbers"u8);
                 writer.WriteBooleanValue(CatenateNumbers.Value);
             }
-            if (CatenateAll.HasValue)
+            if (Optional.IsDefined(CatenateAll))
             {
                 writer.WritePropertyName("catenateAll"u8);
                 writer.WriteBooleanValue(CatenateAll.Value);
             }
-            if (SplitOnCaseChange.HasValue)
+            if (Optional.IsDefined(SplitOnCaseChange))
             {
                 writer.WritePropertyName("splitOnCaseChange"u8);
                 writer.WriteBooleanValue(SplitOnCaseChange.Value);
             }
-            if (PreserveOriginal.HasValue)
+            if (Optional.IsDefined(PreserveOriginal))
             {
                 writer.WritePropertyName("preserveOriginal"u8);
                 writer.WriteBooleanValue(PreserveOriginal.Value);
             }
-            if (SplitOnNumerics.HasValue)
+            if (Optional.IsDefined(SplitOnNumerics))
             {
                 writer.WritePropertyName("splitOnNumerics"u8);
                 writer.WriteBooleanValue(SplitOnNumerics.Value);
             }
-            if (StemEnglishPossessive.HasValue)
+            if (Optional.IsDefined(StemEnglishPossessive))
             {
                 writer.WritePropertyName("stemEnglishPossessive"u8);
                 writer.WriteBooleanValue(StemEnglishPossessive.Value);
             }
-            if (!(ProtectedWords is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ProtectedWords))
             {
                 writer.WritePropertyName("protectedWords"u8);
                 writer.WriteStartArray();
@@ -84,15 +85,15 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<bool> generateWordParts = default;
-            Optional<bool> generateNumberParts = default;
-            Optional<bool> catenateWords = default;
-            Optional<bool> catenateNumbers = default;
-            Optional<bool> catenateAll = default;
-            Optional<bool> splitOnCaseChange = default;
-            Optional<bool> preserveOriginal = default;
-            Optional<bool> splitOnNumerics = default;
-            Optional<bool> stemEnglishPossessive = default;
+            bool? generateWordParts = default;
+            bool? generateNumberParts = default;
+            bool? catenateWords = default;
+            bool? catenateNumbers = default;
+            bool? catenateAll = default;
+            bool? splitOnCaseChange = default;
+            bool? preserveOriginal = default;
+            bool? splitOnNumerics = default;
+            bool? stemEnglishPossessive = default;
             IList<string> protectedWords = default;
             string odataType = default;
             string name = default;
@@ -207,15 +208,15 @@ namespace Azure.Search.Documents.Indexes.Models
             return new WordDelimiterTokenFilter(
                 odataType,
                 name,
-                Optional.ToNullable(generateWordParts),
-                Optional.ToNullable(generateNumberParts),
-                Optional.ToNullable(catenateWords),
-                Optional.ToNullable(catenateNumbers),
-                Optional.ToNullable(catenateAll),
-                Optional.ToNullable(splitOnCaseChange),
-                Optional.ToNullable(preserveOriginal),
-                Optional.ToNullable(splitOnNumerics),
-                Optional.ToNullable(stemEnglishPossessive),
+                generateWordParts,
+                generateNumberParts,
+                catenateWords,
+                catenateNumbers,
+                catenateAll,
+                splitOnCaseChange,
+                preserveOriginal,
+                splitOnNumerics,
+                stemEnglishPossessive,
                 protectedWords ?? new ChangeTrackingList<string>());
         }
     }

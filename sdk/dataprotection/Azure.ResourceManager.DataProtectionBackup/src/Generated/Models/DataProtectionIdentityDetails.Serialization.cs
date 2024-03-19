@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (UseSystemAssignedIdentity.HasValue)
+            if (Optional.IsDefined(UseSystemAssignedIdentity))
             {
                 writer.WritePropertyName("useSystemAssignedIdentity"u8);
                 writer.WriteBooleanValue(UseSystemAssignedIdentity.Value);
             }
-            if (UserAssignedIdentityArmUri != null)
+            if (Optional.IsDefined(UserAssignedIdentityArmUri))
             {
                 writer.WritePropertyName("userAssignedIdentityArmUrl"u8);
                 writer.WriteStringValue(UserAssignedIdentityArmUri.AbsoluteUri);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<bool> useSystemAssignedIdentity = default;
-            Optional<Uri> userAssignedIdentityArmUrl = default;
+            bool? useSystemAssignedIdentity = default;
+            Uri userAssignedIdentityArmUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataProtectionIdentityDetails(Optional.ToNullable(useSystemAssignedIdentity), userAssignedIdentityArmUrl.Value, serializedAdditionalRawData);
+            return new DataProtectionIdentityDetails(useSystemAssignedIdentity, userAssignedIdentityArmUrl, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataProtectionIdentityDetails>.Write(ModelReaderWriterOptions options)

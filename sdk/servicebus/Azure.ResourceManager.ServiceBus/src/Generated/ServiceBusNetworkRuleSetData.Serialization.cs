@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ServiceBus
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -48,24 +48,24 @@ namespace Azure.ResourceManager.ServiceBus
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (IsTrustedServiceAccessEnabled.HasValue)
+            if (Optional.IsDefined(IsTrustedServiceAccessEnabled))
             {
                 writer.WritePropertyName("trustedServiceAccessEnabled"u8);
                 writer.WriteBooleanValue(IsTrustedServiceAccessEnabled.Value);
             }
-            if (DefaultAction.HasValue)
+            if (Optional.IsDefined(DefaultAction))
             {
                 writer.WritePropertyName("defaultAction"u8);
                 writer.WriteStringValue(DefaultAction.Value.ToString());
             }
-            if (!(VirtualNetworkRules is ChangeTrackingList<ServiceBusNetworkRuleSetVirtualNetworkRules> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(VirtualNetworkRules))
             {
                 writer.WritePropertyName("virtualNetworkRules"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ServiceBus
                 }
                 writer.WriteEndArray();
             }
-            if (!(IPRules is ChangeTrackingList<ServiceBusNetworkRuleSetIPRules> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(IPRules))
             {
                 writer.WritePropertyName("ipRules"u8);
                 writer.WriteStartArray();
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ServiceBus
                 }
                 writer.WriteEndArray();
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
@@ -129,16 +129,16 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> trustedServiceAccessEnabled = default;
-            Optional<ServiceBusNetworkRuleSetDefaultAction> defaultAction = default;
+            SystemData systemData = default;
+            bool? trustedServiceAccessEnabled = default;
+            ServiceBusNetworkRuleSetDefaultAction? defaultAction = default;
             IList<ServiceBusNetworkRuleSetVirtualNetworkRules> virtualNetworkRules = default;
             IList<ServiceBusNetworkRuleSetIPRules> ipRules = default;
-            Optional<ServiceBusPublicNetworkAccessFlag> publicNetworkAccess = default;
+            ServiceBusPublicNetworkAccessFlag? publicNetworkAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -253,13 +253,13 @@ namespace Azure.ResourceManager.ServiceBus
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(trustedServiceAccessEnabled),
-                Optional.ToNullable(defaultAction),
+                systemData,
+                trustedServiceAccessEnabled,
+                defaultAction,
                 virtualNetworkRules ?? new ChangeTrackingList<ServiceBusNetworkRuleSetVirtualNetworkRules>(),
                 ipRules ?? new ChangeTrackingList<ServiceBusNetworkRuleSetIPRules>(),
-                Optional.ToNullable(publicNetworkAccess),
-                Optional.ToNullable(location),
+                publicNetworkAccess,
+                location,
                 serializedAdditionalRawData);
         }
 

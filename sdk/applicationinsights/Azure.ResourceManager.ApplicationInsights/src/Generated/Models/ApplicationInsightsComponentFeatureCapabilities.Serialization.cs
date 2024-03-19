@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
@@ -26,82 +27,82 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && SupportExportData.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SupportExportData))
             {
                 writer.WritePropertyName("SupportExportData"u8);
                 writer.WriteBooleanValue(SupportExportData.Value);
             }
-            if (options.Format != "W" && BurstThrottlePolicy != null)
+            if (options.Format != "W" && Optional.IsDefined(BurstThrottlePolicy))
             {
                 writer.WritePropertyName("BurstThrottlePolicy"u8);
                 writer.WriteStringValue(BurstThrottlePolicy);
             }
-            if (options.Format != "W" && MetadataClass != null)
+            if (options.Format != "W" && Optional.IsDefined(MetadataClass))
             {
                 writer.WritePropertyName("MetadataClass"u8);
                 writer.WriteStringValue(MetadataClass);
             }
-            if (options.Format != "W" && LiveStreamMetrics.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LiveStreamMetrics))
             {
                 writer.WritePropertyName("LiveStreamMetrics"u8);
                 writer.WriteBooleanValue(LiveStreamMetrics.Value);
             }
-            if (options.Format != "W" && ApplicationMap.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ApplicationMap))
             {
                 writer.WritePropertyName("ApplicationMap"u8);
                 writer.WriteBooleanValue(ApplicationMap.Value);
             }
-            if (options.Format != "W" && WorkItemIntegration.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(WorkItemIntegration))
             {
                 writer.WritePropertyName("WorkItemIntegration"u8);
                 writer.WriteBooleanValue(WorkItemIntegration.Value);
             }
-            if (options.Format != "W" && PowerBIIntegration.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PowerBIIntegration))
             {
                 writer.WritePropertyName("PowerBIIntegration"u8);
                 writer.WriteBooleanValue(PowerBIIntegration.Value);
             }
-            if (options.Format != "W" && OpenSchema.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(OpenSchema))
             {
                 writer.WritePropertyName("OpenSchema"u8);
                 writer.WriteBooleanValue(OpenSchema.Value);
             }
-            if (options.Format != "W" && ProactiveDetection.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProactiveDetection))
             {
                 writer.WritePropertyName("ProactiveDetection"u8);
                 writer.WriteBooleanValue(ProactiveDetection.Value);
             }
-            if (options.Format != "W" && AnalyticsIntegration.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AnalyticsIntegration))
             {
                 writer.WritePropertyName("AnalyticsIntegration"u8);
                 writer.WriteBooleanValue(AnalyticsIntegration.Value);
             }
-            if (options.Format != "W" && MultipleStepWebTest.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MultipleStepWebTest))
             {
                 writer.WritePropertyName("MultipleStepWebTest"u8);
                 writer.WriteBooleanValue(MultipleStepWebTest.Value);
             }
-            if (options.Format != "W" && ApiAccessLevel != null)
+            if (options.Format != "W" && Optional.IsDefined(ApiAccessLevel))
             {
                 writer.WritePropertyName("ApiAccessLevel"u8);
                 writer.WriteStringValue(ApiAccessLevel);
             }
-            if (options.Format != "W" && TrackingType != null)
+            if (options.Format != "W" && Optional.IsDefined(TrackingType))
             {
                 writer.WritePropertyName("TrackingType"u8);
                 writer.WriteStringValue(TrackingType);
             }
-            if (options.Format != "W" && DailyCap.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DailyCap))
             {
                 writer.WritePropertyName("DailyCap"u8);
                 writer.WriteNumberValue(DailyCap.Value);
             }
-            if (options.Format != "W" && DailyCapResetTime.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DailyCapResetTime))
             {
                 writer.WritePropertyName("DailyCapResetTime"u8);
                 writer.WriteNumberValue(DailyCapResetTime.Value);
             }
-            if (options.Format != "W" && ThrottleRate.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ThrottleRate))
             {
                 writer.WritePropertyName("ThrottleRate"u8);
                 writer.WriteNumberValue(ThrottleRate.Value);
@@ -144,22 +145,22 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<bool> supportExportData = default;
-            Optional<string> burstThrottlePolicy = default;
-            Optional<string> metadataClass = default;
-            Optional<bool> liveStreamMetrics = default;
-            Optional<bool> applicationMap = default;
-            Optional<bool> workItemIntegration = default;
-            Optional<bool> powerBIIntegration = default;
-            Optional<bool> openSchema = default;
-            Optional<bool> proactiveDetection = default;
-            Optional<bool> analyticsIntegration = default;
-            Optional<bool> multipleStepWebTest = default;
-            Optional<string> apiAccessLevel = default;
-            Optional<string> trackingType = default;
-            Optional<float> dailyCap = default;
-            Optional<float> dailyCapResetTime = default;
-            Optional<float> throttleRate = default;
+            bool? supportExportData = default;
+            string burstThrottlePolicy = default;
+            string metadataClass = default;
+            bool? liveStreamMetrics = default;
+            bool? applicationMap = default;
+            bool? workItemIntegration = default;
+            bool? powerBIIntegration = default;
+            bool? openSchema = default;
+            bool? proactiveDetection = default;
+            bool? analyticsIntegration = default;
+            bool? multipleStepWebTest = default;
+            string apiAccessLevel = default;
+            string trackingType = default;
+            float? dailyCap = default;
+            float? dailyCapResetTime = default;
+            float? throttleRate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -299,22 +300,22 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ApplicationInsightsComponentFeatureCapabilities(
-                Optional.ToNullable(supportExportData),
-                burstThrottlePolicy.Value,
-                metadataClass.Value,
-                Optional.ToNullable(liveStreamMetrics),
-                Optional.ToNullable(applicationMap),
-                Optional.ToNullable(workItemIntegration),
-                Optional.ToNullable(powerBIIntegration),
-                Optional.ToNullable(openSchema),
-                Optional.ToNullable(proactiveDetection),
-                Optional.ToNullable(analyticsIntegration),
-                Optional.ToNullable(multipleStepWebTest),
-                apiAccessLevel.Value,
-                trackingType.Value,
-                Optional.ToNullable(dailyCap),
-                Optional.ToNullable(dailyCapResetTime),
-                Optional.ToNullable(throttleRate),
+                supportExportData,
+                burstThrottlePolicy,
+                metadataClass,
+                liveStreamMetrics,
+                applicationMap,
+                workItemIntegration,
+                powerBIIntegration,
+                openSchema,
+                proactiveDetection,
+                analyticsIntegration,
+                multipleStepWebTest,
+                apiAccessLevel,
+                trackingType,
+                dailyCap,
+                dailyCapResetTime,
+                throttleRate,
                 serializedAdditionalRawData);
         }
 

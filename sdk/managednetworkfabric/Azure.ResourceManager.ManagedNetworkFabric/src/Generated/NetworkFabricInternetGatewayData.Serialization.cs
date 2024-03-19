@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,29 +56,29 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Annotation != null)
+            if (Optional.IsDefined(Annotation))
             {
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
             }
-            if (InternetGatewayRuleId != null)
+            if (Optional.IsDefined(InternetGatewayRuleId))
             {
                 writer.WritePropertyName("internetGatewayRuleId"u8);
                 writer.WriteStringValue(InternetGatewayRuleId);
             }
-            if (options.Format != "W" && IPV4Address != null)
+            if (options.Format != "W" && Optional.IsDefined(IPV4Address))
             {
                 writer.WritePropertyName("ipv4Address"u8);
                 writer.WriteStringValue(IPV4Address);
             }
-            if (options.Format != "W" && Port.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             writer.WriteStringValue(TypePropertiesType.ToString());
             writer.WritePropertyName("networkFabricControllerId"u8);
             writer.WriteStringValue(NetworkFabricControllerId);
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -136,14 +136,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> annotation = default;
-            Optional<ResourceIdentifier> internetGatewayRuleId = default;
-            Optional<string> ipv4Address = default;
-            Optional<int> port = default;
+            SystemData systemData = default;
+            string annotation = default;
+            ResourceIdentifier internetGatewayRuleId = default;
+            string ipv4Address = default;
+            int? port = default;
             InternetGatewayType type0 = default;
             ResourceIdentifier networkFabricControllerId = default;
-            Optional<NetworkFabricProvisioningState> provisioningState = default;
+            NetworkFabricProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -260,16 +260,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                annotation.Value,
-                internetGatewayRuleId.Value,
-                ipv4Address.Value,
-                Optional.ToNullable(port),
+                annotation,
+                internetGatewayRuleId,
+                ipv4Address,
+                port,
                 type0,
                 networkFabricControllerId,
-                Optional.ToNullable(provisioningState),
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

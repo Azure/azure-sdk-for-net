@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -26,52 +27,52 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && EndOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endDateTimeUTC"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (options.Format != "W" && AValue.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AValue))
             {
                 writer.WritePropertyName("aValue"u8);
                 writer.WriteNumberValue(AValue.Value);
             }
-            if (options.Format != "W" && BValue.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(BValue))
             {
                 writer.WritePropertyName("bValue"u8);
                 writer.WriteNumberValue(BValue.Value);
             }
-            if (options.Format != "W" && Delta.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Delta))
             {
                 writer.WritePropertyName("delta"u8);
                 writer.WriteNumberValue(Delta.Value);
             }
-            if (options.Format != "W" && DeltaPercent.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DeltaPercent))
             {
                 writer.WritePropertyName("deltaPercent"u8);
                 writer.WriteNumberValue(DeltaPercent.Value);
             }
-            if (options.Format != "W" && ACLower95CI.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ACLower95CI))
             {
                 writer.WritePropertyName("aCLower95CI"u8);
                 writer.WriteNumberValue(ACLower95CI.Value);
             }
-            if (options.Format != "W" && AHUpper95CI.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AHUpper95CI))
             {
                 writer.WritePropertyName("aHUpper95CI"u8);
                 writer.WriteNumberValue(AHUpper95CI.Value);
             }
-            if (options.Format != "W" && BCLower95CI.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(BCLower95CI))
             {
                 writer.WritePropertyName("bCLower95CI"u8);
                 writer.WriteNumberValue(BCLower95CI.Value);
             }
-            if (options.Format != "W" && BUpper95CI.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(BUpper95CI))
             {
                 writer.WritePropertyName("bUpper95CI"u8);
                 writer.WriteNumberValue(BUpper95CI.Value);
@@ -114,16 +115,16 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<DateTimeOffset> endDateTimeUtc = default;
-            Optional<float> aValue = default;
-            Optional<float> bValue = default;
-            Optional<float> delta = default;
-            Optional<float> deltaPercent = default;
-            Optional<float> acLower95CI = default;
-            Optional<float> ahUpper95CI = default;
-            Optional<float> bcLower95CI = default;
-            Optional<float> bUpper95CI = default;
+            string name = default;
+            DateTimeOffset? endDateTimeUtc = default;
+            float? aValue = default;
+            float? bValue = default;
+            float? delta = default;
+            float? deltaPercent = default;
+            float? acLower95CI = default;
+            float? ahUpper95CI = default;
+            float? bcLower95CI = default;
+            float? bUpper95CI = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -221,16 +222,16 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new LatencyMetric(
-                name.Value,
-                Optional.ToNullable(endDateTimeUtc),
-                Optional.ToNullable(aValue),
-                Optional.ToNullable(bValue),
-                Optional.ToNullable(delta),
-                Optional.ToNullable(deltaPercent),
-                Optional.ToNullable(acLower95CI),
-                Optional.ToNullable(ahUpper95CI),
-                Optional.ToNullable(bcLower95CI),
-                Optional.ToNullable(bUpper95CI),
+                name,
+                endDateTimeUtc,
+                aValue,
+                bValue,
+                delta,
+                deltaPercent,
+                acLower95CI,
+                ahUpper95CI,
+                bcLower95CI,
+                bUpper95CI,
                 serializedAdditionalRawData);
         }
 

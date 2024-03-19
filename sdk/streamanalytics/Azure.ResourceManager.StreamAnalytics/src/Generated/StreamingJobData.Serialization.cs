@@ -29,13 +29,13 @@ namespace Azure.ResourceManager.StreamAnalytics
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -63,89 +63,89 @@ namespace Azure.ResourceManager.StreamAnalytics
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (options.Format != "W" && JobId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(JobId))
             {
                 writer.WritePropertyName("jobId"u8);
                 writer.WriteStringValue(JobId.Value);
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && JobState != null)
+            if (options.Format != "W" && Optional.IsDefined(JobState))
             {
                 writer.WritePropertyName("jobState"u8);
                 writer.WriteStringValue(JobState);
             }
-            if (JobType.HasValue)
+            if (Optional.IsDefined(JobType))
             {
                 writer.WritePropertyName("jobType"u8);
                 writer.WriteStringValue(JobType.Value.ToString());
             }
-            if (OutputStartMode.HasValue)
+            if (Optional.IsDefined(OutputStartMode))
             {
                 writer.WritePropertyName("outputStartMode"u8);
                 writer.WriteStringValue(OutputStartMode.Value.ToString());
             }
-            if (OutputStartOn.HasValue)
+            if (Optional.IsDefined(OutputStartOn))
             {
                 writer.WritePropertyName("outputStartTime"u8);
                 writer.WriteStringValue(OutputStartOn.Value, "O");
             }
-            if (options.Format != "W" && LastOutputEventOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastOutputEventOn))
             {
                 writer.WritePropertyName("lastOutputEventTime"u8);
                 writer.WriteStringValue(LastOutputEventOn.Value, "O");
             }
-            if (EventsOutOfOrderPolicy.HasValue)
+            if (Optional.IsDefined(EventsOutOfOrderPolicy))
             {
                 writer.WritePropertyName("eventsOutOfOrderPolicy"u8);
                 writer.WriteStringValue(EventsOutOfOrderPolicy.Value.ToString());
             }
-            if (OutputErrorPolicy.HasValue)
+            if (Optional.IsDefined(OutputErrorPolicy))
             {
                 writer.WritePropertyName("outputErrorPolicy"u8);
                 writer.WriteStringValue(OutputErrorPolicy.Value.ToString());
             }
-            if (EventsOutOfOrderMaxDelayInSeconds.HasValue)
+            if (Optional.IsDefined(EventsOutOfOrderMaxDelayInSeconds))
             {
                 writer.WritePropertyName("eventsOutOfOrderMaxDelayInSeconds"u8);
                 writer.WriteNumberValue(EventsOutOfOrderMaxDelayInSeconds.Value);
             }
-            if (EventsLateArrivalMaxDelayInSeconds.HasValue)
+            if (Optional.IsDefined(EventsLateArrivalMaxDelayInSeconds))
             {
                 writer.WritePropertyName("eventsLateArrivalMaxDelayInSeconds"u8);
                 writer.WriteNumberValue(EventsLateArrivalMaxDelayInSeconds.Value);
             }
-            if (DataLocalion.HasValue)
+            if (Optional.IsDefined(DataLocalion))
             {
                 writer.WritePropertyName("dataLocale"u8);
                 writer.WriteStringValue(DataLocalion.Value);
             }
-            if (CompatibilityLevel.HasValue)
+            if (Optional.IsDefined(CompatibilityLevel))
             {
                 writer.WritePropertyName("compatibilityLevel"u8);
                 writer.WriteStringValue(CompatibilityLevel.Value.ToString());
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (!(Inputs is ChangeTrackingList<StreamingJobInputData> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Inputs))
             {
                 writer.WritePropertyName("inputs"u8);
                 writer.WriteStartArray();
@@ -155,12 +155,12 @@ namespace Azure.ResourceManager.StreamAnalytics
                 }
                 writer.WriteEndArray();
             }
-            if (Transformation != null)
+            if (Optional.IsDefined(Transformation))
             {
                 writer.WritePropertyName("transformation"u8);
                 writer.WriteObjectValue(Transformation);
             }
-            if (!(Outputs is ChangeTrackingList<StreamingJobOutputData> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Outputs))
             {
                 writer.WritePropertyName("outputs"u8);
                 writer.WriteStartArray();
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 }
                 writer.WriteEndArray();
             }
-            if (!(Functions is ChangeTrackingList<StreamingJobFunctionData> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(Functions))
             {
                 writer.WritePropertyName("functions"u8);
                 writer.WriteStartArray();
@@ -180,12 +180,12 @@ namespace Azure.ResourceManager.StreamAnalytics
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (JobStorageAccount != null)
+            if (Optional.IsDefined(JobStorageAccount))
             {
                 if (JobStorageAccount != null)
                 {
@@ -197,17 +197,17 @@ namespace Azure.ResourceManager.StreamAnalytics
                     writer.WriteNull("jobStorageAccount");
                 }
             }
-            if (ContentStoragePolicy.HasValue)
+            if (Optional.IsDefined(ContentStoragePolicy))
             {
                 writer.WritePropertyName("contentStoragePolicy"u8);
                 writer.WriteStringValue(ContentStoragePolicy.Value.ToString());
             }
-            if (Externals != null)
+            if (Optional.IsDefined(Externals))
             {
                 writer.WritePropertyName("externals"u8);
                 writer.WriteObjectValue(Externals);
             }
-            if (Cluster != null)
+            if (Optional.IsDefined(Cluster))
             {
                 if (Cluster != null)
                 {
@@ -258,37 +258,37 @@ namespace Azure.ResourceManager.StreamAnalytics
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<StreamAnalyticsSku> sku = default;
-            Optional<Guid> jobId = default;
-            Optional<string> provisioningState = default;
-            Optional<string> jobState = default;
-            Optional<StreamingJobType> jobType = default;
-            Optional<StreamingJobOutputStartMode> outputStartMode = default;
-            Optional<DateTimeOffset> outputStartTime = default;
-            Optional<DateTimeOffset> lastOutputEventTime = default;
-            Optional<EventsOutOfOrderPolicy> eventsOutOfOrderPolicy = default;
-            Optional<StreamingJobOutputErrorPolicy> outputErrorPolicy = default;
-            Optional<int> eventsOutOfOrderMaxDelayInSeconds = default;
-            Optional<int> eventsLateArrivalMaxDelayInSeconds = default;
-            Optional<AzureLocation> dataLocale = default;
-            Optional<StreamingJobCompatibilityLevel> compatibilityLevel = default;
-            Optional<DateTimeOffset> createdDate = default;
+            SystemData systemData = default;
+            StreamAnalyticsSku sku = default;
+            Guid? jobId = default;
+            string provisioningState = default;
+            string jobState = default;
+            StreamingJobType? jobType = default;
+            StreamingJobOutputStartMode? outputStartMode = default;
+            DateTimeOffset? outputStartTime = default;
+            DateTimeOffset? lastOutputEventTime = default;
+            EventsOutOfOrderPolicy? eventsOutOfOrderPolicy = default;
+            StreamingJobOutputErrorPolicy? outputErrorPolicy = default;
+            int? eventsOutOfOrderMaxDelayInSeconds = default;
+            int? eventsLateArrivalMaxDelayInSeconds = default;
+            AzureLocation? dataLocale = default;
+            StreamingJobCompatibilityLevel? compatibilityLevel = default;
+            DateTimeOffset? createdDate = default;
             IList<StreamingJobInputData> inputs = default;
-            Optional<StreamingJobTransformationData> transformation = default;
+            StreamingJobTransformationData transformation = default;
             IList<StreamingJobOutputData> outputs = default;
             IList<StreamingJobFunctionData> functions = default;
-            Optional<ETag> etag = default;
-            Optional<StreamingJobStorageAccount> jobStorageAccount = default;
-            Optional<StreamingJobContentStoragePolicy> contentStoragePolicy = default;
-            Optional<StreamingJobExternal> externals = default;
-            Optional<ClusterInfo> cluster = default;
+            ETag? etag = default;
+            StreamingJobStorageAccount jobStorageAccount = default;
+            StreamingJobContentStoragePolicy? contentStoragePolicy = default;
+            StreamingJobExternal externals = default;
+            ClusterInfo cluster = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -593,34 +593,34 @@ namespace Azure.ResourceManager.StreamAnalytics
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 identity,
-                sku.Value,
-                Optional.ToNullable(jobId),
-                provisioningState.Value,
-                jobState.Value,
-                Optional.ToNullable(jobType),
-                Optional.ToNullable(outputStartMode),
-                Optional.ToNullable(outputStartTime),
-                Optional.ToNullable(lastOutputEventTime),
-                Optional.ToNullable(eventsOutOfOrderPolicy),
-                Optional.ToNullable(outputErrorPolicy),
-                Optional.ToNullable(eventsOutOfOrderMaxDelayInSeconds),
-                Optional.ToNullable(eventsLateArrivalMaxDelayInSeconds),
-                Optional.ToNullable(dataLocale),
-                Optional.ToNullable(compatibilityLevel),
-                Optional.ToNullable(createdDate),
+                sku,
+                jobId,
+                provisioningState,
+                jobState,
+                jobType,
+                outputStartMode,
+                outputStartTime,
+                lastOutputEventTime,
+                eventsOutOfOrderPolicy,
+                outputErrorPolicy,
+                eventsOutOfOrderMaxDelayInSeconds,
+                eventsLateArrivalMaxDelayInSeconds,
+                dataLocale,
+                compatibilityLevel,
+                createdDate,
                 inputs ?? new ChangeTrackingList<StreamingJobInputData>(),
-                transformation.Value,
+                transformation,
                 outputs ?? new ChangeTrackingList<StreamingJobOutputData>(),
                 functions ?? new ChangeTrackingList<StreamingJobFunctionData>(),
-                Optional.ToNullable(etag),
-                jobStorageAccount.Value,
-                Optional.ToNullable(contentStoragePolicy),
-                externals.Value,
-                cluster.Value,
+                etag,
+                jobStorageAccount,
+                contentStoragePolicy,
+                externals,
+                cluster,
                 serializedAdditionalRawData);
         }
 

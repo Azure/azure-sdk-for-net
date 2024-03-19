@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <exception cref="ArgumentNullException"> <paramref name="source"/> is null. </exception>
         public ContainerRegistryImportImageContent(ContainerRegistryImportSource source)
         {
-            if (source == null)
-            {
-                throw new ArgumentNullException(nameof(source));
-            }
+            Argument.AssertNotNull(source, nameof(source));
 
             Source = source;
             TargetTags = new ChangeTrackingList<string>();

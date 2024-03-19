@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,12 +40,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Source != null)
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteObjectValue(Source);
             }
-            if (!(Parameters is ChangeTrackingList<RunCommandInputParameter> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ProtectedParameters is ChangeTrackingList<RunCommandInputParameter> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(ProtectedParameters))
             {
                 writer.WritePropertyName("protectedParameters"u8);
                 writer.WriteStartArray();
@@ -64,57 +65,57 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (AsyncExecution.HasValue)
+            if (Optional.IsDefined(AsyncExecution))
             {
                 writer.WritePropertyName("asyncExecution"u8);
                 writer.WriteBooleanValue(AsyncExecution.Value);
             }
-            if (RunAsUser != null)
+            if (Optional.IsDefined(RunAsUser))
             {
                 writer.WritePropertyName("runAsUser"u8);
                 writer.WriteStringValue(RunAsUser);
             }
-            if (RunAsPassword != null)
+            if (Optional.IsDefined(RunAsPassword))
             {
                 writer.WritePropertyName("runAsPassword"u8);
                 writer.WriteStringValue(RunAsPassword);
             }
-            if (TimeoutInSeconds.HasValue)
+            if (Optional.IsDefined(TimeoutInSeconds))
             {
                 writer.WritePropertyName("timeoutInSeconds"u8);
                 writer.WriteNumberValue(TimeoutInSeconds.Value);
             }
-            if (OutputBlobUri != null)
+            if (Optional.IsDefined(OutputBlobUri))
             {
                 writer.WritePropertyName("outputBlobUri"u8);
                 writer.WriteStringValue(OutputBlobUri.AbsoluteUri);
             }
-            if (ErrorBlobUri != null)
+            if (Optional.IsDefined(ErrorBlobUri))
             {
                 writer.WritePropertyName("errorBlobUri"u8);
                 writer.WriteStringValue(ErrorBlobUri.AbsoluteUri);
             }
-            if (OutputBlobManagedIdentity != null)
+            if (Optional.IsDefined(OutputBlobManagedIdentity))
             {
                 writer.WritePropertyName("outputBlobManagedIdentity"u8);
                 writer.WriteObjectValue(OutputBlobManagedIdentity);
             }
-            if (ErrorBlobManagedIdentity != null)
+            if (Optional.IsDefined(ErrorBlobManagedIdentity))
             {
                 writer.WritePropertyName("errorBlobManagedIdentity"u8);
                 writer.WriteObjectValue(ErrorBlobManagedIdentity);
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && InstanceView != null)
+            if (options.Format != "W" && Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
                 writer.WriteObjectValue(InstanceView);
             }
-            if (TreatFailureAsDeploymentFailure.HasValue)
+            if (Optional.IsDefined(TreatFailureAsDeploymentFailure))
             {
                 writer.WritePropertyName("treatFailureAsDeploymentFailure"u8);
                 writer.WriteBooleanValue(TreatFailureAsDeploymentFailure.Value);
@@ -159,20 +160,20 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<VirtualMachineRunCommandScriptSource> source = default;
+            VirtualMachineRunCommandScriptSource source = default;
             IList<RunCommandInputParameter> parameters = default;
             IList<RunCommandInputParameter> protectedParameters = default;
-            Optional<bool> asyncExecution = default;
-            Optional<string> runAsUser = default;
-            Optional<string> runAsPassword = default;
-            Optional<int> timeoutInSeconds = default;
-            Optional<Uri> outputBlobUri = default;
-            Optional<Uri> errorBlobUri = default;
-            Optional<RunCommandManagedIdentity> outputBlobManagedIdentity = default;
-            Optional<RunCommandManagedIdentity> errorBlobManagedIdentity = default;
-            Optional<string> provisioningState = default;
-            Optional<VirtualMachineRunCommandInstanceView> instanceView = default;
-            Optional<bool> treatFailureAsDeploymentFailure = default;
+            bool? asyncExecution = default;
+            string runAsUser = default;
+            string runAsPassword = default;
+            int? timeoutInSeconds = default;
+            Uri outputBlobUri = default;
+            Uri errorBlobUri = default;
+            RunCommandManagedIdentity outputBlobManagedIdentity = default;
+            RunCommandManagedIdentity errorBlobManagedIdentity = default;
+            string provisioningState = default;
+            VirtualMachineRunCommandInstanceView instanceView = default;
+            bool? treatFailureAsDeploymentFailure = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -336,20 +337,20 @@ namespace Azure.ResourceManager.Compute.Models
             return new VirtualMachineRunCommandUpdate(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
-                source.Value,
+                source,
                 parameters ?? new ChangeTrackingList<RunCommandInputParameter>(),
                 protectedParameters ?? new ChangeTrackingList<RunCommandInputParameter>(),
-                Optional.ToNullable(asyncExecution),
-                runAsUser.Value,
-                runAsPassword.Value,
-                Optional.ToNullable(timeoutInSeconds),
-                outputBlobUri.Value,
-                errorBlobUri.Value,
-                outputBlobManagedIdentity.Value,
-                errorBlobManagedIdentity.Value,
-                provisioningState.Value,
-                instanceView.Value,
-                Optional.ToNullable(treatFailureAsDeploymentFailure));
+                asyncExecution,
+                runAsUser,
+                runAsPassword,
+                timeoutInSeconds,
+                outputBlobUri,
+                errorBlobUri,
+                outputBlobManagedIdentity,
+                errorBlobManagedIdentity,
+                provisioningState,
+                instanceView,
+                treatFailureAsDeploymentFailure);
         }
 
         BinaryData IPersistableModel<VirtualMachineRunCommandUpdate>.Write(ModelReaderWriterOptions options)

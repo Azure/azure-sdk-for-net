@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -19,7 +20,7 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteStringValue(Text);
             writer.WritePropertyName("category"u8);
             writer.WriteStringValue(Category);
-            if (Subcategory != null)
+            if (Optional.IsDefined(Subcategory))
             {
                 writer.WritePropertyName("subcategory"u8);
                 writer.WriteStringValue(Subcategory);
@@ -41,7 +42,7 @@ namespace Azure.AI.TextAnalytics.Models
             }
             string text = default;
             string category = default;
-            Optional<string> subcategory = default;
+            string subcategory = default;
             int offset = default;
             int length = default;
             double confidenceScore = default;
@@ -81,7 +82,7 @@ namespace Azure.AI.TextAnalytics.Models
             return new Entity(
                 text,
                 category,
-                subcategory.Value,
+                subcategory,
                 offset,
                 length,
                 confidenceScore);

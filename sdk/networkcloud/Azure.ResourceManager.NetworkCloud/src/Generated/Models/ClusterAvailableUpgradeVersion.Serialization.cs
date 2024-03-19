@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ControlImpact.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ControlImpact))
             {
                 writer.WritePropertyName("controlImpact"u8);
                 writer.WriteStringValue(ControlImpact.Value.ToString());
             }
-            if (options.Format != "W" && ExpectedDuration != null)
+            if (options.Format != "W" && Optional.IsDefined(ExpectedDuration))
             {
                 writer.WritePropertyName("expectedDuration"u8);
                 writer.WriteStringValue(ExpectedDuration);
             }
-            if (options.Format != "W" && ImpactDescription != null)
+            if (options.Format != "W" && Optional.IsDefined(ImpactDescription))
             {
                 writer.WritePropertyName("impactDescription"u8);
                 writer.WriteStringValue(ImpactDescription);
             }
-            if (options.Format != "W" && SupportExpireOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SupportExpireOn))
             {
                 writer.WritePropertyName("supportExpiryDate"u8);
                 writer.WriteStringValue(SupportExpireOn.Value, "O");
             }
-            if (options.Format != "W" && TargetClusterVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(TargetClusterVersion))
             {
                 writer.WritePropertyName("targetClusterVersion"u8);
                 writer.WriteStringValue(TargetClusterVersion);
             }
-            if (options.Format != "W" && WorkloadImpact.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(WorkloadImpact))
             {
                 writer.WritePropertyName("workloadImpact"u8);
                 writer.WriteStringValue(WorkloadImpact.Value.ToString());
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<ControlImpact> controlImpact = default;
-            Optional<string> expectedDuration = default;
-            Optional<string> impactDescription = default;
-            Optional<DateTimeOffset> supportExpiryDate = default;
-            Optional<string> targetClusterVersion = default;
-            Optional<WorkloadImpact> workloadImpact = default;
+            ControlImpact? controlImpact = default;
+            string expectedDuration = default;
+            string impactDescription = default;
+            DateTimeOffset? supportExpiryDate = default;
+            string targetClusterVersion = default;
+            WorkloadImpact? workloadImpact = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -153,12 +154,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ClusterAvailableUpgradeVersion(
-                Optional.ToNullable(controlImpact),
-                expectedDuration.Value,
-                impactDescription.Value,
-                Optional.ToNullable(supportExpiryDate),
-                targetClusterVersion.Value,
-                Optional.ToNullable(workloadImpact),
+                controlImpact,
+                expectedDuration,
+                impactDescription,
+                supportExpiryDate,
+                targetClusterVersion,
+                workloadImpact,
                 serializedAdditionalRawData);
         }
 

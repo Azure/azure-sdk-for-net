@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (!(Markings is ChangeTrackingList<int> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Markings))
             {
                 writer.WritePropertyName("markings"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(SourceIPRanges is ChangeTrackingList<QosIPRange> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(SourceIPRanges))
             {
                 writer.WritePropertyName("sourceIpRanges"u8);
                 writer.WriteStartArray();
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(DestinationIPRanges is ChangeTrackingList<QosIPRange> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(DestinationIPRanges))
             {
                 writer.WritePropertyName("destinationIpRanges"u8);
                 writer.WriteStartArray();
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(SourcePortRanges is ChangeTrackingList<QosPortRange> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(SourcePortRanges))
             {
                 writer.WritePropertyName("sourcePortRanges"u8);
                 writer.WriteStartArray();
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(DestinationPortRanges is ChangeTrackingList<QosPortRange> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(DestinationPortRanges))
             {
                 writer.WritePropertyName("destinationPortRanges"u8);
                 writer.WriteStartArray();
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Protocol.HasValue)
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.Network.Models
             IList<QosIPRange> destinationIPRanges = default;
             IList<QosPortRange> sourcePortRanges = default;
             IList<QosPortRange> destinationPortRanges = default;
-            Optional<ProtocolType> protocol = default;
+            ProtocolType? protocol = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -220,7 +221,7 @@ namespace Azure.ResourceManager.Network.Models
                 destinationIPRanges ?? new ChangeTrackingList<QosIPRange>(),
                 sourcePortRanges ?? new ChangeTrackingList<QosPortRange>(),
                 destinationPortRanges ?? new ChangeTrackingList<QosPortRange>(),
-                Optional.ToNullable(protocol),
+                protocol,
                 serializedAdditionalRawData);
         }
 

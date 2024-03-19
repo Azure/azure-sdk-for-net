@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && IsAutoApprovalsAllowed.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsAutoApprovalsAllowed))
             {
                 writer.WritePropertyName("allowAutoApprovals"u8);
                 writer.WriteBooleanValue(IsAutoApprovalsAllowed.Value);
             }
-            if (options.Format != "W" && !(ResourceGuardOperations is ChangeTrackingList<ResourceGuardOperationDetails> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ResourceGuardOperations))
             {
                 writer.WritePropertyName("resourceGuardOperations"u8);
                 writer.WriteStartArray();
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(VaultCriticalOperationExclusionList is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(VaultCriticalOperationExclusionList))
             {
                 writer.WritePropertyName("vaultCriticalOperationExclusionList"u8);
                 writer.WriteStartArray();
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -99,11 +100,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<DataProtectionBackupProvisioningState> provisioningState = default;
-            Optional<bool> allowAutoApprovals = default;
+            DataProtectionBackupProvisioningState? provisioningState = default;
+            bool? allowAutoApprovals = default;
             IReadOnlyList<ResourceGuardOperationDetails> resourceGuardOperations = default;
             IList<string> vaultCriticalOperationExclusionList = default;
-            Optional<string> description = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -166,11 +167,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ResourceGuardProperties(
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(allowAutoApprovals),
+                provisioningState,
+                allowAutoApprovals,
                 resourceGuardOperations ?? new ChangeTrackingList<ResourceGuardOperationDetails>(),
                 vaultCriticalOperationExclusionList ?? new ChangeTrackingList<string>(),
-                description.Value,
+                description,
                 serializedAdditionalRawData);
         }
 

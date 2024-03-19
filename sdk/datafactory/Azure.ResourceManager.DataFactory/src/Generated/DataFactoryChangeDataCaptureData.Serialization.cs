@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -49,19 +49,19 @@ namespace Azure.ResourceManager.DataFactory
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Folder != null)
+            if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
                 writer.WriteObjectValue(Folder);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -82,12 +82,12 @@ namespace Azure.ResourceManager.DataFactory
             writer.WriteEndArray();
             writer.WritePropertyName("policy"u8);
             writer.WriteObjectValue(Policy);
-            if (AllowVnetOverride.HasValue)
+            if (Optional.IsDefined(AllowVnetOverride))
             {
                 writer.WritePropertyName("allowVNetOverride"u8);
                 writer.WriteBooleanValue(AllowVnetOverride.Value);
             }
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
@@ -128,18 +128,18 @@ namespace Azure.ResourceManager.DataFactory
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ChangeDataCaptureFolder> folder = default;
-            Optional<string> description = default;
+            SystemData systemData = default;
+            ChangeDataCaptureFolder folder = default;
+            string description = default;
             IList<MapperSourceConnectionsInfo> sourceConnectionsInfo = default;
             IList<MapperTargetConnectionsInfo> targetConnectionsInfo = default;
             MapperPolicy policy = default;
-            Optional<bool> allowVnetOverride = default;
-            Optional<string> status = default;
+            bool? allowVnetOverride = default;
+            string status = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -249,15 +249,15 @@ namespace Azure.ResourceManager.DataFactory
                 id,
                 name,
                 type,
-                systemData.Value,
-                folder.Value,
-                description.Value,
+                systemData,
+                folder,
+                description,
                 sourceConnectionsInfo,
                 targetConnectionsInfo,
                 policy,
-                Optional.ToNullable(allowVnetOverride),
-                status.Value,
-                Optional.ToNullable(etag),
+                allowVnetOverride,
+                status,
+                etag,
                 additionalProperties);
         }
 

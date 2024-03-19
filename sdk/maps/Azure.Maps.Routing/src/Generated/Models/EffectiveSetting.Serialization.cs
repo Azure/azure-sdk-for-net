@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Maps.Routing.Models
 {
@@ -18,8 +17,8 @@ namespace Azure.Maps.Routing.Models
             {
                 return null;
             }
-            Optional<string> key = default;
-            Optional<string> value = default;
+            string key = default;
+            string value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("key"u8))
@@ -33,7 +32,7 @@ namespace Azure.Maps.Routing.Models
                     continue;
                 }
             }
-            return new EffectiveSetting(key.Value, value.Value);
+            return new EffectiveSetting(key, value);
         }
     }
 }

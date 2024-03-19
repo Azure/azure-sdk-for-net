@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (RecoveryVirtualNetworkResourceGroupName != null)
+            if (Optional.IsDefined(RecoveryVirtualNetworkResourceGroupName))
             {
                 writer.WritePropertyName("recoveryVirtualNetworkResourceGroupName"u8);
                 writer.WriteStringValue(RecoveryVirtualNetworkResourceGroupName);
             }
-            if (RecoveryVirtualNetworkName != null)
+            if (Optional.IsDefined(RecoveryVirtualNetworkName))
             {
                 writer.WritePropertyName("recoveryVirtualNetworkName"u8);
                 writer.WriteStringValue(RecoveryVirtualNetworkName);
@@ -76,8 +77,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> recoveryVirtualNetworkResourceGroupName = default;
-            Optional<string> recoveryVirtualNetworkName = default;
+            string recoveryVirtualNetworkResourceGroupName = default;
+            string recoveryVirtualNetworkName = default;
             string resourceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NewRecoveryVirtualNetwork(resourceType, serializedAdditionalRawData, recoveryVirtualNetworkResourceGroupName.Value, recoveryVirtualNetworkName.Value);
+            return new NewRecoveryVirtualNetwork(resourceType, serializedAdditionalRawData, recoveryVirtualNetworkResourceGroupName, recoveryVirtualNetworkName);
         }
 
         BinaryData IPersistableModel<NewRecoveryVirtualNetwork>.Write(ModelReaderWriterOptions options)

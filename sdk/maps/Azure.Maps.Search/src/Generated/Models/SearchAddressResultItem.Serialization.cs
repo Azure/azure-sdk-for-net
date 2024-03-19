@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Maps.Common;
 using Azure.Maps.Search;
 
 namespace Azure.Maps.Search.Models
@@ -20,21 +20,21 @@ namespace Azure.Maps.Search.Models
             {
                 return null;
             }
-            Optional<SearchAddressResultType> type = default;
-            Optional<string> id = default;
-            Optional<double> score = default;
-            Optional<double> dist = default;
-            Optional<string> info = default;
-            Optional<GeographicEntity> entityType = default;
-            Optional<PointOfInterest> poi = default;
-            Optional<MapsAddress> address = default;
-            Optional<LatLongPairAbbreviated> position = default;
-            Optional<BoundingBox> viewport = default;
+            SearchAddressResultType? type = default;
+            string id = default;
+            double? score = default;
+            double? dist = default;
+            string info = default;
+            GeographicEntity? entityType = default;
+            PointOfInterest poi = default;
+            MapsAddress address = default;
+            LatLongPairAbbreviated position = default;
+            BoundingBox viewport = default;
             IReadOnlyList<FacilityEntryPoint> entryPoints = default;
-            Optional<AddressRanges> addressRanges = default;
-            Optional<MapsDataSource> dataSources = default;
-            Optional<MapsSearchMatchType> matchType = default;
-            Optional<int> detourTime = default;
+            AddressRanges addressRanges = default;
+            MapsDataSource dataSources = default;
+            MapsSearchMatchType? matchType = default;
+            int? detourTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -171,21 +171,21 @@ namespace Azure.Maps.Search.Models
                 }
             }
             return new SearchAddressResultItem(
-                Optional.ToNullable(type),
-                id.Value,
-                Optional.ToNullable(score),
-                Optional.ToNullable(dist),
-                info.Value,
-                Optional.ToNullable(entityType),
-                poi.Value,
-                address.Value,
-                position.Value,
-                viewport.Value,
+                type,
+                id,
+                score,
+                dist,
+                info,
+                entityType,
+                poi,
+                address,
+                position,
+                viewport,
                 entryPoints ?? new ChangeTrackingList<FacilityEntryPoint>(),
-                addressRanges.Value,
-                dataSources.Value,
-                Optional.ToNullable(matchType),
-                Optional.ToNullable(detourTime));
+                addressRanges,
+                dataSources,
+                matchType,
+                detourTime);
         }
     }
 }

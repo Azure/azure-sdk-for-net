@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
 
             writer.WriteStartObject();
-            if (!(RegisteredFeatures is ChangeTrackingList<CustomerSubscriptionRegisteredFeatures> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(RegisteredFeatures))
             {
                 writer.WritePropertyName("registeredFeatures"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
                 writer.WriteEndArray();
             }
-            if (LocationPlacementId != null)
+            if (Optional.IsDefined(LocationPlacementId))
             {
                 writer.WritePropertyName("locationPlacementId"u8);
                 writer.WriteStringValue(LocationPlacementId);
@@ -82,7 +83,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 return null;
             }
             IList<CustomerSubscriptionRegisteredFeatures> registeredFeatures = default;
-            Optional<string> locationPlacementId = default;
+            string locationPlacementId = default;
             string quotaId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomerSubscriptionDetails(registeredFeatures ?? new ChangeTrackingList<CustomerSubscriptionRegisteredFeatures>(), locationPlacementId.Value, quotaId, serializedAdditionalRawData);
+            return new CustomerSubscriptionDetails(registeredFeatures ?? new ChangeTrackingList<CustomerSubscriptionRegisteredFeatures>(), locationPlacementId, quotaId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomerSubscriptionDetails>.Write(ModelReaderWriterOptions options)

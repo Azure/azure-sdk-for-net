@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
 
             writer.WriteStartObject();
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (StatusCode != null)
+            if (Optional.IsDefined(StatusCode))
             {
                 writer.WritePropertyName("statusCode"u8);
                 writer.WriteStringValue(StatusCode);
             }
-            if (StatusDescription != null)
+            if (Optional.IsDefined(StatusDescription))
             {
                 writer.WritePropertyName("statusDescription"u8);
                 writer.WriteStringValue(StatusDescription);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<AmlFileSystemHealthStateType> state = default;
-            Optional<string> statusCode = default;
-            Optional<string> statusDescription = default;
+            AmlFileSystemHealthStateType? state = default;
+            string statusCode = default;
+            string statusDescription = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AmlFileSystemHealth(Optional.ToNullable(state), statusCode.Value, statusDescription.Value, serializedAdditionalRawData);
+            return new AmlFileSystemHealth(state, statusCode, statusDescription, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AmlFileSystemHealth>.Write(ModelReaderWriterOptions options)

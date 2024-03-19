@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Redis;
 
 namespace Azure.ResourceManager.Redis.Models
 {
@@ -34,12 +35,12 @@ namespace Azure.ResourceManager.Redis.Models
             writer.WriteStringValue(LinkedRedisCacheLocation);
             writer.WritePropertyName("serverRole"u8);
             writer.WriteStringValue(ServerRole.ToSerialString());
-            if (options.Format != "W" && GeoReplicatedPrimaryHostName != null)
+            if (options.Format != "W" && Optional.IsDefined(GeoReplicatedPrimaryHostName))
             {
                 writer.WritePropertyName("geoReplicatedPrimaryHostName"u8);
                 writer.WriteStringValue(GeoReplicatedPrimaryHostName);
             }
-            if (options.Format != "W" && PrimaryHostName != null)
+            if (options.Format != "W" && Optional.IsDefined(PrimaryHostName))
             {
                 writer.WritePropertyName("primaryHostName"u8);
                 writer.WriteStringValue(PrimaryHostName);
@@ -86,8 +87,8 @@ namespace Azure.ResourceManager.Redis.Models
             ResourceIdentifier linkedRedisCacheId = default;
             AzureLocation linkedRedisCacheLocation = default;
             RedisLinkedServerRole serverRole = default;
-            Optional<string> geoReplicatedPrimaryHostName = default;
-            Optional<string> primaryHostName = default;
+            string geoReplicatedPrimaryHostName = default;
+            string primaryHostName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -139,8 +140,8 @@ namespace Azure.ResourceManager.Redis.Models
                 linkedRedisCacheId,
                 linkedRedisCacheLocation,
                 serverRole,
-                geoReplicatedPrimaryHostName.Value,
-                primaryHostName.Value,
+                geoReplicatedPrimaryHostName,
+                primaryHostName,
                 serializedAdditionalRawData);
         }
 

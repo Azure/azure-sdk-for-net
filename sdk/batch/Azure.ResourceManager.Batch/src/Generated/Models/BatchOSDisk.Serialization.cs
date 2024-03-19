@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (EphemeralOSDiskSettings != null)
+            if (Optional.IsDefined(EphemeralOSDiskSettings))
             {
                 writer.WritePropertyName("ephemeralOSDiskSettings"u8);
                 writer.WriteObjectValue(EphemeralOSDiskSettings);
             }
-            if (Caching.HasValue)
+            if (Optional.IsDefined(Caching))
             {
                 writer.WritePropertyName("caching"u8);
                 writer.WriteStringValue(Caching.Value.ToSerialString());
             }
-            if (ManagedDisk != null)
+            if (Optional.IsDefined(ManagedDisk))
             {
                 writer.WritePropertyName("managedDisk"u8);
                 writer.WriteObjectValue(ManagedDisk);
             }
-            if (DiskSizeGB.HasValue)
+            if (Optional.IsDefined(DiskSizeGB))
             {
                 writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
-            if (IsWriteAcceleratorEnabled.HasValue)
+            if (Optional.IsDefined(IsWriteAcceleratorEnabled))
             {
                 writer.WritePropertyName("writeAcceleratorEnabled"u8);
                 writer.WriteBooleanValue(IsWriteAcceleratorEnabled.Value);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<DiffDiskSettings> ephemeralOSDiskSettings = default;
-            Optional<BatchDiskCachingType> caching = default;
-            Optional<ManagedDisk> managedDisk = default;
-            Optional<int> diskSizeGB = default;
-            Optional<bool> writeAcceleratorEnabled = default;
+            DiffDiskSettings ephemeralOSDiskSettings = default;
+            BatchDiskCachingType? caching = default;
+            ManagedDisk managedDisk = default;
+            int? diskSizeGB = default;
+            bool? writeAcceleratorEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,11 +151,11 @@ namespace Azure.ResourceManager.Batch.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new BatchOSDisk(
-                ephemeralOSDiskSettings.Value,
-                Optional.ToNullable(caching),
-                managedDisk.Value,
-                Optional.ToNullable(diskSizeGB),
-                Optional.ToNullable(writeAcceleratorEnabled),
+                ephemeralOSDiskSettings,
+                caching,
+                managedDisk,
+                diskSizeGB,
+                writeAcceleratorEnabled,
                 serializedAdditionalRawData);
         }
 

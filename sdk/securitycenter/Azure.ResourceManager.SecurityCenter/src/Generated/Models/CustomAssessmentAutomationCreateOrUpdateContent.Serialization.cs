@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -42,39 +43,39 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (CompressedQuery != null)
+            if (Optional.IsDefined(CompressedQuery))
             {
                 writer.WritePropertyName("compressedQuery"u8);
                 writer.WriteStringValue(CompressedQuery);
             }
-            if (SupportedCloud.HasValue)
+            if (Optional.IsDefined(SupportedCloud))
             {
                 writer.WritePropertyName("supportedCloud"u8);
                 writer.WriteStringValue(SupportedCloud.Value.ToString());
             }
-            if (Severity.HasValue)
+            if (Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (RemediationDescription != null)
+            if (Optional.IsDefined(RemediationDescription))
             {
                 writer.WritePropertyName("remediationDescription"u8);
                 writer.WriteStringValue(RemediationDescription);
@@ -121,13 +122,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> compressedQuery = default;
-            Optional<CustomAssessmentAutomationSupportedCloud> supportedCloud = default;
-            Optional<CustomAssessmentSeverity> severity = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<string> remediationDescription = default;
+            SystemData systemData = default;
+            string compressedQuery = default;
+            CustomAssessmentAutomationSupportedCloud? supportedCloud = default;
+            CustomAssessmentSeverity? severity = default;
+            string displayName = default;
+            string description = default;
+            string remediationDescription = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -216,13 +217,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                compressedQuery.Value,
-                Optional.ToNullable(supportedCloud),
-                Optional.ToNullable(severity),
-                displayName.Value,
-                description.Value,
-                remediationDescription.Value,
+                systemData,
+                compressedQuery,
+                supportedCloud,
+                severity,
+                displayName,
+                description,
+                remediationDescription,
                 serializedAdditionalRawData);
         }
 

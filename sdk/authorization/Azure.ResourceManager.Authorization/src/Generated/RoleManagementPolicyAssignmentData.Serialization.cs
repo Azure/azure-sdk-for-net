@@ -43,29 +43,29 @@ namespace Azure.ResourceManager.Authorization
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Scope != null)
+            if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (RoleDefinitionId != null)
+            if (Optional.IsDefined(RoleDefinitionId))
             {
                 writer.WritePropertyName("roleDefinitionId"u8);
                 writer.WriteStringValue(RoleDefinitionId);
             }
-            if (PolicyId != null)
+            if (Optional.IsDefined(PolicyId))
             {
                 writer.WritePropertyName("policyId"u8);
                 writer.WriteStringValue(PolicyId);
             }
-            if (options.Format != "W" && !(EffectiveRules is ChangeTrackingList<RoleManagementPolicyRule> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(EffectiveRules))
             {
                 writer.WritePropertyName("effectiveRules"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Authorization
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && PolicyAssignmentProperties != null)
+            if (options.Format != "W" && Optional.IsDefined(PolicyAssignmentProperties))
             {
                 writer.WritePropertyName("policyAssignmentProperties"u8);
                 writer.WriteObjectValue(PolicyAssignmentProperties);
@@ -122,12 +122,12 @@ namespace Azure.ResourceManager.Authorization
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> scope = default;
-            Optional<ResourceIdentifier> roleDefinitionId = default;
-            Optional<ResourceIdentifier> policyId = default;
+            SystemData systemData = default;
+            string scope = default;
+            ResourceIdentifier roleDefinitionId = default;
+            ResourceIdentifier policyId = default;
             IReadOnlyList<RoleManagementPolicyRule> effectiveRules = default;
-            Optional<PolicyAssignmentProperties> policyAssignmentProperties = default;
+            PolicyAssignmentProperties policyAssignmentProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -224,12 +224,12 @@ namespace Azure.ResourceManager.Authorization
                 id,
                 name,
                 type,
-                systemData.Value,
-                scope.Value,
-                roleDefinitionId.Value,
-                policyId.Value,
+                systemData,
+                scope,
+                roleDefinitionId,
+                policyId,
                 effectiveRules ?? new ChangeTrackingList<RoleManagementPolicyRule>(),
-                policyAssignmentProperties.Value,
+                policyAssignmentProperties,
                 serializedAdditionalRawData);
         }
 

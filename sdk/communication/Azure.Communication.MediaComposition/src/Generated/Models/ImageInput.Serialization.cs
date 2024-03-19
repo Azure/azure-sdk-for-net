@@ -20,7 +20,7 @@ namespace Azure.Communication.MediaComposition.Models
             writer.WriteStringValue(Uri);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (PlaceholderImageUri != null)
+            if (Optional.IsDefined(PlaceholderImageUri))
             {
                 writer.WritePropertyName("placeholderImageUri"u8);
                 writer.WriteStringValue(PlaceholderImageUri);
@@ -36,7 +36,7 @@ namespace Azure.Communication.MediaComposition.Models
             }
             string uri = default;
             MediaInputType kind = default;
-            Optional<string> placeholderImageUri = default;
+            string placeholderImageUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("uri"u8))
@@ -55,7 +55,7 @@ namespace Azure.Communication.MediaComposition.Models
                     continue;
                 }
             }
-            return new ImageInput(kind, placeholderImageUri.Value, uri);
+            return new ImageInput(kind, placeholderImageUri, uri);
         }
     }
 }

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (ConnectorId != null)
+            if (Optional.IsDefined(ConnectorId))
             {
                 writer.WritePropertyName("connectorId"u8);
                 writer.WriteStringValue(ConnectorId);
             }
-            if (!(DataTypes is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DataTypes))
             {
                 writer.WritePropertyName("dataTypes"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<string> connectorId = default;
+            string connectorId = default;
             IList<string> dataTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityMLAnalyticsSettingsDataSource(connectorId.Value, dataTypes ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new SecurityMLAnalyticsSettingsDataSource(connectorId, dataTypes ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityMLAnalyticsSettingsDataSource>.Write(ModelReaderWriterOptions options)

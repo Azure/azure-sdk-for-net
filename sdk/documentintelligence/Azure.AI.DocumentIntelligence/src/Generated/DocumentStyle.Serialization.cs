@@ -27,32 +27,32 @@ namespace Azure.AI.DocumentIntelligence
             }
 
             writer.WriteStartObject();
-            if (IsHandwritten.HasValue)
+            if (Optional.IsDefined(IsHandwritten))
             {
                 writer.WritePropertyName("isHandwritten"u8);
                 writer.WriteBooleanValue(IsHandwritten.Value);
             }
-            if (SimilarFontFamily != null)
+            if (Optional.IsDefined(SimilarFontFamily))
             {
                 writer.WritePropertyName("similarFontFamily"u8);
                 writer.WriteStringValue(SimilarFontFamily);
             }
-            if (FontStyle.HasValue)
+            if (Optional.IsDefined(FontStyle))
             {
                 writer.WritePropertyName("fontStyle"u8);
                 writer.WriteStringValue(FontStyle.Value.ToString());
             }
-            if (FontWeight.HasValue)
+            if (Optional.IsDefined(FontWeight))
             {
                 writer.WritePropertyName("fontWeight"u8);
                 writer.WriteStringValue(FontWeight.Value.ToString());
             }
-            if (Color != null)
+            if (Optional.IsDefined(Color))
             {
                 writer.WritePropertyName("color"u8);
                 writer.WriteStringValue(Color);
             }
-            if (BackgroundColor != null)
+            if (Optional.IsDefined(BackgroundColor))
             {
                 writer.WritePropertyName("backgroundColor"u8);
                 writer.WriteStringValue(BackgroundColor);
@@ -104,12 +104,12 @@ namespace Azure.AI.DocumentIntelligence
             {
                 return null;
             }
-            Optional<bool> isHandwritten = default;
-            Optional<string> similarFontFamily = default;
-            Optional<FontStyle> fontStyle = default;
-            Optional<FontWeight> fontWeight = default;
-            Optional<string> color = default;
-            Optional<string> backgroundColor = default;
+            bool? isHandwritten = default;
+            string similarFontFamily = default;
+            DocumentFontStyle? fontStyle = default;
+            DocumentFontWeight? fontWeight = default;
+            string color = default;
+            string backgroundColor = default;
             IReadOnlyList<DocumentSpan> spans = default;
             float confidence = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -136,7 +136,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    fontStyle = new FontStyle(property.Value.GetString());
+                    fontStyle = new DocumentFontStyle(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("fontWeight"u8))
@@ -145,7 +145,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    fontWeight = new FontWeight(property.Value.GetString());
+                    fontWeight = new DocumentFontWeight(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("color"u8))
@@ -180,12 +180,12 @@ namespace Azure.AI.DocumentIntelligence
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DocumentStyle(
-                Optional.ToNullable(isHandwritten),
-                similarFontFamily.Value,
-                Optional.ToNullable(fontStyle),
-                Optional.ToNullable(fontWeight),
-                color.Value,
-                backgroundColor.Value,
+                isHandwritten,
+                similarFontFamily,
+                fontStyle,
+                fontWeight,
+                color,
+                backgroundColor,
                 spans,
                 confidence,
                 serializedAdditionalRawData);

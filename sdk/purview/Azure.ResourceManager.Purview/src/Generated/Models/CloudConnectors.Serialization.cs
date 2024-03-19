@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Purview;
 
 namespace Azure.ResourceManager.Purview.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Purview.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && AwsExternalId != null)
+            if (options.Format != "W" && Optional.IsDefined(AwsExternalId))
             {
                 writer.WritePropertyName("awsExternalId"u8);
                 writer.WriteStringValue(AwsExternalId);
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 return null;
             }
-            Optional<string> awsExternalId = default;
+            string awsExternalId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.Purview.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudConnectors(awsExternalId.Value, serializedAdditionalRawData);
+            return new CloudConnectors(awsExternalId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudConnectors>.Write(ModelReaderWriterOptions options)

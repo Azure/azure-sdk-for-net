@@ -8,7 +8,7 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
+using Azure.Messaging.EventGrid;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -21,13 +21,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<DateTimeOffset> scheduleDateTime = default;
-            Optional<string> accountName = default;
-            Optional<string> ruleName = default;
-            Optional<string> policyRunStatus = default;
-            Optional<string> policyRunStatusMessage = default;
-            Optional<string> policyRunId = default;
-            Optional<string> manifestBlobUrl = default;
+            DateTimeOffset? scheduleDateTime = default;
+            string accountName = default;
+            string ruleName = default;
+            string policyRunStatus = default;
+            string policyRunStatusMessage = default;
+            string policyRunId = default;
+            string manifestBlobUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scheduleDateTime"u8))
@@ -71,13 +71,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new StorageBlobInventoryPolicyCompletedEventData(
-                Optional.ToNullable(scheduleDateTime),
-                accountName.Value,
-                ruleName.Value,
-                policyRunStatus.Value,
-                policyRunStatusMessage.Value,
-                policyRunId.Value,
-                manifestBlobUrl.Value);
+                scheduleDateTime,
+                accountName,
+                ruleName,
+                policyRunStatus,
+                policyRunStatusMessage,
+                policyRunId,
+                manifestBlobUrl);
         }
 
         internal partial class StorageBlobInventoryPolicyCompletedEventDataConverter : JsonConverter<StorageBlobInventoryPolicyCompletedEventData>

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (ElapsedTimeMetric != null)
+            if (Optional.IsDefined(ElapsedTimeMetric))
             {
                 writer.WritePropertyName("elapsedTimeMetric"u8);
                 writer.WriteObjectValue(ElapsedTimeMetric);
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<PipelineElapsedTimeMetricPolicy> elapsedTimeMetric = default;
+            PipelineElapsedTimeMetricPolicy elapsedTimeMetric = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataFactoryPipelinePolicy(elapsedTimeMetric.Value, serializedAdditionalRawData);
+            return new DataFactoryPipelinePolicy(elapsedTimeMetric, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataFactoryPipelinePolicy>.Write(ModelReaderWriterOptions options)

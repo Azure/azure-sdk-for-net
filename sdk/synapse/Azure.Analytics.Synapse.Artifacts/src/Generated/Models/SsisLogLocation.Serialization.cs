@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -24,12 +25,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (AccessCredential != null)
+            if (Optional.IsDefined(AccessCredential))
             {
                 writer.WritePropertyName("accessCredential"u8);
                 writer.WriteObjectValue(AccessCredential);
             }
-            if (LogRefreshInterval != null)
+            if (Optional.IsDefined(LogRefreshInterval))
             {
                 writer.WritePropertyName("logRefreshInterval"u8);
                 writer.WriteObjectValue(LogRefreshInterval);
@@ -46,8 +47,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             object logPath = default;
             SsisLogLocationType type = default;
-            Optional<SsisAccessCredential> accessCredential = default;
-            Optional<object> logRefreshInterval = default;
+            SsisAccessCredential accessCredential = default;
+            object logRefreshInterval = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("logPath"u8))
@@ -91,7 +92,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new SsisLogLocation(logPath, type, accessCredential.Value, logRefreshInterval.Value);
+            return new SsisLogLocation(logPath, type, accessCredential, logRefreshInterval);
         }
 
         internal partial class SsisLogLocationConverter : JsonConverter<SsisLogLocation>

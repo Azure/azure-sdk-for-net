@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Synapse
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Kind != null)
+            if (options.Format != "W" && Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -52,44 +52,44 @@ namespace Azure.ResourceManager.Synapse
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (SecurityEnabledAccess != null)
+            if (Optional.IsDefined(SecurityEnabledAccess))
             {
                 writer.WritePropertyName("securityEnabledAccess"u8);
                 writer.WriteStringValue(SecurityEnabledAccess);
             }
-            if (ProxyDnsName != null)
+            if (Optional.IsDefined(ProxyDnsName))
             {
                 writer.WritePropertyName("proxyDnsName"u8);
                 writer.WriteStringValue(ProxyDnsName);
             }
-            if (ProxyPort != null)
+            if (Optional.IsDefined(ProxyPort))
             {
                 writer.WritePropertyName("proxyPort"u8);
                 writer.WriteStringValue(ProxyPort);
             }
-            if (Visibility != null)
+            if (Optional.IsDefined(Visibility))
             {
                 writer.WritePropertyName("visibility"u8);
                 writer.WriteStringValue(Visibility);
             }
-            if (UseServerDefault != null)
+            if (Optional.IsDefined(UseServerDefault))
             {
                 writer.WritePropertyName("useServerDefault"u8);
                 writer.WriteStringValue(UseServerDefault);
             }
-            if (RedirectionState != null)
+            if (Optional.IsDefined(RedirectionState))
             {
                 writer.WritePropertyName("redirectionState"u8);
                 writer.WriteStringValue(RedirectionState);
             }
-            if (State != null)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
@@ -133,19 +133,19 @@ namespace Azure.ResourceManager.Synapse
             {
                 return null;
             }
-            Optional<string> kind = default;
-            Optional<AzureLocation> location = default;
+            string kind = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> securityEnabledAccess = default;
-            Optional<string> proxyDnsName = default;
-            Optional<string> proxyPort = default;
-            Optional<string> visibility = default;
-            Optional<string> useServerDefault = default;
-            Optional<string> redirectionState = default;
-            Optional<string> state = default;
+            SystemData systemData = default;
+            string securityEnabledAccess = default;
+            string proxyDnsName = default;
+            string proxyPort = default;
+            string visibility = default;
+            string useServerDefault = default;
+            string redirectionState = default;
+            string state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -245,16 +245,16 @@ namespace Azure.ResourceManager.Synapse
                 id,
                 name,
                 type,
-                systemData.Value,
-                kind.Value,
-                Optional.ToNullable(location),
-                securityEnabledAccess.Value,
-                proxyDnsName.Value,
-                proxyPort.Value,
-                visibility.Value,
-                useServerDefault.Value,
-                redirectionState.Value,
-                state.Value,
+                systemData,
+                kind,
+                location,
+                securityEnabledAccess,
+                proxyDnsName,
+                proxyPort,
+                visibility,
+                useServerDefault,
+                redirectionState,
+                state,
                 serializedAdditionalRawData);
         }
 

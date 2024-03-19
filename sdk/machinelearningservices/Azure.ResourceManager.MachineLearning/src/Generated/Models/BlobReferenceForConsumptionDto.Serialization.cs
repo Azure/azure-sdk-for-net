@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (BlobUri != null)
+            if (Optional.IsDefined(BlobUri))
             {
                 if (BlobUri != null)
                 {
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("blobUri");
                 }
             }
-            if (Credential != null)
+            if (Optional.IsDefined(Credential))
             {
                 if (Credential != null)
                 {
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("credential");
                 }
             }
-            if (StorageAccountArmId != null)
+            if (Optional.IsDefined(StorageAccountArmId))
             {
                 if (StorageAccountArmId != null)
                 {
@@ -100,9 +101,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<Uri> blobUri = default;
-            Optional<PendingUploadCredentialDto> credential = default;
-            Optional<ResourceIdentifier> storageAccountArmId = default;
+            Uri blobUri = default;
+            PendingUploadCredentialDto credential = default;
+            ResourceIdentifier storageAccountArmId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -143,7 +144,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BlobReferenceForConsumptionDto(blobUri.Value, credential.Value, storageAccountArmId.Value, serializedAdditionalRawData);
+            return new BlobReferenceForConsumptionDto(blobUri, credential, storageAccountArmId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BlobReferenceForConsumptionDto>.Write(ModelReaderWriterOptions options)

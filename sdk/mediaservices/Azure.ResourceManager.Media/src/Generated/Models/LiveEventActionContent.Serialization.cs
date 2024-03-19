@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (RemoveOutputsOnStop.HasValue)
+            if (Optional.IsDefined(RemoveOutputsOnStop))
             {
                 writer.WritePropertyName("removeOutputsOnStop"u8);
                 writer.WriteBooleanValue(RemoveOutputsOnStop.Value);
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<bool> removeOutputsOnStop = default;
+            bool? removeOutputsOnStop = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LiveEventActionContent(Optional.ToNullable(removeOutputsOnStop), serializedAdditionalRawData);
+            return new LiveEventActionContent(removeOutputsOnStop, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LiveEventActionContent>.Write(ModelReaderWriterOptions options)

@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
+using Azure.Messaging.EventGrid;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -22,8 +22,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<MediaJobState> previousState = default;
-            Optional<MediaJobOutput> output = default;
+            MediaJobState? previousState = default;
+            MediaJobOutput output = default;
             IReadOnlyDictionary<string, string> jobCorrelationData = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -60,7 +60,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new MediaJobOutputFinishedEventData(Optional.ToNullable(previousState), output.Value, jobCorrelationData ?? new ChangeTrackingDictionary<string, string>());
+            return new MediaJobOutputFinishedEventData(previousState, output, jobCorrelationData ?? new ChangeTrackingDictionary<string, string>());
         }
 
         internal partial class MediaJobOutputFinishedEventDataConverter : JsonConverter<MediaJobOutputFinishedEventData>

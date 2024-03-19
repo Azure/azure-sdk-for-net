@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Blueprint;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Blueprint.Models
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             JsonSerializer.Serialize(writer, KeyVault);
             writer.WritePropertyName("secretName"u8);
             writer.WriteStringValue(SecretName);
-            if (SecretVersion != null)
+            if (Optional.IsDefined(SecretVersion))
             {
                 writer.WritePropertyName("secretVersion"u8);
                 writer.WriteStringValue(SecretVersion);
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             }
             WritableSubResource keyVault = default;
             string secretName = default;
-            Optional<string> secretVersion = default;
+            string secretVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -102,7 +103,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecretValueReference(keyVault, secretName, secretVersion.Value, serializedAdditionalRawData);
+            return new SecretValueReference(keyVault, secretName, secretVersion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecretValueReference>.Write(ModelReaderWriterOptions options)

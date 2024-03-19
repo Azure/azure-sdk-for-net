@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.EdgeOrder
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,21 +56,21 @@ namespace Azure.ResourceManager.EdgeOrder
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ShippingAddress != null)
+            if (Optional.IsDefined(ShippingAddress))
             {
                 writer.WritePropertyName("shippingAddress"u8);
                 writer.WriteObjectValue(ShippingAddress);
             }
             writer.WritePropertyName("contactDetails"u8);
             writer.WriteObjectValue(ContactDetails);
-            if (options.Format != "W" && AddressValidationStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AddressValidationStatus))
             {
                 writer.WritePropertyName("addressValidationStatus"u8);
                 writer.WriteStringValue(AddressValidationStatus.Value.ToString());
@@ -119,10 +119,10 @@ namespace Azure.ResourceManager.EdgeOrder
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<EdgeOrderShippingAddress> shippingAddress = default;
+            SystemData systemData = default;
+            EdgeOrderShippingAddress shippingAddress = default;
             EdgeOrderAddressContactDetails contactDetails = default;
-            Optional<EdgeOrderAddressValidationStatus> addressValidationStatus = default;
+            EdgeOrderAddressValidationStatus? addressValidationStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -215,12 +215,12 @@ namespace Azure.ResourceManager.EdgeOrder
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                shippingAddress.Value,
+                shippingAddress,
                 contactDetails,
-                Optional.ToNullable(addressValidationStatus),
+                addressValidationStatus,
                 serializedAdditionalRawData);
         }
 

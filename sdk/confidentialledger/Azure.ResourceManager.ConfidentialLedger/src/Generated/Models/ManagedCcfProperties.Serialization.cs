@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ConfidentialLedger;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && AppName != null)
+            if (options.Format != "W" && Optional.IsDefined(AppName))
             {
                 writer.WritePropertyName("appName"u8);
                 writer.WriteStringValue(AppName);
             }
-            if (options.Format != "W" && AppUri != null)
+            if (options.Format != "W" && Optional.IsDefined(AppUri))
             {
                 writer.WritePropertyName("appUri"u8);
                 writer.WriteStringValue(AppUri.AbsoluteUri);
             }
-            if (options.Format != "W" && IdentityServiceUri != null)
+            if (options.Format != "W" && Optional.IsDefined(IdentityServiceUri))
             {
                 writer.WritePropertyName("identityServiceUri"u8);
                 writer.WriteStringValue(IdentityServiceUri.AbsoluteUri);
             }
-            if (!(MemberIdentityCertificates is ChangeTrackingList<ConfidentialLedgerMemberIdentityCertificate> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(MemberIdentityCertificates))
             {
                 writer.WritePropertyName("memberIdentityCertificates"u8);
                 writer.WriteStartArray();
@@ -51,17 +52,17 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 }
                 writer.WriteEndArray();
             }
-            if (DeploymentType != null)
+            if (Optional.IsDefined(DeploymentType))
             {
                 writer.WritePropertyName("deploymentType"u8);
                 writer.WriteObjectValue(DeploymentType);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (NodeCount.HasValue)
+            if (Optional.IsDefined(NodeCount))
             {
                 writer.WritePropertyName("nodeCount"u8);
                 writer.WriteNumberValue(NodeCount.Value);
@@ -104,13 +105,13 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             {
                 return null;
             }
-            Optional<string> appName = default;
-            Optional<Uri> appUri = default;
-            Optional<Uri> identityServiceUri = default;
+            string appName = default;
+            Uri appUri = default;
+            Uri identityServiceUri = default;
             IList<ConfidentialLedgerMemberIdentityCertificate> memberIdentityCertificates = default;
-            Optional<ConfidentialLedgerDeploymentType> deploymentType = default;
-            Optional<ConfidentialLedgerProvisioningState> provisioningState = default;
-            Optional<int> nodeCount = default;
+            ConfidentialLedgerDeploymentType deploymentType = default;
+            ConfidentialLedgerProvisioningState? provisioningState = default;
+            int? nodeCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -186,13 +187,13 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ManagedCcfProperties(
-                appName.Value,
-                appUri.Value,
-                identityServiceUri.Value,
+                appName,
+                appUri,
+                identityServiceUri,
                 memberIdentityCertificates ?? new ChangeTrackingList<ConfidentialLedgerMemberIdentityCertificate>(),
-                deploymentType.Value,
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(nodeCount),
+                deploymentType,
+                provisioningState,
+                nodeCount,
                 serializedAdditionalRawData);
         }
 

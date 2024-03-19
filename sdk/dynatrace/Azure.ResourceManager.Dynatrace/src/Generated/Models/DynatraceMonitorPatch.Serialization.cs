@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Dynatrace;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -37,27 +38,27 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
                 writer.WriteEndObject();
             }
-            if (MonitoringStatus.HasValue)
+            if (Optional.IsDefined(MonitoringStatus))
             {
                 writer.WritePropertyName("monitoringStatus"u8);
                 writer.WriteStringValue(MonitoringStatus.Value.ToString());
             }
-            if (MarketplaceSubscriptionStatus.HasValue)
+            if (Optional.IsDefined(MarketplaceSubscriptionStatus))
             {
                 writer.WritePropertyName("marketplaceSubscriptionStatus"u8);
                 writer.WriteStringValue(MarketplaceSubscriptionStatus.Value.ToString());
             }
-            if (DynatraceEnvironmentProperties != null)
+            if (Optional.IsDefined(DynatraceEnvironmentProperties))
             {
                 writer.WritePropertyName("dynatraceEnvironmentProperties"u8);
                 writer.WriteObjectValue(DynatraceEnvironmentProperties);
             }
-            if (UserInfo != null)
+            if (Optional.IsDefined(UserInfo))
             {
                 writer.WritePropertyName("userInfo"u8);
                 writer.WriteObjectValue(UserInfo);
             }
-            if (PlanData != null)
+            if (Optional.IsDefined(PlanData))
             {
                 writer.WritePropertyName("planData"u8);
                 writer.WriteObjectValue(PlanData);
@@ -101,11 +102,11 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<DynatraceMonitoringStatus> monitoringStatus = default;
-            Optional<DynatraceMonitorMarketplaceSubscriptionStatus> marketplaceSubscriptionStatus = default;
-            Optional<DynatraceEnvironmentProperties> dynatraceEnvironmentProperties = default;
-            Optional<DynatraceMonitorUserInfo> userInfo = default;
-            Optional<DynatraceBillingPlanInfo> planData = default;
+            DynatraceMonitoringStatus? monitoringStatus = default;
+            DynatraceMonitorMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = default;
+            DynatraceEnvironmentProperties dynatraceEnvironmentProperties = default;
+            DynatraceMonitorUserInfo userInfo = default;
+            DynatraceBillingPlanInfo planData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -177,11 +178,11 @@ namespace Azure.ResourceManager.Dynatrace.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DynatraceMonitorPatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                Optional.ToNullable(monitoringStatus),
-                Optional.ToNullable(marketplaceSubscriptionStatus),
-                dynatraceEnvironmentProperties.Value,
-                userInfo.Value,
-                planData.Value,
+                monitoringStatus,
+                marketplaceSubscriptionStatus,
+                dynatraceEnvironmentProperties,
+                userInfo,
+                planData,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Runtime != null)
+            if (Optional.IsDefined(Runtime))
             {
                 if (Runtime != null)
                 {
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> runtime = default;
+            string runtime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComputeInstanceVersion(runtime.Value, serializedAdditionalRawData);
+            return new ComputeInstanceVersion(runtime, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComputeInstanceVersion>.Write(ModelReaderWriterOptions options)

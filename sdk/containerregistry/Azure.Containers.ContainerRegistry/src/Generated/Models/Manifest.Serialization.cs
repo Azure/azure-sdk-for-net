@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
@@ -18,7 +17,7 @@ namespace Azure.Containers.ContainerRegistry
             {
                 return null;
             }
-            Optional<int> schemaVersion = default;
+            int? schemaVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("schemaVersion"u8))
@@ -31,7 +30,7 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new Manifest(Optional.ToNullable(schemaVersion));
+            return new Manifest(schemaVersion);
         }
     }
 }

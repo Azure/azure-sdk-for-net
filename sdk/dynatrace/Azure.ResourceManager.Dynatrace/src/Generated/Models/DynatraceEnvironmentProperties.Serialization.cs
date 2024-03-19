@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Dynatrace;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Dynatrace.Models
             }
 
             writer.WriteStartObject();
-            if (UserId != null)
+            if (Optional.IsDefined(UserId))
             {
                 writer.WritePropertyName("userId"u8);
                 writer.WriteStringValue(UserId);
             }
-            if (AccountInfo != null)
+            if (Optional.IsDefined(AccountInfo))
             {
                 writer.WritePropertyName("accountInfo"u8);
                 writer.WriteObjectValue(AccountInfo);
             }
-            if (EnvironmentInfo != null)
+            if (Optional.IsDefined(EnvironmentInfo))
             {
                 writer.WritePropertyName("environmentInfo"u8);
                 writer.WriteObjectValue(EnvironmentInfo);
             }
-            if (SingleSignOnProperties != null)
+            if (Optional.IsDefined(SingleSignOnProperties))
             {
                 writer.WritePropertyName("singleSignOnProperties"u8);
                 writer.WriteObjectValue(SingleSignOnProperties);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 return null;
             }
-            Optional<string> userId = default;
-            Optional<DynatraceAccountInfo> accountInfo = default;
-            Optional<DynatraceEnvironmentInfo> environmentInfo = default;
-            Optional<DynatraceSingleSignOnProperties> singleSignOnProperties = default;
+            string userId = default;
+            DynatraceAccountInfo accountInfo = default;
+            DynatraceEnvironmentInfo environmentInfo = default;
+            DynatraceSingleSignOnProperties singleSignOnProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DynatraceEnvironmentProperties(userId.Value, accountInfo.Value, environmentInfo.Value, singleSignOnProperties.Value, serializedAdditionalRawData);
+            return new DynatraceEnvironmentProperties(userId, accountInfo, environmentInfo, singleSignOnProperties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DynatraceEnvironmentProperties>.Write(ModelReaderWriterOptions options)

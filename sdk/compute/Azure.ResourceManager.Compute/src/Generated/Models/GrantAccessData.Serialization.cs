@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -30,12 +31,12 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStringValue(Access.ToString());
             writer.WritePropertyName("durationInSeconds"u8);
             writer.WriteNumberValue(DurationInSeconds);
-            if (GetSecureVmGuestStateSas.HasValue)
+            if (Optional.IsDefined(GetSecureVmGuestStateSas))
             {
                 writer.WritePropertyName("getSecureVMGuestStateSAS"u8);
                 writer.WriteBooleanValue(GetSecureVmGuestStateSas.Value);
             }
-            if (FileFormat.HasValue)
+            if (Optional.IsDefined(FileFormat))
             {
                 writer.WritePropertyName("fileFormat"u8);
                 writer.WriteStringValue(FileFormat.Value.ToString());
@@ -80,8 +81,8 @@ namespace Azure.ResourceManager.Compute.Models
             }
             AccessLevel access = default;
             int durationInSeconds = default;
-            Optional<bool> getSecureVmGuestStateSas = default;
-            Optional<DiskImageFileFormat> fileFormat = default;
+            bool? getSecureVmGuestStateSas = default;
+            DiskImageFileFormat? fileFormat = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,7 +121,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GrantAccessData(access, durationInSeconds, Optional.ToNullable(getSecureVmGuestStateSas), Optional.ToNullable(fileFormat), serializedAdditionalRawData);
+            return new GrantAccessData(access, durationInSeconds, getSecureVmGuestStateSas, fileFormat, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GrantAccessData>.Write(ModelReaderWriterOptions options)

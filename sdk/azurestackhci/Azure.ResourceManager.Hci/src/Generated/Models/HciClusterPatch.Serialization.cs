@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Hci;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Hci.Models
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -40,22 +41,22 @@ namespace Azure.ResourceManager.Hci.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (CloudManagementEndpoint != null)
+            if (Optional.IsDefined(CloudManagementEndpoint))
             {
                 writer.WritePropertyName("cloudManagementEndpoint"u8);
                 writer.WriteStringValue(CloudManagementEndpoint);
             }
-            if (AadClientId.HasValue)
+            if (Optional.IsDefined(AadClientId))
             {
                 writer.WritePropertyName("aadClientId"u8);
                 writer.WriteStringValue(AadClientId.Value);
             }
-            if (AadTenantId.HasValue)
+            if (Optional.IsDefined(AadTenantId))
             {
                 writer.WritePropertyName("aadTenantId"u8);
                 writer.WriteStringValue(AadTenantId.Value);
             }
-            if (DesiredProperties != null)
+            if (Optional.IsDefined(DesiredProperties))
             {
                 writer.WritePropertyName("desiredProperties"u8);
                 writer.WriteObjectValue(DesiredProperties);
@@ -63,22 +64,22 @@ namespace Azure.ResourceManager.Hci.Models
             writer.WriteEndObject();
             writer.WritePropertyName("identity"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && PrincipalId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PrincipalId))
             {
                 writer.WritePropertyName("principalId"u8);
                 writer.WriteStringValue(PrincipalId.Value);
             }
-            if (options.Format != "W" && TenantId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (ManagedServiceIdentityType.HasValue)
+            if (Optional.IsDefined(ManagedServiceIdentityType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ManagedServiceIdentityType.Value.ToString());
             }
-            if (!(UserAssignedIdentities is ChangeTrackingDictionary<string, UserAssignedIdentity> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(UserAssignedIdentities))
             {
                 writer.WritePropertyName("userAssignedIdentities"u8);
                 writer.WriteStartObject();
@@ -129,13 +130,13 @@ namespace Azure.ResourceManager.Hci.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<string> cloudManagementEndpoint = default;
-            Optional<Guid> aadClientId = default;
-            Optional<Guid> aadTenantId = default;
-            Optional<HciClusterDesiredProperties> desiredProperties = default;
-            Optional<Guid> principalId = default;
-            Optional<Guid> tenantId = default;
-            Optional<HciManagedServiceIdentityType> type = default;
+            string cloudManagementEndpoint = default;
+            Guid? aadClientId = default;
+            Guid? aadTenantId = default;
+            HciClusterDesiredProperties desiredProperties = default;
+            Guid? principalId = default;
+            Guid? tenantId = default;
+            HciManagedServiceIdentityType? type = default;
             IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -260,13 +261,13 @@ namespace Azure.ResourceManager.Hci.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new HciClusterPatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                cloudManagementEndpoint.Value,
-                Optional.ToNullable(aadClientId),
-                Optional.ToNullable(aadTenantId),
-                desiredProperties.Value,
-                Optional.ToNullable(principalId),
-                Optional.ToNullable(tenantId),
-                Optional.ToNullable(type),
+                cloudManagementEndpoint,
+                aadClientId,
+                aadTenantId,
+                desiredProperties,
+                principalId,
+                tenantId,
+                type,
                 userAssignedIdentities ?? new ChangeTrackingDictionary<string, UserAssignedIdentity>(),
                 serializedAdditionalRawData);
         }

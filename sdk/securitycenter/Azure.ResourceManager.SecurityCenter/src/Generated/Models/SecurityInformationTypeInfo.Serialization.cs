@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Order.HasValue)
+            if (Optional.IsDefined(Order))
             {
                 writer.WritePropertyName("order"u8);
                 writer.WriteNumberValue(Order.Value);
             }
-            if (RecommendedLabelId.HasValue)
+            if (Optional.IsDefined(RecommendedLabelId))
             {
                 writer.WritePropertyName("recommendedLabelId"u8);
                 writer.WriteStringValue(RecommendedLabelId.Value);
             }
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Custom.HasValue)
+            if (Optional.IsDefined(Custom))
             {
                 writer.WritePropertyName("custom"u8);
                 writer.WriteBooleanValue(Custom.Value);
             }
-            if (!(Keywords is ChangeTrackingList<InformationProtectionKeyword> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Keywords))
             {
                 writer.WritePropertyName("keywords"u8);
                 writer.WriteStartArray();
@@ -104,12 +105,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<int> order = default;
-            Optional<Guid> recommendedLabelId = default;
-            Optional<bool> enabled = default;
-            Optional<bool> custom = default;
+            string displayName = default;
+            string description = default;
+            int? order = default;
+            Guid? recommendedLabelId = default;
+            bool? enabled = default;
+            bool? custom = default;
             IList<InformationProtectionKeyword> keywords = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -182,12 +183,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SecurityInformationTypeInfo(
-                displayName.Value,
-                description.Value,
-                Optional.ToNullable(order),
-                Optional.ToNullable(recommendedLabelId),
-                Optional.ToNullable(enabled),
-                Optional.ToNullable(custom),
+                displayName,
+                description,
+                order,
+                recommendedLabelId,
+                enabled,
+                custom,
                 keywords ?? new ChangeTrackingList<InformationProtectionKeyword>(),
                 serializedAdditionalRawData);
         }

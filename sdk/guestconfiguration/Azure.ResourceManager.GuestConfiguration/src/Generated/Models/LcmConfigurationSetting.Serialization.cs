@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.GuestConfiguration;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ConfigurationMode.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ConfigurationMode))
             {
                 writer.WritePropertyName("configurationMode"u8);
                 writer.WriteStringValue(ConfigurationMode.Value.ToString());
             }
-            if (options.Format != "W" && IsModuleOverwriteAllowed.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsModuleOverwriteAllowed))
             {
                 writer.WritePropertyName("allowModuleOverwrite"u8);
                 writer.WriteBooleanValue(IsModuleOverwriteAllowed.Value);
             }
-            if (options.Format != "W" && ActionAfterReboot.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ActionAfterReboot))
             {
                 writer.WritePropertyName("actionAfterReboot"u8);
                 writer.WriteStringValue(ActionAfterReboot.Value.ToString());
             }
-            if (options.Format != "W" && RefreshFrequencyInMins.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RefreshFrequencyInMins))
             {
                 writer.WritePropertyName("refreshFrequencyMins"u8);
                 writer.WriteNumberValue(RefreshFrequencyInMins.Value);
             }
-            if (options.Format != "W" && RebootIfNeeded.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RebootIfNeeded))
             {
                 writer.WritePropertyName("rebootIfNeeded"u8);
                 writer.WriteBooleanValue(RebootIfNeeded.Value);
             }
-            if (options.Format != "W" && ConfigurationModeFrequencyInMins.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ConfigurationModeFrequencyInMins))
             {
                 writer.WritePropertyName("configurationModeFrequencyMins"u8);
                 writer.WriteNumberValue(ConfigurationModeFrequencyInMins.Value);
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             {
                 return null;
             }
-            Optional<LcmConfigurationMode> configurationMode = default;
-            Optional<bool> allowModuleOverwrite = default;
-            Optional<ActionAfterReboot> actionAfterReboot = default;
-            Optional<float> refreshFrequencyMins = default;
-            Optional<bool> rebootIfNeeded = default;
-            Optional<float> configurationModeFrequencyMins = default;
+            LcmConfigurationMode? configurationMode = default;
+            bool? allowModuleOverwrite = default;
+            ActionAfterReboot? actionAfterReboot = default;
+            float? refreshFrequencyMins = default;
+            bool? rebootIfNeeded = default;
+            float? configurationModeFrequencyMins = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,12 +166,12 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new LcmConfigurationSetting(
-                Optional.ToNullable(configurationMode),
-                Optional.ToNullable(allowModuleOverwrite),
-                Optional.ToNullable(actionAfterReboot),
-                Optional.ToNullable(refreshFrequencyMins),
-                Optional.ToNullable(rebootIfNeeded),
-                Optional.ToNullable(configurationModeFrequencyMins),
+                configurationMode,
+                allowModuleOverwrite,
+                actionAfterReboot,
+                refreshFrequencyMins,
+                rebootIfNeeded,
+                configurationModeFrequencyMins,
                 serializedAdditionalRawData);
         }
 

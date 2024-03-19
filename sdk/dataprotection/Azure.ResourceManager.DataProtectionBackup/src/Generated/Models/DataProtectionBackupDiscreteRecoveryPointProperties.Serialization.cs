@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (FriendlyName != null)
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (!(RecoveryPointDataStoresDetails is ChangeTrackingList<RecoveryPointDataStoreDetail> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(RecoveryPointDataStoresDetails))
             {
                 writer.WritePropertyName("recoveryPointDataStoresDetails"u8);
                 writer.WriteStartArray();
@@ -43,42 +44,42 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             writer.WritePropertyName("recoveryPointTime"u8);
             writer.WriteStringValue(RecoverOn, "O");
-            if (PolicyName != null)
+            if (Optional.IsDefined(PolicyName))
             {
                 writer.WritePropertyName("policyName"u8);
                 writer.WriteStringValue(PolicyName);
             }
-            if (PolicyVersion != null)
+            if (Optional.IsDefined(PolicyVersion))
             {
                 writer.WritePropertyName("policyVersion"u8);
                 writer.WriteStringValue(PolicyVersion);
             }
-            if (RecoveryPointId != null)
+            if (Optional.IsDefined(RecoveryPointId))
             {
                 writer.WritePropertyName("recoveryPointId"u8);
                 writer.WriteStringValue(RecoveryPointId);
             }
-            if (RecoveryPointType != null)
+            if (Optional.IsDefined(RecoveryPointType))
             {
                 writer.WritePropertyName("recoveryPointType"u8);
                 writer.WriteStringValue(RecoveryPointType);
             }
-            if (RetentionTagName != null)
+            if (Optional.IsDefined(RetentionTagName))
             {
                 writer.WritePropertyName("retentionTagName"u8);
                 writer.WriteStringValue(RetentionTagName);
             }
-            if (RetentionTagVersion != null)
+            if (Optional.IsDefined(RetentionTagVersion))
             {
                 writer.WritePropertyName("retentionTagVersion"u8);
                 writer.WriteStringValue(RetentionTagVersion);
             }
-            if (options.Format != "W" && ExpireOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expiryTime"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (RecoveryPointState.HasValue)
+            if (Optional.IsDefined(RecoveryPointState))
             {
                 writer.WritePropertyName("recoveryPointState"u8);
                 writer.WriteStringValue(RecoveryPointState.Value.ToString());
@@ -123,17 +124,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<string> friendlyName = default;
+            string friendlyName = default;
             IList<RecoveryPointDataStoreDetail> recoveryPointDataStoresDetails = default;
             DateTimeOffset recoveryPointTime = default;
-            Optional<string> policyName = default;
-            Optional<string> policyVersion = default;
-            Optional<string> recoveryPointId = default;
-            Optional<string> recoveryPointType = default;
-            Optional<string> retentionTagName = default;
-            Optional<string> retentionTagVersion = default;
-            Optional<DateTimeOffset> expiryTime = default;
-            Optional<DataProtectionBackupRecoveryPointCompletionState> recoveryPointState = default;
+            string policyName = default;
+            string policyVersion = default;
+            string recoveryPointId = default;
+            string recoveryPointType = default;
+            string retentionTagName = default;
+            string retentionTagVersion = default;
+            DateTimeOffset? expiryTime = default;
+            DataProtectionBackupRecoveryPointCompletionState? recoveryPointState = default;
             string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -225,17 +226,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             return new DataProtectionBackupDiscreteRecoveryPointProperties(
                 objectType,
                 serializedAdditionalRawData,
-                friendlyName.Value,
+                friendlyName,
                 recoveryPointDataStoresDetails ?? new ChangeTrackingList<RecoveryPointDataStoreDetail>(),
                 recoveryPointTime,
-                policyName.Value,
-                policyVersion.Value,
-                recoveryPointId.Value,
-                recoveryPointType.Value,
-                retentionTagName.Value,
-                retentionTagVersion.Value,
-                Optional.ToNullable(expiryTime),
-                Optional.ToNullable(recoveryPointState));
+                policyName,
+                policyVersion,
+                recoveryPointId,
+                recoveryPointType,
+                retentionTagName,
+                retentionTagVersion,
+                expiryTime,
+                recoveryPointState);
         }
 
         BinaryData IPersistableModel<DataProtectionBackupDiscreteRecoveryPointProperties>.Write(ModelReaderWriterOptions options)

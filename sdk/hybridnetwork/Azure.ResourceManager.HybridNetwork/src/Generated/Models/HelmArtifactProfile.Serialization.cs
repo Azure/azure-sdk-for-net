@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (HelmPackageName != null)
+            if (Optional.IsDefined(HelmPackageName))
             {
                 writer.WritePropertyName("helmPackageName"u8);
                 writer.WriteStringValue(HelmPackageName);
             }
-            if (HelmPackageVersionRange != null)
+            if (Optional.IsDefined(HelmPackageVersionRange))
             {
                 writer.WritePropertyName("helmPackageVersionRange"u8);
                 writer.WriteStringValue(HelmPackageVersionRange);
             }
-            if (!(RegistryValuesPaths is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(RegistryValuesPaths))
             {
                 writer.WritePropertyName("registryValuesPaths"u8);
                 writer.WriteStartArray();
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ImagePullSecretsValuesPaths is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ImagePullSecretsValuesPaths))
             {
                 writer.WritePropertyName("imagePullSecretsValuesPaths"u8);
                 writer.WriteStartArray();
@@ -94,8 +95,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<string> helmPackageName = default;
-            Optional<string> helmPackageVersionRange = default;
+            string helmPackageName = default;
+            string helmPackageVersionRange = default;
             IList<string> registryValuesPaths = default;
             IList<string> imagePullSecretsValuesPaths = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -146,7 +147,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HelmArtifactProfile(helmPackageName.Value, helmPackageVersionRange.Value, registryValuesPaths ?? new ChangeTrackingList<string>(), imagePullSecretsValuesPaths ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new HelmArtifactProfile(helmPackageName, helmPackageVersionRange, registryValuesPaths ?? new ChangeTrackingList<string>(), imagePullSecretsValuesPaths ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HelmArtifactProfile>.Write(ModelReaderWriterOptions options)

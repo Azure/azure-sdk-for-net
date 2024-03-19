@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
+using Azure.Analytics.Synapse.Artifacts;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -22,12 +22,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> triggerRunId = default;
-            Optional<string> triggerName = default;
-            Optional<string> triggerType = default;
-            Optional<DateTimeOffset> triggerRunTimestamp = default;
-            Optional<TriggerRunStatus> status = default;
-            Optional<string> message = default;
+            string triggerRunId = default;
+            string triggerName = default;
+            string triggerType = default;
+            DateTimeOffset? triggerRunTimestamp = default;
+            TriggerRunStatus? status = default;
+            string message = default;
             IReadOnlyDictionary<string, string> properties = default;
             IReadOnlyDictionary<string, string> triggeredPipelines = default;
             IReadOnlyDictionary<string, object> additionalProperties = default;
@@ -104,12 +104,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new TriggerRun(
-                triggerRunId.Value,
-                triggerName.Value,
-                triggerType.Value,
-                Optional.ToNullable(triggerRunTimestamp),
-                Optional.ToNullable(status),
-                message.Value,
+                triggerRunId,
+                triggerName,
+                triggerType,
+                triggerRunTimestamp,
+                status,
+                message,
                 properties ?? new ChangeTrackingDictionary<string, string>(),
                 triggeredPipelines ?? new ChangeTrackingDictionary<string, string>(),
                 additionalProperties);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (!(Columns is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Columns))
             {
                 if (Columns != null)
                 {
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("columns");
                 }
             }
-            if (DataContext != null)
+            if (Optional.IsDefined(DataContext))
             {
                 if (DataContext != null)
                 {
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             IDictionary<string, string> columns = default;
-            Optional<string> dataContext = default;
+            string dataContext = default;
             MonitoringInputDataType inputDataType = "Unknown";
             JobInputType jobInputType = default;
             Uri uri = default;
@@ -157,7 +158,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new UnknownMonitoringInputDataBase(
                 columns ?? new ChangeTrackingDictionary<string, string>(),
-                dataContext.Value,
+                dataContext,
                 inputDataType,
                 jobInputType,
                 uri,

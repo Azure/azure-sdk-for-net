@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridNetwork;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
@@ -27,12 +28,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (CustomLocationReference != null)
+            if (Optional.IsDefined(CustomLocationReference))
             {
                 writer.WritePropertyName("customLocationReference"u8);
                 JsonSerializer.Serialize(writer, CustomLocationReference);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -77,8 +78,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<WritableSubResource> customLocationReference = default;
-            Optional<string> name = default;
+            WritableSubResource customLocationReference = default;
+            string name = default;
             NfviType nfviType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureOperatorNexusClusterNfviDetails(name.Value, nfviType, serializedAdditionalRawData, customLocationReference);
+            return new AzureOperatorNexusClusterNfviDetails(name, nfviType, serializedAdditionalRawData, customLocationReference);
         }
 
         BinaryData IPersistableModel<AzureOperatorNexusClusterNfviDetails>.Write(ModelReaderWriterOptions options)

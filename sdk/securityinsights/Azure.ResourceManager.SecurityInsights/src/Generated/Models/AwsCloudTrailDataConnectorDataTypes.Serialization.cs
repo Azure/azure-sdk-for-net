@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Logs != null)
+            if (Optional.IsDefined(Logs))
             {
                 writer.WritePropertyName("logs"u8);
                 writer.WriteObjectValue(Logs);
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<AwsCloudTrailDataConnectorDataTypesLogs> logs = default;
+            AwsCloudTrailDataConnectorDataTypesLogs logs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AwsCloudTrailDataConnectorDataTypes(logs.Value, serializedAdditionalRawData);
+            return new AwsCloudTrailDataConnectorDataTypes(logs, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AwsCloudTrailDataConnectorDataTypes>.Write(ModelReaderWriterOptions options)

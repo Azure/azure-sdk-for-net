@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (TestFailoverStatus != null)
+            if (Optional.IsDefined(TestFailoverStatus))
             {
                 writer.WritePropertyName("testFailoverStatus"u8);
                 writer.WriteStringValue(TestFailoverStatus);
             }
-            if (Comments != null)
+            if (Optional.IsDefined(Comments))
             {
                 writer.WritePropertyName("comments"u8);
                 writer.WriteStringValue(Comments);
             }
-            if (NetworkName != null)
+            if (Optional.IsDefined(NetworkName))
             {
                 writer.WritePropertyName("networkName"u8);
                 writer.WriteStringValue(NetworkName);
             }
-            if (NetworkFriendlyName != null)
+            if (Optional.IsDefined(NetworkFriendlyName))
             {
                 writer.WritePropertyName("networkFriendlyName"u8);
                 writer.WriteStringValue(NetworkFriendlyName);
             }
-            if (NetworkType != null)
+            if (Optional.IsDefined(NetworkType))
             {
                 writer.WritePropertyName("networkType"u8);
                 writer.WriteStringValue(NetworkType);
             }
-            if (!(ProtectedItemDetails is ChangeTrackingList<FailoverReplicationProtectedItemDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ProtectedItemDetails))
             {
                 writer.WritePropertyName("protectedItemDetails"u8);
                 writer.WriteStartArray();
@@ -63,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
-            if (!(AffectedObjectDetails is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(AffectedObjectDetails))
             {
                 writer.WritePropertyName("affectedObjectDetails"u8);
                 writer.WriteStartObject();
@@ -112,11 +113,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> testFailoverStatus = default;
-            Optional<string> comments = default;
-            Optional<string> networkName = default;
-            Optional<string> networkFriendlyName = default;
-            Optional<string> networkType = default;
+            string testFailoverStatus = default;
+            string comments = default;
+            string networkName = default;
+            string networkFriendlyName = default;
+            string networkType = default;
             IReadOnlyList<FailoverReplicationProtectedItemDetails> protectedItemDetails = default;
             string instanceType = default;
             IReadOnlyDictionary<string, string> affectedObjectDetails = default;
@@ -192,11 +193,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 instanceType,
                 affectedObjectDetails ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
-                testFailoverStatus.Value,
-                comments.Value,
-                networkName.Value,
-                networkFriendlyName.Value,
-                networkType.Value,
+                testFailoverStatus,
+                comments,
+                networkName,
+                networkFriendlyName,
+                networkType,
                 protectedItemDetails ?? new ChangeTrackingList<FailoverReplicationProtectedItemDetails>());
         }
 

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -40,12 +41,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ExpireOn.HasValue)
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expiration"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (!(JumpHostsAllowed is ChangeTrackingList<IPAddress> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(JumpHostsAllowed))
             {
                 writer.WritePropertyName("jumpHostsAllowed"u8);
                 writer.WriteStartArray();
@@ -60,7 +61,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(UserList is ChangeTrackingList<KeySetUser> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(UserList))
             {
                 writer.WritePropertyName("userList"u8);
                 writer.WriteStartArray();
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<DateTimeOffset> expiration = default;
+            DateTimeOffset? expiration = default;
             IList<IPAddress> jumpHostsAllowed = default;
             IList<KeySetUser> userList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -193,7 +194,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudBareMetalMachineKeySetPatch(tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(expiration), jumpHostsAllowed ?? new ChangeTrackingList<IPAddress>(), userList ?? new ChangeTrackingList<KeySetUser>(), serializedAdditionalRawData);
+            return new NetworkCloudBareMetalMachineKeySetPatch(tags ?? new ChangeTrackingDictionary<string, string>(), expiration, jumpHostsAllowed ?? new ChangeTrackingList<IPAddress>(), userList ?? new ChangeTrackingList<KeySetUser>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudBareMetalMachineKeySetPatch>.Write(ModelReaderWriterOptions options)

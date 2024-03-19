@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppPlatform;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppPlatform.Models
@@ -27,27 +28,27 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (RelativePath != null)
+            if (Optional.IsDefined(RelativePath))
             {
                 writer.WritePropertyName("relativePath"u8);
                 writer.WriteStringValue(RelativePath);
             }
-            if (Builder != null)
+            if (Optional.IsDefined(Builder))
             {
                 writer.WritePropertyName("builder"u8);
                 writer.WriteStringValue(Builder);
             }
-            if (AgentPool != null)
+            if (Optional.IsDefined(AgentPool))
             {
                 writer.WritePropertyName("agentPool"u8);
                 writer.WriteStringValue(AgentPool);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (!(Env is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Env))
             {
                 writer.WritePropertyName("env"u8);
                 writer.WriteStartObject();
@@ -58,12 +59,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && TriggeredBuildResult != null)
+            if (options.Format != "W" && Optional.IsDefined(TriggeredBuildResult))
             {
                 writer.WritePropertyName("triggeredBuildResult"u8);
                 JsonSerializer.Serialize(writer, TriggeredBuildResult);
             }
-            if (ResourceRequests != null)
+            if (Optional.IsDefined(ResourceRequests))
             {
                 writer.WritePropertyName("resourceRequests"u8);
                 writer.WriteObjectValue(ResourceRequests);
@@ -106,13 +107,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> relativePath = default;
-            Optional<string> builder = default;
-            Optional<string> agentPool = default;
-            Optional<AppPlatformBuildProvisioningState> provisioningState = default;
+            string relativePath = default;
+            string builder = default;
+            string agentPool = default;
+            AppPlatformBuildProvisioningState? provisioningState = default;
             IDictionary<string, string> env = default;
-            Optional<SubResource> triggeredBuildResult = default;
-            Optional<AppPlatformBuildResourceRequirements> resourceRequests = default;
+            SubResource triggeredBuildResult = default;
+            AppPlatformBuildResourceRequirements resourceRequests = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -180,13 +181,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AppPlatformBuildProperties(
-                relativePath.Value,
-                builder.Value,
-                agentPool.Value,
-                Optional.ToNullable(provisioningState),
+                relativePath,
+                builder,
+                agentPool,
+                provisioningState,
                 env ?? new ChangeTrackingDictionary<string, string>(),
                 triggeredBuildResult,
-                resourceRequests.Value,
+                resourceRequests,
                 serializedAdditionalRawData);
         }
 

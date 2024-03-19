@@ -12,6 +12,7 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -43,34 +44,34 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && DisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && MaxScore.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MaxScore))
             {
                 writer.WritePropertyName("maxScore"u8);
                 writer.WriteNumberValue(MaxScore.Value);
             }
-            if (options.Format != "W" && Source != null)
+            if (options.Format != "W" && Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteObjectValue(Source);
             }
-            if (options.Format != "W" && !(AssessmentDefinitions is ChangeTrackingList<SubResource> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AssessmentDefinitions))
             {
                 writer.WritePropertyName("assessmentDefinitions"u8);
                 writer.WriteStartArray();
@@ -122,11 +123,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<int> maxScore = default;
-            Optional<SecureScoreControlDefinitionSource> source = default;
+            SystemData systemData = default;
+            string displayName = default;
+            string description = default;
+            int? maxScore = default;
+            SecureScoreControlDefinitionSource source = default;
             IReadOnlyList<SubResource> assessmentDefinitions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -220,11 +221,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                displayName.Value,
-                description.Value,
-                Optional.ToNullable(maxScore),
-                source.Value,
+                systemData,
+                displayName,
+                description,
+                maxScore,
+                source,
                 assessmentDefinitions ?? new ChangeTrackingList<SubResource>(),
                 serializedAdditionalRawData);
         }

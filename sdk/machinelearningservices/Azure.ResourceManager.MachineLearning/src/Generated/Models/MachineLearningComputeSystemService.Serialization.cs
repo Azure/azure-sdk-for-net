@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && SystemServiceType != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemServiceType))
             {
                 writer.WritePropertyName("systemServiceType"u8);
                 writer.WriteStringValue(SystemServiceType);
             }
-            if (options.Format != "W" && PublicIPAddress != null)
+            if (options.Format != "W" && Optional.IsDefined(PublicIPAddress))
             {
                 writer.WritePropertyName("publicIpAddress"u8);
                 writer.WriteStringValue(PublicIPAddress);
             }
-            if (options.Format != "W" && Version != null)
+            if (options.Format != "W" && Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> systemServiceType = default;
-            Optional<string> publicIPAddress = default;
-            Optional<string> version = default;
+            string systemServiceType = default;
+            string publicIPAddress = default;
+            string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningComputeSystemService(systemServiceType.Value, publicIPAddress.Value, version.Value, serializedAdditionalRawData);
+            return new MachineLearningComputeSystemService(systemServiceType, publicIPAddress, version, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningComputeSystemService>.Write(ModelReaderWriterOptions options)

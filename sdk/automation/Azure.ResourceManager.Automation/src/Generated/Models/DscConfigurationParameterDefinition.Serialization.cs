@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (DscConfigurationParameterType != null)
+            if (Optional.IsDefined(DscConfigurationParameterType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(DscConfigurationParameterType);
             }
-            if (IsMandatory.HasValue)
+            if (Optional.IsDefined(IsMandatory))
             {
                 writer.WritePropertyName("isMandatory"u8);
                 writer.WriteBooleanValue(IsMandatory.Value);
             }
-            if (Position.HasValue)
+            if (Optional.IsDefined(Position))
             {
                 writer.WritePropertyName("position"u8);
                 writer.WriteNumberValue(Position.Value);
             }
-            if (DefaultValue != null)
+            if (Optional.IsDefined(DefaultValue))
             {
                 writer.WritePropertyName("defaultValue"u8);
                 writer.WriteStringValue(DefaultValue);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> type = default;
-            Optional<bool> isMandatory = default;
-            Optional<int> position = default;
-            Optional<string> defaultValue = default;
+            string type = default;
+            bool? isMandatory = default;
+            int? position = default;
+            string defaultValue = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DscConfigurationParameterDefinition(type.Value, Optional.ToNullable(isMandatory), Optional.ToNullable(position), defaultValue.Value, serializedAdditionalRawData);
+            return new DscConfigurationParameterDefinition(type, isMandatory, position, defaultValue, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DscConfigurationParameterDefinition>.Write(ModelReaderWriterOptions options)

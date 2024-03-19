@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.CostManagement
             }
 
             writer.WriteStartObject();
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -49,64 +49,64 @@ namespace Azure.ResourceManager.CostManagement
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Definition != null)
+            if (Optional.IsDefined(Definition))
             {
                 writer.WritePropertyName("definition"u8);
                 writer.WriteObjectValue(Definition);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Source.HasValue)
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source.Value.ToString());
             }
-            if (Details != null)
+            if (Optional.IsDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteObjectValue(Details);
             }
-            if (CostEntityId != null)
+            if (Optional.IsDefined(CostEntityId))
             {
                 writer.WritePropertyName("costEntityId"u8);
                 writer.WriteStringValue(CostEntityId);
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (CreatedOn.HasValue)
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (CloseOn.HasValue)
+            if (Optional.IsDefined(CloseOn))
             {
                 writer.WritePropertyName("closeTime"u8);
                 writer.WriteStringValue(CloseOn.Value, "O");
             }
-            if (ModifiedOn.HasValue)
+            if (Optional.IsDefined(ModifiedOn))
             {
                 writer.WritePropertyName("modificationTime"u8);
                 writer.WriteStringValue(ModifiedOn.Value, "O");
             }
-            if (StatusModificationUserName != null)
+            if (Optional.IsDefined(StatusModificationUserName))
             {
                 writer.WritePropertyName("statusModificationUserName"u8);
                 writer.WriteStringValue(StatusModificationUserName);
             }
-            if (StatusModifiedOn.HasValue)
+            if (Optional.IsDefined(StatusModifiedOn))
             {
                 writer.WritePropertyName("statusModificationTime"u8);
                 writer.WriteStringValue(StatusModifiedOn.Value, "O");
@@ -150,22 +150,22 @@ namespace Azure.ResourceManager.CostManagement
             {
                 return null;
             }
-            Optional<ETag> eTag = default;
+            ETag? eTag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<AlertPropertiesDefinition> definition = default;
-            Optional<string> description = default;
-            Optional<CostManagementAlertSource> source = default;
-            Optional<AlertPropertiesDetails> details = default;
-            Optional<string> costEntityId = default;
-            Optional<CostManagementAlertStatus> status = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> closeTime = default;
-            Optional<DateTimeOffset> modificationTime = default;
-            Optional<string> statusModificationUserName = default;
-            Optional<DateTimeOffset> statusModificationTime = default;
+            SystemData systemData = default;
+            AlertPropertiesDefinition definition = default;
+            string description = default;
+            CostManagementAlertSource? source = default;
+            AlertPropertiesDetails details = default;
+            string costEntityId = default;
+            CostManagementAlertStatus? status = default;
+            DateTimeOffset? creationTime = default;
+            DateTimeOffset? closeTime = default;
+            DateTimeOffset? modificationTime = default;
+            string statusModificationUserName = default;
+            DateTimeOffset? statusModificationTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -312,19 +312,19 @@ namespace Azure.ResourceManager.CostManagement
                 id,
                 name,
                 type,
-                systemData.Value,
-                definition.Value,
-                description.Value,
-                Optional.ToNullable(source),
-                details.Value,
-                costEntityId.Value,
-                Optional.ToNullable(status),
-                Optional.ToNullable(creationTime),
-                Optional.ToNullable(closeTime),
-                Optional.ToNullable(modificationTime),
-                statusModificationUserName.Value,
-                Optional.ToNullable(statusModificationTime),
-                Optional.ToNullable(eTag),
+                systemData,
+                definition,
+                description,
+                source,
+                details,
+                costEntityId,
+                status,
+                creationTime,
+                closeTime,
+                modificationTime,
+                statusModificationUserName,
+                statusModificationTime,
+                eTag,
                 serializedAdditionalRawData);
         }
 

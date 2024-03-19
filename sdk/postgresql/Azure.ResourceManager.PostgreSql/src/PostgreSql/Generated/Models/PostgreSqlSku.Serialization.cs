@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
@@ -28,22 +29,22 @@ namespace Azure.ResourceManager.PostgreSql.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Tier.HasValue)
+            if (Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier.Value.ToString());
             }
-            if (Capacity.HasValue)
+            if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);
             }
-            if (Size != null)
+            if (Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteStringValue(Size);
             }
-            if (Family != null)
+            if (Optional.IsDefined(Family))
             {
                 writer.WritePropertyName("family"u8);
                 writer.WriteStringValue(Family);
@@ -87,10 +88,10 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 return null;
             }
             string name = default;
-            Optional<PostgreSqlSkuTier> tier = default;
-            Optional<int> capacity = default;
-            Optional<string> size = default;
-            Optional<string> family = default;
+            PostgreSqlSkuTier? tier = default;
+            int? capacity = default;
+            string size = default;
+            string family = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -136,10 +137,10 @@ namespace Azure.ResourceManager.PostgreSql.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new PostgreSqlSku(
                 name,
-                Optional.ToNullable(tier),
-                Optional.ToNullable(capacity),
-                size.Value,
-                family.Value,
+                tier,
+                capacity,
+                size,
+                family,
                 serializedAdditionalRawData);
         }
 

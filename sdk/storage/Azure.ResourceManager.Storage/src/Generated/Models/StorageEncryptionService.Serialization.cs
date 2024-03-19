@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (options.Format != "W" && LastEnabledOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastEnabledOn))
             {
                 writer.WritePropertyName("lastEnabledTime"u8);
                 writer.WriteStringValue(LastEnabledOn.Value, "O");
             }
-            if (KeyType.HasValue)
+            if (Optional.IsDefined(KeyType))
             {
                 writer.WritePropertyName("keyType"u8);
                 writer.WriteStringValue(KeyType.Value.ToString());
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<DateTimeOffset> lastEnabledTime = default;
-            Optional<StorageEncryptionKeyType> keyType = default;
+            bool? enabled = default;
+            DateTimeOffset? lastEnabledTime = default;
+            StorageEncryptionKeyType? keyType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageEncryptionService(Optional.ToNullable(enabled), Optional.ToNullable(lastEnabledTime), Optional.ToNullable(keyType), serializedAdditionalRawData);
+            return new StorageEncryptionService(enabled, lastEnabledTime, keyType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageEncryptionService>.Write(ModelReaderWriterOptions options)

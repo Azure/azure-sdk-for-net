@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PolicyInsights;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Result != null)
+            if (Optional.IsDefined(Result))
             {
                 writer.WritePropertyName("result"u8);
                 writer.WriteStringValue(Result);
             }
-            if (Expression != null)
+            if (Optional.IsDefined(Expression))
             {
                 writer.WritePropertyName("expression"u8);
                 writer.WriteStringValue(Expression);
             }
-            if (options.Format != "W" && ExpressionKind != null)
+            if (options.Format != "W" && Optional.IsDefined(ExpressionKind))
             {
                 writer.WritePropertyName("expressionKind"u8);
                 writer.WriteStringValue(ExpressionKind);
             }
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (ExpressionValue != null)
+            if (Optional.IsDefined(ExpressionValue))
             {
                 writer.WritePropertyName("expressionValue"u8);
 #if NET6_0_OR_GREATER
@@ -58,7 +59,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
 #endif
             }
-            if (TargetValue != null)
+            if (Optional.IsDefined(TargetValue))
             {
                 writer.WritePropertyName("targetValue"u8);
 #if NET6_0_OR_GREATER
@@ -70,7 +71,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
 #endif
             }
-            if (Operator != null)
+            if (Optional.IsDefined(Operator))
             {
                 writer.WritePropertyName("operator"u8);
                 writer.WriteStringValue(Operator);
@@ -113,13 +114,13 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<string> result = default;
-            Optional<string> expression = default;
-            Optional<string> expressionKind = default;
-            Optional<string> path = default;
-            Optional<BinaryData> expressionValue = default;
-            Optional<BinaryData> targetValue = default;
-            Optional<string> @operator = default;
+            string result = default;
+            string expression = default;
+            string expressionKind = default;
+            string path = default;
+            BinaryData expressionValue = default;
+            BinaryData targetValue = default;
+            string @operator = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -174,13 +175,13 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ExpressionEvaluationDetails(
-                result.Value,
-                expression.Value,
-                expressionKind.Value,
-                path.Value,
-                expressionValue.Value,
-                targetValue.Value,
-                @operator.Value,
+                result,
+                expression,
+                expressionKind,
+                path,
+                expressionValue,
+                targetValue,
+                @operator,
                 serializedAdditionalRawData);
         }
 

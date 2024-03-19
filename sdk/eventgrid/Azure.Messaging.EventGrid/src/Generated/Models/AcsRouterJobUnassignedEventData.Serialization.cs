@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
+using Azure.Messaging.EventGrid;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -22,14 +22,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> assignmentId = default;
-            Optional<string> workerId = default;
-            Optional<string> queueId = default;
+            string assignmentId = default;
+            string workerId = default;
+            string queueId = default;
             IReadOnlyDictionary<string, string> labels = default;
             IReadOnlyDictionary<string, string> tags = default;
-            Optional<string> jobId = default;
-            Optional<string> channelReference = default;
-            Optional<string> channelId = default;
+            string jobId = default;
+            string channelReference = default;
+            string channelId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("assignmentId"u8))
@@ -92,14 +92,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new AcsRouterJobUnassignedEventData(
-                jobId.Value,
-                channelReference.Value,
-                channelId.Value,
-                queueId.Value,
+                jobId,
+                channelReference,
+                channelId,
+                queueId,
                 labels ?? new ChangeTrackingDictionary<string, string>(),
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                assignmentId.Value,
-                workerId.Value);
+                assignmentId,
+                workerId);
         }
 
         internal partial class AcsRouterJobUnassignedEventDataConverter : JsonConverter<AcsRouterJobUnassignedEventData>

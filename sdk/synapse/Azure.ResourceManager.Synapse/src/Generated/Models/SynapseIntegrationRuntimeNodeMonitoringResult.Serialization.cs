@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -26,42 +27,42 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && NodeName != null)
+            if (options.Format != "W" && Optional.IsDefined(NodeName))
             {
                 writer.WritePropertyName("nodeName"u8);
                 writer.WriteStringValue(NodeName);
             }
-            if (options.Format != "W" && AvailableMemoryInMB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AvailableMemoryInMB))
             {
                 writer.WritePropertyName("availableMemoryInMB"u8);
                 writer.WriteNumberValue(AvailableMemoryInMB.Value);
             }
-            if (options.Format != "W" && CpuUtilization.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CpuUtilization))
             {
                 writer.WritePropertyName("cpuUtilization"u8);
                 writer.WriteNumberValue(CpuUtilization.Value);
             }
-            if (options.Format != "W" && ConcurrentJobsLimit.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ConcurrentJobsLimit))
             {
                 writer.WritePropertyName("concurrentJobsLimit"u8);
                 writer.WriteNumberValue(ConcurrentJobsLimit.Value);
             }
-            if (options.Format != "W" && ConcurrentJobsRunning.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ConcurrentJobsRunning))
             {
                 writer.WritePropertyName("concurrentJobsRunning"u8);
                 writer.WriteNumberValue(ConcurrentJobsRunning.Value);
             }
-            if (options.Format != "W" && MaxConcurrentJobs.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MaxConcurrentJobs))
             {
                 writer.WritePropertyName("maxConcurrentJobs"u8);
                 writer.WriteNumberValue(MaxConcurrentJobs.Value);
             }
-            if (options.Format != "W" && SentBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SentBytes))
             {
                 writer.WritePropertyName("sentBytes"u8);
                 writer.WriteNumberValue(SentBytes.Value);
             }
-            if (options.Format != "W" && ReceivedBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ReceivedBytes))
             {
                 writer.WritePropertyName("receivedBytes"u8);
                 writer.WriteNumberValue(ReceivedBytes.Value);
@@ -101,14 +102,14 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<string> nodeName = default;
-            Optional<int> availableMemoryInMB = default;
-            Optional<int> cpuUtilization = default;
-            Optional<int> concurrentJobsLimit = default;
-            Optional<int> concurrentJobsRunning = default;
-            Optional<int> maxConcurrentJobs = default;
-            Optional<float> sentBytes = default;
-            Optional<float> receivedBytes = default;
+            string nodeName = default;
+            int? availableMemoryInMB = default;
+            int? cpuUtilization = default;
+            int? concurrentJobsLimit = default;
+            int? concurrentJobsRunning = default;
+            int? maxConcurrentJobs = default;
+            float? sentBytes = default;
+            float? receivedBytes = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -185,14 +186,14 @@ namespace Azure.ResourceManager.Synapse.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new SynapseIntegrationRuntimeNodeMonitoringResult(
-                nodeName.Value,
-                Optional.ToNullable(availableMemoryInMB),
-                Optional.ToNullable(cpuUtilization),
-                Optional.ToNullable(concurrentJobsLimit),
-                Optional.ToNullable(concurrentJobsRunning),
-                Optional.ToNullable(maxConcurrentJobs),
-                Optional.ToNullable(sentBytes),
-                Optional.ToNullable(receivedBytes),
+                nodeName,
+                availableMemoryInMB,
+                cpuUtilization,
+                concurrentJobsLimit,
+                concurrentJobsRunning,
+                maxConcurrentJobs,
+                sentBytes,
+                receivedBytes,
                 additionalProperties);
         }
 

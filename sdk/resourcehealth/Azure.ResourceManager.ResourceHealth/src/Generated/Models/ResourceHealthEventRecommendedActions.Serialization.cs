@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ResourceHealth;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             }
 
             writer.WriteStartObject();
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (!(Actions is ChangeTrackingList<ResourceHealthEventRecommendedActionsItem> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Actions))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
                 writer.WriteEndArray();
             }
-            if (LocaleCode != null)
+            if (Optional.IsDefined(LocaleCode))
             {
                 writer.WritePropertyName("localeCode"u8);
                 writer.WriteStringValue(LocaleCode);
@@ -84,9 +85,9 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Optional<string> message = default;
+            string message = default;
             IReadOnlyList<ResourceHealthEventRecommendedActionsItem> actions = default;
-            Optional<string> localeCode = default;
+            string localeCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceHealthEventRecommendedActions(message.Value, actions ?? new ChangeTrackingList<ResourceHealthEventRecommendedActionsItem>(), localeCode.Value, serializedAdditionalRawData);
+            return new ResourceHealthEventRecommendedActions(message, actions ?? new ChangeTrackingList<ResourceHealthEventRecommendedActionsItem>(), localeCode, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceHealthEventRecommendedActions>.Write(ModelReaderWriterOptions options)

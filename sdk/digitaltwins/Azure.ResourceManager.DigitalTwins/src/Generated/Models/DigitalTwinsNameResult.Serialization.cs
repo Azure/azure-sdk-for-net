@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DigitalTwins;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             }
 
             writer.WriteStartObject();
-            if (IsNameAvailable.HasValue)
+            if (Optional.IsDefined(IsNameAvailable))
             {
                 writer.WritePropertyName("nameAvailable"u8);
                 writer.WriteBooleanValue(IsNameAvailable.Value);
             }
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 if (Message != null)
                 {
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     writer.WriteNull("message");
                 }
             }
-            if (Reason.HasValue)
+            if (Optional.IsDefined(Reason))
             {
                 if (Reason != null)
                 {
@@ -93,9 +94,9 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             {
                 return null;
             }
-            Optional<bool> nameAvailable = default;
-            Optional<string> message = default;
-            Optional<DigitalTwinsNameUnavailableReason?> reason = default;
+            bool? nameAvailable = default;
+            string message = default;
+            DigitalTwinsNameUnavailableReason? reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -135,7 +136,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DigitalTwinsNameResult(Optional.ToNullable(nameAvailable), message.Value, Optional.ToNullable(reason), serializedAdditionalRawData);
+            return new DigitalTwinsNameResult(nameAvailable, message, reason, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DigitalTwinsNameResult>.Write(ModelReaderWriterOptions options)

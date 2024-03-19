@@ -29,22 +29,22 @@ namespace Azure.ResourceManager.CognitiveServices
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -55,12 +55,12 @@ namespace Azure.ResourceManager.CognitiveServices
                 }
                 writer.WriteEndObject();
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Properties != null)
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -123,16 +123,16 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<string> kind = default;
-            Optional<CognitiveServicesSku> sku = default;
+            ETag? etag = default;
+            string kind = default;
+            CognitiveServicesSku sku = default;
             IDictionary<string, string> tags = default;
-            Optional<AzureLocation> location = default;
-            Optional<CommitmentPlanProperties> properties = default;
+            AzureLocation? location = default;
+            CommitmentPlanProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -226,13 +226,13 @@ namespace Azure.ResourceManager.CognitiveServices
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(etag),
-                kind.Value,
-                sku.Value,
+                systemData,
+                etag,
+                kind,
+                sku,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                Optional.ToNullable(location),
-                properties.Value,
+                location,
+                properties,
                 serializedAdditionalRawData);
         }
 

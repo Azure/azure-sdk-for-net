@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,19 +27,19 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PrivateDnsZoneId != null)
+            if (Optional.IsDefined(PrivateDnsZoneId))
             {
                 writer.WritePropertyName("privateDnsZoneId"u8);
                 writer.WriteStringValue(PrivateDnsZoneId);
             }
-            if (options.Format != "W" && !(RecordSets is ChangeTrackingList<RecordSet> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(RecordSets))
             {
                 writer.WritePropertyName("recordSets"u8);
                 writer.WriteStartArray();
@@ -87,8 +88,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> privateDnsZoneId = default;
+            string name = default;
+            string privateDnsZoneId = default;
             IReadOnlyList<RecordSet> recordSets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -136,7 +137,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateDnsZoneConfig(name.Value, privateDnsZoneId.Value, recordSets ?? new ChangeTrackingList<RecordSet>(), serializedAdditionalRawData);
+            return new PrivateDnsZoneConfig(name, privateDnsZoneId, recordSets ?? new ChangeTrackingList<RecordSet>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateDnsZoneConfig>.Write(ModelReaderWriterOptions options)

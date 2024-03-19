@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridContainerService;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Count.HasValue)
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (VmSize != null)
+            if (Optional.IsDefined(VmSize))
             {
                 writer.WritePropertyName("vmSize"u8);
                 writer.WriteStringValue(VmSize);
             }
-            if (ControlPlaneEndpoint != null)
+            if (Optional.IsDefined(ControlPlaneEndpoint))
             {
                 writer.WritePropertyName("controlPlaneEndpoint"u8);
                 writer.WriteObjectValue(ControlPlaneEndpoint);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<int> count = default;
-            Optional<string> vmSize = default;
-            Optional<ControlPlaneProfileControlPlaneEndpoint> controlPlaneEndpoint = default;
+            int? count = default;
+            string vmSize = default;
+            ControlPlaneProfileControlPlaneEndpoint controlPlaneEndpoint = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProvisionedClusterControlPlaneProfile(Optional.ToNullable(count), vmSize.Value, controlPlaneEndpoint.Value, serializedAdditionalRawData);
+            return new ProvisionedClusterControlPlaneProfile(count, vmSize, controlPlaneEndpoint, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProvisionedClusterControlPlaneProfile>.Write(ModelReaderWriterOptions options)

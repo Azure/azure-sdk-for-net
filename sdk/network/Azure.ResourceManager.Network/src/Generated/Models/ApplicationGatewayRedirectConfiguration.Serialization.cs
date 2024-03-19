@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
@@ -28,54 +29,54 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (RedirectType.HasValue)
+            if (Optional.IsDefined(RedirectType))
             {
                 writer.WritePropertyName("redirectType"u8);
                 writer.WriteStringValue(RedirectType.Value.ToString());
             }
-            if (TargetListener != null)
+            if (Optional.IsDefined(TargetListener))
             {
                 writer.WritePropertyName("targetListener"u8);
                 JsonSerializer.Serialize(writer, TargetListener);
             }
-            if (TargetUri != null)
+            if (Optional.IsDefined(TargetUri))
             {
                 writer.WritePropertyName("targetUrl"u8);
                 writer.WriteStringValue(TargetUri.AbsoluteUri);
             }
-            if (IncludePath.HasValue)
+            if (Optional.IsDefined(IncludePath))
             {
                 writer.WritePropertyName("includePath"u8);
                 writer.WriteBooleanValue(IncludePath.Value);
             }
-            if (IncludeQueryString.HasValue)
+            if (Optional.IsDefined(IncludeQueryString))
             {
                 writer.WritePropertyName("includeQueryString"u8);
                 writer.WriteBooleanValue(IncludeQueryString.Value);
             }
-            if (!(RequestRoutingRules is ChangeTrackingList<WritableSubResource> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(RequestRoutingRules))
             {
                 writer.WritePropertyName("requestRoutingRules"u8);
                 writer.WriteStartArray();
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(UrlPathMaps is ChangeTrackingList<WritableSubResource> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(UrlPathMaps))
             {
                 writer.WritePropertyName("urlPathMaps"u8);
                 writer.WriteStartArray();
@@ -95,7 +96,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(PathRules is ChangeTrackingList<WritableSubResource> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(PathRules))
             {
                 writer.WritePropertyName("pathRules"u8);
                 writer.WriteStartArray();
@@ -144,15 +145,15 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<ApplicationGatewayRedirectType> redirectType = default;
-            Optional<WritableSubResource> targetListener = default;
-            Optional<Uri> targetUrl = default;
-            Optional<bool> includePath = default;
-            Optional<bool> includeQueryString = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            ApplicationGatewayRedirectType? redirectType = default;
+            WritableSubResource targetListener = default;
+            Uri targetUrl = default;
+            bool? includePath = default;
+            bool? includeQueryString = default;
             IList<WritableSubResource> requestRoutingRules = default;
             IList<WritableSubResource> urlPathMaps = default;
             IList<WritableSubResource> pathRules = default;
@@ -298,16 +299,16 @@ namespace Azure.ResourceManager.Network.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ApplicationGatewayRedirectConfiguration(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
+                id,
+                name,
+                type,
                 serializedAdditionalRawData,
-                Optional.ToNullable(etag),
-                Optional.ToNullable(redirectType),
+                etag,
+                redirectType,
                 targetListener,
-                targetUrl.Value,
-                Optional.ToNullable(includePath),
-                Optional.ToNullable(includeQueryString),
+                targetUrl,
+                includePath,
+                includeQueryString,
                 requestRoutingRules ?? new ChangeTrackingList<WritableSubResource>(),
                 urlPathMaps ?? new ChangeTrackingList<WritableSubResource>(),
                 pathRules ?? new ChangeTrackingList<WritableSubResource>());

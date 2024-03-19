@@ -12,6 +12,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -29,12 +30,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (ColumnName != null)
+            if (Optional.IsDefined(ColumnName))
             {
                 writer.WritePropertyName("name"u8);
                 JsonSerializer.Serialize(writer, ColumnName);
             }
-            if (ColumnType != null)
+            if (Optional.IsDefined(ColumnType))
             {
                 writer.WritePropertyName("type"u8);
                 JsonSerializer.Serialize(writer, ColumnType);
@@ -77,8 +78,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<string>> name = default;
-            Optional<DataFactoryElement<string>> type = default;
+            DataFactoryElement<string> name = default;
+            DataFactoryElement<string> type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatasetDataElement(name.Value, type.Value, serializedAdditionalRawData);
+            return new DatasetDataElement(name, type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatasetDataElement>.Write(ModelReaderWriterOptions options)

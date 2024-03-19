@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (AccessToken != null)
+            if (Optional.IsDefined(AccessToken))
             {
                 if (AccessToken != null)
                 {
@@ -38,17 +39,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("accessToken");
                 }
             }
-            if (ExpireOn.HasValue)
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expiryTimeUtc"u8);
                 writer.WriteNumberValue(ExpireOn.Value, "U");
             }
-            if (RefreshOn.HasValue)
+            if (Optional.IsDefined(RefreshOn))
             {
                 writer.WritePropertyName("refreshAfterTimeUtc"u8);
                 writer.WriteNumberValue(RefreshOn.Value, "U");
             }
-            if (TokenType != null)
+            if (Optional.IsDefined(TokenType))
             {
                 if (TokenType != null)
                 {
@@ -98,10 +99,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> accessToken = default;
-            Optional<DateTimeOffset> expiryTimeUtc = default;
-            Optional<DateTimeOffset> refreshAfterTimeUtc = default;
-            Optional<string> tokenType = default;
+            string accessToken = default;
+            DateTimeOffset? expiryTimeUtc = default;
+            DateTimeOffset? refreshAfterTimeUtc = default;
+            string tokenType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,7 +151,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningEndpointAuthToken(accessToken.Value, Optional.ToNullable(expiryTimeUtc), Optional.ToNullable(refreshAfterTimeUtc), tokenType.Value, serializedAdditionalRawData);
+            return new MachineLearningEndpointAuthToken(accessToken, expiryTimeUtc, refreshAfterTimeUtc, tokenType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningEndpointAuthToken>.Write(ModelReaderWriterOptions options)

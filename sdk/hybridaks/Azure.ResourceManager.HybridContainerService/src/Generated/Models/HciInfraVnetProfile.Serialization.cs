@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridContainerService;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (MocGroup != null)
+            if (Optional.IsDefined(MocGroup))
             {
                 writer.WritePropertyName("mocGroup"u8);
                 writer.WriteStringValue(MocGroup);
             }
-            if (MocLocation != null)
+            if (Optional.IsDefined(MocLocation))
             {
                 writer.WritePropertyName("mocLocation"u8);
                 writer.WriteStringValue(MocLocation);
             }
-            if (MocVnetName != null)
+            if (Optional.IsDefined(MocVnetName))
             {
                 writer.WritePropertyName("mocVnetName"u8);
                 writer.WriteStringValue(MocVnetName);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<string> mocGroup = default;
-            Optional<string> mocLocation = default;
-            Optional<string> mocVnetName = default;
+            string mocGroup = default;
+            string mocLocation = default;
+            string mocVnetName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HciInfraVnetProfile(mocGroup.Value, mocLocation.Value, mocVnetName.Value, serializedAdditionalRawData);
+            return new HciInfraVnetProfile(mocGroup, mocLocation, mocVnetName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HciInfraVnetProfile>.Write(ModelReaderWriterOptions options)

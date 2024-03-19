@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (TimeoutSeconds.HasValue)
+            if (Optional.IsDefined(TimeoutSeconds))
             {
                 writer.WritePropertyName("timeoutSeconds"u8);
                 writer.WriteNumberValue(TimeoutSeconds.Value);
             }
-            if (RetryAttempts.HasValue)
+            if (Optional.IsDefined(RetryAttempts))
             {
                 writer.WritePropertyName("retryAttempts"u8);
                 writer.WriteNumberValue(RetryAttempts.Value);
             }
-            if (InitialRetryIntervalSeconds.HasValue)
+            if (Optional.IsDefined(InitialRetryIntervalSeconds))
             {
                 writer.WritePropertyName("initialRetryIntervalSeconds"u8);
                 writer.WriteNumberValue(InitialRetryIntervalSeconds.Value);
             }
-            if (MaximumRetryIntervalSeconds.HasValue)
+            if (Optional.IsDefined(MaximumRetryIntervalSeconds))
             {
                 writer.WritePropertyName("maximumRetryIntervalSeconds"u8);
                 writer.WriteNumberValue(MaximumRetryIntervalSeconds.Value);
             }
-            if (RetryIntervalBackoffMultiplier.HasValue)
+            if (Optional.IsDefined(RetryIntervalBackoffMultiplier))
             {
                 writer.WritePropertyName("retryIntervalBackoffMultiplier"u8);
                 writer.WriteNumberValue(RetryIntervalBackoffMultiplier.Value);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<int> timeoutSeconds = default;
-            Optional<int> retryAttempts = default;
-            Optional<int> initialRetryIntervalSeconds = default;
-            Optional<int> maximumRetryIntervalSeconds = default;
-            Optional<float> retryIntervalBackoffMultiplier = default;
+            int? timeoutSeconds = default;
+            int? retryAttempts = default;
+            int? initialRetryIntervalSeconds = default;
+            int? maximumRetryIntervalSeconds = default;
+            float? retryIntervalBackoffMultiplier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,11 +151,11 @@ namespace Azure.ResourceManager.Sql.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new JobStepExecutionOptions(
-                Optional.ToNullable(timeoutSeconds),
-                Optional.ToNullable(retryAttempts),
-                Optional.ToNullable(initialRetryIntervalSeconds),
-                Optional.ToNullable(maximumRetryIntervalSeconds),
-                Optional.ToNullable(retryIntervalBackoffMultiplier),
+                timeoutSeconds,
+                retryAttempts,
+                initialRetryIntervalSeconds,
+                maximumRetryIntervalSeconds,
+                retryIntervalBackoffMultiplier,
                 serializedAdditionalRawData);
         }
 

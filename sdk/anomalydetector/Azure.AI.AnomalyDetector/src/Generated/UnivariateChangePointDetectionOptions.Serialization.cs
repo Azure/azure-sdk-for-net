@@ -36,22 +36,22 @@ namespace Azure.AI.AnomalyDetector
             writer.WriteEndArray();
             writer.WritePropertyName("granularity"u8);
             writer.WriteStringValue(Granularity.ToString());
-            if (CustomInterval.HasValue)
+            if (Optional.IsDefined(CustomInterval))
             {
                 writer.WritePropertyName("customInterval"u8);
                 writer.WriteNumberValue(CustomInterval.Value);
             }
-            if (Period.HasValue)
+            if (Optional.IsDefined(Period))
             {
                 writer.WritePropertyName("period"u8);
                 writer.WriteNumberValue(Period.Value);
             }
-            if (StableTrendWindow.HasValue)
+            if (Optional.IsDefined(StableTrendWindow))
             {
                 writer.WritePropertyName("stableTrendWindow"u8);
                 writer.WriteNumberValue(StableTrendWindow.Value);
             }
-            if (Threshold.HasValue)
+            if (Optional.IsDefined(Threshold))
             {
                 writer.WritePropertyName("threshold"u8);
                 writer.WriteNumberValue(Threshold.Value);
@@ -96,10 +96,10 @@ namespace Azure.AI.AnomalyDetector
             }
             IList<TimeSeriesPoint> series = default;
             TimeGranularity granularity = default;
-            Optional<int> customInterval = default;
-            Optional<int> period = default;
-            Optional<int> stableTrendWindow = default;
-            Optional<float> threshold = default;
+            int? customInterval = default;
+            int? period = default;
+            int? stableTrendWindow = default;
+            float? threshold = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,10 +164,10 @@ namespace Azure.AI.AnomalyDetector
             return new UnivariateChangePointDetectionOptions(
                 series,
                 granularity,
-                Optional.ToNullable(customInterval),
-                Optional.ToNullable(period),
-                Optional.ToNullable(stableTrendWindow),
-                Optional.ToNullable(threshold),
+                customInterval,
+                period,
+                stableTrendWindow,
+                threshold,
                 serializedAdditionalRawData);
         }
 

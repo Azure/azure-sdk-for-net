@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
 
             writer.WriteStartObject();
-            if (IsPrivileged.HasValue)
+            if (Optional.IsDefined(IsPrivileged))
             {
                 writer.WritePropertyName("privileged"u8);
                 writer.WriteBooleanValue(IsPrivileged.Value);
             }
-            if (AllowPrivilegeEscalation.HasValue)
+            if (Optional.IsDefined(AllowPrivilegeEscalation))
             {
                 writer.WritePropertyName("allowPrivilegeEscalation"u8);
                 writer.WriteBooleanValue(AllowPrivilegeEscalation.Value);
             }
-            if (Capabilities != null)
+            if (Optional.IsDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteObjectValue(Capabilities);
             }
-            if (RunAsGroup.HasValue)
+            if (Optional.IsDefined(RunAsGroup))
             {
                 writer.WritePropertyName("runAsGroup"u8);
                 writer.WriteNumberValue(RunAsGroup.Value);
             }
-            if (RunAsUser.HasValue)
+            if (Optional.IsDefined(RunAsUser))
             {
                 writer.WritePropertyName("runAsUser"u8);
                 writer.WriteNumberValue(RunAsUser.Value);
             }
-            if (SeccompProfile != null)
+            if (Optional.IsDefined(SeccompProfile))
             {
                 writer.WritePropertyName("seccompProfile"u8);
                 writer.WriteStringValue(SeccompProfile);
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            Optional<bool> privileged = default;
-            Optional<bool> allowPrivilegeEscalation = default;
-            Optional<ContainerSecurityContextCapabilitiesDefinition> capabilities = default;
-            Optional<int> runAsGroup = default;
-            Optional<int> runAsUser = default;
-            Optional<string> seccompProfile = default;
+            bool? privileged = default;
+            bool? allowPrivilegeEscalation = default;
+            ContainerSecurityContextCapabilitiesDefinition capabilities = default;
+            int? runAsGroup = default;
+            int? runAsUser = default;
+            string seccompProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -161,12 +162,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ContainerSecurityContextDefinition(
-                Optional.ToNullable(privileged),
-                Optional.ToNullable(allowPrivilegeEscalation),
-                capabilities.Value,
-                Optional.ToNullable(runAsGroup),
-                Optional.ToNullable(runAsUser),
-                seccompProfile.Value,
+                privileged,
+                allowPrivilegeEscalation,
+                capabilities,
+                runAsGroup,
+                runAsUser,
+                seccompProfile,
                 serializedAdditionalRawData);
         }
 

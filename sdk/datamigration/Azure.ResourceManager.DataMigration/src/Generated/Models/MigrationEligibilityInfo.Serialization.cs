@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && IsEligibleForMigration.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsEligibleForMigration))
             {
                 writer.WritePropertyName("isEligibleForMigration"u8);
                 writer.WriteBooleanValue(IsEligibleForMigration.Value);
             }
-            if (options.Format != "W" && !(ValidationMessages is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ValidationMessages))
             {
                 writer.WritePropertyName("validationMessages"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<bool> isEligibleForMigration = default;
+            bool? isEligibleForMigration = default;
             IReadOnlyList<string> validationMessages = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrationEligibilityInfo(Optional.ToNullable(isEligibleForMigration), validationMessages ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new MigrationEligibilityInfo(isEligibleForMigration, validationMessages ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigrationEligibilityInfo>.Write(ModelReaderWriterOptions options)

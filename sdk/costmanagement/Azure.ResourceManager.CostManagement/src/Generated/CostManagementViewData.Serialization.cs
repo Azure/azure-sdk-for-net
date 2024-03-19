@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.CostManagement
             }
 
             writer.WriteStartObject();
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -49,59 +49,59 @@ namespace Azure.ResourceManager.CostManagement
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Scope != null)
+            if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdOn"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && ModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ModifiedOn))
             {
                 writer.WritePropertyName("modifiedOn"u8);
                 writer.WriteStringValue(ModifiedOn.Value, "O");
             }
-            if (options.Format != "W" && DateRange != null)
+            if (options.Format != "W" && Optional.IsDefined(DateRange))
             {
                 writer.WritePropertyName("dateRange"u8);
                 writer.WriteStringValue(DateRange);
             }
-            if (options.Format != "W" && Currency != null)
+            if (options.Format != "W" && Optional.IsDefined(Currency))
             {
                 writer.WritePropertyName("currency"u8);
                 writer.WriteStringValue(Currency);
             }
-            if (Chart.HasValue)
+            if (Optional.IsDefined(Chart))
             {
                 writer.WritePropertyName("chart"u8);
                 writer.WriteStringValue(Chart.Value.ToString());
             }
-            if (Accumulated.HasValue)
+            if (Optional.IsDefined(Accumulated))
             {
                 writer.WritePropertyName("accumulated"u8);
                 writer.WriteStringValue(Accumulated.Value.ToString());
             }
-            if (Metric.HasValue)
+            if (Optional.IsDefined(Metric))
             {
                 writer.WritePropertyName("metric"u8);
                 writer.WriteStringValue(Metric.Value.ToString());
             }
-            if (!(Kpis is ChangeTrackingList<ViewKpiProperties> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Kpis))
             {
                 writer.WritePropertyName("kpis"u8);
                 writer.WriteStartArray();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.CostManagement
                 }
                 writer.WriteEndArray();
             }
-            if (!(Pivots is ChangeTrackingList<ViewPivotProperties> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Pivots))
             {
                 writer.WritePropertyName("pivots"u8);
                 writer.WriteStartArray();
@@ -123,27 +123,27 @@ namespace Azure.ResourceManager.CostManagement
             }
             writer.WritePropertyName("query"u8);
             writer.WriteStartObject();
-            if (TypePropertiesQueryType.HasValue)
+            if (Optional.IsDefined(TypePropertiesQueryType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(TypePropertiesQueryType.Value.ToString());
             }
-            if (Timeframe.HasValue)
+            if (Optional.IsDefined(Timeframe))
             {
                 writer.WritePropertyName("timeframe"u8);
                 writer.WriteStringValue(Timeframe.Value.ToString());
             }
-            if (TimePeriod != null)
+            if (Optional.IsDefined(TimePeriod))
             {
                 writer.WritePropertyName("timePeriod"u8);
                 writer.WriteObjectValue(TimePeriod);
             }
-            if (DataSet != null)
+            if (Optional.IsDefined(DataSet))
             {
                 writer.WritePropertyName("dataSet"u8);
                 writer.WriteObjectValue(DataSet);
             }
-            if (IncludeMonetaryCommitment.HasValue)
+            if (Optional.IsDefined(IncludeMonetaryCommitment))
             {
                 writer.WritePropertyName("includeMonetaryCommitment"u8);
                 writer.WriteBooleanValue(IncludeMonetaryCommitment.Value);
@@ -188,27 +188,27 @@ namespace Azure.ResourceManager.CostManagement
             {
                 return null;
             }
-            Optional<ETag> eTag = default;
+            ETag? eTag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<ResourceIdentifier> scope = default;
-            Optional<DateTimeOffset> createdOn = default;
-            Optional<DateTimeOffset> modifiedOn = default;
-            Optional<string> dateRange = default;
-            Optional<string> currency = default;
-            Optional<ViewChartType> chart = default;
-            Optional<AccumulatedType> accumulated = default;
-            Optional<ViewMetricType> metric = default;
+            SystemData systemData = default;
+            string displayName = default;
+            ResourceIdentifier scope = default;
+            DateTimeOffset? createdOn = default;
+            DateTimeOffset? modifiedOn = default;
+            string dateRange = default;
+            string currency = default;
+            ViewChartType? chart = default;
+            AccumulatedType? accumulated = default;
+            ViewMetricType? metric = default;
             IList<ViewKpiProperties> kpis = default;
             IList<ViewPivotProperties> pivots = default;
-            Optional<ViewReportType> type0 = default;
-            Optional<ReportTimeframeType> timeframe = default;
-            Optional<ReportConfigTimePeriod> timePeriod = default;
-            Optional<ReportConfigDataset> dataSet = default;
-            Optional<bool> includeMonetaryCommitment = default;
+            ViewReportType? type0 = default;
+            ReportTimeframeType? timeframe = default;
+            ReportConfigTimePeriod timePeriod = default;
+            ReportConfigDataset dataSet = default;
+            bool? includeMonetaryCommitment = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -422,24 +422,24 @@ namespace Azure.ResourceManager.CostManagement
                 id,
                 name,
                 type,
-                systemData.Value,
-                displayName.Value,
-                scope.Value,
-                Optional.ToNullable(createdOn),
-                Optional.ToNullable(modifiedOn),
-                dateRange.Value,
-                currency.Value,
-                Optional.ToNullable(chart),
-                Optional.ToNullable(accumulated),
-                Optional.ToNullable(metric),
+                systemData,
+                displayName,
+                scope,
+                createdOn,
+                modifiedOn,
+                dateRange,
+                currency,
+                chart,
+                accumulated,
+                metric,
                 kpis ?? new ChangeTrackingList<ViewKpiProperties>(),
                 pivots ?? new ChangeTrackingList<ViewPivotProperties>(),
-                Optional.ToNullable(type0),
-                Optional.ToNullable(timeframe),
-                timePeriod.Value,
-                dataSet.Value,
-                Optional.ToNullable(includeMonetaryCommitment),
-                Optional.ToNullable(eTag),
+                type0,
+                timeframe,
+                timePeriod,
+                dataSet,
+                includeMonetaryCommitment,
+                eTag,
                 serializedAdditionalRawData);
         }
 

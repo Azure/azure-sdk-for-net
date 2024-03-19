@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (ByoaSecretAkvUri != null)
+            if (Optional.IsDefined(ByoaSecretAkvUri))
             {
                 writer.WritePropertyName("byoaSecretAkvUrl"u8);
                 writer.WriteStringValue(ByoaSecretAkvUri.AbsoluteUri);
             }
-            if (ByoaSecretName != null)
+            if (Optional.IsDefined(ByoaSecretName))
             {
                 writer.WritePropertyName("byoaSecretName"u8);
                 writer.WriteStringValue(ByoaSecretName);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<Uri> byoaSecretAkvUrl = default;
-            Optional<string> byoaSecretName = default;
+            Uri byoaSecretAkvUrl = default;
+            string byoaSecretName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FactoryGitHubClientSecret(byoaSecretAkvUrl.Value, byoaSecretName.Value, serializedAdditionalRawData);
+            return new FactoryGitHubClientSecret(byoaSecretAkvUrl, byoaSecretName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FactoryGitHubClientSecret>.Write(ModelReaderWriterOptions options)

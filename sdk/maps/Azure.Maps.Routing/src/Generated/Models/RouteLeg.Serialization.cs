@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Routing.Models
 {
@@ -19,7 +19,7 @@ namespace Azure.Maps.Routing.Models
             {
                 return null;
             }
-            Optional<RouteLegSummary> summary = default;
+            RouteLegSummary summary = default;
             IReadOnlyList<LatLongPair> points = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -47,7 +47,7 @@ namespace Azure.Maps.Routing.Models
                     continue;
                 }
             }
-            return new RouteLeg(summary.Value, points ?? new ChangeTrackingList<LatLongPair>());
+            return new RouteLeg(summary, points ?? new ChangeTrackingList<LatLongPair>());
         }
     }
 }

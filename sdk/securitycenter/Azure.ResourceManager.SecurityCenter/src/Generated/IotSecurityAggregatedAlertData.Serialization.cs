@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -54,74 +54,74 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && AlertType != null)
+            if (options.Format != "W" && Optional.IsDefined(AlertType))
             {
                 writer.WritePropertyName("alertType"u8);
                 writer.WriteStringValue(AlertType);
             }
-            if (options.Format != "W" && AlertDisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(AlertDisplayName))
             {
                 writer.WritePropertyName("alertDisplayName"u8);
                 writer.WriteStringValue(AlertDisplayName);
             }
-            if (options.Format != "W" && AggregatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AggregatedOn))
             {
                 writer.WritePropertyName("aggregatedDateUtc"u8);
                 writer.WriteStringValue(AggregatedOn.Value, "D");
             }
-            if (options.Format != "W" && VendorName != null)
+            if (options.Format != "W" && Optional.IsDefined(VendorName))
             {
                 writer.WritePropertyName("vendorName"u8);
                 writer.WriteStringValue(VendorName);
             }
-            if (options.Format != "W" && ReportedSeverity.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ReportedSeverity))
             {
                 writer.WritePropertyName("reportedSeverity"u8);
                 writer.WriteStringValue(ReportedSeverity.Value.ToString());
             }
-            if (options.Format != "W" && RemediationSteps != null)
+            if (options.Format != "W" && Optional.IsDefined(RemediationSteps))
             {
                 writer.WritePropertyName("remediationSteps"u8);
                 writer.WriteStringValue(RemediationSteps);
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Count.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (options.Format != "W" && EffectedResourceType != null)
+            if (options.Format != "W" && Optional.IsDefined(EffectedResourceType))
             {
                 writer.WritePropertyName("effectedResourceType"u8);
                 writer.WriteStringValue(EffectedResourceType);
             }
-            if (options.Format != "W" && SystemSource != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemSource))
             {
                 writer.WritePropertyName("systemSource"u8);
                 writer.WriteStringValue(SystemSource);
             }
-            if (options.Format != "W" && ActionTaken != null)
+            if (options.Format != "W" && Optional.IsDefined(ActionTaken))
             {
                 writer.WritePropertyName("actionTaken"u8);
                 writer.WriteStringValue(ActionTaken);
             }
-            if (options.Format != "W" && LogAnalyticsQuery != null)
+            if (options.Format != "W" && Optional.IsDefined(LogAnalyticsQuery))
             {
                 writer.WritePropertyName("logAnalyticsQuery"u8);
                 writer.WriteStringValue(LogAnalyticsQuery);
             }
-            if (options.Format != "W" && !(TopDevicesList is ChangeTrackingList<IotSecurityAggregatedAlertTopDevice> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(TopDevicesList))
             {
                 writer.WritePropertyName("topDevicesList"u8);
                 writer.WriteStartArray();
@@ -174,19 +174,19 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> alertType = default;
-            Optional<string> alertDisplayName = default;
-            Optional<DateTimeOffset> aggregatedDateUtc = default;
-            Optional<string> vendorName = default;
-            Optional<ReportedSeverity> reportedSeverity = default;
-            Optional<string> remediationSteps = default;
-            Optional<string> description = default;
-            Optional<long> count = default;
-            Optional<string> effectedResourceType = default;
-            Optional<string> systemSource = default;
-            Optional<string> actionTaken = default;
-            Optional<string> logAnalyticsQuery = default;
+            SystemData systemData = default;
+            string alertType = default;
+            string alertDisplayName = default;
+            DateTimeOffset? aggregatedDateUtc = default;
+            string vendorName = default;
+            ReportedSeverity? reportedSeverity = default;
+            string remediationSteps = default;
+            string description = default;
+            long? count = default;
+            string effectedResourceType = default;
+            string systemSource = default;
+            string actionTaken = default;
+            string logAnalyticsQuery = default;
             IReadOnlyList<IotSecurityAggregatedAlertTopDevice> topDevicesList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -338,19 +338,19 @@ namespace Azure.ResourceManager.SecurityCenter
                 id,
                 name,
                 type,
-                systemData.Value,
-                alertType.Value,
-                alertDisplayName.Value,
-                Optional.ToNullable(aggregatedDateUtc),
-                vendorName.Value,
-                Optional.ToNullable(reportedSeverity),
-                remediationSteps.Value,
-                description.Value,
-                Optional.ToNullable(count),
-                effectedResourceType.Value,
-                systemSource.Value,
-                actionTaken.Value,
-                logAnalyticsQuery.Value,
+                systemData,
+                alertType,
+                alertDisplayName,
+                aggregatedDateUtc,
+                vendorName,
+                reportedSeverity,
+                remediationSteps,
+                description,
+                count,
+                effectedResourceType,
+                systemSource,
+                actionTaken,
+                logAnalyticsQuery,
                 topDevicesList ?? new ChangeTrackingList<IotSecurityAggregatedAlertTopDevice>(),
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);

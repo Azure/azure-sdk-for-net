@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Relay;
 
 namespace Azure.ResourceManager.Relay.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Relay.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name.ToString());
-            if (Tier.HasValue)
+            if (Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier.Value.ToString());
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.Relay.Models
                 return null;
             }
             RelaySkuName name = default;
-            Optional<RelaySkuTier> tier = default;
+            RelaySkuTier? tier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.Relay.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RelaySku(name, Optional.ToNullable(tier), serializedAdditionalRawData);
+            return new RelaySku(name, tier, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RelaySku>.Write(ModelReaderWriterOptions options)

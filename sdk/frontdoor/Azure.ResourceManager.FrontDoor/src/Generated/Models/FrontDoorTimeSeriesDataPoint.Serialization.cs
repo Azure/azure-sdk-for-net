@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
 
             writer.WriteStartObject();
-            if (DateTimeUtc.HasValue)
+            if (Optional.IsDefined(DateTimeUtc))
             {
                 writer.WritePropertyName("dateTimeUTC"u8);
                 writer.WriteStringValue(DateTimeUtc.Value, "O");
             }
-            if (Value.HasValue)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteNumberValue(Value.Value);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> dateTimeUtc = default;
-            Optional<float> value = default;
+            DateTimeOffset? dateTimeUtc = default;
+            float? value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorTimeSeriesDataPoint(Optional.ToNullable(dateTimeUtc), Optional.ToNullable(value), serializedAdditionalRawData);
+            return new FrontDoorTimeSeriesDataPoint(dateTimeUtc, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorTimeSeriesDataPoint>.Write(ModelReaderWriterOptions options)

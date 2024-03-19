@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (!(Value is ChangeTrackingList<StreamingEndpointData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 writer.WriteEndArray();
             }
-            if (OdataCount.HasValue)
+            if (Optional.IsDefined(OdataCount))
             {
                 writer.WritePropertyName("@odata.count"u8);
                 writer.WriteNumberValue(OdataCount.Value);
             }
-            if (OdataNextLink != null)
+            if (Optional.IsDefined(OdataNextLink))
             {
                 writer.WritePropertyName("@odata.nextLink"u8);
                 writer.WriteStringValue(OdataNextLink);
@@ -86,8 +86,8 @@ namespace Azure.ResourceManager.Media.Models
                 return null;
             }
             IReadOnlyList<StreamingEndpointData> value = default;
-            Optional<int> odataCount = default;
-            Optional<string> odataNextLink = default;
+            int? odataCount = default;
+            string odataNextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingEndpointListResult(value ?? new ChangeTrackingList<StreamingEndpointData>(), Optional.ToNullable(odataCount), odataNextLink.Value, serializedAdditionalRawData);
+            return new StreamingEndpointListResult(value ?? new ChangeTrackingList<StreamingEndpointData>(), odataCount, odataNextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamingEndpointListResult>.Write(ModelReaderWriterOptions options)

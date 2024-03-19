@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.Sql
             }
 
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (options.Format != "W" && Kind != null)
+            if (options.Format != "W" && Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -66,64 +66,64 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && State.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (MaxSizeBytes.HasValue)
+            if (Optional.IsDefined(MaxSizeBytes))
             {
                 writer.WritePropertyName("maxSizeBytes"u8);
                 writer.WriteNumberValue(MaxSizeBytes.Value);
             }
-            if (MinCapacity.HasValue)
+            if (Optional.IsDefined(MinCapacity))
             {
                 writer.WritePropertyName("minCapacity"u8);
                 writer.WriteNumberValue(MinCapacity.Value);
             }
-            if (PerDatabaseSettings != null)
+            if (Optional.IsDefined(PerDatabaseSettings))
             {
                 writer.WritePropertyName("perDatabaseSettings"u8);
                 writer.WriteObjectValue(PerDatabaseSettings);
             }
-            if (IsZoneRedundant.HasValue)
+            if (Optional.IsDefined(IsZoneRedundant))
             {
                 writer.WritePropertyName("zoneRedundant"u8);
                 writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
-            if (LicenseType.HasValue)
+            if (Optional.IsDefined(LicenseType))
             {
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType.Value.ToString());
             }
-            if (MaintenanceConfigurationId != null)
+            if (Optional.IsDefined(MaintenanceConfigurationId))
             {
                 writer.WritePropertyName("maintenanceConfigurationId"u8);
                 writer.WriteStringValue(MaintenanceConfigurationId);
             }
-            if (HighAvailabilityReplicaCount.HasValue)
+            if (Optional.IsDefined(HighAvailabilityReplicaCount))
             {
                 writer.WritePropertyName("highAvailabilityReplicaCount"u8);
                 writer.WriteNumberValue(HighAvailabilityReplicaCount.Value);
             }
-            if (PreferredEnclaveType.HasValue)
+            if (Optional.IsDefined(PreferredEnclaveType))
             {
                 writer.WritePropertyName("preferredEnclaveType"u8);
                 writer.WriteStringValue(PreferredEnclaveType.Value.ToString());
             }
-            if (AvailabilityZone.HasValue)
+            if (Optional.IsDefined(AvailabilityZone))
             {
                 writer.WritePropertyName("availabilityZone"u8);
                 writer.WriteStringValue(AvailabilityZone.Value.ToString());
@@ -167,25 +167,25 @@ namespace Azure.ResourceManager.Sql
             {
                 return null;
             }
-            Optional<SqlSku> sku = default;
-            Optional<string> kind = default;
+            SqlSku sku = default;
+            string kind = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ElasticPoolState> state = default;
-            Optional<DateTimeOffset> creationDate = default;
-            Optional<long> maxSizeBytes = default;
-            Optional<double> minCapacity = default;
-            Optional<ElasticPoolPerDatabaseSettings> perDatabaseSettings = default;
-            Optional<bool> zoneRedundant = default;
-            Optional<ElasticPoolLicenseType> licenseType = default;
-            Optional<ResourceIdentifier> maintenanceConfigurationId = default;
-            Optional<int> highAvailabilityReplicaCount = default;
-            Optional<SqlAlwaysEncryptedEnclaveType> preferredEnclaveType = default;
-            Optional<SqlAvailabilityZoneType> availabilityZone = default;
+            SystemData systemData = default;
+            ElasticPoolState? state = default;
+            DateTimeOffset? creationDate = default;
+            long? maxSizeBytes = default;
+            double? minCapacity = default;
+            ElasticPoolPerDatabaseSettings perDatabaseSettings = default;
+            bool? zoneRedundant = default;
+            ElasticPoolLicenseType? licenseType = default;
+            ResourceIdentifier maintenanceConfigurationId = default;
+            int? highAvailabilityReplicaCount = default;
+            SqlAlwaysEncryptedEnclaveType? preferredEnclaveType = default;
+            SqlAvailabilityZoneType? availabilityZone = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -368,22 +368,22 @@ namespace Azure.ResourceManager.Sql
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                sku.Value,
-                kind.Value,
-                Optional.ToNullable(state),
-                Optional.ToNullable(creationDate),
-                Optional.ToNullable(maxSizeBytes),
-                Optional.ToNullable(minCapacity),
-                perDatabaseSettings.Value,
-                Optional.ToNullable(zoneRedundant),
-                Optional.ToNullable(licenseType),
-                maintenanceConfigurationId.Value,
-                Optional.ToNullable(highAvailabilityReplicaCount),
-                Optional.ToNullable(preferredEnclaveType),
-                Optional.ToNullable(availabilityZone),
+                sku,
+                kind,
+                state,
+                creationDate,
+                maxSizeBytes,
+                minCapacity,
+                perDatabaseSettings,
+                zoneRedundant,
+                licenseType,
+                maintenanceConfigurationId,
+                highAvailabilityReplicaCount,
+                preferredEnclaveType,
+                availabilityZone,
                 serializedAdditionalRawData);
         }
 

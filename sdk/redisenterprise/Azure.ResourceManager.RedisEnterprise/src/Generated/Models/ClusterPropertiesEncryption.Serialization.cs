@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RedisEnterprise;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             }
 
             writer.WriteStartObject();
-            if (CustomerManagedKeyEncryption != null)
+            if (Optional.IsDefined(CustomerManagedKeyEncryption))
             {
                 writer.WritePropertyName("customerManagedKeyEncryption"u8);
                 writer.WriteObjectValue(CustomerManagedKeyEncryption);
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             {
                 return null;
             }
-            Optional<RedisEnterpriseCustomerManagedKeyEncryption> customerManagedKeyEncryption = default;
+            RedisEnterpriseCustomerManagedKeyEncryption customerManagedKeyEncryption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterPropertiesEncryption(customerManagedKeyEncryption.Value, serializedAdditionalRawData);
+            return new ClusterPropertiesEncryption(customerManagedKeyEncryption, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterPropertiesEncryption>.Write(ModelReaderWriterOptions options)

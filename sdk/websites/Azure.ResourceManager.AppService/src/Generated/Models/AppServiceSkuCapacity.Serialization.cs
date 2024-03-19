@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Minimum.HasValue)
+            if (Optional.IsDefined(Minimum))
             {
                 writer.WritePropertyName("minimum"u8);
                 writer.WriteNumberValue(Minimum.Value);
             }
-            if (Maximum.HasValue)
+            if (Optional.IsDefined(Maximum))
             {
                 writer.WritePropertyName("maximum"u8);
                 writer.WriteNumberValue(Maximum.Value);
             }
-            if (ElasticMaximum.HasValue)
+            if (Optional.IsDefined(ElasticMaximum))
             {
                 writer.WritePropertyName("elasticMaximum"u8);
                 writer.WriteNumberValue(ElasticMaximum.Value);
             }
-            if (Default.HasValue)
+            if (Optional.IsDefined(Default))
             {
                 writer.WritePropertyName("default"u8);
                 writer.WriteNumberValue(Default.Value);
             }
-            if (ScaleType != null)
+            if (Optional.IsDefined(ScaleType))
             {
                 writer.WritePropertyName("scaleType"u8);
                 writer.WriteStringValue(ScaleType);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<int> minimum = default;
-            Optional<int> maximum = default;
-            Optional<int> elasticMaximum = default;
-            Optional<int> @default = default;
-            Optional<string> scaleType = default;
+            int? minimum = default;
+            int? maximum = default;
+            int? elasticMaximum = default;
+            int? @default = default;
+            string scaleType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,11 +147,11 @@ namespace Azure.ResourceManager.AppService.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AppServiceSkuCapacity(
-                Optional.ToNullable(minimum),
-                Optional.ToNullable(maximum),
-                Optional.ToNullable(elasticMaximum),
-                Optional.ToNullable(@default),
-                scaleType.Value,
+                minimum,
+                maximum,
+                elasticMaximum,
+                @default,
+                scaleType,
                 serializedAdditionalRawData);
         }
 

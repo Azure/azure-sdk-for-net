@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Media.VideoAnalyzer.Edge;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -16,17 +17,17 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ServiceIdentifier != null)
+            if (Optional.IsDefined(ServiceIdentifier))
             {
                 writer.WritePropertyName("serviceIdentifier"u8);
                 writer.WriteStringValue(ServiceIdentifier);
             }
-            if (RemoteIPAddress != null)
+            if (Optional.IsDefined(RemoteIPAddress))
             {
                 writer.WritePropertyName("remoteIPAddress"u8);
                 writer.WriteStringValue(RemoteIPAddress);
             }
-            if (!(Scopes is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Scopes))
             {
                 writer.WritePropertyName("scopes"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Endpoints is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Endpoints))
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
@@ -55,8 +56,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<string> serviceIdentifier = default;
-            Optional<string> remoteIPAddress = default;
+            string serviceIdentifier = default;
+            string remoteIPAddress = default;
             IList<string> scopes = default;
             IList<string> endpoints = default;
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new DiscoveredOnvifDevice(serviceIdentifier.Value, remoteIPAddress.Value, scopes ?? new ChangeTrackingList<string>(), endpoints ?? new ChangeTrackingList<string>());
+            return new DiscoveredOnvifDevice(serviceIdentifier, remoteIPAddress, scopes ?? new ChangeTrackingList<string>(), endpoints ?? new ChangeTrackingList<string>());
         }
     }
 }

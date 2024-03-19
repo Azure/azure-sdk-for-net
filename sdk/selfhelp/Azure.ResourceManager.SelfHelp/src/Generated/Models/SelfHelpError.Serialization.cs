@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SelfHelp;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Code != null)
+            if (options.Format != "W" && Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (options.Format != "W" && ErrorType != null)
+            if (options.Format != "W" && Optional.IsDefined(ErrorType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ErrorType);
             }
-            if (options.Format != "W" && Message != null)
+            if (options.Format != "W" && Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (!(Details is ChangeTrackingList<SelfHelpError> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartArray();
@@ -89,9 +90,9 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<string> type = default;
-            Optional<string> message = default;
+            string code = default;
+            string type = default;
+            string message = default;
             IReadOnlyList<SelfHelpError> details = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SelfHelpError(code.Value, type.Value, message.Value, details ?? new ChangeTrackingList<SelfHelpError>(), serializedAdditionalRawData);
+            return new SelfHelpError(code, type, message, details ?? new ChangeTrackingList<SelfHelpError>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SelfHelpError>.Write(ModelReaderWriterOptions options)

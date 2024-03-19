@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (GroupType.HasValue)
+            if (Optional.IsDefined(GroupType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(GroupType.Value.ToString());
             }
-            if (!(Ids is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Ids))
             {
                 writer.WritePropertyName("ids"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<SharingProfileGroupType> type = default;
+            SharingProfileGroupType? type = default;
             IList<string> ids = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SharingProfileGroup(Optional.ToNullable(type), ids ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new SharingProfileGroup(type, ids ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SharingProfileGroup>.Write(ModelReaderWriterOptions options)

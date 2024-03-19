@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceLinker;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
 
             writer.WriteStartObject();
-            if (DoesConnectAsKubernetesCsiDriver.HasValue)
+            if (Optional.IsDefined(DoesConnectAsKubernetesCsiDriver))
             {
                 if (DoesConnectAsKubernetesCsiDriver != null)
                 {
@@ -78,7 +79,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 return null;
             }
-            Optional<bool?> connectAsKubernetesCsiDriver = default;
+            bool? connectAsKubernetesCsiDriver = default;
             AzureResourceType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -105,7 +106,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureKeyVaultProperties(type, serializedAdditionalRawData, Optional.ToNullable(connectAsKubernetesCsiDriver));
+            return new AzureKeyVaultProperties(type, serializedAdditionalRawData, connectAsKubernetesCsiDriver);
         }
 
         BinaryData IPersistableModel<AzureKeyVaultProperties>.Write(ModelReaderWriterOptions options)

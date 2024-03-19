@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -32,17 +33,17 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStringValue(MetricType);
             writer.WritePropertyName("name"u8);
             writer.WriteObjectValue(Name);
-            if (DisplayDescription != null)
+            if (Optional.IsDefined(DisplayDescription))
             {
                 writer.WritePropertyName("displayDescription"u8);
                 writer.WriteStringValue(DisplayDescription);
             }
-            if (ErrorCode != null)
+            if (Optional.IsDefined(ErrorCode))
             {
                 writer.WritePropertyName("errorCode"u8);
                 writer.WriteStringValue(ErrorCode);
             }
-            if (ErrorMessage != null)
+            if (Optional.IsDefined(ErrorMessage))
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
@@ -97,9 +98,9 @@ namespace Azure.ResourceManager.Monitor.Models
             string id = default;
             string type = default;
             MonitorLocalizableString name = default;
-            Optional<string> displayDescription = default;
-            Optional<string> errorCode = default;
-            Optional<string> errorMessage = default;
+            string displayDescription = default;
+            string errorCode = default;
+            string errorMessage = default;
             MonitorMetricUnit unit = default;
             IReadOnlyList<MonitorTimeSeriesElement> timeseries = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -161,9 +162,9 @@ namespace Azure.ResourceManager.Monitor.Models
                 id,
                 type,
                 name,
-                displayDescription.Value,
-                errorCode.Value,
-                errorMessage.Value,
+                displayDescription,
+                errorCode,
+                errorMessage,
                 unit,
                 timeseries,
                 serializedAdditionalRawData);

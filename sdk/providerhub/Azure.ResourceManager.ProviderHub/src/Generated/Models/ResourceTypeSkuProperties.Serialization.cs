@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 return null;
             }
             IList<ResourceTypeSkuSetting> skuSettings = default;
-            Optional<ProviderHubProvisioningState> provisioningState = default;
+            ProviderHubProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceTypeSkuProperties(skuSettings, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new ResourceTypeSkuProperties(skuSettings, provisioningState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceTypeSkuProperties>.Write(ModelReaderWriterOptions options)

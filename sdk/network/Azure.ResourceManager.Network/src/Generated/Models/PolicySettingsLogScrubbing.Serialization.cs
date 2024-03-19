@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (!(ScrubbingRules is ChangeTrackingList<WebApplicationFirewallScrubbingRules> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ScrubbingRules))
             {
                 writer.WritePropertyName("scrubbingRules"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<WebApplicationFirewallScrubbingState> state = default;
+            WebApplicationFirewallScrubbingState? state = default;
             IList<WebApplicationFirewallScrubbingRules> scrubbingRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicySettingsLogScrubbing(Optional.ToNullable(state), scrubbingRules ?? new ChangeTrackingList<WebApplicationFirewallScrubbingRules>(), serializedAdditionalRawData);
+            return new PolicySettingsLogScrubbing(state, scrubbingRules ?? new ChangeTrackingList<WebApplicationFirewallScrubbingRules>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicySettingsLogScrubbing>.Write(ModelReaderWriterOptions options)

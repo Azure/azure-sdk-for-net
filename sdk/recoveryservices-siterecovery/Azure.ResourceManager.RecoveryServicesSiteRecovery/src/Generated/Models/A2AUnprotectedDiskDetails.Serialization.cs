@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (DiskLunId.HasValue)
+            if (Optional.IsDefined(DiskLunId))
             {
                 writer.WritePropertyName("diskLunId"u8);
                 writer.WriteNumberValue(DiskLunId.Value);
             }
-            if (DiskAutoProtectionStatus.HasValue)
+            if (Optional.IsDefined(DiskAutoProtectionStatus))
             {
                 writer.WritePropertyName("diskAutoProtectionStatus"u8);
                 writer.WriteStringValue(DiskAutoProtectionStatus.Value.ToString());
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<int> diskLunId = default;
-            Optional<AutoProtectionOfDataDisk> diskAutoProtectionStatus = default;
+            int? diskLunId = default;
+            AutoProtectionOfDataDisk? diskAutoProtectionStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new A2AUnprotectedDiskDetails(Optional.ToNullable(diskLunId), Optional.ToNullable(diskAutoProtectionStatus), serializedAdditionalRawData);
+            return new A2AUnprotectedDiskDetails(diskLunId, diskAutoProtectionStatus, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<A2AUnprotectedDiskDetails>.Write(ModelReaderWriterOptions options)

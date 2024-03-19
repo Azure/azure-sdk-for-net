@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
 
             writer.WriteStartObject();
-            if (MemoryInGB.HasValue)
+            if (Optional.IsDefined(MemoryInGB))
             {
                 writer.WritePropertyName("memoryInGB"u8);
                 writer.WriteNumberValue(MemoryInGB.Value);
             }
-            if (Cpu.HasValue)
+            if (Optional.IsDefined(Cpu))
             {
                 writer.WritePropertyName("cpu"u8);
                 writer.WriteNumberValue(Cpu.Value);
             }
-            if (Gpu != null)
+            if (Optional.IsDefined(Gpu))
             {
                 writer.WritePropertyName("gpu"u8);
                 writer.WriteObjectValue(Gpu);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            Optional<double> memoryInGB = default;
-            Optional<double> cpu = default;
-            Optional<ContainerGpuResourceInfo> gpu = default;
+            double? memoryInGB = default;
+            double? cpu = default;
+            ContainerGpuResourceInfo gpu = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerResourceLimits(Optional.ToNullable(memoryInGB), Optional.ToNullable(cpu), gpu.Value, serializedAdditionalRawData);
+            return new ContainerResourceLimits(memoryInGB, cpu, gpu, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerResourceLimits>.Write(ModelReaderWriterOptions options)

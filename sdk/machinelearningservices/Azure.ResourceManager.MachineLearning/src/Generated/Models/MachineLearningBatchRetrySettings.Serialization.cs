@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (MaxRetries.HasValue)
+            if (Optional.IsDefined(MaxRetries))
             {
                 writer.WritePropertyName("maxRetries"u8);
                 writer.WriteNumberValue(MaxRetries.Value);
             }
-            if (Timeout.HasValue)
+            if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout.Value, "P");
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<int> maxRetries = default;
-            Optional<TimeSpan> timeout = default;
+            int? maxRetries = default;
+            TimeSpan? timeout = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningBatchRetrySettings(Optional.ToNullable(maxRetries), Optional.ToNullable(timeout), serializedAdditionalRawData);
+            return new MachineLearningBatchRetrySettings(maxRetries, timeout, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningBatchRetrySettings>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.BotService;
 
 namespace Azure.ResourceManager.BotService.Models
 {
@@ -26,42 +27,42 @@ namespace Azure.ResourceManager.BotService.Models
             }
 
             writer.WriteStartObject();
-            if (OAuthUri != null)
+            if (Optional.IsDefined(OAuthUri))
             {
                 writer.WritePropertyName("OAuthUrl"u8);
                 writer.WriteStringValue(OAuthUri.AbsoluteUri);
             }
-            if (ToBotFromChannelOpenIdMetadataUri != null)
+            if (Optional.IsDefined(ToBotFromChannelOpenIdMetadataUri))
             {
                 writer.WritePropertyName("ToBotFromChannelOpenIdMetadataUrl"u8);
                 writer.WriteStringValue(ToBotFromChannelOpenIdMetadataUri.AbsoluteUri);
             }
-            if (ToBotFromChannelTokenIssuer != null)
+            if (Optional.IsDefined(ToBotFromChannelTokenIssuer))
             {
                 writer.WritePropertyName("ToBotFromChannelTokenIssuer"u8);
                 writer.WriteStringValue(ToBotFromChannelTokenIssuer);
             }
-            if (ToBotFromEmulatorOpenIdMetadataUri != null)
+            if (Optional.IsDefined(ToBotFromEmulatorOpenIdMetadataUri))
             {
                 writer.WritePropertyName("ToBotFromEmulatorOpenIdMetadataUrl"u8);
                 writer.WriteStringValue(ToBotFromEmulatorOpenIdMetadataUri.AbsoluteUri);
             }
-            if (ToChannelFromBotLoginUri != null)
+            if (Optional.IsDefined(ToChannelFromBotLoginUri))
             {
                 writer.WritePropertyName("ToChannelFromBotLoginUrl"u8);
                 writer.WriteStringValue(ToChannelFromBotLoginUri.AbsoluteUri);
             }
-            if (ToChannelFromBotOAuthScope != null)
+            if (Optional.IsDefined(ToChannelFromBotOAuthScope))
             {
                 writer.WritePropertyName("ToChannelFromBotOAuthScope"u8);
                 writer.WriteStringValue(ToChannelFromBotOAuthScope);
             }
-            if (ValidateAuthority.HasValue)
+            if (Optional.IsDefined(ValidateAuthority))
             {
                 writer.WritePropertyName("ValidateAuthority"u8);
                 writer.WriteBooleanValue(ValidateAuthority.Value);
             }
-            if (BotOpenIdMetadata != null)
+            if (Optional.IsDefined(BotOpenIdMetadata))
             {
                 writer.WritePropertyName("BotOpenIdMetadata"u8);
                 writer.WriteStringValue(BotOpenIdMetadata);
@@ -104,14 +105,14 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Optional<Uri> oAuthUrl = default;
-            Optional<Uri> toBotFromChannelOpenIdMetadataUrl = default;
-            Optional<string> toBotFromChannelTokenIssuer = default;
-            Optional<Uri> toBotFromEmulatorOpenIdMetadataUrl = default;
-            Optional<Uri> toChannelFromBotLoginUrl = default;
-            Optional<string> toChannelFromBotOAuthScope = default;
-            Optional<bool> validateAuthority = default;
-            Optional<string> botOpenIdMetadata = default;
+            Uri oAuthUrl = default;
+            Uri toBotFromChannelOpenIdMetadataUrl = default;
+            string toBotFromChannelTokenIssuer = default;
+            Uri toBotFromEmulatorOpenIdMetadataUrl = default;
+            Uri toChannelFromBotLoginUrl = default;
+            string toChannelFromBotOAuthScope = default;
+            bool? validateAuthority = default;
+            string botOpenIdMetadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -183,14 +184,14 @@ namespace Azure.ResourceManager.BotService.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new BotServiceHostSettingsResult(
-                oAuthUrl.Value,
-                toBotFromChannelOpenIdMetadataUrl.Value,
-                toBotFromChannelTokenIssuer.Value,
-                toBotFromEmulatorOpenIdMetadataUrl.Value,
-                toChannelFromBotLoginUrl.Value,
-                toChannelFromBotOAuthScope.Value,
-                Optional.ToNullable(validateAuthority),
-                botOpenIdMetadata.Value,
+                oAuthUrl,
+                toBotFromChannelOpenIdMetadataUrl,
+                toBotFromChannelTokenIssuer,
+                toBotFromEmulatorOpenIdMetadataUrl,
+                toChannelFromBotLoginUrl,
+                toChannelFromBotOAuthScope,
+                validateAuthority,
+                botOpenIdMetadata,
                 serializedAdditionalRawData);
         }
 

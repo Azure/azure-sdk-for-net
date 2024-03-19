@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (!(IncludePrefix is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(IncludePrefix))
             {
                 writer.WritePropertyName("prefixMatch"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ExcludePrefix is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ExcludePrefix))
             {
                 writer.WritePropertyName("excludePrefix"u8);
                 writer.WriteStartArray();
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(BlobTypes is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(BlobTypes))
             {
                 writer.WritePropertyName("blobTypes"u8);
                 writer.WriteStartArray();
@@ -56,17 +57,17 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IncludeBlobVersions.HasValue)
+            if (Optional.IsDefined(IncludeBlobVersions))
             {
                 writer.WritePropertyName("includeBlobVersions"u8);
                 writer.WriteBooleanValue(IncludeBlobVersions.Value);
             }
-            if (IncludeSnapshots.HasValue)
+            if (Optional.IsDefined(IncludeSnapshots))
             {
                 writer.WritePropertyName("includeSnapshots"u8);
                 writer.WriteBooleanValue(IncludeSnapshots.Value);
             }
-            if (IncludeDeleted.HasValue)
+            if (Optional.IsDefined(IncludeDeleted))
             {
                 writer.WritePropertyName("includeDeleted"u8);
                 writer.WriteBooleanValue(IncludeDeleted.Value);
@@ -112,9 +113,9 @@ namespace Azure.ResourceManager.Storage.Models
             IList<string> prefixMatch = default;
             IList<string> excludePrefix = default;
             IList<string> blobTypes = default;
-            Optional<bool> includeBlobVersions = default;
-            Optional<bool> includeSnapshots = default;
-            Optional<bool> includeDeleted = default;
+            bool? includeBlobVersions = default;
+            bool? includeSnapshots = default;
+            bool? includeDeleted = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -198,9 +199,9 @@ namespace Azure.ResourceManager.Storage.Models
                 prefixMatch ?? new ChangeTrackingList<string>(),
                 excludePrefix ?? new ChangeTrackingList<string>(),
                 blobTypes ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(includeBlobVersions),
-                Optional.ToNullable(includeSnapshots),
-                Optional.ToNullable(includeDeleted),
+                includeBlobVersions,
+                includeSnapshots,
+                includeDeleted,
                 serializedAdditionalRawData);
         }
 

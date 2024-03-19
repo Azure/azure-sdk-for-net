@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {
@@ -20,7 +20,7 @@ namespace Azure.Maps.Search.Models
                 return null;
             }
             IReadOnlyList<SearchAddressBatchItem> batchItems = default;
-            Optional<BatchResultSummary> summary = default;
+            BatchResultSummary summary = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("batchItems"u8))
@@ -47,7 +47,7 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new SearchAddressBatchResult(summary.Value, batchItems ?? new ChangeTrackingList<SearchAddressBatchItem>());
+            return new SearchAddressBatchResult(summary, batchItems ?? new ChangeTrackingList<SearchAddressBatchItem>());
         }
     }
 }

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (IsDefault.HasValue)
+            if (Optional.IsDefined(IsDefault))
             {
                 writer.WritePropertyName("default"u8);
                 writer.WriteBooleanValue(IsDefault.Value);
             }
-            if (IsForced.HasValue)
+            if (Optional.IsDefined(IsForced))
             {
                 writer.WritePropertyName("forced"u8);
                 writer.WriteBooleanValue(IsForced.Value);
             }
-            if (Characteristics != null)
+            if (Optional.IsDefined(Characteristics))
             {
                 writer.WritePropertyName("characteristics"u8);
                 writer.WriteStringValue(Characteristics);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<bool> @default = default;
-            Optional<bool> forced = default;
-            Optional<string> characteristics = default;
+            bool? @default = default;
+            bool? forced = default;
+            string characteristics = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HlsSettings(Optional.ToNullable(@default), Optional.ToNullable(forced), characteristics.Value, serializedAdditionalRawData);
+            return new HlsSettings(@default, forced, characteristics, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HlsSettings>.Write(ModelReaderWriterOptions options)

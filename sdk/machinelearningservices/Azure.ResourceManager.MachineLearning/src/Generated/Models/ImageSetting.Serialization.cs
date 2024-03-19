@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (ImageType.HasValue)
+            if (Optional.IsDefined(ImageType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ImageType.Value.ToString());
             }
-            if (Reference != null)
+            if (Optional.IsDefined(Reference))
             {
                 writer.WritePropertyName("reference"u8);
                 writer.WriteStringValue(Reference);
@@ -71,8 +72,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<ImageType> type = default;
-            Optional<string> reference = default;
+            ImageType? type = default;
+            string reference = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ImageSetting(Optional.ToNullable(type), reference.Value, additionalProperties);
+            return new ImageSetting(type, reference, additionalProperties);
         }
 
         BinaryData IPersistableModel<ImageSetting>.Write(ModelReaderWriterOptions options)

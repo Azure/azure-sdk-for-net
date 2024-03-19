@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && VnetId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(VnetId))
             {
                 writer.WritePropertyName("vNetId"u8);
                 writer.WriteStringValue(VnetId.Value);
             }
-            if (options.Format != "W" && Alias != null)
+            if (options.Format != "W" && Optional.IsDefined(Alias))
             {
                 writer.WritePropertyName("alias"u8);
                 writer.WriteStringValue(Alias);
@@ -71,8 +72,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<Guid> vnetId = default;
-            Optional<string> @alias = default;
+            Guid? vnetId = default;
+            string @alias = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFactoryManagedVirtualNetworkProperties(Optional.ToNullable(vnetId), @alias.Value, additionalProperties);
+            return new DataFactoryManagedVirtualNetworkProperties(vnetId, @alias, additionalProperties);
         }
 
         BinaryData IPersistableModel<DataFactoryManagedVirtualNetworkProperties>.Write(ModelReaderWriterOptions options)

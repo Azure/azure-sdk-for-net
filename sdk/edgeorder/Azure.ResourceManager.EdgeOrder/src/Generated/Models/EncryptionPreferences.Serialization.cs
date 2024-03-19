@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
 
             writer.WriteStartObject();
-            if (DoubleEncryptionStatus.HasValue)
+            if (Optional.IsDefined(DoubleEncryptionStatus))
             {
                 writer.WritePropertyName("doubleEncryptionStatus"u8);
                 writer.WriteStringValue(DoubleEncryptionStatus.Value.ToString());
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<DoubleEncryptionStatus> doubleEncryptionStatus = default;
+            DoubleEncryptionStatus? doubleEncryptionStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EncryptionPreferences(Optional.ToNullable(doubleEncryptionStatus), serializedAdditionalRawData);
+            return new EncryptionPreferences(doubleEncryptionStatus, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EncryptionPreferences>.Write(ModelReaderWriterOptions options)

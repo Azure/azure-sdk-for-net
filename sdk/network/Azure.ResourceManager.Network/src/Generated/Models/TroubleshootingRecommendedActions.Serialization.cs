@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (ActionId != null)
+            if (Optional.IsDefined(ActionId))
             {
                 writer.WritePropertyName("actionId"u8);
                 writer.WriteStringValue(ActionId);
             }
-            if (ActionText != null)
+            if (Optional.IsDefined(ActionText))
             {
                 writer.WritePropertyName("actionText"u8);
                 writer.WriteStringValue(ActionText);
             }
-            if (ActionUri != null)
+            if (Optional.IsDefined(ActionUri))
             {
                 writer.WritePropertyName("actionUri"u8);
                 writer.WriteStringValue(ActionUri.AbsoluteUri);
             }
-            if (ActionUriText != null)
+            if (Optional.IsDefined(ActionUriText))
             {
                 writer.WritePropertyName("actionUriText"u8);
                 writer.WriteStringValue(ActionUriText);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> actionId = default;
-            Optional<string> actionText = default;
-            Optional<Uri> actionUri = default;
-            Optional<string> actionUriText = default;
+            string actionId = default;
+            string actionText = default;
+            Uri actionUri = default;
+            string actionUriText = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TroubleshootingRecommendedActions(actionId.Value, actionText.Value, actionUri.Value, actionUriText.Value, serializedAdditionalRawData);
+            return new TroubleshootingRecommendedActions(actionId, actionText, actionUri, actionUriText, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TroubleshootingRecommendedActions>.Write(ModelReaderWriterOptions options)

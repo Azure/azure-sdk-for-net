@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Kubernetes
             writer.WriteStartObject();
             writer.WritePropertyName("identity"u8);
             JsonSerializer.Serialize(writer, Identity);
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Kubernetes
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -67,67 +67,67 @@ namespace Azure.ResourceManager.Kubernetes
             writer.WriteStartObject();
             writer.WritePropertyName("agentPublicKeyCertificate"u8);
             writer.WriteStringValue(AgentPublicKeyCertificate);
-            if (options.Format != "W" && KubernetesVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(KubernetesVersion))
             {
                 writer.WritePropertyName("kubernetesVersion"u8);
                 writer.WriteStringValue(KubernetesVersion);
             }
-            if (options.Format != "W" && TotalNodeCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalNodeCount))
             {
                 writer.WritePropertyName("totalNodeCount"u8);
                 writer.WriteNumberValue(TotalNodeCount.Value);
             }
-            if (options.Format != "W" && TotalCoreCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalCoreCount))
             {
                 writer.WritePropertyName("totalCoreCount"u8);
                 writer.WriteNumberValue(TotalCoreCount.Value);
             }
-            if (options.Format != "W" && AgentVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(AgentVersion))
             {
                 writer.WritePropertyName("agentVersion"u8);
                 writer.WriteStringValue(AgentVersion);
             }
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Distribution != null)
+            if (Optional.IsDefined(Distribution))
             {
                 writer.WritePropertyName("distribution"u8);
                 writer.WriteStringValue(Distribution);
             }
-            if (Infrastructure != null)
+            if (Optional.IsDefined(Infrastructure))
             {
                 writer.WritePropertyName("infrastructure"u8);
                 writer.WriteStringValue(Infrastructure);
             }
-            if (options.Format != "W" && Offering != null)
+            if (options.Format != "W" && Optional.IsDefined(Offering))
             {
                 writer.WritePropertyName("offering"u8);
                 writer.WriteStringValue(Offering);
             }
-            if (options.Format != "W" && ManagedIdentityCertificateExpirationOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ManagedIdentityCertificateExpirationOn))
             {
                 writer.WritePropertyName("managedIdentityCertificateExpirationTime"u8);
                 writer.WriteStringValue(ManagedIdentityCertificateExpirationOn.Value, "O");
             }
-            if (options.Format != "W" && LastConnectivityOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastConnectivityOn))
             {
                 writer.WritePropertyName("lastConnectivityTime"u8);
                 writer.WriteStringValue(LastConnectivityOn.Value, "O");
             }
-            if (options.Format != "W" && ConnectivityStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ConnectivityStatus))
             {
                 writer.WritePropertyName("connectivityStatus"u8);
                 writer.WriteStringValue(ConnectivityStatus.Value.ToString());
             }
-            if (PrivateLinkState.HasValue)
+            if (Optional.IsDefined(PrivateLinkState))
             {
                 writer.WritePropertyName("privateLinkState"u8);
                 writer.WriteStringValue(PrivateLinkState.Value.ToString());
             }
-            if (PrivateLinkScopeResourceId != null)
+            if (Optional.IsDefined(PrivateLinkScopeResourceId))
             {
                 writer.WritePropertyName("privateLinkScopeResourceId"u8);
                 writer.WriteStringValue(PrivateLinkScopeResourceId);
@@ -177,21 +177,21 @@ namespace Azure.ResourceManager.Kubernetes
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             string agentPublicKeyCertificate = default;
-            Optional<string> kubernetesVersion = default;
-            Optional<int> totalNodeCount = default;
-            Optional<int> totalCoreCount = default;
-            Optional<string> agentVersion = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<string> distribution = default;
-            Optional<string> infrastructure = default;
-            Optional<string> offering = default;
-            Optional<DateTimeOffset> managedIdentityCertificateExpirationTime = default;
-            Optional<DateTimeOffset> lastConnectivityTime = default;
-            Optional<ConnectivityStatus> connectivityStatus = default;
-            Optional<PrivateLinkState> privateLinkState = default;
-            Optional<string> privateLinkScopeResourceId = default;
+            string kubernetesVersion = default;
+            int? totalNodeCount = default;
+            int? totalCoreCount = default;
+            string agentVersion = default;
+            ProvisioningState? provisioningState = default;
+            string distribution = default;
+            string infrastructure = default;
+            string offering = default;
+            DateTimeOffset? managedIdentityCertificateExpirationTime = default;
+            DateTimeOffset? lastConnectivityTime = default;
+            ConnectivityStatus? connectivityStatus = default;
+            PrivateLinkState? privateLinkState = default;
+            string privateLinkScopeResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -364,24 +364,24 @@ namespace Azure.ResourceManager.Kubernetes
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 identity,
                 agentPublicKeyCertificate,
-                kubernetesVersion.Value,
-                Optional.ToNullable(totalNodeCount),
-                Optional.ToNullable(totalCoreCount),
-                agentVersion.Value,
-                Optional.ToNullable(provisioningState),
-                distribution.Value,
-                infrastructure.Value,
-                offering.Value,
-                Optional.ToNullable(managedIdentityCertificateExpirationTime),
-                Optional.ToNullable(lastConnectivityTime),
-                Optional.ToNullable(connectivityStatus),
-                Optional.ToNullable(privateLinkState),
-                privateLinkScopeResourceId.Value,
+                kubernetesVersion,
+                totalNodeCount,
+                totalCoreCount,
+                agentVersion,
+                provisioningState,
+                distribution,
+                infrastructure,
+                offering,
+                managedIdentityCertificateExpirationTime,
+                lastConnectivityTime,
+                connectivityStatus,
+                privateLinkState,
+                privateLinkScopeResourceId,
                 serializedAdditionalRawData);
         }
 

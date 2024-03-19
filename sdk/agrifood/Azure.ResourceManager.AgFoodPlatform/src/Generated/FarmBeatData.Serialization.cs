@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.AgFoodPlatform
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -61,34 +61,34 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && InstanceUri != null)
+            if (options.Format != "W" && Optional.IsDefined(InstanceUri))
             {
                 writer.WritePropertyName("instanceUri"u8);
                 writer.WriteStringValue(InstanceUri.AbsoluteUri);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (SensorIntegration != null)
+            if (Optional.IsDefined(SensorIntegration))
             {
                 writer.WritePropertyName("sensorIntegration"u8);
                 writer.WriteObjectValue(SensorIntegration);
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (options.Format != "W" && PrivateEndpointConnections != null)
+            if (options.Format != "W" && Optional.IsDefined(PrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteObjectValue(PrivateEndpointConnections);
@@ -132,18 +132,18 @@ namespace Azure.ResourceManager.AgFoodPlatform
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Uri> instanceUri = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<SensorIntegration> sensorIntegration = default;
-            Optional<PublicNetworkAccess> publicNetworkAccess = default;
-            Optional<AgFoodPlatformPrivateEndpointConnectionData> privateEndpointConnections = default;
+            SystemData systemData = default;
+            Uri instanceUri = default;
+            ProvisioningState? provisioningState = default;
+            SensorIntegration sensorIntegration = default;
+            PublicNetworkAccess? publicNetworkAccess = default;
+            AgFoodPlatformPrivateEndpointConnectionData privateEndpointConnections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -267,15 +267,15 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 identity,
-                instanceUri.Value,
-                Optional.ToNullable(provisioningState),
-                sensorIntegration.Value,
-                Optional.ToNullable(publicNetworkAccess),
-                privateEndpointConnections.Value,
+                instanceUri,
+                provisioningState,
+                sensorIntegration,
+                publicNetworkAccess,
+                privateEndpointConnections,
                 serializedAdditionalRawData);
         }
 

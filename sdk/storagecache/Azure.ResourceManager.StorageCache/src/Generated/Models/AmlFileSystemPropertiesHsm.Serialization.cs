@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
 
             writer.WriteStartObject();
-            if (Settings != null)
+            if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("settings"u8);
                 writer.WriteObjectValue(Settings);
             }
-            if (options.Format != "W" && !(ArchiveStatus is ChangeTrackingList<AmlFileSystemArchive> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ArchiveStatus))
             {
                 writer.WritePropertyName("archiveStatus"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<AmlFileSystemHsmSettings> settings = default;
+            AmlFileSystemHsmSettings settings = default;
             IReadOnlyList<AmlFileSystemArchive> archiveStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AmlFileSystemPropertiesHsm(settings.Value, archiveStatus ?? new ChangeTrackingList<AmlFileSystemArchive>(), serializedAdditionalRawData);
+            return new AmlFileSystemPropertiesHsm(settings, archiveStatus ?? new ChangeTrackingList<AmlFileSystemArchive>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AmlFileSystemPropertiesHsm>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Models
 {
@@ -27,12 +28,12 @@ namespace Azure.ResourceManager.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && PrincipalId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PrincipalId))
             {
                 writer.WritePropertyName("principalId"u8);
                 writer.WriteStringValue(PrincipalId.Value);
             }
-            if (options.Format != "W" && ClientId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId.Value);
@@ -60,8 +61,8 @@ namespace Azure.ResourceManager.Models
             {
                 return null;
             }
-            Optional<Guid> principalId = default;
-            Optional<Guid> clientId = default;
+            Guid? principalId = default;
+            Guid? clientId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("principalId"u8))
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.Models
                     continue;
                 }
             }
-            return new UserAssignedIdentity(Optional.ToNullable(principalId), Optional.ToNullable(clientId));
+            return new UserAssignedIdentity(principalId, clientId);
         }
 
         BinaryData IPersistableModel<UserAssignedIdentity>.Write(ModelReaderWriterOptions options)

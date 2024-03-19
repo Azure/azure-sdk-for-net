@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (TableName != null)
+            if (Optional.IsDefined(TableName))
             {
                 writer.WritePropertyName("tableName"u8);
                 writer.WriteStringValue(TableName);
             }
-            if (!(Columns is ChangeTrackingList<ContainerAppDiagnosticDataColumn> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Columns))
             {
                 writer.WritePropertyName("columns"u8);
                 writer.WriteStartArray();
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Rows is ChangeTrackingList<BinaryData> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Rows))
             {
                 writer.WritePropertyName("rows"u8);
                 writer.WriteStartArray();
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> tableName = default;
+            string tableName = default;
             IList<ContainerAppDiagnosticDataColumn> columns = default;
             IList<BinaryData> rows = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -154,7 +155,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppDiagnosticDataTableResult(tableName.Value, columns ?? new ChangeTrackingList<ContainerAppDiagnosticDataColumn>(), rows ?? new ChangeTrackingList<BinaryData>(), serializedAdditionalRawData);
+            return new ContainerAppDiagnosticDataTableResult(tableName, columns ?? new ChangeTrackingList<ContainerAppDiagnosticDataColumn>(), rows ?? new ChangeTrackingList<BinaryData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppDiagnosticDataTableResult>.Write(ModelReaderWriterOptions options)

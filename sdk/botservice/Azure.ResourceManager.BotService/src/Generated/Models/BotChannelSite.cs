@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure;
-using Azure.Core;
+using Azure.ResourceManager.BotService;
 
 namespace Azure.ResourceManager.BotService.Models
 {
@@ -53,10 +53,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
         public BotChannelSite(string siteName, bool isEnabled)
         {
-            if (siteName == null)
-            {
-                throw new ArgumentNullException(nameof(siteName));
-            }
+            Argument.AssertNotNull(siteName, nameof(siteName));
 
             SiteName = siteName;
             IsEnabled = isEnabled;

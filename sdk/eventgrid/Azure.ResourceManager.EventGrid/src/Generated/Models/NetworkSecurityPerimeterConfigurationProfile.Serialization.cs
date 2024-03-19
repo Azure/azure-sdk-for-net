@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (AccessRulesVersion != null)
+            if (Optional.IsDefined(AccessRulesVersion))
             {
                 writer.WritePropertyName("accessRulesVersion"u8);
                 writer.WriteStringValue(AccessRulesVersion);
             }
-            if (!(AccessRules is ChangeTrackingList<NetworkSecurityPerimeterProfileAccessRule> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AccessRules))
             {
                 writer.WritePropertyName("accessRules"u8);
                 writer.WriteStartArray();
@@ -46,12 +47,12 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 writer.WriteEndArray();
             }
-            if (DiagnosticSettingsVersion != null)
+            if (Optional.IsDefined(DiagnosticSettingsVersion))
             {
                 writer.WritePropertyName("diagnosticSettingsVersion"u8);
                 writer.WriteStringValue(DiagnosticSettingsVersion);
             }
-            if (!(EnabledLogCategories is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(EnabledLogCategories))
             {
                 writer.WritePropertyName("enabledLogCategories"u8);
                 writer.WriteStartArray();
@@ -99,10 +100,10 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> accessRulesVersion = default;
+            string name = default;
+            string accessRulesVersion = default;
             IList<NetworkSecurityPerimeterProfileAccessRule> accessRules = default;
-            Optional<string> diagnosticSettingsVersion = default;
+            string diagnosticSettingsVersion = default;
             IList<string> enabledLogCategories = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -158,10 +159,10 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new NetworkSecurityPerimeterConfigurationProfile(
-                name.Value,
-                accessRulesVersion.Value,
+                name,
+                accessRulesVersion,
                 accessRules ?? new ChangeTrackingList<NetworkSecurityPerimeterProfileAccessRule>(),
-                diagnosticSettingsVersion.Value,
+                diagnosticSettingsVersion,
                 enabledLogCategories ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }

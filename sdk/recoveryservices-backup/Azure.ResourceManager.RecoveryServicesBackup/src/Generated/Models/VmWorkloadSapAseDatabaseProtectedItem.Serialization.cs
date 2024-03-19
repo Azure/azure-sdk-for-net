@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -26,67 +27,67 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && FriendlyName != null)
+            if (options.Format != "W" && Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (ServerName != null)
+            if (Optional.IsDefined(ServerName))
             {
                 writer.WritePropertyName("serverName"u8);
                 writer.WriteStringValue(ServerName);
             }
-            if (ParentName != null)
+            if (Optional.IsDefined(ParentName))
             {
                 writer.WritePropertyName("parentName"u8);
                 writer.WriteStringValue(ParentName);
             }
-            if (ParentType != null)
+            if (Optional.IsDefined(ParentType))
             {
                 writer.WritePropertyName("parentType"u8);
                 writer.WriteStringValue(ParentType);
             }
-            if (options.Format != "W" && ProtectionStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(ProtectionStatus))
             {
                 writer.WritePropertyName("protectionStatus"u8);
                 writer.WriteStringValue(ProtectionStatus);
             }
-            if (ProtectionState.HasValue)
+            if (Optional.IsDefined(ProtectionState))
             {
                 writer.WritePropertyName("protectionState"u8);
                 writer.WriteStringValue(ProtectionState.Value.ToString());
             }
-            if (LastBackupStatus.HasValue)
+            if (Optional.IsDefined(LastBackupStatus))
             {
                 writer.WritePropertyName("lastBackupStatus"u8);
                 writer.WriteStringValue(LastBackupStatus.Value.ToString());
             }
-            if (LastBackupOn.HasValue)
+            if (Optional.IsDefined(LastBackupOn))
             {
                 writer.WritePropertyName("lastBackupTime"u8);
                 writer.WriteStringValue(LastBackupOn.Value, "O");
             }
-            if (LastBackupErrorDetail != null)
+            if (Optional.IsDefined(LastBackupErrorDetail))
             {
                 writer.WritePropertyName("lastBackupErrorDetail"u8);
                 writer.WriteObjectValue(LastBackupErrorDetail);
             }
-            if (ProtectedItemDataSourceId != null)
+            if (Optional.IsDefined(ProtectedItemDataSourceId))
             {
                 writer.WritePropertyName("protectedItemDataSourceId"u8);
                 writer.WriteStringValue(ProtectedItemDataSourceId);
             }
-            if (ProtectedItemHealthStatus.HasValue)
+            if (Optional.IsDefined(ProtectedItemHealthStatus))
             {
                 writer.WritePropertyName("protectedItemHealthStatus"u8);
                 writer.WriteStringValue(ProtectedItemHealthStatus.Value.ToString());
             }
-            if (ExtendedInfo != null)
+            if (Optional.IsDefined(ExtendedInfo))
             {
                 writer.WritePropertyName("extendedInfo"u8);
                 writer.WriteObjectValue(ExtendedInfo);
             }
-            if (!(KpisHealths is ChangeTrackingDictionary<string, KpiResourceHealthDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(KpisHealths))
             {
                 writer.WritePropertyName("kpisHealths"u8);
                 writer.WriteStartObject();
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(NodesList is ChangeTrackingList<DistributedNodesInfo> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(NodesList))
             {
                 writer.WritePropertyName("nodesList"u8);
                 writer.WriteStartArray();
@@ -109,72 +110,72 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             writer.WritePropertyName("protectedItemType"u8);
             writer.WriteStringValue(ProtectedItemType);
-            if (options.Format != "W" && BackupManagementType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(BackupManagementType))
             {
                 writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType.Value.ToString());
             }
-            if (options.Format != "W" && WorkloadType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(WorkloadType))
             {
                 writer.WritePropertyName("workloadType"u8);
                 writer.WriteStringValue(WorkloadType.Value.ToString());
             }
-            if (ContainerName != null)
+            if (Optional.IsDefined(ContainerName))
             {
                 writer.WritePropertyName("containerName"u8);
                 writer.WriteStringValue(ContainerName);
             }
-            if (SourceResourceId != null)
+            if (Optional.IsDefined(SourceResourceId))
             {
                 writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
             }
-            if (PolicyId != null)
+            if (Optional.IsDefined(PolicyId))
             {
                 writer.WritePropertyName("policyId"u8);
                 writer.WriteStringValue(PolicyId);
             }
-            if (LastRecoverOn.HasValue)
+            if (Optional.IsDefined(LastRecoverOn))
             {
                 writer.WritePropertyName("lastRecoveryPoint"u8);
                 writer.WriteStringValue(LastRecoverOn.Value, "O");
             }
-            if (BackupSetName != null)
+            if (Optional.IsDefined(BackupSetName))
             {
                 writer.WritePropertyName("backupSetName"u8);
                 writer.WriteStringValue(BackupSetName);
             }
-            if (CreateMode.HasValue)
+            if (Optional.IsDefined(CreateMode))
             {
                 writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToString());
             }
-            if (DeferredDeletedOn.HasValue)
+            if (Optional.IsDefined(DeferredDeletedOn))
             {
                 writer.WritePropertyName("deferredDeleteTimeInUTC"u8);
                 writer.WriteStringValue(DeferredDeletedOn.Value, "O");
             }
-            if (IsScheduledForDeferredDelete.HasValue)
+            if (Optional.IsDefined(IsScheduledForDeferredDelete))
             {
                 writer.WritePropertyName("isScheduledForDeferredDelete"u8);
                 writer.WriteBooleanValue(IsScheduledForDeferredDelete.Value);
             }
-            if (DeferredDeleteTimeRemaining != null)
+            if (Optional.IsDefined(DeferredDeleteTimeRemaining))
             {
                 writer.WritePropertyName("deferredDeleteTimeRemaining"u8);
                 writer.WriteStringValue(DeferredDeleteTimeRemaining);
             }
-            if (IsDeferredDeleteScheduleUpcoming.HasValue)
+            if (Optional.IsDefined(IsDeferredDeleteScheduleUpcoming))
             {
                 writer.WritePropertyName("isDeferredDeleteScheduleUpcoming"u8);
                 writer.WriteBooleanValue(IsDeferredDeleteScheduleUpcoming.Value);
             }
-            if (IsRehydrate.HasValue)
+            if (Optional.IsDefined(IsRehydrate))
             {
                 writer.WritePropertyName("isRehydrate"u8);
                 writer.WriteBooleanValue(IsRehydrate.Value);
             }
-            if (!(ResourceGuardOperationRequests is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(ResourceGuardOperationRequests))
             {
                 writer.WritePropertyName("resourceGuardOperationRequests"u8);
                 writer.WriteStartArray();
@@ -184,22 +185,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IsArchiveEnabled.HasValue)
+            if (Optional.IsDefined(IsArchiveEnabled))
             {
                 writer.WritePropertyName("isArchiveEnabled"u8);
                 writer.WriteBooleanValue(IsArchiveEnabled.Value);
             }
-            if (PolicyName != null)
+            if (Optional.IsDefined(PolicyName))
             {
                 writer.WritePropertyName("policyName"u8);
                 writer.WriteStringValue(PolicyName);
             }
-            if (SoftDeleteRetentionPeriodInDays.HasValue)
+            if (Optional.IsDefined(SoftDeleteRetentionPeriodInDays))
             {
                 writer.WritePropertyName("softDeleteRetentionPeriodInDays"u8);
                 writer.WriteNumberValue(SoftDeleteRetentionPeriodInDays.Value);
             }
-            if (options.Format != "W" && VaultId != null)
+            if (options.Format != "W" && Optional.IsDefined(VaultId))
             {
                 writer.WritePropertyName("vaultId"u8);
                 writer.WriteStringValue(VaultId);
@@ -242,39 +243,39 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> friendlyName = default;
-            Optional<string> serverName = default;
-            Optional<string> parentName = default;
-            Optional<string> parentType = default;
-            Optional<string> protectionStatus = default;
-            Optional<BackupProtectionState> protectionState = default;
-            Optional<LastBackupStatus> lastBackupStatus = default;
-            Optional<DateTimeOffset> lastBackupTime = default;
-            Optional<BackupErrorDetail> lastBackupErrorDetail = default;
-            Optional<string> protectedItemDataSourceId = default;
-            Optional<VmWorkloadProtectedItemHealthStatus> protectedItemHealthStatus = default;
-            Optional<VmWorkloadProtectedItemExtendedInfo> extendedInfo = default;
+            string friendlyName = default;
+            string serverName = default;
+            string parentName = default;
+            string parentType = default;
+            string protectionStatus = default;
+            BackupProtectionState? protectionState = default;
+            LastBackupStatus? lastBackupStatus = default;
+            DateTimeOffset? lastBackupTime = default;
+            BackupErrorDetail lastBackupErrorDetail = default;
+            string protectedItemDataSourceId = default;
+            VmWorkloadProtectedItemHealthStatus? protectedItemHealthStatus = default;
+            VmWorkloadProtectedItemExtendedInfo extendedInfo = default;
             IDictionary<string, KpiResourceHealthDetails> kpisHealths = default;
             IList<DistributedNodesInfo> nodesList = default;
             string protectedItemType = default;
-            Optional<BackupManagementType> backupManagementType = default;
-            Optional<BackupDataSourceType> workloadType = default;
-            Optional<string> containerName = default;
-            Optional<ResourceIdentifier> sourceResourceId = default;
-            Optional<ResourceIdentifier> policyId = default;
-            Optional<DateTimeOffset> lastRecoveryPoint = default;
-            Optional<string> backupSetName = default;
-            Optional<BackupCreateMode> createMode = default;
-            Optional<DateTimeOffset> deferredDeleteTimeInUTC = default;
-            Optional<bool> isScheduledForDeferredDelete = default;
-            Optional<string> deferredDeleteTimeRemaining = default;
-            Optional<bool> isDeferredDeleteScheduleUpcoming = default;
-            Optional<bool> isRehydrate = default;
+            BackupManagementType? backupManagementType = default;
+            BackupDataSourceType? workloadType = default;
+            string containerName = default;
+            ResourceIdentifier sourceResourceId = default;
+            ResourceIdentifier policyId = default;
+            DateTimeOffset? lastRecoveryPoint = default;
+            string backupSetName = default;
+            BackupCreateMode? createMode = default;
+            DateTimeOffset? deferredDeleteTimeInUTC = default;
+            bool? isScheduledForDeferredDelete = default;
+            string deferredDeleteTimeRemaining = default;
+            bool? isDeferredDeleteScheduleUpcoming = default;
+            bool? isRehydrate = default;
             IList<string> resourceGuardOperationRequests = default;
-            Optional<bool> isArchiveEnabled = default;
-            Optional<string> policyName = default;
-            Optional<int> softDeleteRetentionPeriodInDays = default;
-            Optional<string> vaultId = default;
+            bool? isArchiveEnabled = default;
+            string policyName = default;
+            int? softDeleteRetentionPeriodInDays = default;
+            string vaultId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -551,37 +552,37 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new VmWorkloadSapAseDatabaseProtectedItem(
                 protectedItemType,
-                Optional.ToNullable(backupManagementType),
-                Optional.ToNullable(workloadType),
-                containerName.Value,
-                sourceResourceId.Value,
-                policyId.Value,
-                Optional.ToNullable(lastRecoveryPoint),
-                backupSetName.Value,
-                Optional.ToNullable(createMode),
-                Optional.ToNullable(deferredDeleteTimeInUTC),
-                Optional.ToNullable(isScheduledForDeferredDelete),
-                deferredDeleteTimeRemaining.Value,
-                Optional.ToNullable(isDeferredDeleteScheduleUpcoming),
-                Optional.ToNullable(isRehydrate),
+                backupManagementType,
+                workloadType,
+                containerName,
+                sourceResourceId,
+                policyId,
+                lastRecoveryPoint,
+                backupSetName,
+                createMode,
+                deferredDeleteTimeInUTC,
+                isScheduledForDeferredDelete,
+                deferredDeleteTimeRemaining,
+                isDeferredDeleteScheduleUpcoming,
+                isRehydrate,
                 resourceGuardOperationRequests ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(isArchiveEnabled),
-                policyName.Value,
-                Optional.ToNullable(softDeleteRetentionPeriodInDays),
-                vaultId.Value,
+                isArchiveEnabled,
+                policyName,
+                softDeleteRetentionPeriodInDays,
+                vaultId,
                 serializedAdditionalRawData,
-                friendlyName.Value,
-                serverName.Value,
-                parentName.Value,
-                parentType.Value,
-                protectionStatus.Value,
-                Optional.ToNullable(protectionState),
-                Optional.ToNullable(lastBackupStatus),
-                Optional.ToNullable(lastBackupTime),
-                lastBackupErrorDetail.Value,
-                protectedItemDataSourceId.Value,
-                Optional.ToNullable(protectedItemHealthStatus),
-                extendedInfo.Value,
+                friendlyName,
+                serverName,
+                parentName,
+                parentType,
+                protectionStatus,
+                protectionState,
+                lastBackupStatus,
+                lastBackupTime,
+                lastBackupErrorDetail,
+                protectedItemDataSourceId,
+                protectedItemHealthStatus,
+                extendedInfo,
                 kpisHealths ?? new ChangeTrackingDictionary<string, KpiResourceHealthDetails>(),
                 nodesList ?? new ChangeTrackingList<DistributedNodesInfo>());
         }

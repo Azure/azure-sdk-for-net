@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Workloads
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -57,44 +57,44 @@ namespace Azure.ResourceManager.Workloads
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && InstanceNo != null)
+            if (options.Format != "W" && Optional.IsDefined(InstanceNo))
             {
                 writer.WritePropertyName("instanceNo"u8);
                 writer.WriteStringValue(InstanceNo);
             }
-            if (options.Format != "W" && SubnetId != null)
+            if (options.Format != "W" && Optional.IsDefined(SubnetId))
             {
                 writer.WritePropertyName("subnet"u8);
                 writer.WriteStringValue(SubnetId);
             }
-            if (MessageServerProperties != null)
+            if (Optional.IsDefined(MessageServerProperties))
             {
                 writer.WritePropertyName("messageServerProperties"u8);
                 writer.WriteObjectValue(MessageServerProperties);
             }
-            if (EnqueueServerProperties != null)
+            if (Optional.IsDefined(EnqueueServerProperties))
             {
                 writer.WritePropertyName("enqueueServerProperties"u8);
                 writer.WriteObjectValue(EnqueueServerProperties);
             }
-            if (GatewayServerProperties != null)
+            if (Optional.IsDefined(GatewayServerProperties))
             {
                 writer.WritePropertyName("gatewayServerProperties"u8);
                 writer.WriteObjectValue(GatewayServerProperties);
             }
-            if (EnqueueReplicationServerProperties != null)
+            if (Optional.IsDefined(EnqueueReplicationServerProperties))
             {
                 writer.WritePropertyName("enqueueReplicationServerProperties"u8);
                 writer.WriteObjectValue(EnqueueReplicationServerProperties);
             }
-            if (options.Format != "W" && KernelVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(KernelVersion))
             {
                 if (KernelVersion != null)
                 {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Workloads
                     writer.WriteNull("kernelVersion");
                 }
             }
-            if (options.Format != "W" && KernelPatch != null)
+            if (options.Format != "W" && Optional.IsDefined(KernelPatch))
             {
                 if (KernelPatch != null)
                 {
@@ -118,12 +118,12 @@ namespace Azure.ResourceManager.Workloads
                     writer.WriteNull("kernelPatch");
                 }
             }
-            if (options.Format != "W" && LoadBalancerDetails != null)
+            if (options.Format != "W" && Optional.IsDefined(LoadBalancerDetails))
             {
                 writer.WritePropertyName("loadBalancerDetails"u8);
                 JsonSerializer.Serialize(writer, LoadBalancerDetails);
             }
-            if (options.Format != "W" && !(VmDetails is ChangeTrackingList<CentralServerVmDetails> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(VmDetails))
             {
                 writer.WritePropertyName("vmDetails"u8);
                 writer.WriteStartArray();
@@ -133,22 +133,22 @@ namespace Azure.ResourceManager.Workloads
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Health.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Health))
             {
                 writer.WritePropertyName("health"u8);
                 writer.WriteStringValue(Health.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Errors != null)
+            if (options.Format != "W" && Optional.IsDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteObjectValue(Errors);
@@ -197,21 +197,21 @@ namespace Azure.ResourceManager.Workloads
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> instanceNo = default;
-            Optional<ResourceIdentifier> subnet = default;
-            Optional<MessageServerProperties> messageServerProperties = default;
-            Optional<EnqueueServerProperties> enqueueServerProperties = default;
-            Optional<GatewayServerProperties> gatewayServerProperties = default;
-            Optional<EnqueueReplicationServerProperties> enqueueReplicationServerProperties = default;
-            Optional<string> kernelVersion = default;
-            Optional<string> kernelPatch = default;
-            Optional<SubResource> loadBalancerDetails = default;
+            SystemData systemData = default;
+            string instanceNo = default;
+            ResourceIdentifier subnet = default;
+            MessageServerProperties messageServerProperties = default;
+            EnqueueServerProperties enqueueServerProperties = default;
+            GatewayServerProperties gatewayServerProperties = default;
+            EnqueueReplicationServerProperties enqueueReplicationServerProperties = default;
+            string kernelVersion = default;
+            string kernelPatch = default;
+            SubResource loadBalancerDetails = default;
             IReadOnlyList<CentralServerVmDetails> vmDetails = default;
-            Optional<SapVirtualInstanceStatus> status = default;
-            Optional<SapHealthState> health = default;
-            Optional<SapVirtualInstanceProvisioningState> provisioningState = default;
-            Optional<SapVirtualInstanceError> errors = default;
+            SapVirtualInstanceStatus? status = default;
+            SapHealthState? health = default;
+            SapVirtualInstanceProvisioningState? provisioningState = default;
+            SapVirtualInstanceError errors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -410,23 +410,23 @@ namespace Azure.ResourceManager.Workloads
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                instanceNo.Value,
-                subnet.Value,
-                messageServerProperties.Value,
-                enqueueServerProperties.Value,
-                gatewayServerProperties.Value,
-                enqueueReplicationServerProperties.Value,
-                kernelVersion.Value,
-                kernelPatch.Value,
+                instanceNo,
+                subnet,
+                messageServerProperties,
+                enqueueServerProperties,
+                gatewayServerProperties,
+                enqueueReplicationServerProperties,
+                kernelVersion,
+                kernelPatch,
                 loadBalancerDetails,
                 vmDetails ?? new ChangeTrackingList<CentralServerVmDetails>(),
-                Optional.ToNullable(status),
-                Optional.ToNullable(health),
-                Optional.ToNullable(provisioningState),
-                errors.Value,
+                status,
+                health,
+                provisioningState,
+                errors,
                 serializedAdditionalRawData);
         }
 

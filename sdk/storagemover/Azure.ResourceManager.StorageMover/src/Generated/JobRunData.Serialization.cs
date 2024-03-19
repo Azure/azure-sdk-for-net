@@ -43,119 +43,119 @@ namespace Azure.ResourceManager.StorageMover
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && ScanStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ScanStatus))
             {
                 writer.WritePropertyName("scanStatus"u8);
                 writer.WriteStringValue(ScanStatus.Value.ToString());
             }
-            if (options.Format != "W" && AgentName != null)
+            if (options.Format != "W" && Optional.IsDefined(AgentName))
             {
                 writer.WritePropertyName("agentName"u8);
                 writer.WriteStringValue(AgentName);
             }
-            if (options.Format != "W" && AgentResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(AgentResourceId))
             {
                 writer.WritePropertyName("agentResourceId"u8);
                 writer.WriteStringValue(AgentResourceId);
             }
-            if (options.Format != "W" && ExecutionStartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExecutionStartOn))
             {
                 writer.WritePropertyName("executionStartTime"u8);
                 writer.WriteStringValue(ExecutionStartOn.Value, "O");
             }
-            if (options.Format != "W" && ExecutionEndOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExecutionEndOn))
             {
                 writer.WritePropertyName("executionEndTime"u8);
                 writer.WriteStringValue(ExecutionEndOn.Value, "O");
             }
-            if (options.Format != "W" && LastStatusUpdate.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastStatusUpdate))
             {
                 writer.WritePropertyName("lastStatusUpdate"u8);
                 writer.WriteStringValue(LastStatusUpdate.Value, "O");
             }
-            if (options.Format != "W" && ItemsScanned.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ItemsScanned))
             {
                 writer.WritePropertyName("itemsScanned"u8);
                 writer.WriteNumberValue(ItemsScanned.Value);
             }
-            if (options.Format != "W" && ItemsExcluded.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ItemsExcluded))
             {
                 writer.WritePropertyName("itemsExcluded"u8);
                 writer.WriteNumberValue(ItemsExcluded.Value);
             }
-            if (options.Format != "W" && ItemsUnsupported.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ItemsUnsupported))
             {
                 writer.WritePropertyName("itemsUnsupported"u8);
                 writer.WriteNumberValue(ItemsUnsupported.Value);
             }
-            if (options.Format != "W" && ItemsNoTransferNeeded.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ItemsNoTransferNeeded))
             {
                 writer.WritePropertyName("itemsNoTransferNeeded"u8);
                 writer.WriteNumberValue(ItemsNoTransferNeeded.Value);
             }
-            if (options.Format != "W" && ItemsFailed.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ItemsFailed))
             {
                 writer.WritePropertyName("itemsFailed"u8);
                 writer.WriteNumberValue(ItemsFailed.Value);
             }
-            if (options.Format != "W" && ItemsTransferred.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ItemsTransferred))
             {
                 writer.WritePropertyName("itemsTransferred"u8);
                 writer.WriteNumberValue(ItemsTransferred.Value);
             }
-            if (options.Format != "W" && BytesScanned.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(BytesScanned))
             {
                 writer.WritePropertyName("bytesScanned"u8);
                 writer.WriteNumberValue(BytesScanned.Value);
             }
-            if (options.Format != "W" && BytesExcluded.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(BytesExcluded))
             {
                 writer.WritePropertyName("bytesExcluded"u8);
                 writer.WriteNumberValue(BytesExcluded.Value);
             }
-            if (options.Format != "W" && BytesUnsupported.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(BytesUnsupported))
             {
                 writer.WritePropertyName("bytesUnsupported"u8);
                 writer.WriteNumberValue(BytesUnsupported.Value);
             }
-            if (options.Format != "W" && BytesNoTransferNeeded.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(BytesNoTransferNeeded))
             {
                 writer.WritePropertyName("bytesNoTransferNeeded"u8);
                 writer.WriteNumberValue(BytesNoTransferNeeded.Value);
             }
-            if (options.Format != "W" && BytesFailed.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(BytesFailed))
             {
                 writer.WritePropertyName("bytesFailed"u8);
                 writer.WriteNumberValue(BytesFailed.Value);
             }
-            if (options.Format != "W" && BytesTransferred.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(BytesTransferred))
             {
                 writer.WritePropertyName("bytesTransferred"u8);
                 writer.WriteNumberValue(BytesTransferred.Value);
             }
-            if (options.Format != "W" && SourceName != null)
+            if (options.Format != "W" && Optional.IsDefined(SourceName))
             {
                 writer.WritePropertyName("sourceName"u8);
                 writer.WriteStringValue(SourceName);
             }
-            if (options.Format != "W" && SourceResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(SourceResourceId))
             {
                 writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
             }
-            if (options.Format != "W" && SourceProperties != null)
+            if (options.Format != "W" && Optional.IsDefined(SourceProperties))
             {
                 writer.WritePropertyName("sourceProperties"u8);
 #if NET6_0_OR_GREATER
@@ -167,17 +167,17 @@ namespace Azure.ResourceManager.StorageMover
                 }
 #endif
             }
-            if (options.Format != "W" && TargetName != null)
+            if (options.Format != "W" && Optional.IsDefined(TargetName))
             {
                 writer.WritePropertyName("targetName"u8);
                 writer.WriteStringValue(TargetName);
             }
-            if (options.Format != "W" && TargetResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(TargetResourceId))
             {
                 writer.WritePropertyName("targetResourceId"u8);
                 writer.WriteStringValue(TargetResourceId);
             }
-            if (options.Format != "W" && TargetProperties != null)
+            if (options.Format != "W" && Optional.IsDefined(TargetProperties))
             {
                 writer.WritePropertyName("targetProperties"u8);
 #if NET6_0_OR_GREATER
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.StorageMover
                 }
 #endif
             }
-            if (options.Format != "W" && JobDefinitionProperties != null)
+            if (options.Format != "W" && Optional.IsDefined(JobDefinitionProperties))
             {
                 writer.WritePropertyName("jobDefinitionProperties"u8);
 #if NET6_0_OR_GREATER
@@ -201,12 +201,12 @@ namespace Azure.ResourceManager.StorageMover
                 }
 #endif
             }
-            if (options.Format != "W" && Error != null)
+            if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -253,35 +253,35 @@ namespace Azure.ResourceManager.StorageMover
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<JobRunStatus> status = default;
-            Optional<JobRunScanStatus> scanStatus = default;
-            Optional<string> agentName = default;
-            Optional<ResourceIdentifier> agentResourceId = default;
-            Optional<DateTimeOffset> executionStartTime = default;
-            Optional<DateTimeOffset> executionEndTime = default;
-            Optional<DateTimeOffset> lastStatusUpdate = default;
-            Optional<long> itemsScanned = default;
-            Optional<long> itemsExcluded = default;
-            Optional<long> itemsUnsupported = default;
-            Optional<long> itemsNoTransferNeeded = default;
-            Optional<long> itemsFailed = default;
-            Optional<long> itemsTransferred = default;
-            Optional<long> bytesScanned = default;
-            Optional<long> bytesExcluded = default;
-            Optional<long> bytesUnsupported = default;
-            Optional<long> bytesNoTransferNeeded = default;
-            Optional<long> bytesFailed = default;
-            Optional<long> bytesTransferred = default;
-            Optional<string> sourceName = default;
-            Optional<ResourceIdentifier> sourceResourceId = default;
-            Optional<BinaryData> sourceProperties = default;
-            Optional<string> targetName = default;
-            Optional<ResourceIdentifier> targetResourceId = default;
-            Optional<BinaryData> targetProperties = default;
-            Optional<BinaryData> jobDefinitionProperties = default;
-            Optional<JobRunError> error = default;
-            Optional<StorageMoverProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            JobRunStatus? status = default;
+            JobRunScanStatus? scanStatus = default;
+            string agentName = default;
+            ResourceIdentifier agentResourceId = default;
+            DateTimeOffset? executionStartTime = default;
+            DateTimeOffset? executionEndTime = default;
+            DateTimeOffset? lastStatusUpdate = default;
+            long? itemsScanned = default;
+            long? itemsExcluded = default;
+            long? itemsUnsupported = default;
+            long? itemsNoTransferNeeded = default;
+            long? itemsFailed = default;
+            long? itemsTransferred = default;
+            long? bytesScanned = default;
+            long? bytesExcluded = default;
+            long? bytesUnsupported = default;
+            long? bytesNoTransferNeeded = default;
+            long? bytesFailed = default;
+            long? bytesTransferred = default;
+            string sourceName = default;
+            ResourceIdentifier sourceResourceId = default;
+            BinaryData sourceProperties = default;
+            string targetName = default;
+            ResourceIdentifier targetResourceId = default;
+            BinaryData targetProperties = default;
+            BinaryData jobDefinitionProperties = default;
+            JobRunError error = default;
+            StorageMoverProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -572,35 +572,35 @@ namespace Azure.ResourceManager.StorageMover
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(status),
-                Optional.ToNullable(scanStatus),
-                agentName.Value,
-                agentResourceId.Value,
-                Optional.ToNullable(executionStartTime),
-                Optional.ToNullable(executionEndTime),
-                Optional.ToNullable(lastStatusUpdate),
-                Optional.ToNullable(itemsScanned),
-                Optional.ToNullable(itemsExcluded),
-                Optional.ToNullable(itemsUnsupported),
-                Optional.ToNullable(itemsNoTransferNeeded),
-                Optional.ToNullable(itemsFailed),
-                Optional.ToNullable(itemsTransferred),
-                Optional.ToNullable(bytesScanned),
-                Optional.ToNullable(bytesExcluded),
-                Optional.ToNullable(bytesUnsupported),
-                Optional.ToNullable(bytesNoTransferNeeded),
-                Optional.ToNullable(bytesFailed),
-                Optional.ToNullable(bytesTransferred),
-                sourceName.Value,
-                sourceResourceId.Value,
-                sourceProperties.Value,
-                targetName.Value,
-                targetResourceId.Value,
-                targetProperties.Value,
-                jobDefinitionProperties.Value,
-                error.Value,
-                Optional.ToNullable(provisioningState),
+                systemData,
+                status,
+                scanStatus,
+                agentName,
+                agentResourceId,
+                executionStartTime,
+                executionEndTime,
+                lastStatusUpdate,
+                itemsScanned,
+                itemsExcluded,
+                itemsUnsupported,
+                itemsNoTransferNeeded,
+                itemsFailed,
+                itemsTransferred,
+                bytesScanned,
+                bytesExcluded,
+                bytesUnsupported,
+                bytesNoTransferNeeded,
+                bytesFailed,
+                bytesTransferred,
+                sourceName,
+                sourceResourceId,
+                sourceProperties,
+                targetName,
+                targetResourceId,
+                targetProperties,
+                jobDefinitionProperties,
+                error,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

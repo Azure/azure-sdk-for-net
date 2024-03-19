@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ConfidentialLedger;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             }
 
             writer.WriteStartObject();
-            if (PrincipalId.HasValue)
+            if (Optional.IsDefined(PrincipalId))
             {
                 writer.WritePropertyName("principalId"u8);
                 writer.WriteStringValue(PrincipalId.Value);
             }
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (LedgerRoleName.HasValue)
+            if (Optional.IsDefined(LedgerRoleName))
             {
                 writer.WritePropertyName("ledgerRoleName"u8);
                 writer.WriteStringValue(LedgerRoleName.Value.ToString());
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             {
                 return null;
             }
-            Optional<Guid> principalId = default;
-            Optional<Guid> tenantId = default;
-            Optional<ConfidentialLedgerRoleName> ledgerRoleName = default;
+            Guid? principalId = default;
+            Guid? tenantId = default;
+            ConfidentialLedgerRoleName? ledgerRoleName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AadBasedSecurityPrincipal(Optional.ToNullable(principalId), Optional.ToNullable(tenantId), Optional.ToNullable(ledgerRoleName), serializedAdditionalRawData);
+            return new AadBasedSecurityPrincipal(principalId, tenantId, ledgerRoleName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AadBasedSecurityPrincipal>.Write(ModelReaderWriterOptions options)

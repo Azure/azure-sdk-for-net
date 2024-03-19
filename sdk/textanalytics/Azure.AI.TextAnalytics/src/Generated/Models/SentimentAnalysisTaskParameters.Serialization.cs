@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -15,22 +16,22 @@ namespace Azure.AI.TextAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (OpinionMining.HasValue)
+            if (Optional.IsDefined(OpinionMining))
             {
                 writer.WritePropertyName("opinionMining"u8);
                 writer.WriteBooleanValue(OpinionMining.Value);
             }
-            if (StringIndexType.HasValue)
+            if (Optional.IsDefined(StringIndexType))
             {
                 writer.WritePropertyName("stringIndexType"u8);
                 writer.WriteStringValue(StringIndexType.Value.ToString());
             }
-            if (ModelVersion != null)
+            if (Optional.IsDefined(ModelVersion))
             {
                 writer.WritePropertyName("modelVersion"u8);
                 writer.WriteStringValue(ModelVersion);
             }
-            if (LoggingOptOut.HasValue)
+            if (Optional.IsDefined(LoggingOptOut))
             {
                 writer.WritePropertyName("loggingOptOut"u8);
                 writer.WriteBooleanValue(LoggingOptOut.Value);
@@ -44,10 +45,10 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 return null;
             }
-            Optional<bool> opinionMining = default;
-            Optional<StringIndexType> stringIndexType = default;
-            Optional<string> modelVersion = default;
-            Optional<bool> loggingOptOut = default;
+            bool? opinionMining = default;
+            StringIndexType? stringIndexType = default;
+            string modelVersion = default;
+            bool? loggingOptOut = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("opinionMining"u8))
@@ -83,7 +84,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new SentimentAnalysisTaskParameters(Optional.ToNullable(loggingOptOut), modelVersion.Value, Optional.ToNullable(opinionMining), Optional.ToNullable(stringIndexType));
+            return new SentimentAnalysisTaskParameters(loggingOptOut, modelVersion, opinionMining, stringIndexType);
         }
     }
 }

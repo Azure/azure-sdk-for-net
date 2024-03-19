@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Endpoint != null)
+            if (Optional.IsDefined(Endpoint))
             {
                 if (Endpoint != null)
                 {
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("endpoint");
                 }
             }
-            if (options.Format != "W" && ErrorMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(ErrorMessage))
             {
                 if (ErrorMessage != null)
                 {
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("errorMessage");
                 }
             }
-            if (JobServiceType != null)
+            if (Optional.IsDefined(JobServiceType))
             {
                 if (JobServiceType != null)
                 {
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("jobServiceType");
                 }
             }
-            if (Nodes != null)
+            if (Optional.IsDefined(Nodes))
             {
                 if (Nodes != null)
                 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("nodes");
                 }
             }
-            if (Port.HasValue)
+            if (Optional.IsDefined(Port))
             {
                 if (Port != null)
                 {
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("port");
                 }
             }
-            if (!(Properties is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Properties))
             {
                 if (Properties != null)
                 {
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("properties");
                 }
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 if (Status != null)
                 {
@@ -154,13 +155,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> endpoint = default;
-            Optional<string> errorMessage = default;
-            Optional<string> jobServiceType = default;
-            Optional<JobNodes> nodes = default;
-            Optional<int?> port = default;
+            string endpoint = default;
+            string errorMessage = default;
+            string jobServiceType = default;
+            JobNodes nodes = default;
+            int? port = default;
             IDictionary<string, string> properties = default;
-            Optional<string> status = default;
+            string status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -247,13 +248,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MachineLearningJobService(
-                endpoint.Value,
-                errorMessage.Value,
-                jobServiceType.Value,
-                nodes.Value,
-                Optional.ToNullable(port),
+                endpoint,
+                errorMessage,
+                jobServiceType,
+                nodes,
+                port,
                 properties ?? new ChangeTrackingDictionary<string, string>(),
-                status.Value,
+                status,
                 serializedAdditionalRawData);
         }
 

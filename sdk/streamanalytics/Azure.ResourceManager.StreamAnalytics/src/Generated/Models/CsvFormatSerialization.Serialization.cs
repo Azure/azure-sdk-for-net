@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StreamAnalytics;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
@@ -30,12 +31,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStringValue(EventSerializationType.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (FieldDelimiter != null)
+            if (Optional.IsDefined(FieldDelimiter))
             {
                 writer.WritePropertyName("fieldDelimiter"u8);
                 writer.WriteStringValue(FieldDelimiter);
             }
-            if (Encoding.HasValue)
+            if (Optional.IsDefined(Encoding))
             {
                 writer.WritePropertyName("encoding"u8);
                 writer.WriteStringValue(Encoding.Value.ToString());
@@ -80,8 +81,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             EventSerializationType type = default;
-            Optional<string> fieldDelimiter = default;
-            Optional<StreamAnalyticsDataSerializationEncoding> encoding = default;
+            string fieldDelimiter = default;
+            StreamAnalyticsDataSerializationEncoding? encoding = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,7 +124,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CsvFormatSerialization(type, serializedAdditionalRawData, fieldDelimiter.Value, Optional.ToNullable(encoding));
+            return new CsvFormatSerialization(type, serializedAdditionalRawData, fieldDelimiter, encoding);
         }
 
         BinaryData IPersistableModel<CsvFormatSerialization>.Write(ModelReaderWriterOptions options)

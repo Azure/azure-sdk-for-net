@@ -15,12 +15,12 @@ namespace Azure.DigitalTwins.Core
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Code != null)
+            if (Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (Innererror != null)
+            if (Optional.IsDefined(Innererror))
             {
                 writer.WritePropertyName("innererror"u8);
                 writer.WriteObjectValue(Innererror);
@@ -34,8 +34,8 @@ namespace Azure.DigitalTwins.Core
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<InnerError> innererror = default;
+            string code = default;
+            InnerError innererror = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -53,7 +53,7 @@ namespace Azure.DigitalTwins.Core
                     continue;
                 }
             }
-            return new InnerError(code.Value, innererror.Value);
+            return new InnerError(code, innererror);
         }
     }
 }

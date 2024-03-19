@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteObjectValue(Name);
             }
-            if (Unit != null)
+            if (Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit);
             }
-            if (CurrentValue.HasValue)
+            if (Optional.IsDefined(CurrentValue))
             {
                 writer.WritePropertyName("currentValue"u8);
                 writer.WriteNumberValue(CurrentValue.Value);
             }
-            if (Limit.HasValue)
+            if (Optional.IsDefined(Limit))
             {
                 writer.WritePropertyName("limit"u8);
                 writer.WriteNumberValue(Limit.Value);
             }
-            if (ThrottleStatus != null)
+            if (Optional.IsDefined(ThrottleStatus))
             {
                 writer.WritePropertyName("throttleStatus"u8);
                 writer.WriteStringValue(ThrottleStatus);
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<AutomationUsageCounterName> name = default;
-            Optional<string> unit = default;
-            Optional<double> currentValue = default;
-            Optional<long> limit = default;
-            Optional<string> throttleStatus = default;
+            string id = default;
+            AutomationUsageCounterName name = default;
+            string unit = default;
+            double? currentValue = default;
+            long? limit = default;
+            string throttleStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -153,12 +154,12 @@ namespace Azure.ResourceManager.Automation.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AutomationUsage(
-                id.Value,
-                name.Value,
-                unit.Value,
-                Optional.ToNullable(currentValue),
-                Optional.ToNullable(limit),
-                throttleStatus.Value,
+                id,
+                name,
+                unit,
+                currentValue,
+                limit,
+                throttleStatus,
                 serializedAdditionalRawData);
         }
 

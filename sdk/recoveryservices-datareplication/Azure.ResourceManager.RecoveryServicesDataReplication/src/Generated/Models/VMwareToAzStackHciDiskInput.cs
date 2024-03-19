@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
@@ -53,14 +54,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <exception cref="ArgumentNullException"> <paramref name="diskId"/> or <paramref name="diskFileFormat"/> is null. </exception>
         public VMwareToAzStackHciDiskInput(string diskId, long diskSizeGB, string diskFileFormat, bool isOSDisk)
         {
-            if (diskId == null)
-            {
-                throw new ArgumentNullException(nameof(diskId));
-            }
-            if (diskFileFormat == null)
-            {
-                throw new ArgumentNullException(nameof(diskFileFormat));
-            }
+            Argument.AssertNotNull(diskId, nameof(diskId));
+            Argument.AssertNotNull(diskFileFormat, nameof(diskFileFormat));
 
             DiskId = diskId;
             DiskSizeGB = diskSizeGB;

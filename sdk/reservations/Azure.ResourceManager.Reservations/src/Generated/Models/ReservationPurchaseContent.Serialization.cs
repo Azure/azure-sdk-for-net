@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Reservations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
@@ -26,54 +27,54 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ReservedResourceType.HasValue)
+            if (Optional.IsDefined(ReservedResourceType))
             {
                 writer.WritePropertyName("reservedResourceType"u8);
                 writer.WriteStringValue(ReservedResourceType.Value.ToString());
             }
-            if (BillingScopeId != null)
+            if (Optional.IsDefined(BillingScopeId))
             {
                 writer.WritePropertyName("billingScopeId"u8);
                 writer.WriteStringValue(BillingScopeId);
             }
-            if (Term.HasValue)
+            if (Optional.IsDefined(Term))
             {
                 writer.WritePropertyName("term"u8);
                 writer.WriteStringValue(Term.Value.ToString());
             }
-            if (BillingPlan.HasValue)
+            if (Optional.IsDefined(BillingPlan))
             {
                 writer.WritePropertyName("billingPlan"u8);
                 writer.WriteStringValue(BillingPlan.Value.ToString());
             }
-            if (Quantity.HasValue)
+            if (Optional.IsDefined(Quantity))
             {
                 writer.WritePropertyName("quantity"u8);
                 writer.WriteNumberValue(Quantity.Value);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (AppliedScopeType.HasValue)
+            if (Optional.IsDefined(AppliedScopeType))
             {
                 writer.WritePropertyName("appliedScopeType"u8);
                 writer.WriteStringValue(AppliedScopeType.Value.ToString());
             }
-            if (!(AppliedScopes is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AppliedScopes))
             {
                 if (AppliedScopes != null)
                 {
@@ -90,22 +91,22 @@ namespace Azure.ResourceManager.Reservations.Models
                     writer.WriteNull("appliedScopes");
                 }
             }
-            if (AppliedScopeProperties != null)
+            if (Optional.IsDefined(AppliedScopeProperties))
             {
                 writer.WritePropertyName("appliedScopeProperties"u8);
                 writer.WriteObjectValue(AppliedScopeProperties);
             }
-            if (IsRenewEnabled.HasValue)
+            if (Optional.IsDefined(IsRenewEnabled))
             {
                 writer.WritePropertyName("renew"u8);
                 writer.WriteBooleanValue(IsRenewEnabled.Value);
             }
-            if (ReservedResourceProperties != null)
+            if (Optional.IsDefined(ReservedResourceProperties))
             {
                 writer.WritePropertyName("reservedResourceProperties"u8);
                 writer.WriteObjectValue(ReservedResourceProperties);
             }
-            if (ReviewOn.HasValue)
+            if (Optional.IsDefined(ReviewOn))
             {
                 writer.WritePropertyName("reviewDateTime"u8);
                 writer.WriteStringValue(ReviewOn.Value, "O");
@@ -149,20 +150,20 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<ReservationsSkuName> sku = default;
-            Optional<AzureLocation> location = default;
-            Optional<ReservedResourceType> reservedResourceType = default;
-            Optional<ResourceIdentifier> billingScopeId = default;
-            Optional<ReservationTerm> term = default;
-            Optional<ReservationBillingPlan> billingPlan = default;
-            Optional<int> quantity = default;
-            Optional<string> displayName = default;
-            Optional<AppliedScopeType> appliedScopeType = default;
+            ReservationsSkuName sku = default;
+            AzureLocation? location = default;
+            ReservedResourceType? reservedResourceType = default;
+            ResourceIdentifier billingScopeId = default;
+            ReservationTerm? term = default;
+            ReservationBillingPlan? billingPlan = default;
+            int? quantity = default;
+            string displayName = default;
+            AppliedScopeType? appliedScopeType = default;
             IList<string> appliedScopes = default;
-            Optional<AppliedScopeProperties> appliedScopeProperties = default;
-            Optional<bool> renew = default;
-            Optional<PurchaseRequestPropertiesReservedResourceProperties> reservedResourceProperties = default;
-            Optional<DateTimeOffset> reviewDateTime = default;
+            AppliedScopeProperties appliedScopeProperties = default;
+            bool? renew = default;
+            PurchaseRequestPropertiesReservedResourceProperties reservedResourceProperties = default;
+            DateTimeOffset? reviewDateTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -314,20 +315,20 @@ namespace Azure.ResourceManager.Reservations.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ReservationPurchaseContent(
-                sku.Value,
-                Optional.ToNullable(location),
-                Optional.ToNullable(reservedResourceType),
-                billingScopeId.Value,
-                Optional.ToNullable(term),
-                Optional.ToNullable(billingPlan),
-                Optional.ToNullable(quantity),
-                displayName.Value,
-                Optional.ToNullable(appliedScopeType),
+                sku,
+                location,
+                reservedResourceType,
+                billingScopeId,
+                term,
+                billingPlan,
+                quantity,
+                displayName,
+                appliedScopeType,
                 appliedScopes ?? new ChangeTrackingList<string>(),
-                appliedScopeProperties.Value,
-                Optional.ToNullable(renew),
-                reservedResourceProperties.Value,
-                Optional.ToNullable(reviewDateTime),
+                appliedScopeProperties,
+                renew,
+                reservedResourceProperties,
+                reviewDateTime,
                 serializedAdditionalRawData);
         }
 

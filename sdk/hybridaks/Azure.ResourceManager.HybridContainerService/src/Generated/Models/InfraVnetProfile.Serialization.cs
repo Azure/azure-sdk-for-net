@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridContainerService;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Hci != null)
+            if (Optional.IsDefined(Hci))
             {
                 writer.WritePropertyName("hci"u8);
                 writer.WriteObjectValue(Hci);
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<HciInfraVnetProfile> hci = default;
+            HciInfraVnetProfile hci = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InfraVnetProfile(hci.Value, serializedAdditionalRawData);
+            return new InfraVnetProfile(hci, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InfraVnetProfile>.Write(ModelReaderWriterOptions options)

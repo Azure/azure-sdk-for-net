@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -26,42 +27,42 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ApiName != null)
+            if (options.Format != "W" && Optional.IsDefined(ApiName))
             {
                 writer.WritePropertyName("apiName"u8);
                 writer.WriteStringValue(ApiName);
             }
-            if (options.Format != "W" && ApiRevision != null)
+            if (options.Format != "W" && Optional.IsDefined(ApiRevision))
             {
                 writer.WritePropertyName("apiRevision"u8);
                 writer.WriteStringValue(ApiRevision);
             }
-            if (options.Format != "W" && ApiVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(ApiVersion))
             {
                 writer.WritePropertyName("apiVersion"u8);
                 writer.WriteStringValue(ApiVersion);
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Method != null)
+            if (options.Format != "W" && Optional.IsDefined(Method))
             {
                 writer.WritePropertyName("method"u8);
                 writer.WriteStringValue(Method);
             }
-            if (options.Format != "W" && UriTemplate != null)
+            if (options.Format != "W" && Optional.IsDefined(UriTemplate))
             {
                 writer.WritePropertyName("urlTemplate"u8);
                 writer.WriteStringValue(UriTemplate);
@@ -104,14 +105,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> apiName = default;
-            Optional<string> apiRevision = default;
-            Optional<string> apiVersion = default;
-            Optional<string> description = default;
-            Optional<string> method = default;
-            Optional<string> uriTemplate = default;
+            string id = default;
+            string name = default;
+            string apiName = default;
+            string apiRevision = default;
+            string apiVersion = default;
+            string description = default;
+            string method = default;
+            string uriTemplate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -163,14 +164,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AssociatedOperationProperties(
-                id.Value,
-                name.Value,
-                apiName.Value,
-                apiRevision.Value,
-                apiVersion.Value,
-                description.Value,
-                method.Value,
-                uriTemplate.Value,
+                id,
+                name,
+                apiName,
+                apiRevision,
+                apiVersion,
+                description,
+                method,
+                uriTemplate,
                 serializedAdditionalRawData);
         }
 

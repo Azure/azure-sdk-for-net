@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Advisor;
 
 namespace Azure.ResourceManager.Advisor.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Advisor.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (ActionGroupResourceId != null)
+            if (Optional.IsDefined(ActionGroupResourceId))
             {
                 writer.WritePropertyName("actionGroupResourceId"u8);
                 writer.WriteStringValue(ActionGroupResourceId);
             }
-            if (Frequency.HasValue)
+            if (Optional.IsDefined(Frequency))
             {
                 writer.WritePropertyName("frequency"u8);
                 writer.WriteNumberValue(Frequency.Value);
             }
-            if (!(Categories is ChangeTrackingList<Category> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Categories))
             {
                 writer.WritePropertyName("categories"u8);
                 writer.WriteStartArray();
@@ -51,12 +52,12 @@ namespace Azure.ResourceManager.Advisor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Language != null)
+            if (Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
             }
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
@@ -99,12 +100,12 @@ namespace Azure.ResourceManager.Advisor.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> actionGroupResourceId = default;
-            Optional<int> frequency = default;
+            string name = default;
+            string actionGroupResourceId = default;
+            int? frequency = default;
             IList<Category> categories = default;
-            Optional<string> language = default;
-            Optional<DigestConfigState> state = default;
+            string language = default;
+            DigestConfigState? state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -163,12 +164,12 @@ namespace Azure.ResourceManager.Advisor.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DigestConfig(
-                name.Value,
-                actionGroupResourceId.Value,
-                Optional.ToNullable(frequency),
+                name,
+                actionGroupResourceId,
+                frequency,
                 categories ?? new ChangeTrackingList<Category>(),
-                language.Value,
-                Optional.ToNullable(state),
+                language,
+                state,
                 serializedAdditionalRawData);
         }
 

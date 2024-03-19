@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (RecoveryPointHistoryInMinutes.HasValue)
+            if (Optional.IsDefined(RecoveryPointHistoryInMinutes))
             {
                 writer.WritePropertyName("recoveryPointHistoryInMinutes"u8);
                 writer.WriteNumberValue(RecoveryPointHistoryInMinutes.Value);
             }
-            if (AppConsistentFrequencyInMinutes.HasValue)
+            if (Optional.IsDefined(AppConsistentFrequencyInMinutes))
             {
                 writer.WritePropertyName("appConsistentFrequencyInMinutes"u8);
                 writer.WriteNumberValue(AppConsistentFrequencyInMinutes.Value);
             }
-            if (CrashConsistentFrequencyInMinutes.HasValue)
+            if (Optional.IsDefined(CrashConsistentFrequencyInMinutes))
             {
                 writer.WritePropertyName("crashConsistentFrequencyInMinutes"u8);
                 writer.WriteNumberValue(CrashConsistentFrequencyInMinutes.Value);
             }
-            if (EnableMultiVmSync != null)
+            if (Optional.IsDefined(EnableMultiVmSync))
             {
                 writer.WritePropertyName("enableMultiVmSync"u8);
                 writer.WriteStringValue(EnableMultiVmSync);
@@ -86,10 +87,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<int> recoveryPointHistoryInMinutes = default;
-            Optional<int> appConsistentFrequencyInMinutes = default;
-            Optional<int> crashConsistentFrequencyInMinutes = default;
-            Optional<string> enableMultiVmSync = default;
+            int? recoveryPointHistoryInMinutes = default;
+            int? appConsistentFrequencyInMinutes = default;
+            int? crashConsistentFrequencyInMinutes = default;
+            string enableMultiVmSync = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -141,10 +142,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageRcmPolicyDetails(
                 instanceType,
                 serializedAdditionalRawData,
-                Optional.ToNullable(recoveryPointHistoryInMinutes),
-                Optional.ToNullable(appConsistentFrequencyInMinutes),
-                Optional.ToNullable(crashConsistentFrequencyInMinutes),
-                enableMultiVmSync.Value);
+                recoveryPointHistoryInMinutes,
+                appConsistentFrequencyInMinutes,
+                crashConsistentFrequencyInMinutes,
+                enableMultiVmSync);
         }
 
         BinaryData IPersistableModel<InMageRcmPolicyDetails>.Write(ModelReaderWriterOptions options)

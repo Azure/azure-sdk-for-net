@@ -42,24 +42,24 @@ namespace Azure.ResourceManager.Advisor
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (SuppressionId != null)
+            if (Optional.IsDefined(SuppressionId))
             {
                 writer.WritePropertyName("suppressionId"u8);
                 writer.WriteStringValue(SuppressionId);
             }
-            if (Ttl != null)
+            if (Optional.IsDefined(Ttl))
             {
                 writer.WritePropertyName("ttl"u8);
                 writer.WriteStringValue(Ttl);
             }
-            if (options.Format != "W" && ExpirationTimeStamp.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExpirationTimeStamp))
             {
                 writer.WritePropertyName("expirationTimeStamp"u8);
                 writer.WriteStringValue(ExpirationTimeStamp.Value, "O");
@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.Advisor
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> suppressionId = default;
-            Optional<string> ttl = default;
-            Optional<DateTimeOffset> expirationTimeStamp = default;
+            SystemData systemData = default;
+            string suppressionId = default;
+            string ttl = default;
+            DateTimeOffset? expirationTimeStamp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,10 +179,10 @@ namespace Azure.ResourceManager.Advisor
                 id,
                 name,
                 type,
-                systemData.Value,
-                suppressionId.Value,
-                ttl.Value,
-                Optional.ToNullable(expirationTimeStamp),
+                systemData,
+                suppressionId,
+                ttl,
+                expirationTimeStamp,
                 serializedAdditionalRawData);
         }
 

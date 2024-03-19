@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (IsCredentialEnabled.HasValue)
+            if (Optional.IsDefined(IsCredentialEnabled))
             {
                 writer.WritePropertyName("restAuthCredential.isEnabled"u8);
                 writer.WriteBooleanValue(IsCredentialEnabled.Value);
             }
-            if (UserName != null)
+            if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("restAuthCredential.username"u8);
                 writer.WriteStringValue(UserName);
             }
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("restAuthCredential.password"u8);
                 writer.WriteStringValue(Password);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<bool> restAuthCredentialIsEnabled = default;
-            Optional<string> restAuthCredentialUsername = default;
-            Optional<string> restAuthCredentialPassword = default;
+            bool? restAuthCredentialIsEnabled = default;
+            string restAuthCredentialUsername = default;
+            string restAuthCredentialPassword = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightClusterUpdateGatewaySettingsContent(Optional.ToNullable(restAuthCredentialIsEnabled), restAuthCredentialUsername.Value, restAuthCredentialPassword.Value, serializedAdditionalRawData);
+            return new HDInsightClusterUpdateGatewaySettingsContent(restAuthCredentialIsEnabled, restAuthCredentialUsername, restAuthCredentialPassword, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightClusterUpdateGatewaySettingsContent>.Write(ModelReaderWriterOptions options)

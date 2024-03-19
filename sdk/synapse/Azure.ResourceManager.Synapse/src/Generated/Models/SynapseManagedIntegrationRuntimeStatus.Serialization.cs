@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -28,24 +29,24 @@ namespace Azure.ResourceManager.Synapse.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(RuntimeType.ToString());
-            if (options.Format != "W" && DataFactoryName != null)
+            if (options.Format != "W" && Optional.IsDefined(DataFactoryName))
             {
                 writer.WritePropertyName("dataFactoryName"u8);
                 writer.WriteStringValue(DataFactoryName);
             }
-            if (options.Format != "W" && State.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && CreateOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreateOn))
             {
                 writer.WritePropertyName("createTime"u8);
                 writer.WriteStringValue(CreateOn.Value, "O");
             }
-            if (options.Format != "W" && !(Nodes is ChangeTrackingList<SynapseManagedIntegrationRuntimeNode> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Nodes))
             {
                 writer.WritePropertyName("nodes"u8);
                 writer.WriteStartArray();
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(OtherErrors is ChangeTrackingList<SynapseManagedIntegrationRuntimeError> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(OtherErrors))
             {
                 writer.WritePropertyName("otherErrors"u8);
                 writer.WriteStartArray();
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && LastOperation != null)
+            if (options.Format != "W" && Optional.IsDefined(LastOperation))
             {
                 writer.WritePropertyName("lastOperation"u8);
                 writer.WriteObjectValue(LastOperation);
@@ -107,12 +108,12 @@ namespace Azure.ResourceManager.Synapse.Models
                 return null;
             }
             IntegrationRuntimeType type = default;
-            Optional<string> dataFactoryName = default;
-            Optional<SynapseIntegrationRuntimeState> state = default;
-            Optional<DateTimeOffset> createTime = default;
+            string dataFactoryName = default;
+            SynapseIntegrationRuntimeState? state = default;
+            DateTimeOffset? createTime = default;
             IReadOnlyList<SynapseManagedIntegrationRuntimeNode> nodes = default;
             IReadOnlyList<SynapseManagedIntegrationRuntimeError> otherErrors = default;
-            Optional<SynapseManagedIntegrationRuntimeOperationResult> lastOperation = default;
+            SynapseManagedIntegrationRuntimeOperationResult lastOperation = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -199,13 +200,13 @@ namespace Azure.ResourceManager.Synapse.Models
             additionalProperties = additionalPropertiesDictionary;
             return new SynapseManagedIntegrationRuntimeStatus(
                 type,
-                dataFactoryName.Value,
-                Optional.ToNullable(state),
+                dataFactoryName,
+                state,
                 additionalProperties,
-                Optional.ToNullable(createTime),
+                createTime,
                 nodes ?? new ChangeTrackingList<SynapseManagedIntegrationRuntimeNode>(),
                 otherErrors ?? new ChangeTrackingList<SynapseManagedIntegrationRuntimeError>(),
-                lastOperation.Value);
+                lastOperation);
         }
 
         BinaryData IPersistableModel<SynapseManagedIntegrationRuntimeStatus>.Write(ModelReaderWriterOptions options)

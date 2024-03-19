@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -26,14 +27,14 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ExecutionFrequencyInSeconds.HasValue)
+            if (Optional.IsDefined(ExecutionFrequencyInSeconds))
             {
                 writer.WritePropertyName("executionFrequencyInSeconds"u8);
                 writer.WriteNumberValue(ExecutionFrequencyInSeconds.Value);
@@ -77,8 +78,8 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<long> executionFrequencyInSeconds = default;
+            string name = default;
+            long? executionFrequencyInSeconds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationWatcherPatch(name.Value, Optional.ToNullable(executionFrequencyInSeconds), serializedAdditionalRawData);
+            return new AutomationWatcherPatch(name, executionFrequencyInSeconds, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationWatcherPatch>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && DeviceId != null)
+            if (options.Format != "W" && Optional.IsDefined(DeviceId))
             {
                 writer.WritePropertyName("deviceId"u8);
                 writer.WriteStringValue(DeviceId);
             }
-            if (options.Format != "W" && AlertsCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AlertsCount))
             {
                 writer.WritePropertyName("alertsCount"u8);
                 writer.WriteNumberValue(AlertsCount.Value);
             }
-            if (options.Format != "W" && LastOccurrence != null)
+            if (options.Format != "W" && Optional.IsDefined(LastOccurrence))
             {
                 writer.WritePropertyName("lastOccurrence"u8);
                 writer.WriteStringValue(LastOccurrence);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> deviceId = default;
-            Optional<long> alertsCount = default;
-            Optional<string> lastOccurrence = default;
+            string deviceId = default;
+            long? alertsCount = default;
+            string lastOccurrence = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotSecurityAggregatedAlertTopDevice(deviceId.Value, Optional.ToNullable(alertsCount), lastOccurrence.Value, serializedAdditionalRawData);
+            return new IotSecurityAggregatedAlertTopDevice(deviceId, alertsCount, lastOccurrence, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotSecurityAggregatedAlertTopDevice>.Write(ModelReaderWriterOptions options)

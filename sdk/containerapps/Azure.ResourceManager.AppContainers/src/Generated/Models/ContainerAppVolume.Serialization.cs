@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (StorageType.HasValue)
+            if (Optional.IsDefined(StorageType))
             {
                 writer.WritePropertyName("storageType"u8);
                 writer.WriteStringValue(StorageType.Value.ToString());
             }
-            if (StorageName != null)
+            if (Optional.IsDefined(StorageName))
             {
                 writer.WritePropertyName("storageName"u8);
                 writer.WriteStringValue(StorageName);
             }
-            if (!(Secrets is ChangeTrackingList<SecretVolumeItem> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Secrets))
             {
                 writer.WritePropertyName("secrets"u8);
                 writer.WriteStartArray();
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (MountOptions != null)
+            if (Optional.IsDefined(MountOptions))
             {
                 writer.WritePropertyName("mountOptions"u8);
                 writer.WriteStringValue(MountOptions);
@@ -94,11 +95,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ContainerAppStorageType> storageType = default;
-            Optional<string> storageName = default;
+            string name = default;
+            ContainerAppStorageType? storageType = default;
+            string storageName = default;
             IList<SecretVolumeItem> secrets = default;
-            Optional<string> mountOptions = default;
+            string mountOptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -148,11 +149,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ContainerAppVolume(
-                name.Value,
-                Optional.ToNullable(storageType),
-                storageName.Value,
+                name,
+                storageType,
+                storageName,
                 secrets ?? new ChangeTrackingList<SecretVolumeItem>(),
-                mountOptions.Value,
+                mountOptions,
                 serializedAdditionalRawData);
         }
 

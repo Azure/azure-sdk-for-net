@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Chaos;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Chaos.Models
@@ -42,39 +43,39 @@ namespace Azure.ResourceManager.Chaos.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && StartedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartedOn))
             {
                 writer.WritePropertyName("startedAt"u8);
                 writer.WriteStringValue(StartedOn.Value, "O");
             }
-            if (options.Format != "W" && StoppedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StoppedOn))
             {
                 writer.WritePropertyName("stoppedAt"u8);
                 writer.WriteStringValue(StoppedOn.Value, "O");
             }
-            if (options.Format != "W" && FailureReason != null)
+            if (options.Format != "W" && Optional.IsDefined(FailureReason))
             {
                 writer.WritePropertyName("failureReason"u8);
                 writer.WriteStringValue(FailureReason);
             }
-            if (options.Format != "W" && LastActionOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastActionOn))
             {
                 writer.WritePropertyName("lastActionAt"u8);
                 writer.WriteStringValue(LastActionOn.Value, "O");
             }
-            if (options.Format != "W" && RunInformation != null)
+            if (options.Format != "W" && Optional.IsDefined(RunInformation))
             {
                 writer.WritePropertyName("runInformation"u8);
                 writer.WriteObjectValue(RunInformation);
@@ -121,13 +122,13 @@ namespace Azure.ResourceManager.Chaos.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> status = default;
-            Optional<DateTimeOffset> startedAt = default;
-            Optional<DateTimeOffset> stoppedAt = default;
-            Optional<string> failureReason = default;
-            Optional<DateTimeOffset> lastActionAt = default;
-            Optional<ChaosExperimentRunInformation> runInformation = default;
+            SystemData systemData = default;
+            string status = default;
+            DateTimeOffset? startedAt = default;
+            DateTimeOffset? stoppedAt = default;
+            string failureReason = default;
+            DateTimeOffset? lastActionAt = default;
+            ChaosExperimentRunInformation runInformation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -224,13 +225,13 @@ namespace Azure.ResourceManager.Chaos.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                status.Value,
-                Optional.ToNullable(startedAt),
-                Optional.ToNullable(stoppedAt),
-                failureReason.Value,
-                Optional.ToNullable(lastActionAt),
-                runInformation.Value,
+                systemData,
+                status,
+                startedAt,
+                stoppedAt,
+                failureReason,
+                lastActionAt,
+                runInformation,
                 serializedAdditionalRawData);
         }
 

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -48,19 +48,19 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Metadata != null)
+            if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteObjectValue(Metadata);
             }
-            if (!(Dataset is ChangeTrackingList<DiagnosticDataset> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Dataset))
             {
                 writer.WritePropertyName("dataset"u8);
                 writer.WriteStartArray();
@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndArray();
             }
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
             }
-            if (!(DataProvidersMetadata is ChangeTrackingList<DataProviderMetadata> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(DataProvidersMetadata))
             {
                 writer.WritePropertyName("dataProvidersMetadata"u8);
                 writer.WriteStartArray();
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndArray();
             }
-            if (SuggestedUtterances != null)
+            if (Optional.IsDefined(SuggestedUtterances))
             {
                 writer.WritePropertyName("suggestedUtterances"u8);
                 writer.WriteObjectValue(SuggestedUtterances);
@@ -129,16 +129,16 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DetectorInfo> metadata = default;
+            SystemData systemData = default;
+            DetectorInfo metadata = default;
             IList<DiagnosticDataset> dataset = default;
-            Optional<AppServiceStatusInfo> status = default;
+            AppServiceStatusInfo status = default;
             IList<DataProviderMetadata> dataProvidersMetadata = default;
-            Optional<QueryUtterancesResults> suggestedUtterances = default;
+            QueryUtterancesResults suggestedUtterances = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -249,13 +249,13 @@ namespace Azure.ResourceManager.AppService
                 id,
                 name,
                 type,
-                systemData.Value,
-                metadata.Value,
+                systemData,
+                metadata,
                 dataset ?? new ChangeTrackingList<DiagnosticDataset>(),
-                status.Value,
+                status,
                 dataProvidersMetadata ?? new ChangeTrackingList<DataProviderMetadata>(),
-                suggestedUtterances.Value,
-                kind.Value,
+                suggestedUtterances,
+                kind,
                 serializedAdditionalRawData);
         }
 

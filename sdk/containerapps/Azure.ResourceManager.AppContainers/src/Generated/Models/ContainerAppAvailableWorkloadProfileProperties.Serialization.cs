@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Category != null)
+            if (Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (Applicability.HasValue)
+            if (Optional.IsDefined(Applicability))
             {
                 writer.WritePropertyName("applicability"u8);
                 writer.WriteStringValue(Applicability.Value.ToString());
             }
-            if (Cores.HasValue)
+            if (Optional.IsDefined(Cores))
             {
                 writer.WritePropertyName("cores"u8);
                 writer.WriteNumberValue(Cores.Value);
             }
-            if (MemoryInGiB.HasValue)
+            if (Optional.IsDefined(MemoryInGiB))
             {
                 writer.WritePropertyName("memoryGiB"u8);
                 writer.WriteNumberValue(MemoryInGiB.Value);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> category = default;
-            Optional<ContainerAppAvailableWorkloadProfileApplicability> applicability = default;
-            Optional<int> cores = default;
-            Optional<int> memoryGiB = default;
-            Optional<string> displayName = default;
+            string category = default;
+            ContainerAppAvailableWorkloadProfileApplicability? applicability = default;
+            int? cores = default;
+            int? memoryGiB = default;
+            string displayName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -142,11 +143,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ContainerAppAvailableWorkloadProfileProperties(
-                category.Value,
-                Optional.ToNullable(applicability),
-                Optional.ToNullable(cores),
-                Optional.ToNullable(memoryGiB),
-                displayName.Value,
+                category,
+                applicability,
+                cores,
+                memoryGiB,
+                displayName,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -30,17 +31,17 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ExtensionType != null)
+            if (Optional.IsDefined(ExtensionType))
             {
                 writer.WritePropertyName("extensionType"u8);
                 writer.WriteStringValue(ExtensionType);
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Settings != null)
+            if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("settings"u8);
 #if NET6_0_OR_GREATER
@@ -52,7 +53,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
 #endif
             }
-            if (ProtectedSettings != null)
+            if (Optional.IsDefined(ProtectedSettings))
             {
                 writer.WritePropertyName("protectedSettings"u8);
 #if NET6_0_OR_GREATER
@@ -104,10 +105,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 return null;
             }
             string name = default;
-            Optional<string> extensionType = default;
-            Optional<string> version = default;
-            Optional<BinaryData> settings = default;
-            Optional<BinaryData> protectedSettings = default;
+            string extensionType = default;
+            string version = default;
+            BinaryData settings = default;
+            BinaryData protectedSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,10 +166,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DeploymentExtensionSpec(
                 name,
-                extensionType.Value,
-                version.Value,
-                settings.Value,
-                protectedSettings.Value,
+                extensionType,
+                version,
+                settings,
+                protectedSettings,
                 serializedAdditionalRawData);
         }
 

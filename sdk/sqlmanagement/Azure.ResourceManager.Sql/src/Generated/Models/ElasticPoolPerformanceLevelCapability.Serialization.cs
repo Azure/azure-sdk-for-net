@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && PerformanceLevel != null)
+            if (options.Format != "W" && Optional.IsDefined(PerformanceLevel))
             {
                 writer.WritePropertyName("performanceLevel"u8);
                 writer.WriteObjectValue(PerformanceLevel);
             }
-            if (options.Format != "W" && Sku != null)
+            if (options.Format != "W" && Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (options.Format != "W" && !(SupportedLicenseTypes is ChangeTrackingList<LicenseTypeCapability> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedLicenseTypes))
             {
                 writer.WritePropertyName("supportedLicenseTypes"u8);
                 writer.WriteStartArray();
@@ -46,17 +47,17 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && MaxDatabaseCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MaxDatabaseCount))
             {
                 writer.WritePropertyName("maxDatabaseCount"u8);
                 writer.WriteNumberValue(MaxDatabaseCount.Value);
             }
-            if (options.Format != "W" && IncludedMaxSize != null)
+            if (options.Format != "W" && Optional.IsDefined(IncludedMaxSize))
             {
                 writer.WritePropertyName("includedMaxSize"u8);
                 writer.WriteObjectValue(IncludedMaxSize);
             }
-            if (options.Format != "W" && !(SupportedMaxSizes is ChangeTrackingList<MaxSizeRangeCapability> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedMaxSizes))
             {
                 writer.WritePropertyName("supportedMaxSizes"u8);
                 writer.WriteStartArray();
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(SupportedPerDatabaseMaxSizes is ChangeTrackingList<MaxSizeRangeCapability> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedPerDatabaseMaxSizes))
             {
                 writer.WritePropertyName("supportedPerDatabaseMaxSizes"u8);
                 writer.WriteStartArray();
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(SupportedPerDatabaseMaxPerformanceLevels is ChangeTrackingList<ElasticPoolPerDatabaseMaxPerformanceLevelCapability> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedPerDatabaseMaxPerformanceLevels))
             {
                 writer.WritePropertyName("supportedPerDatabaseMaxPerformanceLevels"u8);
                 writer.WriteStartArray();
@@ -86,12 +87,12 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && IsZoneRedundant.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsZoneRedundant))
             {
                 writer.WritePropertyName("zoneRedundant"u8);
                 writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
-            if (options.Format != "W" && !(SupportedMaintenanceConfigurations is ChangeTrackingList<MaintenanceConfigurationCapability> collection3 && collection3.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedMaintenanceConfigurations))
             {
                 writer.WritePropertyName("supportedMaintenanceConfigurations"u8);
                 writer.WriteStartArray();
@@ -101,12 +102,12 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (Reason != null)
+            if (Optional.IsDefined(Reason))
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
@@ -149,18 +150,18 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<PerformanceLevelCapability> performanceLevel = default;
-            Optional<SqlSku> sku = default;
+            PerformanceLevelCapability performanceLevel = default;
+            SqlSku sku = default;
             IReadOnlyList<LicenseTypeCapability> supportedLicenseTypes = default;
-            Optional<int> maxDatabaseCount = default;
-            Optional<MaxSizeCapability> includedMaxSize = default;
+            int? maxDatabaseCount = default;
+            MaxSizeCapability includedMaxSize = default;
             IReadOnlyList<MaxSizeRangeCapability> supportedMaxSizes = default;
             IReadOnlyList<MaxSizeRangeCapability> supportedPerDatabaseMaxSizes = default;
             IReadOnlyList<ElasticPoolPerDatabaseMaxPerformanceLevelCapability> supportedPerDatabaseMaxPerformanceLevels = default;
-            Optional<bool> zoneRedundant = default;
+            bool? zoneRedundant = default;
             IReadOnlyList<MaintenanceConfigurationCapability> supportedMaintenanceConfigurations = default;
-            Optional<SqlCapabilityStatus> status = default;
-            Optional<string> reason = default;
+            SqlCapabilityStatus? status = default;
+            string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -301,18 +302,18 @@ namespace Azure.ResourceManager.Sql.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ElasticPoolPerformanceLevelCapability(
-                performanceLevel.Value,
-                sku.Value,
+                performanceLevel,
+                sku,
                 supportedLicenseTypes ?? new ChangeTrackingList<LicenseTypeCapability>(),
-                Optional.ToNullable(maxDatabaseCount),
-                includedMaxSize.Value,
+                maxDatabaseCount,
+                includedMaxSize,
                 supportedMaxSizes ?? new ChangeTrackingList<MaxSizeRangeCapability>(),
                 supportedPerDatabaseMaxSizes ?? new ChangeTrackingList<MaxSizeRangeCapability>(),
                 supportedPerDatabaseMaxPerformanceLevels ?? new ChangeTrackingList<ElasticPoolPerDatabaseMaxPerformanceLevelCapability>(),
-                Optional.ToNullable(zoneRedundant),
+                zoneRedundant,
                 supportedMaintenanceConfigurations ?? new ChangeTrackingList<MaintenanceConfigurationCapability>(),
-                Optional.ToNullable(status),
-                reason.Value,
+                status,
+                reason,
                 serializedAdditionalRawData);
         }
 

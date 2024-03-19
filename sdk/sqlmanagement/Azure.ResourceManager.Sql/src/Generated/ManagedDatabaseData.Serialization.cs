@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Sql
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,119 +56,119 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Collation != null)
+            if (Optional.IsDefined(Collation))
             {
                 writer.WritePropertyName("collation"u8);
                 writer.WriteStringValue(Collation);
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && EarliestRestorePoint.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EarliestRestorePoint))
             {
                 writer.WritePropertyName("earliestRestorePoint"u8);
                 writer.WriteStringValue(EarliestRestorePoint.Value, "O");
             }
-            if (RestorePointInTime.HasValue)
+            if (Optional.IsDefined(RestorePointInTime))
             {
                 writer.WritePropertyName("restorePointInTime"u8);
                 writer.WriteStringValue(RestorePointInTime.Value, "O");
             }
-            if (options.Format != "W" && DefaultSecondaryLocation.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DefaultSecondaryLocation))
             {
                 writer.WritePropertyName("defaultSecondaryLocation"u8);
                 writer.WriteStringValue(DefaultSecondaryLocation.Value);
             }
-            if (CatalogCollation.HasValue)
+            if (Optional.IsDefined(CatalogCollation))
             {
                 writer.WritePropertyName("catalogCollation"u8);
                 writer.WriteStringValue(CatalogCollation.Value.ToString());
             }
-            if (CreateMode.HasValue)
+            if (Optional.IsDefined(CreateMode))
             {
                 writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToString());
             }
-            if (StorageContainerUri != null)
+            if (Optional.IsDefined(StorageContainerUri))
             {
                 writer.WritePropertyName("storageContainerUri"u8);
                 writer.WriteStringValue(StorageContainerUri.AbsoluteUri);
             }
-            if (SourceDatabaseId != null)
+            if (Optional.IsDefined(SourceDatabaseId))
             {
                 writer.WritePropertyName("sourceDatabaseId"u8);
                 writer.WriteStringValue(SourceDatabaseId);
             }
-            if (CrossSubscriptionSourceDatabaseId != null)
+            if (Optional.IsDefined(CrossSubscriptionSourceDatabaseId))
             {
                 writer.WritePropertyName("crossSubscriptionSourceDatabaseId"u8);
                 writer.WriteStringValue(CrossSubscriptionSourceDatabaseId);
             }
-            if (RestorableDroppedDatabaseId != null)
+            if (Optional.IsDefined(RestorableDroppedDatabaseId))
             {
                 writer.WritePropertyName("restorableDroppedDatabaseId"u8);
                 writer.WriteStringValue(RestorableDroppedDatabaseId);
             }
-            if (CrossSubscriptionRestorableDroppedDatabaseId != null)
+            if (Optional.IsDefined(CrossSubscriptionRestorableDroppedDatabaseId))
             {
                 writer.WritePropertyName("crossSubscriptionRestorableDroppedDatabaseId"u8);
                 writer.WriteStringValue(CrossSubscriptionRestorableDroppedDatabaseId);
             }
-            if (StorageContainerIdentity != null)
+            if (Optional.IsDefined(StorageContainerIdentity))
             {
                 writer.WritePropertyName("storageContainerIdentity"u8);
                 writer.WriteStringValue(StorageContainerIdentity);
             }
-            if (StorageContainerSasToken != null)
+            if (Optional.IsDefined(StorageContainerSasToken))
             {
                 writer.WritePropertyName("storageContainerSasToken"u8);
                 writer.WriteStringValue(StorageContainerSasToken);
             }
-            if (options.Format != "W" && FailoverGroupId != null)
+            if (options.Format != "W" && Optional.IsDefined(FailoverGroupId))
             {
                 writer.WritePropertyName("failoverGroupId"u8);
                 writer.WriteStringValue(FailoverGroupId);
             }
-            if (RecoverableDatabaseId != null)
+            if (Optional.IsDefined(RecoverableDatabaseId))
             {
                 writer.WritePropertyName("recoverableDatabaseId"u8);
                 writer.WriteStringValue(RecoverableDatabaseId);
             }
-            if (LongTermRetentionBackupResourceId != null)
+            if (Optional.IsDefined(LongTermRetentionBackupResourceId))
             {
                 writer.WritePropertyName("longTermRetentionBackupResourceId"u8);
                 writer.WriteStringValue(LongTermRetentionBackupResourceId);
             }
-            if (AllowAutoCompleteRestore.HasValue)
+            if (Optional.IsDefined(AllowAutoCompleteRestore))
             {
                 writer.WritePropertyName("autoCompleteRestore"u8);
                 writer.WriteBooleanValue(AllowAutoCompleteRestore.Value);
             }
-            if (LastBackupName != null)
+            if (Optional.IsDefined(LastBackupName))
             {
                 writer.WritePropertyName("lastBackupName"u8);
                 writer.WriteStringValue(LastBackupName);
             }
-            if (CrossSubscriptionTargetManagedInstanceId != null)
+            if (Optional.IsDefined(CrossSubscriptionTargetManagedInstanceId))
             {
                 writer.WritePropertyName("crossSubscriptionTargetManagedInstanceId"u8);
                 writer.WriteStringValue(CrossSubscriptionTargetManagedInstanceId);
             }
-            if (IsLedgerOn.HasValue)
+            if (Optional.IsDefined(IsLedgerOn))
             {
                 writer.WritePropertyName("isLedgerOn"u8);
                 writer.WriteBooleanValue(IsLedgerOn.Value);
@@ -217,29 +217,29 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> collation = default;
-            Optional<ManagedDatabaseStatus> status = default;
-            Optional<DateTimeOffset> creationDate = default;
-            Optional<DateTimeOffset> earliestRestorePoint = default;
-            Optional<DateTimeOffset> restorePointInTime = default;
-            Optional<AzureLocation> defaultSecondaryLocation = default;
-            Optional<CatalogCollationType> catalogCollation = default;
-            Optional<ManagedDatabaseCreateMode> createMode = default;
-            Optional<Uri> storageContainerUri = default;
-            Optional<ResourceIdentifier> sourceDatabaseId = default;
-            Optional<ResourceIdentifier> crossSubscriptionSourceDatabaseId = default;
-            Optional<ResourceIdentifier> restorableDroppedDatabaseId = default;
-            Optional<ResourceIdentifier> crossSubscriptionRestorableDroppedDatabaseId = default;
-            Optional<string> storageContainerIdentity = default;
-            Optional<string> storageContainerSasToken = default;
-            Optional<ResourceIdentifier> failoverGroupId = default;
-            Optional<ResourceIdentifier> recoverableDatabaseId = default;
-            Optional<ResourceIdentifier> longTermRetentionBackupResourceId = default;
-            Optional<bool> autoCompleteRestore = default;
-            Optional<string> lastBackupName = default;
-            Optional<ResourceIdentifier> crossSubscriptionTargetManagedInstanceId = default;
-            Optional<bool> isLedgerOn = default;
+            SystemData systemData = default;
+            string collation = default;
+            ManagedDatabaseStatus? status = default;
+            DateTimeOffset? creationDate = default;
+            DateTimeOffset? earliestRestorePoint = default;
+            DateTimeOffset? restorePointInTime = default;
+            AzureLocation? defaultSecondaryLocation = default;
+            CatalogCollationType? catalogCollation = default;
+            ManagedDatabaseCreateMode? createMode = default;
+            Uri storageContainerUri = default;
+            ResourceIdentifier sourceDatabaseId = default;
+            ResourceIdentifier crossSubscriptionSourceDatabaseId = default;
+            ResourceIdentifier restorableDroppedDatabaseId = default;
+            ResourceIdentifier crossSubscriptionRestorableDroppedDatabaseId = default;
+            string storageContainerIdentity = default;
+            string storageContainerSasToken = default;
+            ResourceIdentifier failoverGroupId = default;
+            ResourceIdentifier recoverableDatabaseId = default;
+            ResourceIdentifier longTermRetentionBackupResourceId = default;
+            bool? autoCompleteRestore = default;
+            string lastBackupName = default;
+            ResourceIdentifier crossSubscriptionTargetManagedInstanceId = default;
+            bool? isLedgerOn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -491,31 +491,31 @@ namespace Azure.ResourceManager.Sql
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                collation.Value,
-                Optional.ToNullable(status),
-                Optional.ToNullable(creationDate),
-                Optional.ToNullable(earliestRestorePoint),
-                Optional.ToNullable(restorePointInTime),
-                Optional.ToNullable(defaultSecondaryLocation),
-                Optional.ToNullable(catalogCollation),
-                Optional.ToNullable(createMode),
-                storageContainerUri.Value,
-                sourceDatabaseId.Value,
-                crossSubscriptionSourceDatabaseId.Value,
-                restorableDroppedDatabaseId.Value,
-                crossSubscriptionRestorableDroppedDatabaseId.Value,
-                storageContainerIdentity.Value,
-                storageContainerSasToken.Value,
-                failoverGroupId.Value,
-                recoverableDatabaseId.Value,
-                longTermRetentionBackupResourceId.Value,
-                Optional.ToNullable(autoCompleteRestore),
-                lastBackupName.Value,
-                crossSubscriptionTargetManagedInstanceId.Value,
-                Optional.ToNullable(isLedgerOn),
+                collation,
+                status,
+                creationDate,
+                earliestRestorePoint,
+                restorePointInTime,
+                defaultSecondaryLocation,
+                catalogCollation,
+                createMode,
+                storageContainerUri,
+                sourceDatabaseId,
+                crossSubscriptionSourceDatabaseId,
+                restorableDroppedDatabaseId,
+                crossSubscriptionRestorableDroppedDatabaseId,
+                storageContainerIdentity,
+                storageContainerSasToken,
+                failoverGroupId,
+                recoverableDatabaseId,
+                longTermRetentionBackupResourceId,
+                autoCompleteRestore,
+                lastBackupName,
+                crossSubscriptionTargetManagedInstanceId,
+                isLedgerOn,
                 serializedAdditionalRawData);
         }
 

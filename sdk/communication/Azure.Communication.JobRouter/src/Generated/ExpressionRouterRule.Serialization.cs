@@ -27,7 +27,7 @@ namespace Azure.Communication.JobRouter
             }
 
             writer.WriteStartObject();
-            if (Language != null)
+            if (Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
@@ -74,7 +74,7 @@ namespace Azure.Communication.JobRouter
             {
                 return null;
             }
-            Optional<string> language = default;
+            string language = default;
             string expression = default;
             RouterRuleKind kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -102,7 +102,7 @@ namespace Azure.Communication.JobRouter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressionRouterRule(kind, serializedAdditionalRawData, language.Value, expression);
+            return new ExpressionRouterRule(kind, serializedAdditionalRawData, language, expression);
         }
 
         BinaryData IPersistableModel<ExpressionRouterRule>.Write(ModelReaderWriterOptions options)

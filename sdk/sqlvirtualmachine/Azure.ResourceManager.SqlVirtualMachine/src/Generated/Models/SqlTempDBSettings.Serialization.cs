@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SqlVirtualMachine;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
@@ -26,42 +27,42 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             }
 
             writer.WriteStartObject();
-            if (DataFileSize.HasValue)
+            if (Optional.IsDefined(DataFileSize))
             {
                 writer.WritePropertyName("dataFileSize"u8);
                 writer.WriteNumberValue(DataFileSize.Value);
             }
-            if (DataGrowth.HasValue)
+            if (Optional.IsDefined(DataGrowth))
             {
                 writer.WritePropertyName("dataGrowth"u8);
                 writer.WriteNumberValue(DataGrowth.Value);
             }
-            if (LogFileSize.HasValue)
+            if (Optional.IsDefined(LogFileSize))
             {
                 writer.WritePropertyName("logFileSize"u8);
                 writer.WriteNumberValue(LogFileSize.Value);
             }
-            if (LogGrowth.HasValue)
+            if (Optional.IsDefined(LogGrowth))
             {
                 writer.WritePropertyName("logGrowth"u8);
                 writer.WriteNumberValue(LogGrowth.Value);
             }
-            if (DataFileCount.HasValue)
+            if (Optional.IsDefined(DataFileCount))
             {
                 writer.WritePropertyName("dataFileCount"u8);
                 writer.WriteNumberValue(DataFileCount.Value);
             }
-            if (PersistFolder.HasValue)
+            if (Optional.IsDefined(PersistFolder))
             {
                 writer.WritePropertyName("persistFolder"u8);
                 writer.WriteBooleanValue(PersistFolder.Value);
             }
-            if (PersistFolderPath != null)
+            if (Optional.IsDefined(PersistFolderPath))
             {
                 writer.WritePropertyName("persistFolderPath"u8);
                 writer.WriteStringValue(PersistFolderPath);
             }
-            if (!(LogicalUnitNumbers is ChangeTrackingList<int> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(LogicalUnitNumbers))
             {
                 writer.WritePropertyName("luns"u8);
                 writer.WriteStartArray();
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
                 writer.WriteEndArray();
             }
-            if (DefaultFilePath != null)
+            if (Optional.IsDefined(DefaultFilePath))
             {
                 writer.WritePropertyName("defaultFilePath"u8);
                 writer.WriteStringValue(DefaultFilePath);
@@ -114,15 +115,15 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 return null;
             }
-            Optional<int> dataFileSize = default;
-            Optional<int> dataGrowth = default;
-            Optional<int> logFileSize = default;
-            Optional<int> logGrowth = default;
-            Optional<int> dataFileCount = default;
-            Optional<bool> persistFolder = default;
-            Optional<string> persistFolderPath = default;
+            int? dataFileSize = default;
+            int? dataGrowth = default;
+            int? logFileSize = default;
+            int? logGrowth = default;
+            int? dataFileCount = default;
+            bool? persistFolder = default;
+            string persistFolderPath = default;
             IList<int> luns = default;
-            Optional<string> defaultFilePath = default;
+            string defaultFilePath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -212,15 +213,15 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SqlTempDBSettings(
-                Optional.ToNullable(dataFileSize),
-                Optional.ToNullable(dataGrowth),
-                Optional.ToNullable(logFileSize),
-                Optional.ToNullable(logGrowth),
-                Optional.ToNullable(dataFileCount),
-                Optional.ToNullable(persistFolder),
-                persistFolderPath.Value,
+                dataFileSize,
+                dataGrowth,
+                logFileSize,
+                logGrowth,
+                dataFileCount,
+                persistFolder,
+                persistFolderPath,
                 luns ?? new ChangeTrackingList<int>(),
-                defaultFilePath.Value,
+                defaultFilePath,
                 serializedAdditionalRawData);
         }
 

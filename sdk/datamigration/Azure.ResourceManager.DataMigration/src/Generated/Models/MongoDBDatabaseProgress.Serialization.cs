@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (!(Collections is ChangeTrackingDictionary<string, MongoDBCollectionProgress> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Collections))
             {
                 writer.WritePropertyName("collections"u8);
                 writer.WriteStartObject();
@@ -55,22 +56,22 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteNumberValue(EventsPending);
             writer.WritePropertyName("eventsReplayed"u8);
             writer.WriteNumberValue(EventsReplayed);
-            if (LastEventOn.HasValue)
+            if (Optional.IsDefined(LastEventOn))
             {
                 writer.WritePropertyName("lastEventTime"u8);
                 writer.WriteStringValue(LastEventOn.Value, "O");
             }
-            if (LastReplayOn.HasValue)
+            if (Optional.IsDefined(LastReplayOn))
             {
                 writer.WritePropertyName("lastReplayTime"u8);
                 writer.WriteStringValue(LastReplayOn.Value, "O");
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (QualifiedName != null)
+            if (Optional.IsDefined(QualifiedName))
             {
                 writer.WritePropertyName("qualifiedName"u8);
                 writer.WriteStringValue(QualifiedName);
@@ -128,10 +129,10 @@ namespace Azure.ResourceManager.DataMigration.Models
             IReadOnlyDictionary<string, MongoDBError> errors = default;
             long eventsPending = default;
             long eventsReplayed = default;
-            Optional<DateTimeOffset> lastEventTime = default;
-            Optional<DateTimeOffset> lastReplayTime = default;
-            Optional<string> name = default;
-            Optional<string> qualifiedName = default;
+            DateTimeOffset? lastEventTime = default;
+            DateTimeOffset? lastReplayTime = default;
+            string name = default;
+            string qualifiedName = default;
             MongoDBProgressResultType resultType = default;
             MongoDBMigrationState state = default;
             long totalBytes = default;
@@ -250,10 +251,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 errors,
                 eventsPending,
                 eventsReplayed,
-                Optional.ToNullable(lastEventTime),
-                Optional.ToNullable(lastReplayTime),
-                name.Value,
-                qualifiedName.Value,
+                lastEventTime,
+                lastReplayTime,
+                name,
+                qualifiedName,
                 resultType,
                 state,
                 totalBytes,

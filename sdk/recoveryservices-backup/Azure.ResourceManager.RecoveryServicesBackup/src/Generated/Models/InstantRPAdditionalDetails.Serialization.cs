@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (AzureBackupRGNamePrefix != null)
+            if (Optional.IsDefined(AzureBackupRGNamePrefix))
             {
                 writer.WritePropertyName("azureBackupRGNamePrefix"u8);
                 writer.WriteStringValue(AzureBackupRGNamePrefix);
             }
-            if (AzureBackupRGNameSuffix != null)
+            if (Optional.IsDefined(AzureBackupRGNameSuffix))
             {
                 writer.WritePropertyName("azureBackupRGNameSuffix"u8);
                 writer.WriteStringValue(AzureBackupRGNameSuffix);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> azureBackupRGNamePrefix = default;
-            Optional<string> azureBackupRGNameSuffix = default;
+            string azureBackupRGNamePrefix = default;
+            string azureBackupRGNameSuffix = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InstantRPAdditionalDetails(azureBackupRGNamePrefix.Value, azureBackupRGNameSuffix.Value, serializedAdditionalRawData);
+            return new InstantRPAdditionalDetails(azureBackupRGNamePrefix, azureBackupRGNameSuffix, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InstantRPAdditionalDetails>.Write(ModelReaderWriterOptions options)

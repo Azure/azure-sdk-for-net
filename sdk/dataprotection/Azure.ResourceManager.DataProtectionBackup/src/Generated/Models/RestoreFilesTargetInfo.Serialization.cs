@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStringValue(ObjectType);
             writer.WritePropertyName("recoveryOption"u8);
             writer.WriteStringValue(RecoverySetting.ToString());
-            if (RestoreLocation.HasValue)
+            if (Optional.IsDefined(RestoreLocation))
             {
                 writer.WritePropertyName("restoreLocation"u8);
                 writer.WriteStringValue(RestoreLocation.Value);
@@ -78,7 +79,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             RestoreFilesTargetDetails targetDetails = default;
             string objectType = default;
             RecoverySetting recoveryOption = default;
-            Optional<AzureLocation> restoreLocation = default;
+            AzureLocation? restoreLocation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RestoreFilesTargetInfo(objectType, recoveryOption, Optional.ToNullable(restoreLocation), serializedAdditionalRawData, targetDetails);
+            return new RestoreFilesTargetInfo(objectType, recoveryOption, restoreLocation, serializedAdditionalRawData, targetDetails);
         }
 
         BinaryData IPersistableModel<RestoreFilesTargetInfo>.Write(ModelReaderWriterOptions options)

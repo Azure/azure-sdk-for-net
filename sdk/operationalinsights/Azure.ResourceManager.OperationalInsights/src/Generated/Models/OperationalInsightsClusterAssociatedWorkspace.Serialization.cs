@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && WorkspaceId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(WorkspaceId))
             {
                 writer.WritePropertyName("workspaceId"u8);
                 writer.WriteStringValue(WorkspaceId.Value);
             }
-            if (options.Format != "W" && WorkspaceName != null)
+            if (options.Format != "W" && Optional.IsDefined(WorkspaceName))
             {
                 writer.WritePropertyName("workspaceName"u8);
                 writer.WriteStringValue(WorkspaceName);
             }
-            if (options.Format != "W" && ResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (options.Format != "W" && AssociatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AssociatedOn))
             {
                 writer.WritePropertyName("associateDate"u8);
                 writer.WriteStringValue(AssociatedOn.Value, "R");
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Optional<Guid> workspaceId = default;
-            Optional<string> workspaceName = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<DateTimeOffset> associateDate = default;
+            Guid? workspaceId = default;
+            string workspaceName = default;
+            ResourceIdentifier resourceId = default;
+            DateTimeOffset? associateDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalInsightsClusterAssociatedWorkspace(Optional.ToNullable(workspaceId), workspaceName.Value, resourceId.Value, Optional.ToNullable(associateDate), serializedAdditionalRawData);
+            return new OperationalInsightsClusterAssociatedWorkspace(workspaceId, workspaceName, resourceId, associateDate, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationalInsightsClusterAssociatedWorkspace>.Write(ModelReaderWriterOptions options)

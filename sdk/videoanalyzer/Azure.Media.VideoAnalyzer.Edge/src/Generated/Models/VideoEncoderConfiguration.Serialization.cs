@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Media.VideoAnalyzer.Edge;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -15,32 +16,32 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Encoding.HasValue)
+            if (Optional.IsDefined(Encoding))
             {
                 writer.WritePropertyName("encoding"u8);
                 writer.WriteStringValue(Encoding.Value.ToString());
             }
-            if (Quality.HasValue)
+            if (Optional.IsDefined(Quality))
             {
                 writer.WritePropertyName("quality"u8);
                 writer.WriteNumberValue(Quality.Value);
             }
-            if (Resolution != null)
+            if (Optional.IsDefined(Resolution))
             {
                 writer.WritePropertyName("resolution"u8);
                 writer.WriteObjectValue(Resolution);
             }
-            if (RateControl != null)
+            if (Optional.IsDefined(RateControl))
             {
                 writer.WritePropertyName("rateControl"u8);
                 writer.WriteObjectValue(RateControl);
             }
-            if (H264 != null)
+            if (Optional.IsDefined(H264))
             {
                 writer.WritePropertyName("h264"u8);
                 writer.WriteObjectValue(H264);
             }
-            if (Mpeg4 != null)
+            if (Optional.IsDefined(Mpeg4))
             {
                 writer.WritePropertyName("mpeg4"u8);
                 writer.WriteObjectValue(Mpeg4);
@@ -54,12 +55,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<VideoEncoding> encoding = default;
-            Optional<float> quality = default;
-            Optional<VideoResolution> resolution = default;
-            Optional<RateControl> rateControl = default;
-            Optional<H264Configuration> h264 = default;
-            Optional<Mpeg4Configuration> mpeg4 = default;
+            VideoEncoding? encoding = default;
+            float? quality = default;
+            VideoResolution resolution = default;
+            RateControl rateControl = default;
+            H264Configuration h264 = default;
+            Mpeg4Configuration mpeg4 = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("encoding"u8))
@@ -118,12 +119,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 }
             }
             return new VideoEncoderConfiguration(
-                Optional.ToNullable(encoding),
-                Optional.ToNullable(quality),
-                resolution.Value,
-                rateControl.Value,
-                h264.Value,
-                mpeg4.Value);
+                encoding,
+                quality,
+                resolution,
+                rateControl,
+                h264,
+                mpeg4);
         }
     }
 }

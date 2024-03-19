@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -28,17 +29,17 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && RuleSetName != null)
+            if (options.Format != "W" && Optional.IsDefined(RuleSetName))
             {
                 writer.WritePropertyName("ruleSetName"u8);
                 writer.WriteStringValue(RuleSetName);
             }
-            if (Order.HasValue)
+            if (Optional.IsDefined(Order))
             {
                 writer.WritePropertyName("order"u8);
                 writer.WriteNumberValue(Order.Value);
             }
-            if (!(Conditions is ChangeTrackingList<DeliveryRuleCondition> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Conditions))
             {
                 writer.WritePropertyName("conditions"u8);
                 writer.WriteStartArray();
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Actions is ChangeTrackingList<DeliveryRuleAction> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Actions))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
@@ -58,7 +59,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndArray();
             }
-            if (MatchProcessingBehavior.HasValue)
+            if (Optional.IsDefined(MatchProcessingBehavior))
             {
                 writer.WritePropertyName("matchProcessingBehavior"u8);
                 writer.WriteStringValue(MatchProcessingBehavior.Value.ToString());
@@ -102,11 +103,11 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<string> ruleSetName = default;
-            Optional<int> order = default;
+            string ruleSetName = default;
+            int? order = default;
             IList<DeliveryRuleCondition> conditions = default;
             IList<DeliveryRuleAction> actions = default;
-            Optional<MatchProcessingBehavior> matchProcessingBehavior = default;
+            MatchProcessingBehavior? matchProcessingBehavior = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -181,11 +182,11 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new FrontDoorRulePatch(
-                ruleSetName.Value,
-                Optional.ToNullable(order),
+                ruleSetName,
+                order,
                 conditions ?? new ChangeTrackingList<DeliveryRuleCondition>(),
                 actions ?? new ChangeTrackingList<DeliveryRuleAction>(),
-                Optional.ToNullable(matchProcessingBehavior),
+                matchProcessingBehavior,
                 serializedAdditionalRawData);
         }
 

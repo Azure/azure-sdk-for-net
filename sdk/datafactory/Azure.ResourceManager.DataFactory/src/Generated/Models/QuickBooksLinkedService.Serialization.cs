@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -29,17 +30,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LinkedServiceType);
-            if (ConnectVia != null)
+            if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
                 writer.WriteObjectValue(ConnectVia);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, EntityParameterSpecification> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(Annotations is ChangeTrackingList<BinaryData> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (ConnectionProperties != null)
+            if (Optional.IsDefined(ConnectionProperties))
             {
                 writer.WritePropertyName("connectionProperties"u8);
 #if NET6_0_OR_GREATER
@@ -86,42 +87,42 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            if (Endpoint != null)
+            if (Optional.IsDefined(Endpoint))
             {
                 writer.WritePropertyName("endpoint"u8);
                 JsonSerializer.Serialize(writer, Endpoint);
             }
-            if (CompanyId != null)
+            if (Optional.IsDefined(CompanyId))
             {
                 writer.WritePropertyName("companyId"u8);
                 JsonSerializer.Serialize(writer, CompanyId);
             }
-            if (ConsumerKey != null)
+            if (Optional.IsDefined(ConsumerKey))
             {
                 writer.WritePropertyName("consumerKey"u8);
                 JsonSerializer.Serialize(writer, ConsumerKey);
             }
-            if (ConsumerSecret != null)
+            if (Optional.IsDefined(ConsumerSecret))
             {
                 writer.WritePropertyName("consumerSecret"u8);
                 JsonSerializer.Serialize(writer, ConsumerSecret);
             }
-            if (AccessToken != null)
+            if (Optional.IsDefined(AccessToken))
             {
                 writer.WritePropertyName("accessToken"u8);
                 JsonSerializer.Serialize(writer, AccessToken);
             }
-            if (AccessTokenSecret != null)
+            if (Optional.IsDefined(AccessTokenSecret))
             {
                 writer.WritePropertyName("accessTokenSecret"u8);
                 JsonSerializer.Serialize(writer, AccessTokenSecret);
             }
-            if (UseEncryptedEndpoints != null)
+            if (Optional.IsDefined(UseEncryptedEndpoints))
             {
                 writer.WritePropertyName("useEncryptedEndpoints"u8);
                 JsonSerializer.Serialize(writer, UseEncryptedEndpoints);
             }
-            if (EncryptedCredential != null)
+            if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteStringValue(EncryptedCredential);
@@ -163,19 +164,19 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
             IDictionary<string, EntityParameterSpecification> parameters = default;
             IList<BinaryData> annotations = default;
-            Optional<BinaryData> connectionProperties = default;
-            Optional<DataFactoryElement<string>> endpoint = default;
-            Optional<DataFactoryElement<string>> companyId = default;
-            Optional<DataFactoryElement<string>> consumerKey = default;
-            Optional<DataFactorySecretBaseDefinition> consumerSecret = default;
-            Optional<DataFactorySecretBaseDefinition> accessToken = default;
-            Optional<DataFactorySecretBaseDefinition> accessTokenSecret = default;
-            Optional<DataFactoryElement<bool>> useEncryptedEndpoints = default;
-            Optional<string> encryptedCredential = default;
+            BinaryData connectionProperties = default;
+            DataFactoryElement<string> endpoint = default;
+            DataFactoryElement<string> companyId = default;
+            DataFactoryElement<string> consumerKey = default;
+            DataFactorySecret consumerSecret = default;
+            DataFactorySecret accessToken = default;
+            DataFactorySecret accessTokenSecret = default;
+            DataFactoryElement<bool> useEncryptedEndpoints = default;
+            string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -285,7 +286,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            consumerSecret = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
+                            consumerSecret = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("accessToken"u8))
@@ -294,7 +295,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            accessToken = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
+                            accessToken = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("accessTokenSecret"u8))
@@ -303,7 +304,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            accessTokenSecret = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
+                            accessTokenSecret = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("useEncryptedEndpoints"u8))
@@ -328,20 +329,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new QuickBooksLinkedService(
                 type,
-                connectVia.Value,
-                description.Value,
+                connectVia,
+                description,
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 annotations ?? new ChangeTrackingList<BinaryData>(),
                 additionalProperties,
-                connectionProperties.Value,
-                endpoint.Value,
-                companyId.Value,
-                consumerKey.Value,
+                connectionProperties,
+                endpoint,
+                companyId,
+                consumerKey,
                 consumerSecret,
                 accessToken,
                 accessTokenSecret,
-                useEncryptedEndpoints.Value,
-                encryptedCredential.Value);
+                useEncryptedEndpoints,
+                encryptedCredential);
         }
 
         BinaryData IPersistableModel<QuickBooksLinkedService>.Write(ModelReaderWriterOptions options)

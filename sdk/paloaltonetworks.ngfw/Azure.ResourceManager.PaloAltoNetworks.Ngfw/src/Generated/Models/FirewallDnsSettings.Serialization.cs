@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
 
             writer.WriteStartObject();
-            if (EnableDnsProxy.HasValue)
+            if (Optional.IsDefined(EnableDnsProxy))
             {
                 writer.WritePropertyName("enableDnsProxy"u8);
                 writer.WriteStringValue(EnableDnsProxy.Value.ToString());
             }
-            if (EnabledDnsType.HasValue)
+            if (Optional.IsDefined(EnabledDnsType))
             {
                 writer.WritePropertyName("enabledDnsType"u8);
                 writer.WriteStringValue(EnabledDnsType.Value.ToString());
             }
-            if (!(DnsServers is ChangeTrackingList<IPAddressInfo> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DnsServers))
             {
                 writer.WritePropertyName("dnsServers"u8);
                 writer.WriteStartArray();
@@ -84,8 +85,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 return null;
             }
-            Optional<AllowDnsProxyType> enableDnsProxy = default;
-            Optional<EnabledDnsType> enabledDnsType = default;
+            AllowDnsProxyType? enableDnsProxy = default;
+            EnabledDnsType? enabledDnsType = default;
             IList<IPAddressInfo> dnsServers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallDnsSettings(Optional.ToNullable(enableDnsProxy), Optional.ToNullable(enabledDnsType), dnsServers ?? new ChangeTrackingList<IPAddressInfo>(), serializedAdditionalRawData);
+            return new FirewallDnsSettings(enableDnsProxy, enabledDnsType, dnsServers ?? new ChangeTrackingList<IPAddressInfo>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirewallDnsSettings>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -26,74 +27,74 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ContactPersonName != null)
+            if (options.Format != "W" && Optional.IsDefined(ContactPersonName))
             {
                 writer.WritePropertyName("contactPersonName"u8);
                 writer.WriteStringValue(ContactPersonName);
             }
-            if (options.Format != "W" && Company != null)
+            if (options.Format != "W" && Optional.IsDefined(Company))
             {
                 writer.WritePropertyName("company"u8);
                 writer.WriteStringValue(Company);
             }
-            if (options.Format != "W" && Street1 != null)
+            if (options.Format != "W" && Optional.IsDefined(Street1))
             {
                 writer.WritePropertyName("street1"u8);
                 writer.WriteStringValue(Street1);
             }
-            if (options.Format != "W" && Street2 != null)
+            if (options.Format != "W" && Optional.IsDefined(Street2))
             {
                 writer.WritePropertyName("street2"u8);
                 writer.WriteStringValue(Street2);
             }
-            if (options.Format != "W" && Street3 != null)
+            if (options.Format != "W" && Optional.IsDefined(Street3))
             {
                 writer.WritePropertyName("street3"u8);
                 writer.WriteStringValue(Street3);
             }
-            if (options.Format != "W" && City != null)
+            if (options.Format != "W" && Optional.IsDefined(City))
             {
                 writer.WritePropertyName("city"u8);
                 writer.WriteStringValue(City);
             }
-            if (options.Format != "W" && State != null)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
-            if (options.Format != "W" && Zip != null)
+            if (options.Format != "W" && Optional.IsDefined(Zip))
             {
                 writer.WritePropertyName("zip"u8);
                 writer.WriteStringValue(Zip);
             }
-            if (options.Format != "W" && Country != null)
+            if (options.Format != "W" && Optional.IsDefined(Country))
             {
                 writer.WritePropertyName("country"u8);
                 writer.WriteStringValue(Country);
             }
-            if (options.Format != "W" && Phone != null)
+            if (options.Format != "W" && Optional.IsDefined(Phone))
             {
                 writer.WritePropertyName("phone"u8);
                 writer.WriteStringValue(Phone);
             }
-            if (options.Format != "W" && PhoneExtension != null)
+            if (options.Format != "W" && Optional.IsDefined(PhoneExtension))
             {
                 writer.WritePropertyName("phoneExtension"u8);
                 writer.WriteStringValue(PhoneExtension);
             }
-            if (options.Format != "W" && AddressType != null)
+            if (options.Format != "W" && Optional.IsDefined(AddressType))
             {
                 writer.WritePropertyName("addressType"u8);
                 writer.WriteStringValue(AddressType);
             }
-            if (options.Format != "W" && AdditionalShippingInformation != null)
+            if (options.Format != "W" && Optional.IsDefined(AdditionalShippingInformation))
             {
                 writer.WritePropertyName("additionalShippingInformation"u8);
                 writer.WriteStringValue(AdditionalShippingInformation);
             }
             writer.WritePropertyName("datacenterAddressType"u8);
             writer.WriteStringValue(DataCenterAddressType.ToSerialString());
-            if (options.Format != "W" && !(SupportedCarriersForReturnShipment is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedCarriersForReturnShipment))
             {
                 writer.WritePropertyName("supportedCarriersForReturnShipment"u8);
                 writer.WriteStartArray();
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && DataCenterAzureLocation.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DataCenterAzureLocation))
             {
                 writer.WritePropertyName("dataCenterAzureLocation"u8);
                 writer.WriteStringValue(DataCenterAzureLocation.Value);
@@ -146,22 +147,22 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<string> contactPersonName = default;
-            Optional<string> company = default;
-            Optional<string> street1 = default;
-            Optional<string> street2 = default;
-            Optional<string> street3 = default;
-            Optional<string> city = default;
-            Optional<string> state = default;
-            Optional<string> zip = default;
-            Optional<string> country = default;
-            Optional<string> phone = default;
-            Optional<string> phoneExtension = default;
-            Optional<string> addressType = default;
-            Optional<string> additionalShippingInformation = default;
+            string contactPersonName = default;
+            string company = default;
+            string street1 = default;
+            string street2 = default;
+            string street3 = default;
+            string city = default;
+            string state = default;
+            string zip = default;
+            string country = default;
+            string phone = default;
+            string phoneExtension = default;
+            string addressType = default;
+            string additionalShippingInformation = default;
             DataCenterAddressType dataCenterAddressType = default;
             IReadOnlyList<string> supportedCarriersForReturnShipment = default;
-            Optional<AzureLocation> dataCenterAzureLocation = default;
+            AzureLocation? dataCenterAzureLocation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -268,21 +269,21 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataCenterAddressLocationResult(
                 dataCenterAddressType,
                 supportedCarriersForReturnShipment ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(dataCenterAzureLocation),
+                dataCenterAzureLocation,
                 serializedAdditionalRawData,
-                contactPersonName.Value,
-                company.Value,
-                street1.Value,
-                street2.Value,
-                street3.Value,
-                city.Value,
-                state.Value,
-                zip.Value,
-                country.Value,
-                phone.Value,
-                phoneExtension.Value,
-                addressType.Value,
-                additionalShippingInformation.Value);
+                contactPersonName,
+                company,
+                street1,
+                street2,
+                street3,
+                city,
+                state,
+                zip,
+                country,
+                phone,
+                phoneExtension,
+                addressType,
+                additionalShippingInformation);
         }
 
         BinaryData IPersistableModel<DataCenterAddressLocationResult>.Write(ModelReaderWriterOptions options)

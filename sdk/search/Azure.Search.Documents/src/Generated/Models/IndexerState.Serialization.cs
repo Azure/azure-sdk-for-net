@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -19,11 +19,11 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<IndexingMode> mode = default;
-            Optional<string> allDocsInitialChangeTrackingState = default;
-            Optional<string> allDocsFinalChangeTrackingState = default;
-            Optional<string> resetDocsInitialChangeTrackingState = default;
-            Optional<string> resetDocsFinalChangeTrackingState = default;
+            IndexingMode? mode = default;
+            string allDocsInitialChangeTrackingState = default;
+            string allDocsFinalChangeTrackingState = default;
+            string resetDocsInitialChangeTrackingState = default;
+            string resetDocsFinalChangeTrackingState = default;
             IReadOnlyList<string> resetDocumentKeys = default;
             IReadOnlyList<string> resetDatasourceDocumentIds = default;
             foreach (var property in element.EnumerateObject())
@@ -87,11 +87,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
             }
             return new IndexerState(
-                Optional.ToNullable(mode),
-                allDocsInitialChangeTrackingState.Value,
-                allDocsFinalChangeTrackingState.Value,
-                resetDocsInitialChangeTrackingState.Value,
-                resetDocsFinalChangeTrackingState.Value,
+                mode,
+                allDocsInitialChangeTrackingState,
+                allDocsFinalChangeTrackingState,
+                resetDocsInitialChangeTrackingState,
+                resetDocsFinalChangeTrackingState,
                 resetDocumentKeys ?? new ChangeTrackingList<string>(),
                 resetDatasourceDocumentIds ?? new ChangeTrackingList<string>());
         }

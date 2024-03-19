@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -35,17 +36,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (LicenseType.HasValue)
+            if (Optional.IsDefined(LicenseType))
             {
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType.Value.ToString());
             }
-            if (SqlServerLicenseType.HasValue)
+            if (Optional.IsDefined(SqlServerLicenseType))
             {
                 writer.WritePropertyName("sqlServerLicenseType"u8);
                 writer.WriteStringValue(SqlServerLicenseType.Value.ToString());
             }
-            if (PerformSqlBulkRegistration != null)
+            if (Optional.IsDefined(PerformSqlBulkRegistration))
             {
                 writer.WritePropertyName("performSqlBulkRegistration"u8);
                 writer.WriteStringValue(PerformSqlBulkRegistration);
@@ -54,12 +55,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStringValue(DataMoverRunAsAccountId);
             writer.WritePropertyName("snapshotRunAsAccountId"u8);
             writer.WriteStringValue(SnapshotRunAsAccountId);
-            if (TargetVmName != null)
+            if (Optional.IsDefined(TargetVmName))
             {
                 writer.WritePropertyName("targetVmName"u8);
                 writer.WriteStringValue(TargetVmName);
             }
-            if (TargetVmSize != null)
+            if (Optional.IsDefined(TargetVmSize))
             {
                 writer.WritePropertyName("targetVmSize"u8);
                 writer.WriteStringValue(TargetVmSize);
@@ -68,57 +69,57 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStringValue(TargetResourceGroupId);
             writer.WritePropertyName("targetNetworkId"u8);
             writer.WriteStringValue(TargetNetworkId);
-            if (TestNetworkId != null)
+            if (Optional.IsDefined(TestNetworkId))
             {
                 writer.WritePropertyName("testNetworkId"u8);
                 writer.WriteStringValue(TestNetworkId);
             }
-            if (TargetSubnetName != null)
+            if (Optional.IsDefined(TargetSubnetName))
             {
                 writer.WritePropertyName("targetSubnetName"u8);
                 writer.WriteStringValue(TargetSubnetName);
             }
-            if (TestSubnetName != null)
+            if (Optional.IsDefined(TestSubnetName))
             {
                 writer.WritePropertyName("testSubnetName"u8);
                 writer.WriteStringValue(TestSubnetName);
             }
-            if (TargetAvailabilitySetId != null)
+            if (Optional.IsDefined(TargetAvailabilitySetId))
             {
                 writer.WritePropertyName("targetAvailabilitySetId"u8);
                 writer.WriteStringValue(TargetAvailabilitySetId);
             }
-            if (TargetAvailabilityZone != null)
+            if (Optional.IsDefined(TargetAvailabilityZone))
             {
                 writer.WritePropertyName("targetAvailabilityZone"u8);
                 writer.WriteStringValue(TargetAvailabilityZone);
             }
-            if (TargetProximityPlacementGroupId != null)
+            if (Optional.IsDefined(TargetProximityPlacementGroupId))
             {
                 writer.WritePropertyName("targetProximityPlacementGroupId"u8);
                 writer.WriteStringValue(TargetProximityPlacementGroupId);
             }
-            if (ConfidentialVmKeyVaultId != null)
+            if (Optional.IsDefined(ConfidentialVmKeyVaultId))
             {
                 writer.WritePropertyName("confidentialVmKeyVaultId"u8);
                 writer.WriteStringValue(ConfidentialVmKeyVaultId);
             }
-            if (TargetVmSecurityProfile != null)
+            if (Optional.IsDefined(TargetVmSecurityProfile))
             {
                 writer.WritePropertyName("targetVmSecurityProfile"u8);
                 writer.WriteObjectValue(TargetVmSecurityProfile);
             }
-            if (TargetBootDiagnosticsStorageAccountId != null)
+            if (Optional.IsDefined(TargetBootDiagnosticsStorageAccountId))
             {
                 writer.WritePropertyName("targetBootDiagnosticsStorageAccountId"u8);
                 writer.WriteStringValue(TargetBootDiagnosticsStorageAccountId);
             }
-            if (PerformAutoResync != null)
+            if (Optional.IsDefined(PerformAutoResync))
             {
                 writer.WritePropertyName("performAutoResync"u8);
                 writer.WriteStringValue(PerformAutoResync);
             }
-            if (!(TargetVmTags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(TargetVmTags))
             {
                 writer.WritePropertyName("targetVmTags"u8);
                 writer.WriteStartObject();
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(SeedDiskTags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(SeedDiskTags))
             {
                 writer.WritePropertyName("seedDiskTags"u8);
                 writer.WriteStartObject();
@@ -140,7 +141,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(TargetDiskTags is ChangeTrackingDictionary<string, string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(TargetDiskTags))
             {
                 writer.WritePropertyName("targetDiskTags"u8);
                 writer.WriteStartObject();
@@ -151,7 +152,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(TargetNicTags is ChangeTrackingDictionary<string, string> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(TargetNicTags))
             {
                 writer.WritePropertyName("targetNicTags"u8);
                 writer.WriteStartObject();
@@ -204,25 +205,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             ResourceIdentifier vmwareMachineId = default;
             IList<VMwareCbtDiskContent> disksToInclude = default;
-            Optional<SiteRecoveryLicenseType> licenseType = default;
-            Optional<SiteRecoverySqlServerLicenseType> sqlServerLicenseType = default;
-            Optional<string> performSqlBulkRegistration = default;
+            SiteRecoveryLicenseType? licenseType = default;
+            SiteRecoverySqlServerLicenseType? sqlServerLicenseType = default;
+            string performSqlBulkRegistration = default;
             ResourceIdentifier dataMoverRunAsAccountId = default;
             ResourceIdentifier snapshotRunAsAccountId = default;
-            Optional<string> targetVmName = default;
-            Optional<string> targetVmSize = default;
+            string targetVmName = default;
+            string targetVmSize = default;
             ResourceIdentifier targetResourceGroupId = default;
             ResourceIdentifier targetNetworkId = default;
-            Optional<ResourceIdentifier> testNetworkId = default;
-            Optional<string> targetSubnetName = default;
-            Optional<string> testSubnetName = default;
-            Optional<ResourceIdentifier> targetAvailabilitySetId = default;
-            Optional<string> targetAvailabilityZone = default;
-            Optional<ResourceIdentifier> targetProximityPlacementGroupId = default;
-            Optional<ResourceIdentifier> confidentialVmKeyVaultId = default;
-            Optional<VMwareCbtSecurityProfileProperties> targetVmSecurityProfile = default;
-            Optional<ResourceIdentifier> targetBootDiagnosticsStorageAccountId = default;
-            Optional<string> performAutoResync = default;
+            ResourceIdentifier testNetworkId = default;
+            string targetSubnetName = default;
+            string testSubnetName = default;
+            ResourceIdentifier targetAvailabilitySetId = default;
+            string targetAvailabilityZone = default;
+            ResourceIdentifier targetProximityPlacementGroupId = default;
+            ResourceIdentifier confidentialVmKeyVaultId = default;
+            VMwareCbtSecurityProfileProperties targetVmSecurityProfile = default;
+            ResourceIdentifier targetBootDiagnosticsStorageAccountId = default;
+            string performAutoResync = default;
             IDictionary<string, string> targetVmTags = default;
             IDictionary<string, string> seedDiskTags = default;
             IDictionary<string, string> targetDiskTags = default;
@@ -446,25 +447,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 serializedAdditionalRawData,
                 vmwareMachineId,
                 disksToInclude,
-                Optional.ToNullable(licenseType),
-                Optional.ToNullable(sqlServerLicenseType),
-                performSqlBulkRegistration.Value,
+                licenseType,
+                sqlServerLicenseType,
+                performSqlBulkRegistration,
                 dataMoverRunAsAccountId,
                 snapshotRunAsAccountId,
-                targetVmName.Value,
-                targetVmSize.Value,
+                targetVmName,
+                targetVmSize,
                 targetResourceGroupId,
                 targetNetworkId,
-                testNetworkId.Value,
-                targetSubnetName.Value,
-                testSubnetName.Value,
-                targetAvailabilitySetId.Value,
-                targetAvailabilityZone.Value,
-                targetProximityPlacementGroupId.Value,
-                confidentialVmKeyVaultId.Value,
-                targetVmSecurityProfile.Value,
-                targetBootDiagnosticsStorageAccountId.Value,
-                performAutoResync.Value,
+                testNetworkId,
+                targetSubnetName,
+                testSubnetName,
+                targetAvailabilitySetId,
+                targetAvailabilityZone,
+                targetProximityPlacementGroupId,
+                confidentialVmKeyVaultId,
+                targetVmSecurityProfile,
+                targetBootDiagnosticsStorageAccountId,
+                performAutoResync,
                 targetVmTags ?? new ChangeTrackingDictionary<string, string>(),
                 seedDiskTags ?? new ChangeTrackingDictionary<string, string>(),
                 targetDiskTags ?? new ChangeTrackingDictionary<string, string>(),

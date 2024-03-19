@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (!(Layers is ChangeTrackingList<PngLayer> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Layers))
             {
                 writer.WritePropertyName("layers"u8);
                 writer.WriteStartArray();
@@ -38,34 +39,34 @@ namespace Azure.ResourceManager.Media.Models
             }
             writer.WritePropertyName("start"u8);
             writer.WriteStringValue(Start);
-            if (Step != null)
+            if (Optional.IsDefined(Step))
             {
                 writer.WritePropertyName("step"u8);
                 writer.WriteStringValue(Step);
             }
-            if (Range != null)
+            if (Optional.IsDefined(Range))
             {
                 writer.WritePropertyName("range"u8);
                 writer.WriteStringValue(Range);
             }
-            if (KeyFrameInterval.HasValue)
+            if (Optional.IsDefined(KeyFrameInterval))
             {
                 writer.WritePropertyName("keyFrameInterval"u8);
                 writer.WriteStringValue(KeyFrameInterval.Value, "P");
             }
-            if (StretchMode.HasValue)
+            if (Optional.IsDefined(StretchMode))
             {
                 writer.WritePropertyName("stretchMode"u8);
                 writer.WriteStringValue(StretchMode.Value.ToString());
             }
-            if (SyncMode.HasValue)
+            if (Optional.IsDefined(SyncMode))
             {
                 writer.WritePropertyName("syncMode"u8);
                 writer.WriteStringValue(SyncMode.Value.ToString());
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
-            if (Label != null)
+            if (Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
@@ -110,13 +111,13 @@ namespace Azure.ResourceManager.Media.Models
             }
             IList<PngLayer> layers = default;
             string start = default;
-            Optional<string> step = default;
-            Optional<string> range = default;
-            Optional<TimeSpan> keyFrameInterval = default;
-            Optional<InputVideoStretchMode> stretchMode = default;
-            Optional<VideoSyncMode> syncMode = default;
+            string step = default;
+            string range = default;
+            TimeSpan? keyFrameInterval = default;
+            InputVideoStretchMode? stretchMode = default;
+            VideoSyncMode? syncMode = default;
             string odataType = default;
-            Optional<string> label = default;
+            string label = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -195,14 +196,14 @@ namespace Azure.ResourceManager.Media.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new PngImage(
                 odataType,
-                label.Value,
+                label,
                 serializedAdditionalRawData,
-                Optional.ToNullable(keyFrameInterval),
-                Optional.ToNullable(stretchMode),
-                Optional.ToNullable(syncMode),
+                keyFrameInterval,
+                stretchMode,
+                syncMode,
                 start,
-                step.Value,
-                range.Value,
+                step,
+                range,
                 layers ?? new ChangeTrackingList<PngLayer>());
         }
 

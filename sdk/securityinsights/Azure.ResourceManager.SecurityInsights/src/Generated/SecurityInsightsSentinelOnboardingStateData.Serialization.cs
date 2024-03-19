@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.SecurityInsights
             }
 
             writer.WriteStartObject();
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.SecurityInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (IsCustomerManagedKeySet.HasValue)
+            if (Optional.IsDefined(IsCustomerManagedKeySet))
             {
                 writer.WritePropertyName("customerManagedKey"u8);
                 writer.WriteBooleanValue(IsCustomerManagedKeySet.Value);
@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> customerManagedKey = default;
+            SystemData systemData = default;
+            bool? customerManagedKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -173,9 +173,9 @@ namespace Azure.ResourceManager.SecurityInsights
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(customerManagedKey),
-                Optional.ToNullable(etag),
+                systemData,
+                customerManagedKey,
+                etag,
                 serializedAdditionalRawData);
         }
 

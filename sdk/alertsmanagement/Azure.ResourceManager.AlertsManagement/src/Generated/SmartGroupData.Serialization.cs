@@ -43,44 +43,44 @@ namespace Azure.ResourceManager.AlertsManagement
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AlertsCount.HasValue)
+            if (Optional.IsDefined(AlertsCount))
             {
                 writer.WritePropertyName("alertsCount"u8);
                 writer.WriteNumberValue(AlertsCount.Value);
             }
-            if (options.Format != "W" && SmartGroupState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SmartGroupState))
             {
                 writer.WritePropertyName("smartGroupState"u8);
                 writer.WriteStringValue(SmartGroupState.Value.ToString());
             }
-            if (options.Format != "W" && Severity.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startDateTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && LastModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedDateTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (options.Format != "W" && LastModifiedBy != null)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedBy))
             {
                 writer.WritePropertyName("lastModifiedUserName"u8);
                 writer.WriteStringValue(LastModifiedBy);
             }
-            if (!(Resources is ChangeTrackingList<SmartGroupAggregatedProperty> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Resources))
             {
                 writer.WritePropertyName("resources"u8);
                 writer.WriteStartArray();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 }
                 writer.WriteEndArray();
             }
-            if (!(ResourceTypes is ChangeTrackingList<SmartGroupAggregatedProperty> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ResourceTypes))
             {
                 writer.WritePropertyName("resourceTypes"u8);
                 writer.WriteStartArray();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 }
                 writer.WriteEndArray();
             }
-            if (!(ResourceGroups is ChangeTrackingList<SmartGroupAggregatedProperty> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(ResourceGroups))
             {
                 writer.WritePropertyName("resourceGroups"u8);
                 writer.WriteStartArray();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 }
                 writer.WriteEndArray();
             }
-            if (!(MonitorServices is ChangeTrackingList<SmartGroupAggregatedProperty> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(MonitorServices))
             {
                 writer.WritePropertyName("monitorServices"u8);
                 writer.WriteStartArray();
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 }
                 writer.WriteEndArray();
             }
-            if (!(MonitorConditions is ChangeTrackingList<SmartGroupAggregatedProperty> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(MonitorConditions))
             {
                 writer.WritePropertyName("monitorConditions"u8);
                 writer.WriteStartArray();
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 }
                 writer.WriteEndArray();
             }
-            if (!(AlertStates is ChangeTrackingList<SmartGroupAggregatedProperty> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(AlertStates))
             {
                 writer.WritePropertyName("alertStates"u8);
                 writer.WriteStartArray();
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 }
                 writer.WriteEndArray();
             }
-            if (!(AlertSeverities is ChangeTrackingList<SmartGroupAggregatedProperty> collection5 && collection5.IsUndefined))
+            if (Optional.IsCollectionDefined(AlertSeverities))
             {
                 writer.WritePropertyName("alertSeverities"u8);
                 writer.WriteStartArray();
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 }
                 writer.WriteEndArray();
             }
-            if (NextLink != null)
+            if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -197,13 +197,13 @@ namespace Azure.ResourceManager.AlertsManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<long> alertsCount = default;
-            Optional<SmartGroupState> smartGroupState = default;
-            Optional<ServiceAlertSeverity> severity = default;
-            Optional<DateTimeOffset> startDateTime = default;
-            Optional<DateTimeOffset> lastModifiedDateTime = default;
-            Optional<string> lastModifiedUserName = default;
+            SystemData systemData = default;
+            long? alertsCount = default;
+            SmartGroupState? smartGroupState = default;
+            ServiceAlertSeverity? severity = default;
+            DateTimeOffset? startDateTime = default;
+            DateTimeOffset? lastModifiedDateTime = default;
+            string lastModifiedUserName = default;
             IList<SmartGroupAggregatedProperty> resources = default;
             IList<SmartGroupAggregatedProperty> resourceTypes = default;
             IList<SmartGroupAggregatedProperty> resourceGroups = default;
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.AlertsManagement
             IList<SmartGroupAggregatedProperty> monitorConditions = default;
             IList<SmartGroupAggregatedProperty> alertStates = default;
             IList<SmartGroupAggregatedProperty> alertSeverities = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -415,13 +415,13 @@ namespace Azure.ResourceManager.AlertsManagement
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(alertsCount),
-                Optional.ToNullable(smartGroupState),
-                Optional.ToNullable(severity),
-                Optional.ToNullable(startDateTime),
-                Optional.ToNullable(lastModifiedDateTime),
-                lastModifiedUserName.Value,
+                systemData,
+                alertsCount,
+                smartGroupState,
+                severity,
+                startDateTime,
+                lastModifiedDateTime,
+                lastModifiedUserName,
                 resources ?? new ChangeTrackingList<SmartGroupAggregatedProperty>(),
                 resourceTypes ?? new ChangeTrackingList<SmartGroupAggregatedProperty>(),
                 resourceGroups ?? new ChangeTrackingList<SmartGroupAggregatedProperty>(),
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 monitorConditions ?? new ChangeTrackingList<SmartGroupAggregatedProperty>(),
                 alertStates ?? new ChangeTrackingList<SmartGroupAggregatedProperty>(),
                 alertSeverities ?? new ChangeTrackingList<SmartGroupAggregatedProperty>(),
-                nextLink.Value,
+                nextLink,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppPlatform;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -26,14 +27,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (BuildResultId != null)
+            if (Optional.IsDefined(BuildResultId))
             {
                 writer.WritePropertyName("buildResultId"u8);
                 writer.WriteStringValue(BuildResultId);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(UserSourceInfoType);
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
@@ -76,9 +77,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> buildResultId = default;
+            string buildResultId = default;
             string type = default;
-            Optional<string> version = default;
+            string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformBuildResultUserSourceInfo(type, version.Value, serializedAdditionalRawData, buildResultId.Value);
+            return new AppPlatformBuildResultUserSourceInfo(type, version, serializedAdditionalRawData, buildResultId);
         }
 
         BinaryData IPersistableModel<AppPlatformBuildResultUserSourceInfo>.Write(ModelReaderWriterOptions options)

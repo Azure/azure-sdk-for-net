@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -52,18 +53,9 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="metastoreDBConnectionPasswordSecret"/>, <paramref name="metastoreDBConnectionUriString"/> or <paramref name="metastoreDBConnectionUserName"/> is null. </exception>
         public FlinkHiveCatalogOption(string metastoreDBConnectionPasswordSecret, string metastoreDBConnectionUriString, string metastoreDBConnectionUserName)
         {
-            if (metastoreDBConnectionPasswordSecret == null)
-            {
-                throw new ArgumentNullException(nameof(metastoreDBConnectionPasswordSecret));
-            }
-            if (metastoreDBConnectionUriString == null)
-            {
-                throw new ArgumentNullException(nameof(metastoreDBConnectionUriString));
-            }
-            if (metastoreDBConnectionUserName == null)
-            {
-                throw new ArgumentNullException(nameof(metastoreDBConnectionUserName));
-            }
+            Argument.AssertNotNull(metastoreDBConnectionPasswordSecret, nameof(metastoreDBConnectionPasswordSecret));
+            Argument.AssertNotNull(metastoreDBConnectionUriString, nameof(metastoreDBConnectionUriString));
+            Argument.AssertNotNull(metastoreDBConnectionUserName, nameof(metastoreDBConnectionUserName));
 
             MetastoreDBConnectionPasswordSecret = metastoreDBConnectionPasswordSecret;
             MetastoreDBConnectionUriString = metastoreDBConnectionUriString;

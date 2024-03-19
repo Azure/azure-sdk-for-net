@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.IoT.Hub.Service;
 
 namespace Azure.IoT.Hub.Service.Models
 {
@@ -17,17 +18,17 @@ namespace Azure.IoT.Hub.Service.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (SchemaVersion != null)
+            if (Optional.IsDefined(SchemaVersion))
             {
                 writer.WritePropertyName("schemaVersion"u8);
                 writer.WriteStringValue(SchemaVersion);
             }
-            if (!(Labels is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Labels))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartObject();
@@ -38,42 +39,42 @@ namespace Azure.IoT.Hub.Service.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Content != null)
+            if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteObjectValue(Content);
             }
-            if (TargetCondition != null)
+            if (Optional.IsDefined(TargetCondition))
             {
                 writer.WritePropertyName("targetCondition"u8);
                 writer.WriteStringValue(TargetCondition);
             }
-            if (CreatedTimeUtc.HasValue)
+            if (Optional.IsDefined(CreatedTimeUtc))
             {
                 writer.WritePropertyName("createdTimeUtc"u8);
                 writer.WriteStringValue(CreatedTimeUtc.Value, "O");
             }
-            if (LastUpdatedTimeUtc.HasValue)
+            if (Optional.IsDefined(LastUpdatedTimeUtc))
             {
                 writer.WritePropertyName("lastUpdatedTimeUtc"u8);
                 writer.WriteStringValue(LastUpdatedTimeUtc.Value, "O");
             }
-            if (Priority.HasValue)
+            if (Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
-            if (SystemMetrics != null)
+            if (Optional.IsDefined(SystemMetrics))
             {
                 writer.WritePropertyName("systemMetrics"u8);
                 writer.WriteObjectValue(SystemMetrics);
             }
-            if (Metrics != null)
+            if (Optional.IsDefined(Metrics))
             {
                 writer.WritePropertyName("metrics"u8);
                 writer.WriteObjectValue(Metrics);
             }
-            if (Etag != null)
+            if (Optional.IsDefined(Etag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(Etag);
@@ -87,17 +88,17 @@ namespace Azure.IoT.Hub.Service.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> schemaVersion = default;
+            string id = default;
+            string schemaVersion = default;
             IDictionary<string, string> labels = default;
-            Optional<ConfigurationContent> content = default;
-            Optional<string> targetCondition = default;
-            Optional<DateTimeOffset> createdTimeUtc = default;
-            Optional<DateTimeOffset> lastUpdatedTimeUtc = default;
-            Optional<int> priority = default;
-            Optional<ConfigurationMetrics> systemMetrics = default;
-            Optional<ConfigurationMetrics> metrics = default;
-            Optional<string> etag = default;
+            ConfigurationContent content = default;
+            string targetCondition = default;
+            DateTimeOffset? createdTimeUtc = default;
+            DateTimeOffset? lastUpdatedTimeUtc = default;
+            int? priority = default;
+            ConfigurationMetrics systemMetrics = default;
+            ConfigurationMetrics metrics = default;
+            string etag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -190,17 +191,17 @@ namespace Azure.IoT.Hub.Service.Models
                 }
             }
             return new TwinConfiguration(
-                id.Value,
-                schemaVersion.Value,
+                id,
+                schemaVersion,
                 labels ?? new ChangeTrackingDictionary<string, string>(),
-                content.Value,
-                targetCondition.Value,
-                Optional.ToNullable(createdTimeUtc),
-                Optional.ToNullable(lastUpdatedTimeUtc),
-                Optional.ToNullable(priority),
-                systemMetrics.Value,
-                metrics.Value,
-                etag.Value);
+                content,
+                targetCondition,
+                createdTimeUtc,
+                lastUpdatedTimeUtc,
+                priority,
+                systemMetrics,
+                metrics,
+                etag);
         }
     }
 }

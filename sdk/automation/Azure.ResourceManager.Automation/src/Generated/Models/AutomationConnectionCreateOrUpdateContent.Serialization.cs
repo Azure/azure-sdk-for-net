@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -30,14 +31,14 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("connectionType"u8);
             writer.WriteObjectValue(ConnectionType);
-            if (!(FieldDefinitionValues is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(FieldDefinitionValues))
             {
                 writer.WritePropertyName("fieldDefinitionValues"u8);
                 writer.WriteStartObject();
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.Automation.Models
                 return null;
             }
             string name = default;
-            Optional<string> description = default;
+            string description = default;
             ConnectionTypeAssociationProperty connectionType = default;
             IDictionary<string, string> fieldDefinitionValues = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationConnectionCreateOrUpdateContent(name, description.Value, connectionType, fieldDefinitionValues ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new AutomationConnectionCreateOrUpdateContent(name, description, connectionType, fieldDefinitionValues ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationConnectionCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

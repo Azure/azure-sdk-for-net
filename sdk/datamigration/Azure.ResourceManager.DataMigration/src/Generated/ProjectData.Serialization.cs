@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.DataMigration
             }
 
             writer.WriteStartObject();
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -62,44 +62,44 @@ namespace Azure.ResourceManager.DataMigration
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (SourcePlatform.HasValue)
+            if (Optional.IsDefined(SourcePlatform))
             {
                 writer.WritePropertyName("sourcePlatform"u8);
                 writer.WriteStringValue(SourcePlatform.Value.ToString());
             }
-            if (AzureAuthenticationInfo != null)
+            if (Optional.IsDefined(AzureAuthenticationInfo))
             {
                 writer.WritePropertyName("azureAuthenticationInfo"u8);
                 writer.WriteObjectValue(AzureAuthenticationInfo);
             }
-            if (TargetPlatform.HasValue)
+            if (Optional.IsDefined(TargetPlatform))
             {
                 writer.WritePropertyName("targetPlatform"u8);
                 writer.WriteStringValue(TargetPlatform.Value.ToString());
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (SourceConnectionInfo != null)
+            if (Optional.IsDefined(SourceConnectionInfo))
             {
                 writer.WritePropertyName("sourceConnectionInfo"u8);
                 writer.WriteObjectValue(SourceConnectionInfo);
             }
-            if (TargetConnectionInfo != null)
+            if (Optional.IsDefined(TargetConnectionInfo))
             {
                 writer.WritePropertyName("targetConnectionInfo"u8);
                 writer.WriteObjectValue(TargetConnectionInfo);
             }
-            if (!(DatabasesInfo is ChangeTrackingList<DatabaseInfo> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(DatabasesInfo))
             {
                 writer.WritePropertyName("databasesInfo"u8);
                 writer.WriteStartArray();
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DataMigration
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -153,21 +153,21 @@ namespace Azure.ResourceManager.DataMigration
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             Core.ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ProjectSourcePlatform> sourcePlatform = default;
-            Optional<AzureActiveDirectoryApp> azureAuthenticationInfo = default;
-            Optional<ProjectTargetPlatform> targetPlatform = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<ConnectionInfo> sourceConnectionInfo = default;
-            Optional<ConnectionInfo> targetConnectionInfo = default;
+            SystemData systemData = default;
+            ProjectSourcePlatform? sourcePlatform = default;
+            AzureActiveDirectoryApp azureAuthenticationInfo = default;
+            ProjectTargetPlatform? targetPlatform = default;
+            DateTimeOffset? creationTime = default;
+            ConnectionInfo sourceConnectionInfo = default;
+            ConnectionInfo targetConnectionInfo = default;
             IList<DatabaseInfo> databasesInfo = default;
-            Optional<ProjectProvisioningState> provisioningState = default;
+            ProjectProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -323,18 +323,18 @@ namespace Azure.ResourceManager.DataMigration
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(etag),
-                Optional.ToNullable(sourcePlatform),
-                azureAuthenticationInfo.Value,
-                Optional.ToNullable(targetPlatform),
-                Optional.ToNullable(creationTime),
-                sourceConnectionInfo.Value,
-                targetConnectionInfo.Value,
+                etag,
+                sourcePlatform,
+                azureAuthenticationInfo,
+                targetPlatform,
+                creationTime,
+                sourceConnectionInfo,
+                targetConnectionInfo,
                 databasesInfo ?? new ChangeTrackingList<DatabaseInfo>(),
-                Optional.ToNullable(provisioningState),
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

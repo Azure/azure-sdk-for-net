@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (MaxPercentageCpu.HasValue)
+            if (Optional.IsDefined(MaxPercentageCpu))
             {
                 writer.WritePropertyName("maxPercentageCpu"u8);
                 writer.WriteNumberValue(MaxPercentageCpu.Value);
             }
-            if (MaxMemoryInMb.HasValue)
+            if (Optional.IsDefined(MaxMemoryInMb))
             {
                 writer.WritePropertyName("maxMemoryInMb"u8);
                 writer.WriteNumberValue(MaxMemoryInMb.Value);
             }
-            if (MaxDiskSizeInMb.HasValue)
+            if (Optional.IsDefined(MaxDiskSizeInMb))
             {
                 writer.WritePropertyName("maxDiskSizeInMb"u8);
                 writer.WriteNumberValue(MaxDiskSizeInMb.Value);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<double> maxPercentageCpu = default;
-            Optional<long> maxMemoryInMb = default;
-            Optional<long> maxDiskSizeInMb = default;
+            double? maxPercentageCpu = default;
+            long? maxMemoryInMb = default;
+            long? maxDiskSizeInMb = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteLimits(Optional.ToNullable(maxPercentageCpu), Optional.ToNullable(maxMemoryInMb), Optional.ToNullable(maxDiskSizeInMb), serializedAdditionalRawData);
+            return new SiteLimits(maxPercentageCpu, maxMemoryInMb, maxDiskSizeInMb, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteLimits>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.BillingBenefits;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
@@ -26,47 +27,47 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && SucceededCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SucceededCount))
             {
                 writer.WritePropertyName("succeededCount"u8);
                 writer.WriteNumberValue(SucceededCount.Value);
             }
-            if (options.Format != "W" && FailedCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(FailedCount))
             {
                 writer.WritePropertyName("failedCount"u8);
                 writer.WriteNumberValue(FailedCount.Value);
             }
-            if (options.Format != "W" && ExpiringCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExpiringCount))
             {
                 writer.WritePropertyName("expiringCount"u8);
                 writer.WriteNumberValue(ExpiringCount.Value);
             }
-            if (options.Format != "W" && ExpiredCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExpiredCount))
             {
                 writer.WritePropertyName("expiredCount"u8);
                 writer.WriteNumberValue(ExpiredCount.Value);
             }
-            if (options.Format != "W" && PendingCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PendingCount))
             {
                 writer.WritePropertyName("pendingCount"u8);
                 writer.WriteNumberValue(PendingCount.Value);
             }
-            if (options.Format != "W" && CancelledCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CancelledCount))
             {
                 writer.WritePropertyName("cancelledCount"u8);
                 writer.WriteNumberValue(CancelledCount.Value);
             }
-            if (options.Format != "W" && ProcessingCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProcessingCount))
             {
                 writer.WritePropertyName("processingCount"u8);
                 writer.WriteNumberValue(ProcessingCount.Value);
             }
-            if (options.Format != "W" && NoBenefitCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NoBenefitCount))
             {
                 writer.WritePropertyName("noBenefitCount"u8);
                 writer.WriteNumberValue(NoBenefitCount.Value);
             }
-            if (options.Format != "W" && WarningCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(WarningCount))
             {
                 writer.WritePropertyName("warningCount"u8);
                 writer.WriteNumberValue(WarningCount.Value);
@@ -109,15 +110,15 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             {
                 return null;
             }
-            Optional<float> succeededCount = default;
-            Optional<float> failedCount = default;
-            Optional<float> expiringCount = default;
-            Optional<float> expiredCount = default;
-            Optional<float> pendingCount = default;
-            Optional<float> cancelledCount = default;
-            Optional<float> processingCount = default;
-            Optional<float> noBenefitCount = default;
-            Optional<float> warningCount = default;
+            float? succeededCount = default;
+            float? failedCount = default;
+            float? expiringCount = default;
+            float? expiredCount = default;
+            float? pendingCount = default;
+            float? cancelledCount = default;
+            float? processingCount = default;
+            float? noBenefitCount = default;
+            float? warningCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -210,15 +211,15 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SavingsPlanSummaryCount(
-                Optional.ToNullable(succeededCount),
-                Optional.ToNullable(failedCount),
-                Optional.ToNullable(expiringCount),
-                Optional.ToNullable(expiredCount),
-                Optional.ToNullable(pendingCount),
-                Optional.ToNullable(cancelledCount),
-                Optional.ToNullable(processingCount),
-                Optional.ToNullable(noBenefitCount),
-                Optional.ToNullable(warningCount),
+                succeededCount,
+                failedCount,
+                expiringCount,
+                expiredCount,
+                pendingCount,
+                cancelledCount,
+                processingCount,
+                noBenefitCount,
+                warningCount,
                 serializedAdditionalRawData);
         }
 

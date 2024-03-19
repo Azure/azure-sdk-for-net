@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (CreatedOn.HasValue)
+            if (Optional.IsDefined(CreatedOn))
             {
                 if (CreatedOn != null)
                 {
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("createdDate");
                 }
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 if (DisplayName != null)
                 {
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("displayName");
                 }
             }
-            if (Duration.HasValue)
+            if (Optional.IsDefined(Duration))
             {
                 if (Duration != null)
                 {
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("duration");
                 }
             }
-            if (ExperimentId != null)
+            if (Optional.IsDefined(ExperimentId))
             {
                 if (ExperimentId != null)
                 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("experimentId");
                 }
             }
-            if (FeatureWindow != null)
+            if (Optional.IsDefined(FeatureWindow))
             {
                 if (FeatureWindow != null)
                 {
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("featureWindow");
                 }
             }
-            if (JobId != null)
+            if (Optional.IsDefined(JobId))
             {
                 if (JobId != null)
                 {
@@ -98,12 +99,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("jobId");
                 }
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 if (Tags != null)
                 {
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("tags");
                 }
             }
-            if (FeatureStoreJobType.HasValue)
+            if (Optional.IsDefined(FeatureStoreJobType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(FeatureStoreJobType.Value.ToString());
@@ -164,15 +165,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset?> createdDate = default;
-            Optional<string> displayName = default;
-            Optional<TimeSpan?> duration = default;
-            Optional<string> experimentId = default;
-            Optional<FeatureWindow> featureWindow = default;
-            Optional<string> jobId = default;
-            Optional<MachineLearningJobStatus> status = default;
+            DateTimeOffset? createdDate = default;
+            string displayName = default;
+            TimeSpan? duration = default;
+            string experimentId = default;
+            FeatureWindow featureWindow = default;
+            string jobId = default;
+            MachineLearningJobStatus? status = default;
             IReadOnlyDictionary<string, string> tags = default;
-            Optional<FeatureStoreJobType> type = default;
+            FeatureStoreJobType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -277,15 +278,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MachineLearningFeatureSetJob(
-                Optional.ToNullable(createdDate),
-                displayName.Value,
-                Optional.ToNullable(duration),
-                experimentId.Value,
-                featureWindow.Value,
-                jobId.Value,
-                Optional.ToNullable(status),
+                createdDate,
+                displayName,
+                duration,
+                experimentId,
+                featureWindow,
+                jobId,
+                status,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                Optional.ToNullable(type),
+                type,
                 serializedAdditionalRawData);
         }
 

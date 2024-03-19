@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
@@ -26,47 +27,47 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (ResourceName != null)
+            if (Optional.IsDefined(ResourceName))
             {
                 writer.WritePropertyName("resourcename"u8);
                 writer.WriteStringValue(ResourceName);
             }
-            if (ResourceUniqueId != null)
+            if (Optional.IsDefined(ResourceUniqueId))
             {
                 writer.WritePropertyName("resourceUId"u8);
                 writer.WriteStringValue(ResourceUniqueId);
             }
-            if (ResourceCost.HasValue)
+            if (Optional.IsDefined(ResourceCost))
             {
                 writer.WritePropertyName("resourceCost"u8);
                 writer.WriteNumberValue(ResourceCost.Value);
             }
-            if (ResourceType != null)
+            if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (ResourceOwner != null)
+            if (Optional.IsDefined(ResourceOwner))
             {
                 writer.WritePropertyName("resourceOwner"u8);
                 writer.WriteStringValue(ResourceOwner);
             }
-            if (ResourcePricingTier != null)
+            if (Optional.IsDefined(ResourcePricingTier))
             {
                 writer.WritePropertyName("resourcePricingTier"u8);
                 writer.WriteStringValue(ResourcePricingTier);
             }
-            if (ResourceStatus != null)
+            if (Optional.IsDefined(ResourceStatus))
             {
                 writer.WritePropertyName("resourceStatus"u8);
                 writer.WriteStringValue(ResourceStatus);
             }
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (ExternalResourceId != null)
+            if (Optional.IsDefined(ExternalResourceId))
             {
                 writer.WritePropertyName("externalResourceId"u8);
                 writer.WriteStringValue(ExternalResourceId);
@@ -109,15 +110,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<string> resourcename = default;
-            Optional<string> resourceUId = default;
-            Optional<double> resourceCost = default;
-            Optional<string> resourceType = default;
-            Optional<string> resourceOwner = default;
-            Optional<string> resourcePricingTier = default;
-            Optional<string> resourceStatus = default;
-            Optional<string> resourceId = default;
-            Optional<string> externalResourceId = default;
+            string resourcename = default;
+            string resourceUId = default;
+            double? resourceCost = default;
+            string resourceType = default;
+            string resourceOwner = default;
+            string resourcePricingTier = default;
+            string resourceStatus = default;
+            string resourceId = default;
+            string externalResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -178,15 +179,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DevTestLabResourceCost(
-                resourcename.Value,
-                resourceUId.Value,
-                Optional.ToNullable(resourceCost),
-                resourceType.Value,
-                resourceOwner.Value,
-                resourcePricingTier.Value,
-                resourceStatus.Value,
-                resourceId.Value,
-                externalResourceId.Value,
+                resourcename,
+                resourceUId,
+                resourceCost,
+                resourceType,
+                resourceOwner,
+                resourcePricingTier,
+                resourceStatus,
+                resourceId,
+                externalResourceId,
                 serializedAdditionalRawData);
         }
 

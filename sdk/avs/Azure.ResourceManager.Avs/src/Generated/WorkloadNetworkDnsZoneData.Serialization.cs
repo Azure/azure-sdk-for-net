@@ -44,19 +44,19 @@ namespace Azure.ResourceManager.Avs
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (!(Domain is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Domain))
             {
                 writer.WritePropertyName("domain"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Avs
                 }
                 writer.WriteEndArray();
             }
-            if (!(DnsServerIPs is ChangeTrackingList<IPAddress> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(DnsServerIPs))
             {
                 writer.WritePropertyName("dnsServerIps"u8);
                 writer.WriteStartArray();
@@ -81,22 +81,22 @@ namespace Azure.ResourceManager.Avs
                 }
                 writer.WriteEndArray();
             }
-            if (SourceIP != null)
+            if (Optional.IsDefined(SourceIP))
             {
                 writer.WritePropertyName("sourceIp"u8);
                 writer.WriteStringValue(SourceIP.ToString());
             }
-            if (DnsServices.HasValue)
+            if (Optional.IsDefined(DnsServices))
             {
                 writer.WritePropertyName("dnsServices"u8);
                 writer.WriteNumberValue(DnsServices.Value);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Revision.HasValue)
+            if (Optional.IsDefined(Revision))
             {
                 writer.WritePropertyName("revision"u8);
                 writer.WriteNumberValue(Revision.Value);
@@ -143,14 +143,14 @@ namespace Azure.ResourceManager.Avs
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
+            SystemData systemData = default;
+            string displayName = default;
             IList<string> domain = default;
             IList<IPAddress> dnsServerIPs = default;
-            Optional<IPAddress> sourceIP = default;
-            Optional<long> dnsServices = default;
-            Optional<WorkloadNetworkDnsZoneProvisioningState> provisioningState = default;
-            Optional<long> revision = default;
+            IPAddress sourceIP = default;
+            long? dnsServices = default;
+            WorkloadNetworkDnsZoneProvisioningState? provisioningState = default;
+            long? revision = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -277,14 +277,14 @@ namespace Azure.ResourceManager.Avs
                 id,
                 name,
                 type,
-                systemData.Value,
-                displayName.Value,
+                systemData,
+                displayName,
                 domain ?? new ChangeTrackingList<string>(),
                 dnsServerIPs ?? new ChangeTrackingList<IPAddress>(),
-                sourceIP.Value,
-                Optional.ToNullable(dnsServices),
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(revision),
+                sourceIP,
+                dnsServices,
+                provisioningState,
+                revision,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -26,24 +27,24 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Cost.HasValue)
+            if (Optional.IsDefined(Cost))
             {
                 writer.WritePropertyName("cost"u8);
                 writer.WriteNumberValue(Cost.Value);
             }
             writer.WritePropertyName("timespan"u8);
             writer.WriteStringValue(Timespan);
-            if (Interval.HasValue)
+            if (Optional.IsDefined(Interval))
             {
                 writer.WritePropertyName("interval"u8);
                 writer.WriteStringValue(Interval.Value, "P");
             }
-            if (Namespace != null)
+            if (Optional.IsDefined(Namespace))
             {
                 writer.WritePropertyName("namespace"u8);
                 writer.WriteStringValue(Namespace);
             }
-            if (Resourceregion != null)
+            if (Optional.IsDefined(Resourceregion))
             {
                 writer.WritePropertyName("resourceregion"u8);
                 writer.WriteStringValue(Resourceregion);
@@ -93,11 +94,11 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<int> cost = default;
+            int? cost = default;
             string timespan = default;
-            Optional<TimeSpan> interval = default;
-            Optional<string> @namespace = default;
-            Optional<string> resourceregion = default;
+            TimeSpan? interval = default;
+            string @namespace = default;
+            string resourceregion = default;
             IReadOnlyList<SubscriptionMonitorMetric> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -153,11 +154,11 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SubscriptionScopeMetricResponse(
-                Optional.ToNullable(cost),
+                cost,
                 timespan,
-                Optional.ToNullable(interval),
-                @namespace.Value,
-                resourceregion.Value,
+                interval,
+                @namespace,
+                resourceregion,
                 value,
                 serializedAdditionalRawData);
         }

@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.Blueprint
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (BlueprintVersion != null)
+            if (Optional.IsDefined(BlueprintVersion))
             {
                 writer.WritePropertyName("blueprintVersion"u8);
                 writer.WriteStringValue(BlueprintVersion);
             }
-            if (AssignmentState != null)
+            if (Optional.IsDefined(AssignmentState))
             {
                 writer.WritePropertyName("assignmentState"u8);
                 writer.WriteStringValue(AssignmentState);
             }
-            if (TimeCreated != null)
+            if (Optional.IsDefined(TimeCreated))
             {
                 writer.WritePropertyName("timeCreated"u8);
                 writer.WriteStringValue(TimeCreated);
             }
-            if (TimeStarted != null)
+            if (Optional.IsDefined(TimeStarted))
             {
                 writer.WritePropertyName("timeStarted"u8);
                 writer.WriteStringValue(TimeStarted);
             }
-            if (TimeFinished != null)
+            if (Optional.IsDefined(TimeFinished))
             {
                 writer.WritePropertyName("timeFinished"u8);
                 writer.WriteStringValue(TimeFinished);
             }
-            if (!(Deployments is ChangeTrackingList<AssignmentDeploymentJob> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Deployments))
             {
                 writer.WritePropertyName("deployments"u8);
                 writer.WriteStartArray();
@@ -127,12 +127,12 @@ namespace Azure.ResourceManager.Blueprint
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> blueprintVersion = default;
-            Optional<string> assignmentState = default;
-            Optional<string> timeCreated = default;
-            Optional<string> timeStarted = default;
-            Optional<string> timeFinished = default;
+            SystemData systemData = default;
+            string blueprintVersion = default;
+            string assignmentState = default;
+            string timeCreated = default;
+            string timeStarted = default;
+            string timeFinished = default;
             IList<AssignmentDeploymentJob> deployments = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -223,12 +223,12 @@ namespace Azure.ResourceManager.Blueprint
                 id,
                 name,
                 type,
-                systemData.Value,
-                blueprintVersion.Value,
-                assignmentState.Value,
-                timeCreated.Value,
-                timeStarted.Value,
-                timeFinished.Value,
+                systemData,
+                blueprintVersion,
+                assignmentState,
+                timeCreated,
+                timeStarted,
+                timeFinished,
                 deployments ?? new ChangeTrackingList<AssignmentDeploymentJob>(),
                 serializedAdditionalRawData);
         }

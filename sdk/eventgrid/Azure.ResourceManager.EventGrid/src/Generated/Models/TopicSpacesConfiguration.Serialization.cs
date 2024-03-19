@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -26,42 +27,42 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (RouteTopicResourceId != null)
+            if (Optional.IsDefined(RouteTopicResourceId))
             {
                 writer.WritePropertyName("routeTopicResourceId"u8);
                 writer.WriteStringValue(RouteTopicResourceId);
             }
-            if (options.Format != "W" && Hostname != null)
+            if (options.Format != "W" && Optional.IsDefined(Hostname))
             {
                 writer.WritePropertyName("hostname"u8);
                 writer.WriteStringValue(Hostname);
             }
-            if (RoutingEnrichments != null)
+            if (Optional.IsDefined(RoutingEnrichments))
             {
                 writer.WritePropertyName("routingEnrichments"u8);
                 writer.WriteObjectValue(RoutingEnrichments);
             }
-            if (ClientAuthentication != null)
+            if (Optional.IsDefined(ClientAuthentication))
             {
                 writer.WritePropertyName("clientAuthentication"u8);
                 writer.WriteObjectValue(ClientAuthentication);
             }
-            if (MaximumSessionExpiryInHours.HasValue)
+            if (Optional.IsDefined(MaximumSessionExpiryInHours))
             {
                 writer.WritePropertyName("maximumSessionExpiryInHours"u8);
                 writer.WriteNumberValue(MaximumSessionExpiryInHours.Value);
             }
-            if (MaximumClientSessionsPerAuthenticationName.HasValue)
+            if (Optional.IsDefined(MaximumClientSessionsPerAuthenticationName))
             {
                 writer.WritePropertyName("maximumClientSessionsPerAuthenticationName"u8);
                 writer.WriteNumberValue(MaximumClientSessionsPerAuthenticationName.Value);
             }
-            if (RoutingIdentityInfo != null)
+            if (Optional.IsDefined(RoutingIdentityInfo))
             {
                 writer.WritePropertyName("routingIdentityInfo"u8);
                 writer.WriteObjectValue(RoutingIdentityInfo);
@@ -104,14 +105,14 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<TopicSpacesConfigurationState> state = default;
-            Optional<string> routeTopicResourceId = default;
-            Optional<string> hostname = default;
-            Optional<RoutingEnrichments> routingEnrichments = default;
-            Optional<ClientAuthenticationSettings> clientAuthentication = default;
-            Optional<int> maximumSessionExpiryInHours = default;
-            Optional<int> maximumClientSessionsPerAuthenticationName = default;
-            Optional<RoutingIdentityInfo> routingIdentityInfo = default;
+            TopicSpacesConfigurationState? state = default;
+            string routeTopicResourceId = default;
+            string hostname = default;
+            RoutingEnrichments routingEnrichments = default;
+            ClientAuthenticationSettings clientAuthentication = default;
+            int? maximumSessionExpiryInHours = default;
+            int? maximumClientSessionsPerAuthenticationName = default;
+            RoutingIdentityInfo routingIdentityInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -187,14 +188,14 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new TopicSpacesConfiguration(
-                Optional.ToNullable(state),
-                routeTopicResourceId.Value,
-                hostname.Value,
-                routingEnrichments.Value,
-                clientAuthentication.Value,
-                Optional.ToNullable(maximumSessionExpiryInHours),
-                Optional.ToNullable(maximumClientSessionsPerAuthenticationName),
-                routingIdentityInfo.Value,
+                state,
+                routeTopicResourceId,
+                hostname,
+                routingEnrichments,
+                clientAuthentication,
+                maximumSessionExpiryInHours,
+                maximumClientSessionsPerAuthenticationName,
+                routingIdentityInfo,
                 serializedAdditionalRawData);
         }
 

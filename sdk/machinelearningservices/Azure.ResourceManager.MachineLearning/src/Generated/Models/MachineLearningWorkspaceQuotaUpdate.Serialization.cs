@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && UpdateWorkspaceQuotasType != null)
+            if (options.Format != "W" && Optional.IsDefined(UpdateWorkspaceQuotasType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(UpdateWorkspaceQuotasType);
             }
-            if (Limit.HasValue)
+            if (Optional.IsDefined(Limit))
             {
                 writer.WritePropertyName("limit"u8);
                 writer.WriteNumberValue(Limit.Value);
             }
-            if (options.Format != "W" && Unit.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit.Value.ToString());
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> type = default;
-            Optional<long> limit = default;
-            Optional<MachineLearningQuotaUnit> unit = default;
-            Optional<MachineLearningWorkspaceQuotaStatus> status = default;
+            string id = default;
+            string type = default;
+            long? limit = default;
+            MachineLearningQuotaUnit? unit = default;
+            MachineLearningWorkspaceQuotaStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -142,11 +143,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MachineLearningWorkspaceQuotaUpdate(
-                id.Value,
-                type.Value,
-                Optional.ToNullable(limit),
-                Optional.ToNullable(unit),
-                Optional.ToNullable(status),
+                id,
+                type,
+                limit,
+                unit,
+                status,
                 serializedAdditionalRawData);
         }
 

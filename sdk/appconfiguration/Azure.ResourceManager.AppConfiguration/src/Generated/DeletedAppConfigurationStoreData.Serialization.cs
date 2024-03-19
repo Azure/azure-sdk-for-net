@@ -42,34 +42,34 @@ namespace Azure.ResourceManager.AppConfiguration
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ConfigurationStoreId != null)
+            if (options.Format != "W" && Optional.IsDefined(ConfigurationStoreId))
             {
                 writer.WritePropertyName("configurationStoreId"u8);
                 writer.WriteStringValue(ConfigurationStoreId);
             }
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (options.Format != "W" && DeletedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DeletedOn))
             {
                 writer.WritePropertyName("deletionDate"u8);
                 writer.WriteStringValue(DeletedOn.Value, "O");
             }
-            if (options.Format != "W" && ScheduledPurgeOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ScheduledPurgeOn))
             {
                 writer.WritePropertyName("scheduledPurgeDate"u8);
                 writer.WriteStringValue(ScheduledPurgeOn.Value, "O");
             }
-            if (options.Format != "W" && !(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && IsPurgeProtectionEnabled.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsPurgeProtectionEnabled))
             {
                 writer.WritePropertyName("purgeProtectionEnabled"u8);
                 writer.WriteBooleanValue(IsPurgeProtectionEnabled.Value);
@@ -127,13 +127,13 @@ namespace Azure.ResourceManager.AppConfiguration
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> configurationStoreId = default;
-            Optional<AzureLocation> location = default;
-            Optional<DateTimeOffset> deletionDate = default;
-            Optional<DateTimeOffset> scheduledPurgeDate = default;
+            SystemData systemData = default;
+            ResourceIdentifier configurationStoreId = default;
+            AzureLocation? location = default;
+            DateTimeOffset? deletionDate = default;
+            DateTimeOffset? scheduledPurgeDate = default;
             IReadOnlyDictionary<string, string> tags = default;
-            Optional<bool> purgeProtectionEnabled = default;
+            bool? purgeProtectionEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -243,13 +243,13 @@ namespace Azure.ResourceManager.AppConfiguration
                 id,
                 name,
                 type,
-                systemData.Value,
-                configurationStoreId.Value,
-                Optional.ToNullable(location),
-                Optional.ToNullable(deletionDate),
-                Optional.ToNullable(scheduledPurgeDate),
+                systemData,
+                configurationStoreId,
+                location,
+                deletionDate,
+                scheduledPurgeDate,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                Optional.ToNullable(purgeProtectionEnabled),
+                purgeProtectionEnabled,
                 serializedAdditionalRawData);
         }
 

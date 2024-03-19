@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Address != null)
+            if (options.Format != "W" && Optional.IsDefined(Address))
             {
                 writer.WritePropertyName("address"u8);
                 writer.WriteStringValue(Address);
             }
-            if (options.Format != "W" && DeviceConnectionType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DeviceConnectionType))
             {
                 writer.WritePropertyName("deviceConnectionType"u8);
                 writer.WriteStringValue(DeviceConnectionType.Value.ToString());
             }
-            if (options.Format != "W" && Model != null)
+            if (options.Format != "W" && Optional.IsDefined(Model))
             {
                 writer.WritePropertyName("model"u8);
                 writer.WriteStringValue(Model);
             }
-            if (options.Format != "W" && PhysicalSlot.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PhysicalSlot))
             {
                 writer.WritePropertyName("physicalSlot"u8);
                 writer.WriteNumberValue(PhysicalSlot.Value);
             }
-            if (options.Format != "W" && PortCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PortCount))
             {
                 writer.WritePropertyName("portCount"u8);
                 writer.WriteNumberValue(PortCount.Value);
             }
-            if (options.Format != "W" && PortSpeed.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PortSpeed))
             {
                 writer.WritePropertyName("portSpeed"u8);
                 writer.WriteNumberValue(PortSpeed.Value);
             }
-            if (options.Format != "W" && Vendor != null)
+            if (options.Format != "W" && Optional.IsDefined(Vendor))
             {
                 writer.WritePropertyName("vendor"u8);
                 writer.WriteStringValue(Vendor);
@@ -99,13 +100,13 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<string> address = default;
-            Optional<DeviceConnectionType> deviceConnectionType = default;
-            Optional<string> model = default;
-            Optional<long> physicalSlot = default;
-            Optional<long> portCount = default;
-            Optional<long> portSpeed = default;
-            Optional<string> vendor = default;
+            string address = default;
+            DeviceConnectionType? deviceConnectionType = default;
+            string model = default;
+            long? physicalSlot = default;
+            long? portCount = default;
+            long? portSpeed = default;
+            string vendor = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,13 +169,13 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new NetworkCloudNetworkInterface(
-                address.Value,
-                Optional.ToNullable(deviceConnectionType),
-                model.Value,
-                Optional.ToNullable(physicalSlot),
-                Optional.ToNullable(portCount),
-                Optional.ToNullable(portSpeed),
-                vendor.Value,
+                address,
+                deviceConnectionType,
+                model,
+                physicalSlot,
+                portCount,
+                portSpeed,
+                vendor,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && StageName.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StageName))
             {
                 writer.WritePropertyName("stageName"u8);
                 writer.WriteStringValue(StageName.Value.ToString());
             }
-            if (options.Format != "W" && DisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && StageStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StageStatus))
             {
                 writer.WritePropertyName("stageStatus"u8);
                 writer.WriteStringValue(StageStatus.Value.ToSerialString());
             }
-            if (options.Format != "W" && StageTime.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StageTime))
             {
                 writer.WritePropertyName("stageTime"u8);
                 writer.WriteStringValue(StageTime.Value, "O");
             }
-            if (options.Format != "W" && JobStageDetails != null)
+            if (options.Format != "W" && Optional.IsDefined(JobStageDetails))
             {
                 writer.WritePropertyName("jobStageDetails"u8);
 #if NET6_0_OR_GREATER
@@ -96,11 +97,11 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<DataBoxStageName> stageName = default;
-            Optional<string> displayName = default;
-            Optional<DataBoxStageStatus> stageStatus = default;
-            Optional<DateTimeOffset> stageTime = default;
-            Optional<BinaryData> jobStageDetails = default;
+            DataBoxStageName? stageName = default;
+            string displayName = default;
+            DataBoxStageStatus? stageStatus = default;
+            DateTimeOffset? stageTime = default;
+            BinaryData jobStageDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -153,11 +154,11 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DataBoxJobStage(
-                Optional.ToNullable(stageName),
-                displayName.Value,
-                Optional.ToNullable(stageStatus),
-                Optional.ToNullable(stageTime),
-                jobStageDetails.Value,
+                stageName,
+                displayName,
+                stageStatus,
+                stageTime,
+                jobStageDetails,
                 serializedAdditionalRawData);
         }
 

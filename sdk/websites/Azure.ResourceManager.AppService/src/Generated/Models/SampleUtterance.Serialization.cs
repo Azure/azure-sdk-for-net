@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Text != null)
+            if (Optional.IsDefined(Text))
             {
                 writer.WritePropertyName("text"u8);
                 writer.WriteStringValue(Text);
             }
-            if (!(Links is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Links))
             {
                 writer.WritePropertyName("links"u8);
                 writer.WriteStartArray();
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Qid != null)
+            if (Optional.IsDefined(Qid))
             {
                 writer.WritePropertyName("qid"u8);
                 writer.WriteStringValue(Qid);
@@ -84,9 +85,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> text = default;
+            string text = default;
             IList<string> links = default;
-            Optional<string> qid = default;
+            string qid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SampleUtterance(text.Value, links ?? new ChangeTrackingList<string>(), qid.Value, serializedAdditionalRawData);
+            return new SampleUtterance(text, links ?? new ChangeTrackingList<string>(), qid, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SampleUtterance>.Write(ModelReaderWriterOptions options)

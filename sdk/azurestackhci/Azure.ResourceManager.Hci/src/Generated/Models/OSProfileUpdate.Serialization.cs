@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (ComputerName != null)
+            if (Optional.IsDefined(ComputerName))
             {
                 writer.WritePropertyName("computerName"u8);
                 writer.WriteStringValue(ComputerName);
             }
-            if (LinuxConfiguration != null)
+            if (Optional.IsDefined(LinuxConfiguration))
             {
                 writer.WritePropertyName("linuxConfiguration"u8);
                 writer.WriteObjectValue(LinuxConfiguration);
             }
-            if (WindowsConfiguration != null)
+            if (Optional.IsDefined(WindowsConfiguration))
             {
                 writer.WritePropertyName("windowsConfiguration"u8);
                 writer.WriteObjectValue(WindowsConfiguration);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> computerName = default;
-            Optional<OSProfileUpdateLinuxConfiguration> linuxConfiguration = default;
-            Optional<OSProfileUpdateWindowsConfiguration> windowsConfiguration = default;
+            string computerName = default;
+            OSProfileUpdateLinuxConfiguration linuxConfiguration = default;
+            OSProfileUpdateWindowsConfiguration windowsConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OSProfileUpdate(computerName.Value, linuxConfiguration.Value, windowsConfiguration.Value, serializedAdditionalRawData);
+            return new OSProfileUpdate(computerName, linuxConfiguration, windowsConfiguration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OSProfileUpdate>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -49,34 +50,34 @@ namespace Azure.ResourceManager.Automation.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (IsLogVerboseEnabled.HasValue)
+            if (Optional.IsDefined(IsLogVerboseEnabled))
             {
                 writer.WritePropertyName("logVerbose"u8);
                 writer.WriteBooleanValue(IsLogVerboseEnabled.Value);
             }
-            if (IsLogProgressEnabled.HasValue)
+            if (Optional.IsDefined(IsLogProgressEnabled))
             {
                 writer.WritePropertyName("logProgress"u8);
                 writer.WriteBooleanValue(IsLogProgressEnabled.Value);
             }
             writer.WritePropertyName("runbookType"u8);
             writer.WriteStringValue(RunbookType.ToString());
-            if (Draft != null)
+            if (Optional.IsDefined(Draft))
             {
                 writer.WritePropertyName("draft"u8);
                 writer.WriteObjectValue(Draft);
             }
-            if (PublishContentLink != null)
+            if (Optional.IsDefined(PublishContentLink))
             {
                 writer.WritePropertyName("publishContentLink"u8);
                 writer.WriteObjectValue(PublishContentLink);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (LogActivityTrace.HasValue)
+            if (Optional.IsDefined(LogActivityTrace))
             {
                 writer.WritePropertyName("logActivityTrace"u8);
                 writer.WriteNumberValue(LogActivityTrace.Value);
@@ -120,16 +121,16 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<AzureLocation> location = default;
+            string name = default;
+            AzureLocation? location = default;
             IDictionary<string, string> tags = default;
-            Optional<bool> logVerbose = default;
-            Optional<bool> logProgress = default;
+            bool? logVerbose = default;
+            bool? logProgress = default;
             AutomationRunbookType runbookType = default;
-            Optional<AutomationRunbookDraft> draft = default;
-            Optional<AutomationContentLink> publishContentLink = default;
-            Optional<string> description = default;
-            Optional<int> logActivityTrace = default;
+            AutomationRunbookDraft draft = default;
+            AutomationContentLink publishContentLink = default;
+            string description = default;
+            int? logActivityTrace = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -236,16 +237,16 @@ namespace Azure.ResourceManager.Automation.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AutomationRunbookCreateOrUpdateContent(
-                name.Value,
-                Optional.ToNullable(location),
+                name,
+                location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                Optional.ToNullable(logVerbose),
-                Optional.ToNullable(logProgress),
+                logVerbose,
+                logProgress,
                 runbookType,
-                draft.Value,
-                publishContentLink.Value,
-                description.Value,
-                Optional.ToNullable(logActivityTrace),
+                draft,
+                publishContentLink,
+                description,
+                logActivityTrace,
                 serializedAdditionalRawData);
         }
 

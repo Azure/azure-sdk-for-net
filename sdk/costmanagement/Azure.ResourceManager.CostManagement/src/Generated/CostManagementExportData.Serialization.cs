@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.CostManagement
             }
 
             writer.WriteStartObject();
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -49,44 +49,44 @@ namespace Azure.ResourceManager.CostManagement
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Format.HasValue)
+            if (Optional.IsDefined(Format))
             {
                 writer.WritePropertyName("format"u8);
                 writer.WriteStringValue(Format.Value.ToString());
             }
-            if (DeliveryInfo != null)
+            if (Optional.IsDefined(DeliveryInfo))
             {
                 writer.WritePropertyName("deliveryInfo"u8);
                 writer.WriteObjectValue(DeliveryInfo);
             }
-            if (Definition != null)
+            if (Optional.IsDefined(Definition))
             {
                 writer.WritePropertyName("definition"u8);
                 writer.WriteObjectValue(Definition);
             }
-            if (RunHistory != null)
+            if (Optional.IsDefined(RunHistory))
             {
                 writer.WritePropertyName("runHistory"u8);
                 writer.WriteObjectValue(RunHistory);
             }
-            if (PartitionData.HasValue)
+            if (Optional.IsDefined(PartitionData))
             {
                 writer.WritePropertyName("partitionData"u8);
                 writer.WriteBooleanValue(PartitionData.Value);
             }
-            if (options.Format != "W" && NextRunTimeEstimate.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NextRunTimeEstimate))
             {
                 writer.WritePropertyName("nextRunTimeEstimate"u8);
                 writer.WriteStringValue(NextRunTimeEstimate.Value, "O");
             }
-            if (Schedule != null)
+            if (Optional.IsDefined(Schedule))
             {
                 writer.WritePropertyName("schedule"u8);
                 writer.WriteObjectValue(Schedule);
@@ -130,18 +130,18 @@ namespace Azure.ResourceManager.CostManagement
             {
                 return null;
             }
-            Optional<ETag> eTag = default;
+            ETag? eTag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ExportFormatType> format = default;
-            Optional<ExportDeliveryInfo> deliveryInfo = default;
-            Optional<ExportDefinition> definition = default;
-            Optional<ExportExecutionListResult> runHistory = default;
-            Optional<bool> partitionData = default;
-            Optional<DateTimeOffset> nextRunTimeEstimate = default;
-            Optional<ExportSchedule> schedule = default;
+            SystemData systemData = default;
+            ExportFormatType? format = default;
+            ExportDeliveryInfo deliveryInfo = default;
+            ExportDefinition definition = default;
+            ExportExecutionListResult runHistory = default;
+            bool? partitionData = default;
+            DateTimeOffset? nextRunTimeEstimate = default;
+            ExportSchedule schedule = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -264,15 +264,15 @@ namespace Azure.ResourceManager.CostManagement
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(format),
-                deliveryInfo.Value,
-                definition.Value,
-                runHistory.Value,
-                Optional.ToNullable(partitionData),
-                Optional.ToNullable(nextRunTimeEstimate),
-                schedule.Value,
-                Optional.ToNullable(eTag),
+                systemData,
+                format,
+                deliveryInfo,
+                definition,
+                runHistory,
+                partitionData,
+                nextRunTimeEstimate,
+                schedule,
+                eTag,
                 serializedAdditionalRawData);
         }
 

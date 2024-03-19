@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Elastic;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.Elastic.Models
             }
 
             writer.WriteStartObject();
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (MonitoringStatus.HasValue)
+            if (Optional.IsDefined(MonitoringStatus))
             {
                 writer.WritePropertyName("monitoringStatus"u8);
                 writer.WriteStringValue(MonitoringStatus.Value.ToString());
             }
-            if (ElasticProperties != null)
+            if (Optional.IsDefined(ElasticProperties))
             {
                 writer.WritePropertyName("elasticProperties"u8);
                 writer.WriteObjectValue(ElasticProperties);
             }
-            if (UserInfo != null)
+            if (Optional.IsDefined(UserInfo))
             {
                 writer.WritePropertyName("userInfo"u8);
                 writer.WriteObjectValue(UserInfo);
             }
-            if (options.Format != "W" && LiftrResourceCategory.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LiftrResourceCategory))
             {
                 writer.WritePropertyName("liftrResourceCategory"u8);
                 writer.WriteStringValue(LiftrResourceCategory.Value.ToString());
             }
-            if (options.Format != "W" && LiftrResourcePreference.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LiftrResourcePreference))
             {
                 writer.WritePropertyName("liftrResourcePreference"u8);
                 writer.WriteNumberValue(LiftrResourcePreference.Value);
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 return null;
             }
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<MonitoringStatus> monitoringStatus = default;
-            Optional<ElasticProperties> elasticProperties = default;
-            Optional<UserInfo> userInfo = default;
-            Optional<LiftrResourceCategory> liftrResourceCategory = default;
-            Optional<int> liftrResourcePreference = default;
+            ProvisioningState? provisioningState = default;
+            MonitoringStatus? monitoringStatus = default;
+            ElasticProperties elasticProperties = default;
+            UserInfo userInfo = default;
+            LiftrResourceCategory? liftrResourceCategory = default;
+            int? liftrResourcePreference = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,12 +166,12 @@ namespace Azure.ResourceManager.Elastic.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MonitorProperties(
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(monitoringStatus),
-                elasticProperties.Value,
-                userInfo.Value,
-                Optional.ToNullable(liftrResourceCategory),
-                Optional.ToNullable(liftrResourcePreference),
+                provisioningState,
+                monitoringStatus,
+                elasticProperties,
+                userInfo,
+                liftrResourceCategory,
+                liftrResourcePreference,
                 serializedAdditionalRawData);
         }
 

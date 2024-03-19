@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
+using Azure.Messaging.EventGrid;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -22,14 +22,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<CommunicationIdentifierModel> createdByCommunicationIdentifier = default;
+            CommunicationIdentifierModel createdByCommunicationIdentifier = default;
             IReadOnlyDictionary<string, object> properties = default;
             IReadOnlyDictionary<string, string> metadata = default;
             IReadOnlyList<AcsChatThreadParticipantProperties> participants = default;
-            Optional<DateTimeOffset> createTime = default;
-            Optional<long> version = default;
-            Optional<string> transactionId = default;
-            Optional<string> threadId = default;
+            DateTimeOffset? createTime = default;
+            long? version = default;
+            string transactionId = default;
+            string threadId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("createdByCommunicationIdentifier"u8))
@@ -120,11 +120,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new AcsChatThreadCreatedEventData(
-                transactionId.Value,
-                threadId.Value,
-                Optional.ToNullable(createTime),
-                Optional.ToNullable(version),
-                createdByCommunicationIdentifier.Value,
+                transactionId,
+                threadId,
+                createTime,
+                version,
+                createdByCommunicationIdentifier,
                 properties ?? new ChangeTrackingDictionary<string, object>(),
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
                 participants ?? new ChangeTrackingList<AcsChatThreadParticipantProperties>());

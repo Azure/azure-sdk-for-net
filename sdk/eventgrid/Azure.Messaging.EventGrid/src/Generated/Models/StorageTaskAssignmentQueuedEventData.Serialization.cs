@@ -8,7 +8,7 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
+using Azure.Messaging.EventGrid;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -21,8 +21,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<DateTimeOffset> queuedDateTime = default;
-            Optional<string> taskExecutionId = default;
+            DateTimeOffset? queuedDateTime = default;
+            string taskExecutionId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("queuedDateTime"u8))
@@ -40,7 +40,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new StorageTaskAssignmentQueuedEventData(Optional.ToNullable(queuedDateTime), taskExecutionId.Value);
+            return new StorageTaskAssignmentQueuedEventData(queuedDateTime, taskExecutionId);
         }
 
         internal partial class StorageTaskAssignmentQueuedEventDataConverter : JsonConverter<StorageTaskAssignmentQueuedEventData>

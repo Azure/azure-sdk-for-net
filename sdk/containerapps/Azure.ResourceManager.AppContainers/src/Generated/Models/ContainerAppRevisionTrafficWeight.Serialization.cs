@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (RevisionName != null)
+            if (Optional.IsDefined(RevisionName))
             {
                 writer.WritePropertyName("revisionName"u8);
                 writer.WriteStringValue(RevisionName);
             }
-            if (Weight.HasValue)
+            if (Optional.IsDefined(Weight))
             {
                 writer.WritePropertyName("weight"u8);
                 writer.WriteNumberValue(Weight.Value);
             }
-            if (IsLatestRevision.HasValue)
+            if (Optional.IsDefined(IsLatestRevision))
             {
                 writer.WritePropertyName("latestRevision"u8);
                 writer.WriteBooleanValue(IsLatestRevision.Value);
             }
-            if (Label != null)
+            if (Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> revisionName = default;
-            Optional<int> weight = default;
-            Optional<bool> latestRevision = default;
-            Optional<string> label = default;
+            string revisionName = default;
+            int? weight = default;
+            bool? latestRevision = default;
+            string label = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppRevisionTrafficWeight(revisionName.Value, Optional.ToNullable(weight), Optional.ToNullable(latestRevision), label.Value, serializedAdditionalRawData);
+            return new ContainerAppRevisionTrafficWeight(revisionName, weight, latestRevision, label, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppRevisionTrafficWeight>.Write(ModelReaderWriterOptions options)

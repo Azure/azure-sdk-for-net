@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ResourceMover;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(UserManagedIdentities is ChangeTrackingList<ResourceIdentifier> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(UserManagedIdentities))
             {
                 writer.WritePropertyName("userManagedIdentities"u8);
                 writer.WriteStartArray();
@@ -52,29 +53,29 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
                 writer.WriteEndArray();
             }
-            if (TargetAvailabilityZone.HasValue)
+            if (Optional.IsDefined(TargetAvailabilityZone))
             {
                 writer.WritePropertyName("targetAvailabilityZone"u8);
                 writer.WriteStringValue(TargetAvailabilityZone.Value.ToString());
             }
-            if (TargetVmSize != null)
+            if (Optional.IsDefined(TargetVmSize))
             {
                 writer.WritePropertyName("targetVmSize"u8);
                 writer.WriteStringValue(TargetVmSize);
             }
-            if (TargetAvailabilitySetId != null)
+            if (Optional.IsDefined(TargetAvailabilitySetId))
             {
                 writer.WritePropertyName("targetAvailabilitySetId"u8);
                 writer.WriteStringValue(TargetAvailabilitySetId);
             }
             writer.WritePropertyName("resourceType"u8);
             writer.WriteStringValue(ResourceType);
-            if (TargetResourceName != null)
+            if (Optional.IsDefined(TargetResourceName))
             {
                 writer.WritePropertyName("targetResourceName"u8);
                 writer.WriteStringValue(TargetResourceName);
             }
-            if (TargetResourceGroupName != null)
+            if (Optional.IsDefined(TargetResourceGroupName))
             {
                 writer.WritePropertyName("targetResourceGroupName"u8);
                 writer.WriteStringValue(TargetResourceGroupName);
@@ -119,12 +120,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
             IDictionary<string, string> tags = default;
             IList<ResourceIdentifier> userManagedIdentities = default;
-            Optional<MoverTargetAvailabilityZone> targetAvailabilityZone = default;
-            Optional<string> targetVmSize = default;
-            Optional<ResourceIdentifier> targetAvailabilitySetId = default;
+            MoverTargetAvailabilityZone? targetAvailabilityZone = default;
+            string targetVmSize = default;
+            ResourceIdentifier targetAvailabilitySetId = default;
             string resourceType = default;
-            Optional<string> targetResourceName = default;
-            Optional<string> targetResourceGroupName = default;
+            string targetResourceName = default;
+            string targetResourceGroupName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -210,14 +211,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new VirtualMachineResourceSettings(
                 resourceType,
-                targetResourceName.Value,
-                targetResourceGroupName.Value,
+                targetResourceName,
+                targetResourceGroupName,
                 serializedAdditionalRawData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 userManagedIdentities ?? new ChangeTrackingList<ResourceIdentifier>(),
-                Optional.ToNullable(targetAvailabilityZone),
-                targetVmSize.Value,
-                targetAvailabilitySetId.Value);
+                targetAvailabilityZone,
+                targetVmSize,
+                targetAvailabilitySetId);
         }
 
         BinaryData IPersistableModel<VirtualMachineResourceSettings>.Write(ModelReaderWriterOptions options)

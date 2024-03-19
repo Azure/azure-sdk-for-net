@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CustomerInsights;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
 
             writer.WriteStartObject();
-            if (CanonicalProfileId.HasValue)
+            if (Optional.IsDefined(CanonicalProfileId))
             {
                 writer.WritePropertyName("canonicalProfileId"u8);
                 writer.WriteNumberValue(CanonicalProfileId.Value);
             }
-            if (!(Properties is ChangeTrackingList<CanonicalProfileDefinitionPropertiesItem> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<int> canonicalProfileId = default;
+            int? canonicalProfileId = default;
             IReadOnlyList<CanonicalProfileDefinitionPropertiesItem> properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CanonicalProfileDefinition(Optional.ToNullable(canonicalProfileId), properties ?? new ChangeTrackingList<CanonicalProfileDefinitionPropertiesItem>(), serializedAdditionalRawData);
+            return new CanonicalProfileDefinition(canonicalProfileId, properties ?? new ChangeTrackingList<CanonicalProfileDefinitionPropertiesItem>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CanonicalProfileDefinition>.Write(ModelReaderWriterOptions options)

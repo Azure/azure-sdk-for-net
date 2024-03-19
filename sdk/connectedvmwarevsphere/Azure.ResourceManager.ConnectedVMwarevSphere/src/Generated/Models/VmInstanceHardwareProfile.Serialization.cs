@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ConnectedVMwarevSphere;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             }
 
             writer.WriteStartObject();
-            if (MemorySizeMB.HasValue)
+            if (Optional.IsDefined(MemorySizeMB))
             {
                 writer.WritePropertyName("memorySizeMB"u8);
                 writer.WriteNumberValue(MemorySizeMB.Value);
             }
-            if (NumCpus.HasValue)
+            if (Optional.IsDefined(NumCpus))
             {
                 writer.WritePropertyName("numCPUs"u8);
                 writer.WriteNumberValue(NumCpus.Value);
             }
-            if (NumCoresPerSocket.HasValue)
+            if (Optional.IsDefined(NumCoresPerSocket))
             {
                 writer.WritePropertyName("numCoresPerSocket"u8);
                 writer.WriteNumberValue(NumCoresPerSocket.Value);
             }
-            if (options.Format != "W" && CpuHotAddEnabled.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CpuHotAddEnabled))
             {
                 writer.WritePropertyName("cpuHotAddEnabled"u8);
                 writer.WriteBooleanValue(CpuHotAddEnabled.Value);
             }
-            if (options.Format != "W" && CpuHotRemoveEnabled.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CpuHotRemoveEnabled))
             {
                 writer.WritePropertyName("cpuHotRemoveEnabled"u8);
                 writer.WriteBooleanValue(CpuHotRemoveEnabled.Value);
             }
-            if (options.Format != "W" && MemoryHotAddEnabled.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MemoryHotAddEnabled))
             {
                 writer.WritePropertyName("memoryHotAddEnabled"u8);
                 writer.WriteBooleanValue(MemoryHotAddEnabled.Value);
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             {
                 return null;
             }
-            Optional<int> memorySizeMB = default;
-            Optional<int> numCpus = default;
-            Optional<int> numCoresPerSocket = default;
-            Optional<bool> cpuHotAddEnabled = default;
-            Optional<bool> cpuHotRemoveEnabled = default;
-            Optional<bool> memoryHotAddEnabled = default;
+            int? memorySizeMB = default;
+            int? numCpus = default;
+            int? numCoresPerSocket = default;
+            bool? cpuHotAddEnabled = default;
+            bool? cpuHotRemoveEnabled = default;
+            bool? memoryHotAddEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,12 +166,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new VmInstanceHardwareProfile(
-                Optional.ToNullable(memorySizeMB),
-                Optional.ToNullable(numCpus),
-                Optional.ToNullable(numCoresPerSocket),
-                Optional.ToNullable(cpuHotAddEnabled),
-                Optional.ToNullable(cpuHotRemoveEnabled),
-                Optional.ToNullable(memoryHotAddEnabled),
+                memorySizeMB,
+                numCpus,
+                numCoresPerSocket,
+                cpuHotAddEnabled,
+                cpuHotRemoveEnabled,
+                memoryHotAddEnabled,
                 serializedAdditionalRawData);
         }
 

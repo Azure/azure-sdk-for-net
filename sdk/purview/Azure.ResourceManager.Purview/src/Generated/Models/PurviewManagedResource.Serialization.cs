@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Purview;
 
 namespace Azure.ResourceManager.Purview.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Purview.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && EventHubNamespace != null)
+            if (options.Format != "W" && Optional.IsDefined(EventHubNamespace))
             {
                 writer.WritePropertyName("eventHubNamespace"u8);
                 writer.WriteStringValue(EventHubNamespace);
             }
-            if (options.Format != "W" && ResourceGroup != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceGroup))
             {
                 writer.WritePropertyName("resourceGroup"u8);
                 writer.WriteStringValue(ResourceGroup);
             }
-            if (options.Format != "W" && StorageAccount != null)
+            if (options.Format != "W" && Optional.IsDefined(StorageAccount))
             {
                 writer.WritePropertyName("storageAccount"u8);
                 writer.WriteStringValue(StorageAccount);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> eventHubNamespace = default;
-            Optional<ResourceIdentifier> resourceGroup = default;
-            Optional<ResourceIdentifier> storageAccount = default;
+            ResourceIdentifier eventHubNamespace = default;
+            ResourceIdentifier resourceGroup = default;
+            ResourceIdentifier storageAccount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.Purview.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PurviewManagedResource(eventHubNamespace.Value, resourceGroup.Value, storageAccount.Value, serializedAdditionalRawData);
+            return new PurviewManagedResource(eventHubNamespace, resourceGroup, storageAccount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PurviewManagedResource>.Write(ModelReaderWriterOptions options)

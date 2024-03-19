@@ -43,59 +43,59 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (TargetDatabase != null)
+            if (Optional.IsDefined(TargetDatabase))
             {
                 writer.WritePropertyName("targetDatabase"u8);
                 writer.WriteStringValue(TargetDatabase);
             }
-            if (SourceEndpoint != null)
+            if (Optional.IsDefined(SourceEndpoint))
             {
                 writer.WritePropertyName("sourceEndpoint"u8);
                 writer.WriteStringValue(SourceEndpoint);
             }
-            if (PrimaryAvailabilityGroupName != null)
+            if (Optional.IsDefined(PrimaryAvailabilityGroupName))
             {
                 writer.WritePropertyName("primaryAvailabilityGroupName"u8);
                 writer.WriteStringValue(PrimaryAvailabilityGroupName);
             }
-            if (SecondaryAvailabilityGroupName != null)
+            if (Optional.IsDefined(SecondaryAvailabilityGroupName))
             {
                 writer.WritePropertyName("secondaryAvailabilityGroupName"u8);
                 writer.WriteStringValue(SecondaryAvailabilityGroupName);
             }
-            if (ReplicationMode.HasValue)
+            if (Optional.IsDefined(ReplicationMode))
             {
                 writer.WritePropertyName("replicationMode"u8);
                 writer.WriteStringValue(ReplicationMode.Value.ToString());
             }
-            if (options.Format != "W" && DistributedAvailabilityGroupId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DistributedAvailabilityGroupId))
             {
                 writer.WritePropertyName("distributedAvailabilityGroupId"u8);
                 writer.WriteStringValue(DistributedAvailabilityGroupId.Value);
             }
-            if (options.Format != "W" && SourceReplicaId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SourceReplicaId))
             {
                 writer.WritePropertyName("sourceReplicaId"u8);
                 writer.WriteStringValue(SourceReplicaId.Value);
             }
-            if (options.Format != "W" && TargetReplicaId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TargetReplicaId))
             {
                 writer.WritePropertyName("targetReplicaId"u8);
                 writer.WriteStringValue(TargetReplicaId.Value);
             }
-            if (options.Format != "W" && LinkState != null)
+            if (options.Format != "W" && Optional.IsDefined(LinkState))
             {
                 writer.WritePropertyName("linkState"u8);
                 writer.WriteStringValue(LinkState);
             }
-            if (options.Format != "W" && LastHardenedLsn != null)
+            if (options.Format != "W" && Optional.IsDefined(LastHardenedLsn))
             {
                 writer.WritePropertyName("lastHardenedLsn"u8);
                 writer.WriteStringValue(LastHardenedLsn);
@@ -142,17 +142,17 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> targetDatabase = default;
-            Optional<string> sourceEndpoint = default;
-            Optional<string> primaryAvailabilityGroupName = default;
-            Optional<string> secondaryAvailabilityGroupName = default;
-            Optional<DistributedAvailabilityGroupReplicationMode> replicationMode = default;
-            Optional<Guid> distributedAvailabilityGroupId = default;
-            Optional<Guid> sourceReplicaId = default;
-            Optional<Guid> targetReplicaId = default;
-            Optional<string> linkState = default;
-            Optional<string> lastHardenedLsn = default;
+            SystemData systemData = default;
+            string targetDatabase = default;
+            string sourceEndpoint = default;
+            string primaryAvailabilityGroupName = default;
+            string secondaryAvailabilityGroupName = default;
+            DistributedAvailabilityGroupReplicationMode? replicationMode = default;
+            Guid? distributedAvailabilityGroupId = default;
+            Guid? sourceReplicaId = default;
+            Guid? targetReplicaId = default;
+            string linkState = default;
+            string lastHardenedLsn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -269,17 +269,17 @@ namespace Azure.ResourceManager.Sql
                 id,
                 name,
                 type,
-                systemData.Value,
-                targetDatabase.Value,
-                sourceEndpoint.Value,
-                primaryAvailabilityGroupName.Value,
-                secondaryAvailabilityGroupName.Value,
-                Optional.ToNullable(replicationMode),
-                Optional.ToNullable(distributedAvailabilityGroupId),
-                Optional.ToNullable(sourceReplicaId),
-                Optional.ToNullable(targetReplicaId),
-                linkState.Value,
-                lastHardenedLsn.Value,
+                systemData,
+                targetDatabase,
+                sourceEndpoint,
+                primaryAvailabilityGroupName,
+                secondaryAvailabilityGroupName,
+                replicationMode,
+                distributedAvailabilityGroupId,
+                sourceReplicaId,
+                targetReplicaId,
+                linkState,
+                lastHardenedLsn,
                 serializedAdditionalRawData);
         }
 

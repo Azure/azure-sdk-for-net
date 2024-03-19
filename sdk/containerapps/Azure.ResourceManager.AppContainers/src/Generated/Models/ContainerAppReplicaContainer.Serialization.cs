@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -26,47 +27,47 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (ContainerId != null)
+            if (Optional.IsDefined(ContainerId))
             {
                 writer.WritePropertyName("containerId"u8);
                 writer.WriteStringValue(ContainerId);
             }
-            if (IsReady.HasValue)
+            if (Optional.IsDefined(IsReady))
             {
                 writer.WritePropertyName("ready"u8);
                 writer.WriteBooleanValue(IsReady.Value);
             }
-            if (IsStarted.HasValue)
+            if (Optional.IsDefined(IsStarted))
             {
                 writer.WritePropertyName("started"u8);
                 writer.WriteBooleanValue(IsStarted.Value);
             }
-            if (RestartCount.HasValue)
+            if (Optional.IsDefined(RestartCount))
             {
                 writer.WritePropertyName("restartCount"u8);
                 writer.WriteNumberValue(RestartCount.Value);
             }
-            if (options.Format != "W" && RunningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RunningState))
             {
                 writer.WritePropertyName("runningState"u8);
                 writer.WriteStringValue(RunningState.Value.ToString());
             }
-            if (options.Format != "W" && RunningStateDetails != null)
+            if (options.Format != "W" && Optional.IsDefined(RunningStateDetails))
             {
                 writer.WritePropertyName("runningStateDetails"u8);
                 writer.WriteStringValue(RunningStateDetails);
             }
-            if (options.Format != "W" && LogStreamEndpoint != null)
+            if (options.Format != "W" && Optional.IsDefined(LogStreamEndpoint))
             {
                 writer.WritePropertyName("logStreamEndpoint"u8);
                 writer.WriteStringValue(LogStreamEndpoint);
             }
-            if (options.Format != "W" && ExecEndpoint != null)
+            if (options.Format != "W" && Optional.IsDefined(ExecEndpoint))
             {
                 writer.WritePropertyName("execEndpoint"u8);
                 writer.WriteStringValue(ExecEndpoint);
@@ -109,15 +110,15 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> containerId = default;
-            Optional<bool> ready = default;
-            Optional<bool> started = default;
-            Optional<int> restartCount = default;
-            Optional<ContainerAppContainerRunningState> runningState = default;
-            Optional<string> runningStateDetails = default;
-            Optional<string> logStreamEndpoint = default;
-            Optional<string> execEndpoint = default;
+            string name = default;
+            string containerId = default;
+            bool? ready = default;
+            bool? started = default;
+            int? restartCount = default;
+            ContainerAppContainerRunningState? runningState = default;
+            string runningStateDetails = default;
+            string logStreamEndpoint = default;
+            string execEndpoint = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -190,15 +191,15 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ContainerAppReplicaContainer(
-                name.Value,
-                containerId.Value,
-                Optional.ToNullable(ready),
-                Optional.ToNullable(started),
-                Optional.ToNullable(restartCount),
-                Optional.ToNullable(runningState),
-                runningStateDetails.Value,
-                logStreamEndpoint.Value,
-                execEndpoint.Value,
+                name,
+                containerId,
+                ready,
+                started,
+                restartCount,
+                runningState,
+                runningStateDetails,
+                logStreamEndpoint,
+                execEndpoint,
                 serializedAdditionalRawData);
         }
 

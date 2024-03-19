@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.MetricsAdvisor;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -23,14 +24,14 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStringValue(DataSourceType.ToString());
             writer.WritePropertyName("dataFeedName"u8);
             writer.WriteStringValue(DataFeedName);
-            if (DataFeedDescription != null)
+            if (Optional.IsDefined(DataFeedDescription))
             {
                 writer.WritePropertyName("dataFeedDescription"u8);
                 writer.WriteStringValue(DataFeedDescription);
             }
             writer.WritePropertyName("granularityName"u8);
             writer.WriteStringValue(GranularityName.ToString());
-            if (GranularityAmount.HasValue)
+            if (Optional.IsDefined(GranularityAmount))
             {
                 if (GranularityAmount != null)
                 {
@@ -49,7 +50,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (!(Dimension is ChangeTrackingList<DataFeedDimension> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Dimension))
             {
                 writer.WritePropertyName("dimension"u8);
                 writer.WriteStartArray();
@@ -59,44 +60,44 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (TimestampColumn != null)
+            if (Optional.IsDefined(TimestampColumn))
             {
                 writer.WritePropertyName("timestampColumn"u8);
                 writer.WriteStringValue(TimestampColumn);
             }
             writer.WritePropertyName("dataStartFrom"u8);
             writer.WriteStringValue(DataStartFrom, "O");
-            if (StartOffsetInSeconds.HasValue)
+            if (Optional.IsDefined(StartOffsetInSeconds))
             {
                 writer.WritePropertyName("startOffsetInSeconds"u8);
                 writer.WriteNumberValue(StartOffsetInSeconds.Value);
             }
-            if (MaxConcurrency.HasValue)
+            if (Optional.IsDefined(MaxConcurrency))
             {
                 writer.WritePropertyName("maxConcurrency"u8);
                 writer.WriteNumberValue(MaxConcurrency.Value);
             }
-            if (MinRetryIntervalInSeconds.HasValue)
+            if (Optional.IsDefined(MinRetryIntervalInSeconds))
             {
                 writer.WritePropertyName("minRetryIntervalInSeconds"u8);
                 writer.WriteNumberValue(MinRetryIntervalInSeconds.Value);
             }
-            if (StopRetryAfterInSeconds.HasValue)
+            if (Optional.IsDefined(StopRetryAfterInSeconds))
             {
                 writer.WritePropertyName("stopRetryAfterInSeconds"u8);
                 writer.WriteNumberValue(StopRetryAfterInSeconds.Value);
             }
-            if (NeedRollup.HasValue)
+            if (Optional.IsDefined(NeedRollup))
             {
                 writer.WritePropertyName("needRollup"u8);
                 writer.WriteStringValue(NeedRollup.Value.ToString());
             }
-            if (RollUpMethod.HasValue)
+            if (Optional.IsDefined(RollUpMethod))
             {
                 writer.WritePropertyName("rollUpMethod"u8);
                 writer.WriteStringValue(RollUpMethod.Value.ToString());
             }
-            if (!(RollUpColumns is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(RollUpColumns))
             {
                 writer.WritePropertyName("rollUpColumns"u8);
                 writer.WriteStartArray();
@@ -106,27 +107,27 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (AllUpIdentification != null)
+            if (Optional.IsDefined(AllUpIdentification))
             {
                 writer.WritePropertyName("allUpIdentification"u8);
                 writer.WriteStringValue(AllUpIdentification);
             }
-            if (FillMissingPointType.HasValue)
+            if (Optional.IsDefined(FillMissingPointType))
             {
                 writer.WritePropertyName("fillMissingPointType"u8);
                 writer.WriteStringValue(FillMissingPointType.Value.ToString());
             }
-            if (FillMissingPointValue.HasValue)
+            if (Optional.IsDefined(FillMissingPointValue))
             {
                 writer.WritePropertyName("fillMissingPointValue"u8);
                 writer.WriteNumberValue(FillMissingPointValue.Value);
             }
-            if (ViewMode.HasValue)
+            if (Optional.IsDefined(ViewMode))
             {
                 writer.WritePropertyName("viewMode"u8);
                 writer.WriteStringValue(ViewMode.Value.ToString());
             }
-            if (!(Admins is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Admins))
             {
                 writer.WritePropertyName("admins"u8);
                 writer.WriteStartArray();
@@ -136,7 +137,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Viewers is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(Viewers))
             {
                 writer.WritePropertyName("viewers"u8);
                 writer.WriteStartArray();
@@ -146,17 +147,17 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ActionLinkTemplate != null)
+            if (Optional.IsDefined(ActionLinkTemplate))
             {
                 writer.WritePropertyName("actionLinkTemplate"u8);
                 writer.WriteStringValue(ActionLinkTemplate);
             }
-            if (AuthenticationType.HasValue)
+            if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType"u8);
                 writer.WriteStringValue(AuthenticationType.Value.ToString());
             }
-            if (CredentialId != null)
+            if (Optional.IsDefined(CredentialId))
             {
                 writer.WritePropertyName("credentialId"u8);
                 writer.WriteStringValue(CredentialId);
@@ -172,35 +173,35 @@ namespace Azure.AI.MetricsAdvisor.Models
             }
             AzureTableParameter dataSourceParameter = default;
             DataFeedSourceKind dataSourceType = default;
-            Optional<string> dataFeedId = default;
+            string dataFeedId = default;
             string dataFeedName = default;
-            Optional<string> dataFeedDescription = default;
+            string dataFeedDescription = default;
             DataFeedGranularityType granularityName = default;
-            Optional<int?> granularityAmount = default;
+            int? granularityAmount = default;
             IList<DataFeedMetric> metrics = default;
             IList<DataFeedDimension> dimension = default;
-            Optional<string> timestampColumn = default;
+            string timestampColumn = default;
             DateTimeOffset dataStartFrom = default;
-            Optional<long> startOffsetInSeconds = default;
-            Optional<int> maxConcurrency = default;
-            Optional<long> minRetryIntervalInSeconds = default;
-            Optional<long> stopRetryAfterInSeconds = default;
-            Optional<DataFeedRollupType> needRollup = default;
-            Optional<DataFeedAutoRollupMethod> rollUpMethod = default;
+            long? startOffsetInSeconds = default;
+            int? maxConcurrency = default;
+            long? minRetryIntervalInSeconds = default;
+            long? stopRetryAfterInSeconds = default;
+            DataFeedRollupType? needRollup = default;
+            DataFeedAutoRollupMethod? rollUpMethod = default;
             IList<string> rollUpColumns = default;
-            Optional<string> allUpIdentification = default;
-            Optional<DataFeedMissingDataPointFillType> fillMissingPointType = default;
-            Optional<double> fillMissingPointValue = default;
-            Optional<DataFeedAccessMode> viewMode = default;
+            string allUpIdentification = default;
+            DataFeedMissingDataPointFillType? fillMissingPointType = default;
+            double? fillMissingPointValue = default;
+            DataFeedAccessMode? viewMode = default;
             IList<string> admins = default;
             IList<string> viewers = default;
-            Optional<bool> isAdmin = default;
-            Optional<string> creator = default;
-            Optional<DataFeedStatus> status = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<string> actionLinkTemplate = default;
-            Optional<AuthenticationTypeEnum> authenticationType = default;
-            Optional<string> credentialId = default;
+            bool? isAdmin = default;
+            string creator = default;
+            DataFeedStatus? status = default;
+            DateTimeOffset? createdTime = default;
+            string actionLinkTemplate = default;
+            AuthenticationTypeEnum? authenticationType = default;
+            string credentialId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataSourceParameter"u8))
@@ -459,35 +460,35 @@ namespace Azure.AI.MetricsAdvisor.Models
             }
             return new AzureTableDataFeed(
                 dataSourceType,
-                dataFeedId.Value,
+                dataFeedId,
                 dataFeedName,
-                dataFeedDescription.Value,
+                dataFeedDescription,
                 granularityName,
-                Optional.ToNullable(granularityAmount),
+                granularityAmount,
                 metrics,
                 dimension ?? new ChangeTrackingList<DataFeedDimension>(),
-                timestampColumn.Value,
+                timestampColumn,
                 dataStartFrom,
-                Optional.ToNullable(startOffsetInSeconds),
-                Optional.ToNullable(maxConcurrency),
-                Optional.ToNullable(minRetryIntervalInSeconds),
-                Optional.ToNullable(stopRetryAfterInSeconds),
-                Optional.ToNullable(needRollup),
-                Optional.ToNullable(rollUpMethod),
+                startOffsetInSeconds,
+                maxConcurrency,
+                minRetryIntervalInSeconds,
+                stopRetryAfterInSeconds,
+                needRollup,
+                rollUpMethod,
                 rollUpColumns ?? new ChangeTrackingList<string>(),
-                allUpIdentification.Value,
-                Optional.ToNullable(fillMissingPointType),
-                Optional.ToNullable(fillMissingPointValue),
-                Optional.ToNullable(viewMode),
+                allUpIdentification,
+                fillMissingPointType,
+                fillMissingPointValue,
+                viewMode,
                 admins ?? new ChangeTrackingList<string>(),
                 viewers ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(isAdmin),
-                creator.Value,
-                Optional.ToNullable(status),
-                Optional.ToNullable(createdTime),
-                actionLinkTemplate.Value,
-                Optional.ToNullable(authenticationType),
-                credentialId.Value,
+                isAdmin,
+                creator,
+                status,
+                createdTime,
+                actionLinkTemplate,
+                authenticationType,
+                credentialId,
                 dataSourceParameter);
         }
     }

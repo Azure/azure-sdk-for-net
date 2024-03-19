@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -32,12 +33,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteObjectValue(RestoreTargetInfo);
             writer.WritePropertyName("sourceDataStoreType"u8);
             writer.WriteStringValue(SourceDataStoreType.ToString());
-            if (SourceResourceId != null)
+            if (Optional.IsDefined(SourceResourceId))
             {
                 writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
             }
-            if (IdentityDetails != null)
+            if (Optional.IsDefined(IdentityDetails))
             {
                 writer.WritePropertyName("identityDetails"u8);
                 writer.WriteObjectValue(IdentityDetails);
@@ -83,8 +84,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             string objectType = "Unknown";
             RestoreTargetInfoBase restoreTargetInfo = default;
             SourceDataStoreType sourceDataStoreType = default;
-            Optional<ResourceIdentifier> sourceResourceId = default;
-            Optional<DataProtectionIdentityDetails> identityDetails = default;
+            ResourceIdentifier sourceResourceId = default;
+            DataProtectionIdentityDetails identityDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -132,8 +133,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 objectType,
                 restoreTargetInfo,
                 sourceDataStoreType,
-                sourceResourceId.Value,
-                identityDetails.Value,
+                sourceResourceId,
+                identityDetails,
                 serializedAdditionalRawData);
         }
 

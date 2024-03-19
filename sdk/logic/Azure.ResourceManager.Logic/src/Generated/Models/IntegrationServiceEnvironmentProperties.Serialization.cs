@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (IntegrationServiceEnvironmentId != null)
+            if (Optional.IsDefined(IntegrationServiceEnvironmentId))
             {
                 writer.WritePropertyName("integrationServiceEnvironmentId"u8);
                 writer.WriteStringValue(IntegrationServiceEnvironmentId);
             }
-            if (EndpointsConfiguration != null)
+            if (Optional.IsDefined(EndpointsConfiguration))
             {
                 writer.WritePropertyName("endpointsConfiguration"u8);
                 writer.WriteObjectValue(EndpointsConfiguration);
             }
-            if (NetworkConfiguration != null)
+            if (Optional.IsDefined(NetworkConfiguration))
             {
                 writer.WritePropertyName("networkConfiguration"u8);
                 writer.WriteObjectValue(NetworkConfiguration);
             }
-            if (EncryptionConfiguration != null)
+            if (Optional.IsDefined(EncryptionConfiguration))
             {
                 writer.WritePropertyName("encryptionConfiguration"u8);
                 writer.WriteObjectValue(EncryptionConfiguration);
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<LogicWorkflowProvisioningState> provisioningState = default;
-            Optional<LogicWorkflowState> state = default;
-            Optional<string> integrationServiceEnvironmentId = default;
-            Optional<FlowEndpointsConfiguration> endpointsConfiguration = default;
-            Optional<IntegrationServiceNetworkConfiguration> networkConfiguration = default;
-            Optional<IntegrationServiceEnvironmenEncryptionConfiguration> encryptionConfiguration = default;
+            LogicWorkflowProvisioningState? provisioningState = default;
+            LogicWorkflowState? state = default;
+            string integrationServiceEnvironmentId = default;
+            FlowEndpointsConfiguration endpointsConfiguration = default;
+            IntegrationServiceNetworkConfiguration networkConfiguration = default;
+            IntegrationServiceEnvironmenEncryptionConfiguration encryptionConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -161,12 +162,12 @@ namespace Azure.ResourceManager.Logic.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new IntegrationServiceEnvironmentProperties(
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(state),
-                integrationServiceEnvironmentId.Value,
-                endpointsConfiguration.Value,
-                networkConfiguration.Value,
-                encryptionConfiguration.Value,
+                provisioningState,
+                state,
+                integrationServiceEnvironmentId,
+                endpointsConfiguration,
+                networkConfiguration,
+                encryptionConfiguration,
                 serializedAdditionalRawData);
         }
 

@@ -43,59 +43,59 @@ namespace Azure.ResourceManager.DataShare
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ConsumerEmail != null)
+            if (options.Format != "W" && Optional.IsDefined(ConsumerEmail))
             {
                 writer.WritePropertyName("consumerEmail"u8);
                 writer.WriteStringValue(ConsumerEmail);
             }
-            if (options.Format != "W" && ConsumerName != null)
+            if (options.Format != "W" && Optional.IsDefined(ConsumerName))
             {
                 writer.WritePropertyName("consumerName"u8);
                 writer.WriteStringValue(ConsumerName);
             }
-            if (options.Format != "W" && ConsumerTenantName != null)
+            if (options.Format != "W" && Optional.IsDefined(ConsumerTenantName))
             {
                 writer.WritePropertyName("consumerTenantName"u8);
                 writer.WriteStringValue(ConsumerTenantName);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdAt"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (ExpireOn.HasValue)
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationDate"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (options.Format != "W" && ProviderEmail != null)
+            if (options.Format != "W" && Optional.IsDefined(ProviderEmail))
             {
                 writer.WritePropertyName("providerEmail"u8);
                 writer.WriteStringValue(ProviderEmail);
             }
-            if (options.Format != "W" && ProviderName != null)
+            if (options.Format != "W" && Optional.IsDefined(ProviderName))
             {
                 writer.WritePropertyName("providerName"u8);
                 writer.WriteStringValue(ProviderName);
             }
-            if (options.Format != "W" && SharedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SharedOn))
             {
                 writer.WritePropertyName("sharedAt"u8);
                 writer.WriteStringValue(SharedOn.Value, "O");
             }
-            if (options.Format != "W" && ShareSubscriptionObjectId != null)
+            if (options.Format != "W" && Optional.IsDefined(ShareSubscriptionObjectId))
             {
                 writer.WritePropertyName("shareSubscriptionObjectId"u8);
                 writer.WriteStringValue(ShareSubscriptionObjectId);
             }
-            if (options.Format != "W" && ShareSubscriptionStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ShareSubscriptionStatus))
             {
                 writer.WritePropertyName("shareSubscriptionStatus"u8);
                 writer.WriteStringValue(ShareSubscriptionStatus.Value.ToString());
@@ -142,17 +142,17 @@ namespace Azure.ResourceManager.DataShare
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> consumerEmail = default;
-            Optional<string> consumerName = default;
-            Optional<string> consumerTenantName = default;
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<DateTimeOffset> expirationDate = default;
-            Optional<string> providerEmail = default;
-            Optional<string> providerName = default;
-            Optional<DateTimeOffset> sharedAt = default;
-            Optional<string> shareSubscriptionObjectId = default;
-            Optional<ShareSubscriptionStatus> shareSubscriptionStatus = default;
+            SystemData systemData = default;
+            string consumerEmail = default;
+            string consumerName = default;
+            string consumerTenantName = default;
+            DateTimeOffset? createdAt = default;
+            DateTimeOffset? expirationDate = default;
+            string providerEmail = default;
+            string providerName = default;
+            DateTimeOffset? sharedAt = default;
+            string shareSubscriptionObjectId = default;
+            ShareSubscriptionStatus? shareSubscriptionStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -269,17 +269,17 @@ namespace Azure.ResourceManager.DataShare
                 id,
                 name,
                 type,
-                systemData.Value,
-                consumerEmail.Value,
-                consumerName.Value,
-                consumerTenantName.Value,
-                Optional.ToNullable(createdAt),
-                Optional.ToNullable(expirationDate),
-                providerEmail.Value,
-                providerName.Value,
-                Optional.ToNullable(sharedAt),
-                shareSubscriptionObjectId.Value,
-                Optional.ToNullable(shareSubscriptionStatus),
+                systemData,
+                consumerEmail,
+                consumerName,
+                consumerTenantName,
+                createdAt,
+                expirationDate,
+                providerEmail,
+                providerName,
+                sharedAt,
+                shareSubscriptionObjectId,
+                shareSubscriptionStatus,
                 serializedAdditionalRawData);
         }
 

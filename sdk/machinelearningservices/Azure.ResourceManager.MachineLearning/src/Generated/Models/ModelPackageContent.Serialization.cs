@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (BaseEnvironmentSource != null)
+            if (Optional.IsDefined(BaseEnvironmentSource))
             {
                 if (BaseEnvironmentSource != null)
                 {
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("baseEnvironmentSource");
                 }
             }
-            if (!(EnvironmentVariables is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(EnvironmentVariables))
             {
                 if (EnvironmentVariables != null)
                 {
@@ -58,7 +59,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("inferencingServer"u8);
             writer.WriteObjectValue(InferencingServer);
-            if (!(Inputs is ChangeTrackingList<ModelPackageInput> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Inputs))
             {
                 if (Inputs != null)
                 {
@@ -75,7 +76,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("inputs");
                 }
             }
-            if (ModelConfiguration != null)
+            if (Optional.IsDefined(ModelConfiguration))
             {
                 if (ModelConfiguration != null)
                 {
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("modelConfiguration");
                 }
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 if (Tags != null)
                 {
@@ -145,11 +146,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<BaseEnvironmentSource> baseEnvironmentSource = default;
+            BaseEnvironmentSource baseEnvironmentSource = default;
             IDictionary<string, string> environmentVariables = default;
             InferencingServer inferencingServer = default;
             IList<ModelPackageInput> inputs = default;
-            Optional<ModelConfiguration> modelConfiguration = default;
+            ModelConfiguration modelConfiguration = default;
             IDictionary<string, string> tags = default;
             string targetEnvironmentId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -238,11 +239,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ModelPackageContent(
-                baseEnvironmentSource.Value,
+                baseEnvironmentSource,
                 environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
                 inferencingServer,
                 inputs ?? new ChangeTrackingList<ModelPackageInput>(),
-                modelConfiguration.Value,
+                modelConfiguration,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 targetEnvironmentId,
                 serializedAdditionalRawData);

@@ -8,7 +8,7 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
+using Azure.Messaging.EventGrid;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -21,14 +21,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> dataDriftId = default;
-            Optional<string> dataDriftName = default;
-            Optional<string> runId = default;
-            Optional<string> baseDatasetId = default;
-            Optional<string> targetDatasetId = default;
-            Optional<double> driftCoefficient = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
+            string dataDriftId = default;
+            string dataDriftName = default;
+            string runId = default;
+            string baseDatasetId = default;
+            string targetDatasetId = default;
+            double? driftCoefficient = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataDriftId"u8))
@@ -85,14 +85,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new MachineLearningServicesDatasetDriftDetectedEventData(
-                dataDriftId.Value,
-                dataDriftName.Value,
-                runId.Value,
-                baseDatasetId.Value,
-                targetDatasetId.Value,
-                Optional.ToNullable(driftCoefficient),
-                Optional.ToNullable(startTime),
-                Optional.ToNullable(endTime));
+                dataDriftId,
+                dataDriftName,
+                runId,
+                baseDatasetId,
+                targetDatasetId,
+                driftCoefficient,
+                startTime,
+                endTime);
         }
 
         internal partial class MachineLearningServicesDatasetDriftDetectedEventDataConverter : JsonConverter<MachineLearningServicesDatasetDriftDetectedEventData>

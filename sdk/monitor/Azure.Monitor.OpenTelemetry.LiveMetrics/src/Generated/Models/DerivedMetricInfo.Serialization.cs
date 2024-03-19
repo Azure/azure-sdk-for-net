@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Monitor.OpenTelemetry.LiveMetrics;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
@@ -19,11 +19,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> telemetryType = default;
+            string id = default;
+            string telemetryType = default;
             IReadOnlyList<FilterConjunctionGroupInfo> filterGroups = default;
-            Optional<string> projection = default;
-            Optional<DerivedMetricInfoAggregation> aggregation = default;
+            string projection = default;
+            DerivedMetricInfoAggregation? aggregation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("Id"u8))
@@ -65,7 +65,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                     continue;
                 }
             }
-            return new DerivedMetricInfo(id.Value, telemetryType.Value, filterGroups ?? new ChangeTrackingList<FilterConjunctionGroupInfo>(), projection.Value, Optional.ToNullable(aggregation));
+            return new DerivedMetricInfo(id, telemetryType, filterGroups ?? new ChangeTrackingList<FilterConjunctionGroupInfo>(), projection, aggregation);
         }
     }
 }

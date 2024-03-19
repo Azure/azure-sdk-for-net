@@ -29,13 +29,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -63,38 +63,38 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PanETag.HasValue)
+            if (Optional.IsDefined(PanETag))
             {
                 writer.WritePropertyName("panEtag"u8);
                 writer.WriteStringValue(PanETag.Value.ToString());
             }
             writer.WritePropertyName("networkProfile"u8);
             writer.WriteObjectValue(NetworkProfile);
-            if (IsPanoramaManaged.HasValue)
+            if (Optional.IsDefined(IsPanoramaManaged))
             {
                 writer.WritePropertyName("isPanoramaManaged"u8);
                 writer.WriteStringValue(IsPanoramaManaged.Value.ToString());
             }
-            if (PanoramaConfig != null)
+            if (Optional.IsDefined(PanoramaConfig))
             {
                 writer.WritePropertyName("panoramaConfig"u8);
                 writer.WriteObjectValue(PanoramaConfig);
             }
-            if (AssociatedRulestack != null)
+            if (Optional.IsDefined(AssociatedRulestack))
             {
                 writer.WritePropertyName("associatedRulestack"u8);
                 writer.WriteObjectValue(AssociatedRulestack);
             }
             writer.WritePropertyName("dnsSettings"u8);
             writer.WriteObjectValue(DnsSettings);
-            if (!(FrontEndSettings is ChangeTrackingList<FirewallFrontendSetting> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(FrontEndSettings))
             {
                 writer.WritePropertyName("frontEndSettings"u8);
                 writer.WriteStartArray();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -152,21 +152,21 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ETag> panETag = default;
+            SystemData systemData = default;
+            ETag? panETag = default;
             FirewallNetworkProfile networkProfile = default;
-            Optional<FirewallBooleanType> isPanoramaManaged = default;
-            Optional<FirewallPanoramaConfiguration> panoramaConfig = default;
-            Optional<RulestackDetails> associatedRulestack = default;
+            FirewallBooleanType? isPanoramaManaged = default;
+            FirewallPanoramaConfiguration panoramaConfig = default;
+            RulestackDetails associatedRulestack = default;
             FirewallDnsSettings dnsSettings = default;
             IList<FirewallFrontendSetting> frontEndSettings = default;
-            Optional<FirewallProvisioningState> provisioningState = default;
+            FirewallProvisioningState? provisioningState = default;
             FirewallBillingPlanInfo planData = default;
             PanFirewallMarketplaceDetails marketplaceDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -327,18 +327,18 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 identity,
-                Optional.ToNullable(panETag),
+                panETag,
                 networkProfile,
-                Optional.ToNullable(isPanoramaManaged),
-                panoramaConfig.Value,
-                associatedRulestack.Value,
+                isPanoramaManaged,
+                panoramaConfig,
+                associatedRulestack,
                 dnsSettings,
                 frontEndSettings ?? new ChangeTrackingList<FirewallFrontendSetting>(),
-                Optional.ToNullable(provisioningState),
+                provisioningState,
                 planData,
                 marketplaceDetails,
                 serializedAdditionalRawData);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (HeaderName != null)
+            if (Optional.IsDefined(HeaderName))
             {
                 writer.WritePropertyName("headerName"u8);
                 writer.WriteStringValue(HeaderName);
             }
-            if (HeaderValue != null)
+            if (Optional.IsDefined(HeaderValue))
             {
                 writer.WritePropertyName("headerValue"u8);
                 writer.WriteStringValue(HeaderValue);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> headerName = default;
-            Optional<string> headerValue = default;
+            string headerName = default;
+            string headerValue = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallPolicyHttpHeaderToInsert(headerName.Value, headerValue.Value, serializedAdditionalRawData);
+            return new FirewallPolicyHttpHeaderToInsert(headerName, headerValue, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirewallPolicyHttpHeaderToInsert>.Write(ModelReaderWriterOptions options)

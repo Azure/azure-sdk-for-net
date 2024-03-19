@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.SelfHelp;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
@@ -27,47 +28,47 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Title != null)
+            if (Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Guidance != null)
+            if (Optional.IsDefined(Guidance))
             {
                 writer.WritePropertyName("guidance"u8);
                 writer.WriteStringValue(Guidance);
             }
-            if (ExecutionStatus.HasValue)
+            if (Optional.IsDefined(ExecutionStatus))
             {
                 writer.WritePropertyName("executionStatus"u8);
                 writer.WriteStringValue(ExecutionStatus.Value.ToString());
             }
-            if (ExecutionStatusDescription != null)
+            if (Optional.IsDefined(ExecutionStatusDescription))
             {
                 writer.WritePropertyName("executionStatusDescription"u8);
                 writer.WriteStringValue(ExecutionStatusDescription);
             }
-            if (StepType.HasValue)
+            if (Optional.IsDefined(StepType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(StepType.Value.ToString());
             }
-            if (IsLastStep.HasValue)
+            if (Optional.IsDefined(IsLastStep))
             {
                 writer.WritePropertyName("isLastStep"u8);
                 writer.WriteBooleanValue(IsLastStep.Value);
             }
-            if (!(Inputs is ChangeTrackingList<StepInput> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Inputs))
             {
                 writer.WritePropertyName("inputs"u8);
                 writer.WriteStartArray();
@@ -77,12 +78,12 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
                 writer.WriteEndArray();
             }
-            if (AutomatedCheckResults != null)
+            if (Optional.IsDefined(AutomatedCheckResults))
             {
                 writer.WritePropertyName("automatedCheckResults"u8);
                 writer.WriteObjectValue(AutomatedCheckResults);
             }
-            if (!(Insights is ChangeTrackingList<SelfHelpDiagnosticInsight> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Insights))
             {
                 writer.WritePropertyName("insights"u8);
                 writer.WriteStartArray();
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Error != null)
+            if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, Error);
@@ -135,18 +136,18 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> title = default;
-            Optional<string> description = default;
-            Optional<string> guidance = default;
-            Optional<ExecutionStatus> executionStatus = default;
-            Optional<string> executionStatusDescription = default;
-            Optional<SelfHelpType> type = default;
-            Optional<bool> isLastStep = default;
+            string id = default;
+            string title = default;
+            string description = default;
+            string guidance = default;
+            ExecutionStatus? executionStatus = default;
+            string executionStatusDescription = default;
+            SelfHelpType? type = default;
+            bool? isLastStep = default;
             IReadOnlyList<StepInput> inputs = default;
-            Optional<AutomatedCheckResult> automatedCheckResults = default;
+            AutomatedCheckResult automatedCheckResults = default;
             IReadOnlyList<SelfHelpDiagnosticInsight> insights = default;
-            Optional<ResponseError> error = default;
+            ResponseError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -256,18 +257,18 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SelfHelpStep(
-                id.Value,
-                title.Value,
-                description.Value,
-                guidance.Value,
-                Optional.ToNullable(executionStatus),
-                executionStatusDescription.Value,
-                Optional.ToNullable(type),
-                Optional.ToNullable(isLastStep),
+                id,
+                title,
+                description,
+                guidance,
+                executionStatus,
+                executionStatusDescription,
+                type,
+                isLastStep,
                 inputs ?? new ChangeTrackingList<StepInput>(),
-                automatedCheckResults.Value,
+                automatedCheckResults,
                 insights ?? new ChangeTrackingList<SelfHelpDiagnosticInsight>(),
-                error.Value,
+                error,
                 serializedAdditionalRawData);
         }
 

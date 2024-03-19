@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (EndOn.HasValue)
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (!(Events is ChangeTrackingList<DetectorAbnormalTimePeriod> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Events))
             {
                 writer.WritePropertyName("events"u8);
                 writer.WriteStartArray();
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Solutions is ChangeTrackingList<DiagnosticSolution> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Solutions))
             {
                 writer.WritePropertyName("solutions"u8);
                 writer.WriteStartArray();
@@ -94,8 +95,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
             IList<DetectorAbnormalTimePeriod> events = default;
             IList<DiagnosticSolution> solutions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -154,7 +155,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AbnormalTimePeriod(Optional.ToNullable(startTime), Optional.ToNullable(endTime), events ?? new ChangeTrackingList<DetectorAbnormalTimePeriod>(), solutions ?? new ChangeTrackingList<DiagnosticSolution>(), serializedAdditionalRawData);
+            return new AbnormalTimePeriod(startTime, endTime, events ?? new ChangeTrackingList<DetectorAbnormalTimePeriod>(), solutions ?? new ChangeTrackingList<DiagnosticSolution>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AbnormalTimePeriod>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && SuccessfulInstanceCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SuccessfulInstanceCount))
             {
                 writer.WritePropertyName("successfulInstanceCount"u8);
                 writer.WriteNumberValue(SuccessfulInstanceCount.Value);
             }
-            if (options.Format != "W" && FailedInstanceCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(FailedInstanceCount))
             {
                 writer.WritePropertyName("failedInstanceCount"u8);
                 writer.WriteNumberValue(FailedInstanceCount.Value);
             }
-            if (options.Format != "W" && InProgressInstanceCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(InProgressInstanceCount))
             {
                 writer.WritePropertyName("inProgressInstanceCount"u8);
                 writer.WriteNumberValue(InProgressInstanceCount.Value);
             }
-            if (options.Format != "W" && PendingInstanceCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PendingInstanceCount))
             {
                 writer.WritePropertyName("pendingInstanceCount"u8);
                 writer.WriteNumberValue(PendingInstanceCount.Value);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<int> successfulInstanceCount = default;
-            Optional<int> failedInstanceCount = default;
-            Optional<int> inProgressInstanceCount = default;
-            Optional<int> pendingInstanceCount = default;
+            int? successfulInstanceCount = default;
+            int? failedInstanceCount = default;
+            int? inProgressInstanceCount = default;
+            int? pendingInstanceCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RollingUpgradeProgressInfo(Optional.ToNullable(successfulInstanceCount), Optional.ToNullable(failedInstanceCount), Optional.ToNullable(inProgressInstanceCount), Optional.ToNullable(pendingInstanceCount), serializedAdditionalRawData);
+            return new RollingUpgradeProgressInfo(successfulInstanceCount, failedInstanceCount, inProgressInstanceCount, pendingInstanceCount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RollingUpgradeProgressInfo>.Write(ModelReaderWriterOptions options)

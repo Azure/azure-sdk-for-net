@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ElasticSan
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
@@ -48,39 +48,39 @@ namespace Azure.ResourceManager.ElasticSan
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (ProtocolType.HasValue)
+            if (Optional.IsDefined(ProtocolType))
             {
                 writer.WritePropertyName("protocolType"u8);
                 writer.WriteStringValue(ProtocolType.Value.ToString());
             }
-            if (Encryption.HasValue)
+            if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteStringValue(Encryption.Value.ToString());
             }
-            if (EncryptionProperties != null)
+            if (Optional.IsDefined(EncryptionProperties))
             {
                 writer.WritePropertyName("encryptionProperties"u8);
                 writer.WriteObjectValue(EncryptionProperties);
             }
-            if (NetworkAcls != null)
+            if (Optional.IsDefined(NetworkAcls))
             {
                 writer.WritePropertyName("networkAcls"u8);
                 writer.WriteObjectValue(NetworkAcls);
             }
-            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<ElasticSanPrivateEndpointConnectionData> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -129,16 +129,16 @@ namespace Azure.ResourceManager.ElasticSan
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
+            ManagedServiceIdentity identity = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ElasticSanProvisioningState> provisioningState = default;
-            Optional<ElasticSanStorageTargetType> protocolType = default;
-            Optional<ElasticSanEncryptionType> encryption = default;
-            Optional<ElasticSanEncryptionProperties> encryptionProperties = default;
-            Optional<NetworkRuleSet> networkAcls = default;
+            SystemData systemData = default;
+            ElasticSanProvisioningState? provisioningState = default;
+            ElasticSanStorageTargetType? protocolType = default;
+            ElasticSanEncryptionType? encryption = default;
+            ElasticSanEncryptionProperties encryptionProperties = default;
+            NetworkRuleSet networkAcls = default;
             IReadOnlyList<ElasticSanPrivateEndpointConnectionData> privateEndpointConnections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -258,13 +258,13 @@ namespace Azure.ResourceManager.ElasticSan
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 identity,
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(protocolType),
-                Optional.ToNullable(encryption),
-                encryptionProperties.Value,
-                networkAcls.Value,
+                provisioningState,
+                protocolType,
+                encryption,
+                encryptionProperties,
+                networkAcls,
                 privateEndpointConnections ?? new ChangeTrackingList<ElasticSanPrivateEndpointConnectionData>(),
                 serializedAdditionalRawData);
         }

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -29,17 +30,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("linkedServiceName"u8);
             JsonSerializer.Serialize(writer, LinkedServiceName);
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 JsonSerializer.Serialize(writer, Path);
             }
-            if (LogLevel != null)
+            if (Optional.IsDefined(LogLevel))
             {
                 writer.WritePropertyName("logLevel"u8);
                 JsonSerializer.Serialize(writer, LogLevel);
             }
-            if (EnableReliableLogging != null)
+            if (Optional.IsDefined(EnableReliableLogging))
             {
                 writer.WritePropertyName("enableReliableLogging"u8);
                 JsonSerializer.Serialize(writer, EnableReliableLogging);
@@ -80,9 +81,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             DataFactoryLinkedServiceReference linkedServiceName = default;
-            Optional<DataFactoryElement<string>> path = default;
-            Optional<DataFactoryElement<string>> logLevel = default;
-            Optional<DataFactoryElement<bool>> enableReliableLogging = default;
+            DataFactoryElement<string> path = default;
+            DataFactoryElement<string> logLevel = default;
+            DataFactoryElement<bool> enableReliableLogging = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new LogStorageSettings(linkedServiceName, path.Value, logLevel.Value, enableReliableLogging.Value, additionalProperties);
+            return new LogStorageSettings(linkedServiceName, path, logLevel, enableReliableLogging, additionalProperties);
         }
 
         BinaryData IPersistableModel<LogStorageSettings>.Write(ModelReaderWriterOptions options)

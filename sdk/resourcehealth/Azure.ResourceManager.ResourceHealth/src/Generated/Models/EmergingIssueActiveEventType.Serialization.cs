@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ResourceHealth;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
@@ -26,52 +27,52 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             }
 
             writer.WriteStartObject();
-            if (Title != null)
+            if (Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (TrackingId != null)
+            if (Optional.IsDefined(TrackingId))
             {
                 writer.WritePropertyName("trackingId"u8);
                 writer.WriteStringValue(TrackingId);
             }
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Cloud != null)
+            if (Optional.IsDefined(Cloud))
             {
                 writer.WritePropertyName("cloud"u8);
                 writer.WriteStringValue(Cloud);
             }
-            if (Severity.HasValue)
+            if (Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (Stage.HasValue)
+            if (Optional.IsDefined(Stage))
             {
                 writer.WritePropertyName("stage"u8);
                 writer.WriteStringValue(Stage.Value.ToString());
             }
-            if (IsPublished.HasValue)
+            if (Optional.IsDefined(IsPublished))
             {
                 writer.WritePropertyName("published"u8);
                 writer.WriteBooleanValue(IsPublished.Value);
             }
-            if (LastModifiedOn.HasValue)
+            if (Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (!(Impacts is ChangeTrackingList<EmergingIssueImpact> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Impacts))
             {
                 writer.WritePropertyName("impacts"u8);
                 writer.WriteStartArray();
@@ -119,15 +120,15 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Optional<string> title = default;
-            Optional<string> description = default;
-            Optional<string> trackingId = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<string> cloud = default;
-            Optional<ResourceHealthEventSeverityLevel> severity = default;
-            Optional<ResourceHealthEventStageValue> stage = default;
-            Optional<bool> published = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
+            string title = default;
+            string description = default;
+            string trackingId = default;
+            DateTimeOffset? startTime = default;
+            string cloud = default;
+            ResourceHealthEventSeverityLevel? severity = default;
+            ResourceHealthEventStageValue? stage = default;
+            bool? published = default;
+            DateTimeOffset? lastModifiedTime = default;
             IReadOnlyList<EmergingIssueImpact> impacts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -219,15 +220,15 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new EmergingIssueActiveEventType(
-                title.Value,
-                description.Value,
-                trackingId.Value,
-                Optional.ToNullable(startTime),
-                cloud.Value,
-                Optional.ToNullable(severity),
-                Optional.ToNullable(stage),
-                Optional.ToNullable(published),
-                Optional.ToNullable(lastModifiedTime),
+                title,
+                description,
+                trackingId,
+                startTime,
+                cloud,
+                severity,
+                stage,
+                published,
+                lastModifiedTime,
                 impacts ?? new ChangeTrackingList<EmergingIssueImpact>(),
                 serializedAdditionalRawData);
         }

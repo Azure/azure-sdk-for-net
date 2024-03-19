@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServices;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
 
             writer.WriteStartObject();
-            if (!(RequiredZoneNames is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(RequiredZoneNames))
             {
                 writer.WritePropertyName("requiredZoneNames"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (SubResource.HasValue)
+            if (Optional.IsDefined(SubResource))
             {
                 writer.WritePropertyName("subResource"u8);
                 writer.WriteStringValue(SubResource.Value.ToString());
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 return null;
             }
             IList<string> requiredZoneNames = default;
-            Optional<VaultSubResourceType> subResource = default;
+            VaultSubResourceType? subResource = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DnsZoneResult(Optional.ToNullable(subResource), serializedAdditionalRawData, requiredZoneNames ?? new ChangeTrackingList<string>());
+            return new DnsZoneResult(subResource, serializedAdditionalRawData, requiredZoneNames ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<DnsZoneResult>.Write(ModelReaderWriterOptions options)

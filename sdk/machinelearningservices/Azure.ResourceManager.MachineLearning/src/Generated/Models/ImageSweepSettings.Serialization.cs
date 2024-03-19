@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (EarlyTermination != null)
+            if (Optional.IsDefined(EarlyTermination))
             {
                 if (EarlyTermination != null)
                 {
@@ -78,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<MachineLearningEarlyTerminationPolicy> earlyTermination = default;
+            MachineLearningEarlyTerminationPolicy earlyTermination = default;
             SamplingAlgorithmType samplingAlgorithm = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -105,7 +106,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImageSweepSettings(earlyTermination.Value, samplingAlgorithm, serializedAdditionalRawData);
+            return new ImageSweepSettings(earlyTermination, samplingAlgorithm, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ImageSweepSettings>.Write(ModelReaderWriterOptions options)

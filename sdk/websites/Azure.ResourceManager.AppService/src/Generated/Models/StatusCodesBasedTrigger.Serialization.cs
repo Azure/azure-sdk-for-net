@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteNumberValue(Status.Value);
             }
-            if (SubStatus.HasValue)
+            if (Optional.IsDefined(SubStatus))
             {
                 writer.WritePropertyName("subStatus"u8);
                 writer.WriteNumberValue(SubStatus.Value);
             }
-            if (Win32Status.HasValue)
+            if (Optional.IsDefined(Win32Status))
             {
                 writer.WritePropertyName("win32Status"u8);
                 writer.WriteNumberValue(Win32Status.Value);
             }
-            if (Count.HasValue)
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (TimeInterval != null)
+            if (Optional.IsDefined(TimeInterval))
             {
                 writer.WritePropertyName("timeInterval"u8);
                 writer.WriteStringValue(TimeInterval);
             }
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<int> status = default;
-            Optional<int> subStatus = default;
-            Optional<int> win32Status = default;
-            Optional<int> count = default;
-            Optional<string> timeInterval = default;
-            Optional<string> path = default;
+            int? status = default;
+            int? subStatus = default;
+            int? win32Status = default;
+            int? count = default;
+            string timeInterval = default;
+            string path = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,12 +158,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new StatusCodesBasedTrigger(
-                Optional.ToNullable(status),
-                Optional.ToNullable(subStatus),
-                Optional.ToNullable(win32Status),
-                Optional.ToNullable(count),
-                timeInterval.Value,
-                path.Value,
+                status,
+                subStatus,
+                win32Status,
+                count,
+                timeInterval,
+                path,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Authorization.Models
             }
 
             writer.WriteStartObject();
-            if (!(EnablementRules is ChangeTrackingList<RoleAssignmentEnablementRuleType> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(EnablementRules))
             {
                 writer.WritePropertyName("enabledRules"u8);
                 writer.WriteStartArray();
@@ -36,14 +37,14 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("ruleType"u8);
             writer.WriteStringValue(RuleType.ToString());
-            if (Target != null)
+            if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteObjectValue(Target);
@@ -87,9 +88,9 @@ namespace Azure.ResourceManager.Authorization.Models
                 return null;
             }
             IList<RoleAssignmentEnablementRuleType> enabledRules = default;
-            Optional<string> id = default;
+            string id = default;
             RoleManagementPolicyRuleType ruleType = default;
-            Optional<RoleManagementPolicyRuleTarget> target = default;
+            RoleManagementPolicyRuleTarget target = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +134,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleManagementPolicyEnablementRule(id.Value, ruleType, target.Value, serializedAdditionalRawData, enabledRules ?? new ChangeTrackingList<RoleAssignmentEnablementRuleType>());
+            return new RoleManagementPolicyEnablementRule(id, ruleType, target, serializedAdditionalRawData, enabledRules ?? new ChangeTrackingList<RoleAssignmentEnablementRuleType>());
         }
 
         BinaryData IPersistableModel<RoleManagementPolicyEnablementRule>.Write(ModelReaderWriterOptions options)

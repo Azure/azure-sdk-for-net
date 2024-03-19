@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Support;
 
 namespace Azure.ResourceManager.Support.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Support.Models
             }
 
             writer.WriteStartObject();
-            if (QuotaChangeRequestSubType != null)
+            if (Optional.IsDefined(QuotaChangeRequestSubType))
             {
                 writer.WritePropertyName("quotaChangeRequestSubType"u8);
                 writer.WriteStringValue(QuotaChangeRequestSubType);
             }
-            if (QuotaChangeRequestVersion != null)
+            if (Optional.IsDefined(QuotaChangeRequestVersion))
             {
                 writer.WritePropertyName("quotaChangeRequestVersion"u8);
                 writer.WriteStringValue(QuotaChangeRequestVersion);
             }
-            if (!(QuotaChangeRequests is ChangeTrackingList<SupportQuotaChangeContent> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(QuotaChangeRequests))
             {
                 writer.WritePropertyName("quotaChangeRequests"u8);
                 writer.WriteStartArray();
@@ -84,8 +85,8 @@ namespace Azure.ResourceManager.Support.Models
             {
                 return null;
             }
-            Optional<string> quotaChangeRequestSubType = default;
-            Optional<string> quotaChangeRequestVersion = default;
+            string quotaChangeRequestSubType = default;
+            string quotaChangeRequestVersion = default;
             IList<SupportQuotaChangeContent> quotaChangeRequests = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.Support.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QuotaTicketDetails(quotaChangeRequestSubType.Value, quotaChangeRequestVersion.Value, quotaChangeRequests ?? new ChangeTrackingList<SupportQuotaChangeContent>(), serializedAdditionalRawData);
+            return new QuotaTicketDetails(quotaChangeRequestSubType, quotaChangeRequestVersion, quotaChangeRequests ?? new ChangeTrackingList<SupportQuotaChangeContent>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QuotaTicketDetails>.Write(ModelReaderWriterOptions options)

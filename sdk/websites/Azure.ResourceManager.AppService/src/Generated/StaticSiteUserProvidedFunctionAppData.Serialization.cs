@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,24 +47,24 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (FunctionAppResourceId != null)
+            if (Optional.IsDefined(FunctionAppResourceId))
             {
                 writer.WritePropertyName("functionAppResourceId"u8);
                 writer.WriteStringValue(FunctionAppResourceId);
             }
-            if (FunctionAppRegion != null)
+            if (Optional.IsDefined(FunctionAppRegion))
             {
                 writer.WritePropertyName("functionAppRegion"u8);
                 writer.WriteStringValue(FunctionAppRegion);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdOn"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> functionAppResourceId = default;
-            Optional<string> functionAppRegion = default;
-            Optional<DateTimeOffset> createdOn = default;
+            SystemData systemData = default;
+            ResourceIdentifier functionAppResourceId = default;
+            string functionAppRegion = default;
+            DateTimeOffset? createdOn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -194,11 +194,11 @@ namespace Azure.ResourceManager.AppService
                 id,
                 name,
                 type,
-                systemData.Value,
-                functionAppResourceId.Value,
-                functionAppRegion.Value,
-                Optional.ToNullable(createdOn),
-                kind.Value,
+                systemData,
+                functionAppResourceId,
+                functionAppRegion,
+                createdOn,
+                kind,
                 serializedAdditionalRawData);
         }
 

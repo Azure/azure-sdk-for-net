@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.FluidRelay
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -61,34 +61,34 @@ namespace Azure.ResourceManager.FluidRelay
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && FrsTenantId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(FrsTenantId))
             {
                 writer.WritePropertyName("frsTenantId"u8);
                 writer.WriteStringValue(FrsTenantId.Value);
             }
-            if (options.Format != "W" && FluidRelayEndpoints != null)
+            if (options.Format != "W" && Optional.IsDefined(FluidRelayEndpoints))
             {
                 writer.WritePropertyName("fluidRelayEndpoints"u8);
                 writer.WriteObjectValue(FluidRelayEndpoints);
             }
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Encryption != null)
+            if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (StorageSku.HasValue)
+            if (Optional.IsDefined(StorageSku))
             {
                 writer.WritePropertyName("storagesku"u8);
                 writer.WriteStringValue(StorageSku.Value.ToString());
@@ -132,18 +132,18 @@ namespace Azure.ResourceManager.FluidRelay
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> frsTenantId = default;
-            Optional<FluidRelayEndpoints> fluidRelayEndpoints = default;
-            Optional<FluidRelayProvisioningState> provisioningState = default;
-            Optional<Models.EncryptionProperties> encryption = default;
-            Optional<FluidRelayStorageSku> storagesku = default;
+            SystemData systemData = default;
+            Guid? frsTenantId = default;
+            FluidRelayEndpoints fluidRelayEndpoints = default;
+            FluidRelayProvisioningState? provisioningState = default;
+            Models.EncryptionProperties encryption = default;
+            FluidRelayStorageSku? storagesku = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -267,15 +267,15 @@ namespace Azure.ResourceManager.FluidRelay
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 identity,
-                Optional.ToNullable(frsTenantId),
-                fluidRelayEndpoints.Value,
-                Optional.ToNullable(provisioningState),
-                encryption.Value,
-                Optional.ToNullable(storagesku),
+                frsTenantId,
+                fluidRelayEndpoints,
+                provisioningState,
+                encryption,
+                storagesku,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && AssignedLicenseImmutableId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AssignedLicenseImmutableId))
             {
                 writer.WritePropertyName("assignedLicenseImmutableId"u8);
                 writer.WriteStringValue(AssignedLicenseImmutableId.Value);
             }
-            if (options.Format != "W" && !(EsuKeys is ChangeTrackingList<EsuKey> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(EsuKeys))
             {
                 writer.WritePropertyName("esuKeys"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<Guid> assignedLicenseImmutableId = default;
+            Guid? assignedLicenseImmutableId = default;
             IReadOnlyList<EsuKey> esuKeys = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LicenseProfileStorageModelEsuProperties(Optional.ToNullable(assignedLicenseImmutableId), esuKeys ?? new ChangeTrackingList<EsuKey>(), serializedAdditionalRawData);
+            return new LicenseProfileStorageModelEsuProperties(assignedLicenseImmutableId, esuKeys ?? new ChangeTrackingList<EsuKey>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LicenseProfileStorageModelEsuProperties>.Write(ModelReaderWriterOptions options)

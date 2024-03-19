@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DevCenter;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -37,34 +38,34 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DevBoxDefinitionName != null)
+            if (Optional.IsDefined(DevBoxDefinitionName))
             {
                 writer.WritePropertyName("devBoxDefinitionName"u8);
                 writer.WriteStringValue(DevBoxDefinitionName);
             }
-            if (NetworkConnectionName != null)
+            if (Optional.IsDefined(NetworkConnectionName))
             {
                 writer.WritePropertyName("networkConnectionName"u8);
                 writer.WriteStringValue(NetworkConnectionName);
             }
-            if (LicenseType.HasValue)
+            if (Optional.IsDefined(LicenseType))
             {
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType.Value.ToString());
             }
-            if (LocalAdministrator.HasValue)
+            if (Optional.IsDefined(LocalAdministrator))
             {
                 writer.WritePropertyName("localAdministrator"u8);
                 writer.WriteStringValue(LocalAdministrator.Value.ToString());
             }
-            if (StopOnDisconnect != null)
+            if (Optional.IsDefined(StopOnDisconnect))
             {
                 writer.WritePropertyName("stopOnDisconnect"u8);
                 writer.WriteObjectValue(StopOnDisconnect);
@@ -109,12 +110,12 @@ namespace Azure.ResourceManager.DevCenter.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<AzureLocation> location = default;
-            Optional<string> devBoxDefinitionName = default;
-            Optional<string> networkConnectionName = default;
-            Optional<DevCenterLicenseType> licenseType = default;
-            Optional<LocalAdminStatus> localAdministrator = default;
-            Optional<StopOnDisconnectConfiguration> stopOnDisconnect = default;
+            AzureLocation? location = default;
+            string devBoxDefinitionName = default;
+            string networkConnectionName = default;
+            DevCenterLicenseType? licenseType = default;
+            LocalAdminStatus? localAdministrator = default;
+            StopOnDisconnectConfiguration stopOnDisconnect = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -199,13 +200,13 @@ namespace Azure.ResourceManager.DevCenter.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DevCenterPoolPatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                Optional.ToNullable(location),
+                location,
                 serializedAdditionalRawData,
-                devBoxDefinitionName.Value,
-                networkConnectionName.Value,
-                Optional.ToNullable(licenseType),
-                Optional.ToNullable(localAdministrator),
-                stopOnDisconnect.Value);
+                devBoxDefinitionName,
+                networkConnectionName,
+                licenseType,
+                localAdministrator,
+                stopOnDisconnect);
         }
 
         BinaryData IPersistableModel<DevCenterPoolPatch>.Write(ModelReaderWriterOptions options)

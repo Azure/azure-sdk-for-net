@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (RegistryServer != null)
+            if (Optional.IsDefined(RegistryServer))
             {
                 writer.WritePropertyName("registryUrl"u8);
                 writer.WriteStringValue(RegistryServer);
             }
-            if (RegistryUserName != null)
+            if (Optional.IsDefined(RegistryUserName))
             {
                 writer.WritePropertyName("registryUserName"u8);
                 writer.WriteStringValue(RegistryUserName);
             }
-            if (RegistryPassword != null)
+            if (Optional.IsDefined(RegistryPassword))
             {
                 writer.WritePropertyName("registryPassword"u8);
                 writer.WriteStringValue(RegistryPassword);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> registryUrl = default;
-            Optional<string> registryUserName = default;
-            Optional<string> registryPassword = default;
+            string registryUrl = default;
+            string registryUserName = default;
+            string registryPassword = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppRegistryInfo(registryUrl.Value, registryUserName.Value, registryPassword.Value, serializedAdditionalRawData);
+            return new ContainerAppRegistryInfo(registryUrl, registryUserName, registryPassword, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppRegistryInfo>.Write(ModelReaderWriterOptions options)

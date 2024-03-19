@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
@@ -27,37 +28,37 @@ namespace Azure.ResourceManager.Resources
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && TenantId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (options.Format != "W" && TenantCategory.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TenantCategory))
             {
                 writer.WritePropertyName("tenantCategory"u8);
                 writer.WriteStringValue(TenantCategory.Value.ToSerialString());
             }
-            if (options.Format != "W" && Country != null)
+            if (options.Format != "W" && Optional.IsDefined(Country))
             {
                 writer.WritePropertyName("country"u8);
                 writer.WriteStringValue(Country);
             }
-            if (options.Format != "W" && CountryCode != null)
+            if (options.Format != "W" && Optional.IsDefined(CountryCode))
             {
                 writer.WritePropertyName("countryCode"u8);
                 writer.WriteStringValue(CountryCode);
             }
-            if (options.Format != "W" && DisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && !(Domains is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Domains))
             {
                 writer.WritePropertyName("domains"u8);
                 writer.WriteStartArray();
@@ -67,17 +68,17 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && DefaultDomain != null)
+            if (options.Format != "W" && Optional.IsDefined(DefaultDomain))
             {
                 writer.WritePropertyName("defaultDomain"u8);
                 writer.WriteStringValue(DefaultDomain);
             }
-            if (options.Format != "W" && TenantType != null)
+            if (options.Format != "W" && Optional.IsDefined(TenantType))
             {
                 writer.WritePropertyName("tenantType"u8);
                 writer.WriteStringValue(TenantType);
             }
-            if (options.Format != "W" && TenantBrandingLogoUri != null)
+            if (options.Format != "W" && Optional.IsDefined(TenantBrandingLogoUri))
             {
                 writer.WritePropertyName("tenantBrandingLogoUrl"u8);
                 writer.WriteStringValue(TenantBrandingLogoUri.AbsoluteUri);
@@ -120,16 +121,16 @@ namespace Azure.ResourceManager.Resources
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<Guid> tenantId = default;
-            Optional<TenantCategory> tenantCategory = default;
-            Optional<string> country = default;
-            Optional<string> countryCode = default;
-            Optional<string> displayName = default;
+            string id = default;
+            Guid? tenantId = default;
+            TenantCategory? tenantCategory = default;
+            string country = default;
+            string countryCode = default;
+            string displayName = default;
             IReadOnlyList<string> domains = default;
-            Optional<string> defaultDomain = default;
-            Optional<string> tenantType = default;
-            Optional<Uri> tenantBrandingLogoUrl = default;
+            string defaultDomain = default;
+            string tenantType = default;
+            Uri tenantBrandingLogoUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -212,16 +213,16 @@ namespace Azure.ResourceManager.Resources
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new TenantData(
-                id.Value,
-                Optional.ToNullable(tenantId),
-                Optional.ToNullable(tenantCategory),
-                country.Value,
-                countryCode.Value,
-                displayName.Value,
+                id,
+                tenantId,
+                tenantCategory,
+                country,
+                countryCode,
+                displayName,
                 domains ?? new ChangeTrackingList<string>(),
-                defaultDomain.Value,
-                tenantType.Value,
-                tenantBrandingLogoUrl.Value,
+                defaultDomain,
+                tenantType,
+                tenantBrandingLogoUrl,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && LocalAddress != null)
+            if (options.Format != "W" && Optional.IsDefined(LocalAddress))
             {
                 writer.WritePropertyName("localAddress"u8);
                 writer.WriteStringValue(LocalAddress);
             }
-            if (options.Format != "W" && Network != null)
+            if (options.Format != "W" && Optional.IsDefined(Network))
             {
                 writer.WritePropertyName("network"u8);
                 writer.WriteStringValue(Network);
             }
-            if (options.Format != "W" && NextHop != null)
+            if (options.Format != "W" && Optional.IsDefined(NextHop))
             {
                 writer.WritePropertyName("nextHop"u8);
                 writer.WriteStringValue(NextHop);
             }
-            if (options.Format != "W" && SourcePeer != null)
+            if (options.Format != "W" && Optional.IsDefined(SourcePeer))
             {
                 writer.WritePropertyName("sourcePeer"u8);
                 writer.WriteStringValue(SourcePeer);
             }
-            if (options.Format != "W" && Origin != null)
+            if (options.Format != "W" && Optional.IsDefined(Origin))
             {
                 writer.WritePropertyName("origin"u8);
                 writer.WriteStringValue(Origin);
             }
-            if (options.Format != "W" && AsPath != null)
+            if (options.Format != "W" && Optional.IsDefined(AsPath))
             {
                 writer.WritePropertyName("asPath"u8);
                 writer.WriteStringValue(AsPath);
             }
-            if (options.Format != "W" && Weight.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Weight))
             {
                 writer.WritePropertyName("weight"u8);
                 writer.WriteNumberValue(Weight.Value);
@@ -99,13 +100,13 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> localAddress = default;
-            Optional<string> network = default;
-            Optional<string> nextHop = default;
-            Optional<string> sourcePeer = default;
-            Optional<string> origin = default;
-            Optional<string> asPath = default;
-            Optional<int> weight = default;
+            string localAddress = default;
+            string network = default;
+            string nextHop = default;
+            string sourcePeer = default;
+            string origin = default;
+            string asPath = default;
+            int? weight = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -156,13 +157,13 @@ namespace Azure.ResourceManager.Network.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new PeerRoute(
-                localAddress.Value,
-                network.Value,
-                nextHop.Value,
-                sourcePeer.Value,
-                origin.Value,
-                asPath.Value,
-                Optional.ToNullable(weight),
+                localAddress,
+                network,
+                nextHop,
+                sourcePeer,
+                origin,
+                asPath,
+                weight,
                 serializedAdditionalRawData);
         }
 

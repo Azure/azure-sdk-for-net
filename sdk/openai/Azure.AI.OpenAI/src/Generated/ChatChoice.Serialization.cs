@@ -27,10 +27,19 @@ namespace Azure.AI.OpenAI
             }
 
             writer.WriteStartObject();
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteObjectValue(Message);
+            }
+            if (LogProbabilityInfo != null)
+            {
+                writer.WritePropertyName("logprobs"u8);
+                writer.WriteObjectValue(LogProbabilityInfo);
+            }
+            else
+            {
+                writer.WriteNull("logprobs");
             }
             writer.WritePropertyName("index"u8);
             writer.WriteNumberValue(Index);
@@ -43,22 +52,22 @@ namespace Azure.AI.OpenAI
             {
                 writer.WriteNull("finish_reason");
             }
-            if (FinishDetails != null)
+            if (Optional.IsDefined(FinishDetails))
             {
                 writer.WritePropertyName("finish_details"u8);
                 writer.WriteObjectValue(FinishDetails);
             }
-            if (InternalStreamingDeltaMessage != null)
+            if (Optional.IsDefined(InternalStreamingDeltaMessage))
             {
                 writer.WritePropertyName("delta"u8);
                 writer.WriteObjectValue(InternalStreamingDeltaMessage);
             }
-            if (ContentFilterResults != null)
+            if (Optional.IsDefined(ContentFilterResults))
             {
                 writer.WritePropertyName("content_filter_results"u8);
                 writer.WriteObjectValue(ContentFilterResults);
             }
-            if (Enhancements != null)
+            if (Optional.IsDefined(Enhancements))
             {
                 writer.WritePropertyName("enhancements"u8);
                 writer.WriteObjectValue(Enhancements);
@@ -101,13 +110,14 @@ namespace Azure.AI.OpenAI
             {
                 return null;
             }
-            Optional<ChatResponseMessage> message = default;
+            ChatResponseMessage message = default;
+            ChatChoiceLogProbabilityInfo logprobs = default;
             int index = default;
             CompletionsFinishReason? finishReason = default;
-            Optional<ChatFinishDetails> finishDetails = default;
-            Optional<ChatResponseMessage> delta = default;
-            Optional<ContentFilterResultsForChoice> contentFilterResults = default;
-            Optional<AzureChatEnhancements> enhancements = default;
+            ChatFinishDetails finishDetails = default;
+            ChatResponseMessage delta = default;
+            ContentFilterResultsForChoice contentFilterResults = default;
+            AzureChatEnhancements enhancements = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,6 +129,16 @@ namespace Azure.AI.OpenAI
                         continue;
                     }
                     message = ChatResponseMessage.DeserializeChatResponseMessage(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("logprobs"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        logprobs = null;
+                        continue;
+                    }
+                    logprobs = ChatChoiceLogProbabilityInfo.DeserializeChatChoiceLogProbabilityInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("index"u8))
@@ -179,13 +199,14 @@ namespace Azure.AI.OpenAI
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ChatChoice(
-                message.Value,
+                message,
+                logprobs,
                 index,
                 finishReason,
-                finishDetails.Value,
-                delta.Value,
-                contentFilterResults.Value,
-                enhancements.Value,
+                finishDetails,
+                delta,
+                contentFilterResults,
+                enhancements,
                 serializedAdditionalRawData);
         }
 

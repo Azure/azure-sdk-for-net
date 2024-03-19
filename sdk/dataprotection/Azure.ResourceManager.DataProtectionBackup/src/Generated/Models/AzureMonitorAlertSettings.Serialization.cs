@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (AlertSettingsForAllJobFailures.HasValue)
+            if (Optional.IsDefined(AlertSettingsForAllJobFailures))
             {
                 writer.WritePropertyName("alertsForAllJobFailures"u8);
                 writer.WriteStringValue(AlertSettingsForAllJobFailures.Value.ToString());
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<AzureMonitorAlertsState> alertsForAllJobFailures = default;
+            AzureMonitorAlertsState? alertsForAllJobFailures = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureMonitorAlertSettings(Optional.ToNullable(alertsForAllJobFailures), serializedAdditionalRawData);
+            return new AzureMonitorAlertSettings(alertsForAllJobFailures, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureMonitorAlertSettings>.Write(ModelReaderWriterOptions options)

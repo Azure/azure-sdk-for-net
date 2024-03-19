@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageSync;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && LastUpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedTimestamp"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && VolumeSizeInBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(VolumeSizeInBytes))
             {
                 writer.WritePropertyName("volumeSizeBytes"u8);
                 writer.WriteNumberValue(VolumeSizeInBytes.Value);
             }
-            if (options.Format != "W" && CloudTotalSizeInBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CloudTotalSizeInBytes))
             {
                 writer.WritePropertyName("totalSizeCloudBytes"u8);
                 writer.WriteNumberValue(CloudTotalSizeInBytes.Value);
             }
-            if (options.Format != "W" && CachedSizeInBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CachedSizeInBytes))
             {
                 writer.WritePropertyName("cachedSizeBytes"u8);
                 writer.WriteNumberValue(CachedSizeInBytes.Value);
             }
-            if (options.Format != "W" && SpaceSavingsPercent.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SpaceSavingsPercent))
             {
                 writer.WritePropertyName("spaceSavingsPercent"u8);
                 writer.WriteNumberValue(SpaceSavingsPercent.Value);
             }
-            if (options.Format != "W" && SpaceSavingsInBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SpaceSavingsInBytes))
             {
                 writer.WritePropertyName("spaceSavingsBytes"u8);
                 writer.WriteNumberValue(SpaceSavingsInBytes.Value);
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> lastUpdatedTimestamp = default;
-            Optional<long> volumeSizeBytes = default;
-            Optional<long> totalSizeCloudBytes = default;
-            Optional<long> cachedSizeBytes = default;
-            Optional<int> spaceSavingsPercent = default;
-            Optional<long> spaceSavingsBytes = default;
+            DateTimeOffset? lastUpdatedTimestamp = default;
+            long? volumeSizeBytes = default;
+            long? totalSizeCloudBytes = default;
+            long? cachedSizeBytes = default;
+            int? spaceSavingsPercent = default;
+            long? spaceSavingsBytes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,12 +166,12 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new CloudTieringSpaceSavings(
-                Optional.ToNullable(lastUpdatedTimestamp),
-                Optional.ToNullable(volumeSizeBytes),
-                Optional.ToNullable(totalSizeCloudBytes),
-                Optional.ToNullable(cachedSizeBytes),
-                Optional.ToNullable(spaceSavingsPercent),
-                Optional.ToNullable(spaceSavingsBytes),
+                lastUpdatedTimestamp,
+                volumeSizeBytes,
+                totalSizeCloudBytes,
+                cachedSizeBytes,
+                spaceSavingsPercent,
+                spaceSavingsBytes,
                 serializedAdditionalRawData);
         }
 

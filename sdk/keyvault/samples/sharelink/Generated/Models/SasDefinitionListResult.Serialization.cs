@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Security.KeyVault.Storage;
 
 namespace Azure.Security.KeyVault.Storage.Models
 {
@@ -20,7 +20,7 @@ namespace Azure.Security.KeyVault.Storage.Models
                 return null;
             }
             IReadOnlyList<SasDefinitionItem> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.Security.KeyVault.Storage.Models
                     continue;
                 }
             }
-            return new SasDefinitionListResult(value ?? new ChangeTrackingList<SasDefinitionItem>(), nextLink.Value);
+            return new SasDefinitionListResult(value ?? new ChangeTrackingList<SasDefinitionItem>(), nextLink);
         }
     }
 }

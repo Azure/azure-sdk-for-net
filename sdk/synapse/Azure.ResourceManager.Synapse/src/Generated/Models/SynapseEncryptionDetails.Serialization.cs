@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && IsDoubleEncryptionEnabled.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsDoubleEncryptionEnabled))
             {
                 writer.WritePropertyName("doubleEncryptionEnabled"u8);
                 writer.WriteBooleanValue(IsDoubleEncryptionEnabled.Value);
             }
-            if (Cmk != null)
+            if (Optional.IsDefined(Cmk))
             {
                 writer.WritePropertyName("cmk"u8);
                 writer.WriteObjectValue(Cmk);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<bool> doubleEncryptionEnabled = default;
-            Optional<WorkspaceCustomerManagedKeyDetails> cmk = default;
+            bool? doubleEncryptionEnabled = default;
+            WorkspaceCustomerManagedKeyDetails cmk = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseEncryptionDetails(Optional.ToNullable(doubleEncryptionEnabled), cmk.Value, serializedAdditionalRawData);
+            return new SynapseEncryptionDetails(doubleEncryptionEnabled, cmk, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseEncryptionDetails>.Write(ModelReaderWriterOptions options)

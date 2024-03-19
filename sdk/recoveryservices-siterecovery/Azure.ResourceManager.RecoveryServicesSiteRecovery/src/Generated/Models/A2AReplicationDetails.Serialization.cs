@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,62 +27,62 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (FabricObjectId != null)
+            if (Optional.IsDefined(FabricObjectId))
             {
                 writer.WritePropertyName("fabricObjectId"u8);
                 writer.WriteStringValue(FabricObjectId);
             }
-            if (options.Format != "W" && InitialPrimaryZone != null)
+            if (options.Format != "W" && Optional.IsDefined(InitialPrimaryZone))
             {
                 writer.WritePropertyName("initialPrimaryZone"u8);
                 writer.WriteStringValue(InitialPrimaryZone);
             }
-            if (options.Format != "W" && InitialPrimaryFabricLocation.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(InitialPrimaryFabricLocation))
             {
                 writer.WritePropertyName("initialPrimaryFabricLocation"u8);
                 writer.WriteStringValue(InitialPrimaryFabricLocation.Value);
             }
-            if (options.Format != "W" && InitialRecoveryZone != null)
+            if (options.Format != "W" && Optional.IsDefined(InitialRecoveryZone))
             {
                 writer.WritePropertyName("initialRecoveryZone"u8);
                 writer.WriteStringValue(InitialRecoveryZone);
             }
-            if (InitialPrimaryExtendedLocation != null)
+            if (Optional.IsDefined(InitialPrimaryExtendedLocation))
             {
                 writer.WritePropertyName("initialPrimaryExtendedLocation"u8);
                 writer.WriteObjectValue(InitialPrimaryExtendedLocation);
             }
-            if (InitialRecoveryExtendedLocation != null)
+            if (Optional.IsDefined(InitialRecoveryExtendedLocation))
             {
                 writer.WritePropertyName("initialRecoveryExtendedLocation"u8);
                 writer.WriteObjectValue(InitialRecoveryExtendedLocation);
             }
-            if (options.Format != "W" && InitialRecoveryFabricLocation.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(InitialRecoveryFabricLocation))
             {
                 writer.WritePropertyName("initialRecoveryFabricLocation"u8);
                 writer.WriteStringValue(InitialRecoveryFabricLocation.Value);
             }
-            if (MultiVmGroupId != null)
+            if (Optional.IsDefined(MultiVmGroupId))
             {
                 writer.WritePropertyName("multiVmGroupId"u8);
                 writer.WriteStringValue(MultiVmGroupId);
             }
-            if (MultiVmGroupName != null)
+            if (Optional.IsDefined(MultiVmGroupName))
             {
                 writer.WritePropertyName("multiVmGroupName"u8);
                 writer.WriteStringValue(MultiVmGroupName);
             }
-            if (MultiVmGroupCreateOption.HasValue)
+            if (Optional.IsDefined(MultiVmGroupCreateOption))
             {
                 writer.WritePropertyName("multiVmGroupCreateOption"u8);
                 writer.WriteStringValue(MultiVmGroupCreateOption.Value.ToString());
             }
-            if (ManagementId != null)
+            if (Optional.IsDefined(ManagementId))
             {
                 writer.WritePropertyName("managementId"u8);
                 writer.WriteStringValue(ManagementId);
             }
-            if (!(ProtectedDisks is ChangeTrackingList<A2AProtectedDiskDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ProtectedDisks))
             {
                 writer.WritePropertyName("protectedDisks"u8);
                 writer.WriteStartArray();
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(UnprotectedDisks is ChangeTrackingList<A2AUnprotectedDiskDetails> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(UnprotectedDisks))
             {
                 writer.WritePropertyName("unprotectedDisks"u8);
                 writer.WriteStartArray();
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ProtectedManagedDisks is ChangeTrackingList<A2AProtectedManagedDiskDetails> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(ProtectedManagedDisks))
             {
                 writer.WritePropertyName("protectedManagedDisks"u8);
                 writer.WriteStartArray();
@@ -111,62 +112,62 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (RecoveryBootDiagStorageAccountId != null)
+            if (Optional.IsDefined(RecoveryBootDiagStorageAccountId))
             {
                 writer.WritePropertyName("recoveryBootDiagStorageAccountId"u8);
                 writer.WriteStringValue(RecoveryBootDiagStorageAccountId);
             }
-            if (PrimaryFabricLocation.HasValue)
+            if (Optional.IsDefined(PrimaryFabricLocation))
             {
                 writer.WritePropertyName("primaryFabricLocation"u8);
                 writer.WriteStringValue(PrimaryFabricLocation.Value);
             }
-            if (RecoveryFabricLocation.HasValue)
+            if (Optional.IsDefined(RecoveryFabricLocation))
             {
                 writer.WritePropertyName("recoveryFabricLocation"u8);
                 writer.WriteStringValue(RecoveryFabricLocation.Value);
             }
-            if (OSType != null)
+            if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType);
             }
-            if (RecoveryAzureVmSize != null)
+            if (Optional.IsDefined(RecoveryAzureVmSize))
             {
                 writer.WritePropertyName("recoveryAzureVMSize"u8);
                 writer.WriteStringValue(RecoveryAzureVmSize);
             }
-            if (RecoveryAzureVmName != null)
+            if (Optional.IsDefined(RecoveryAzureVmName))
             {
                 writer.WritePropertyName("recoveryAzureVMName"u8);
                 writer.WriteStringValue(RecoveryAzureVmName);
             }
-            if (RecoveryAzureResourceGroupId != null)
+            if (Optional.IsDefined(RecoveryAzureResourceGroupId))
             {
                 writer.WritePropertyName("recoveryAzureResourceGroupId"u8);
                 writer.WriteStringValue(RecoveryAzureResourceGroupId);
             }
-            if (RecoveryCloudService != null)
+            if (Optional.IsDefined(RecoveryCloudService))
             {
                 writer.WritePropertyName("recoveryCloudService"u8);
                 writer.WriteStringValue(RecoveryCloudService);
             }
-            if (RecoveryAvailabilitySet != null)
+            if (Optional.IsDefined(RecoveryAvailabilitySet))
             {
                 writer.WritePropertyName("recoveryAvailabilitySet"u8);
                 writer.WriteStringValue(RecoveryAvailabilitySet);
             }
-            if (SelectedRecoveryAzureNetworkId != null)
+            if (Optional.IsDefined(SelectedRecoveryAzureNetworkId))
             {
                 writer.WritePropertyName("selectedRecoveryAzureNetworkId"u8);
                 writer.WriteStringValue(SelectedRecoveryAzureNetworkId);
             }
-            if (SelectedTfoAzureNetworkId != null)
+            if (Optional.IsDefined(SelectedTfoAzureNetworkId))
             {
                 writer.WritePropertyName("selectedTfoAzureNetworkId"u8);
                 writer.WriteStringValue(SelectedTfoAzureNetworkId);
             }
-            if (!(VmNics is ChangeTrackingList<VmNicDetails> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(VmNics))
             {
                 writer.WritePropertyName("vmNics"u8);
                 writer.WriteStartArray();
@@ -176,142 +177,142 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (VmSyncedConfigDetails != null)
+            if (Optional.IsDefined(VmSyncedConfigDetails))
             {
                 writer.WritePropertyName("vmSyncedConfigDetails"u8);
                 writer.WriteObjectValue(VmSyncedConfigDetails);
             }
-            if (MonitoringPercentageCompletion.HasValue)
+            if (Optional.IsDefined(MonitoringPercentageCompletion))
             {
                 writer.WritePropertyName("monitoringPercentageCompletion"u8);
                 writer.WriteNumberValue(MonitoringPercentageCompletion.Value);
             }
-            if (MonitoringJobType != null)
+            if (Optional.IsDefined(MonitoringJobType))
             {
                 writer.WritePropertyName("monitoringJobType"u8);
                 writer.WriteStringValue(MonitoringJobType);
             }
-            if (LastHeartbeat.HasValue)
+            if (Optional.IsDefined(LastHeartbeat))
             {
                 writer.WritePropertyName("lastHeartbeat"u8);
                 writer.WriteStringValue(LastHeartbeat.Value, "O");
             }
-            if (AgentVersion != null)
+            if (Optional.IsDefined(AgentVersion))
             {
                 writer.WritePropertyName("agentVersion"u8);
                 writer.WriteStringValue(AgentVersion);
             }
-            if (AgentExpireOn.HasValue)
+            if (Optional.IsDefined(AgentExpireOn))
             {
                 writer.WritePropertyName("agentExpiryDate"u8);
                 writer.WriteStringValue(AgentExpireOn.Value, "O");
             }
-            if (IsReplicationAgentUpdateRequired.HasValue)
+            if (Optional.IsDefined(IsReplicationAgentUpdateRequired))
             {
                 writer.WritePropertyName("isReplicationAgentUpdateRequired"u8);
                 writer.WriteBooleanValue(IsReplicationAgentUpdateRequired.Value);
             }
-            if (options.Format != "W" && AgentCertificateExpireOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AgentCertificateExpireOn))
             {
                 writer.WritePropertyName("agentCertificateExpiryDate"u8);
                 writer.WriteStringValue(AgentCertificateExpireOn.Value, "O");
             }
-            if (IsReplicationAgentCertificateUpdateRequired.HasValue)
+            if (Optional.IsDefined(IsReplicationAgentCertificateUpdateRequired))
             {
                 writer.WritePropertyName("isReplicationAgentCertificateUpdateRequired"u8);
                 writer.WriteBooleanValue(IsReplicationAgentCertificateUpdateRequired.Value);
             }
-            if (RecoveryFabricObjectId != null)
+            if (Optional.IsDefined(RecoveryFabricObjectId))
             {
                 writer.WritePropertyName("recoveryFabricObjectId"u8);
                 writer.WriteStringValue(RecoveryFabricObjectId);
             }
-            if (VmProtectionState != null)
+            if (Optional.IsDefined(VmProtectionState))
             {
                 writer.WritePropertyName("vmProtectionState"u8);
                 writer.WriteStringValue(VmProtectionState);
             }
-            if (VmProtectionStateDescription != null)
+            if (Optional.IsDefined(VmProtectionStateDescription))
             {
                 writer.WritePropertyName("vmProtectionStateDescription"u8);
                 writer.WriteStringValue(VmProtectionStateDescription);
             }
-            if (LifecycleId != null)
+            if (Optional.IsDefined(LifecycleId))
             {
                 writer.WritePropertyName("lifecycleId"u8);
                 writer.WriteStringValue(LifecycleId);
             }
-            if (TestFailoverRecoveryFabricObjectId != null)
+            if (Optional.IsDefined(TestFailoverRecoveryFabricObjectId))
             {
                 writer.WritePropertyName("testFailoverRecoveryFabricObjectId"u8);
                 writer.WriteStringValue(TestFailoverRecoveryFabricObjectId);
             }
-            if (RpoInSeconds.HasValue)
+            if (Optional.IsDefined(RpoInSeconds))
             {
                 writer.WritePropertyName("rpoInSeconds"u8);
                 writer.WriteNumberValue(RpoInSeconds.Value);
             }
-            if (LastRpoCalculatedOn.HasValue)
+            if (Optional.IsDefined(LastRpoCalculatedOn))
             {
                 writer.WritePropertyName("lastRpoCalculatedTime"u8);
                 writer.WriteStringValue(LastRpoCalculatedOn.Value, "O");
             }
-            if (PrimaryAvailabilityZone != null)
+            if (Optional.IsDefined(PrimaryAvailabilityZone))
             {
                 writer.WritePropertyName("primaryAvailabilityZone"u8);
                 writer.WriteStringValue(PrimaryAvailabilityZone);
             }
-            if (RecoveryAvailabilityZone != null)
+            if (Optional.IsDefined(RecoveryAvailabilityZone))
             {
                 writer.WritePropertyName("recoveryAvailabilityZone"u8);
                 writer.WriteStringValue(RecoveryAvailabilityZone);
             }
-            if (PrimaryExtendedLocation != null)
+            if (Optional.IsDefined(PrimaryExtendedLocation))
             {
                 writer.WritePropertyName("primaryExtendedLocation"u8);
                 writer.WriteObjectValue(PrimaryExtendedLocation);
             }
-            if (RecoveryExtendedLocation != null)
+            if (Optional.IsDefined(RecoveryExtendedLocation))
             {
                 writer.WritePropertyName("recoveryExtendedLocation"u8);
                 writer.WriteObjectValue(RecoveryExtendedLocation);
             }
-            if (options.Format != "W" && VmEncryptionType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(VmEncryptionType))
             {
                 writer.WritePropertyName("vmEncryptionType"u8);
                 writer.WriteStringValue(VmEncryptionType.Value.ToString());
             }
-            if (TfoAzureVmName != null)
+            if (Optional.IsDefined(TfoAzureVmName))
             {
                 writer.WritePropertyName("tfoAzureVMName"u8);
                 writer.WriteStringValue(TfoAzureVmName);
             }
-            if (options.Format != "W" && RecoveryAzureGeneration != null)
+            if (options.Format != "W" && Optional.IsDefined(RecoveryAzureGeneration))
             {
                 writer.WritePropertyName("recoveryAzureGeneration"u8);
                 writer.WriteStringValue(RecoveryAzureGeneration);
             }
-            if (RecoveryProximityPlacementGroupId != null)
+            if (Optional.IsDefined(RecoveryProximityPlacementGroupId))
             {
                 writer.WritePropertyName("recoveryProximityPlacementGroupId"u8);
                 writer.WriteStringValue(RecoveryProximityPlacementGroupId);
             }
-            if (AutoProtectionOfDataDisk.HasValue)
+            if (Optional.IsDefined(AutoProtectionOfDataDisk))
             {
                 writer.WritePropertyName("autoProtectionOfDataDisk"u8);
                 writer.WriteStringValue(AutoProtectionOfDataDisk.Value.ToString());
             }
-            if (RecoveryVirtualMachineScaleSetId != null)
+            if (Optional.IsDefined(RecoveryVirtualMachineScaleSetId))
             {
                 writer.WritePropertyName("recoveryVirtualMachineScaleSetId"u8);
                 writer.WriteStringValue(RecoveryVirtualMachineScaleSetId);
             }
-            if (RecoveryCapacityReservationGroupId != null)
+            if (Optional.IsDefined(RecoveryCapacityReservationGroupId))
             {
                 writer.WritePropertyName("recoveryCapacityReservationGroupId"u8);
                 writer.WriteStringValue(RecoveryCapacityReservationGroupId);
             }
-            if (options.Format != "W" && ChurnOptionSelected.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ChurnOptionSelected))
             {
                 writer.WritePropertyName("churnOptionSelected"u8);
                 writer.WriteStringValue(ChurnOptionSelected.Value.ToString());
@@ -356,60 +357,60 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> fabricObjectId = default;
-            Optional<string> initialPrimaryZone = default;
-            Optional<AzureLocation> initialPrimaryFabricLocation = default;
-            Optional<string> initialRecoveryZone = default;
-            Optional<SiteRecoveryExtendedLocation> initialPrimaryExtendedLocation = default;
-            Optional<SiteRecoveryExtendedLocation> initialRecoveryExtendedLocation = default;
-            Optional<AzureLocation> initialRecoveryFabricLocation = default;
-            Optional<string> multiVmGroupId = default;
-            Optional<string> multiVmGroupName = default;
-            Optional<MultiVmGroupCreateOption> multiVmGroupCreateOption = default;
-            Optional<string> managementId = default;
+            ResourceIdentifier fabricObjectId = default;
+            string initialPrimaryZone = default;
+            AzureLocation? initialPrimaryFabricLocation = default;
+            string initialRecoveryZone = default;
+            SiteRecoveryExtendedLocation initialPrimaryExtendedLocation = default;
+            SiteRecoveryExtendedLocation initialRecoveryExtendedLocation = default;
+            AzureLocation? initialRecoveryFabricLocation = default;
+            string multiVmGroupId = default;
+            string multiVmGroupName = default;
+            MultiVmGroupCreateOption? multiVmGroupCreateOption = default;
+            string managementId = default;
             IReadOnlyList<A2AProtectedDiskDetails> protectedDisks = default;
             IReadOnlyList<A2AUnprotectedDiskDetails> unprotectedDisks = default;
             IReadOnlyList<A2AProtectedManagedDiskDetails> protectedManagedDisks = default;
-            Optional<ResourceIdentifier> recoveryBootDiagStorageAccountId = default;
-            Optional<AzureLocation> primaryFabricLocation = default;
-            Optional<AzureLocation> recoveryFabricLocation = default;
-            Optional<string> osType = default;
-            Optional<string> recoveryAzureVmSize = default;
-            Optional<string> recoveryAzureVmName = default;
-            Optional<ResourceIdentifier> recoveryAzureResourceGroupId = default;
-            Optional<string> recoveryCloudService = default;
-            Optional<string> recoveryAvailabilitySet = default;
-            Optional<ResourceIdentifier> selectedRecoveryAzureNetworkId = default;
-            Optional<ResourceIdentifier> selectedTfoAzureNetworkId = default;
+            ResourceIdentifier recoveryBootDiagStorageAccountId = default;
+            AzureLocation? primaryFabricLocation = default;
+            AzureLocation? recoveryFabricLocation = default;
+            string osType = default;
+            string recoveryAzureVmSize = default;
+            string recoveryAzureVmName = default;
+            ResourceIdentifier recoveryAzureResourceGroupId = default;
+            string recoveryCloudService = default;
+            string recoveryAvailabilitySet = default;
+            ResourceIdentifier selectedRecoveryAzureNetworkId = default;
+            ResourceIdentifier selectedTfoAzureNetworkId = default;
             IReadOnlyList<VmNicDetails> vmNics = default;
-            Optional<A2AVmSyncedConfigDetails> vmSyncedConfigDetails = default;
-            Optional<int> monitoringPercentageCompletion = default;
-            Optional<string> monitoringJobType = default;
-            Optional<DateTimeOffset> lastHeartbeat = default;
-            Optional<string> agentVersion = default;
-            Optional<DateTimeOffset> agentExpireOn = default;
-            Optional<bool> isReplicationAgentUpdateRequired = default;
-            Optional<DateTimeOffset> agentCertificateExpireOn = default;
-            Optional<bool> isReplicationAgentCertificateUpdateRequired = default;
-            Optional<ResourceIdentifier> recoveryFabricObjectId = default;
-            Optional<string> vmProtectionState = default;
-            Optional<string> vmProtectionStateDescription = default;
-            Optional<string> lifecycleId = default;
-            Optional<ResourceIdentifier> testFailoverRecoveryFabricObjectId = default;
-            Optional<long> rpoInSeconds = default;
-            Optional<DateTimeOffset> lastRpoCalculatedTime = default;
-            Optional<string> primaryAvailabilityZone = default;
-            Optional<string> recoveryAvailabilityZone = default;
-            Optional<SiteRecoveryExtendedLocation> primaryExtendedLocation = default;
-            Optional<SiteRecoveryExtendedLocation> recoveryExtendedLocation = default;
-            Optional<SiteRecoveryVmEncryptionType> vmEncryptionType = default;
-            Optional<string> tfoAzureVmName = default;
-            Optional<string> recoveryAzureGeneration = default;
-            Optional<ResourceIdentifier> recoveryProximityPlacementGroupId = default;
-            Optional<AutoProtectionOfDataDisk> autoProtectionOfDataDisk = default;
-            Optional<ResourceIdentifier> recoveryVirtualMachineScaleSetId = default;
-            Optional<ResourceIdentifier> recoveryCapacityReservationGroupId = default;
-            Optional<ChurnOptionSelected> churnOptionSelected = default;
+            A2AVmSyncedConfigDetails vmSyncedConfigDetails = default;
+            int? monitoringPercentageCompletion = default;
+            string monitoringJobType = default;
+            DateTimeOffset? lastHeartbeat = default;
+            string agentVersion = default;
+            DateTimeOffset? agentExpireOn = default;
+            bool? isReplicationAgentUpdateRequired = default;
+            DateTimeOffset? agentCertificateExpireOn = default;
+            bool? isReplicationAgentCertificateUpdateRequired = default;
+            ResourceIdentifier recoveryFabricObjectId = default;
+            string vmProtectionState = default;
+            string vmProtectionStateDescription = default;
+            string lifecycleId = default;
+            ResourceIdentifier testFailoverRecoveryFabricObjectId = default;
+            long? rpoInSeconds = default;
+            DateTimeOffset? lastRpoCalculatedTime = default;
+            string primaryAvailabilityZone = default;
+            string recoveryAvailabilityZone = default;
+            SiteRecoveryExtendedLocation primaryExtendedLocation = default;
+            SiteRecoveryExtendedLocation recoveryExtendedLocation = default;
+            SiteRecoveryVmEncryptionType? vmEncryptionType = default;
+            string tfoAzureVmName = default;
+            string recoveryAzureGeneration = default;
+            ResourceIdentifier recoveryProximityPlacementGroupId = default;
+            AutoProtectionOfDataDisk? autoProtectionOfDataDisk = default;
+            ResourceIdentifier recoveryVirtualMachineScaleSetId = default;
+            ResourceIdentifier recoveryCapacityReservationGroupId = default;
+            ChurnOptionSelected? churnOptionSelected = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -859,60 +860,60 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new A2AReplicationDetails(
                 instanceType,
                 serializedAdditionalRawData,
-                fabricObjectId.Value,
-                initialPrimaryZone.Value,
-                Optional.ToNullable(initialPrimaryFabricLocation),
-                initialRecoveryZone.Value,
-                initialPrimaryExtendedLocation.Value,
-                initialRecoveryExtendedLocation.Value,
-                Optional.ToNullable(initialRecoveryFabricLocation),
-                multiVmGroupId.Value,
-                multiVmGroupName.Value,
-                Optional.ToNullable(multiVmGroupCreateOption),
-                managementId.Value,
+                fabricObjectId,
+                initialPrimaryZone,
+                initialPrimaryFabricLocation,
+                initialRecoveryZone,
+                initialPrimaryExtendedLocation,
+                initialRecoveryExtendedLocation,
+                initialRecoveryFabricLocation,
+                multiVmGroupId,
+                multiVmGroupName,
+                multiVmGroupCreateOption,
+                managementId,
                 protectedDisks ?? new ChangeTrackingList<A2AProtectedDiskDetails>(),
                 unprotectedDisks ?? new ChangeTrackingList<A2AUnprotectedDiskDetails>(),
                 protectedManagedDisks ?? new ChangeTrackingList<A2AProtectedManagedDiskDetails>(),
-                recoveryBootDiagStorageAccountId.Value,
-                Optional.ToNullable(primaryFabricLocation),
-                Optional.ToNullable(recoveryFabricLocation),
-                osType.Value,
-                recoveryAzureVmSize.Value,
-                recoveryAzureVmName.Value,
-                recoveryAzureResourceGroupId.Value,
-                recoveryCloudService.Value,
-                recoveryAvailabilitySet.Value,
-                selectedRecoveryAzureNetworkId.Value,
-                selectedTfoAzureNetworkId.Value,
+                recoveryBootDiagStorageAccountId,
+                primaryFabricLocation,
+                recoveryFabricLocation,
+                osType,
+                recoveryAzureVmSize,
+                recoveryAzureVmName,
+                recoveryAzureResourceGroupId,
+                recoveryCloudService,
+                recoveryAvailabilitySet,
+                selectedRecoveryAzureNetworkId,
+                selectedTfoAzureNetworkId,
                 vmNics ?? new ChangeTrackingList<VmNicDetails>(),
-                vmSyncedConfigDetails.Value,
-                Optional.ToNullable(monitoringPercentageCompletion),
-                monitoringJobType.Value,
-                Optional.ToNullable(lastHeartbeat),
-                agentVersion.Value,
-                Optional.ToNullable(agentExpireOn),
-                Optional.ToNullable(isReplicationAgentUpdateRequired),
-                Optional.ToNullable(agentCertificateExpireOn),
-                Optional.ToNullable(isReplicationAgentCertificateUpdateRequired),
-                recoveryFabricObjectId.Value,
-                vmProtectionState.Value,
-                vmProtectionStateDescription.Value,
-                lifecycleId.Value,
-                testFailoverRecoveryFabricObjectId.Value,
-                Optional.ToNullable(rpoInSeconds),
-                Optional.ToNullable(lastRpoCalculatedTime),
-                primaryAvailabilityZone.Value,
-                recoveryAvailabilityZone.Value,
-                primaryExtendedLocation.Value,
-                recoveryExtendedLocation.Value,
-                Optional.ToNullable(vmEncryptionType),
-                tfoAzureVmName.Value,
-                recoveryAzureGeneration.Value,
-                recoveryProximityPlacementGroupId.Value,
-                Optional.ToNullable(autoProtectionOfDataDisk),
-                recoveryVirtualMachineScaleSetId.Value,
-                recoveryCapacityReservationGroupId.Value,
-                Optional.ToNullable(churnOptionSelected));
+                vmSyncedConfigDetails,
+                monitoringPercentageCompletion,
+                monitoringJobType,
+                lastHeartbeat,
+                agentVersion,
+                agentExpireOn,
+                isReplicationAgentUpdateRequired,
+                agentCertificateExpireOn,
+                isReplicationAgentCertificateUpdateRequired,
+                recoveryFabricObjectId,
+                vmProtectionState,
+                vmProtectionStateDescription,
+                lifecycleId,
+                testFailoverRecoveryFabricObjectId,
+                rpoInSeconds,
+                lastRpoCalculatedTime,
+                primaryAvailabilityZone,
+                recoveryAvailabilityZone,
+                primaryExtendedLocation,
+                recoveryExtendedLocation,
+                vmEncryptionType,
+                tfoAzureVmName,
+                recoveryAzureGeneration,
+                recoveryProximityPlacementGroupId,
+                autoProtectionOfDataDisk,
+                recoveryVirtualMachineScaleSetId,
+                recoveryCapacityReservationGroupId,
+                churnOptionSelected);
         }
 
         BinaryData IPersistableModel<A2AReplicationDetails>.Write(ModelReaderWriterOptions options)

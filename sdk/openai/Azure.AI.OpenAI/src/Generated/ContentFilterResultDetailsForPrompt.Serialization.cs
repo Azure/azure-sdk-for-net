@@ -27,32 +27,32 @@ namespace Azure.AI.OpenAI
             }
 
             writer.WriteStartObject();
-            if (Sexual != null)
+            if (Optional.IsDefined(Sexual))
             {
                 writer.WritePropertyName("sexual"u8);
                 writer.WriteObjectValue(Sexual);
             }
-            if (Violence != null)
+            if (Optional.IsDefined(Violence))
             {
                 writer.WritePropertyName("violence"u8);
                 writer.WriteObjectValue(Violence);
             }
-            if (Hate != null)
+            if (Optional.IsDefined(Hate))
             {
                 writer.WritePropertyName("hate"u8);
                 writer.WriteObjectValue(Hate);
             }
-            if (SelfHarm != null)
+            if (Optional.IsDefined(SelfHarm))
             {
                 writer.WritePropertyName("self_harm"u8);
                 writer.WriteObjectValue(SelfHarm);
             }
-            if (Profanity != null)
+            if (Optional.IsDefined(Profanity))
             {
                 writer.WritePropertyName("profanity"u8);
                 writer.WriteObjectValue(Profanity);
             }
-            if (!(CustomBlocklists is ChangeTrackingList<ContentFilterBlocklistIdResult> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CustomBlocklists))
             {
                 writer.WritePropertyName("custom_blocklists"u8);
                 writer.WriteStartArray();
@@ -62,12 +62,12 @@ namespace Azure.AI.OpenAI
                 }
                 writer.WriteEndArray();
             }
-            if (Error != null)
+            if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, Error);
             }
-            if (Jailbreak != null)
+            if (Optional.IsDefined(Jailbreak))
             {
                 writer.WritePropertyName("jailbreak"u8);
                 writer.WriteObjectValue(Jailbreak);
@@ -110,14 +110,14 @@ namespace Azure.AI.OpenAI
             {
                 return null;
             }
-            Optional<ContentFilterResult> sexual = default;
-            Optional<ContentFilterResult> violence = default;
-            Optional<ContentFilterResult> hate = default;
-            Optional<ContentFilterResult> selfHarm = default;
-            Optional<ContentFilterDetectionResult> profanity = default;
+            ContentFilterResult sexual = default;
+            ContentFilterResult violence = default;
+            ContentFilterResult hate = default;
+            ContentFilterResult selfHarm = default;
+            ContentFilterDetectionResult profanity = default;
             IReadOnlyList<ContentFilterBlocklistIdResult> customBlocklists = default;
-            Optional<ResponseError> error = default;
-            Optional<ContentFilterDetectionResult> jailbreak = default;
+            ResponseError error = default;
+            ContentFilterDetectionResult jailbreak = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -206,14 +206,14 @@ namespace Azure.AI.OpenAI
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ContentFilterResultDetailsForPrompt(
-                sexual.Value,
-                violence.Value,
-                hate.Value,
-                selfHarm.Value,
-                profanity.Value,
+                sexual,
+                violence,
+                hate,
+                selfHarm,
+                profanity,
                 customBlocklists ?? new ChangeTrackingList<ContentFilterBlocklistIdResult>(),
-                error.Value,
-                jailbreak.Value,
+                error,
+                jailbreak,
                 serializedAdditionalRawData);
         }
 

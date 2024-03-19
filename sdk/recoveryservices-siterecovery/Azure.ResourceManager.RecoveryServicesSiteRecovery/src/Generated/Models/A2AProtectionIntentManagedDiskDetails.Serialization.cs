@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -28,32 +29,32 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             writer.WritePropertyName("diskId"u8);
             writer.WriteStringValue(DiskId);
-            if (PrimaryStagingStorageAccountCustomContent != null)
+            if (Optional.IsDefined(PrimaryStagingStorageAccountCustomContent))
             {
                 writer.WritePropertyName("primaryStagingStorageAccountCustomInput"u8);
                 writer.WriteObjectValue(PrimaryStagingStorageAccountCustomContent);
             }
-            if (RecoveryResourceGroupCustomContent != null)
+            if (Optional.IsDefined(RecoveryResourceGroupCustomContent))
             {
                 writer.WritePropertyName("recoveryResourceGroupCustomInput"u8);
                 writer.WriteObjectValue(RecoveryResourceGroupCustomContent);
             }
-            if (RecoveryReplicaDiskAccountType != null)
+            if (Optional.IsDefined(RecoveryReplicaDiskAccountType))
             {
                 writer.WritePropertyName("recoveryReplicaDiskAccountType"u8);
                 writer.WriteStringValue(RecoveryReplicaDiskAccountType);
             }
-            if (RecoveryTargetDiskAccountType != null)
+            if (Optional.IsDefined(RecoveryTargetDiskAccountType))
             {
                 writer.WritePropertyName("recoveryTargetDiskAccountType"u8);
                 writer.WriteStringValue(RecoveryTargetDiskAccountType);
             }
-            if (RecoveryDiskEncryptionSetId != null)
+            if (Optional.IsDefined(RecoveryDiskEncryptionSetId))
             {
                 writer.WritePropertyName("recoveryDiskEncryptionSetId"u8);
                 writer.WriteStringValue(RecoveryDiskEncryptionSetId);
             }
-            if (DiskEncryptionInfo != null)
+            if (Optional.IsDefined(DiskEncryptionInfo))
             {
                 writer.WritePropertyName("diskEncryptionInfo"u8);
                 writer.WriteObjectValue(DiskEncryptionInfo);
@@ -97,12 +98,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             string diskId = default;
-            Optional<StorageAccountCustomDetails> primaryStagingStorageAccountCustomContent = default;
-            Optional<RecoveryResourceGroupCustomDetails> recoveryResourceGroupCustomContent = default;
-            Optional<string> recoveryReplicaDiskAccountType = default;
-            Optional<string> recoveryTargetDiskAccountType = default;
-            Optional<ResourceIdentifier> recoveryDiskEncryptionSetId = default;
-            Optional<SiteRecoveryDiskEncryptionInfo> diskEncryptionInfo = default;
+            StorageAccountCustomDetails primaryStagingStorageAccountCustomContent = default;
+            RecoveryResourceGroupCustomDetails recoveryResourceGroupCustomContent = default;
+            string recoveryReplicaDiskAccountType = default;
+            string recoveryTargetDiskAccountType = default;
+            ResourceIdentifier recoveryDiskEncryptionSetId = default;
+            SiteRecoveryDiskEncryptionInfo diskEncryptionInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -166,12 +167,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new A2AProtectionIntentManagedDiskDetails(
                 diskId,
-                primaryStagingStorageAccountCustomContent.Value,
-                recoveryResourceGroupCustomContent.Value,
-                recoveryReplicaDiskAccountType.Value,
-                recoveryTargetDiskAccountType.Value,
-                recoveryDiskEncryptionSetId.Value,
-                diskEncryptionInfo.Value,
+                primaryStagingStorageAccountCustomContent,
+                recoveryResourceGroupCustomContent,
+                recoveryReplicaDiskAccountType,
+                recoveryTargetDiskAccountType,
+                recoveryDiskEncryptionSetId,
+                diskEncryptionInfo,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Uri != null)
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (RelativePath != null)
+            if (Optional.IsDefined(RelativePath))
             {
                 writer.WritePropertyName("relativePath"u8);
                 writer.WriteStringValue(RelativePath);
             }
-            if (ContentVersion != null)
+            if (Optional.IsDefined(ContentVersion))
             {
                 writer.WritePropertyName("contentVersion"u8);
                 writer.WriteStringValue(ContentVersion);
             }
-            if (QueryString != null)
+            if (Optional.IsDefined(QueryString))
             {
                 writer.WritePropertyName("queryString"u8);
                 writer.WriteStringValue(QueryString);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<Uri> uri = default;
-            Optional<string> id = default;
-            Optional<string> relativePath = default;
-            Optional<string> contentVersion = default;
-            Optional<string> queryString = default;
+            Uri uri = default;
+            string id = default;
+            string relativePath = default;
+            string contentVersion = default;
+            string queryString = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,11 +135,11 @@ namespace Azure.ResourceManager.Resources.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ArmDeploymentTemplateLink(
-                uri.Value,
-                id.Value,
-                relativePath.Value,
-                contentVersion.Value,
-                queryString.Value,
+                uri,
+                id,
+                relativePath,
+                contentVersion,
+                queryString,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -26,14 +27,14 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             writer.WriteStartObject();
             writer.WritePropertyName("groupId"u8);
             writer.WriteStringValue(GroupId);
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -93,11 +94,11 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<string> id = default;
+            string id = default;
             string name = default;
-            Optional<ResourceType> type = default;
+            ResourceType? type = default;
             string groupId = default;
-            Optional<HDInsightPrivateLinkConfigurationProvisioningState> provisioningState = default;
+            HDInsightPrivateLinkConfigurationProvisioningState? provisioningState = default;
             IList<HDInsightIPConfiguration> ipConfigurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -165,11 +166,11 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new HDInsightPrivateLinkConfiguration(
-                id.Value,
+                id,
                 name,
-                Optional.ToNullable(type),
+                type,
                 groupId,
-                Optional.ToNullable(provisioningState),
+                provisioningState,
                 ipConfigurations,
                 serializedAdditionalRawData);
         }

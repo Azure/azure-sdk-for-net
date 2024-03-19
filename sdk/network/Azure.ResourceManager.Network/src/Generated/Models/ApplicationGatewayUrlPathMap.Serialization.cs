@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
@@ -28,54 +29,54 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DefaultBackendAddressPool != null)
+            if (Optional.IsDefined(DefaultBackendAddressPool))
             {
                 writer.WritePropertyName("defaultBackendAddressPool"u8);
                 JsonSerializer.Serialize(writer, DefaultBackendAddressPool);
             }
-            if (DefaultBackendHttpSettings != null)
+            if (Optional.IsDefined(DefaultBackendHttpSettings))
             {
                 writer.WritePropertyName("defaultBackendHttpSettings"u8);
                 JsonSerializer.Serialize(writer, DefaultBackendHttpSettings);
             }
-            if (DefaultRewriteRuleSet != null)
+            if (Optional.IsDefined(DefaultRewriteRuleSet))
             {
                 writer.WritePropertyName("defaultRewriteRuleSet"u8);
                 JsonSerializer.Serialize(writer, DefaultRewriteRuleSet);
             }
-            if (DefaultRedirectConfiguration != null)
+            if (Optional.IsDefined(DefaultRedirectConfiguration))
             {
                 writer.WritePropertyName("defaultRedirectConfiguration"u8);
                 JsonSerializer.Serialize(writer, DefaultRedirectConfiguration);
             }
-            if (DefaultLoadDistributionPolicy != null)
+            if (Optional.IsDefined(DefaultLoadDistributionPolicy))
             {
                 writer.WritePropertyName("defaultLoadDistributionPolicy"u8);
                 JsonSerializer.Serialize(writer, DefaultLoadDistributionPolicy);
             }
-            if (!(PathRules is ChangeTrackingList<ApplicationGatewayPathRule> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PathRules))
             {
                 writer.WritePropertyName("pathRules"u8);
                 writer.WriteStartArray();
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -129,17 +130,17 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<WritableSubResource> defaultBackendAddressPool = default;
-            Optional<WritableSubResource> defaultBackendHttpSettings = default;
-            Optional<WritableSubResource> defaultRewriteRuleSet = default;
-            Optional<WritableSubResource> defaultRedirectConfiguration = default;
-            Optional<WritableSubResource> defaultLoadDistributionPolicy = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            WritableSubResource defaultBackendAddressPool = default;
+            WritableSubResource defaultBackendHttpSettings = default;
+            WritableSubResource defaultRewriteRuleSet = default;
+            WritableSubResource defaultRedirectConfiguration = default;
+            WritableSubResource defaultLoadDistributionPolicy = default;
             IList<ApplicationGatewayPathRule> pathRules = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -263,18 +264,18 @@ namespace Azure.ResourceManager.Network.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ApplicationGatewayUrlPathMap(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
+                id,
+                name,
+                type,
                 serializedAdditionalRawData,
-                Optional.ToNullable(etag),
+                etag,
                 defaultBackendAddressPool,
                 defaultBackendHttpSettings,
                 defaultRewriteRuleSet,
                 defaultRedirectConfiguration,
                 defaultLoadDistributionPolicy,
                 pathRules ?? new ChangeTrackingList<ApplicationGatewayPathRule>(),
-                Optional.ToNullable(provisioningState));
+                provisioningState);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayUrlPathMap>.Write(ModelReaderWriterOptions options)

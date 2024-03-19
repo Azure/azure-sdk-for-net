@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (ArtifactType.HasValue)
+            if (Optional.IsDefined(ArtifactType))
             {
                 writer.WritePropertyName("artifactType"u8);
                 writer.WriteStringValue(ArtifactType.Value.ToString());
             }
-            if (ArtifactVersion != null)
+            if (Optional.IsDefined(ArtifactVersion))
             {
                 writer.WritePropertyName("artifactVersion"u8);
                 writer.WriteStringValue(ArtifactVersion);
             }
-            if (ArtifactState.HasValue)
+            if (Optional.IsDefined(ArtifactState))
             {
                 writer.WritePropertyName("artifactState"u8);
                 writer.WriteStringValue(ArtifactState.Value.ToString());
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<ArtifactType> artifactType = default;
-            Optional<string> artifactVersion = default;
-            Optional<ArtifactState> artifactState = default;
+            ArtifactType? artifactType = default;
+            string artifactVersion = default;
+            ArtifactState? artifactState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProxyArtifactOverviewPropertiesValue(Optional.ToNullable(artifactType), artifactVersion.Value, Optional.ToNullable(artifactState), serializedAdditionalRawData);
+            return new ProxyArtifactOverviewPropertiesValue(artifactType, artifactVersion, artifactState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProxyArtifactOverviewPropertiesValue>.Write(ModelReaderWriterOptions options)

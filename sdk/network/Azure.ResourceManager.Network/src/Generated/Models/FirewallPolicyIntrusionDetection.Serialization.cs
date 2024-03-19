@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Mode.HasValue)
+            if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (Profile.HasValue)
+            if (Optional.IsDefined(Profile))
             {
                 writer.WritePropertyName("profile"u8);
                 writer.WriteStringValue(Profile.Value.ToString());
             }
-            if (Configuration != null)
+            if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
                 writer.WriteObjectValue(Configuration);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<FirewallPolicyIntrusionDetectionStateType> mode = default;
-            Optional<FirewallPolicyIntrusionDetectionProfileType> profile = default;
-            Optional<FirewallPolicyIntrusionDetectionConfiguration> configuration = default;
+            FirewallPolicyIntrusionDetectionStateType? mode = default;
+            FirewallPolicyIntrusionDetectionProfileType? profile = default;
+            FirewallPolicyIntrusionDetectionConfiguration configuration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallPolicyIntrusionDetection(Optional.ToNullable(mode), Optional.ToNullable(profile), configuration.Value, serializedAdditionalRawData);
+            return new FirewallPolicyIntrusionDetection(mode, profile, configuration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirewallPolicyIntrusionDetection>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ElasticSan;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ElasticSan.Models
@@ -27,29 +28,29 @@ namespace Azure.ResourceManager.ElasticSan.Models
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ProtocolType.HasValue)
+            if (Optional.IsDefined(ProtocolType))
             {
                 writer.WritePropertyName("protocolType"u8);
                 writer.WriteStringValue(ProtocolType.Value.ToString());
             }
-            if (Encryption.HasValue)
+            if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteStringValue(Encryption.Value.ToString());
             }
-            if (EncryptionProperties != null)
+            if (Optional.IsDefined(EncryptionProperties))
             {
                 writer.WritePropertyName("encryptionProperties"u8);
                 writer.WriteObjectValue(EncryptionProperties);
             }
-            if (NetworkAcls != null)
+            if (Optional.IsDefined(NetworkAcls))
             {
                 writer.WritePropertyName("networkAcls"u8);
                 writer.WriteObjectValue(NetworkAcls);
@@ -93,11 +94,11 @@ namespace Azure.ResourceManager.ElasticSan.Models
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<ElasticSanStorageTargetType> protocolType = default;
-            Optional<ElasticSanEncryptionType> encryption = default;
-            Optional<ElasticSanEncryptionProperties> encryptionProperties = default;
-            Optional<NetworkRuleSet> networkAcls = default;
+            ManagedServiceIdentity identity = default;
+            ElasticSanStorageTargetType? protocolType = default;
+            ElasticSanEncryptionType? encryption = default;
+            ElasticSanEncryptionProperties encryptionProperties = default;
+            NetworkRuleSet networkAcls = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -167,10 +168,10 @@ namespace Azure.ResourceManager.ElasticSan.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ElasticSanVolumeGroupPatch(
                 identity,
-                Optional.ToNullable(protocolType),
-                Optional.ToNullable(encryption),
-                encryptionProperties.Value,
-                networkAcls.Value,
+                protocolType,
+                encryption,
+                encryptionProperties,
+                networkAcls,
                 serializedAdditionalRawData);
         }
 

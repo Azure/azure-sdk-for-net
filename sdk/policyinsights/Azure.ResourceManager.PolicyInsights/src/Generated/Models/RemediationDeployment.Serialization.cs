@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.PolicyInsights;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
@@ -27,37 +28,37 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && RemediatedResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(RemediatedResourceId))
             {
                 writer.WritePropertyName("remediatedResourceId"u8);
                 writer.WriteStringValue(RemediatedResourceId);
             }
-            if (options.Format != "W" && DeploymentId != null)
+            if (options.Format != "W" && Optional.IsDefined(DeploymentId))
             {
                 writer.WritePropertyName("deploymentId"u8);
                 writer.WriteStringValue(DeploymentId);
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && ResourceLocation.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceLocation))
             {
                 writer.WritePropertyName("resourceLocation"u8);
                 writer.WriteStringValue(ResourceLocation.Value);
             }
-            if (options.Format != "W" && Error != null)
+            if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, Error);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdOn"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && LastUpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedOn"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
@@ -100,13 +101,13 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> remediatedResourceId = default;
-            Optional<ResourceIdentifier> deploymentId = default;
-            Optional<string> status = default;
-            Optional<AzureLocation> resourceLocation = default;
-            Optional<ResponseError> error = default;
-            Optional<DateTimeOffset> createdOn = default;
-            Optional<DateTimeOffset> lastUpdatedOn = default;
+            ResourceIdentifier remediatedResourceId = default;
+            ResourceIdentifier deploymentId = default;
+            string status = default;
+            AzureLocation? resourceLocation = default;
+            ResponseError error = default;
+            DateTimeOffset? createdOn = default;
+            DateTimeOffset? lastUpdatedOn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -177,13 +178,13 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new RemediationDeployment(
-                remediatedResourceId.Value,
-                deploymentId.Value,
-                status.Value,
-                Optional.ToNullable(resourceLocation),
-                error.Value,
-                Optional.ToNullable(createdOn),
-                Optional.ToNullable(lastUpdatedOn),
+                remediatedResourceId,
+                deploymentId,
+                status,
+                resourceLocation,
+                error,
+                createdOn,
+                lastUpdatedOn,
                 serializedAdditionalRawData);
         }
 

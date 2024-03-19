@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Autosave.HasValue)
+            if (Optional.IsDefined(Autosave))
             {
                 writer.WritePropertyName("autosave"u8);
                 writer.WriteStringValue(Autosave.Value.ToString());
             }
-            if (Gpu != null)
+            if (Optional.IsDefined(Gpu))
             {
                 writer.WritePropertyName("gpu"u8);
                 writer.WriteStringValue(Gpu);
             }
-            if (Network.HasValue)
+            if (Optional.IsDefined(Network))
             {
                 writer.WritePropertyName("network"u8);
                 writer.WriteStringValue(Network.Value.ToString());
             }
-            if (Environment != null)
+            if (Optional.IsDefined(Environment))
             {
                 writer.WritePropertyName("environment"u8);
                 writer.WriteObjectValue(Environment);
             }
-            if (options.Format != "W" && !(Services is ChangeTrackingList<BinaryData> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Services))
             {
                 writer.WritePropertyName("services"u8);
                 writer.WriteStartArray();
@@ -111,11 +112,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<MachineLearningComputeInstanceAutosave> autosave = default;
-            Optional<string> gpu = default;
-            Optional<MachineLearningNetwork> network = default;
-            Optional<MachineLearningComputeInstanceEnvironmentInfo> environment = default;
+            string name = default;
+            MachineLearningComputeInstanceAutosave? autosave = default;
+            string gpu = default;
+            MachineLearningNetwork? network = default;
+            MachineLearningComputeInstanceEnvironmentInfo environment = default;
             IReadOnlyList<BinaryData> services = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -186,11 +187,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MachineLearningComputeInstanceContainer(
-                name.Value,
-                Optional.ToNullable(autosave),
-                gpu.Value,
-                Optional.ToNullable(network),
-                environment.Value,
+                name,
+                autosave,
+                gpu,
+                network,
+                environment,
                 services ?? new ChangeTrackingList<BinaryData>(),
                 serializedAdditionalRawData);
         }

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (WorkloadIdentityProviderId != null)
+            if (Optional.IsDefined(WorkloadIdentityProviderId))
             {
                 writer.WritePropertyName("workloadIdentityProviderId"u8);
                 writer.WriteStringValue(WorkloadIdentityProviderId);
             }
-            if (ServiceAccountEmailAddress != null)
+            if (Optional.IsDefined(ServiceAccountEmailAddress))
             {
                 writer.WritePropertyName("serviceAccountEmailAddress"u8);
                 writer.WriteStringValue(ServiceAccountEmailAddress);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> workloadIdentityProviderId = default;
-            Optional<string> serviceAccountEmailAddress = default;
+            string workloadIdentityProviderId = default;
+            string serviceAccountEmailAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GcpDefenderForServersInfo(workloadIdentityProviderId.Value, serviceAccountEmailAddress.Value, serializedAdditionalRawData);
+            return new GcpDefenderForServersInfo(workloadIdentityProviderId, serviceAccountEmailAddress, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GcpDefenderForServersInfo>.Write(ModelReaderWriterOptions options)

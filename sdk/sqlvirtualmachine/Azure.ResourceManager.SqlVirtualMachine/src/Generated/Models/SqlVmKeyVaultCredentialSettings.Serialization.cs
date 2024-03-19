@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SqlVirtualMachine;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             }
 
             writer.WriteStartObject();
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enable"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (CredentialName != null)
+            if (Optional.IsDefined(CredentialName))
             {
                 writer.WritePropertyName("credentialName"u8);
                 writer.WriteStringValue(CredentialName);
             }
-            if (AzureKeyVaultUri != null)
+            if (Optional.IsDefined(AzureKeyVaultUri))
             {
                 writer.WritePropertyName("azureKeyVaultUrl"u8);
                 writer.WriteStringValue(AzureKeyVaultUri.AbsoluteUri);
             }
-            if (ServicePrincipalName != null)
+            if (Optional.IsDefined(ServicePrincipalName))
             {
                 writer.WritePropertyName("servicePrincipalName"u8);
                 writer.WriteStringValue(ServicePrincipalName);
             }
-            if (ServicePrincipalSecret != null)
+            if (Optional.IsDefined(ServicePrincipalSecret))
             {
                 writer.WritePropertyName("servicePrincipalSecret"u8);
                 writer.WriteStringValue(ServicePrincipalSecret);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 return null;
             }
-            Optional<bool> enable = default;
-            Optional<string> credentialName = default;
-            Optional<Uri> azureKeyVaultUrl = default;
-            Optional<string> servicePrincipalName = default;
-            Optional<string> servicePrincipalSecret = default;
+            bool? enable = default;
+            string credentialName = default;
+            Uri azureKeyVaultUrl = default;
+            string servicePrincipalName = default;
+            string servicePrincipalSecret = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,11 +139,11 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SqlVmKeyVaultCredentialSettings(
-                Optional.ToNullable(enable),
-                credentialName.Value,
-                azureKeyVaultUrl.Value,
-                servicePrincipalName.Value,
-                servicePrincipalSecret.Value,
+                enable,
+                credentialName,
+                azureKeyVaultUrl,
+                servicePrincipalName,
+                servicePrincipalSecret,
                 serializedAdditionalRawData);
         }
 

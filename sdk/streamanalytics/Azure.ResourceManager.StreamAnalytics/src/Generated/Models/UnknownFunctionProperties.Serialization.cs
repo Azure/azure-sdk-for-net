@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.StreamAnalytics;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
@@ -29,14 +30,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(FunctionPropertiesType);
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(Inputs is ChangeTrackingList<StreamingJobFunctionInput> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Inputs))
             {
                 writer.WritePropertyName("inputs"u8);
                 writer.WriteStartArray();
@@ -46,12 +47,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Output != null)
+            if (Optional.IsDefined(Output))
             {
                 writer.WritePropertyName("output"u8);
                 writer.WriteObjectValue(Output);
             }
-            if (Binding != null)
+            if (Optional.IsDefined(Binding))
             {
                 writer.WritePropertyName("binding"u8);
                 writer.WriteObjectValue(Binding);
@@ -96,10 +97,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string type = "Unknown";
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             IList<StreamingJobFunctionInput> inputs = default;
-            Optional<StreamingJobFunctionOutput> output = default;
-            Optional<StreamingJobFunctionBinding> binding = default;
+            StreamingJobFunctionOutput output = default;
+            StreamingJobFunctionBinding binding = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -170,10 +171,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new UnknownFunctionProperties(
                 type,
-                Optional.ToNullable(etag),
+                etag,
                 inputs ?? new ChangeTrackingList<StreamingJobFunctionInput>(),
-                output.Value,
-                binding.Value,
+                output,
+                binding,
                 serializedAdditionalRawData);
         }
 

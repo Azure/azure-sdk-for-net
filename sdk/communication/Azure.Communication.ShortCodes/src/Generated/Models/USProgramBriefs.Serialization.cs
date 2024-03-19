@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Communication.ShortCodes;
 
 namespace Azure.Communication.ShortCodes.Models
 {
@@ -20,7 +20,7 @@ namespace Azure.Communication.ShortCodes.Models
                 return null;
             }
             IReadOnlyList<USProgramBrief> programBriefs = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("programBriefs"u8))
@@ -43,7 +43,7 @@ namespace Azure.Communication.ShortCodes.Models
                     continue;
                 }
             }
-            return new USProgramBriefs(programBriefs ?? new ChangeTrackingList<USProgramBrief>(), nextLink.Value);
+            return new USProgramBriefs(programBriefs ?? new ChangeTrackingList<USProgramBrief>(), nextLink);
         }
     }
 }

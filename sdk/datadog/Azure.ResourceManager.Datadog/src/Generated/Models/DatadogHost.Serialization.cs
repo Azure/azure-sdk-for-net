@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Datadog;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Datadog.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (!(Aliases is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Aliases))
             {
                 writer.WritePropertyName("aliases"u8);
                 writer.WriteStartArray();
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Apps is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Apps))
             {
                 writer.WritePropertyName("apps"u8);
                 writer.WriteStartArray();
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Meta != null)
+            if (Optional.IsDefined(Meta))
             {
                 writer.WritePropertyName("meta"u8);
                 writer.WriteObjectValue(Meta);
@@ -94,10 +95,10 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            Optional<string> name = default;
+            string name = default;
             IReadOnlyList<string> aliases = default;
             IReadOnlyList<string> apps = default;
-            Optional<DatadogHostMetadata> meta = default;
+            DatadogHostMetadata meta = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,7 +151,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatadogHost(name.Value, aliases ?? new ChangeTrackingList<string>(), apps ?? new ChangeTrackingList<string>(), meta.Value, serializedAdditionalRawData);
+            return new DatadogHost(name, aliases ?? new ChangeTrackingList<string>(), apps ?? new ChangeTrackingList<string>(), meta, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatadogHost>.Write(ModelReaderWriterOptions options)

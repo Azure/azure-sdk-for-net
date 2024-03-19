@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.LabServices;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
@@ -28,27 +29,27 @@ namespace Azure.ResourceManager.LabServices.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startAt"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (StopOn.HasValue)
+            if (Optional.IsDefined(StopOn))
             {
                 writer.WritePropertyName("stopAt"u8);
                 writer.WriteStringValue(StopOn.Value, "O");
             }
-            if (RecurrencePattern != null)
+            if (Optional.IsDefined(RecurrencePattern))
             {
                 writer.WritePropertyName("recurrencePattern"u8);
                 writer.WriteObjectValue(RecurrencePattern);
             }
-            if (TimeZoneId != null)
+            if (Optional.IsDefined(TimeZoneId))
             {
                 writer.WritePropertyName("timeZoneId"u8);
                 writer.WriteStringValue(TimeZoneId);
             }
-            if (Notes != null)
+            if (Optional.IsDefined(Notes))
             {
                 writer.WritePropertyName("notes"u8);
 #if NET6_0_OR_GREATER
@@ -99,11 +100,11 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> startAt = default;
-            Optional<DateTimeOffset> stopAt = default;
-            Optional<LabServicesRecurrencePattern> recurrencePattern = default;
-            Optional<string> timeZoneId = default;
-            Optional<BinaryData> notes = default;
+            DateTimeOffset? startAt = default;
+            DateTimeOffset? stopAt = default;
+            LabServicesRecurrencePattern recurrencePattern = default;
+            string timeZoneId = default;
+            BinaryData notes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,11 +169,11 @@ namespace Azure.ResourceManager.LabServices.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new LabServicesSchedulePatch(
-                Optional.ToNullable(startAt),
-                Optional.ToNullable(stopAt),
-                recurrencePattern.Value,
-                timeZoneId.Value,
-                notes.Value,
+                startAt,
+                stopAt,
+                recurrencePattern,
+                timeZoneId,
+                notes,
                 serializedAdditionalRawData);
         }
 

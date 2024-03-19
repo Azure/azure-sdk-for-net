@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Consumption;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
@@ -28,12 +29,12 @@ namespace Azure.ResourceManager.Consumption.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (options.Format != "W" && !(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -59,49 +60,49 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && BillingPeriodId != null)
+            if (options.Format != "W" && Optional.IsDefined(BillingPeriodId))
             {
                 writer.WritePropertyName("billingPeriodId"u8);
                 writer.WriteStringValue(BillingPeriodId);
             }
-            if (options.Format != "W" && UsageStartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UsageStartOn))
             {
                 writer.WritePropertyName("usageStart"u8);
                 writer.WriteStringValue(UsageStartOn.Value, "O");
             }
-            if (options.Format != "W" && UsageEndOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UsageEndOn))
             {
                 writer.WritePropertyName("usageEnd"u8);
                 writer.WriteStringValue(UsageEndOn.Value, "O");
             }
-            if (options.Format != "W" && AzureCharges.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AzureCharges))
             {
                 writer.WritePropertyName("azureCharges"u8);
                 writer.WriteNumberValue(AzureCharges.Value);
             }
-            if (options.Format != "W" && MarketplaceCharges.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MarketplaceCharges))
             {
                 writer.WritePropertyName("marketplaceCharges"u8);
                 writer.WriteNumberValue(MarketplaceCharges.Value);
             }
-            if (options.Format != "W" && ChargesBilledSeparately.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ChargesBilledSeparately))
             {
                 writer.WritePropertyName("chargesBilledSeparately"u8);
                 writer.WriteNumberValue(ChargesBilledSeparately.Value);
             }
-            if (options.Format != "W" && Currency != null)
+            if (options.Format != "W" && Optional.IsDefined(Currency))
             {
                 writer.WritePropertyName("currency"u8);
                 writer.WriteStringValue(Currency);
             }
-            if (!(Children is ChangeTrackingList<ConsumptionAggregatedCostResult> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Children))
             {
                 writer.WritePropertyName("children"u8);
                 writer.WriteStartArray();
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(IncludedSubscriptions is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(IncludedSubscriptions))
             {
                 writer.WritePropertyName("includedSubscriptions"u8);
                 writer.WriteStartArray();
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ExcludedSubscriptions is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(ExcludedSubscriptions))
             {
                 writer.WritePropertyName("excludedSubscriptions"u8);
                 writer.WriteStartArray();
@@ -170,19 +171,19 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             IReadOnlyDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> billingPeriodId = default;
-            Optional<DateTimeOffset> usageStart = default;
-            Optional<DateTimeOffset> usageEnd = default;
-            Optional<decimal> azureCharges = default;
-            Optional<decimal> marketplaceCharges = default;
-            Optional<decimal> chargesBilledSeparately = default;
-            Optional<string> currency = default;
+            SystemData systemData = default;
+            string billingPeriodId = default;
+            DateTimeOffset? usageStart = default;
+            DateTimeOffset? usageEnd = default;
+            decimal? azureCharges = default;
+            decimal? marketplaceCharges = default;
+            decimal? chargesBilledSeparately = default;
+            string currency = default;
             IReadOnlyList<ConsumptionAggregatedCostResult> children = default;
             IReadOnlyList<string> includedSubscriptions = default;
             IReadOnlyList<string> excludedSubscriptions = default;
@@ -356,18 +357,18 @@ namespace Azure.ResourceManager.Consumption.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                billingPeriodId.Value,
-                Optional.ToNullable(usageStart),
-                Optional.ToNullable(usageEnd),
-                Optional.ToNullable(azureCharges),
-                Optional.ToNullable(marketplaceCharges),
-                Optional.ToNullable(chargesBilledSeparately),
-                currency.Value,
+                systemData,
+                billingPeriodId,
+                usageStart,
+                usageEnd,
+                azureCharges,
+                marketplaceCharges,
+                chargesBilledSeparately,
+                currency,
                 children ?? new ChangeTrackingList<ConsumptionAggregatedCostResult>(),
                 includedSubscriptions ?? new ChangeTrackingList<string>(),
                 excludedSubscriptions ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(etag),
+                etag,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }

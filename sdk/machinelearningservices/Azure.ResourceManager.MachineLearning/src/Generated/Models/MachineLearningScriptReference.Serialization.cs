@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (ScriptSource != null)
+            if (Optional.IsDefined(ScriptSource))
             {
                 writer.WritePropertyName("scriptSource"u8);
                 writer.WriteStringValue(ScriptSource);
             }
-            if (ScriptData != null)
+            if (Optional.IsDefined(ScriptData))
             {
                 writer.WritePropertyName("scriptData"u8);
                 writer.WriteStringValue(ScriptData);
             }
-            if (ScriptArguments != null)
+            if (Optional.IsDefined(ScriptArguments))
             {
                 writer.WritePropertyName("scriptArguments"u8);
                 writer.WriteStringValue(ScriptArguments);
             }
-            if (Timeout != null)
+            if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> scriptSource = default;
-            Optional<string> scriptData = default;
-            Optional<string> scriptArguments = default;
-            Optional<string> timeout = default;
+            string scriptSource = default;
+            string scriptData = default;
+            string scriptArguments = default;
+            string timeout = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningScriptReference(scriptSource.Value, scriptData.Value, scriptArguments.Value, timeout.Value, serializedAdditionalRawData);
+            return new MachineLearningScriptReference(scriptSource, scriptData, scriptArguments, timeout, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningScriptReference>.Write(ModelReaderWriterOptions options)

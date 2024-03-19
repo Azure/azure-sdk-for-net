@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (MipIntegrationStatus.HasValue)
+            if (Optional.IsDefined(MipIntegrationStatus))
             {
                 writer.WritePropertyName("mipIntegrationStatus"u8);
                 writer.WriteStringValue(MipIntegrationStatus.Value.ToString());
             }
-            if (!(Labels is ChangeTrackingList<MipSensitivityLabel> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Labels))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartArray();
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(CustomInfoTypes is ChangeTrackingList<UserDefinedInformationType> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(CustomInfoTypes))
             {
                 writer.WritePropertyName("customInfoTypes"u8);
                 writer.WriteStartArray();
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(BuiltInInfoTypes is ChangeTrackingList<BuiltInInfoType> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(BuiltInInfoTypes))
             {
                 writer.WritePropertyName("builtInInfoTypes"u8);
                 writer.WriteStartArray();
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<MipIntegrationStatus> mipIntegrationStatus = default;
+            MipIntegrationStatus? mipIntegrationStatus = default;
             IReadOnlyList<MipSensitivityLabel> labels = default;
             IReadOnlyList<UserDefinedInformationType> customInfoTypes = default;
             IReadOnlyList<BuiltInInfoType> builtInInfoTypes = default;
@@ -164,7 +165,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GetSensitivitySettingsResponsePropertiesMipInformation(Optional.ToNullable(mipIntegrationStatus), labels ?? new ChangeTrackingList<MipSensitivityLabel>(), customInfoTypes ?? new ChangeTrackingList<UserDefinedInformationType>(), builtInInfoTypes ?? new ChangeTrackingList<BuiltInInfoType>(), serializedAdditionalRawData);
+            return new GetSensitivitySettingsResponsePropertiesMipInformation(mipIntegrationStatus, labels ?? new ChangeTrackingList<MipSensitivityLabel>(), customInfoTypes ?? new ChangeTrackingList<UserDefinedInformationType>(), builtInInfoTypes ?? new ChangeTrackingList<BuiltInInfoType>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GetSensitivitySettingsResponsePropertiesMipInformation>.Write(ModelReaderWriterOptions options)

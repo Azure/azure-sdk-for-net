@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MySql;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (RestartWithFailover.HasValue)
+            if (Optional.IsDefined(RestartWithFailover))
             {
                 writer.WritePropertyName("restartWithFailover"u8);
                 writer.WriteStringValue(RestartWithFailover.Value.ToString());
             }
-            if (MaxFailoverSeconds.HasValue)
+            if (Optional.IsDefined(MaxFailoverSeconds))
             {
                 writer.WritePropertyName("maxFailoverSeconds"u8);
                 writer.WriteNumberValue(MaxFailoverSeconds.Value);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<MySqlFlexibleServerEnableStatusEnum> restartWithFailover = default;
-            Optional<int> maxFailoverSeconds = default;
+            MySqlFlexibleServerEnableStatusEnum? restartWithFailover = default;
+            int? maxFailoverSeconds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlFlexibleServerRestartParameter(Optional.ToNullable(restartWithFailover), Optional.ToNullable(maxFailoverSeconds), serializedAdditionalRawData);
+            return new MySqlFlexibleServerRestartParameter(restartWithFailover, maxFailoverSeconds, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFlexibleServerRestartParameter>.Write(ModelReaderWriterOptions options)

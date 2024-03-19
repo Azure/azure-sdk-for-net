@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -26,52 +27,52 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && AgentPoolId != null)
+            if (options.Format != "W" && Optional.IsDefined(AgentPoolId))
             {
                 writer.WritePropertyName("agentPoolId"u8);
                 writer.WriteStringValue(AgentPoolId);
             }
-            if (options.Format != "W" && AvailabilityZone != null)
+            if (options.Format != "W" && Optional.IsDefined(AvailabilityZone))
             {
                 writer.WritePropertyName("availabilityZone"u8);
                 writer.WriteStringValue(AvailabilityZone);
             }
-            if (options.Format != "W" && BareMetalMachineId != null)
+            if (options.Format != "W" && Optional.IsDefined(BareMetalMachineId))
             {
                 writer.WritePropertyName("bareMetalMachineId"u8);
                 writer.WriteStringValue(BareMetalMachineId);
             }
-            if (options.Format != "W" && CpuCores.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CpuCores))
             {
                 writer.WritePropertyName("cpuCores"u8);
                 writer.WriteNumberValue(CpuCores.Value);
             }
-            if (options.Format != "W" && DetailedStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DetailedStatus))
             {
                 writer.WritePropertyName("detailedStatus"u8);
                 writer.WriteStringValue(DetailedStatus.Value.ToString());
             }
-            if (options.Format != "W" && DetailedStatusMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(DetailedStatusMessage))
             {
                 writer.WritePropertyName("detailedStatusMessage"u8);
                 writer.WriteStringValue(DetailedStatusMessage);
             }
-            if (options.Format != "W" && DiskSizeGB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DiskSizeGB))
             {
                 writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
-            if (options.Format != "W" && Image != null)
+            if (options.Format != "W" && Optional.IsDefined(Image))
             {
                 writer.WritePropertyName("image"u8);
                 writer.WriteStringValue(Image);
             }
-            if (options.Format != "W" && KubernetesVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(KubernetesVersion))
             {
                 writer.WritePropertyName("kubernetesVersion"u8);
                 writer.WriteStringValue(KubernetesVersion);
             }
-            if (options.Format != "W" && !(Labels is ChangeTrackingList<KubernetesLabel> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Labels))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartArray();
@@ -81,22 +82,22 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && MemorySizeGB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MemorySizeGB))
             {
                 writer.WritePropertyName("memorySizeGB"u8);
                 writer.WriteNumberValue(MemorySizeGB.Value);
             }
-            if (options.Format != "W" && Mode.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && !(NetworkAttachments is ChangeTrackingList<NetworkAttachment> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(NetworkAttachments))
             {
                 writer.WritePropertyName("networkAttachments"u8);
                 writer.WriteStartArray();
@@ -106,17 +107,17 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && PowerState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PowerState))
             {
                 writer.WritePropertyName("powerState"u8);
                 writer.WriteStringValue(PowerState.Value.ToString());
             }
-            if (options.Format != "W" && Role.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Role))
             {
                 writer.WritePropertyName("role"u8);
                 writer.WriteStringValue(Role.Value.ToString());
             }
-            if (options.Format != "W" && !(Taints is ChangeTrackingList<KubernetesLabel> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Taints))
             {
                 writer.WritePropertyName("taints"u8);
                 writer.WriteStartArray();
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && VmSkuName != null)
+            if (options.Format != "W" && Optional.IsDefined(VmSkuName))
             {
                 writer.WritePropertyName("vmSkuName"u8);
                 writer.WriteStringValue(VmSkuName);
@@ -169,24 +170,24 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<string> agentPoolId = default;
-            Optional<string> availabilityZone = default;
-            Optional<string> bareMetalMachineId = default;
-            Optional<long> cpuCores = default;
-            Optional<KubernetesClusterNodeDetailedStatus> detailedStatus = default;
-            Optional<string> detailedStatusMessage = default;
-            Optional<long> diskSizeGB = default;
-            Optional<string> image = default;
-            Optional<string> kubernetesVersion = default;
+            string agentPoolId = default;
+            string availabilityZone = default;
+            string bareMetalMachineId = default;
+            long? cpuCores = default;
+            KubernetesClusterNodeDetailedStatus? detailedStatus = default;
+            string detailedStatusMessage = default;
+            long? diskSizeGB = default;
+            string image = default;
+            string kubernetesVersion = default;
             IReadOnlyList<KubernetesLabel> labels = default;
-            Optional<long> memorySizeGB = default;
-            Optional<NetworkCloudAgentPoolMode> mode = default;
-            Optional<string> name = default;
+            long? memorySizeGB = default;
+            NetworkCloudAgentPoolMode? mode = default;
+            string name = default;
             IReadOnlyList<NetworkAttachment> networkAttachments = default;
-            Optional<KubernetesNodePowerState> powerState = default;
-            Optional<KubernetesNodeRole> role = default;
+            KubernetesNodePowerState? powerState = default;
+            KubernetesNodeRole? role = default;
             IReadOnlyList<KubernetesLabel> taints = default;
-            Optional<string> vmSkuName = default;
+            string vmSkuName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -343,24 +344,24 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new KubernetesClusterNode(
-                agentPoolId.Value,
-                availabilityZone.Value,
-                bareMetalMachineId.Value,
-                Optional.ToNullable(cpuCores),
-                Optional.ToNullable(detailedStatus),
-                detailedStatusMessage.Value,
-                Optional.ToNullable(diskSizeGB),
-                image.Value,
-                kubernetesVersion.Value,
+                agentPoolId,
+                availabilityZone,
+                bareMetalMachineId,
+                cpuCores,
+                detailedStatus,
+                detailedStatusMessage,
+                diskSizeGB,
+                image,
+                kubernetesVersion,
                 labels ?? new ChangeTrackingList<KubernetesLabel>(),
-                Optional.ToNullable(memorySizeGB),
-                Optional.ToNullable(mode),
-                name.Value,
+                memorySizeGB,
+                mode,
+                name,
                 networkAttachments ?? new ChangeTrackingList<NetworkAttachment>(),
-                Optional.ToNullable(powerState),
-                Optional.ToNullable(role),
+                powerState,
+                role,
                 taints ?? new ChangeTrackingList<KubernetesLabel>(),
-                vmSkuName.Value,
+                vmSkuName,
                 serializedAdditionalRawData);
         }
 

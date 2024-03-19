@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && SourceDatabaseName != null)
+            if (options.Format != "W" && Optional.IsDefined(SourceDatabaseName))
             {
                 writer.WritePropertyName("sourceDatabaseName"u8);
                 writer.WriteStringValue(SourceDatabaseName);
             }
-            if (options.Format != "W" && MigrationState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MigrationState))
             {
                 writer.WritePropertyName("migrationState"u8);
                 writer.WriteStringValue(MigrationState.Value.ToString());
             }
-            if (options.Format != "W" && StartedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartedOn))
             {
                 writer.WritePropertyName("startedOn"u8);
                 writer.WriteStringValue(StartedOn.Value, "O");
             }
-            if (options.Format != "W" && EndedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndedOn))
             {
                 writer.WritePropertyName("endedOn"u8);
                 writer.WriteStringValue(EndedOn.Value, "O");
             }
-            if (options.Format != "W" && FullBackupSetInfo != null)
+            if (options.Format != "W" && Optional.IsDefined(FullBackupSetInfo))
             {
                 writer.WritePropertyName("fullBackupSetInfo"u8);
                 writer.WriteObjectValue(FullBackupSetInfo);
             }
-            if (options.Format != "W" && LastRestoredBackupSetInfo != null)
+            if (options.Format != "W" && Optional.IsDefined(LastRestoredBackupSetInfo))
             {
                 writer.WritePropertyName("lastRestoredBackupSetInfo"u8);
                 writer.WriteObjectValue(LastRestoredBackupSetInfo);
             }
-            if (options.Format != "W" && !(ActiveBackupSets is ChangeTrackingList<BackupSetInfo> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ActiveBackupSets))
             {
                 writer.WritePropertyName("activeBackupSets"u8);
                 writer.WriteStartArray();
@@ -66,22 +67,22 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ContainerName != null)
+            if (options.Format != "W" && Optional.IsDefined(ContainerName))
             {
                 writer.WritePropertyName("containerName"u8);
                 writer.WriteStringValue(ContainerName);
             }
-            if (options.Format != "W" && ErrorPrefix != null)
+            if (options.Format != "W" && Optional.IsDefined(ErrorPrefix))
             {
                 writer.WritePropertyName("errorPrefix"u8);
                 writer.WriteStringValue(ErrorPrefix);
             }
-            if (options.Format != "W" && IsFullBackupRestored.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsFullBackupRestored))
             {
                 writer.WritePropertyName("isFullBackupRestored"u8);
                 writer.WriteBooleanValue(IsFullBackupRestored.Value);
             }
-            if (options.Format != "W" && !(ExceptionsAndWarnings is ChangeTrackingList<ReportableException> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ExceptionsAndWarnings))
             {
                 writer.WritePropertyName("exceptionsAndWarnings"u8);
                 writer.WriteStartArray();
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -136,18 +137,18 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> sourceDatabaseName = default;
-            Optional<DatabaseMigrationState> migrationState = default;
-            Optional<DateTimeOffset> startedOn = default;
-            Optional<DateTimeOffset> endedOn = default;
-            Optional<BackupSetInfo> fullBackupSetInfo = default;
-            Optional<BackupSetInfo> lastRestoredBackupSetInfo = default;
+            string sourceDatabaseName = default;
+            DatabaseMigrationState? migrationState = default;
+            DateTimeOffset? startedOn = default;
+            DateTimeOffset? endedOn = default;
+            BackupSetInfo fullBackupSetInfo = default;
+            BackupSetInfo lastRestoredBackupSetInfo = default;
             IReadOnlyList<BackupSetInfo> activeBackupSets = default;
-            Optional<string> containerName = default;
-            Optional<string> errorPrefix = default;
-            Optional<bool> isFullBackupRestored = default;
+            string containerName = default;
+            string errorPrefix = default;
+            bool? isFullBackupRestored = default;
             IReadOnlyList<ReportableException> exceptionsAndWarnings = default;
-            Optional<string> id = default;
+            string id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -267,19 +268,19 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel(
-                id.Value,
+                id,
                 resultType,
                 serializedAdditionalRawData,
-                sourceDatabaseName.Value,
-                Optional.ToNullable(migrationState),
-                Optional.ToNullable(startedOn),
-                Optional.ToNullable(endedOn),
-                fullBackupSetInfo.Value,
-                lastRestoredBackupSetInfo.Value,
+                sourceDatabaseName,
+                migrationState,
+                startedOn,
+                endedOn,
+                fullBackupSetInfo,
+                lastRestoredBackupSetInfo,
                 activeBackupSets ?? new ChangeTrackingList<BackupSetInfo>(),
-                containerName.Value,
-                errorPrefix.Value,
-                Optional.ToNullable(isFullBackupRestored),
+                containerName,
+                errorPrefix,
+                isFullBackupRestored,
                 exceptionsAndWarnings ?? new ChangeTrackingList<ReportableException>());
         }
 

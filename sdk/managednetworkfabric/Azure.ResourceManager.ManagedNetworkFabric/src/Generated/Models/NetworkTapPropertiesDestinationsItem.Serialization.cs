@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (DestinationType.HasValue)
+            if (Optional.IsDefined(DestinationType))
             {
                 writer.WritePropertyName("destinationType"u8);
                 writer.WriteStringValue(DestinationType.Value.ToString());
             }
-            if (DestinationId != null)
+            if (Optional.IsDefined(DestinationId))
             {
                 writer.WritePropertyName("destinationId"u8);
                 writer.WriteStringValue(DestinationId);
             }
-            if (IsolationDomainProperties != null)
+            if (Optional.IsDefined(IsolationDomainProperties))
             {
                 writer.WritePropertyName("isolationDomainProperties"u8);
                 writer.WriteObjectValue(IsolationDomainProperties);
             }
-            if (DestinationTapRuleId != null)
+            if (Optional.IsDefined(DestinationTapRuleId))
             {
                 writer.WritePropertyName("destinationTapRuleId"u8);
                 writer.WriteStringValue(DestinationTapRuleId);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<NetworkTapDestinationType> destinationType = default;
-            Optional<ResourceIdentifier> destinationId = default;
-            Optional<IsolationDomainProperties> isolationDomainProperties = default;
-            Optional<ResourceIdentifier> destinationTapRuleId = default;
+            string name = default;
+            NetworkTapDestinationType? destinationType = default;
+            ResourceIdentifier destinationId = default;
+            IsolationDomainProperties isolationDomainProperties = default;
+            ResourceIdentifier destinationTapRuleId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,11 +147,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new NetworkTapPropertiesDestinationsItem(
-                name.Value,
-                Optional.ToNullable(destinationType),
-                destinationId.Value,
-                isolationDomainProperties.Value,
-                destinationTapRuleId.Value,
+                name,
+                destinationType,
+                destinationId,
+                isolationDomainProperties,
+                destinationTapRuleId,
                 serializedAdditionalRawData);
         }
 

@@ -37,17 +37,17 @@ namespace Azure.Communication.JobRouter
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (DistributionPolicyId != null)
+            if (Optional.IsDefined(DistributionPolicyId))
             {
                 writer.WritePropertyName("distributionPolicyId"u8);
                 writer.WriteStringValue(DistributionPolicyId);
             }
-            if (!(_labels is ChangeTrackingDictionary<string, object> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(_labels))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartObject();
@@ -63,7 +63,7 @@ namespace Azure.Communication.JobRouter
                 }
                 writer.WriteEndObject();
             }
-            if (ExceptionPolicyId != null)
+            if (Optional.IsDefined(ExceptionPolicyId))
             {
                 writer.WritePropertyName("exceptionPolicyId"u8);
                 writer.WriteStringValue(ExceptionPolicyId);
@@ -108,10 +108,10 @@ namespace Azure.Communication.JobRouter
             }
             ETag etag = default;
             string id = default;
-            Optional<string> name = default;
-            Optional<string> distributionPolicyId = default;
+            string name = default;
+            string distributionPolicyId = default;
             IDictionary<string, object> labels = default;
-            Optional<string> exceptionPolicyId = default;
+            string exceptionPolicyId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -171,10 +171,10 @@ namespace Azure.Communication.JobRouter
             return new RouterQueue(
                 etag,
                 id,
-                name.Value,
-                distributionPolicyId.Value,
+                name,
+                distributionPolicyId,
                 labels ?? new ChangeTrackingDictionary<string, object>(),
-                exceptionPolicyId.Value,
+                exceptionPolicyId,
                 serializedAdditionalRawData);
         }
 

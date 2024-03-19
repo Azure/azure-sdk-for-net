@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -28,12 +29,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartObject();
             writer.WritePropertyName("issueKey"u8);
             writer.WriteStringValue(IssueKey);
-            if (IssueName != null)
+            if (Optional.IsDefined(IssueName))
             {
                 writer.WritePropertyName("issueName"u8);
                 writer.WriteStringValue(IssueName);
             }
-            if (!(SecurityValues is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SecurityValues))
             {
                 writer.WritePropertyName("securityValues"u8);
                 writer.WriteStartArray();
@@ -43,22 +44,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IssueDescription != null)
+            if (Optional.IsDefined(IssueDescription))
             {
                 writer.WritePropertyName("issueDescription"u8);
                 writer.WriteStringValue(IssueDescription);
             }
-            if (RemediationSteps != null)
+            if (Optional.IsDefined(RemediationSteps))
             {
                 writer.WritePropertyName("remediationSteps"u8);
                 writer.WriteStringValue(RemediationSteps);
             }
-            if (RemediationScript != null)
+            if (Optional.IsDefined(RemediationScript))
             {
                 writer.WritePropertyName("remediationScript"u8);
                 writer.WriteStringValue(RemediationScript);
             }
-            if (!(IssueAdditionalData is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(IssueAdditionalData))
             {
                 writer.WritePropertyName("issueAdditionalData"u8);
                 writer.WriteStartObject();
@@ -108,11 +109,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             string issueKey = default;
-            Optional<string> issueName = default;
+            string issueName = default;
             IList<string> securityValues = default;
-            Optional<string> issueDescription = default;
-            Optional<string> remediationSteps = default;
-            Optional<string> remediationScript = default;
+            string issueDescription = default;
+            string remediationSteps = default;
+            string remediationScript = default;
             IDictionary<string, string> issueAdditionalData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -179,11 +180,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SecurityHealthReportIssue(
                 issueKey,
-                issueName.Value,
+                issueName,
                 securityValues ?? new ChangeTrackingList<string>(),
-                issueDescription.Value,
-                remediationSteps.Value,
-                remediationScript.Value,
+                issueDescription,
+                remediationSteps,
+                remediationScript,
                 issueAdditionalData ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }

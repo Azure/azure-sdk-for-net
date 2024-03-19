@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDBForPostgreSql;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 {
@@ -30,12 +31,12 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             writer.WriteStringValue(Role.ToString());
             writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
-            if (options.Format != "W" && DefaultValue != null)
+            if (options.Format != "W" && Optional.IsDefined(DefaultValue))
             {
                 writer.WritePropertyName("defaultValue"u8);
                 writer.WriteStringValue(DefaultValue);
             }
-            if (options.Format != "W" && Source != null)
+            if (options.Format != "W" && Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
@@ -80,8 +81,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             }
             CosmosDBForPostgreSqlServerRole role = default;
             string value = default;
-            Optional<string> defaultValue = default;
-            Optional<string> source = default;
+            string defaultValue = default;
+            string source = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBForPostgreSqlServerRoleGroupConfiguration(role, value, defaultValue.Value, source.Value, serializedAdditionalRawData);
+            return new CosmosDBForPostgreSqlServerRoleGroupConfiguration(role, value, defaultValue, source, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBForPostgreSqlServerRoleGroupConfiguration>.Write(ModelReaderWriterOptions options)

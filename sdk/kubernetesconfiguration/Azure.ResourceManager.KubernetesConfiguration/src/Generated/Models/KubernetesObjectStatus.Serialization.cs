@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.KubernetesConfiguration;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Namespace != null)
+            if (Optional.IsDefined(Namespace))
             {
                 writer.WritePropertyName("namespace"u8);
                 writer.WriteStringValue(Namespace);
             }
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (ComplianceState.HasValue)
+            if (Optional.IsDefined(ComplianceState))
             {
                 writer.WritePropertyName("complianceState"u8);
                 writer.WriteStringValue(ComplianceState.Value.ToString());
             }
-            if (AppliedBy != null)
+            if (Optional.IsDefined(AppliedBy))
             {
                 if (AppliedBy != null)
                 {
@@ -58,7 +59,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("appliedBy");
                 }
             }
-            if (!(StatusConditions is ChangeTrackingList<KubernetesObjectStatusCondition> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(StatusConditions))
             {
                 if (StatusConditions != null)
                 {
@@ -75,7 +76,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("statusConditions");
                 }
             }
-            if (HelmReleaseProperties != null)
+            if (Optional.IsDefined(HelmReleaseProperties))
             {
                 if (HelmReleaseProperties != null)
                 {
@@ -125,13 +126,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> @namespace = default;
-            Optional<string> kind = default;
-            Optional<KubernetesFluxComplianceState> complianceState = default;
-            Optional<KubernetesObjectReference> appliedBy = default;
+            string name = default;
+            string @namespace = default;
+            string kind = default;
+            KubernetesFluxComplianceState? complianceState = default;
+            KubernetesObjectReference appliedBy = default;
             IReadOnlyList<KubernetesObjectStatusCondition> statusConditions = default;
-            Optional<HelmReleaseProperties> helmReleaseProperties = default;
+            HelmReleaseProperties helmReleaseProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -202,13 +203,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new KubernetesObjectStatus(
-                name.Value,
-                @namespace.Value,
-                kind.Value,
-                Optional.ToNullable(complianceState),
-                appliedBy.Value,
+                name,
+                @namespace,
+                kind,
+                complianceState,
+                appliedBy,
                 statusConditions ?? new ChangeTrackingList<KubernetesObjectStatusCondition>(),
-                helmReleaseProperties.Value,
+                helmReleaseProperties,
                 serializedAdditionalRawData);
         }
 

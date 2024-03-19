@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (IsSoftDeleteEnabled.HasValue)
+            if (Optional.IsDefined(IsSoftDeleteEnabled))
             {
                 writer.WritePropertyName("isSoftDeleteEnabled"u8);
                 writer.WriteBooleanValue(IsSoftDeleteEnabled.Value);
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<bool> isSoftDeleteEnabled = default;
+            bool? isSoftDeleteEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SoftDeletePolicy(Optional.ToNullable(isSoftDeleteEnabled), serializedAdditionalRawData);
+            return new SoftDeletePolicy(isSoftDeleteEnabled, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SoftDeletePolicy>.Write(ModelReaderWriterOptions options)

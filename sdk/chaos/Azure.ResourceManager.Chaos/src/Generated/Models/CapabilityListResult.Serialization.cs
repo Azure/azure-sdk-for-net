@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Chaos.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(Value is ChangeTrackingList<ChaosCapabilityData> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && NextLink != null)
+            if (options.Format != "W" && Optional.IsDefined(NextLink))
             {
                 if (NextLink != null)
                 {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 return null;
             }
             IReadOnlyList<ChaosCapabilityData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CapabilityListResult(value ?? new ChangeTrackingList<ChaosCapabilityData>(), nextLink.Value, serializedAdditionalRawData);
+            return new CapabilityListResult(value ?? new ChangeTrackingList<ChaosCapabilityData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CapabilityListResult>.Write(ModelReaderWriterOptions options)

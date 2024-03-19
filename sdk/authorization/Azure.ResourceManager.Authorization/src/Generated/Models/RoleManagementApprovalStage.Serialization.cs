@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Authorization.Models
             }
 
             writer.WriteStartObject();
-            if (ApprovalStageTimeOutInDays.HasValue)
+            if (Optional.IsDefined(ApprovalStageTimeOutInDays))
             {
                 writer.WritePropertyName("approvalStageTimeOutInDays"u8);
                 writer.WriteNumberValue(ApprovalStageTimeOutInDays.Value);
             }
-            if (IsApproverJustificationRequired.HasValue)
+            if (Optional.IsDefined(IsApproverJustificationRequired))
             {
                 writer.WritePropertyName("isApproverJustificationRequired"u8);
                 writer.WriteBooleanValue(IsApproverJustificationRequired.Value);
             }
-            if (EscalationTimeInMinutes.HasValue)
+            if (Optional.IsDefined(EscalationTimeInMinutes))
             {
                 writer.WritePropertyName("escalationTimeInMinutes"u8);
                 writer.WriteNumberValue(EscalationTimeInMinutes.Value);
             }
-            if (!(PrimaryApprovers is ChangeTrackingList<RoleManagementUserInfo> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PrimaryApprovers))
             {
                 writer.WritePropertyName("primaryApprovers"u8);
                 writer.WriteStartArray();
@@ -51,12 +52,12 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IsEscalationEnabled.HasValue)
+            if (Optional.IsDefined(IsEscalationEnabled))
             {
                 writer.WritePropertyName("isEscalationEnabled"u8);
                 writer.WriteBooleanValue(IsEscalationEnabled.Value);
             }
-            if (!(EscalationApprovers is ChangeTrackingList<RoleManagementUserInfo> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(EscalationApprovers))
             {
                 writer.WritePropertyName("escalationApprovers"u8);
                 writer.WriteStartArray();
@@ -104,11 +105,11 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            Optional<int> approvalStageTimeOutInDays = default;
-            Optional<bool> isApproverJustificationRequired = default;
-            Optional<int> escalationTimeInMinutes = default;
+            int? approvalStageTimeOutInDays = default;
+            bool? isApproverJustificationRequired = default;
+            int? escalationTimeInMinutes = default;
             IList<RoleManagementUserInfo> primaryApprovers = default;
-            Optional<bool> isEscalationEnabled = default;
+            bool? isEscalationEnabled = default;
             IList<RoleManagementUserInfo> escalationApprovers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -185,11 +186,11 @@ namespace Azure.ResourceManager.Authorization.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new RoleManagementApprovalStage(
-                Optional.ToNullable(approvalStageTimeOutInDays),
-                Optional.ToNullable(isApproverJustificationRequired),
-                Optional.ToNullable(escalationTimeInMinutes),
+                approvalStageTimeOutInDays,
+                isApproverJustificationRequired,
+                escalationTimeInMinutes,
                 primaryApprovers ?? new ChangeTrackingList<RoleManagementUserInfo>(),
-                Optional.ToNullable(isEscalationEnabled),
+                isEscalationEnabled,
                 escalationApprovers ?? new ChangeTrackingList<RoleManagementUserInfo>(),
                 serializedAdditionalRawData);
         }

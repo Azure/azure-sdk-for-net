@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
@@ -28,32 +29,32 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -66,51 +67,51 @@ namespace Azure.ResourceManager.Network.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AuthorizationKey != null)
+            if (Optional.IsDefined(AuthorizationKey))
             {
                 writer.WritePropertyName("authorizationKey"u8);
                 writer.WriteStringValue(AuthorizationKey);
             }
             writer.WritePropertyName("virtualNetworkGateway1"u8);
             JsonSerializer.Serialize(writer, VirtualNetworkGateway1);
-            if (VirtualNetworkGateway2 != null)
+            if (Optional.IsDefined(VirtualNetworkGateway2))
             {
                 writer.WritePropertyName("virtualNetworkGateway2"u8);
                 JsonSerializer.Serialize(writer, VirtualNetworkGateway2);
             }
-            if (LocalNetworkGateway2 != null)
+            if (Optional.IsDefined(LocalNetworkGateway2))
             {
                 writer.WritePropertyName("localNetworkGateway2"u8);
                 JsonSerializer.Serialize(writer, LocalNetworkGateway2);
             }
             writer.WritePropertyName("connectionType"u8);
             writer.WriteStringValue(ConnectionType.ToString());
-            if (ConnectionProtocol.HasValue)
+            if (Optional.IsDefined(ConnectionProtocol))
             {
                 writer.WritePropertyName("connectionProtocol"u8);
                 writer.WriteStringValue(ConnectionProtocol.Value.ToString());
             }
-            if (RoutingWeight.HasValue)
+            if (Optional.IsDefined(RoutingWeight))
             {
                 writer.WritePropertyName("routingWeight"u8);
                 writer.WriteNumberValue(RoutingWeight.Value);
             }
-            if (ConnectionMode.HasValue)
+            if (Optional.IsDefined(ConnectionMode))
             {
                 writer.WritePropertyName("connectionMode"u8);
                 writer.WriteStringValue(ConnectionMode.Value.ToString());
             }
-            if (SharedKey != null)
+            if (Optional.IsDefined(SharedKey))
             {
                 writer.WritePropertyName("sharedKey"u8);
                 writer.WriteStringValue(SharedKey);
             }
-            if (options.Format != "W" && ConnectionStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ConnectionStatus))
             {
                 writer.WritePropertyName("connectionStatus"u8);
                 writer.WriteStringValue(ConnectionStatus.Value.ToString());
             }
-            if (options.Format != "W" && !(TunnelConnectionStatus is ChangeTrackingList<TunnelConnectionHealth> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(TunnelConnectionStatus))
             {
                 writer.WritePropertyName("tunnelConnectionStatus"u8);
                 writer.WriteStartArray();
@@ -120,27 +121,27 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && EgressBytesTransferred.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EgressBytesTransferred))
             {
                 writer.WritePropertyName("egressBytesTransferred"u8);
                 writer.WriteNumberValue(EgressBytesTransferred.Value);
             }
-            if (options.Format != "W" && IngressBytesTransferred.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IngressBytesTransferred))
             {
                 writer.WritePropertyName("ingressBytesTransferred"u8);
                 writer.WriteNumberValue(IngressBytesTransferred.Value);
             }
-            if (Peer != null)
+            if (Optional.IsDefined(Peer))
             {
                 writer.WritePropertyName("peer"u8);
                 JsonSerializer.Serialize(writer, Peer);
             }
-            if (EnableBgp.HasValue)
+            if (Optional.IsDefined(EnableBgp))
             {
                 writer.WritePropertyName("enableBgp"u8);
                 writer.WriteBooleanValue(EnableBgp.Value);
             }
-            if (!(GatewayCustomBgpIPAddresses is ChangeTrackingList<GatewayCustomBgpIPAddressIPConfiguration> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(GatewayCustomBgpIPAddresses))
             {
                 writer.WritePropertyName("gatewayCustomBgpIpAddresses"u8);
                 writer.WriteStartArray();
@@ -150,12 +151,12 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (UsePolicyBasedTrafficSelectors.HasValue)
+            if (Optional.IsDefined(UsePolicyBasedTrafficSelectors))
             {
                 writer.WritePropertyName("usePolicyBasedTrafficSelectors"u8);
                 writer.WriteBooleanValue(UsePolicyBasedTrafficSelectors.Value);
             }
-            if (!(IPsecPolicies is ChangeTrackingList<IPsecPolicy> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(IPsecPolicies))
             {
                 writer.WritePropertyName("ipsecPolicies"u8);
                 writer.WriteStartArray();
@@ -165,7 +166,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(TrafficSelectorPolicies is ChangeTrackingList<TrafficSelectorPolicy> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(TrafficSelectorPolicies))
             {
                 writer.WritePropertyName("trafficSelectorPolicies"u8);
                 writer.WriteStartArray();
@@ -175,22 +176,22 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ResourceGuid.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
             {
                 writer.WritePropertyName("resourceGuid"u8);
                 writer.WriteStringValue(ResourceGuid.Value);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (ExpressRouteGatewayBypass.HasValue)
+            if (Optional.IsDefined(ExpressRouteGatewayBypass))
             {
                 writer.WritePropertyName("expressRouteGatewayBypass"u8);
                 writer.WriteBooleanValue(ExpressRouteGatewayBypass.Value);
             }
-            if (EnablePrivateLinkFastPath.HasValue)
+            if (Optional.IsDefined(EnablePrivateLinkFastPath))
             {
                 writer.WritePropertyName("enablePrivateLinkFastPath"u8);
                 writer.WriteBooleanValue(EnablePrivateLinkFastPath.Value);
@@ -234,35 +235,35 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
             IDictionary<string, string> tags = default;
-            Optional<string> authorizationKey = default;
+            string authorizationKey = default;
             WritableSubResource virtualNetworkGateway1 = default;
-            Optional<WritableSubResource> virtualNetworkGateway2 = default;
-            Optional<WritableSubResource> localNetworkGateway2 = default;
+            WritableSubResource virtualNetworkGateway2 = default;
+            WritableSubResource localNetworkGateway2 = default;
             VirtualNetworkGatewayConnectionType connectionType = default;
-            Optional<VirtualNetworkGatewayConnectionProtocol> connectionProtocol = default;
-            Optional<int> routingWeight = default;
-            Optional<VirtualNetworkGatewayConnectionMode> connectionMode = default;
-            Optional<string> sharedKey = default;
-            Optional<VirtualNetworkGatewayConnectionStatus> connectionStatus = default;
+            VirtualNetworkGatewayConnectionProtocol? connectionProtocol = default;
+            int? routingWeight = default;
+            VirtualNetworkGatewayConnectionMode? connectionMode = default;
+            string sharedKey = default;
+            VirtualNetworkGatewayConnectionStatus? connectionStatus = default;
             IReadOnlyList<TunnelConnectionHealth> tunnelConnectionStatus = default;
-            Optional<long> egressBytesTransferred = default;
-            Optional<long> ingressBytesTransferred = default;
-            Optional<WritableSubResource> peer = default;
-            Optional<bool> enableBgp = default;
+            long? egressBytesTransferred = default;
+            long? ingressBytesTransferred = default;
+            WritableSubResource peer = default;
+            bool? enableBgp = default;
             IList<GatewayCustomBgpIPAddressIPConfiguration> gatewayCustomBgpIPAddresses = default;
-            Optional<bool> usePolicyBasedTrafficSelectors = default;
+            bool? usePolicyBasedTrafficSelectors = default;
             IList<IPsecPolicy> ipsecPolicies = default;
             IList<TrafficSelectorPolicy> trafficSelectorPolicies = default;
-            Optional<Guid> resourceGuid = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<bool> expressRouteGatewayBypass = default;
-            Optional<bool> enablePrivateLinkFastPath = default;
+            Guid? resourceGuid = default;
+            NetworkProvisioningState? provisioningState = default;
+            bool? expressRouteGatewayBypass = default;
+            bool? enablePrivateLinkFastPath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -552,36 +553,36 @@ namespace Azure.ResourceManager.Network.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new VirtualNetworkGatewayConnectionListEntity(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
-                Optional.ToNullable(location),
+                id,
+                name,
+                type,
+                location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
-                Optional.ToNullable(etag),
-                authorizationKey.Value,
+                etag,
+                authorizationKey,
                 virtualNetworkGateway1,
                 virtualNetworkGateway2,
                 localNetworkGateway2,
                 connectionType,
-                Optional.ToNullable(connectionProtocol),
-                Optional.ToNullable(routingWeight),
-                Optional.ToNullable(connectionMode),
-                sharedKey.Value,
-                Optional.ToNullable(connectionStatus),
+                connectionProtocol,
+                routingWeight,
+                connectionMode,
+                sharedKey,
+                connectionStatus,
                 tunnelConnectionStatus ?? new ChangeTrackingList<TunnelConnectionHealth>(),
-                Optional.ToNullable(egressBytesTransferred),
-                Optional.ToNullable(ingressBytesTransferred),
+                egressBytesTransferred,
+                ingressBytesTransferred,
                 peer,
-                Optional.ToNullable(enableBgp),
+                enableBgp,
                 gatewayCustomBgpIPAddresses ?? new ChangeTrackingList<GatewayCustomBgpIPAddressIPConfiguration>(),
-                Optional.ToNullable(usePolicyBasedTrafficSelectors),
+                usePolicyBasedTrafficSelectors,
                 ipsecPolicies ?? new ChangeTrackingList<IPsecPolicy>(),
                 trafficSelectorPolicies ?? new ChangeTrackingList<TrafficSelectorPolicy>(),
-                Optional.ToNullable(resourceGuid),
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(expressRouteGatewayBypass),
-                Optional.ToNullable(enablePrivateLinkFastPath));
+                resourceGuid,
+                provisioningState,
+                expressRouteGatewayBypass,
+                enablePrivateLinkFastPath);
         }
 
         BinaryData IPersistableModel<VirtualNetworkGatewayConnectionListEntity>.Write(ModelReaderWriterOptions options)

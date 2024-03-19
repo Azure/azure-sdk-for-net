@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteBooleanValue(CheckCertificateRevocationListOnReceive);
             writer.WritePropertyName("encryptionAlgorithm"u8);
             writer.WriteStringValue(EncryptionAlgorithm.ToString());
-            if (SigningAlgorithm.HasValue)
+            if (Optional.IsDefined(SigningAlgorithm))
             {
                 writer.WritePropertyName("signingAlgorithm"u8);
                 writer.WriteStringValue(SigningAlgorithm.Value.ToString());
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.Logic.Models
             bool checkCertificateRevocationListOnSend = default;
             bool checkCertificateRevocationListOnReceive = default;
             AS2EncryptionAlgorithm encryptionAlgorithm = default;
-            Optional<AS2SigningAlgorithm> signingAlgorithm = default;
+            AS2SigningAlgorithm? signingAlgorithm = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -171,7 +172,7 @@ namespace Azure.ResourceManager.Logic.Models
                 checkCertificateRevocationListOnSend,
                 checkCertificateRevocationListOnReceive,
                 encryptionAlgorithm,
-                Optional.ToNullable(signingAlgorithm),
+                signingAlgorithm,
                 serializedAdditionalRawData);
         }
 

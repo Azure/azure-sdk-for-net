@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,47 +27,47 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Source != null)
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
-            if (SourceType.HasValue)
+            if (Optional.IsDefined(SourceType))
             {
                 writer.WritePropertyName("sourceType"u8);
                 writer.WriteStringValue(SourceType.Value.ToString());
             }
-            if (MountName != null)
+            if (Optional.IsDefined(MountName))
             {
                 writer.WritePropertyName("mountName"u8);
                 writer.WriteStringValue(MountName);
             }
-            if (MountAction.HasValue)
+            if (Optional.IsDefined(MountAction))
             {
                 writer.WritePropertyName("mountAction"u8);
                 writer.WriteStringValue(MountAction.Value.ToString());
             }
-            if (CreatedBy != null)
+            if (Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("createdBy"u8);
                 writer.WriteStringValue(CreatedBy);
             }
-            if (MountPath != null)
+            if (Optional.IsDefined(MountPath))
             {
                 writer.WritePropertyName("mountPath"u8);
                 writer.WriteStringValue(MountPath);
             }
-            if (MountState.HasValue)
+            if (Optional.IsDefined(MountState))
             {
                 writer.WritePropertyName("mountState"u8);
                 writer.WriteStringValue(MountState.Value.ToString());
             }
-            if (MountedOn.HasValue)
+            if (Optional.IsDefined(MountedOn))
             {
                 writer.WritePropertyName("mountedOn"u8);
                 writer.WriteStringValue(MountedOn.Value, "O");
             }
-            if (Error != null)
+            if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteStringValue(Error);
@@ -109,15 +110,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> source = default;
-            Optional<MachineLearningSourceType> sourceType = default;
-            Optional<string> mountName = default;
-            Optional<MachineLearningMountAction> mountAction = default;
-            Optional<string> createdBy = default;
-            Optional<string> mountPath = default;
-            Optional<MachineLearningMountState> mountState = default;
-            Optional<DateTimeOffset> mountedOn = default;
-            Optional<string> error = default;
+            string source = default;
+            MachineLearningSourceType? sourceType = default;
+            string mountName = default;
+            MachineLearningMountAction? mountAction = default;
+            string createdBy = default;
+            string mountPath = default;
+            MachineLearningMountState? mountState = default;
+            DateTimeOffset? mountedOn = default;
+            string error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -190,15 +191,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MachineLearningComputeInstanceDataMount(
-                source.Value,
-                Optional.ToNullable(sourceType),
-                mountName.Value,
-                Optional.ToNullable(mountAction),
-                createdBy.Value,
-                mountPath.Value,
-                Optional.ToNullable(mountState),
-                Optional.ToNullable(mountedOn),
-                error.Value,
+                source,
+                sourceType,
+                mountName,
+                mountAction,
+                createdBy,
+                mountPath,
+                mountState,
+                mountedOn,
+                error,
                 serializedAdditionalRawData);
         }
 

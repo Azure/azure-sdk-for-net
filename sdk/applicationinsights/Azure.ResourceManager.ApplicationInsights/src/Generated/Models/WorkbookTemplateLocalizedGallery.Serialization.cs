@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (TemplateData != null)
+            if (Optional.IsDefined(TemplateData))
             {
                 writer.WritePropertyName("templateData"u8);
 #if NET6_0_OR_GREATER
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
 #endif
             }
-            if (!(Galleries is ChangeTrackingList<WorkbookTemplateGallery> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Galleries))
             {
                 writer.WritePropertyName("galleries"u8);
                 writer.WriteStartArray();
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<BinaryData> templateData = default;
+            BinaryData templateData = default;
             IList<WorkbookTemplateGallery> galleries = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkbookTemplateLocalizedGallery(templateData.Value, galleries ?? new ChangeTrackingList<WorkbookTemplateGallery>(), serializedAdditionalRawData);
+            return new WorkbookTemplateLocalizedGallery(templateData, galleries ?? new ChangeTrackingList<WorkbookTemplateGallery>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkbookTemplateLocalizedGallery>.Write(ModelReaderWriterOptions options)

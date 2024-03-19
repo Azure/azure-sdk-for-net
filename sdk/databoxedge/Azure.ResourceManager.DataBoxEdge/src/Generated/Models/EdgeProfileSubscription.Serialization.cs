@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -26,54 +27,54 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (RegistrationId.HasValue)
+            if (Optional.IsDefined(RegistrationId))
             {
                 writer.WritePropertyName("registrationId"u8);
                 writer.WriteStringValue(RegistrationId.Value);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (RegistrationDate != null)
+            if (Optional.IsDefined(RegistrationDate))
             {
                 writer.WritePropertyName("registrationDate"u8);
                 writer.WriteStringValue(RegistrationDate);
             }
-            if (SubscriptionId != null)
+            if (Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (LocationPlacementId != null)
+            if (Optional.IsDefined(LocationPlacementId))
             {
                 writer.WritePropertyName("locationPlacementId"u8);
                 writer.WriteStringValue(LocationPlacementId);
             }
-            if (QuotaId != null)
+            if (Optional.IsDefined(QuotaId))
             {
                 writer.WritePropertyName("quotaId"u8);
                 writer.WriteStringValue(QuotaId);
             }
-            if (SerializedDetails != null)
+            if (Optional.IsDefined(SerializedDetails))
             {
                 writer.WritePropertyName("serializedDetails"u8);
                 writer.WriteStringValue(SerializedDetails);
             }
-            if (!(RegisteredFeatures is ChangeTrackingList<SubscriptionRegisteredFeatures> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(RegisteredFeatures))
             {
                 writer.WritePropertyName("registeredFeatures"u8);
                 writer.WriteStartArray();
@@ -122,15 +123,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<Guid> registrationId = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<DataBoxEdgeSubscriptionState> state = default;
-            Optional<string> registrationDate = default;
-            Optional<string> subscriptionId = default;
-            Optional<Guid> tenantId = default;
-            Optional<string> locationPlacementId = default;
-            Optional<string> quotaId = default;
-            Optional<string> serializedDetails = default;
+            Guid? registrationId = default;
+            ResourceIdentifier id = default;
+            DataBoxEdgeSubscriptionState? state = default;
+            string registrationDate = default;
+            string subscriptionId = default;
+            Guid? tenantId = default;
+            string locationPlacementId = default;
+            string quotaId = default;
+            string serializedDetails = default;
             IReadOnlyList<SubscriptionRegisteredFeatures> registeredFeatures = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -230,15 +231,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new EdgeProfileSubscription(
-                Optional.ToNullable(registrationId),
-                id.Value,
-                Optional.ToNullable(state),
-                registrationDate.Value,
-                subscriptionId.Value,
-                Optional.ToNullable(tenantId),
-                locationPlacementId.Value,
-                quotaId.Value,
-                serializedDetails.Value,
+                registrationId,
+                id,
+                state,
+                registrationDate,
+                subscriptionId,
+                tenantId,
+                locationPlacementId,
+                quotaId,
+                serializedDetails,
                 registeredFeatures ?? new ChangeTrackingList<SubscriptionRegisteredFeatures>(),
                 serializedAdditionalRawData);
         }

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (ServerHostname != null)
+            if (Optional.IsDefined(ServerHostname))
             {
                 writer.WritePropertyName("serverHostname"u8);
                 writer.WriteStringValue(ServerHostname);
             }
-            if (ServerPort.HasValue)
+            if (Optional.IsDefined(ServerPort))
             {
                 writer.WritePropertyName("serverPort"u8);
                 writer.WriteNumberValue(ServerPort.Value);
             }
-            if (ServiceUserDistinguishedName != null)
+            if (Optional.IsDefined(ServiceUserDistinguishedName))
             {
                 writer.WritePropertyName("serviceUserDistinguishedName"u8);
                 writer.WriteStringValue(ServiceUserDistinguishedName);
             }
-            if (ServiceUserPassword != null)
+            if (Optional.IsDefined(ServiceUserPassword))
             {
                 writer.WritePropertyName("serviceUserPassword"u8);
                 writer.WriteStringValue(ServiceUserPassword);
             }
-            if (SearchBaseDistinguishedName != null)
+            if (Optional.IsDefined(SearchBaseDistinguishedName))
             {
                 writer.WritePropertyName("searchBaseDistinguishedName"u8);
                 writer.WriteStringValue(SearchBaseDistinguishedName);
             }
-            if (SearchFilterTemplate != null)
+            if (Optional.IsDefined(SearchFilterTemplate))
             {
                 writer.WritePropertyName("searchFilterTemplate"u8);
                 writer.WriteStringValue(SearchFilterTemplate);
             }
-            if (!(ServerCertificates is ChangeTrackingList<CassandraCertificate> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ServerCertificates))
             {
                 writer.WritePropertyName("serverCertificates"u8);
                 writer.WriteStartArray();
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ConnectionTimeoutInMs.HasValue)
+            if (Optional.IsDefined(ConnectionTimeoutInMs))
             {
                 writer.WritePropertyName("connectionTimeoutInMs"u8);
                 writer.WriteNumberValue(ConnectionTimeoutInMs.Value);
@@ -109,14 +110,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> serverHostname = default;
-            Optional<int> serverPort = default;
-            Optional<string> serviceUserDistinguishedName = default;
-            Optional<string> serviceUserPassword = default;
-            Optional<string> searchBaseDistinguishedName = default;
-            Optional<string> searchFilterTemplate = default;
+            string serverHostname = default;
+            int? serverPort = default;
+            string serviceUserDistinguishedName = default;
+            string serviceUserPassword = default;
+            string searchBaseDistinguishedName = default;
+            string searchFilterTemplate = default;
             IList<CassandraCertificate> serverCertificates = default;
-            Optional<int> connectionTimeoutInMs = default;
+            int? connectionTimeoutInMs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -185,14 +186,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AuthenticationMethodLdapProperties(
-                serverHostname.Value,
-                Optional.ToNullable(serverPort),
-                serviceUserDistinguishedName.Value,
-                serviceUserPassword.Value,
-                searchBaseDistinguishedName.Value,
-                searchFilterTemplate.Value,
+                serverHostname,
+                serverPort,
+                serviceUserDistinguishedName,
+                serviceUserPassword,
+                searchBaseDistinguishedName,
+                searchFilterTemplate,
                 serverCertificates ?? new ChangeTrackingList<CassandraCertificate>(),
-                Optional.ToNullable(connectionTimeoutInMs),
+                connectionTimeoutInMs,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Compute != null)
+            if (Optional.IsDefined(Compute))
             {
                 if (Compute != null)
                 {
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("compute");
                 }
             }
-            if (DeploymentConfiguration != null)
+            if (Optional.IsDefined(DeploymentConfiguration))
             {
                 if (DeploymentConfiguration != null)
                 {
@@ -50,27 +51,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("deploymentConfiguration");
                 }
             }
-            if (ErrorThreshold.HasValue)
+            if (Optional.IsDefined(ErrorThreshold))
             {
                 writer.WritePropertyName("errorThreshold"u8);
                 writer.WriteNumberValue(ErrorThreshold.Value);
             }
-            if (LoggingLevel.HasValue)
+            if (Optional.IsDefined(LoggingLevel))
             {
                 writer.WritePropertyName("loggingLevel"u8);
                 writer.WriteStringValue(LoggingLevel.Value.ToString());
             }
-            if (MaxConcurrencyPerInstance.HasValue)
+            if (Optional.IsDefined(MaxConcurrencyPerInstance))
             {
                 writer.WritePropertyName("maxConcurrencyPerInstance"u8);
                 writer.WriteNumberValue(MaxConcurrencyPerInstance.Value);
             }
-            if (MiniBatchSize.HasValue)
+            if (Optional.IsDefined(MiniBatchSize))
             {
                 writer.WritePropertyName("miniBatchSize"u8);
                 writer.WriteNumberValue(MiniBatchSize.Value);
             }
-            if (Model != null)
+            if (Optional.IsDefined(Model))
             {
                 if (Model != null)
                 {
@@ -82,22 +83,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("model");
                 }
             }
-            if (OutputAction.HasValue)
+            if (Optional.IsDefined(OutputAction))
             {
                 writer.WritePropertyName("outputAction"u8);
                 writer.WriteStringValue(OutputAction.Value.ToString());
             }
-            if (OutputFileName != null)
+            if (Optional.IsDefined(OutputFileName))
             {
                 writer.WritePropertyName("outputFileName"u8);
                 writer.WriteStringValue(OutputFileName);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Resources != null)
+            if (Optional.IsDefined(Resources))
             {
                 if (Resources != null)
                 {
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("resources");
                 }
             }
-            if (RetrySettings != null)
+            if (Optional.IsDefined(RetrySettings))
             {
                 if (RetrySettings != null)
                 {
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("retrySettings");
                 }
             }
-            if (CodeConfiguration != null)
+            if (Optional.IsDefined(CodeConfiguration))
             {
                 if (CodeConfiguration != null)
                 {
@@ -133,7 +134,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("codeConfiguration");
                 }
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 if (Description != null)
                 {
@@ -145,7 +146,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("description");
                 }
             }
-            if (EnvironmentId != null)
+            if (Optional.IsDefined(EnvironmentId))
             {
                 if (EnvironmentId != null)
                 {
@@ -157,7 +158,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("environmentId");
                 }
             }
-            if (!(EnvironmentVariables is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(EnvironmentVariables))
             {
                 if (EnvironmentVariables != null)
                 {
@@ -175,7 +176,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("environmentVariables");
                 }
             }
-            if (!(Properties is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Properties))
             {
                 if (Properties != null)
                 {
@@ -231,21 +232,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> compute = default;
-            Optional<BatchDeploymentConfiguration> deploymentConfiguration = default;
-            Optional<int> errorThreshold = default;
-            Optional<MachineLearningBatchLoggingLevel> loggingLevel = default;
-            Optional<int> maxConcurrencyPerInstance = default;
-            Optional<long> miniBatchSize = default;
-            Optional<MachineLearningAssetReferenceBase> model = default;
-            Optional<MachineLearningBatchOutputAction> outputAction = default;
-            Optional<string> outputFileName = default;
-            Optional<MachineLearningDeploymentProvisioningState> provisioningState = default;
-            Optional<MachineLearningDeploymentResourceConfiguration> resources = default;
-            Optional<MachineLearningBatchRetrySettings> retrySettings = default;
-            Optional<MachineLearningCodeConfiguration> codeConfiguration = default;
-            Optional<string> description = default;
-            Optional<string> environmentId = default;
+            string compute = default;
+            BatchDeploymentConfiguration deploymentConfiguration = default;
+            int? errorThreshold = default;
+            MachineLearningBatchLoggingLevel? loggingLevel = default;
+            int? maxConcurrencyPerInstance = default;
+            long? miniBatchSize = default;
+            MachineLearningAssetReferenceBase model = default;
+            MachineLearningBatchOutputAction? outputAction = default;
+            string outputFileName = default;
+            MachineLearningDeploymentProvisioningState? provisioningState = default;
+            MachineLearningDeploymentResourceConfiguration resources = default;
+            MachineLearningBatchRetrySettings retrySettings = default;
+            MachineLearningCodeConfiguration codeConfiguration = default;
+            string description = default;
+            string environmentId = default;
             IDictionary<string, string> environmentVariables = default;
             IDictionary<string, string> properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -428,24 +429,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MachineLearningBatchDeploymentProperties(
-                codeConfiguration.Value,
-                description.Value,
-                environmentId.Value,
+                codeConfiguration,
+                description,
+                environmentId,
                 environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
                 properties ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
-                compute.Value,
-                deploymentConfiguration.Value,
-                Optional.ToNullable(errorThreshold),
-                Optional.ToNullable(loggingLevel),
-                Optional.ToNullable(maxConcurrencyPerInstance),
-                Optional.ToNullable(miniBatchSize),
-                model.Value,
-                Optional.ToNullable(outputAction),
-                outputFileName.Value,
-                Optional.ToNullable(provisioningState),
-                resources.Value,
-                retrySettings.Value);
+                compute,
+                deploymentConfiguration,
+                errorThreshold,
+                loggingLevel,
+                maxConcurrencyPerInstance,
+                miniBatchSize,
+                model,
+                outputAction,
+                outputFileName,
+                provisioningState,
+                resources,
+                retrySettings);
         }
 
         BinaryData IPersistableModel<MachineLearningBatchDeploymentProperties>.Write(ModelReaderWriterOptions options)

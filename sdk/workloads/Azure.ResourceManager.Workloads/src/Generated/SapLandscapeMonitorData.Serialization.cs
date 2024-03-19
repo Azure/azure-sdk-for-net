@@ -43,24 +43,24 @@ namespace Azure.ResourceManager.Workloads
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Grouping != null)
+            if (Optional.IsDefined(Grouping))
             {
                 writer.WritePropertyName("grouping"u8);
                 writer.WriteObjectValue(Grouping);
             }
-            if (!(TopMetricsThresholds is ChangeTrackingList<SapLandscapeMonitorMetricThresholds> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(TopMetricsThresholds))
             {
                 writer.WritePropertyName("topMetricsThresholds"u8);
                 writer.WriteStartArray();
@@ -112,9 +112,9 @@ namespace Azure.ResourceManager.Workloads
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SapLandscapeMonitorProvisioningState> provisioningState = default;
-            Optional<SapLandscapeMonitorPropertiesGrouping> grouping = default;
+            SystemData systemData = default;
+            SapLandscapeMonitorProvisioningState? provisioningState = default;
+            SapLandscapeMonitorPropertiesGrouping grouping = default;
             IList<SapLandscapeMonitorMetricThresholds> topMetricsThresholds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -198,9 +198,9 @@ namespace Azure.ResourceManager.Workloads
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(provisioningState),
-                grouping.Value,
+                systemData,
+                provisioningState,
+                grouping,
                 topMetricsThresholds ?? new ChangeTrackingList<SapLandscapeMonitorMetricThresholds>(),
                 serializedAdditionalRawData);
         }

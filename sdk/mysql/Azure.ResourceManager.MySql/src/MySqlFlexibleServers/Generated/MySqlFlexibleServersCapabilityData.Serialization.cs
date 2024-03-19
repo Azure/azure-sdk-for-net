@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.MySql;
 using Azure.ResourceManager.MySql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers
@@ -43,14 +44,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && !(SupportedGeoBackupRegions is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedGeoBackupRegions))
             {
                 writer.WritePropertyName("supportedGeoBackupRegions"u8);
                 writer.WriteStartArray();
@@ -60,7 +61,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(SupportedFlexibleServerEditions is ChangeTrackingList<ServerEditionCapabilityV2> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedFlexibleServerEditions))
             {
                 writer.WritePropertyName("supportedFlexibleServerEditions"u8);
                 writer.WriteStartArray();
@@ -70,7 +71,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(SupportedServerVersions is ChangeTrackingList<ServerVersionCapabilityV2> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedServerVersions))
             {
                 writer.WritePropertyName("supportedServerVersions"u8);
                 writer.WriteStartArray();
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IReadOnlyList<string> supportedGeoBackupRegions = default;
             IReadOnlyList<ServerEditionCapabilityV2> supportedFlexibleServerEditions = default;
             IReadOnlyList<ServerVersionCapabilityV2> supportedServerVersions = default;
@@ -218,7 +219,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 supportedGeoBackupRegions ?? new ChangeTrackingList<string>(),
                 supportedFlexibleServerEditions ?? new ChangeTrackingList<ServerEditionCapabilityV2>(),
                 supportedServerVersions ?? new ChangeTrackingList<ServerVersionCapabilityV2>(),

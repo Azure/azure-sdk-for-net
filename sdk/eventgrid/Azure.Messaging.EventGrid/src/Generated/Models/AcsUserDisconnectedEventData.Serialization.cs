@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -21,7 +20,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<CommunicationIdentifierModel> userCommunicationIdentifier = default;
+            CommunicationIdentifierModel userCommunicationIdentifier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("userCommunicationIdentifier"u8))
@@ -34,7 +33,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsUserDisconnectedEventData(userCommunicationIdentifier.Value);
+            return new AcsUserDisconnectedEventData(userCommunicationIdentifier);
         }
 
         internal partial class AcsUserDisconnectedEventDataConverter : JsonConverter<AcsUserDisconnectedEventData>

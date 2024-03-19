@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.IotHub.Models
             }
 
             writer.WriteStartObject();
-            if (SasTtlAsIso8601.HasValue)
+            if (Optional.IsDefined(SasTtlAsIso8601))
             {
                 writer.WritePropertyName("sasTtlAsIso8601"u8);
                 writer.WriteStringValue(SasTtlAsIso8601.Value, "P");
@@ -35,12 +36,12 @@ namespace Azure.ResourceManager.IotHub.Models
             writer.WriteStringValue(ConnectionString);
             writer.WritePropertyName("containerName"u8);
             writer.WriteStringValue(ContainerName);
-            if (AuthenticationType.HasValue)
+            if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType"u8);
                 writer.WriteStringValue(AuthenticationType.Value.ToString());
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
@@ -83,11 +84,11 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<TimeSpan> sasTtlAsIso8601 = default;
+            TimeSpan? sasTtlAsIso8601 = default;
             string connectionString = default;
             string containerName = default;
-            Optional<IotHubAuthenticationType> authenticationType = default;
-            Optional<ManagedIdentity> identity = default;
+            IotHubAuthenticationType? authenticationType = default;
+            ManagedIdentity identity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -136,11 +137,11 @@ namespace Azure.ResourceManager.IotHub.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new IotHubStorageEndpointProperties(
-                Optional.ToNullable(sasTtlAsIso8601),
+                sasTtlAsIso8601,
                 connectionString,
                 containerName,
-                Optional.ToNullable(authenticationType),
-                identity.Value,
+                authenticationType,
+                identity,
                 serializedAdditionalRawData);
         }
 

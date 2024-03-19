@@ -12,6 +12,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -50,49 +51,49 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Query != null)
+            if (Optional.IsDefined(Query))
             {
                 writer.WritePropertyName("query"u8);
                 writer.WriteStringValue(Query);
             }
-            if (QueryFrequency.HasValue)
+            if (Optional.IsDefined(QueryFrequency))
             {
                 writer.WritePropertyName("queryFrequency"u8);
                 writer.WriteStringValue(QueryFrequency.Value, "P");
             }
-            if (QueryPeriod.HasValue)
+            if (Optional.IsDefined(QueryPeriod))
             {
                 writer.WritePropertyName("queryPeriod"u8);
                 writer.WriteStringValue(QueryPeriod.Value, "P");
             }
-            if (Severity.HasValue)
+            if (Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (TriggerOperator.HasValue)
+            if (Optional.IsDefined(TriggerOperator))
             {
                 writer.WritePropertyName("triggerOperator"u8);
                 writer.WriteStringValue(TriggerOperator.Value.ToSerialString());
             }
-            if (TriggerThreshold.HasValue)
+            if (Optional.IsDefined(TriggerThreshold))
             {
                 writer.WritePropertyName("triggerThreshold"u8);
                 writer.WriteNumberValue(TriggerThreshold.Value);
             }
-            if (EventGroupingSettings != null)
+            if (Optional.IsDefined(EventGroupingSettings))
             {
                 writer.WritePropertyName("eventGroupingSettings"u8);
                 writer.WriteObjectValue(EventGroupingSettings);
             }
-            if (!(CustomDetails is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CustomDetails))
             {
                 writer.WritePropertyName("customDetails"u8);
                 writer.WriteStartObject();
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(EntityMappings is ChangeTrackingList<SecurityInsightsAlertRuleEntityMapping> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(EntityMappings))
             {
                 writer.WritePropertyName("entityMappings"u8);
                 writer.WriteStartArray();
@@ -113,52 +114,52 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (AlertDetailsOverride != null)
+            if (Optional.IsDefined(AlertDetailsOverride))
             {
                 writer.WritePropertyName("alertDetailsOverride"u8);
                 writer.WriteObjectValue(AlertDetailsOverride);
             }
-            if (AlertRuleTemplateName != null)
+            if (Optional.IsDefined(AlertRuleTemplateName))
             {
                 writer.WritePropertyName("alertRuleTemplateName"u8);
                 writer.WriteStringValue(AlertRuleTemplateName);
             }
-            if (TemplateVersion != null)
+            if (Optional.IsDefined(TemplateVersion))
             {
                 writer.WritePropertyName("templateVersion"u8);
                 writer.WriteStringValue(TemplateVersion);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (options.Format != "W" && LastModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedUtc"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (SuppressionDuration.HasValue)
+            if (Optional.IsDefined(SuppressionDuration))
             {
                 writer.WritePropertyName("suppressionDuration"u8);
                 writer.WriteStringValue(SuppressionDuration.Value, "P");
             }
-            if (IsSuppressionEnabled.HasValue)
+            if (Optional.IsDefined(IsSuppressionEnabled))
             {
                 writer.WritePropertyName("suppressionEnabled"u8);
                 writer.WriteBooleanValue(IsSuppressionEnabled.Value);
             }
-            if (!(Tactics is ChangeTrackingList<SecurityInsightsAttackTactic> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Tactics))
             {
                 writer.WritePropertyName("tactics"u8);
                 writer.WriteStartArray();
@@ -168,7 +169,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Techniques is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(Techniques))
             {
                 writer.WritePropertyName("techniques"u8);
                 writer.WriteStartArray();
@@ -178,7 +179,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IncidentConfiguration != null)
+            if (Optional.IsDefined(IncidentConfiguration))
             {
                 writer.WritePropertyName("incidentConfiguration"u8);
                 writer.WriteObjectValue(IncidentConfiguration);
@@ -223,32 +224,32 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 return null;
             }
             AlertRuleKind kind = default;
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> query = default;
-            Optional<TimeSpan> queryFrequency = default;
-            Optional<TimeSpan> queryPeriod = default;
-            Optional<SecurityInsightsAlertSeverity> severity = default;
-            Optional<SecurityInsightsAlertRuleTriggerOperator> triggerOperator = default;
-            Optional<int> triggerThreshold = default;
-            Optional<EventGroupingSettings> eventGroupingSettings = default;
+            SystemData systemData = default;
+            string query = default;
+            TimeSpan? queryFrequency = default;
+            TimeSpan? queryPeriod = default;
+            SecurityInsightsAlertSeverity? severity = default;
+            SecurityInsightsAlertRuleTriggerOperator? triggerOperator = default;
+            int? triggerThreshold = default;
+            EventGroupingSettings eventGroupingSettings = default;
             IDictionary<string, string> customDetails = default;
             IList<SecurityInsightsAlertRuleEntityMapping> entityMappings = default;
-            Optional<SecurityInsightsAlertDetailsOverride> alertDetailsOverride = default;
-            Optional<string> alertRuleTemplateName = default;
-            Optional<string> templateVersion = default;
-            Optional<string> description = default;
-            Optional<string> displayName = default;
-            Optional<bool> enabled = default;
-            Optional<DateTimeOffset> lastModifiedUtc = default;
-            Optional<TimeSpan> suppressionDuration = default;
-            Optional<bool> suppressionEnabled = default;
+            SecurityInsightsAlertDetailsOverride alertDetailsOverride = default;
+            string alertRuleTemplateName = default;
+            string templateVersion = default;
+            string description = default;
+            string displayName = default;
+            bool? enabled = default;
+            DateTimeOffset? lastModifiedUtc = default;
+            TimeSpan? suppressionDuration = default;
+            bool? suppressionEnabled = default;
             IList<SecurityInsightsAttackTactic> tactics = default;
             IList<string> techniques = default;
-            Optional<SecurityInsightsIncidentConfiguration> incidentConfiguration = default;
+            SecurityInsightsIncidentConfiguration incidentConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -502,31 +503,31 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 kind,
-                Optional.ToNullable(etag),
+                etag,
                 serializedAdditionalRawData,
-                query.Value,
-                Optional.ToNullable(queryFrequency),
-                Optional.ToNullable(queryPeriod),
-                Optional.ToNullable(severity),
-                Optional.ToNullable(triggerOperator),
-                Optional.ToNullable(triggerThreshold),
-                eventGroupingSettings.Value,
+                query,
+                queryFrequency,
+                queryPeriod,
+                severity,
+                triggerOperator,
+                triggerThreshold,
+                eventGroupingSettings,
                 customDetails ?? new ChangeTrackingDictionary<string, string>(),
                 entityMappings ?? new ChangeTrackingList<SecurityInsightsAlertRuleEntityMapping>(),
-                alertDetailsOverride.Value,
-                alertRuleTemplateName.Value,
-                templateVersion.Value,
-                description.Value,
-                displayName.Value,
-                Optional.ToNullable(enabled),
-                Optional.ToNullable(lastModifiedUtc),
-                Optional.ToNullable(suppressionDuration),
-                Optional.ToNullable(suppressionEnabled),
+                alertDetailsOverride,
+                alertRuleTemplateName,
+                templateVersion,
+                description,
+                displayName,
+                enabled,
+                lastModifiedUtc,
+                suppressionDuration,
+                suppressionEnabled,
                 tactics ?? new ChangeTrackingList<SecurityInsightsAttackTactic>(),
                 techniques ?? new ChangeTrackingList<string>(),
-                incidentConfiguration.Value);
+                incidentConfiguration);
         }
 
         BinaryData IPersistableModel<SecurityInsightsScheduledAlertRule>.Write(ModelReaderWriterOptions options)

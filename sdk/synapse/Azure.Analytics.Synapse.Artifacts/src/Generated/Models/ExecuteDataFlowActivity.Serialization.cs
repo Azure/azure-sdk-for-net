@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -19,12 +20,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (LinkedServiceName != null)
+            if (Optional.IsDefined(LinkedServiceName))
             {
                 writer.WritePropertyName("linkedServiceName"u8);
                 writer.WriteObjectValue(LinkedServiceName);
             }
-            if (Policy != null)
+            if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
                 writer.WriteObjectValue(Policy);
@@ -33,22 +34,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (OnInactiveMarkAs.HasValue)
+            if (Optional.IsDefined(OnInactiveMarkAs))
             {
                 writer.WritePropertyName("onInactiveMarkAs"u8);
                 writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
             }
-            if (!(DependsOn is ChangeTrackingList<ActivityDependency> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
@@ -58,7 +59,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(UserProperties is ChangeTrackingList<UserProperty> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(UserProperties))
             {
                 writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
@@ -72,37 +73,37 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("dataflow"u8);
             writer.WriteObjectValue(Dataflow);
-            if (Staging != null)
+            if (Optional.IsDefined(Staging))
             {
                 writer.WritePropertyName("staging"u8);
                 writer.WriteObjectValue(Staging);
             }
-            if (IntegrationRuntime != null)
+            if (Optional.IsDefined(IntegrationRuntime))
             {
                 writer.WritePropertyName("integrationRuntime"u8);
                 writer.WriteObjectValue(IntegrationRuntime);
             }
-            if (Compute != null)
+            if (Optional.IsDefined(Compute))
             {
                 writer.WritePropertyName("compute"u8);
                 writer.WriteObjectValue(Compute);
             }
-            if (TraceLevel != null)
+            if (Optional.IsDefined(TraceLevel))
             {
                 writer.WritePropertyName("traceLevel"u8);
                 writer.WriteObjectValue(TraceLevel);
             }
-            if (ContinueOnError != null)
+            if (Optional.IsDefined(ContinueOnError))
             {
                 writer.WritePropertyName("continueOnError"u8);
                 writer.WriteObjectValue(ContinueOnError);
             }
-            if (RunConcurrently != null)
+            if (Optional.IsDefined(RunConcurrently))
             {
                 writer.WritePropertyName("runConcurrently"u8);
                 writer.WriteObjectValue(RunConcurrently);
             }
-            if (SourceStagingConcurrency != null)
+            if (Optional.IsDefined(SourceStagingConcurrency))
             {
                 writer.WritePropertyName("sourceStagingConcurrency"u8);
                 writer.WriteObjectValue(SourceStagingConcurrency);
@@ -122,23 +123,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<LinkedServiceReference> linkedServiceName = default;
-            Optional<ActivityPolicy> policy = default;
+            LinkedServiceReference linkedServiceName = default;
+            ActivityPolicy policy = default;
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<ActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
+            string description = default;
+            ActivityState? state = default;
+            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
             IList<ActivityDependency> dependsOn = default;
             IList<UserProperty> userProperties = default;
             DataFlowReference dataflow = default;
-            Optional<DataFlowStagingInfo> staging = default;
-            Optional<IntegrationRuntimeReference> integrationRuntime = default;
-            Optional<ExecuteDataFlowActivityTypePropertiesCompute> compute = default;
-            Optional<object> traceLevel = default;
-            Optional<object> continueOnError = default;
-            Optional<object> runConcurrently = default;
-            Optional<object> sourceStagingConcurrency = default;
+            DataFlowStagingInfo staging = default;
+            IntegrationRuntimeReference integrationRuntime = default;
+            ExecuteDataFlowActivityTypePropertiesCompute compute = default;
+            object traceLevel = default;
+            object continueOnError = default;
+            object runConcurrently = default;
+            object sourceStagingConcurrency = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -308,22 +309,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new ExecuteDataFlowActivity(
                 name,
                 type,
-                description.Value,
-                Optional.ToNullable(state),
-                Optional.ToNullable(onInactiveMarkAs),
+                description,
+                state,
+                onInactiveMarkAs,
                 dependsOn ?? new ChangeTrackingList<ActivityDependency>(),
                 userProperties ?? new ChangeTrackingList<UserProperty>(),
                 additionalProperties,
-                linkedServiceName.Value,
-                policy.Value,
+                linkedServiceName,
+                policy,
                 dataflow,
-                staging.Value,
-                integrationRuntime.Value,
-                compute.Value,
-                traceLevel.Value,
-                continueOnError.Value,
-                runConcurrently.Value,
-                sourceStagingConcurrency.Value);
+                staging,
+                integrationRuntime,
+                compute,
+                traceLevel,
+                continueOnError,
+                runConcurrently,
+                sourceStagingConcurrency);
         }
 
         internal partial class ExecuteDataFlowActivityConverter : JsonConverter<ExecuteDataFlowActivity>

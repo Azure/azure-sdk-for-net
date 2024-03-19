@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
 
             writer.WriteStartObject();
-            if (ExtensionService != null)
+            if (Optional.IsDefined(ExtensionService))
             {
                 writer.WritePropertyName("extensionService"u8);
                 writer.WriteObjectValue(ExtensionService);
             }
-            if (GuestConfigurationService != null)
+            if (Optional.IsDefined(GuestConfigurationService))
             {
                 writer.WritePropertyName("guestConfigurationService"u8);
                 writer.WriteObjectValue(GuestConfigurationService);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<HybridComputeServiceStatus> extensionService = default;
-            Optional<HybridComputeServiceStatus> guestConfigurationService = default;
+            HybridComputeServiceStatus extensionService = default;
+            HybridComputeServiceStatus guestConfigurationService = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridComputeServiceStatuses(extensionService.Value, guestConfigurationService.Value, serializedAdditionalRawData);
+            return new HybridComputeServiceStatuses(extensionService, guestConfigurationService, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridComputeServiceStatuses>.Write(ModelReaderWriterOptions options)

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(Value is ChangeTrackingList<ReservationDetailData> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && NextLink != null)
+            if (options.Format != "W" && Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (Summary != null)
+            if (Optional.IsDefined(Summary))
             {
                 writer.WritePropertyName("summary"u8);
                 writer.WriteObjectValue(Summary);
@@ -86,8 +86,8 @@ namespace Azure.ResourceManager.Reservations.Models
                 return null;
             }
             IReadOnlyList<ReservationDetailData> value = default;
-            Optional<string> nextLink = default;
-            Optional<ReservationSummary> summary = default;
+            string nextLink = default;
+            ReservationSummary summary = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReservationsListResult(value ?? new ChangeTrackingList<ReservationDetailData>(), nextLink.Value, summary.Value, serializedAdditionalRawData);
+            return new ReservationsListResult(value ?? new ChangeTrackingList<ReservationDetailData>(), nextLink, summary, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationsListResult>.Write(ModelReaderWriterOptions options)

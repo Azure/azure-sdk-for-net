@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DeviceProvisioningServices;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Subject != null)
+            if (options.Format != "W" && Optional.IsDefined(Subject))
             {
                 writer.WritePropertyName("subject"u8);
                 writer.WriteStringValue(Subject);
             }
-            if (options.Format != "W" && ExpireOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expiry"u8);
                 writer.WriteStringValue(ExpireOn.Value, "R");
             }
-            if (options.Format != "W" && Thumbprint != null)
+            if (options.Format != "W" && Optional.IsDefined(Thumbprint))
             {
                 writer.WritePropertyName("thumbprint"u8);
 #if NET6_0_OR_GREATER
@@ -48,12 +49,12 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 }
 #endif
             }
-            if (IsVerified.HasValue)
+            if (Optional.IsDefined(IsVerified))
             {
                 writer.WritePropertyName("isVerified"u8);
                 writer.WriteBooleanValue(IsVerified.Value);
             }
-            if (Certificate != null)
+            if (Optional.IsDefined(Certificate))
             {
                 writer.WritePropertyName("certificate"u8);
 #if NET6_0_OR_GREATER
@@ -65,12 +66,12 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 }
 #endif
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(CreatedOn.Value, "R");
             }
-            if (options.Format != "W" && UpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updated"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "R");
@@ -113,13 +114,13 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             {
                 return null;
             }
-            Optional<string> subject = default;
-            Optional<DateTimeOffset> expiry = default;
-            Optional<BinaryData> thumbprint = default;
-            Optional<bool> isVerified = default;
-            Optional<BinaryData> certificate = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<DateTimeOffset> updated = default;
+            string subject = default;
+            DateTimeOffset? expiry = default;
+            BinaryData thumbprint = default;
+            bool? isVerified = default;
+            BinaryData certificate = default;
+            DateTimeOffset? created = default;
+            DateTimeOffset? updated = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -190,13 +191,13 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DeviceProvisioningServicesCertificateProperties(
-                subject.Value,
-                Optional.ToNullable(expiry),
-                thumbprint.Value,
-                Optional.ToNullable(isVerified),
-                certificate.Value,
-                Optional.ToNullable(created),
-                Optional.ToNullable(updated),
+                subject,
+                expiry,
+                thumbprint,
+                isVerified,
+                certificate,
+                created,
+                updated,
                 serializedAdditionalRawData);
         }
 

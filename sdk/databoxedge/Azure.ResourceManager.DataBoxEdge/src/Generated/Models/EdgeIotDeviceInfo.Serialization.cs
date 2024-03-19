@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -30,12 +31,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteStringValue(DeviceId);
             writer.WritePropertyName("ioTHostHub"u8);
             writer.WriteStringValue(IotHostHub);
-            if (IotHostHubId != null)
+            if (Optional.IsDefined(IotHostHubId))
             {
                 writer.WritePropertyName("ioTHostHubId"u8);
                 writer.WriteStringValue(IotHostHubId);
             }
-            if (Authentication != null)
+            if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
                 writer.WriteObjectValue(Authentication);
@@ -80,8 +81,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
             string deviceId = default;
             string iotHostHub = default;
-            Optional<ResourceIdentifier> iotHostHubId = default;
-            Optional<Authentication> authentication = default;
+            ResourceIdentifier iotHostHubId = default;
+            Authentication authentication = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,7 +121,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeIotDeviceInfo(deviceId, iotHostHub, iotHostHubId.Value, authentication.Value, serializedAdditionalRawData);
+            return new EdgeIotDeviceInfo(deviceId, iotHostHub, iotHostHubId, authentication, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeIotDeviceInfo>.Write(ModelReaderWriterOptions options)

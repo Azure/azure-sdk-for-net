@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Reservations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Reservations.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(Quantities is ChangeTrackingList<int> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Quantities))
             {
                 writer.WritePropertyName("quantities"u8);
                 writer.WriteStartArray();
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ReservationId != null)
+            if (Optional.IsDefined(ReservationId))
             {
                 writer.WritePropertyName("reservationId"u8);
                 writer.WriteStringValue(ReservationId);
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 return null;
             }
             IList<int> quantities = default;
-            Optional<ResourceIdentifier> reservationId = default;
+            ResourceIdentifier reservationId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SplitContent(quantities ?? new ChangeTrackingList<int>(), reservationId.Value, serializedAdditionalRawData);
+            return new SplitContent(quantities ?? new ChangeTrackingList<int>(), reservationId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SplitContent>.Write(ModelReaderWriterOptions options)

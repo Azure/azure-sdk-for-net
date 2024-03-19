@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,12 +40,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (CollectionInterval.HasValue)
+            if (Optional.IsDefined(CollectionInterval))
             {
                 writer.WritePropertyName("collectionInterval"u8);
                 writer.WriteNumberValue(CollectionInterval.Value);
             }
-            if (!(EnabledMetrics is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(EnabledMetrics))
             {
                 writer.WritePropertyName("enabledMetrics"u8);
                 writer.WriteStartArray();
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<long> collectionInterval = default;
+            long? collectionInterval = default;
             IList<string> enabledMetrics = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -155,7 +156,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudClusterMetricsConfigurationPatch(tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(collectionInterval), enabledMetrics ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new NetworkCloudClusterMetricsConfigurationPatch(tags ?? new ChangeTrackingDictionary<string, string>(), collectionInterval, enabledMetrics ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudClusterMetricsConfigurationPatch>.Write(ModelReaderWriterOptions options)

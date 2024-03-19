@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Consumption;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.Consumption.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && OnDemandCost.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(OnDemandCost))
             {
                 writer.WritePropertyName("onDemandCost"u8);
                 writer.WriteNumberValue(OnDemandCost.Value);
             }
-            if (options.Format != "W" && OverageCost.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(OverageCost))
             {
                 writer.WritePropertyName("overageCost"u8);
                 writer.WriteNumberValue(OverageCost.Value);
             }
-            if (options.Format != "W" && Quantity.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Quantity))
             {
                 writer.WritePropertyName("quantity"u8);
                 writer.WriteNumberValue(Quantity.Value);
             }
-            if (options.Format != "W" && ReservationCost.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ReservationCost))
             {
                 writer.WritePropertyName("reservationCost"u8);
                 writer.WriteNumberValue(ReservationCost.Value);
             }
-            if (options.Format != "W" && TotalReservationCost.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalReservationCost))
             {
                 writer.WritePropertyName("totalReservationCost"u8);
                 writer.WriteNumberValue(TotalReservationCost.Value);
             }
-            if (ReservedUnitCount.HasValue)
+            if (Optional.IsDefined(ReservedUnitCount))
             {
                 writer.WritePropertyName("reservedUnitCount"u8);
                 writer.WriteNumberValue(ReservedUnitCount.Value);
             }
-            if (options.Format != "W" && Savings.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Savings))
             {
                 writer.WritePropertyName("savings"u8);
                 writer.WriteNumberValue(Savings.Value);
@@ -99,13 +100,13 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<float> onDemandCost = default;
-            Optional<float> overageCost = default;
-            Optional<float> quantity = default;
-            Optional<float> reservationCost = default;
-            Optional<float> totalReservationCost = default;
-            Optional<float> reservedUnitCount = default;
-            Optional<float> savings = default;
+            float? onDemandCost = default;
+            float? overageCost = default;
+            float? quantity = default;
+            float? reservationCost = default;
+            float? totalReservationCost = default;
+            float? reservedUnitCount = default;
+            float? savings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -180,13 +181,13 @@ namespace Azure.ResourceManager.Consumption.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ConsumptionCalculatedSavingsProperties(
-                Optional.ToNullable(onDemandCost),
-                Optional.ToNullable(overageCost),
-                Optional.ToNullable(quantity),
-                Optional.ToNullable(reservationCost),
-                Optional.ToNullable(totalReservationCost),
-                Optional.ToNullable(reservedUnitCount),
-                Optional.ToNullable(savings),
+                onDemandCost,
+                overageCost,
+                quantity,
+                reservationCost,
+                totalReservationCost,
+                reservedUnitCount,
+                savings,
                 serializedAdditionalRawData);
         }
 

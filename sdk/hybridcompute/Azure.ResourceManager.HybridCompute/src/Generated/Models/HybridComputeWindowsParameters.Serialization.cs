@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
 
             writer.WriteStartObject();
-            if (!(ClassificationsToInclude is ChangeTrackingList<VmGuestPatchClassificationWindow> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ClassificationsToInclude))
             {
                 writer.WritePropertyName("classificationsToInclude"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(KbNumbersToInclude is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(KbNumbersToInclude))
             {
                 writer.WritePropertyName("kbNumbersToInclude"u8);
                 writer.WriteStartArray();
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(KbNumbersToExclude is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(KbNumbersToExclude))
             {
                 writer.WritePropertyName("kbNumbersToExclude"u8);
                 writer.WriteStartArray();
@@ -56,12 +57,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ExcludeKbsRequiringReboot.HasValue)
+            if (Optional.IsDefined(ExcludeKbsRequiringReboot))
             {
                 writer.WritePropertyName("excludeKbsRequiringReboot"u8);
                 writer.WriteBooleanValue(ExcludeKbsRequiringReboot.Value);
             }
-            if (MaxPatchPublishOn.HasValue)
+            if (Optional.IsDefined(MaxPatchPublishOn))
             {
                 writer.WritePropertyName("maxPatchPublishDate"u8);
                 writer.WriteStringValue(MaxPatchPublishOn.Value, "O");
@@ -107,8 +108,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
             IList<VmGuestPatchClassificationWindow> classificationsToInclude = default;
             IList<string> kbNumbersToInclude = default;
             IList<string> kbNumbersToExclude = default;
-            Optional<bool> excludeKbsRequiringReboot = default;
-            Optional<DateTimeOffset> maxPatchPublishDate = default;
+            bool? excludeKbsRequiringReboot = default;
+            DateTimeOffset? maxPatchPublishDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -183,8 +184,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 classificationsToInclude ?? new ChangeTrackingList<VmGuestPatchClassificationWindow>(),
                 kbNumbersToInclude ?? new ChangeTrackingList<string>(),
                 kbNumbersToExclude ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(excludeKbsRequiringReboot),
-                Optional.ToNullable(maxPatchPublishDate),
+                excludeKbsRequiringReboot,
+                maxPatchPublishDate,
                 serializedAdditionalRawData);
         }
 

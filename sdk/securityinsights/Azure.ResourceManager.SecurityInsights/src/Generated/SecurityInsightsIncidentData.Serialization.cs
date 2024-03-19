@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityInsights
             }
 
             writer.WriteStartObject();
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -49,59 +49,59 @@ namespace Azure.ResourceManager.SecurityInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && AdditionalInfo != null)
+            if (options.Format != "W" && Optional.IsDefined(AdditionalInfo))
             {
                 writer.WritePropertyName("additionalData"u8);
                 writer.WriteObjectValue(AdditionalInfo);
             }
-            if (Classification.HasValue)
+            if (Optional.IsDefined(Classification))
             {
                 writer.WritePropertyName("classification"u8);
                 writer.WriteStringValue(Classification.Value.ToString());
             }
-            if (ClassificationComment != null)
+            if (Optional.IsDefined(ClassificationComment))
             {
                 writer.WritePropertyName("classificationComment"u8);
                 writer.WriteStringValue(ClassificationComment);
             }
-            if (ClassificationReason.HasValue)
+            if (Optional.IsDefined(ClassificationReason))
             {
                 writer.WritePropertyName("classificationReason"u8);
                 writer.WriteStringValue(ClassificationReason.Value.ToString());
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdTimeUtc"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (FirstActivityOn.HasValue)
+            if (Optional.IsDefined(FirstActivityOn))
             {
                 writer.WritePropertyName("firstActivityTimeUtc"u8);
                 writer.WriteStringValue(FirstActivityOn.Value, "O");
             }
-            if (options.Format != "W" && IncidentUri != null)
+            if (options.Format != "W" && Optional.IsDefined(IncidentUri))
             {
                 writer.WritePropertyName("incidentUrl"u8);
                 writer.WriteStringValue(IncidentUri.AbsoluteUri);
             }
-            if (options.Format != "W" && IncidentNumber.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IncidentNumber))
             {
                 writer.WritePropertyName("incidentNumber"u8);
                 writer.WriteNumberValue(IncidentNumber.Value);
             }
-            if (!(Labels is ChangeTrackingList<SecurityInsightsIncidentLabel> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Labels))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartArray();
@@ -111,22 +111,22 @@ namespace Azure.ResourceManager.SecurityInsights
                 }
                 writer.WriteEndArray();
             }
-            if (LastActivityOn.HasValue)
+            if (Optional.IsDefined(LastActivityOn))
             {
                 writer.WritePropertyName("lastActivityTimeUtc"u8);
                 writer.WriteStringValue(LastActivityOn.Value, "O");
             }
-            if (options.Format != "W" && LastModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedTimeUtc"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (Owner != null)
+            if (Optional.IsDefined(Owner))
             {
                 writer.WritePropertyName("owner"u8);
                 writer.WriteObjectValue(Owner);
             }
-            if (options.Format != "W" && !(RelatedAnalyticRuleIds is ChangeTrackingList<ResourceIdentifier> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(RelatedAnalyticRuleIds))
             {
                 writer.WritePropertyName("relatedAnalyticRuleIds"u8);
                 writer.WriteStartArray();
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.SecurityInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Severity.HasValue)
+            if (Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Title != null)
+            if (Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
@@ -195,28 +195,28 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SecurityInsightsIncidentAdditionalInfo> additionalData = default;
-            Optional<SecurityInsightsIncidentClassification> classification = default;
-            Optional<string> classificationComment = default;
-            Optional<SecurityInsightsIncidentClassificationReason> classificationReason = default;
-            Optional<DateTimeOffset> createdTimeUtc = default;
-            Optional<string> description = default;
-            Optional<DateTimeOffset> firstActivityTimeUtc = default;
-            Optional<Uri> incidentUrl = default;
-            Optional<int> incidentNumber = default;
+            SystemData systemData = default;
+            SecurityInsightsIncidentAdditionalInfo additionalData = default;
+            SecurityInsightsIncidentClassification? classification = default;
+            string classificationComment = default;
+            SecurityInsightsIncidentClassificationReason? classificationReason = default;
+            DateTimeOffset? createdTimeUtc = default;
+            string description = default;
+            DateTimeOffset? firstActivityTimeUtc = default;
+            Uri incidentUrl = default;
+            int? incidentNumber = default;
             IList<SecurityInsightsIncidentLabel> labels = default;
-            Optional<DateTimeOffset> lastActivityTimeUtc = default;
-            Optional<DateTimeOffset> lastModifiedTimeUtc = default;
-            Optional<SecurityInsightsIncidentOwnerInfo> owner = default;
+            DateTimeOffset? lastActivityTimeUtc = default;
+            DateTimeOffset? lastModifiedTimeUtc = default;
+            SecurityInsightsIncidentOwnerInfo owner = default;
             IReadOnlyList<ResourceIdentifier> relatedAnalyticRuleIds = default;
-            Optional<SecurityInsightsIncidentSeverity> severity = default;
-            Optional<SecurityInsightsIncidentStatus> status = default;
-            Optional<string> title = default;
+            SecurityInsightsIncidentSeverity? severity = default;
+            SecurityInsightsIncidentStatus? status = default;
+            string title = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -434,25 +434,25 @@ namespace Azure.ResourceManager.SecurityInsights
                 id,
                 name,
                 type,
-                systemData.Value,
-                additionalData.Value,
-                Optional.ToNullable(classification),
-                classificationComment.Value,
-                Optional.ToNullable(classificationReason),
-                Optional.ToNullable(createdTimeUtc),
-                description.Value,
-                Optional.ToNullable(firstActivityTimeUtc),
-                incidentUrl.Value,
-                Optional.ToNullable(incidentNumber),
+                systemData,
+                additionalData,
+                classification,
+                classificationComment,
+                classificationReason,
+                createdTimeUtc,
+                description,
+                firstActivityTimeUtc,
+                incidentUrl,
+                incidentNumber,
                 labels ?? new ChangeTrackingList<SecurityInsightsIncidentLabel>(),
-                Optional.ToNullable(lastActivityTimeUtc),
-                Optional.ToNullable(lastModifiedTimeUtc),
-                owner.Value,
+                lastActivityTimeUtc,
+                lastModifiedTimeUtc,
+                owner,
                 relatedAnalyticRuleIds ?? new ChangeTrackingList<ResourceIdentifier>(),
-                Optional.ToNullable(severity),
-                Optional.ToNullable(status),
-                title.Value,
-                Optional.ToNullable(etag),
+                severity,
+                status,
+                title,
+                etag,
                 serializedAdditionalRawData);
         }
 

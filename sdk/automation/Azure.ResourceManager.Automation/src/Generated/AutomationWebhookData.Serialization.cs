@@ -43,29 +43,29 @@ namespace Azure.ResourceManager.Automation
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Uri != null)
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (ExpireOn.HasValue)
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expiryTime"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (LastInvokedOn.HasValue)
+            if (Optional.IsDefined(LastInvokedOn))
             {
                 if (LastInvokedOn != null)
                 {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Automation
                     writer.WriteNull("lastInvokedTime");
                 }
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -88,32 +88,32 @@ namespace Azure.ResourceManager.Automation
                 }
                 writer.WriteEndObject();
             }
-            if (Runbook != null)
+            if (Optional.IsDefined(Runbook))
             {
                 writer.WritePropertyName("runbook"u8);
                 writer.WriteObjectValue(Runbook);
             }
-            if (RunOn != null)
+            if (Optional.IsDefined(RunOn))
             {
                 writer.WritePropertyName("runOn"u8);
                 writer.WriteStringValue(RunOn);
             }
-            if (CreatedOn.HasValue)
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (LastModifiedOn.HasValue)
+            if (Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (LastModifiedBy != null)
+            if (Optional.IsDefined(LastModifiedBy))
             {
                 writer.WritePropertyName("lastModifiedBy"u8);
                 writer.WriteStringValue(LastModifiedBy);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -160,18 +160,18 @@ namespace Azure.ResourceManager.Automation
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> isEnabled = default;
-            Optional<Uri> uri = default;
-            Optional<DateTimeOffset> expiryTime = default;
-            Optional<DateTimeOffset?> lastInvokedTime = default;
+            SystemData systemData = default;
+            bool? isEnabled = default;
+            Uri uri = default;
+            DateTimeOffset? expiryTime = default;
+            DateTimeOffset? lastInvokedTime = default;
             IDictionary<string, string> parameters = default;
-            Optional<RunbookAssociationProperty> runbook = default;
-            Optional<string> runOn = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<string> lastModifiedBy = default;
-            Optional<string> description = default;
+            RunbookAssociationProperty runbook = default;
+            string runOn = default;
+            DateTimeOffset? creationTime = default;
+            DateTimeOffset? lastModifiedTime = default;
+            string lastModifiedBy = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -315,18 +315,18 @@ namespace Azure.ResourceManager.Automation
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(isEnabled),
-                uri.Value,
-                Optional.ToNullable(expiryTime),
-                Optional.ToNullable(lastInvokedTime),
+                systemData,
+                isEnabled,
+                uri,
+                expiryTime,
+                lastInvokedTime,
                 parameters ?? new ChangeTrackingDictionary<string, string>(),
-                runbook.Value,
-                runOn.Value,
-                Optional.ToNullable(creationTime),
-                Optional.ToNullable(lastModifiedTime),
-                lastModifiedBy.Value,
-                description.Value,
+                runbook,
+                runOn,
+                creationTime,
+                lastModifiedTime,
+                lastModifiedBy,
+                description,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -28,42 +29,42 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             writer.WritePropertyName("bitrate"u8);
             writer.WriteNumberValue(Bitrate);
-            if (MaxBitrate.HasValue)
+            if (Optional.IsDefined(MaxBitrate))
             {
                 writer.WritePropertyName("maxBitrate"u8);
                 writer.WriteNumberValue(MaxBitrate.Value);
             }
-            if (BFrames.HasValue)
+            if (Optional.IsDefined(BFrames))
             {
                 writer.WritePropertyName("bFrames"u8);
                 writer.WriteNumberValue(BFrames.Value);
             }
-            if (FrameRate != null)
+            if (Optional.IsDefined(FrameRate))
             {
                 writer.WritePropertyName("frameRate"u8);
                 writer.WriteStringValue(FrameRate);
             }
-            if (Slices.HasValue)
+            if (Optional.IsDefined(Slices))
             {
                 writer.WritePropertyName("slices"u8);
                 writer.WriteNumberValue(Slices.Value);
             }
-            if (UseAdaptiveBFrame.HasValue)
+            if (Optional.IsDefined(UseAdaptiveBFrame))
             {
                 writer.WritePropertyName("adaptiveBFrame"u8);
                 writer.WriteBooleanValue(UseAdaptiveBFrame.Value);
             }
-            if (Width != null)
+            if (Optional.IsDefined(Width))
             {
                 writer.WritePropertyName("width"u8);
                 writer.WriteStringValue(Width);
             }
-            if (Height != null)
+            if (Optional.IsDefined(Height))
             {
                 writer.WritePropertyName("height"u8);
                 writer.WriteStringValue(Height);
             }
-            if (Label != null)
+            if (Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
@@ -107,14 +108,14 @@ namespace Azure.ResourceManager.Media.Models
                 return null;
             }
             int bitrate = default;
-            Optional<int> maxBitrate = default;
-            Optional<int> bFrames = default;
-            Optional<string> frameRate = default;
-            Optional<int> slices = default;
-            Optional<bool> adaptiveBFrame = default;
-            Optional<string> width = default;
-            Optional<string> height = default;
-            Optional<string> label = default;
+            int? maxBitrate = default;
+            int? bFrames = default;
+            string frameRate = default;
+            int? slices = default;
+            bool? adaptiveBFrame = default;
+            string width = default;
+            string height = default;
+            string label = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -187,16 +188,16 @@ namespace Azure.ResourceManager.Media.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new H265VideoLayer(
-                width.Value,
-                height.Value,
-                label.Value,
+                width,
+                height,
+                label,
                 serializedAdditionalRawData,
                 bitrate,
-                Optional.ToNullable(maxBitrate),
-                Optional.ToNullable(bFrames),
-                frameRate.Value,
-                Optional.ToNullable(slices),
-                Optional.ToNullable(adaptiveBFrame));
+                maxBitrate,
+                bFrames,
+                frameRate,
+                slices,
+                adaptiveBFrame);
         }
 
         BinaryData IPersistableModel<H265VideoLayer>.Write(ModelReaderWriterOptions options)

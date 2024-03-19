@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,26 +27,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (CosmosDBResourceId != null)
+            if (Optional.IsDefined(CosmosDBResourceId))
             {
                 writer.WritePropertyName("cosmosDbResourceId"u8);
                 writer.WriteStringValue(CosmosDBResourceId);
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
             }
             writer.WritePropertyName("keyVaultProperties"u8);
             writer.WriteObjectValue(KeyVaultProperties);
-            if (SearchAccountResourceId != null)
+            if (Optional.IsDefined(SearchAccountResourceId))
             {
                 writer.WritePropertyName("searchAccountResourceId"u8);
                 writer.WriteStringValue(SearchAccountResourceId);
             }
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
-            if (StorageAccountResourceId != null)
+            if (Optional.IsDefined(StorageAccountResourceId))
             {
                 writer.WritePropertyName("storageAccountResourceId"u8);
                 writer.WriteStringValue(StorageAccountResourceId);
@@ -88,12 +89,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> cosmosDbResourceId = default;
-            Optional<MachineLearningCmkIdentity> identity = default;
+            ResourceIdentifier cosmosDbResourceId = default;
+            MachineLearningCmkIdentity identity = default;
             MachineLearningEncryptionKeyVaultProperties keyVaultProperties = default;
-            Optional<ResourceIdentifier> searchAccountResourceId = default;
+            ResourceIdentifier searchAccountResourceId = default;
             MachineLearningEncryptionStatus status = default;
-            Optional<ResourceIdentifier> storageAccountResourceId = default;
+            ResourceIdentifier storageAccountResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -151,12 +152,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MachineLearningEncryptionSetting(
-                cosmosDbResourceId.Value,
-                identity.Value,
+                cosmosDbResourceId,
+                identity,
                 keyVaultProperties,
-                searchAccountResourceId.Value,
+                searchAccountResourceId,
                 status,
-                storageAccountResourceId.Value,
+                storageAccountResourceId,
                 serializedAdditionalRawData);
         }
 

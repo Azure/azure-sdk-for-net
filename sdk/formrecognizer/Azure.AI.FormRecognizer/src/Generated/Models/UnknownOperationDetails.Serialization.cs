@@ -8,8 +8,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.FormRecognizer;
 using Azure.AI.FormRecognizer.DocumentAnalysis;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -23,14 +23,14 @@ namespace Azure.AI.FormRecognizer.Models
             }
             string operationId = default;
             DocumentOperationStatus status = default;
-            Optional<int> percentCompleted = default;
+            int? percentCompleted = default;
             DateTimeOffset createdDateTime = default;
             DateTimeOffset lastUpdatedDateTime = default;
             DocumentOperationKind kind = "Unknown";
             Uri resourceLocation = default;
-            Optional<string> apiVersion = default;
+            string apiVersion = default;
             IReadOnlyDictionary<string, string> tags = default;
-            Optional<JsonElement> error = default;
+            JsonElement error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operationId"u8))
@@ -100,12 +100,12 @@ namespace Azure.AI.FormRecognizer.Models
             return new UnknownOperationDetails(
                 operationId,
                 status,
-                Optional.ToNullable(percentCompleted),
+                percentCompleted,
                 createdDateTime,
                 lastUpdatedDateTime,
                 kind,
                 resourceLocation,
-                apiVersion.Value,
+                apiVersion,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 error);
         }

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (CatalogPlanId != null)
+            if (Optional.IsDefined(CatalogPlanId))
             {
                 writer.WritePropertyName("catalogPlanId"u8);
                 writer.WriteStringValue(CatalogPlanId);
             }
-            if (MarketplaceSkuId != null)
+            if (Optional.IsDefined(MarketplaceSkuId))
             {
                 writer.WritePropertyName("marketplaceSkuId"u8);
                 writer.WriteStringValue(MarketplaceSkuId);
             }
-            if (!(MarketplaceSkuVersions is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(MarketplaceSkuVersions))
             {
                 writer.WritePropertyName("marketplaceSkuVersions"u8);
                 writer.WriteStartArray();
@@ -84,8 +85,8 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> catalogPlanId = default;
-            Optional<string> marketplaceSkuId = default;
+            string catalogPlanId = default;
+            string marketplaceSkuId = default;
             IList<string> marketplaceSkuVersions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HciSkuMappings(catalogPlanId.Value, marketplaceSkuId.Value, marketplaceSkuVersions ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new HciSkuMappings(catalogPlanId, marketplaceSkuId, marketplaceSkuVersions ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HciSkuMappings>.Write(ModelReaderWriterOptions options)

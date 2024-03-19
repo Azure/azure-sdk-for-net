@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -28,17 +29,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (LoggerType.HasValue)
+            if (Optional.IsDefined(LoggerType))
             {
                 writer.WritePropertyName("loggerType"u8);
                 writer.WriteStringValue(LoggerType.Value.ToString());
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Credentials is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
                 writer.WriteStartObject();
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndObject();
             }
-            if (IsBuffered.HasValue)
+            if (Optional.IsDefined(IsBuffered))
             {
                 writer.WritePropertyName("isBuffered"u8);
                 writer.WriteBooleanValue(IsBuffered.Value);
@@ -93,10 +94,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<LoggerType> loggerType = default;
-            Optional<string> description = default;
+            LoggerType? loggerType = default;
+            string description = default;
             IDictionary<string, string> credentials = default;
-            Optional<bool> isBuffered = default;
+            bool? isBuffered = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -156,7 +157,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementLoggerPatch(Optional.ToNullable(loggerType), description.Value, credentials ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(isBuffered), serializedAdditionalRawData);
+            return new ApiManagementLoggerPatch(loggerType, description, credentials ?? new ChangeTrackingDictionary<string, string>(), isBuffered, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementLoggerPatch>.Write(ModelReaderWriterOptions options)

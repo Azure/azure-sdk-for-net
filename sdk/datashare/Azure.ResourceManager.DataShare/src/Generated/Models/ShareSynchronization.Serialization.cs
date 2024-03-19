@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataShare;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
@@ -26,52 +27,52 @@ namespace Azure.ResourceManager.DataShare.Models
             }
 
             writer.WriteStartObject();
-            if (ConsumerEmail != null)
+            if (Optional.IsDefined(ConsumerEmail))
             {
                 writer.WritePropertyName("consumerEmail"u8);
                 writer.WriteStringValue(ConsumerEmail);
             }
-            if (ConsumerName != null)
+            if (Optional.IsDefined(ConsumerName))
             {
                 writer.WritePropertyName("consumerName"u8);
                 writer.WriteStringValue(ConsumerName);
             }
-            if (ConsumerTenantName != null)
+            if (Optional.IsDefined(ConsumerTenantName))
             {
                 writer.WritePropertyName("consumerTenantName"u8);
                 writer.WriteStringValue(ConsumerTenantName);
             }
-            if (DurationInMilliSeconds.HasValue)
+            if (Optional.IsDefined(DurationInMilliSeconds))
             {
                 writer.WritePropertyName("durationMs"u8);
                 writer.WriteNumberValue(DurationInMilliSeconds.Value);
             }
-            if (EndOn.HasValue)
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (SynchronizationId.HasValue)
+            if (Optional.IsDefined(SynchronizationId))
             {
                 writer.WritePropertyName("synchronizationId"u8);
                 writer.WriteStringValue(SynchronizationId.Value);
             }
-            if (options.Format != "W" && SynchronizationMode.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SynchronizationMode))
             {
                 writer.WritePropertyName("synchronizationMode"u8);
                 writer.WriteStringValue(SynchronizationMode.Value.ToString());
@@ -114,16 +115,16 @@ namespace Azure.ResourceManager.DataShare.Models
             {
                 return null;
             }
-            Optional<string> consumerEmail = default;
-            Optional<string> consumerName = default;
-            Optional<string> consumerTenantName = default;
-            Optional<int> durationMs = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<string> message = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<string> status = default;
-            Optional<Guid> synchronizationId = default;
-            Optional<SynchronizationMode> synchronizationMode = default;
+            string consumerEmail = default;
+            string consumerName = default;
+            string consumerTenantName = default;
+            int? durationMs = default;
+            DateTimeOffset? endTime = default;
+            string message = default;
+            DateTimeOffset? startTime = default;
+            string status = default;
+            Guid? synchronizationId = default;
+            SynchronizationMode? synchronizationMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -205,16 +206,16 @@ namespace Azure.ResourceManager.DataShare.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ShareSynchronization(
-                consumerEmail.Value,
-                consumerName.Value,
-                consumerTenantName.Value,
-                Optional.ToNullable(durationMs),
-                Optional.ToNullable(endTime),
-                message.Value,
-                Optional.ToNullable(startTime),
-                status.Value,
-                Optional.ToNullable(synchronizationId),
-                Optional.ToNullable(synchronizationMode),
+                consumerEmail,
+                consumerName,
+                consumerTenantName,
+                durationMs,
+                endTime,
+                message,
+                startTime,
+                status,
+                synchronizationId,
+                synchronizationMode,
                 serializedAdditionalRawData);
         }
 

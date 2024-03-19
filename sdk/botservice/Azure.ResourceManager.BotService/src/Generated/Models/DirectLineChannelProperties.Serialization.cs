@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.BotService;
 
 namespace Azure.ResourceManager.BotService.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.BotService.Models
             }
 
             writer.WriteStartObject();
-            if (!(Sites is ChangeTrackingList<DirectLineSite> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Sites))
             {
                 writer.WritePropertyName("sites"u8);
                 writer.WriteStartArray();
@@ -36,17 +37,17 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ExtensionKey1 != null)
+            if (Optional.IsDefined(ExtensionKey1))
             {
                 writer.WritePropertyName("extensionKey1"u8);
                 writer.WriteStringValue(ExtensionKey1);
             }
-            if (ExtensionKey2 != null)
+            if (Optional.IsDefined(ExtensionKey2))
             {
                 writer.WritePropertyName("extensionKey2"u8);
                 writer.WriteStringValue(ExtensionKey2);
             }
-            if (DirectLineEmbedCode != null)
+            if (Optional.IsDefined(DirectLineEmbedCode))
             {
                 writer.WritePropertyName("DirectLineEmbedCode"u8);
                 writer.WriteStringValue(DirectLineEmbedCode);
@@ -90,9 +91,9 @@ namespace Azure.ResourceManager.BotService.Models
                 return null;
             }
             IList<DirectLineSite> sites = default;
-            Optional<string> extensionKey1 = default;
-            Optional<string> extensionKey2 = default;
-            Optional<string> directLineEmbedCode = default;
+            string extensionKey1 = default;
+            string extensionKey2 = default;
+            string directLineEmbedCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DirectLineChannelProperties(sites ?? new ChangeTrackingList<DirectLineSite>(), extensionKey1.Value, extensionKey2.Value, directLineEmbedCode.Value, serializedAdditionalRawData);
+            return new DirectLineChannelProperties(sites ?? new ChangeTrackingList<DirectLineSite>(), extensionKey1, extensionKey2, directLineEmbedCode, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DirectLineChannelProperties>.Write(ModelReaderWriterOptions options)

@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Media.VideoAnalyzer.Edge;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -15,19 +16,19 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (TrustedCertificates != null)
+            if (Optional.IsDefined(TrustedCertificates))
             {
                 writer.WritePropertyName("trustedCertificates"u8);
                 writer.WriteObjectValue(TrustedCertificates);
             }
-            if (ValidationOptions != null)
+            if (Optional.IsDefined(ValidationOptions))
             {
                 writer.WritePropertyName("validationOptions"u8);
                 writer.WriteObjectValue(ValidationOptions);
             }
             writer.WritePropertyName("@type"u8);
             writer.WriteStringValue(Type);
-            if (Credentials != null)
+            if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
                 writer.WriteObjectValue(Credentials);
@@ -43,10 +44,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<CertificateSource> trustedCertificates = default;
-            Optional<TlsValidationOptions> validationOptions = default;
+            CertificateSource trustedCertificates = default;
+            TlsValidationOptions validationOptions = default;
             string type = default;
-            Optional<CredentialsBase> credentials = default;
+            CredentialsBase credentials = default;
             string url = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -88,7 +89,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new TlsEndpoint(type, credentials.Value, url, trustedCertificates.Value, validationOptions.Value);
+            return new TlsEndpoint(type, credentials, url, trustedCertificates, validationOptions);
         }
     }
 }

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDBForPostgreSql;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,82 +40,82 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AdministratorLoginPassword != null)
+            if (Optional.IsDefined(AdministratorLoginPassword))
             {
                 writer.WritePropertyName("administratorLoginPassword"u8);
                 writer.WriteStringValue(AdministratorLoginPassword);
             }
-            if (PostgresqlVersion != null)
+            if (Optional.IsDefined(PostgresqlVersion))
             {
                 writer.WritePropertyName("postgresqlVersion"u8);
                 writer.WriteStringValue(PostgresqlVersion);
             }
-            if (CitusVersion != null)
+            if (Optional.IsDefined(CitusVersion))
             {
                 writer.WritePropertyName("citusVersion"u8);
                 writer.WriteStringValue(CitusVersion);
             }
-            if (IsShardsOnCoordinatorEnabled.HasValue)
+            if (Optional.IsDefined(IsShardsOnCoordinatorEnabled))
             {
                 writer.WritePropertyName("enableShardsOnCoordinator"u8);
                 writer.WriteBooleanValue(IsShardsOnCoordinatorEnabled.Value);
             }
-            if (IsHAEnabled.HasValue)
+            if (Optional.IsDefined(IsHAEnabled))
             {
                 writer.WritePropertyName("enableHa"u8);
                 writer.WriteBooleanValue(IsHAEnabled.Value);
             }
-            if (PreferredPrimaryZone != null)
+            if (Optional.IsDefined(PreferredPrimaryZone))
             {
                 writer.WritePropertyName("preferredPrimaryZone"u8);
                 writer.WriteStringValue(PreferredPrimaryZone);
             }
-            if (CoordinatorServerEdition != null)
+            if (Optional.IsDefined(CoordinatorServerEdition))
             {
                 writer.WritePropertyName("coordinatorServerEdition"u8);
                 writer.WriteStringValue(CoordinatorServerEdition);
             }
-            if (CoordinatorStorageQuotaInMb.HasValue)
+            if (Optional.IsDefined(CoordinatorStorageQuotaInMb))
             {
                 writer.WritePropertyName("coordinatorStorageQuotaInMb"u8);
                 writer.WriteNumberValue(CoordinatorStorageQuotaInMb.Value);
             }
-            if (CoordinatorVCores.HasValue)
+            if (Optional.IsDefined(CoordinatorVCores))
             {
                 writer.WritePropertyName("coordinatorVCores"u8);
                 writer.WriteNumberValue(CoordinatorVCores.Value);
             }
-            if (IsCoordinatorPublicIPAccessEnabled.HasValue)
+            if (Optional.IsDefined(IsCoordinatorPublicIPAccessEnabled))
             {
                 writer.WritePropertyName("coordinatorEnablePublicIpAccess"u8);
                 writer.WriteBooleanValue(IsCoordinatorPublicIPAccessEnabled.Value);
             }
-            if (NodeServerEdition != null)
+            if (Optional.IsDefined(NodeServerEdition))
             {
                 writer.WritePropertyName("nodeServerEdition"u8);
                 writer.WriteStringValue(NodeServerEdition);
             }
-            if (NodeCount.HasValue)
+            if (Optional.IsDefined(NodeCount))
             {
                 writer.WritePropertyName("nodeCount"u8);
                 writer.WriteNumberValue(NodeCount.Value);
             }
-            if (NodeStorageQuotaInMb.HasValue)
+            if (Optional.IsDefined(NodeStorageQuotaInMb))
             {
                 writer.WritePropertyName("nodeStorageQuotaInMb"u8);
                 writer.WriteNumberValue(NodeStorageQuotaInMb.Value);
             }
-            if (NodeVCores.HasValue)
+            if (Optional.IsDefined(NodeVCores))
             {
                 writer.WritePropertyName("nodeVCores"u8);
                 writer.WriteNumberValue(NodeVCores.Value);
             }
-            if (options.Format != "W" && IsNodePublicIPAccessEnabled.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsNodePublicIPAccessEnabled))
             {
                 writer.WritePropertyName("nodeEnablePublicIpAccess"u8);
                 writer.WriteBooleanValue(IsNodePublicIPAccessEnabled.Value);
             }
-            if (MaintenanceWindow != null)
+            if (Optional.IsDefined(MaintenanceWindow))
             {
                 writer.WritePropertyName("maintenanceWindow"u8);
                 writer.WriteObjectValue(MaintenanceWindow);
@@ -159,22 +160,22 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<string> administratorLoginPassword = default;
-            Optional<string> postgresqlVersion = default;
-            Optional<string> citusVersion = default;
-            Optional<bool> enableShardsOnCoordinator = default;
-            Optional<bool> enableHa = default;
-            Optional<string> preferredPrimaryZone = default;
-            Optional<string> coordinatorServerEdition = default;
-            Optional<int> coordinatorStorageQuotaInMb = default;
-            Optional<int> coordinatorVCores = default;
-            Optional<bool> coordinatorEnablePublicIPAccess = default;
-            Optional<string> nodeServerEdition = default;
-            Optional<int> nodeCount = default;
-            Optional<int> nodeStorageQuotaInMb = default;
-            Optional<int> nodeVCores = default;
-            Optional<bool> nodeEnablePublicIPAccess = default;
-            Optional<CosmosDBForPostgreSqlMaintenanceWindow> maintenanceWindow = default;
+            string administratorLoginPassword = default;
+            string postgresqlVersion = default;
+            string citusVersion = default;
+            bool? enableShardsOnCoordinator = default;
+            bool? enableHa = default;
+            string preferredPrimaryZone = default;
+            string coordinatorServerEdition = default;
+            int? coordinatorStorageQuotaInMb = default;
+            int? coordinatorVCores = default;
+            bool? coordinatorEnablePublicIPAccess = default;
+            string nodeServerEdition = default;
+            int? nodeCount = default;
+            int? nodeStorageQuotaInMb = default;
+            int? nodeVCores = default;
+            bool? nodeEnablePublicIPAccess = default;
+            CosmosDBForPostgreSqlMaintenanceWindow maintenanceWindow = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -333,22 +334,22 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new CosmosDBForPostgreSqlClusterPatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                administratorLoginPassword.Value,
-                postgresqlVersion.Value,
-                citusVersion.Value,
-                Optional.ToNullable(enableShardsOnCoordinator),
-                Optional.ToNullable(enableHa),
-                preferredPrimaryZone.Value,
-                coordinatorServerEdition.Value,
-                Optional.ToNullable(coordinatorStorageQuotaInMb),
-                Optional.ToNullable(coordinatorVCores),
-                Optional.ToNullable(coordinatorEnablePublicIPAccess),
-                nodeServerEdition.Value,
-                Optional.ToNullable(nodeCount),
-                Optional.ToNullable(nodeStorageQuotaInMb),
-                Optional.ToNullable(nodeVCores),
-                Optional.ToNullable(nodeEnablePublicIPAccess),
-                maintenanceWindow.Value,
+                administratorLoginPassword,
+                postgresqlVersion,
+                citusVersion,
+                enableShardsOnCoordinator,
+                enableHa,
+                preferredPrimaryZone,
+                coordinatorServerEdition,
+                coordinatorStorageQuotaInMb,
+                coordinatorVCores,
+                coordinatorEnablePublicIPAccess,
+                nodeServerEdition,
+                nodeCount,
+                nodeStorageQuotaInMb,
+                nodeVCores,
+                nodeEnablePublicIPAccess,
+                maintenanceWindow,
                 serializedAdditionalRawData);
         }
 

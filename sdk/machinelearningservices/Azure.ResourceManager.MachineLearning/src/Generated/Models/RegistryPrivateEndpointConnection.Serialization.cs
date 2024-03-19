@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 if (Id != null)
                 {
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("id");
                 }
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 if (Location != null)
                 {
@@ -52,7 +53,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(GroupIds is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(GroupIds))
             {
                 if (GroupIds != null)
                 {
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("groupIds");
                 }
             }
-            if (PrivateEndpoint != null)
+            if (Optional.IsDefined(PrivateEndpoint))
             {
                 if (PrivateEndpoint != null)
                 {
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("privateEndpoint");
                 }
             }
-            if (PrivateLinkServiceConnectionState != null)
+            if (Optional.IsDefined(PrivateLinkServiceConnectionState))
             {
                 if (PrivateLinkServiceConnectionState != null)
                 {
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("privateLinkServiceConnectionState");
                 }
             }
-            if (ProvisioningState != null)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 if (ProvisioningState != null)
                 {
@@ -144,12 +145,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<AzureLocation?> location = default;
+            ResourceIdentifier id = default;
+            AzureLocation? location = default;
             IList<string> groupIds = default;
-            Optional<RegistryPrivateEndpoint> privateEndpoint = default;
-            Optional<RegistryPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
-            Optional<string> provisioningState = default;
+            RegistryPrivateEndpoint privateEndpoint = default;
+            RegistryPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -238,12 +239,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new RegistryPrivateEndpointConnection(
-                id.Value,
-                Optional.ToNullable(location),
+                id,
+                location,
                 groupIds ?? new ChangeTrackingList<string>(),
-                privateEndpoint.Value,
-                privateLinkServiceConnectionState.Value,
-                provisioningState.Value,
+                privateEndpoint,
+                privateLinkServiceConnectionState,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

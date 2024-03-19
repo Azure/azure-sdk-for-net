@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -26,42 +27,42 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && BlobUri != null)
+            if (options.Format != "W" && Optional.IsDefined(BlobUri))
             {
                 writer.WritePropertyName("blob"u8);
                 writer.WriteStringValue(BlobUri.AbsoluteUri);
             }
-            if (options.Format != "W" && QueueUri != null)
+            if (options.Format != "W" && Optional.IsDefined(QueueUri))
             {
                 writer.WritePropertyName("queue"u8);
                 writer.WriteStringValue(QueueUri.AbsoluteUri);
             }
-            if (options.Format != "W" && TableUri != null)
+            if (options.Format != "W" && Optional.IsDefined(TableUri))
             {
                 writer.WritePropertyName("table"u8);
                 writer.WriteStringValue(TableUri.AbsoluteUri);
             }
-            if (options.Format != "W" && FileUri != null)
+            if (options.Format != "W" && Optional.IsDefined(FileUri))
             {
                 writer.WritePropertyName("file"u8);
                 writer.WriteStringValue(FileUri.AbsoluteUri);
             }
-            if (options.Format != "W" && WebUri != null)
+            if (options.Format != "W" && Optional.IsDefined(WebUri))
             {
                 writer.WritePropertyName("web"u8);
                 writer.WriteStringValue(WebUri.AbsoluteUri);
             }
-            if (options.Format != "W" && DfsUri != null)
+            if (options.Format != "W" && Optional.IsDefined(DfsUri))
             {
                 writer.WritePropertyName("dfs"u8);
                 writer.WriteStringValue(DfsUri.AbsoluteUri);
             }
-            if (MicrosoftEndpoints != null)
+            if (Optional.IsDefined(MicrosoftEndpoints))
             {
                 writer.WritePropertyName("microsoftEndpoints"u8);
                 writer.WriteObjectValue(MicrosoftEndpoints);
             }
-            if (InternetEndpoints != null)
+            if (Optional.IsDefined(InternetEndpoints))
             {
                 writer.WritePropertyName("internetEndpoints"u8);
                 writer.WriteObjectValue(InternetEndpoints);
@@ -104,14 +105,14 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<Uri> blob = default;
-            Optional<Uri> queue = default;
-            Optional<Uri> table = default;
-            Optional<Uri> file = default;
-            Optional<Uri> web = default;
-            Optional<Uri> dfs = default;
-            Optional<StorageAccountMicrosoftEndpoints> microsoftEndpoints = default;
-            Optional<StorageAccountInternetEndpoints> internetEndpoints = default;
+            Uri blob = default;
+            Uri queue = default;
+            Uri table = default;
+            Uri file = default;
+            Uri web = default;
+            Uri dfs = default;
+            StorageAccountMicrosoftEndpoints microsoftEndpoints = default;
+            StorageAccountInternetEndpoints internetEndpoints = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -195,14 +196,14 @@ namespace Azure.ResourceManager.Storage.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new StorageAccountEndpoints(
-                blob.Value,
-                queue.Value,
-                table.Value,
-                file.Value,
-                web.Value,
-                dfs.Value,
-                microsoftEndpoints.Value,
-                internetEndpoints.Value,
+                blob,
+                queue,
+                table,
+                file,
+                web,
+                dfs,
+                microsoftEndpoints,
+                internetEndpoints,
                 serializedAdditionalRawData);
         }
 

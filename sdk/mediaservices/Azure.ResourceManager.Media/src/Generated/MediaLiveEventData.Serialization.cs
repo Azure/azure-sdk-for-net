@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Media
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,34 +56,34 @@ namespace Azure.ResourceManager.Media
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Input != null)
+            if (Optional.IsDefined(Input))
             {
                 writer.WritePropertyName("input"u8);
                 writer.WriteObjectValue(Input);
             }
-            if (Preview != null)
+            if (Optional.IsDefined(Preview))
             {
                 writer.WritePropertyName("preview"u8);
                 writer.WriteObjectValue(Preview);
             }
-            if (Encoding != null)
+            if (Optional.IsDefined(Encoding))
             {
                 writer.WritePropertyName("encoding"u8);
                 writer.WriteObjectValue(Encoding);
             }
-            if (!(Transcriptions is ChangeTrackingList<LiveEventTranscription> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Transcriptions))
             {
                 writer.WritePropertyName("transcriptions"u8);
                 writer.WriteStartArray();
@@ -93,32 +93,32 @@ namespace Azure.ResourceManager.Media
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && ResourceState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceState))
             {
                 writer.WritePropertyName("resourceState"u8);
                 writer.WriteStringValue(ResourceState.Value.ToString());
             }
-            if (CrossSiteAccessPolicies != null)
+            if (Optional.IsDefined(CrossSiteAccessPolicies))
             {
                 writer.WritePropertyName("crossSiteAccessPolicies"u8);
                 writer.WriteObjectValue(CrossSiteAccessPolicies);
             }
-            if (UseStaticHostname.HasValue)
+            if (Optional.IsDefined(UseStaticHostname))
             {
                 writer.WritePropertyName("useStaticHostname"u8);
                 writer.WriteBooleanValue(UseStaticHostname.Value);
             }
-            if (HostnamePrefix != null)
+            if (Optional.IsDefined(HostnamePrefix))
             {
                 writer.WritePropertyName("hostnamePrefix"u8);
                 writer.WriteStringValue(HostnamePrefix);
             }
-            if (!(StreamOptions is ChangeTrackingList<StreamOptionsFlag> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(StreamOptions))
             {
                 writer.WritePropertyName("streamOptions"u8);
                 writer.WriteStartArray();
@@ -128,12 +128,12 @@ namespace Azure.ResourceManager.Media
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && LastModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModified"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
@@ -182,20 +182,20 @@ namespace Azure.ResourceManager.Media
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<LiveEventInput> input = default;
-            Optional<LiveEventPreview> preview = default;
-            Optional<LiveEventEncoding> encoding = default;
+            SystemData systemData = default;
+            string description = default;
+            LiveEventInput input = default;
+            LiveEventPreview preview = default;
+            LiveEventEncoding encoding = default;
             IList<LiveEventTranscription> transcriptions = default;
-            Optional<string> provisioningState = default;
-            Optional<LiveEventResourceState> resourceState = default;
-            Optional<CrossSiteAccessPolicies> crossSiteAccessPolicies = default;
-            Optional<bool> useStaticHostname = default;
-            Optional<string> hostnamePrefix = default;
+            string provisioningState = default;
+            LiveEventResourceState? resourceState = default;
+            CrossSiteAccessPolicies crossSiteAccessPolicies = default;
+            bool? useStaticHostname = default;
+            string hostnamePrefix = default;
             IList<StreamOptionsFlag> streamOptions = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<DateTimeOffset> lastModified = default;
+            DateTimeOffset? created = default;
+            DateTimeOffset? lastModified = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -380,22 +380,22 @@ namespace Azure.ResourceManager.Media
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                description.Value,
-                input.Value,
-                preview.Value,
-                encoding.Value,
+                description,
+                input,
+                preview,
+                encoding,
                 transcriptions ?? new ChangeTrackingList<LiveEventTranscription>(),
-                provisioningState.Value,
-                Optional.ToNullable(resourceState),
-                crossSiteAccessPolicies.Value,
-                Optional.ToNullable(useStaticHostname),
-                hostnamePrefix.Value,
+                provisioningState,
+                resourceState,
+                crossSiteAccessPolicies,
+                useStaticHostname,
+                hostnamePrefix,
                 streamOptions ?? new ChangeTrackingList<StreamOptionsFlag>(),
-                Optional.ToNullable(created),
-                Optional.ToNullable(lastModified),
+                created,
+                lastModified,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
 
             writer.WriteStartObject();
-            if (DesiredVersion != null)
+            if (Optional.IsDefined(DesiredVersion))
             {
                 writer.WritePropertyName("desiredVersion"u8);
                 writer.WriteStringValue(DesiredVersion);
             }
-            if (CorrelationId.HasValue)
+            if (Optional.IsDefined(CorrelationId))
             {
                 writer.WritePropertyName("correlationId"u8);
                 writer.WriteStringValue(CorrelationId.Value);
             }
-            if (IsAutomaticUpgradeEnabled.HasValue)
+            if (Optional.IsDefined(IsAutomaticUpgradeEnabled))
             {
                 writer.WritePropertyName("enableAutomaticUpgrade"u8);
                 writer.WriteBooleanValue(IsAutomaticUpgradeEnabled.Value);
             }
-            if (options.Format != "W" && LastAttemptDesiredVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(LastAttemptDesiredVersion))
             {
                 writer.WritePropertyName("lastAttemptDesiredVersion"u8);
                 writer.WriteStringValue(LastAttemptDesiredVersion);
             }
-            if (options.Format != "W" && LastAttemptedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastAttemptedOn))
             {
                 writer.WritePropertyName("lastAttemptTimestamp"u8);
                 writer.WriteStringValue(LastAttemptedOn.Value, "O");
             }
-            if (options.Format != "W" && LastAttemptStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastAttemptStatus))
             {
                 writer.WritePropertyName("lastAttemptStatus"u8);
                 writer.WriteStringValue(LastAttemptStatus.Value.ToString());
             }
-            if (options.Format != "W" && LastAttemptMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(LastAttemptMessage))
             {
                 writer.WritePropertyName("lastAttemptMessage"u8);
                 writer.WriteStringValue(LastAttemptMessage);
@@ -99,13 +100,13 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<string> desiredVersion = default;
-            Optional<Guid> correlationId = default;
-            Optional<bool> enableAutomaticUpgrade = default;
-            Optional<string> lastAttemptDesiredVersion = default;
-            Optional<DateTimeOffset> lastAttemptTimestamp = default;
-            Optional<LastAttemptStatusEnum> lastAttemptStatus = default;
-            Optional<string> lastAttemptMessage = default;
+            string desiredVersion = default;
+            Guid? correlationId = default;
+            bool? enableAutomaticUpgrade = default;
+            string lastAttemptDesiredVersion = default;
+            DateTimeOffset? lastAttemptTimestamp = default;
+            LastAttemptStatusEnum? lastAttemptStatus = default;
+            string lastAttemptMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,13 +169,13 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AgentUpgrade(
-                desiredVersion.Value,
-                Optional.ToNullable(correlationId),
-                Optional.ToNullable(enableAutomaticUpgrade),
-                lastAttemptDesiredVersion.Value,
-                Optional.ToNullable(lastAttemptTimestamp),
-                Optional.ToNullable(lastAttemptStatus),
-                lastAttemptMessage.Value,
+                desiredVersion,
+                correlationId,
+                enableAutomaticUpgrade,
+                lastAttemptDesiredVersion,
+                lastAttemptTimestamp,
+                lastAttemptStatus,
+                lastAttemptMessage,
                 serializedAdditionalRawData);
         }
 

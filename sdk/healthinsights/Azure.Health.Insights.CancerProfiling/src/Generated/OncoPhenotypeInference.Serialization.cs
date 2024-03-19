@@ -31,17 +31,17 @@ namespace Azure.Health.Insights.CancerProfiling
             writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (ConfidenceScore.HasValue)
+            if (Optional.IsDefined(ConfidenceScore))
             {
                 writer.WritePropertyName("confidenceScore"u8);
                 writer.WriteNumberValue(ConfidenceScore.Value);
             }
-            if (!(Evidence is ChangeTrackingList<InferenceEvidence> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Evidence))
             {
                 writer.WritePropertyName("evidence"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.Health.Insights.CancerProfiling
                 }
                 writer.WriteEndArray();
             }
-            if (CaseId != null)
+            if (Optional.IsDefined(CaseId))
             {
                 writer.WritePropertyName("caseId"u8);
                 writer.WriteStringValue(CaseId);
@@ -96,10 +96,10 @@ namespace Azure.Health.Insights.CancerProfiling
             }
             OncoPhenotypeInferenceType type = default;
             string value = default;
-            Optional<string> description = default;
-            Optional<float> confidenceScore = default;
+            string description = default;
+            float? confidenceScore = default;
             IReadOnlyList<InferenceEvidence> evidence = default;
-            Optional<string> caseId = default;
+            string caseId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -156,10 +156,10 @@ namespace Azure.Health.Insights.CancerProfiling
             return new OncoPhenotypeInference(
                 type,
                 value,
-                description.Value,
-                Optional.ToNullable(confidenceScore),
+                description,
+                confidenceScore,
                 evidence ?? new ChangeTrackingList<InferenceEvidence>(),
-                caseId.Value,
+                caseId,
                 serializedAdditionalRawData);
         }
 

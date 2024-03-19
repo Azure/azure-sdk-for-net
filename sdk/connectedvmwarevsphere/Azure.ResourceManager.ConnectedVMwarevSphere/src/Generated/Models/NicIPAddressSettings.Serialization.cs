@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ConnectedVMwarevSphere;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && AllocationMethod != null)
+            if (options.Format != "W" && Optional.IsDefined(AllocationMethod))
             {
                 writer.WritePropertyName("allocationMethod"u8);
                 writer.WriteStringValue(AllocationMethod);
             }
-            if (options.Format != "W" && IPAddress != null)
+            if (options.Format != "W" && Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress);
             }
-            if (options.Format != "W" && SubnetMask != null)
+            if (options.Format != "W" && Optional.IsDefined(SubnetMask))
             {
                 writer.WritePropertyName("subnetMask"u8);
                 writer.WriteStringValue(SubnetMask);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             {
                 return null;
             }
-            Optional<string> allocationMethod = default;
-            Optional<string> ipAddress = default;
-            Optional<string> subnetMask = default;
+            string allocationMethod = default;
+            string ipAddress = default;
+            string subnetMask = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NicIPAddressSettings(allocationMethod.Value, ipAddress.Value, subnetMask.Value, serializedAdditionalRawData);
+            return new NicIPAddressSettings(allocationMethod, ipAddress, subnetMask, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NicIPAddressSettings>.Write(ModelReaderWriterOptions options)

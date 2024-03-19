@@ -43,49 +43,49 @@ namespace Azure.ResourceManager.StorageSync
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (LastStepName != null)
+            if (Optional.IsDefined(LastStepName))
             {
                 writer.WritePropertyName("lastStepName"u8);
                 writer.WriteStringValue(LastStepName);
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Operation.HasValue)
+            if (Optional.IsDefined(Operation))
             {
                 writer.WritePropertyName("operation"u8);
                 writer.WriteStringValue(Operation.Value.ToString());
             }
-            if (Steps != null)
+            if (Optional.IsDefined(Steps))
             {
                 writer.WritePropertyName("steps"u8);
                 writer.WriteStringValue(Steps);
             }
-            if (LastOperationId.HasValue)
+            if (Optional.IsDefined(LastOperationId))
             {
                 writer.WritePropertyName("lastOperationId"u8);
                 writer.WriteStringValue(LastOperationId.Value);
             }
-            if (options.Format != "W" && CommandName != null)
+            if (options.Format != "W" && Optional.IsDefined(CommandName))
             {
                 writer.WritePropertyName("commandName"u8);
                 writer.WriteStringValue(CommandName);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdTimestamp"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && LastStatusUpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastStatusUpdatedOn))
             {
                 writer.WritePropertyName("lastStatusTimestamp"u8);
                 writer.WriteStringValue(LastStatusUpdatedOn.Value, "O");
@@ -132,15 +132,15 @@ namespace Azure.ResourceManager.StorageSync
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> lastStepName = default;
-            Optional<StorageSyncWorkflowStatus> status = default;
-            Optional<StorageSyncOperationDirection> operation = default;
-            Optional<string> steps = default;
-            Optional<Guid> lastOperationId = default;
-            Optional<string> commandName = default;
-            Optional<DateTimeOffset> createdTimestamp = default;
-            Optional<DateTimeOffset> lastStatusTimestamp = default;
+            SystemData systemData = default;
+            string lastStepName = default;
+            StorageSyncWorkflowStatus? status = default;
+            StorageSyncOperationDirection? operation = default;
+            string steps = default;
+            Guid? lastOperationId = default;
+            string commandName = default;
+            DateTimeOffset? createdTimestamp = default;
+            DateTimeOffset? lastStatusTimestamp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -251,15 +251,15 @@ namespace Azure.ResourceManager.StorageSync
                 id,
                 name,
                 type,
-                systemData.Value,
-                lastStepName.Value,
-                Optional.ToNullable(status),
-                Optional.ToNullable(operation),
-                steps.Value,
-                Optional.ToNullable(lastOperationId),
-                commandName.Value,
-                Optional.ToNullable(createdTimestamp),
-                Optional.ToNullable(lastStatusTimestamp),
+                systemData,
+                lastStepName,
+                status,
+                operation,
+                steps,
+                lastOperationId,
+                commandName,
+                createdTimestamp,
+                lastStatusTimestamp,
                 serializedAdditionalRawData);
         }
 

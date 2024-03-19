@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,42 +27,42 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (AppLocation != null)
+            if (Optional.IsDefined(AppLocation))
             {
                 writer.WritePropertyName("appLocation"u8);
                 writer.WriteStringValue(AppLocation);
             }
-            if (ApiLocation != null)
+            if (Optional.IsDefined(ApiLocation))
             {
                 writer.WritePropertyName("apiLocation"u8);
                 writer.WriteStringValue(ApiLocation);
             }
-            if (AppArtifactLocation != null)
+            if (Optional.IsDefined(AppArtifactLocation))
             {
                 writer.WritePropertyName("appArtifactLocation"u8);
                 writer.WriteStringValue(AppArtifactLocation);
             }
-            if (OutputLocation != null)
+            if (Optional.IsDefined(OutputLocation))
             {
                 writer.WritePropertyName("outputLocation"u8);
                 writer.WriteStringValue(OutputLocation);
             }
-            if (AppBuildCommand != null)
+            if (Optional.IsDefined(AppBuildCommand))
             {
                 writer.WritePropertyName("appBuildCommand"u8);
                 writer.WriteStringValue(AppBuildCommand);
             }
-            if (ApiBuildCommand != null)
+            if (Optional.IsDefined(ApiBuildCommand))
             {
                 writer.WritePropertyName("apiBuildCommand"u8);
                 writer.WriteStringValue(ApiBuildCommand);
             }
-            if (SkipGithubActionWorkflowGeneration.HasValue)
+            if (Optional.IsDefined(SkipGithubActionWorkflowGeneration))
             {
                 writer.WritePropertyName("skipGithubActionWorkflowGeneration"u8);
                 writer.WriteBooleanValue(SkipGithubActionWorkflowGeneration.Value);
             }
-            if (GithubActionSecretNameOverride != null)
+            if (Optional.IsDefined(GithubActionSecretNameOverride))
             {
                 writer.WritePropertyName("githubActionSecretNameOverride"u8);
                 writer.WriteStringValue(GithubActionSecretNameOverride);
@@ -104,14 +105,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> appLocation = default;
-            Optional<string> apiLocation = default;
-            Optional<string> appArtifactLocation = default;
-            Optional<string> outputLocation = default;
-            Optional<string> appBuildCommand = default;
-            Optional<string> apiBuildCommand = default;
-            Optional<bool> skipGithubActionWorkflowGeneration = default;
-            Optional<string> githubActionSecretNameOverride = default;
+            string appLocation = default;
+            string apiLocation = default;
+            string appArtifactLocation = default;
+            string outputLocation = default;
+            string appBuildCommand = default;
+            string apiBuildCommand = default;
+            bool? skipGithubActionWorkflowGeneration = default;
+            string githubActionSecretNameOverride = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -167,14 +168,14 @@ namespace Azure.ResourceManager.AppService.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new StaticSiteBuildProperties(
-                appLocation.Value,
-                apiLocation.Value,
-                appArtifactLocation.Value,
-                outputLocation.Value,
-                appBuildCommand.Value,
-                apiBuildCommand.Value,
-                Optional.ToNullable(skipGithubActionWorkflowGeneration),
-                githubActionSecretNameOverride.Value,
+                appLocation,
+                apiLocation,
+                appArtifactLocation,
+                outputLocation,
+                appBuildCommand,
+                apiBuildCommand,
+                skipGithubActionWorkflowGeneration,
+                githubActionSecretNameOverride,
                 serializedAdditionalRawData);
         }
 

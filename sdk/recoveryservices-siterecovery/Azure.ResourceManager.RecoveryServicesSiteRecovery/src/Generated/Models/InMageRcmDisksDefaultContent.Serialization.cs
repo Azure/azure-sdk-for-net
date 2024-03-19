@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStringValue(LogStorageAccountId);
             writer.WritePropertyName("diskType"u8);
             writer.WriteStringValue(DiskType.ToString());
-            if (DiskEncryptionSetId != null)
+            if (Optional.IsDefined(DiskEncryptionSetId))
             {
                 writer.WritePropertyName("diskEncryptionSetId"u8);
                 writer.WriteStringValue(DiskEncryptionSetId);
@@ -75,7 +76,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             ResourceIdentifier logStorageAccountId = default;
             SiteRecoveryDiskAccountType diskType = default;
-            Optional<ResourceIdentifier> diskEncryptionSetId = default;
+            ResourceIdentifier diskEncryptionSetId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +106,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageRcmDisksDefaultContent(logStorageAccountId, diskType, diskEncryptionSetId.Value, serializedAdditionalRawData);
+            return new InMageRcmDisksDefaultContent(logStorageAccountId, diskType, diskEncryptionSetId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InMageRcmDisksDefaultContent>.Write(ModelReaderWriterOptions options)

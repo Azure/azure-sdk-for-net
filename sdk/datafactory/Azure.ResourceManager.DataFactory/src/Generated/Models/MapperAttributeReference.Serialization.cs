@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Entity != null)
+            if (Optional.IsDefined(Entity))
             {
                 writer.WritePropertyName("entity"u8);
                 writer.WriteStringValue(Entity);
             }
-            if (EntityConnectionReference != null)
+            if (Optional.IsDefined(EntityConnectionReference))
             {
                 writer.WritePropertyName("entityConnectionReference"u8);
                 writer.WriteObjectValue(EntityConnectionReference);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> entity = default;
-            Optional<MapperConnectionReference> entityConnectionReference = default;
+            string name = default;
+            string entity = default;
+            MapperConnectionReference entityConnectionReference = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MapperAttributeReference(name.Value, entity.Value, entityConnectionReference.Value, serializedAdditionalRawData);
+            return new MapperAttributeReference(name, entity, entityConnectionReference, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MapperAttributeReference>.Write(ModelReaderWriterOptions options)

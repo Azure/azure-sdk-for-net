@@ -49,21 +49,17 @@ namespace Azure.Communication.JobRouter
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> UpsertJobAsync(string jobId, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
         {
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (jobId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            Argument.AssertNotNull(content, nameof(content));
 
-            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
-            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            if (requestConditions?.IfNoneMatch is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
+            }
+            if (requestConditions?.IfModifiedSince is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            }
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterClient.UpsertJob");
             scope.Start();
@@ -99,21 +95,17 @@ namespace Azure.Communication.JobRouter
         /// <returns> The response returned from the service. </returns>
         internal virtual Response UpsertJob(string jobId, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
         {
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (jobId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            Argument.AssertNotNull(content, nameof(content));
 
-            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
-            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            if (requestConditions?.IfNoneMatch is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
+            }
+            if (requestConditions?.IfModifiedSince is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            }
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterClient.UpsertJob");
             scope.Start();
@@ -136,14 +128,7 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<RouterJob>> GetJobAsync(string jobId, CancellationToken cancellationToken = default)
         {
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (jobId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
-            }
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetJobAsync(jobId, context).ConfigureAwait(false);
@@ -157,14 +142,7 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<RouterJob> GetJob(string jobId, CancellationToken cancellationToken = default)
         {
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (jobId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
-            }
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetJob(jobId, context);
@@ -194,14 +172,7 @@ namespace Azure.Communication.JobRouter
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetJobAsync(string jobId, RequestContext context)
         {
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (jobId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
-            }
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterClient.GetJob");
             scope.Start();
@@ -240,14 +211,7 @@ namespace Azure.Communication.JobRouter
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetJob(string jobId, RequestContext context)
         {
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (jobId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
-            }
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterClient.GetJob");
             scope.Start();
@@ -282,14 +246,7 @@ namespace Azure.Communication.JobRouter
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> DeleteJobAsync(string jobId, RequestContext context = null)
         {
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (jobId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
-            }
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterClient.DeleteJob");
             scope.Start();
@@ -324,14 +281,7 @@ namespace Azure.Communication.JobRouter
         /// <returns> The response returned from the service. </returns>
         public virtual Response DeleteJob(string jobId, RequestContext context = null)
         {
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (jobId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
-            }
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterClient.DeleteJob");
             scope.Start();
@@ -355,14 +305,7 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         internal virtual async Task<Response<ReclassifyJobResult>> ReclassifyJobAsync(string jobId, ReclassifyJobOptions options = null, CancellationToken cancellationToken = default)
         {
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (jobId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
-            }
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options?.ToRequestContent();
@@ -378,14 +321,7 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         internal virtual Response<ReclassifyJobResult> ReclassifyJob(string jobId, ReclassifyJobOptions options = null, CancellationToken cancellationToken = default)
         {
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (jobId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
-            }
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options?.ToRequestContent();
@@ -401,14 +337,7 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         internal virtual async Task<Response<CancelJobResult>> CancelJobAsync(string jobId, CancelJobOptions options = null, CancellationToken cancellationToken = default)
         {
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (jobId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
-            }
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options?.ToRequestContent();
@@ -424,14 +353,7 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         internal virtual Response<CancelJobResult> CancelJob(string jobId, CancelJobOptions options = null, CancellationToken cancellationToken = default)
         {
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (jobId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
-            }
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options?.ToRequestContent();
@@ -448,22 +370,8 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         internal virtual async Task<Response<CompleteJobResult>> CompleteJobAsync(string jobId, string assignmentId, CompleteJobOptions options = null, CancellationToken cancellationToken = default)
         {
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (jobId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
-            }
-            if (assignmentId == null)
-            {
-                throw new ArgumentNullException(nameof(assignmentId));
-            }
-            if (assignmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assignmentId));
-            }
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            Argument.AssertNotNullOrEmpty(assignmentId, nameof(assignmentId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options?.ToRequestContent();
@@ -480,22 +388,8 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         internal virtual Response<CompleteJobResult> CompleteJob(string jobId, string assignmentId, CompleteJobOptions options = null, CancellationToken cancellationToken = default)
         {
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (jobId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
-            }
-            if (assignmentId == null)
-            {
-                throw new ArgumentNullException(nameof(assignmentId));
-            }
-            if (assignmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assignmentId));
-            }
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            Argument.AssertNotNullOrEmpty(assignmentId, nameof(assignmentId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options?.ToRequestContent();
@@ -512,22 +406,8 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         internal virtual async Task<Response<CloseJobResult>> CloseJobAsync(string jobId, string assignmentId, CloseJobOptions options = null, CancellationToken cancellationToken = default)
         {
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (jobId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
-            }
-            if (assignmentId == null)
-            {
-                throw new ArgumentNullException(nameof(assignmentId));
-            }
-            if (assignmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assignmentId));
-            }
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            Argument.AssertNotNullOrEmpty(assignmentId, nameof(assignmentId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options?.ToRequestContent();
@@ -544,22 +424,8 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         internal virtual Response<CloseJobResult> CloseJob(string jobId, string assignmentId, CloseJobOptions options = null, CancellationToken cancellationToken = default)
         {
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (jobId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
-            }
-            if (assignmentId == null)
-            {
-                throw new ArgumentNullException(nameof(assignmentId));
-            }
-            if (assignmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assignmentId));
-            }
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            Argument.AssertNotNullOrEmpty(assignmentId, nameof(assignmentId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options?.ToRequestContent();
@@ -574,14 +440,7 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<RouterJobPositionDetails>> GetQueuePositionAsync(string jobId, CancellationToken cancellationToken = default)
         {
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (jobId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
-            }
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetQueuePositionAsync(jobId, context).ConfigureAwait(false);
@@ -595,14 +454,7 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<RouterJobPositionDetails> GetQueuePosition(string jobId, CancellationToken cancellationToken = default)
         {
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (jobId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
-            }
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetQueuePosition(jobId, context);
@@ -632,14 +484,7 @@ namespace Azure.Communication.JobRouter
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetQueuePositionAsync(string jobId, RequestContext context)
         {
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (jobId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
-            }
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterClient.GetQueuePosition");
             scope.Start();
@@ -678,14 +523,7 @@ namespace Azure.Communication.JobRouter
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetQueuePosition(string jobId, RequestContext context)
         {
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (jobId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
-            }
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterClient.GetQueuePosition");
             scope.Start();
@@ -710,22 +548,8 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         internal virtual async Task<Response<UnassignJobResult>> UnassignJobAsync(string jobId, string assignmentId, UnassignJobOptions options = null, CancellationToken cancellationToken = default)
         {
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (jobId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
-            }
-            if (assignmentId == null)
-            {
-                throw new ArgumentNullException(nameof(assignmentId));
-            }
-            if (assignmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assignmentId));
-            }
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            Argument.AssertNotNullOrEmpty(assignmentId, nameof(assignmentId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options?.ToRequestContent();
@@ -742,22 +566,8 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         internal virtual Response<UnassignJobResult> UnassignJob(string jobId, string assignmentId, UnassignJobOptions options = null, CancellationToken cancellationToken = default)
         {
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (jobId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
-            }
-            if (assignmentId == null)
-            {
-                throw new ArgumentNullException(nameof(assignmentId));
-            }
-            if (assignmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assignmentId));
-            }
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            Argument.AssertNotNullOrEmpty(assignmentId, nameof(assignmentId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options?.ToRequestContent();
@@ -773,22 +583,8 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="workerId"/> or <paramref name="offerId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<AcceptJobOfferResult>> AcceptJobOfferAsync(string workerId, string offerId, CancellationToken cancellationToken = default)
         {
-            if (workerId == null)
-            {
-                throw new ArgumentNullException(nameof(workerId));
-            }
-            if (workerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workerId));
-            }
-            if (offerId == null)
-            {
-                throw new ArgumentNullException(nameof(offerId));
-            }
-            if (offerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(offerId));
-            }
+            Argument.AssertNotNullOrEmpty(workerId, nameof(workerId));
+            Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await AcceptJobOfferAsync(workerId, offerId, context).ConfigureAwait(false);
@@ -803,22 +599,8 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="workerId"/> or <paramref name="offerId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<AcceptJobOfferResult> AcceptJobOffer(string workerId, string offerId, CancellationToken cancellationToken = default)
         {
-            if (workerId == null)
-            {
-                throw new ArgumentNullException(nameof(workerId));
-            }
-            if (workerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workerId));
-            }
-            if (offerId == null)
-            {
-                throw new ArgumentNullException(nameof(offerId));
-            }
-            if (offerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(offerId));
-            }
+            Argument.AssertNotNullOrEmpty(workerId, nameof(workerId));
+            Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = AcceptJobOffer(workerId, offerId, context);
@@ -849,22 +631,8 @@ namespace Azure.Communication.JobRouter
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> AcceptJobOfferAsync(string workerId, string offerId, RequestContext context)
         {
-            if (workerId == null)
-            {
-                throw new ArgumentNullException(nameof(workerId));
-            }
-            if (workerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workerId));
-            }
-            if (offerId == null)
-            {
-                throw new ArgumentNullException(nameof(offerId));
-            }
-            if (offerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(offerId));
-            }
+            Argument.AssertNotNullOrEmpty(workerId, nameof(workerId));
+            Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterClient.AcceptJobOffer");
             scope.Start();
@@ -904,22 +672,8 @@ namespace Azure.Communication.JobRouter
         /// <returns> The response returned from the service. </returns>
         public virtual Response AcceptJobOffer(string workerId, string offerId, RequestContext context)
         {
-            if (workerId == null)
-            {
-                throw new ArgumentNullException(nameof(workerId));
-            }
-            if (workerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workerId));
-            }
-            if (offerId == null)
-            {
-                throw new ArgumentNullException(nameof(offerId));
-            }
-            if (offerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(offerId));
-            }
+            Argument.AssertNotNullOrEmpty(workerId, nameof(workerId));
+            Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterClient.AcceptJobOffer");
             scope.Start();
@@ -944,22 +698,8 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="workerId"/> or <paramref name="offerId"/> is an empty string, and was expected to be non-empty. </exception>
         internal virtual async Task<Response<DeclineJobOfferResult>> DeclineJobOfferAsync(string workerId, string offerId, DeclineJobOfferOptions options = null, CancellationToken cancellationToken = default)
         {
-            if (workerId == null)
-            {
-                throw new ArgumentNullException(nameof(workerId));
-            }
-            if (workerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workerId));
-            }
-            if (offerId == null)
-            {
-                throw new ArgumentNullException(nameof(offerId));
-            }
-            if (offerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(offerId));
-            }
+            Argument.AssertNotNullOrEmpty(workerId, nameof(workerId));
+            Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options?.ToRequestContent();
@@ -976,22 +716,8 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="workerId"/> or <paramref name="offerId"/> is an empty string, and was expected to be non-empty. </exception>
         internal virtual Response<DeclineJobOfferResult> DeclineJobOffer(string workerId, string offerId, DeclineJobOfferOptions options = null, CancellationToken cancellationToken = default)
         {
-            if (workerId == null)
-            {
-                throw new ArgumentNullException(nameof(workerId));
-            }
-            if (workerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workerId));
-            }
-            if (offerId == null)
-            {
-                throw new ArgumentNullException(nameof(offerId));
-            }
-            if (offerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(offerId));
-            }
+            Argument.AssertNotNullOrEmpty(workerId, nameof(workerId));
+            Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options?.ToRequestContent();
@@ -1006,14 +732,7 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="queueId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<RouterQueueStatistics>> GetQueueStatisticsAsync(string queueId, CancellationToken cancellationToken = default)
         {
-            if (queueId == null)
-            {
-                throw new ArgumentNullException(nameof(queueId));
-            }
-            if (queueId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(queueId));
-            }
+            Argument.AssertNotNullOrEmpty(queueId, nameof(queueId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetQueueStatisticsAsync(queueId, context).ConfigureAwait(false);
@@ -1027,14 +746,7 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="queueId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<RouterQueueStatistics> GetQueueStatistics(string queueId, CancellationToken cancellationToken = default)
         {
-            if (queueId == null)
-            {
-                throw new ArgumentNullException(nameof(queueId));
-            }
-            if (queueId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(queueId));
-            }
+            Argument.AssertNotNullOrEmpty(queueId, nameof(queueId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetQueueStatistics(queueId, context);
@@ -1064,14 +776,7 @@ namespace Azure.Communication.JobRouter
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetQueueStatisticsAsync(string queueId, RequestContext context)
         {
-            if (queueId == null)
-            {
-                throw new ArgumentNullException(nameof(queueId));
-            }
-            if (queueId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(queueId));
-            }
+            Argument.AssertNotNullOrEmpty(queueId, nameof(queueId));
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterClient.GetQueueStatistics");
             scope.Start();
@@ -1110,14 +815,7 @@ namespace Azure.Communication.JobRouter
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetQueueStatistics(string queueId, RequestContext context)
         {
-            if (queueId == null)
-            {
-                throw new ArgumentNullException(nameof(queueId));
-            }
-            if (queueId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(queueId));
-            }
+            Argument.AssertNotNullOrEmpty(queueId, nameof(queueId));
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterClient.GetQueueStatistics");
             scope.Start();
@@ -1153,21 +851,17 @@ namespace Azure.Communication.JobRouter
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> UpsertWorkerAsync(string workerId, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
         {
-            if (workerId == null)
-            {
-                throw new ArgumentNullException(nameof(workerId));
-            }
-            if (workerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workerId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(workerId, nameof(workerId));
+            Argument.AssertNotNull(content, nameof(content));
 
-            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
-            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            if (requestConditions?.IfNoneMatch is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
+            }
+            if (requestConditions?.IfModifiedSince is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            }
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterClient.UpsertWorker");
             scope.Start();
@@ -1203,21 +897,17 @@ namespace Azure.Communication.JobRouter
         /// <returns> The response returned from the service. </returns>
         internal virtual Response UpsertWorker(string workerId, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
         {
-            if (workerId == null)
-            {
-                throw new ArgumentNullException(nameof(workerId));
-            }
-            if (workerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workerId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(workerId, nameof(workerId));
+            Argument.AssertNotNull(content, nameof(content));
 
-            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
-            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            if (requestConditions?.IfNoneMatch is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
+            }
+            if (requestConditions?.IfModifiedSince is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            }
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterClient.UpsertWorker");
             scope.Start();
@@ -1240,14 +930,7 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="workerId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<RouterWorker>> GetWorkerAsync(string workerId, CancellationToken cancellationToken = default)
         {
-            if (workerId == null)
-            {
-                throw new ArgumentNullException(nameof(workerId));
-            }
-            if (workerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workerId));
-            }
+            Argument.AssertNotNullOrEmpty(workerId, nameof(workerId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetWorkerAsync(workerId, context).ConfigureAwait(false);
@@ -1261,14 +944,7 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="workerId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<RouterWorker> GetWorker(string workerId, CancellationToken cancellationToken = default)
         {
-            if (workerId == null)
-            {
-                throw new ArgumentNullException(nameof(workerId));
-            }
-            if (workerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workerId));
-            }
+            Argument.AssertNotNullOrEmpty(workerId, nameof(workerId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetWorker(workerId, context);
@@ -1298,14 +974,7 @@ namespace Azure.Communication.JobRouter
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetWorkerAsync(string workerId, RequestContext context)
         {
-            if (workerId == null)
-            {
-                throw new ArgumentNullException(nameof(workerId));
-            }
-            if (workerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workerId));
-            }
+            Argument.AssertNotNullOrEmpty(workerId, nameof(workerId));
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterClient.GetWorker");
             scope.Start();
@@ -1344,14 +1013,7 @@ namespace Azure.Communication.JobRouter
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetWorker(string workerId, RequestContext context)
         {
-            if (workerId == null)
-            {
-                throw new ArgumentNullException(nameof(workerId));
-            }
-            if (workerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workerId));
-            }
+            Argument.AssertNotNullOrEmpty(workerId, nameof(workerId));
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterClient.GetWorker");
             scope.Start();
@@ -1386,14 +1048,7 @@ namespace Azure.Communication.JobRouter
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> DeleteWorkerAsync(string workerId, RequestContext context = null)
         {
-            if (workerId == null)
-            {
-                throw new ArgumentNullException(nameof(workerId));
-            }
-            if (workerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workerId));
-            }
+            Argument.AssertNotNullOrEmpty(workerId, nameof(workerId));
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterClient.DeleteWorker");
             scope.Start();
@@ -1428,14 +1083,7 @@ namespace Azure.Communication.JobRouter
         /// <returns> The response returned from the service. </returns>
         public virtual Response DeleteWorker(string workerId, RequestContext context = null)
         {
-            if (workerId == null)
-            {
-                throw new ArgumentNullException(nameof(workerId));
-            }
-            if (workerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workerId));
-            }
+            Argument.AssertNotNullOrEmpty(workerId, nameof(workerId));
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterClient.DeleteWorker");
             scope.Start();

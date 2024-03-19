@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Communication;
 
 namespace Azure.ResourceManager.Communication.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.Communication.Models
             }
 
             writer.WriteStartObject();
-            if (Domain != null)
+            if (Optional.IsDefined(Domain))
             {
                 writer.WritePropertyName("Domain"u8);
                 writer.WriteObjectValue(Domain);
             }
-            if (Spf != null)
+            if (Optional.IsDefined(Spf))
             {
                 writer.WritePropertyName("SPF"u8);
                 writer.WriteObjectValue(Spf);
             }
-            if (Dkim != null)
+            if (Optional.IsDefined(Dkim))
             {
                 writer.WritePropertyName("DKIM"u8);
                 writer.WriteObjectValue(Dkim);
             }
-            if (Dkim2 != null)
+            if (Optional.IsDefined(Dkim2))
             {
                 writer.WritePropertyName("DKIM2"u8);
                 writer.WriteObjectValue(Dkim2);
             }
-            if (Dmarc != null)
+            if (Optional.IsDefined(Dmarc))
             {
                 writer.WritePropertyName("DMARC"u8);
                 writer.WriteObjectValue(Dmarc);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.Communication.Models
             {
                 return null;
             }
-            Optional<DomainVerificationStatusRecord> domain = default;
-            Optional<DomainVerificationStatusRecord> spf = default;
-            Optional<DomainVerificationStatusRecord> dkim = default;
-            Optional<DomainVerificationStatusRecord> dkiM2 = default;
-            Optional<DomainVerificationStatusRecord> dmarc = default;
+            DomainVerificationStatusRecord domain = default;
+            DomainVerificationStatusRecord spf = default;
+            DomainVerificationStatusRecord dkim = default;
+            DomainVerificationStatusRecord dkiM2 = default;
+            DomainVerificationStatusRecord dmarc = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,11 +151,11 @@ namespace Azure.ResourceManager.Communication.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DomainPropertiesVerificationStates(
-                domain.Value,
-                spf.Value,
-                dkim.Value,
-                dkiM2.Value,
-                dmarc.Value,
+                domain,
+                spf,
+                dkim,
+                dkiM2,
+                dmarc,
                 serializedAdditionalRawData);
         }
 

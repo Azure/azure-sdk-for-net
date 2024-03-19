@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStringValue(SenderApplicationId);
             writer.WritePropertyName("receiverApplicationId"u8);
             writer.WriteStringValue(ReceiverApplicationId);
-            if (FunctionalIdentifierCode != null)
+            if (Optional.IsDefined(FunctionalIdentifierCode))
             {
                 writer.WritePropertyName("functionalIdentifierCode"u8);
                 writer.WriteStringValue(FunctionalIdentifierCode);
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.Logic.Models
             string headerVersion = default;
             string senderApplicationId = default;
             string receiverApplicationId = default;
-            Optional<string> functionalIdentifierCode = default;
+            string functionalIdentifierCode = default;
             X12DateFormat dateFormat = default;
             X12TimeFormat timeFormat = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -165,7 +166,7 @@ namespace Azure.ResourceManager.Logic.Models
                 headerVersion,
                 senderApplicationId,
                 receiverApplicationId,
-                functionalIdentifierCode.Value,
+                functionalIdentifierCode,
                 dateFormat,
                 timeFormat,
                 serializedAdditionalRawData);

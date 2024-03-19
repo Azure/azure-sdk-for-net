@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.GuestConfiguration;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && VmId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(VmId))
             {
                 writer.WritePropertyName("vmId"u8);
                 writer.WriteStringValue(VmId.Value);
             }
-            if (options.Format != "W" && VmResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(VmResourceId))
             {
                 writer.WritePropertyName("vmResourceId"u8);
                 writer.WriteStringValue(VmResourceId);
             }
-            if (options.Format != "W" && ComplianceStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ComplianceStatus))
             {
                 writer.WritePropertyName("complianceStatus"u8);
                 writer.WriteStringValue(ComplianceStatus.Value.ToString());
             }
-            if (options.Format != "W" && LatestReportId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LatestReportId))
             {
                 if (LatestReportId != null)
                 {
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     writer.WriteNull("latestReportId");
                 }
             }
-            if (options.Format != "W" && LastComplianceCheckedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastComplianceCheckedOn))
             {
                 if (LastComplianceCheckedOn != null)
                 {
@@ -103,11 +104,11 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             {
                 return null;
             }
-            Optional<Guid> vmId = default;
-            Optional<ResourceIdentifier> vmResourceId = default;
-            Optional<AssignedGuestConfigurationMachineComplianceStatus> complianceStatus = default;
-            Optional<Guid?> latestReportId = default;
-            Optional<DateTimeOffset?> lastComplianceChecked = default;
+            Guid? vmId = default;
+            ResourceIdentifier vmResourceId = default;
+            AssignedGuestConfigurationMachineComplianceStatus? complianceStatus = default;
+            Guid? latestReportId = default;
+            DateTimeOffset? lastComplianceChecked = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -166,11 +167,11 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new GuestConfigurationVmssVmInfo(
-                Optional.ToNullable(vmId),
-                vmResourceId.Value,
-                Optional.ToNullable(complianceStatus),
-                Optional.ToNullable(latestReportId),
-                Optional.ToNullable(lastComplianceChecked),
+                vmId,
+                vmResourceId,
+                complianceStatus,
+                latestReportId,
+                lastComplianceChecked,
                 serializedAdditionalRawData);
         }
 

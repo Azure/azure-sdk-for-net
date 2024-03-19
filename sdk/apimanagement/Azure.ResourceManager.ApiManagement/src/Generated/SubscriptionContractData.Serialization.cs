@@ -43,74 +43,74 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (OwnerId != null)
+            if (Optional.IsDefined(OwnerId))
             {
                 writer.WritePropertyName("ownerId"u8);
                 writer.WriteStringValue(OwnerId);
             }
-            if (Scope != null)
+            if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToSerialString());
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startDate"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (ExpireOn.HasValue)
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationDate"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (EndOn.HasValue)
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endDate"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (NotifiesOn.HasValue)
+            if (Optional.IsDefined(NotifiesOn))
             {
                 writer.WritePropertyName("notificationDate"u8);
                 writer.WriteStringValue(NotifiesOn.Value, "O");
             }
-            if (PrimaryKey != null)
+            if (Optional.IsDefined(PrimaryKey))
             {
                 writer.WritePropertyName("primaryKey"u8);
                 writer.WriteStringValue(PrimaryKey);
             }
-            if (SecondaryKey != null)
+            if (Optional.IsDefined(SecondaryKey))
             {
                 writer.WritePropertyName("secondaryKey"u8);
                 writer.WriteStringValue(SecondaryKey);
             }
-            if (StateComment != null)
+            if (Optional.IsDefined(StateComment))
             {
                 writer.WritePropertyName("stateComment"u8);
                 writer.WriteStringValue(StateComment);
             }
-            if (AllowTracing.HasValue)
+            if (Optional.IsDefined(AllowTracing))
             {
                 writer.WritePropertyName("allowTracing"u8);
                 writer.WriteBooleanValue(AllowTracing.Value);
@@ -157,20 +157,20 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> ownerId = default;
-            Optional<string> scope = default;
-            Optional<string> displayName = default;
-            Optional<SubscriptionState> state = default;
-            Optional<DateTimeOffset> createdDate = default;
-            Optional<DateTimeOffset> startDate = default;
-            Optional<DateTimeOffset> expirationDate = default;
-            Optional<DateTimeOffset> endDate = default;
-            Optional<DateTimeOffset> notificationDate = default;
-            Optional<string> primaryKey = default;
-            Optional<string> secondaryKey = default;
-            Optional<string> stateComment = default;
-            Optional<bool> allowTracing = default;
+            SystemData systemData = default;
+            string ownerId = default;
+            string scope = default;
+            string displayName = default;
+            SubscriptionState? state = default;
+            DateTimeOffset? createdDate = default;
+            DateTimeOffset? startDate = default;
+            DateTimeOffset? expirationDate = default;
+            DateTimeOffset? endDate = default;
+            DateTimeOffset? notificationDate = default;
+            string primaryKey = default;
+            string secondaryKey = default;
+            string stateComment = default;
+            bool? allowTracing = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -314,20 +314,20 @@ namespace Azure.ResourceManager.ApiManagement
                 id,
                 name,
                 type,
-                systemData.Value,
-                ownerId.Value,
-                scope.Value,
-                displayName.Value,
-                Optional.ToNullable(state),
-                Optional.ToNullable(createdDate),
-                Optional.ToNullable(startDate),
-                Optional.ToNullable(expirationDate),
-                Optional.ToNullable(endDate),
-                Optional.ToNullable(notificationDate),
-                primaryKey.Value,
-                secondaryKey.Value,
-                stateComment.Value,
-                Optional.ToNullable(allowTracing),
+                systemData,
+                ownerId,
+                scope,
+                displayName,
+                state,
+                createdDate,
+                startDate,
+                expirationDate,
+                endDate,
+                notificationDate,
+                primaryKey,
+                secondaryKey,
+                stateComment,
+                allowTracing,
                 serializedAdditionalRawData);
         }
 

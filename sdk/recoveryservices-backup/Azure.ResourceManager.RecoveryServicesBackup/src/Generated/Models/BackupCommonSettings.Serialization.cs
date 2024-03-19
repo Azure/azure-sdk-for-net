@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (TimeZone != null)
+            if (Optional.IsDefined(TimeZone))
             {
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
-            if (IsSqlCompression.HasValue)
+            if (Optional.IsDefined(IsSqlCompression))
             {
                 writer.WritePropertyName("issqlcompression"u8);
                 writer.WriteBooleanValue(IsSqlCompression.Value);
             }
-            if (IsCompression.HasValue)
+            if (Optional.IsDefined(IsCompression))
             {
                 writer.WritePropertyName("isCompression"u8);
                 writer.WriteBooleanValue(IsCompression.Value);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> timeZone = default;
-            Optional<bool> isSqlCompression = default;
-            Optional<bool> isCompression = default;
+            string timeZone = default;
+            bool? isSqlCompression = default;
+            bool? isCompression = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupCommonSettings(timeZone.Value, Optional.ToNullable(isSqlCompression), Optional.ToNullable(isCompression), serializedAdditionalRawData);
+            return new BackupCommonSettings(timeZone, isSqlCompression, isCompression, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupCommonSettings>.Write(ModelReaderWriterOptions options)

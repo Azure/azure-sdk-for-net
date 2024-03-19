@@ -42,39 +42,39 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (MemberName != null)
+            if (Optional.IsDefined(MemberName))
             {
                 writer.WritePropertyName("memberName"u8);
                 writer.WriteStringValue(MemberName);
             }
-            if (Label != null)
+            if (Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
-            if (Context != null)
+            if (Optional.IsDefined(Context))
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteStringValue(Context);
             }
-            if (StartTime != null)
+            if (Optional.IsDefined(StartTime))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartTime);
             }
-            if (EndTime != null)
+            if (Optional.IsDefined(EndTime))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndTime);
             }
-            if (Importance != null)
+            if (Optional.IsDefined(Importance))
             {
                 writer.WritePropertyName("importance"u8);
                 writer.WriteStringValue(Importance);
@@ -121,13 +121,13 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> memberName = default;
-            Optional<string> label = default;
-            Optional<string> context = default;
-            Optional<string> startTime = default;
-            Optional<string> endTime = default;
-            Optional<string> importance = default;
+            SystemData systemData = default;
+            string memberName = default;
+            string label = default;
+            string context = default;
+            string startTime = default;
+            string endTime = default;
+            string importance = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -208,13 +208,13 @@ namespace Azure.ResourceManager.Sql
                 id,
                 name,
                 type,
-                systemData.Value,
-                memberName.Value,
-                label.Value,
-                context.Value,
-                startTime.Value,
-                endTime.Value,
-                importance.Value,
+                systemData,
+                memberName,
+                label,
+                context,
+                startTime,
+                endTime,
+                importance,
                 serializedAdditionalRawData);
         }
 

@@ -31,7 +31,7 @@ namespace Azure.Communication.JobRouter
             writer.WriteStringValue(Key);
             writer.WritePropertyName("labelOperator"u8);
             writer.WriteStringValue(LabelOperator.ToString());
-            if (_value != null)
+            if (Optional.IsDefined(_value))
             {
                 writer.WritePropertyName("value"u8);
 #if NET6_0_OR_GREATER
@@ -43,22 +43,22 @@ namespace Azure.Communication.JobRouter
                 }
 #endif
             }
-            if (ExpiresAfter.HasValue)
+            if (Optional.IsDefined(ExpiresAfter))
             {
                 writer.WritePropertyName("expiresAfterSeconds"u8);
                 WriteExpiresAfter(writer);
             }
-            if (Expedite.HasValue)
+            if (Optional.IsDefined(Expedite))
             {
                 writer.WritePropertyName("expedite"u8);
                 writer.WriteBooleanValue(Expedite.Value);
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && ExpiresAt.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExpiresAt))
             {
                 writer.WritePropertyName("expiresAt"u8);
                 writer.WriteStringValue(ExpiresAt.Value, "O");
@@ -103,11 +103,11 @@ namespace Azure.Communication.JobRouter
             }
             string key = default;
             LabelOperator labelOperator = default;
-            Optional<BinaryData> value = default;
-            Optional<TimeSpan> expiresAfterSeconds = default;
-            Optional<bool> expedite = default;
-            Optional<RouterWorkerSelectorStatus> status = default;
-            Optional<DateTimeOffset> expiresAt = default;
+            BinaryData value = default;
+            TimeSpan? expiresAfterSeconds = default;
+            bool? expedite = default;
+            RouterWorkerSelectorStatus? status = default;
+            DateTimeOffset? expiresAt = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -172,11 +172,11 @@ namespace Azure.Communication.JobRouter
             return new RouterWorkerSelector(
                 key,
                 labelOperator,
-                value.Value,
-                Optional.ToNullable(expiresAfterSeconds),
-                Optional.ToNullable(expedite),
-                Optional.ToNullable(status),
-                Optional.ToNullable(expiresAt),
+                value,
+                expiresAfterSeconds,
+                expedite,
+                status,
+                expiresAt,
                 serializedAdditionalRawData);
         }
 

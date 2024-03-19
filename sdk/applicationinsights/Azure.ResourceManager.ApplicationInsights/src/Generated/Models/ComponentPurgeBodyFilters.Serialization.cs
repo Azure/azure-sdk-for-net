@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Column != null)
+            if (Optional.IsDefined(Column))
             {
                 writer.WritePropertyName("column"u8);
                 writer.WriteStringValue(Column);
             }
-            if (Operator != null)
+            if (Optional.IsDefined(Operator))
             {
                 writer.WritePropertyName("operator"u8);
                 writer.WriteStringValue(Operator);
             }
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
 #if NET6_0_OR_GREATER
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
 #endif
             }
-            if (Key != null)
+            if (Optional.IsDefined(Key))
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
@@ -91,10 +92,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<string> column = default;
-            Optional<string> @operator = default;
-            Optional<BinaryData> value = default;
-            Optional<string> key = default;
+            string column = default;
+            string @operator = default;
+            BinaryData value = default;
+            string key = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComponentPurgeBodyFilters(column.Value, @operator.Value, value.Value, key.Value, serializedAdditionalRawData);
+            return new ComponentPurgeBodyFilters(column, @operator, value, key, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComponentPurgeBodyFilters>.Write(ModelReaderWriterOptions options)

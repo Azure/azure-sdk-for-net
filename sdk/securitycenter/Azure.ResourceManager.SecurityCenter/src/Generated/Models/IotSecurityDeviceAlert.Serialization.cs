@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && AlertDisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(AlertDisplayName))
             {
                 writer.WritePropertyName("alertDisplayName"u8);
                 writer.WriteStringValue(AlertDisplayName);
             }
-            if (options.Format != "W" && ReportedSeverity.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ReportedSeverity))
             {
                 writer.WritePropertyName("reportedSeverity"u8);
                 writer.WriteStringValue(ReportedSeverity.Value.ToString());
             }
-            if (options.Format != "W" && AlertsCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AlertsCount))
             {
                 writer.WritePropertyName("alertsCount"u8);
                 writer.WriteNumberValue(AlertsCount.Value);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> alertDisplayName = default;
-            Optional<ReportedSeverity> reportedSeverity = default;
-            Optional<long> alertsCount = default;
+            string alertDisplayName = default;
+            ReportedSeverity? reportedSeverity = default;
+            long? alertsCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotSecurityDeviceAlert(alertDisplayName.Value, Optional.ToNullable(reportedSeverity), Optional.ToNullable(alertsCount), serializedAdditionalRawData);
+            return new IotSecurityDeviceAlert(alertDisplayName, reportedSeverity, alertsCount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotSecurityDeviceAlert>.Write(ModelReaderWriterOptions options)

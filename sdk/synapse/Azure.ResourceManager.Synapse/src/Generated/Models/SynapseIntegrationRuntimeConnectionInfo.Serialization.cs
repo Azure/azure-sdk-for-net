@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ServiceToken != null)
+            if (options.Format != "W" && Optional.IsDefined(ServiceToken))
             {
                 writer.WritePropertyName("serviceToken"u8);
                 writer.WriteStringValue(ServiceToken);
             }
-            if (options.Format != "W" && IdentityCertThumbprint != null)
+            if (options.Format != "W" && Optional.IsDefined(IdentityCertThumbprint))
             {
                 writer.WritePropertyName("identityCertThumbprint"u8);
 #if NET6_0_OR_GREATER
@@ -43,22 +44,22 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
 #endif
             }
-            if (options.Format != "W" && HostServiceUri != null)
+            if (options.Format != "W" && Optional.IsDefined(HostServiceUri))
             {
                 writer.WritePropertyName("hostServiceUri"u8);
                 writer.WriteStringValue(HostServiceUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Version != null)
+            if (options.Format != "W" && Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (options.Format != "W" && PublicKey != null)
+            if (options.Format != "W" && Optional.IsDefined(PublicKey))
             {
                 writer.WritePropertyName("publicKey"u8);
                 writer.WriteStringValue(PublicKey);
             }
-            if (options.Format != "W" && IsIdentityCertExprired.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsIdentityCertExprired))
             {
                 writer.WritePropertyName("isIdentityCertExprired"u8);
                 writer.WriteBooleanValue(IsIdentityCertExprired.Value);
@@ -98,12 +99,12 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<string> serviceToken = default;
-            Optional<BinaryData> identityCertThumbprint = default;
-            Optional<Uri> hostServiceUri = default;
-            Optional<string> version = default;
-            Optional<string> publicKey = default;
-            Optional<bool> isIdentityCertExprired = default;
+            string serviceToken = default;
+            BinaryData identityCertThumbprint = default;
+            Uri hostServiceUri = default;
+            string version = default;
+            string publicKey = default;
+            bool? isIdentityCertExprired = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -154,12 +155,12 @@ namespace Azure.ResourceManager.Synapse.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new SynapseIntegrationRuntimeConnectionInfo(
-                serviceToken.Value,
-                identityCertThumbprint.Value,
-                hostServiceUri.Value,
-                version.Value,
-                publicKey.Value,
-                Optional.ToNullable(isIdentityCertExprired),
+                serviceToken,
+                identityCertThumbprint,
+                hostServiceUri,
+                version,
+                publicKey,
+                isIdentityCertExprired,
                 additionalProperties);
         }
 

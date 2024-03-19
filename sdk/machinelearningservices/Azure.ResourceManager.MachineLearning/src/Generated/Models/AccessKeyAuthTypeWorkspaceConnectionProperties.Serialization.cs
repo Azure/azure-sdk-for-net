@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,24 +27,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Credentials != null)
+            if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
                 writer.WriteObjectValue(Credentials);
             }
             writer.WritePropertyName("authType"u8);
             writer.WriteStringValue(AuthType.ToString());
-            if (Category.HasValue)
+            if (Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category.Value.ToString());
             }
-            if (ExpiryOn.HasValue)
+            if (Optional.IsDefined(ExpiryOn))
             {
                 writer.WritePropertyName("expiryTime"u8);
                 writer.WriteStringValue(ExpiryOn.Value, "O");
             }
-            if (Metadata != null)
+            if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
 #if NET6_0_OR_GREATER
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
 #endif
             }
-            if (Target != null)
+            if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
@@ -98,12 +99,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<WorkspaceConnectionAccessKey> credentials = default;
+            WorkspaceConnectionAccessKey credentials = default;
             MachineLearningConnectionAuthType authType = default;
-            Optional<MachineLearningConnectionCategory> category = default;
-            Optional<DateTimeOffset> expiryTime = default;
-            Optional<BinaryData> metadata = default;
-            Optional<string> target = default;
+            MachineLearningConnectionCategory? category = default;
+            DateTimeOffset? expiryTime = default;
+            BinaryData metadata = default;
+            string target = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -162,12 +163,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AccessKeyAuthTypeWorkspaceConnectionProperties(
                 authType,
-                Optional.ToNullable(category),
-                Optional.ToNullable(expiryTime),
-                metadata.Value,
-                target.Value,
+                category,
+                expiryTime,
+                metadata,
+                target,
                 serializedAdditionalRawData,
-                credentials.Value);
+                credentials);
         }
 
         BinaryData IPersistableModel<AccessKeyAuthTypeWorkspaceConnectionProperties>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (GitHubAccessToken != null)
+            if (Optional.IsDefined(GitHubAccessToken))
             {
                 writer.WritePropertyName("gitHubAccessToken"u8);
                 writer.WriteStringValue(GitHubAccessToken);
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> gitHubAccessToken = default;
+            string gitHubAccessToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GitHubAccessTokenResult(gitHubAccessToken.Value, serializedAdditionalRawData);
+            return new GitHubAccessTokenResult(gitHubAccessToken, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GitHubAccessTokenResult>.Write(ModelReaderWriterOptions options)

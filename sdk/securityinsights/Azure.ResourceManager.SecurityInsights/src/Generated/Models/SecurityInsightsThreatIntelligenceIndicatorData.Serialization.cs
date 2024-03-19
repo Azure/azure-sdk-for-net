@@ -12,6 +12,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -50,14 +51,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && !(AdditionalData is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AdditionalData))
             {
                 writer.WritePropertyName("additionalData"u8);
                 writer.WriteStartObject();
@@ -80,12 +81,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && FriendlyName != null)
+            if (options.Format != "W" && Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (!(ThreatIntelligenceTags is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ThreatIntelligenceTags))
             {
                 writer.WritePropertyName("threatIntelligenceTags"u8);
                 writer.WriteStartArray();
@@ -95,27 +96,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (LastUpdatedOn.HasValue)
+            if (Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedTimeUtc"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (Source != null)
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(IndicatorTypes is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(IndicatorTypes))
             {
                 writer.WritePropertyName("indicatorTypes"u8);
                 writer.WriteStartArray();
@@ -125,22 +126,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Pattern != null)
+            if (Optional.IsDefined(Pattern))
             {
                 writer.WritePropertyName("pattern"u8);
                 writer.WriteStringValue(Pattern);
             }
-            if (PatternType != null)
+            if (Optional.IsDefined(PatternType))
             {
                 writer.WritePropertyName("patternType"u8);
                 writer.WriteStringValue(PatternType);
             }
-            if (PatternVersion != null)
+            if (Optional.IsDefined(PatternVersion))
             {
                 writer.WritePropertyName("patternVersion"u8);
                 writer.WriteStringValue(PatternVersion);
             }
-            if (!(KillChainPhases is ChangeTrackingList<ThreatIntelligenceKillChainPhase> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(KillChainPhases))
             {
                 writer.WritePropertyName("killChainPhases"u8);
                 writer.WriteStartArray();
@@ -150,7 +151,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ParsedPattern is ChangeTrackingList<ThreatIntelligenceParsedPattern> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(ParsedPattern))
             {
                 writer.WritePropertyName("parsedPattern"u8);
                 writer.WriteStartArray();
@@ -160,27 +161,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ExternalId != null)
+            if (Optional.IsDefined(ExternalId))
             {
                 writer.WritePropertyName("externalId"u8);
                 writer.WriteStringValue(ExternalId);
             }
-            if (CreatedByRef != null)
+            if (Optional.IsDefined(CreatedByRef))
             {
                 writer.WritePropertyName("createdByRef"u8);
                 writer.WriteStringValue(CreatedByRef);
             }
-            if (IsDefanged.HasValue)
+            if (Optional.IsDefined(IsDefanged))
             {
                 writer.WritePropertyName("defanged"u8);
                 writer.WriteBooleanValue(IsDefanged.Value);
             }
-            if (ExternalLastUpdatedOn.HasValue)
+            if (Optional.IsDefined(ExternalLastUpdatedOn))
             {
                 writer.WritePropertyName("externalLastUpdatedTimeUtc"u8);
                 writer.WriteStringValue(ExternalLastUpdatedOn.Value, "O");
             }
-            if (!(ExternalReferences is ChangeTrackingList<ThreatIntelligenceExternalReference> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(ExternalReferences))
             {
                 writer.WritePropertyName("externalReferences"u8);
                 writer.WriteStartArray();
@@ -190,7 +191,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(GranularMarkings is ChangeTrackingList<ThreatIntelligenceGranularMarkingEntity> collection5 && collection5.IsUndefined))
+            if (Optional.IsCollectionDefined(GranularMarkings))
             {
                 writer.WritePropertyName("granularMarkings"u8);
                 writer.WriteStartArray();
@@ -200,7 +201,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Labels is ChangeTrackingList<string> collection6 && collection6.IsUndefined))
+            if (Optional.IsCollectionDefined(Labels))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartArray();
@@ -210,17 +211,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IsRevoked.HasValue)
+            if (Optional.IsDefined(IsRevoked))
             {
                 writer.WritePropertyName("revoked"u8);
                 writer.WriteBooleanValue(IsRevoked.Value);
             }
-            if (Confidence.HasValue)
+            if (Optional.IsDefined(Confidence))
             {
                 writer.WritePropertyName("confidence"u8);
                 writer.WriteNumberValue(Confidence.Value);
             }
-            if (!(ObjectMarkingRefs is ChangeTrackingList<string> collection7 && collection7.IsUndefined))
+            if (Optional.IsCollectionDefined(ObjectMarkingRefs))
             {
                 writer.WritePropertyName("objectMarkingRefs"u8);
                 writer.WriteStartArray();
@@ -230,12 +231,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Language != null)
+            if (Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
             }
-            if (!(ThreatTypes is ChangeTrackingList<string> collection8 && collection8.IsUndefined))
+            if (Optional.IsCollectionDefined(ThreatTypes))
             {
                 writer.WritePropertyName("threatTypes"u8);
                 writer.WriteStartArray();
@@ -245,27 +246,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ValidFrom.HasValue)
+            if (Optional.IsDefined(ValidFrom))
             {
                 writer.WritePropertyName("validFrom"u8);
                 writer.WriteStringValue(ValidFrom.Value, "O");
             }
-            if (ValidUntil.HasValue)
+            if (Optional.IsDefined(ValidUntil))
             {
                 writer.WritePropertyName("validUntil"u8);
                 writer.WriteStringValue(ValidUntil.Value, "O");
             }
-            if (CreatedOn.HasValue)
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Modified != null)
+            if (Optional.IsDefined(Modified))
             {
                 writer.WritePropertyName("modified"u8);
                 writer.WriteStringValue(Modified);
             }
-            if (!(Extensions is ChangeTrackingDictionary<string, BinaryData> collection9 && collection9.IsUndefined))
+            if (Optional.IsCollectionDefined(Extensions))
             {
                 writer.WritePropertyName("extensions"u8);
                 writer.WriteStartObject();
@@ -328,40 +329,40 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 return null;
             }
             ThreatIntelligenceResourceInnerKind kind = default;
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IReadOnlyDictionary<string, BinaryData> additionalData = default;
-            Optional<string> friendlyName = default;
+            string friendlyName = default;
             IList<string> threatIntelligenceTags = default;
-            Optional<DateTimeOffset> lastUpdatedTimeUtc = default;
-            Optional<string> source = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
+            DateTimeOffset? lastUpdatedTimeUtc = default;
+            string source = default;
+            string displayName = default;
+            string description = default;
             IList<string> indicatorTypes = default;
-            Optional<string> pattern = default;
-            Optional<string> patternType = default;
-            Optional<string> patternVersion = default;
+            string pattern = default;
+            string patternType = default;
+            string patternVersion = default;
             IList<ThreatIntelligenceKillChainPhase> killChainPhases = default;
             IList<ThreatIntelligenceParsedPattern> parsedPattern = default;
-            Optional<string> externalId = default;
-            Optional<string> createdByRef = default;
-            Optional<bool> defanged = default;
-            Optional<DateTimeOffset> externalLastUpdatedTimeUtc = default;
+            string externalId = default;
+            string createdByRef = default;
+            bool? defanged = default;
+            DateTimeOffset? externalLastUpdatedTimeUtc = default;
             IList<ThreatIntelligenceExternalReference> externalReferences = default;
             IList<ThreatIntelligenceGranularMarkingEntity> granularMarkings = default;
             IList<string> labels = default;
-            Optional<bool> revoked = default;
-            Optional<int> confidence = default;
+            bool? revoked = default;
+            int? confidence = default;
             IList<string> objectMarkingRefs = default;
-            Optional<string> language = default;
+            string language = default;
             IList<string> threatTypes = default;
-            Optional<DateTimeOffset> validFrom = default;
-            Optional<DateTimeOffset> validUntil = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<string> modified = default;
+            DateTimeOffset? validFrom = default;
+            DateTimeOffset? validUntil = default;
+            DateTimeOffset? created = default;
+            string modified = default;
             IDictionary<string, BinaryData> extensions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -722,39 +723,39 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 kind,
-                Optional.ToNullable(etag),
+                etag,
                 serializedAdditionalRawData,
                 additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                friendlyName.Value,
+                friendlyName,
                 threatIntelligenceTags ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(lastUpdatedTimeUtc),
-                source.Value,
-                displayName.Value,
-                description.Value,
+                lastUpdatedTimeUtc,
+                source,
+                displayName,
+                description,
                 indicatorTypes ?? new ChangeTrackingList<string>(),
-                pattern.Value,
-                patternType.Value,
-                patternVersion.Value,
+                pattern,
+                patternType,
+                patternVersion,
                 killChainPhases ?? new ChangeTrackingList<ThreatIntelligenceKillChainPhase>(),
                 parsedPattern ?? new ChangeTrackingList<ThreatIntelligenceParsedPattern>(),
-                externalId.Value,
-                createdByRef.Value,
-                Optional.ToNullable(defanged),
-                Optional.ToNullable(externalLastUpdatedTimeUtc),
+                externalId,
+                createdByRef,
+                defanged,
+                externalLastUpdatedTimeUtc,
                 externalReferences ?? new ChangeTrackingList<ThreatIntelligenceExternalReference>(),
                 granularMarkings ?? new ChangeTrackingList<ThreatIntelligenceGranularMarkingEntity>(),
                 labels ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(revoked),
-                Optional.ToNullable(confidence),
+                revoked,
+                confidence,
                 objectMarkingRefs ?? new ChangeTrackingList<string>(),
-                language.Value,
+                language,
                 threatTypes ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(validFrom),
-                Optional.ToNullable(validUntil),
-                Optional.ToNullable(created),
-                modified.Value,
+                validFrom,
+                validUntil,
+                created,
+                modified,
                 extensions ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 

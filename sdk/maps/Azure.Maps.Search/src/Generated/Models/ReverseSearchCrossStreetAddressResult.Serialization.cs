@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {
@@ -19,7 +19,7 @@ namespace Azure.Maps.Search.Models
             {
                 return null;
             }
-            Optional<SearchSummary> summary = default;
+            SearchSummary summary = default;
             IReadOnlyList<ReverseSearchCrossStreetAddressResultItem> addresses = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -47,7 +47,7 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new ReverseSearchCrossStreetAddressResult(summary.Value, addresses ?? new ChangeTrackingList<ReverseSearchCrossStreetAddressResultItem>());
+            return new ReverseSearchCrossStreetAddressResult(summary, addresses ?? new ChangeTrackingList<ReverseSearchCrossStreetAddressResultItem>());
         }
     }
 }

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventHubs;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs.Models
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -55,19 +56,19 @@ namespace Azure.ResourceManager.EventHubs.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (!(ProvisioningIssues is ChangeTrackingList<EventHubsProvisioningIssue> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ProvisioningIssues))
             {
                 writer.WritePropertyName("provisioningIssues"u8);
                 writer.WriteStartArray();
@@ -77,17 +78,17 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && NetworkSecurityPerimeter != null)
+            if (options.Format != "W" && Optional.IsDefined(NetworkSecurityPerimeter))
             {
                 writer.WritePropertyName("networkSecurityPerimeter"u8);
                 writer.WriteObjectValue(NetworkSecurityPerimeter);
             }
-            if (options.Format != "W" && ResourceAssociation != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceAssociation))
             {
                 writer.WritePropertyName("resourceAssociation"u8);
                 writer.WriteObjectValue(ResourceAssociation);
             }
-            if (options.Format != "W" && Profile != null)
+            if (options.Format != "W" && Optional.IsDefined(Profile))
             {
                 writer.WritePropertyName("profile"u8);
                 writer.WriteObjectValue(Profile);
@@ -136,12 +137,12 @@ namespace Azure.ResourceManager.EventHubs.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<EventHubsNetworkSecurityPerimeterConfigurationProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            EventHubsNetworkSecurityPerimeterConfigurationProvisioningState? provisioningState = default;
             IList<EventHubsProvisioningIssue> provisioningIssues = default;
-            Optional<EventHubsNetworkSecurityPerimeter> networkSecurityPerimeter = default;
-            Optional<EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation> resourceAssociation = default;
-            Optional<EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile> profile = default;
+            EventHubsNetworkSecurityPerimeter networkSecurityPerimeter = default;
+            EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation resourceAssociation = default;
+            EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile profile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -261,14 +262,14 @@ namespace Azure.ResourceManager.EventHubs.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(provisioningState),
+                provisioningState,
                 provisioningIssues ?? new ChangeTrackingList<EventHubsProvisioningIssue>(),
-                networkSecurityPerimeter.Value,
-                resourceAssociation.Value,
-                profile.Value,
+                networkSecurityPerimeter,
+                resourceAssociation,
+                profile,
                 serializedAdditionalRawData);
         }
 

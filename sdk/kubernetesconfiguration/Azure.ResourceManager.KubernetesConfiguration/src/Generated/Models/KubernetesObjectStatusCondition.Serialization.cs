@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.KubernetesConfiguration;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (LastTransitionOn.HasValue)
+            if (Optional.IsDefined(LastTransitionOn))
             {
                 writer.WritePropertyName("lastTransitionTime"u8);
                 writer.WriteStringValue(LastTransitionOn.Value, "O");
             }
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Reason != null)
+            if (Optional.IsDefined(Reason))
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
             }
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (ObjectStatusConditionDefinitionType != null)
+            if (Optional.IsDefined(ObjectStatusConditionDefinitionType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ObjectStatusConditionDefinitionType);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> lastTransitionTime = default;
-            Optional<string> message = default;
-            Optional<string> reason = default;
-            Optional<string> status = default;
-            Optional<string> type = default;
+            DateTimeOffset? lastTransitionTime = default;
+            string message = default;
+            string reason = default;
+            string status = default;
+            string type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,11 +135,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new KubernetesObjectStatusCondition(
-                Optional.ToNullable(lastTransitionTime),
-                message.Value,
-                reason.Value,
-                status.Value,
-                type.Value,
+                lastTransitionTime,
+                message,
+                reason,
+                status,
+                type,
                 serializedAdditionalRawData);
         }
 

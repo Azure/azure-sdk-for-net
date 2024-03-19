@@ -7,7 +7,7 @@
 
 using System;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Monitor.Query;
 
 namespace Azure.Monitor.Query.Models
 {
@@ -19,8 +19,8 @@ namespace Azure.Monitor.Query.Models
             {
                 return null;
             }
-            Optional<TimeSpan> timeGrain = default;
-            Optional<TimeSpan> retention = default;
+            TimeSpan? timeGrain = default;
+            TimeSpan? retention = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timeGrain"u8))
@@ -42,7 +42,7 @@ namespace Azure.Monitor.Query.Models
                     continue;
                 }
             }
-            return new MetricAvailability(Optional.ToNullable(timeGrain), Optional.ToNullable(retention));
+            return new MetricAvailability(timeGrain, retention);
         }
     }
 }

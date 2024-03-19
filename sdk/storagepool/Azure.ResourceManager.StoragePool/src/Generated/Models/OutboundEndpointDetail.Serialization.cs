@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StoragePool;
 
 namespace Azure.ResourceManager.StoragePool.Models
 {
@@ -27,22 +28,22 @@ namespace Azure.ResourceManager.StoragePool.Models
             }
 
             writer.WriteStartObject();
-            if (IPAddress != null)
+            if (Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress.ToString());
             }
-            if (Port.HasValue)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (LatencyInMs.HasValue)
+            if (Optional.IsDefined(LatencyInMs))
             {
                 writer.WritePropertyName("latency"u8);
                 writer.WriteNumberValue(LatencyInMs.Value);
             }
-            if (IsAccessible.HasValue)
+            if (Optional.IsDefined(IsAccessible))
             {
                 writer.WritePropertyName("isAccessible"u8);
                 writer.WriteBooleanValue(IsAccessible.Value);
@@ -85,10 +86,10 @@ namespace Azure.ResourceManager.StoragePool.Models
             {
                 return null;
             }
-            Optional<IPAddress> ipAddress = default;
-            Optional<int> port = default;
-            Optional<double> latency = default;
-            Optional<bool> isAccessible = default;
+            IPAddress ipAddress = default;
+            int? port = default;
+            double? latency = default;
+            bool? isAccessible = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -135,7 +136,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OutboundEndpointDetail(ipAddress.Value, Optional.ToNullable(port), Optional.ToNullable(latency), Optional.ToNullable(isAccessible), serializedAdditionalRawData);
+            return new OutboundEndpointDetail(ipAddress, port, latency, isAccessible, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OutboundEndpointDetail>.Write(ModelReaderWriterOptions options)

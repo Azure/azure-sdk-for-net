@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Author != null)
+            if (options.Format != "W" && Optional.IsDefined(Author))
             {
                 writer.WritePropertyName("author"u8);
                 writer.WriteStringValue(Author);
             }
-            if (options.Format != "W" && Category != null)
+            if (options.Format != "W" && Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (options.Format != "W" && !(SupportTopicList is ChangeTrackingList<DetectorSupportTopic> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportTopicList))
             {
                 writer.WritePropertyName("supportTopicList"u8);
                 writer.WriteStartArray();
@@ -61,7 +62,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(AnalysisType is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AnalysisType))
             {
                 writer.WritePropertyName("analysisType"u8);
                 writer.WriteStartArray();
@@ -71,12 +72,12 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && DetectorType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DetectorType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(DetectorType.Value.ToSerialString());
             }
-            if (options.Format != "W" && Score.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Score))
             {
                 writer.WritePropertyName("score"u8);
                 writer.WriteNumberValue(Score.Value);
@@ -119,15 +120,15 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<string> author = default;
-            Optional<string> category = default;
+            string id = default;
+            string name = default;
+            string description = default;
+            string author = default;
+            string category = default;
             IReadOnlyList<DetectorSupportTopic> supportTopicList = default;
             IReadOnlyList<string> analysisType = default;
-            Optional<DetectorType> type = default;
-            Optional<float> score = default;
+            DetectorType? type = default;
+            float? score = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -210,15 +211,15 @@ namespace Azure.ResourceManager.AppService.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DetectorInfo(
-                id.Value,
-                name.Value,
-                description.Value,
-                author.Value,
-                category.Value,
+                id,
+                name,
+                description,
+                author,
+                category,
                 supportTopicList ?? new ChangeTrackingList<DetectorSupportTopic>(),
                 analysisType ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(type),
-                Optional.ToNullable(score),
+                type,
+                score,
                 serializedAdditionalRawData);
         }
 

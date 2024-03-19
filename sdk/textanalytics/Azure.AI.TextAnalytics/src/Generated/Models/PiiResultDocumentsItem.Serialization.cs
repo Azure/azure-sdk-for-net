@@ -35,7 +35,7 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Statistics.HasValue)
+            if (Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
                 writer.WriteObjectValue(Statistics);
@@ -53,7 +53,7 @@ namespace Azure.AI.TextAnalytics.Models
             IList<Entity> entities = default;
             string id = default;
             IList<DocumentWarning> warnings = default;
-            Optional<TextDocumentStatistics> statistics = default;
+            TextDocumentStatistics? statistics = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("redactedText"u8))
@@ -96,7 +96,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new PiiResultDocumentsItem(id, warnings, Optional.ToNullable(statistics), redactedText, entities);
+            return new PiiResultDocumentsItem(id, warnings, statistics, redactedText, entities);
         }
     }
 }

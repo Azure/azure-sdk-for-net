@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -51,10 +52,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <exception cref="ArgumentNullException"> <paramref name="expressRouteCircuitId"/> is null. </exception>
         public ExpressRouteConnectionInformation(ResourceIdentifier expressRouteCircuitId)
         {
-            if (expressRouteCircuitId == null)
-            {
-                throw new ArgumentNullException(nameof(expressRouteCircuitId));
-            }
+            Argument.AssertNotNull(expressRouteCircuitId, nameof(expressRouteCircuitId));
 
             ExpressRouteCircuitId = expressRouteCircuitId;
         }

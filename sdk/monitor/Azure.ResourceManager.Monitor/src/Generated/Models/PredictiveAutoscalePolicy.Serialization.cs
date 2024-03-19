@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartObject();
             writer.WritePropertyName("scaleMode"u8);
             writer.WriteStringValue(ScaleMode.ToSerialString());
-            if (ScaleLookAheadTime.HasValue)
+            if (Optional.IsDefined(ScaleLookAheadTime))
             {
                 writer.WritePropertyName("scaleLookAheadTime"u8);
                 writer.WriteStringValue(ScaleLookAheadTime.Value, "P");
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             PredictiveAutoscalePolicyScaleMode scaleMode = default;
-            Optional<TimeSpan> scaleLookAheadTime = default;
+            TimeSpan? scaleLookAheadTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PredictiveAutoscalePolicy(scaleMode, Optional.ToNullable(scaleLookAheadTime), serializedAdditionalRawData);
+            return new PredictiveAutoscalePolicy(scaleMode, scaleLookAheadTime, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PredictiveAutoscalePolicy>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (ProtectionLevel.HasValue)
+            if (Optional.IsDefined(ProtectionLevel))
             {
                 writer.WritePropertyName("protectionLevel"u8);
                 writer.WriteStringValue(ProtectionLevel.Value.ToString());
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IntellectualProtectionLevel> protectionLevel = default;
+            IntellectualProtectionLevel? protectionLevel = default;
             string publisher = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntellectualProperty(Optional.ToNullable(protectionLevel), publisher, serializedAdditionalRawData);
+            return new IntellectualProperty(protectionLevel, publisher, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntellectualProperty>.Write(ModelReaderWriterOptions options)

@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -30,10 +31,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             LinkedService properties = default;
-            Optional<string> etag = default;
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
+            string etag = default;
+            string id = default;
+            string name = default;
+            string type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -62,7 +63,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new LinkedServiceResource(id.Value, name.Value, type.Value, etag.Value, properties);
+            return new LinkedServiceResource(id, name, type, etag, properties);
         }
 
         internal partial class LinkedServiceResourceConverter : JsonConverter<LinkedServiceResource>

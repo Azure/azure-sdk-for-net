@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -27,22 +28,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Project != null)
+            if (Optional.IsDefined(Project))
             {
                 writer.WritePropertyName("project"u8);
                 JsonSerializer.Serialize(writer, Project);
             }
-            if (Sort != null)
+            if (Optional.IsDefined(Sort))
             {
                 writer.WritePropertyName("sort"u8);
                 JsonSerializer.Serialize(writer, Sort);
             }
-            if (Skip != null)
+            if (Optional.IsDefined(Skip))
             {
                 writer.WritePropertyName("skip"u8);
                 JsonSerializer.Serialize(writer, Skip);
             }
-            if (Limit != null)
+            if (Optional.IsDefined(Limit))
             {
                 writer.WritePropertyName("limit"u8);
                 JsonSerializer.Serialize(writer, Limit);
@@ -82,10 +83,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<string>> project = default;
-            Optional<DataFactoryElement<string>> sort = default;
-            Optional<DataFactoryElement<int>> skip = default;
-            Optional<DataFactoryElement<int>> limit = default;
+            DataFactoryElement<string> project = default;
+            DataFactoryElement<string> sort = default;
+            DataFactoryElement<int> skip = default;
+            DataFactoryElement<int> limit = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new MongoDBCursorMethodsProperties(project.Value, sort.Value, skip.Value, limit.Value, additionalProperties);
+            return new MongoDBCursorMethodsProperties(project, sort, skip, limit, additionalProperties);
         }
 
         BinaryData IPersistableModel<MongoDBCursorMethodsProperties>.Write(ModelReaderWriterOptions options)

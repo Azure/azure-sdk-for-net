@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -26,42 +27,42 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (NodeSize != null)
+            if (Optional.IsDefined(NodeSize))
             {
                 writer.WritePropertyName("nodeSize"u8);
                 writer.WriteStringValue(NodeSize);
             }
-            if (NumberOfNodes.HasValue)
+            if (Optional.IsDefined(NumberOfNodes))
             {
                 writer.WritePropertyName("numberOfNodes"u8);
                 writer.WriteNumberValue(NumberOfNodes.Value);
             }
-            if (MaxParallelExecutionsPerNode.HasValue)
+            if (Optional.IsDefined(MaxParallelExecutionsPerNode))
             {
                 writer.WritePropertyName("maxParallelExecutionsPerNode"u8);
                 writer.WriteNumberValue(MaxParallelExecutionsPerNode.Value);
             }
-            if (DataFlowProperties != null)
+            if (Optional.IsDefined(DataFlowProperties))
             {
                 writer.WritePropertyName("dataFlowProperties"u8);
                 writer.WriteObjectValue(DataFlowProperties);
             }
-            if (VnetProperties != null)
+            if (Optional.IsDefined(VnetProperties))
             {
                 writer.WritePropertyName("vNetProperties"u8);
                 writer.WriteObjectValue(VnetProperties);
             }
-            if (CopyComputeScaleProperties != null)
+            if (Optional.IsDefined(CopyComputeScaleProperties))
             {
                 writer.WritePropertyName("copyComputeScaleProperties"u8);
                 writer.WriteObjectValue(CopyComputeScaleProperties);
             }
-            if (PipelineExternalComputeScaleProperties != null)
+            if (Optional.IsDefined(PipelineExternalComputeScaleProperties))
             {
                 writer.WritePropertyName("pipelineExternalComputeScaleProperties"u8);
                 writer.WriteObjectValue(PipelineExternalComputeScaleProperties);
@@ -101,14 +102,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<string> nodeSize = default;
-            Optional<int> numberOfNodes = default;
-            Optional<int> maxParallelExecutionsPerNode = default;
-            Optional<IntegrationRuntimeDataFlowProperties> dataFlowProperties = default;
-            Optional<IntegrationRuntimeVnetProperties> vnetProperties = default;
-            Optional<CopyComputeScaleProperties> copyComputeScaleProperties = default;
-            Optional<PipelineExternalComputeScaleProperties> pipelineExternalComputeScaleProperties = default;
+            AzureLocation? location = default;
+            string nodeSize = default;
+            int? numberOfNodes = default;
+            int? maxParallelExecutionsPerNode = default;
+            IntegrationRuntimeDataFlowProperties dataFlowProperties = default;
+            IntegrationRuntimeVnetProperties vnetProperties = default;
+            CopyComputeScaleProperties copyComputeScaleProperties = default;
+            PipelineExternalComputeScaleProperties pipelineExternalComputeScaleProperties = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -185,14 +186,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new IntegrationRuntimeComputeProperties(
-                Optional.ToNullable(location),
-                nodeSize.Value,
-                Optional.ToNullable(numberOfNodes),
-                Optional.ToNullable(maxParallelExecutionsPerNode),
-                dataFlowProperties.Value,
-                vnetProperties.Value,
-                copyComputeScaleProperties.Value,
-                pipelineExternalComputeScaleProperties.Value,
+                location,
+                nodeSize,
+                numberOfNodes,
+                maxParallelExecutionsPerNode,
+                dataFlowProperties,
+                vnetProperties,
+                copyComputeScaleProperties,
+                pipelineExternalComputeScaleProperties,
                 additionalProperties);
         }
 

@@ -29,79 +29,79 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (VpnSiteLink != null)
+            if (Optional.IsDefined(VpnSiteLink))
             {
                 writer.WritePropertyName("vpnSiteLink"u8);
                 JsonSerializer.Serialize(writer, VpnSiteLink);
             }
-            if (RoutingWeight.HasValue)
+            if (Optional.IsDefined(RoutingWeight))
             {
                 writer.WritePropertyName("routingWeight"u8);
                 writer.WriteNumberValue(RoutingWeight.Value);
             }
-            if (VpnLinkConnectionMode.HasValue)
+            if (Optional.IsDefined(VpnLinkConnectionMode))
             {
                 writer.WritePropertyName("vpnLinkConnectionMode"u8);
                 writer.WriteStringValue(VpnLinkConnectionMode.Value.ToString());
             }
-            if (options.Format != "W" && ConnectionStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ConnectionStatus))
             {
                 writer.WritePropertyName("connectionStatus"u8);
                 writer.WriteStringValue(ConnectionStatus.Value.ToString());
             }
-            if (VpnConnectionProtocolType.HasValue)
+            if (Optional.IsDefined(VpnConnectionProtocolType))
             {
                 writer.WritePropertyName("vpnConnectionProtocolType"u8);
                 writer.WriteStringValue(VpnConnectionProtocolType.Value.ToString());
             }
-            if (options.Format != "W" && IngressBytesTransferred.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IngressBytesTransferred))
             {
                 writer.WritePropertyName("ingressBytesTransferred"u8);
                 writer.WriteNumberValue(IngressBytesTransferred.Value);
             }
-            if (options.Format != "W" && EgressBytesTransferred.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EgressBytesTransferred))
             {
                 writer.WritePropertyName("egressBytesTransferred"u8);
                 writer.WriteNumberValue(EgressBytesTransferred.Value);
             }
-            if (ConnectionBandwidth.HasValue)
+            if (Optional.IsDefined(ConnectionBandwidth))
             {
                 writer.WritePropertyName("connectionBandwidth"u8);
                 writer.WriteNumberValue(ConnectionBandwidth.Value);
             }
-            if (SharedKey != null)
+            if (Optional.IsDefined(SharedKey))
             {
                 writer.WritePropertyName("sharedKey"u8);
                 writer.WriteStringValue(SharedKey);
             }
-            if (EnableBgp.HasValue)
+            if (Optional.IsDefined(EnableBgp))
             {
                 writer.WritePropertyName("enableBgp"u8);
                 writer.WriteBooleanValue(EnableBgp.Value);
             }
-            if (!(VpnGatewayCustomBgpAddresses is ChangeTrackingList<GatewayCustomBgpIPAddressIPConfiguration> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(VpnGatewayCustomBgpAddresses))
             {
                 writer.WritePropertyName("vpnGatewayCustomBgpAddresses"u8);
                 writer.WriteStartArray();
@@ -111,12 +111,12 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (UsePolicyBasedTrafficSelectors.HasValue)
+            if (Optional.IsDefined(UsePolicyBasedTrafficSelectors))
             {
                 writer.WritePropertyName("usePolicyBasedTrafficSelectors"u8);
                 writer.WriteBooleanValue(UsePolicyBasedTrafficSelectors.Value);
             }
-            if (!(IPsecPolicies is ChangeTrackingList<IPsecPolicy> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(IPsecPolicies))
             {
                 writer.WritePropertyName("ipsecPolicies"u8);
                 writer.WriteStartArray();
@@ -126,22 +126,22 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (EnableRateLimiting.HasValue)
+            if (Optional.IsDefined(EnableRateLimiting))
             {
                 writer.WritePropertyName("enableRateLimiting"u8);
                 writer.WriteBooleanValue(EnableRateLimiting.Value);
             }
-            if (UseLocalAzureIPAddress.HasValue)
+            if (Optional.IsDefined(UseLocalAzureIPAddress))
             {
                 writer.WritePropertyName("useLocalAzureIpAddress"u8);
                 writer.WriteBooleanValue(UseLocalAzureIPAddress.Value);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (!(IngressNatRules is ChangeTrackingList<WritableSubResource> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(IngressNatRules))
             {
                 writer.WritePropertyName("ingressNatRules"u8);
                 writer.WriteStartArray();
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (!(EgressNatRules is ChangeTrackingList<WritableSubResource> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(EgressNatRules))
             {
                 writer.WritePropertyName("egressNatRules"u8);
                 writer.WriteStartArray();
@@ -200,26 +200,26 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<WritableSubResource> vpnSiteLink = default;
-            Optional<int> routingWeight = default;
-            Optional<VpnLinkConnectionMode> vpnLinkConnectionMode = default;
-            Optional<VpnConnectionStatus> connectionStatus = default;
-            Optional<VirtualNetworkGatewayConnectionProtocol> vpnConnectionProtocolType = default;
-            Optional<long> ingressBytesTransferred = default;
-            Optional<long> egressBytesTransferred = default;
-            Optional<int> connectionBandwidth = default;
-            Optional<string> sharedKey = default;
-            Optional<bool> enableBgp = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            WritableSubResource vpnSiteLink = default;
+            int? routingWeight = default;
+            VpnLinkConnectionMode? vpnLinkConnectionMode = default;
+            VpnConnectionStatus? connectionStatus = default;
+            VirtualNetworkGatewayConnectionProtocol? vpnConnectionProtocolType = default;
+            long? ingressBytesTransferred = default;
+            long? egressBytesTransferred = default;
+            int? connectionBandwidth = default;
+            string sharedKey = default;
+            bool? enableBgp = default;
             IList<GatewayCustomBgpIPAddressIPConfiguration> vpnGatewayCustomBgpAddresses = default;
-            Optional<bool> usePolicyBasedTrafficSelectors = default;
+            bool? usePolicyBasedTrafficSelectors = default;
             IList<IPsecPolicy> ipsecPolicies = default;
-            Optional<bool> enableRateLimiting = default;
-            Optional<bool> useLocalAzureIPAddress = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            bool? enableRateLimiting = default;
+            bool? useLocalAzureIPAddress = default;
+            NetworkProvisioningState? provisioningState = default;
             IList<WritableSubResource> ingressNatRules = default;
             IList<WritableSubResource> egressNatRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -455,27 +455,27 @@ namespace Azure.ResourceManager.Network
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new VpnSiteLinkConnectionData(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
+                id,
+                name,
+                type,
                 serializedAdditionalRawData,
-                Optional.ToNullable(etag),
+                etag,
                 vpnSiteLink,
-                Optional.ToNullable(routingWeight),
-                Optional.ToNullable(vpnLinkConnectionMode),
-                Optional.ToNullable(connectionStatus),
-                Optional.ToNullable(vpnConnectionProtocolType),
-                Optional.ToNullable(ingressBytesTransferred),
-                Optional.ToNullable(egressBytesTransferred),
-                Optional.ToNullable(connectionBandwidth),
-                sharedKey.Value,
-                Optional.ToNullable(enableBgp),
+                routingWeight,
+                vpnLinkConnectionMode,
+                connectionStatus,
+                vpnConnectionProtocolType,
+                ingressBytesTransferred,
+                egressBytesTransferred,
+                connectionBandwidth,
+                sharedKey,
+                enableBgp,
                 vpnGatewayCustomBgpAddresses ?? new ChangeTrackingList<GatewayCustomBgpIPAddressIPConfiguration>(),
-                Optional.ToNullable(usePolicyBasedTrafficSelectors),
+                usePolicyBasedTrafficSelectors,
                 ipsecPolicies ?? new ChangeTrackingList<IPsecPolicy>(),
-                Optional.ToNullable(enableRateLimiting),
-                Optional.ToNullable(useLocalAzureIPAddress),
-                Optional.ToNullable(provisioningState),
+                enableRateLimiting,
+                useLocalAzureIPAddress,
+                provisioningState,
                 ingressNatRules ?? new ChangeTrackingList<WritableSubResource>(),
                 egressNatRules ?? new ChangeTrackingList<WritableSubResource>());
         }

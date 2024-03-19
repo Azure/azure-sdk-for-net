@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -28,12 +29,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             writer.WritePropertyName("adminUserName"u8);
             writer.WriteStringValue(AdminUserName);
-            if (AdminUserSshPublicKey != null)
+            if (Optional.IsDefined(AdminUserSshPublicKey))
             {
                 writer.WritePropertyName("adminUserSshPublicKey"u8);
                 writer.WriteStringValue(AdminUserSshPublicKey);
             }
-            if (AdminUserPassword != null)
+            if (Optional.IsDefined(AdminUserPassword))
             {
                 writer.WritePropertyName("adminUserPassword"u8);
                 writer.WriteStringValue(AdminUserPassword);
@@ -77,8 +78,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             string adminUserName = default;
-            Optional<string> adminUserSshPublicKey = default;
-            Optional<string> adminUserPassword = default;
+            string adminUserSshPublicKey = default;
+            string adminUserPassword = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningUserAccountCredentials(adminUserName, adminUserSshPublicKey.Value, adminUserPassword.Value, serializedAdditionalRawData);
+            return new MachineLearningUserAccountCredentials(adminUserName, adminUserSshPublicKey, adminUserPassword, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningUserAccountCredentials>.Write(ModelReaderWriterOptions options)

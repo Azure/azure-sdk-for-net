@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.Hci
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (PublisherId != null)
+            if (Optional.IsDefined(PublisherId))
             {
                 writer.WritePropertyName("publisherId"u8);
                 writer.WriteStringValue(PublisherId);
             }
-            if (OfferId != null)
+            if (Optional.IsDefined(OfferId))
             {
                 writer.WritePropertyName("offerId"u8);
                 writer.WriteStringValue(OfferId);
             }
-            if (Content != null)
+            if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content);
             }
-            if (ContentVersion != null)
+            if (Optional.IsDefined(ContentVersion))
             {
                 writer.WritePropertyName("contentVersion"u8);
                 writer.WriteStringValue(ContentVersion);
             }
-            if (!(SkuMappings is ChangeTrackingList<HciSkuMappings> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SkuMappings))
             {
                 writer.WritePropertyName("skuMappings"u8);
                 writer.WriteStartArray();
@@ -127,12 +127,12 @@ namespace Azure.ResourceManager.Hci
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> provisioningState = default;
-            Optional<string> publisherId = default;
-            Optional<string> offerId = default;
-            Optional<string> content = default;
-            Optional<string> contentVersion = default;
+            SystemData systemData = default;
+            string provisioningState = default;
+            string publisherId = default;
+            string offerId = default;
+            string content = default;
+            string contentVersion = default;
             IList<HciSkuMappings> skuMappings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -223,12 +223,12 @@ namespace Azure.ResourceManager.Hci
                 id,
                 name,
                 type,
-                systemData.Value,
-                provisioningState.Value,
-                publisherId.Value,
-                offerId.Value,
-                content.Value,
-                contentVersion.Value,
+                systemData,
+                provisioningState,
+                publisherId,
+                offerId,
+                content,
+                contentVersion,
                 skuMappings ?? new ChangeTrackingList<HciSkuMappings>(),
                 serializedAdditionalRawData);
         }

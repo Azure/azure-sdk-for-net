@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (EventSource.HasValue)
+            if (Optional.IsDefined(EventSource))
             {
                 writer.WritePropertyName("eventSource"u8);
                 writer.WriteStringValue(EventSource.Value.ToString());
             }
-            if (!(RuleSets is ChangeTrackingList<SecurityAutomationRuleSet> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(RuleSets))
             {
                 writer.WritePropertyName("ruleSets"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<SecurityEventSource> eventSource = default;
+            SecurityEventSource? eventSource = default;
             IList<SecurityAutomationRuleSet> ruleSets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityAutomationSource(Optional.ToNullable(eventSource), ruleSets ?? new ChangeTrackingList<SecurityAutomationRuleSet>(), serializedAdditionalRawData);
+            return new SecurityAutomationSource(eventSource, ruleSets ?? new ChangeTrackingList<SecurityAutomationRuleSet>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityAutomationSource>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteStartObject();
             writer.WritePropertyName("isEnabled"u8);
             writer.WriteBooleanValue(IsEnabled);
-            if (ExpireOn.HasValue)
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationTimeUtc"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteStringValue(TriggersOn.ToString());
             writer.WritePropertyName("triggersWhen"u8);
             writer.WriteStringValue(TriggersWhen.ToString());
-            if (!(Conditions is ChangeTrackingList<SecurityInsightsAutomationRuleCondition> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Conditions))
             {
                 writer.WritePropertyName("conditions"u8);
                 writer.WriteStartArray();
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 return null;
             }
             bool isEnabled = default;
-            Optional<DateTimeOffset> expirationTimeUtc = default;
+            DateTimeOffset? expirationTimeUtc = default;
             TriggersOn triggersOn = default;
             TriggersWhen triggersWhen = default;
             IList<SecurityInsightsAutomationRuleCondition> conditions = default;
@@ -140,7 +141,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SecurityInsightsAutomationRuleTriggeringLogic(
                 isEnabled,
-                Optional.ToNullable(expirationTimeUtc),
+                expirationTimeUtc,
                 triggersOn,
                 triggersWhen,
                 conditions ?? new ChangeTrackingList<SecurityInsightsAutomationRuleCondition>(),

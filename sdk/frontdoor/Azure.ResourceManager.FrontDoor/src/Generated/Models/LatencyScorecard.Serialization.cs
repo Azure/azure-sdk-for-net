@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.FrontDoor;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.FrontDoor.Models
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -55,54 +56,54 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && LatencyScorecardId != null)
+            if (options.Format != "W" && Optional.IsDefined(LatencyScorecardId))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(LatencyScorecardId);
             }
-            if (options.Format != "W" && LatencyScorecardName != null)
+            if (options.Format != "W" && Optional.IsDefined(LatencyScorecardName))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(LatencyScorecardName);
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && ScorecardEndpointA != null)
+            if (options.Format != "W" && Optional.IsDefined(ScorecardEndpointA))
             {
                 writer.WritePropertyName("endpointA"u8);
                 writer.WriteStringValue(ScorecardEndpointA.AbsoluteUri);
             }
-            if (options.Format != "W" && ScorecardEndpointB != null)
+            if (options.Format != "W" && Optional.IsDefined(ScorecardEndpointB))
             {
                 writer.WritePropertyName("endpointB"u8);
                 writer.WriteStringValue(ScorecardEndpointB.AbsoluteUri);
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startDateTimeUTC"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && EndOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endDateTimeUTC"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (options.Format != "W" && Country != null)
+            if (options.Format != "W" && Optional.IsDefined(Country))
             {
                 writer.WritePropertyName("country"u8);
                 writer.WriteStringValue(Country);
             }
-            if (!(LatencyMetrics is ChangeTrackingList<LatencyMetric> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(LatencyMetrics))
             {
                 writer.WritePropertyName("latencyMetrics"u8);
                 writer.WriteStartArray();
@@ -156,15 +157,15 @@ namespace Azure.ResourceManager.FrontDoor.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> id0 = default;
-            Optional<string> name0 = default;
-            Optional<string> description = default;
-            Optional<Uri> endpointA = default;
-            Optional<Uri> endpointB = default;
-            Optional<DateTimeOffset> startDateTimeUtc = default;
-            Optional<DateTimeOffset> endDateTimeUtc = default;
-            Optional<string> country = default;
+            SystemData systemData = default;
+            string id0 = default;
+            string name0 = default;
+            string description = default;
+            Uri endpointA = default;
+            Uri endpointB = default;
+            DateTimeOffset? startDateTimeUtc = default;
+            DateTimeOffset? endDateTimeUtc = default;
+            string country = default;
             IList<LatencyMetric> latencyMetrics = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -305,17 +306,17 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                id0.Value,
-                name0.Value,
-                description.Value,
-                endpointA.Value,
-                endpointB.Value,
-                Optional.ToNullable(startDateTimeUtc),
-                Optional.ToNullable(endDateTimeUtc),
-                country.Value,
+                id0,
+                name0,
+                description,
+                endpointA,
+                endpointB,
+                startDateTimeUtc,
+                endDateTimeUtc,
+                country,
                 latencyMetrics ?? new ChangeTrackingList<LatencyMetric>(),
                 serializedAdditionalRawData);
         }

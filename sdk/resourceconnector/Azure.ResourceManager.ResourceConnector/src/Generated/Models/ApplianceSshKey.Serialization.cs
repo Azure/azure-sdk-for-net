@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ResourceConnector;
 
 namespace Azure.ResourceManager.ResourceConnector.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Certificate != null)
+            if (options.Format != "W" && Optional.IsDefined(Certificate))
             {
                 writer.WritePropertyName("certificate"u8);
                 writer.WriteStringValue(Certificate);
             }
-            if (options.Format != "W" && CreationTimeStamp.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreationTimeStamp))
             {
                 writer.WritePropertyName("creationTimeStamp"u8);
                 writer.WriteNumberValue(CreationTimeStamp.Value);
             }
-            if (options.Format != "W" && ExpirationTimeStamp.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExpirationTimeStamp))
             {
                 writer.WritePropertyName("expirationTimeStamp"u8);
                 writer.WriteNumberValue(ExpirationTimeStamp.Value);
             }
-            if (options.Format != "W" && PrivateKey != null)
+            if (options.Format != "W" && Optional.IsDefined(PrivateKey))
             {
                 writer.WritePropertyName("privateKey"u8);
                 writer.WriteStringValue(PrivateKey);
             }
-            if (options.Format != "W" && PublicKey != null)
+            if (options.Format != "W" && Optional.IsDefined(PublicKey))
             {
                 writer.WritePropertyName("publicKey"u8);
                 writer.WriteStringValue(PublicKey);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             {
                 return null;
             }
-            Optional<string> certificate = default;
-            Optional<long> creationTimeStamp = default;
-            Optional<long> expirationTimeStamp = default;
-            Optional<string> privateKey = default;
-            Optional<string> publicKey = default;
+            string certificate = default;
+            long? creationTimeStamp = default;
+            long? expirationTimeStamp = default;
+            string privateKey = default;
+            string publicKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,11 +139,11 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ApplianceSshKey(
-                certificate.Value,
-                Optional.ToNullable(creationTimeStamp),
-                Optional.ToNullable(expirationTimeStamp),
-                privateKey.Value,
-                publicKey.Value,
+                certificate,
+                creationTimeStamp,
+                expirationTimeStamp,
+                privateKey,
+                publicKey,
                 serializedAdditionalRawData);
         }
 

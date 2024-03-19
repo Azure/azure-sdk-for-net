@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
@@ -20,7 +19,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                 return null;
             }
             IReadOnlyList<TextAnalyticsError> errors = default;
-            Optional<RequestStatistics> statistics = default;
+            RequestStatistics statistics = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("errors"u8))
@@ -47,7 +46,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                     continue;
                 }
             }
-            return new AnalyzeJobErrorsAndStatistics(errors ?? new ChangeTrackingList<TextAnalyticsError>(), statistics.Value);
+            return new AnalyzeJobErrorsAndStatistics(errors ?? new ChangeTrackingList<TextAnalyticsError>(), statistics);
         }
     }
 }

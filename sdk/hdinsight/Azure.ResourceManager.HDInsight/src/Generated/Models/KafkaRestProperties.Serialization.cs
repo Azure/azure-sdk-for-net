@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (ClientGroupInfo != null)
+            if (Optional.IsDefined(ClientGroupInfo))
             {
                 writer.WritePropertyName("clientGroupInfo"u8);
                 writer.WriteObjectValue(ClientGroupInfo);
             }
-            if (!(ConfigurationOverride is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ConfigurationOverride))
             {
                 writer.WritePropertyName("configurationOverride"u8);
                 writer.WriteStartObject();
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<ClientGroupInfo> clientGroupInfo = default;
+            ClientGroupInfo clientGroupInfo = default;
             IDictionary<string, string> configurationOverride = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KafkaRestProperties(clientGroupInfo.Value, configurationOverride ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new KafkaRestProperties(clientGroupInfo, configurationOverride ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KafkaRestProperties>.Write(ModelReaderWriterOptions options)

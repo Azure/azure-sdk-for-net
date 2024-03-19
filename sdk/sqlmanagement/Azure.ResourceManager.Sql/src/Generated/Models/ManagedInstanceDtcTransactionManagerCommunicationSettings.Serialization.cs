@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (AllowInboundEnabled.HasValue)
+            if (Optional.IsDefined(AllowInboundEnabled))
             {
                 writer.WritePropertyName("allowInboundEnabled"u8);
                 writer.WriteBooleanValue(AllowInboundEnabled.Value);
             }
-            if (AllowOutboundEnabled.HasValue)
+            if (Optional.IsDefined(AllowOutboundEnabled))
             {
                 writer.WritePropertyName("allowOutboundEnabled"u8);
                 writer.WriteBooleanValue(AllowOutboundEnabled.Value);
             }
-            if (Authentication != null)
+            if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
                 writer.WriteStringValue(Authentication);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<bool> allowInboundEnabled = default;
-            Optional<bool> allowOutboundEnabled = default;
-            Optional<string> authentication = default;
+            bool? allowInboundEnabled = default;
+            bool? allowOutboundEnabled = default;
+            string authentication = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedInstanceDtcTransactionManagerCommunicationSettings(Optional.ToNullable(allowInboundEnabled), Optional.ToNullable(allowOutboundEnabled), authentication.Value, serializedAdditionalRawData);
+            return new ManagedInstanceDtcTransactionManagerCommunicationSettings(allowInboundEnabled, allowOutboundEnabled, authentication, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedInstanceDtcTransactionManagerCommunicationSettings>.Write(ModelReaderWriterOptions options)

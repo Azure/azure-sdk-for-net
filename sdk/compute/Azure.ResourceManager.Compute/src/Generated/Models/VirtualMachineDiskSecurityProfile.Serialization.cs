@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -27,12 +28,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (SecurityEncryptionType.HasValue)
+            if (Optional.IsDefined(SecurityEncryptionType))
             {
                 writer.WritePropertyName("securityEncryptionType"u8);
                 writer.WriteStringValue(SecurityEncryptionType.Value.ToString());
             }
-            if (DiskEncryptionSet != null)
+            if (Optional.IsDefined(DiskEncryptionSet))
             {
                 writer.WritePropertyName("diskEncryptionSet"u8);
                 JsonSerializer.Serialize(writer, DiskEncryptionSet);
@@ -75,8 +76,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<SecurityEncryptionType> securityEncryptionType = default;
-            Optional<WritableSubResource> diskEncryptionSet = default;
+            SecurityEncryptionType? securityEncryptionType = default;
+            WritableSubResource diskEncryptionSet = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +106,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineDiskSecurityProfile(Optional.ToNullable(securityEncryptionType), diskEncryptionSet, serializedAdditionalRawData);
+            return new VirtualMachineDiskSecurityProfile(securityEncryptionType, diskEncryptionSet, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineDiskSecurityProfile>.Write(ModelReaderWriterOptions options)

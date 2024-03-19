@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && MeterId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MeterId))
             {
                 writer.WritePropertyName("meterId"u8);
                 writer.WriteStringValue(MeterId.Value);
             }
-            if (options.Format != "W" && MeterType != null)
+            if (options.Format != "W" && Optional.IsDefined(MeterType))
             {
                 writer.WritePropertyName("meterType"u8);
                 writer.WriteStringValue(MeterType);
             }
-            if (options.Format != "W" && Multiplier.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Multiplier))
             {
                 writer.WritePropertyName("multiplier"u8);
                 writer.WriteNumberValue(Multiplier.Value);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<Guid> meterId = default;
-            Optional<string> meterType = default;
-            Optional<double> multiplier = default;
+            Guid? meterId = default;
+            string meterType = default;
+            double? multiplier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxSkuCost(Optional.ToNullable(meterId), meterType.Value, Optional.ToNullable(multiplier), serializedAdditionalRawData);
+            return new DataBoxSkuCost(meterId, meterType, multiplier, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxSkuCost>.Write(ModelReaderWriterOptions options)

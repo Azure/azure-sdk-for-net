@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.IotHub.Models
             }
 
             writer.WriteStartObject();
-            if (Desired != null)
+            if (Optional.IsDefined(Desired))
             {
                 writer.WritePropertyName("desired"u8);
 #if NET6_0_OR_GREATER
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
 #endif
             }
-            if (Reported != null)
+            if (Optional.IsDefined(Reported))
             {
                 writer.WritePropertyName("reported"u8);
 #if NET6_0_OR_GREATER
@@ -88,8 +89,8 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<BinaryData> desired = default;
-            Optional<BinaryData> reported = default;
+            BinaryData desired = default;
+            BinaryData reported = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoutingTwinProperties(desired.Value, reported.Value, serializedAdditionalRawData);
+            return new RoutingTwinProperties(desired, reported, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoutingTwinProperties>.Write(ModelReaderWriterOptions options)

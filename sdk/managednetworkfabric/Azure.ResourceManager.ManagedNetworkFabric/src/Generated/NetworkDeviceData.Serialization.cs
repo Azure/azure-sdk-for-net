@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -57,69 +57,69 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Annotation != null)
+            if (Optional.IsDefined(Annotation))
             {
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
             }
-            if (HostName != null)
+            if (Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (SerialNumber != null)
+            if (Optional.IsDefined(SerialNumber))
             {
                 writer.WritePropertyName("serialNumber"u8);
                 writer.WriteStringValue(SerialNumber);
             }
-            if (options.Format != "W" && Version != null)
+            if (options.Format != "W" && Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (NetworkDeviceSku != null)
+            if (Optional.IsDefined(NetworkDeviceSku))
             {
                 writer.WritePropertyName("networkDeviceSku"u8);
                 writer.WriteStringValue(NetworkDeviceSku);
             }
-            if (options.Format != "W" && NetworkDeviceRole.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NetworkDeviceRole))
             {
                 writer.WritePropertyName("networkDeviceRole"u8);
                 writer.WriteStringValue(NetworkDeviceRole.Value.ToString());
             }
-            if (options.Format != "W" && NetworkRackId != null)
+            if (options.Format != "W" && Optional.IsDefined(NetworkRackId))
             {
                 writer.WritePropertyName("networkRackId"u8);
                 writer.WriteStringValue(NetworkRackId);
             }
-            if (options.Format != "W" && ManagementIPv4Address != null)
+            if (options.Format != "W" && Optional.IsDefined(ManagementIPv4Address))
             {
                 writer.WritePropertyName("managementIpv4Address"u8);
                 writer.WriteStringValue(ManagementIPv4Address.ToString());
             }
-            if (options.Format != "W" && ManagementIPv6Address != null)
+            if (options.Format != "W" && Optional.IsDefined(ManagementIPv6Address))
             {
                 writer.WritePropertyName("managementIpv6Address"u8);
                 writer.WriteStringValue(ManagementIPv6Address);
             }
-            if (options.Format != "W" && ConfigurationState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ConfigurationState))
             {
                 writer.WritePropertyName("configurationState"u8);
                 writer.WriteStringValue(ConfigurationState.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && AdministrativeState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AdministrativeState))
             {
                 writer.WritePropertyName("administrativeState"u8);
                 writer.WriteStringValue(AdministrativeState.Value.ToString());
@@ -168,19 +168,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> annotation = default;
-            Optional<string> hostName = default;
-            Optional<string> serialNumber = default;
-            Optional<string> version = default;
-            Optional<string> networkDeviceSku = default;
-            Optional<NetworkDeviceRole> networkDeviceRole = default;
-            Optional<ResourceIdentifier> networkRackId = default;
-            Optional<IPAddress> managementIPv4Address = default;
-            Optional<string> managementIPv6Address = default;
-            Optional<NetworkFabricConfigurationState> configurationState = default;
-            Optional<NetworkFabricProvisioningState> provisioningState = default;
-            Optional<NetworkFabricAdministrativeState> administrativeState = default;
+            SystemData systemData = default;
+            string annotation = default;
+            string hostName = default;
+            string serialNumber = default;
+            string version = default;
+            string networkDeviceSku = default;
+            NetworkDeviceRole? networkDeviceRole = default;
+            ResourceIdentifier networkRackId = default;
+            IPAddress managementIPv4Address = default;
+            string managementIPv6Address = default;
+            NetworkFabricConfigurationState? configurationState = default;
+            NetworkFabricProvisioningState? provisioningState = default;
+            NetworkFabricAdministrativeState? administrativeState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -334,21 +334,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                annotation.Value,
-                hostName.Value,
-                serialNumber.Value,
-                version.Value,
-                networkDeviceSku.Value,
-                Optional.ToNullable(networkDeviceRole),
-                networkRackId.Value,
-                managementIPv4Address.Value,
-                managementIPv6Address.Value,
-                Optional.ToNullable(configurationState),
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(administrativeState),
+                annotation,
+                hostName,
+                serialNumber,
+                version,
+                networkDeviceSku,
+                networkDeviceRole,
+                networkRackId,
+                managementIPv4Address,
+                managementIPv6Address,
+                configurationState,
+                provisioningState,
+                administrativeState,
                 serializedAdditionalRawData);
         }
 

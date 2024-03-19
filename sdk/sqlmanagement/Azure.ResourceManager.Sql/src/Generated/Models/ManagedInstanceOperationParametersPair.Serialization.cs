@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && CurrentParameters != null)
+            if (options.Format != "W" && Optional.IsDefined(CurrentParameters))
             {
                 writer.WritePropertyName("currentParameters"u8);
                 writer.WriteObjectValue(CurrentParameters);
             }
-            if (options.Format != "W" && RequestedParameters != null)
+            if (options.Format != "W" && Optional.IsDefined(RequestedParameters))
             {
                 writer.WritePropertyName("requestedParameters"u8);
                 writer.WriteObjectValue(RequestedParameters);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<UpsertManagedServerOperationParameters> currentParameters = default;
-            Optional<UpsertManagedServerOperationParameters> requestedParameters = default;
+            UpsertManagedServerOperationParameters currentParameters = default;
+            UpsertManagedServerOperationParameters requestedParameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedInstanceOperationParametersPair(currentParameters.Value, requestedParameters.Value, serializedAdditionalRawData);
+            return new ManagedInstanceOperationParametersPair(currentParameters, requestedParameters, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedInstanceOperationParametersPair>.Write(ModelReaderWriterOptions options)

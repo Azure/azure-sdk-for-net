@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (TargetEntityName != null)
+            if (Optional.IsDefined(TargetEntityName))
             {
                 writer.WritePropertyName("targetEntityName"u8);
                 writer.WriteStringValue(TargetEntityName);
             }
-            if (SourceEntityName != null)
+            if (Optional.IsDefined(SourceEntityName))
             {
                 writer.WritePropertyName("sourceEntityName"u8);
                 writer.WriteStringValue(SourceEntityName);
             }
-            if (SourceConnectionReference != null)
+            if (Optional.IsDefined(SourceConnectionReference))
             {
                 writer.WritePropertyName("sourceConnectionReference"u8);
                 writer.WriteObjectValue(SourceConnectionReference);
             }
-            if (AttributeMappingInfo != null)
+            if (Optional.IsDefined(AttributeMappingInfo))
             {
                 writer.WritePropertyName("attributeMappingInfo"u8);
                 writer.WriteObjectValue(AttributeMappingInfo);
             }
-            if (SourceDenormalizeInfo != null)
+            if (Optional.IsDefined(SourceDenormalizeInfo))
             {
                 writer.WritePropertyName("sourceDenormalizeInfo"u8);
 #if NET6_0_OR_GREATER
@@ -96,11 +97,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> targetEntityName = default;
-            Optional<string> sourceEntityName = default;
-            Optional<MapperConnectionReference> sourceConnectionReference = default;
-            Optional<MapperAttributeMappings> attributeMappingInfo = default;
-            Optional<BinaryData> sourceDenormalizeInfo = default;
+            string targetEntityName = default;
+            string sourceEntityName = default;
+            MapperConnectionReference sourceConnectionReference = default;
+            MapperAttributeMappings attributeMappingInfo = default;
+            BinaryData sourceDenormalizeInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,11 +150,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DataMapperMapping(
-                targetEntityName.Value,
-                sourceEntityName.Value,
-                sourceConnectionReference.Value,
-                attributeMappingInfo.Value,
-                sourceDenormalizeInfo.Value,
+                targetEntityName,
+                sourceEntityName,
+                sourceConnectionReference,
+                attributeMappingInfo,
+                sourceDenormalizeInfo,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (SoftStopTimeoutSeconds.HasValue)
+            if (Optional.IsDefined(SoftStopTimeoutSeconds))
             {
                 writer.WritePropertyName("softStopTimeoutSeconds"u8);
                 writer.WriteNumberValue(SoftStopTimeoutSeconds.Value);
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<long> softStopTimeoutSeconds = default;
+            long? softStopTimeoutSeconds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SapStopContent(Optional.ToNullable(softStopTimeoutSeconds), serializedAdditionalRawData);
+            return new SapStopContent(softStopTimeoutSeconds, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SapStopContent>.Write(ModelReaderWriterOptions options)

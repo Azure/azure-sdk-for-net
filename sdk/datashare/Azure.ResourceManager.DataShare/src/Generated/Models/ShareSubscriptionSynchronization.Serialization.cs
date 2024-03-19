@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataShare;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
@@ -26,34 +27,34 @@ namespace Azure.ResourceManager.DataShare.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && DurationInMilliSeconds.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DurationInMilliSeconds))
             {
                 writer.WritePropertyName("durationMs"u8);
                 writer.WriteNumberValue(DurationInMilliSeconds.Value);
             }
-            if (options.Format != "W" && EndOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (options.Format != "W" && Message != null)
+            if (options.Format != "W" && Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
             writer.WritePropertyName("synchronizationId"u8);
             writer.WriteStringValue(SynchronizationId);
-            if (options.Format != "W" && SynchronizationMode.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SynchronizationMode))
             {
                 writer.WritePropertyName("synchronizationMode"u8);
                 writer.WriteStringValue(SynchronizationMode.Value.ToString());
@@ -96,13 +97,13 @@ namespace Azure.ResourceManager.DataShare.Models
             {
                 return null;
             }
-            Optional<int> durationMs = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<string> message = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<string> status = default;
+            int? durationMs = default;
+            DateTimeOffset? endTime = default;
+            string message = default;
+            DateTimeOffset? startTime = default;
+            string status = default;
             Guid synchronizationId = default;
-            Optional<SynchronizationMode> synchronizationMode = default;
+            SynchronizationMode? synchronizationMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,13 +166,13 @@ namespace Azure.ResourceManager.DataShare.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ShareSubscriptionSynchronization(
-                Optional.ToNullable(durationMs),
-                Optional.ToNullable(endTime),
-                message.Value,
-                Optional.ToNullable(startTime),
-                status.Value,
+                durationMs,
+                endTime,
+                message,
+                startTime,
+                status,
                 synchronizationId,
-                Optional.ToNullable(synchronizationMode),
+                synchronizationMode,
                 serializedAdditionalRawData);
         }
 

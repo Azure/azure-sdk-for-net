@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
@@ -26,42 +27,42 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("Name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Config != null)
+            if (Optional.IsDefined(Config))
             {
                 writer.WritePropertyName("Config"u8);
                 writer.WriteStringValue(Config);
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("Version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (options.Format != "W" && FavoriteId != null)
+            if (options.Format != "W" && Optional.IsDefined(FavoriteId))
             {
                 writer.WritePropertyName("FavoriteId"u8);
                 writer.WriteStringValue(FavoriteId);
             }
-            if (FavoriteType.HasValue)
+            if (Optional.IsDefined(FavoriteType))
             {
                 writer.WritePropertyName("FavoriteType"u8);
                 writer.WriteStringValue(FavoriteType.Value.ToSerialString());
             }
-            if (SourceType != null)
+            if (Optional.IsDefined(SourceType))
             {
                 writer.WritePropertyName("SourceType"u8);
                 writer.WriteStringValue(SourceType);
             }
-            if (options.Format != "W" && TimeModified != null)
+            if (options.Format != "W" && Optional.IsDefined(TimeModified))
             {
                 writer.WritePropertyName("TimeModified"u8);
                 writer.WriteStringValue(TimeModified);
             }
-            if (!(Tags is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("Tags"u8);
                 writer.WriteStartArray();
@@ -71,17 +72,17 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Category != null)
+            if (Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("Category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (IsGeneratedFromTemplate.HasValue)
+            if (Optional.IsDefined(IsGeneratedFromTemplate))
             {
                 writer.WritePropertyName("IsGeneratedFromTemplate"u8);
                 writer.WriteBooleanValue(IsGeneratedFromTemplate.Value);
             }
-            if (options.Format != "W" && UserId != null)
+            if (options.Format != "W" && Optional.IsDefined(UserId))
             {
                 writer.WritePropertyName("UserId"u8);
                 writer.WriteStringValue(UserId);
@@ -124,17 +125,17 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> config = default;
-            Optional<string> version = default;
-            Optional<string> favoriteId = default;
-            Optional<FavoriteType> favoriteType = default;
-            Optional<string> sourceType = default;
-            Optional<string> timeModified = default;
+            string name = default;
+            string config = default;
+            string version = default;
+            string favoriteId = default;
+            FavoriteType? favoriteType = default;
+            string sourceType = default;
+            string timeModified = default;
             IList<string> tags = default;
-            Optional<string> category = default;
-            Optional<bool> isGeneratedFromTemplate = default;
-            Optional<string> userId = default;
+            string category = default;
+            bool? isGeneratedFromTemplate = default;
+            string userId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -218,17 +219,17 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ApplicationInsightsComponentFavorite(
-                name.Value,
-                config.Value,
-                version.Value,
-                favoriteId.Value,
-                Optional.ToNullable(favoriteType),
-                sourceType.Value,
-                timeModified.Value,
+                name,
+                config,
+                version,
+                favoriteId,
+                favoriteType,
+                sourceType,
+                timeModified,
                 tags ?? new ChangeTrackingList<string>(),
-                category.Value,
-                Optional.ToNullable(isGeneratedFromTemplate),
-                userId.Value,
+                category,
+                isGeneratedFromTemplate,
+                userId,
                 serializedAdditionalRawData);
         }
 

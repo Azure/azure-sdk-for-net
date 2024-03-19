@@ -43,24 +43,24 @@ namespace Azure.ResourceManager.Dynatrace
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (LogRules != null)
+            if (Optional.IsDefined(LogRules))
             {
                 writer.WritePropertyName("logRules"u8);
                 writer.WriteObjectValue(LogRules);
             }
-            if (MetricRules != null)
+            if (Optional.IsDefined(MetricRules))
             {
                 writer.WritePropertyName("metricRules"u8);
                 writer.WriteObjectValue(MetricRules);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.Dynatrace
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DynatraceMonitorResourceLogRules> logRules = default;
-            Optional<DynatraceMonitorResourceMetricRules> metricRules = default;
-            Optional<DynatraceProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            DynatraceMonitorResourceLogRules logRules = default;
+            DynatraceMonitorResourceMetricRules metricRules = default;
+            DynatraceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -188,10 +188,10 @@ namespace Azure.ResourceManager.Dynatrace
                 id,
                 name,
                 type,
-                systemData.Value,
-                logRules.Value,
-                metricRules.Value,
-                Optional.ToNullable(provisioningState),
+                systemData,
+                logRules,
+                metricRules,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

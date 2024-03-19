@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (ProtectedItemName != null)
+            if (Optional.IsDefined(ProtectedItemName))
             {
                 writer.WritePropertyName("protectedItemName"u8);
                 writer.WriteStringValue(ProtectedItemName);
             }
-            if (FabricObjectId != null)
+            if (Optional.IsDefined(FabricObjectId))
             {
                 writer.WritePropertyName("fabricObjectId"u8);
                 writer.WriteStringValue(FabricObjectId);
             }
-            if (FabricName != null)
+            if (Optional.IsDefined(FabricName))
             {
                 writer.WritePropertyName("fabricName"u8);
                 writer.WriteStringValue(FabricName);
             }
-            if (FabricLocation.HasValue)
+            if (Optional.IsDefined(FabricLocation))
             {
                 writer.WritePropertyName("fabricLocation"u8);
                 writer.WriteStringValue(FabricLocation.Value);
             }
-            if (RemoteFabricName != null)
+            if (Optional.IsDefined(RemoteFabricName))
             {
                 writer.WritePropertyName("remoteFabricName"u8);
                 writer.WriteStringValue(RemoteFabricName);
             }
-            if (RemoteFabricLocation.HasValue)
+            if (Optional.IsDefined(RemoteFabricLocation))
             {
                 writer.WritePropertyName("remoteFabricLocation"u8);
                 writer.WriteStringValue(RemoteFabricLocation.Value);
@@ -96,12 +97,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> protectedItemName = default;
-            Optional<ResourceIdentifier> fabricObjectId = default;
-            Optional<string> fabricName = default;
-            Optional<AzureLocation> fabricLocation = default;
-            Optional<string> remoteFabricName = default;
-            Optional<AzureLocation> remoteFabricLocation = default;
+            string protectedItemName = default;
+            ResourceIdentifier fabricObjectId = default;
+            string fabricName = default;
+            AzureLocation? fabricLocation = default;
+            string remoteFabricName = default;
+            AzureLocation? remoteFabricLocation = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -163,12 +164,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new A2AEventDetails(
                 instanceType,
                 serializedAdditionalRawData,
-                protectedItemName.Value,
-                fabricObjectId.Value,
-                fabricName.Value,
-                Optional.ToNullable(fabricLocation),
-                remoteFabricName.Value,
-                Optional.ToNullable(remoteFabricLocation));
+                protectedItemName,
+                fabricObjectId,
+                fabricName,
+                fabricLocation,
+                remoteFabricName,
+                remoteFabricLocation);
         }
 
         BinaryData IPersistableModel<A2AEventDetails>.Write(ModelReaderWriterOptions options)

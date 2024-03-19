@@ -31,7 +31,7 @@ namespace Azure.Communication.JobRouter
             writer.WriteStringValue(ChannelId);
             writer.WritePropertyName("capacityCostPerJob"u8);
             writer.WriteNumberValue(CapacityCostPerJob);
-            if (MaxNumberOfJobs.HasValue)
+            if (Optional.IsDefined(MaxNumberOfJobs))
             {
                 writer.WritePropertyName("maxNumberOfJobs"u8);
                 writer.WriteNumberValue(MaxNumberOfJobs.Value);
@@ -76,7 +76,7 @@ namespace Azure.Communication.JobRouter
             }
             string channelId = default;
             int capacityCostPerJob = default;
-            Optional<int> maxNumberOfJobs = default;
+            int? maxNumberOfJobs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,7 +106,7 @@ namespace Azure.Communication.JobRouter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RouterChannel(channelId, capacityCostPerJob, Optional.ToNullable(maxNumberOfJobs), serializedAdditionalRawData);
+            return new RouterChannel(channelId, capacityCostPerJob, maxNumberOfJobs, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RouterChannel>.Write(ModelReaderWriterOptions options)

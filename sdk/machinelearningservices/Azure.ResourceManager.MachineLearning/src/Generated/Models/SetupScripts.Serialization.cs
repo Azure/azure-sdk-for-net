@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Scripts != null)
+            if (Optional.IsDefined(Scripts))
             {
                 writer.WritePropertyName("scripts"u8);
                 writer.WriteObjectValue(Scripts);
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<MachineLearningScriptsToExecute> scripts = default;
+            MachineLearningScriptsToExecute scripts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SetupScripts(scripts.Value, serializedAdditionalRawData);
+            return new SetupScripts(scripts, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SetupScripts>.Write(ModelReaderWriterOptions options)

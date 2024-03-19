@@ -43,29 +43,29 @@ namespace Azure.ResourceManager.Avs
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (ConnectedGateway != null)
+            if (Optional.IsDefined(ConnectedGateway))
             {
                 writer.WritePropertyName("connectedGateway"u8);
                 writer.WriteStringValue(ConnectedGateway);
             }
-            if (Subnet != null)
+            if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
                 writer.WriteObjectValue(Subnet);
             }
-            if (options.Format != "W" && !(PortVif is ChangeTrackingList<WorkloadNetworkSegmentPortVif> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PortVif))
             {
                 writer.WritePropertyName("portVif"u8);
                 writer.WriteStartArray();
@@ -75,17 +75,17 @@ namespace Azure.ResourceManager.Avs
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Revision.HasValue)
+            if (Optional.IsDefined(Revision))
             {
                 writer.WritePropertyName("revision"u8);
                 writer.WriteNumberValue(Revision.Value);
@@ -132,14 +132,14 @@ namespace Azure.ResourceManager.Avs
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<string> connectedGateway = default;
-            Optional<WorkloadNetworkSegmentSubnet> subnet = default;
+            SystemData systemData = default;
+            string displayName = default;
+            string connectedGateway = default;
+            WorkloadNetworkSegmentSubnet subnet = default;
             IReadOnlyList<WorkloadNetworkSegmentPortVif> portVif = default;
-            Optional<WorkloadNetworkSegmentStatus> status = default;
-            Optional<WorkloadNetworkSegmentProvisioningState> provisioningState = default;
-            Optional<long> revision = default;
+            WorkloadNetworkSegmentStatus? status = default;
+            WorkloadNetworkSegmentProvisioningState? provisioningState = default;
+            long? revision = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -250,14 +250,14 @@ namespace Azure.ResourceManager.Avs
                 id,
                 name,
                 type,
-                systemData.Value,
-                displayName.Value,
-                connectedGateway.Value,
-                subnet.Value,
+                systemData,
+                displayName,
+                connectedGateway,
+                subnet,
                 portVif ?? new ChangeTrackingList<WorkloadNetworkSegmentPortVif>(),
-                Optional.ToNullable(status),
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(revision),
+                status,
+                provisioningState,
+                revision,
                 serializedAdditionalRawData);
         }
 

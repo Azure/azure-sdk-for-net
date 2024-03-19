@@ -27,39 +27,39 @@ namespace Azure.AI.OpenAI
             }
 
             writer.WriteStartObject();
-            if (DeploymentName != null)
+            if (Optional.IsDefined(DeploymentName))
             {
                 writer.WritePropertyName("model"u8);
                 writer.WriteStringValue(DeploymentName);
             }
             writer.WritePropertyName("prompt"u8);
             writer.WriteStringValue(Prompt);
-            if (ImageCount.HasValue)
+            if (Optional.IsDefined(ImageCount))
             {
                 writer.WritePropertyName("n"u8);
                 writer.WriteNumberValue(ImageCount.Value);
             }
-            if (Size.HasValue)
+            if (Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteStringValue(Size.Value.ToString());
             }
-            if (ResponseFormat.HasValue)
+            if (Optional.IsDefined(ResponseFormat))
             {
                 writer.WritePropertyName("response_format"u8);
                 writer.WriteStringValue(ResponseFormat.Value.ToString());
             }
-            if (Quality.HasValue)
+            if (Optional.IsDefined(Quality))
             {
                 writer.WritePropertyName("quality"u8);
                 writer.WriteStringValue(Quality.Value.ToString());
             }
-            if (Style.HasValue)
+            if (Optional.IsDefined(Style))
             {
                 writer.WritePropertyName("style"u8);
                 writer.WriteStringValue(Style.Value.ToString());
             }
-            if (User != null)
+            if (Optional.IsDefined(User))
             {
                 writer.WritePropertyName("user"u8);
                 writer.WriteStringValue(User);
@@ -102,14 +102,14 @@ namespace Azure.AI.OpenAI
             {
                 return null;
             }
-            Optional<string> model = default;
+            string model = default;
             string prompt = default;
-            Optional<int> n = default;
-            Optional<ImageSize> size = default;
-            Optional<ImageGenerationResponseFormat> responseFormat = default;
-            Optional<ImageGenerationQuality> quality = default;
-            Optional<ImageGenerationStyle> style = default;
-            Optional<string> user = default;
+            int? n = default;
+            ImageSize? size = default;
+            ImageGenerationResponseFormat? responseFormat = default;
+            ImageGenerationQuality? quality = default;
+            ImageGenerationStyle? style = default;
+            string user = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -181,14 +181,14 @@ namespace Azure.AI.OpenAI
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ImageGenerationOptions(
-                model.Value,
+                model,
                 prompt,
-                Optional.ToNullable(n),
-                Optional.ToNullable(size),
-                Optional.ToNullable(responseFormat),
-                Optional.ToNullable(quality),
-                Optional.ToNullable(style),
-                user.Value,
+                n,
+                size,
+                responseFormat,
+                quality,
+                style,
+                user,
                 serializedAdditionalRawData);
         }
 

@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Communication.ShortCodes;
 
 namespace Azure.Communication.ShortCodes.Models
 {
@@ -20,11 +20,11 @@ namespace Azure.Communication.ShortCodes.Models
             {
                 return null;
             }
-            Optional<string> number = default;
-            Optional<NumberType> numberType = default;
-            Optional<string> countryCode = default;
+            string number = default;
+            NumberType? numberType = default;
+            string countryCode = default;
             IReadOnlyList<string> programBriefIds = default;
-            Optional<DateTimeOffset> purchaseDate = default;
+            DateTimeOffset? purchaseDate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("number"u8))
@@ -70,7 +70,7 @@ namespace Azure.Communication.ShortCodes.Models
                     continue;
                 }
             }
-            return new ShortCode(number.Value, Optional.ToNullable(numberType), countryCode.Value, programBriefIds ?? new ChangeTrackingList<string>(), Optional.ToNullable(purchaseDate));
+            return new ShortCode(number, numberType, countryCode, programBriefIds ?? new ChangeTrackingList<string>(), purchaseDate);
         }
     }
 }

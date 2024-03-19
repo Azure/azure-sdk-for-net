@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageSync;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             writer.WriteStartObject();
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (IncomingTrafficPolicy.HasValue)
+            if (Optional.IsDefined(IncomingTrafficPolicy))
             {
                 writer.WritePropertyName("incomingTrafficPolicy"u8);
                 writer.WriteStringValue(IncomingTrafficPolicy.Value.ToString());
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
             AzureLocation location = default;
             IDictionary<string, string> tags = default;
-            Optional<IncomingTrafficPolicy> incomingTrafficPolicy = default;
+            IncomingTrafficPolicy? incomingTrafficPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,7 +139,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageSyncServiceCreateOrUpdateContent(location, tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(incomingTrafficPolicy), serializedAdditionalRawData);
+            return new StorageSyncServiceCreateOrUpdateContent(location, tags ?? new ChangeTrackingDictionary<string, string>(), incomingTrafficPolicy, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageSyncServiceCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

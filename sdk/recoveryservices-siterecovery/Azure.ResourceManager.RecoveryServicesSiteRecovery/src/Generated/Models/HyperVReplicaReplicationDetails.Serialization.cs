@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (LastReplicatedOn.HasValue)
+            if (Optional.IsDefined(LastReplicatedOn))
             {
                 writer.WritePropertyName("lastReplicatedTime"u8);
                 writer.WriteStringValue(LastReplicatedOn.Value, "O");
             }
-            if (!(VmNics is ChangeTrackingList<VmNicDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(VmNics))
             {
                 writer.WritePropertyName("vmNics"u8);
                 writer.WriteStartArray();
@@ -41,27 +42,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (VmId != null)
+            if (Optional.IsDefined(VmId))
             {
                 writer.WritePropertyName("vmId"u8);
                 writer.WriteStringValue(VmId);
             }
-            if (VmProtectionState != null)
+            if (Optional.IsDefined(VmProtectionState))
             {
                 writer.WritePropertyName("vmProtectionState"u8);
                 writer.WriteStringValue(VmProtectionState);
             }
-            if (VmProtectionStateDescription != null)
+            if (Optional.IsDefined(VmProtectionStateDescription))
             {
                 writer.WritePropertyName("vmProtectionStateDescription"u8);
                 writer.WriteStringValue(VmProtectionStateDescription);
             }
-            if (InitialReplicationDetails != null)
+            if (Optional.IsDefined(InitialReplicationDetails))
             {
                 writer.WritePropertyName("initialReplicationDetails"u8);
                 writer.WriteObjectValue(InitialReplicationDetails);
             }
-            if (!(VmDiskDetails is ChangeTrackingList<SiteRecoveryDiskDetails> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(VmDiskDetails))
             {
                 writer.WritePropertyName("vMDiskDetails"u8);
                 writer.WriteStartArray();
@@ -111,12 +112,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> lastReplicatedTime = default;
+            DateTimeOffset? lastReplicatedTime = default;
             IReadOnlyList<VmNicDetails> vmNics = default;
-            Optional<string> vmId = default;
-            Optional<string> vmProtectionState = default;
-            Optional<string> vmProtectionStateDescription = default;
-            Optional<InitialReplicationDetails> initialReplicationDetails = default;
+            string vmId = default;
+            string vmProtectionState = default;
+            string vmProtectionStateDescription = default;
+            InitialReplicationDetails initialReplicationDetails = default;
             IReadOnlyList<SiteRecoveryDiskDetails> vmDiskDetails = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -198,12 +199,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new HyperVReplicaReplicationDetails(
                 instanceType,
                 serializedAdditionalRawData,
-                Optional.ToNullable(lastReplicatedTime),
+                lastReplicatedTime,
                 vmNics ?? new ChangeTrackingList<VmNicDetails>(),
-                vmId.Value,
-                vmProtectionState.Value,
-                vmProtectionStateDescription.Value,
-                initialReplicationDetails.Value,
+                vmId,
+                vmProtectionState,
+                vmProtectionStateDescription,
+                initialReplicationDetails,
                 vmDiskDetails ?? new ChangeTrackingList<SiteRecoveryDiskDetails>());
         }
 

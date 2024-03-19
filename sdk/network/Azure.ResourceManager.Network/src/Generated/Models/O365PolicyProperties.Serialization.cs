@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (BreakOutCategories != null)
+            if (Optional.IsDefined(BreakOutCategories))
             {
                 writer.WritePropertyName("breakOutCategories"u8);
                 writer.WriteObjectValue(BreakOutCategories);
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<O365BreakOutCategoryPolicies> breakOutCategories = default;
+            O365BreakOutCategoryPolicies breakOutCategories = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new O365PolicyProperties(breakOutCategories.Value, serializedAdditionalRawData);
+            return new O365PolicyProperties(breakOutCategories, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<O365PolicyProperties>.Write(ModelReaderWriterOptions options)

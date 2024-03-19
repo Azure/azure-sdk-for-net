@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
 
             writer.WriteStartObject();
-            if (ActiveDirectory != null)
+            if (Optional.IsDefined(ActiveDirectory))
             {
                 writer.WritePropertyName("activeDirectory"u8);
                 writer.WriteObjectValue(ActiveDirectory);
             }
-            if (UsernameDownload != null)
+            if (Optional.IsDefined(UsernameDownload))
             {
                 writer.WritePropertyName("usernameDownload"u8);
                 writer.WriteObjectValue(UsernameDownload);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<StorageCacheActiveDirectorySettings> activeDirectory = default;
-            Optional<StorageCacheUsernameDownloadSettings> usernameDownload = default;
+            StorageCacheActiveDirectorySettings activeDirectory = default;
+            StorageCacheUsernameDownloadSettings usernameDownload = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageCacheDirectorySettings(activeDirectory.Value, usernameDownload.Value, serializedAdditionalRawData);
+            return new StorageCacheDirectorySettings(activeDirectory, usernameDownload, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageCacheDirectorySettings>.Write(ModelReaderWriterOptions options)

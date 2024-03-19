@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
@@ -19,11 +18,11 @@ namespace Azure.Containers.ContainerRegistry
             {
                 return null;
             }
-            Optional<string> architecture = default;
-            Optional<string> os = default;
-            Optional<string> osVersion = default;
+            string architecture = default;
+            string os = default;
+            string osVersion = default;
             IReadOnlyList<string> osFeatures = default;
-            Optional<string> variant = default;
+            string variant = default;
             IReadOnlyList<string> features = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -77,11 +76,11 @@ namespace Azure.Containers.ContainerRegistry
                 }
             }
             return new Platform(
-                architecture.Value,
-                os.Value,
-                osVersion.Value,
+                architecture,
+                os,
+                osVersion,
                 osFeatures ?? new ChangeTrackingList<string>(),
-                variant.Value,
+                variant,
                 features ?? new ChangeTrackingList<string>());
         }
     }

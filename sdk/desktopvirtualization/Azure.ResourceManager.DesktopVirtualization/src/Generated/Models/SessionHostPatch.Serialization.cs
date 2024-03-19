@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DesktopVirtualization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
@@ -42,24 +43,24 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AllowNewSession.HasValue)
+            if (Optional.IsDefined(AllowNewSession))
             {
                 writer.WritePropertyName("allowNewSession"u8);
                 writer.WriteBooleanValue(AllowNewSession.Value);
             }
-            if (AssignedUser != null)
+            if (Optional.IsDefined(AssignedUser))
             {
                 writer.WritePropertyName("assignedUser"u8);
                 writer.WriteStringValue(AssignedUser);
             }
-            if (FriendlyName != null)
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
@@ -106,10 +107,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> allowNewSession = default;
-            Optional<string> assignedUser = default;
-            Optional<string> friendlyName = default;
+            SystemData systemData = default;
+            bool? allowNewSession = default;
+            string assignedUser = default;
+            string friendlyName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,10 +180,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(allowNewSession),
-                assignedUser.Value,
-                friendlyName.Value,
+                systemData,
+                allowNewSession,
+                assignedUser,
+                friendlyName,
                 serializedAdditionalRawData);
         }
 

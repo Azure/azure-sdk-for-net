@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -26,24 +27,24 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Context != null)
+            if (Optional.IsDefined(Context))
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteObjectValue(Context);
             }
             writer.WritePropertyName("state"u8);
             writer.WriteStringValue(State);
-            if (CompletedOn.HasValue)
+            if (Optional.IsDefined(CompletedOn))
             {
                 writer.WritePropertyName("completedTime"u8);
                 writer.WriteStringValue(CompletedOn.Value, "O");
             }
-            if (CreatedOn.HasValue)
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (!(ActionDetails is ChangeTrackingList<NotificationActionDetail> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ActionDetails))
             {
                 writer.WritePropertyName("actionDetails"u8);
                 writer.WriteStartArray();
@@ -91,10 +92,10 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<NotificationContext> context = default;
+            NotificationContext context = default;
             string state = default;
-            Optional<DateTimeOffset> completedTime = default;
-            Optional<DateTimeOffset> createdTime = default;
+            DateTimeOffset? completedTime = default;
+            DateTimeOffset? createdTime = default;
             IReadOnlyList<NotificationActionDetail> actionDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -153,10 +154,10 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new NotificationStatus(
-                context.Value,
+                context,
                 state,
-                Optional.ToNullable(completedTime),
-                Optional.ToNullable(createdTime),
+                completedTime,
+                createdTime,
                 actionDetails ?? new ChangeTrackingList<NotificationActionDetail>(),
                 serializedAdditionalRawData);
         }

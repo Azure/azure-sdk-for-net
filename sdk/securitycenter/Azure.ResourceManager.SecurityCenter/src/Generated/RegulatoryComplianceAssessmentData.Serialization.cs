@@ -43,49 +43,49 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && AssessmentType != null)
+            if (options.Format != "W" && Optional.IsDefined(AssessmentType))
             {
                 writer.WritePropertyName("assessmentType"u8);
                 writer.WriteStringValue(AssessmentType);
             }
-            if (options.Format != "W" && AssessmentDetailsLink != null)
+            if (options.Format != "W" && Optional.IsDefined(AssessmentDetailsLink))
             {
                 writer.WritePropertyName("assessmentDetailsLink"u8);
                 writer.WriteStringValue(AssessmentDetailsLink);
             }
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && PassedResources.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PassedResources))
             {
                 writer.WritePropertyName("passedResources"u8);
                 writer.WriteNumberValue(PassedResources.Value);
             }
-            if (options.Format != "W" && FailedResources.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(FailedResources))
             {
                 writer.WritePropertyName("failedResources"u8);
                 writer.WriteNumberValue(FailedResources.Value);
             }
-            if (options.Format != "W" && SkippedResources.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SkippedResources))
             {
                 writer.WritePropertyName("skippedResources"u8);
                 writer.WriteNumberValue(SkippedResources.Value);
             }
-            if (options.Format != "W" && UnsupportedResources.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UnsupportedResources))
             {
                 writer.WritePropertyName("unsupportedResources"u8);
                 writer.WriteNumberValue(UnsupportedResources.Value);
@@ -132,15 +132,15 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<string> assessmentType = default;
-            Optional<string> assessmentDetailsLink = default;
-            Optional<RegulatoryComplianceState> state = default;
-            Optional<int> passedResources = default;
-            Optional<int> failedResources = default;
-            Optional<int> skippedResources = default;
-            Optional<int> unsupportedResources = default;
+            SystemData systemData = default;
+            string description = default;
+            string assessmentType = default;
+            string assessmentDetailsLink = default;
+            RegulatoryComplianceState? state = default;
+            int? passedResources = default;
+            int? failedResources = default;
+            int? skippedResources = default;
+            int? unsupportedResources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -251,15 +251,15 @@ namespace Azure.ResourceManager.SecurityCenter
                 id,
                 name,
                 type,
-                systemData.Value,
-                description.Value,
-                assessmentType.Value,
-                assessmentDetailsLink.Value,
-                Optional.ToNullable(state),
-                Optional.ToNullable(passedResources),
-                Optional.ToNullable(failedResources),
-                Optional.ToNullable(skippedResources),
-                Optional.ToNullable(unsupportedResources),
+                systemData,
+                description,
+                assessmentType,
+                assessmentDetailsLink,
+                state,
+                passedResources,
+                failedResources,
+                skippedResources,
+                unsupportedResources,
                 serializedAdditionalRawData);
         }
 

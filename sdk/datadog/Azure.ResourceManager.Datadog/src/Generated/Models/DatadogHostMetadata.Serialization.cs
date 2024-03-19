@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Datadog;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Datadog.Models
             }
 
             writer.WriteStartObject();
-            if (AgentVersion != null)
+            if (Optional.IsDefined(AgentVersion))
             {
                 writer.WritePropertyName("agentVersion"u8);
                 writer.WriteStringValue(AgentVersion);
             }
-            if (InstallMethod != null)
+            if (Optional.IsDefined(InstallMethod))
             {
                 writer.WritePropertyName("installMethod"u8);
                 writer.WriteObjectValue(InstallMethod);
             }
-            if (LogsAgent != null)
+            if (Optional.IsDefined(LogsAgent))
             {
                 writer.WritePropertyName("logsAgent"u8);
                 writer.WriteObjectValue(LogsAgent);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            Optional<string> agentVersion = default;
-            Optional<DatadogInstallMethod> installMethod = default;
-            Optional<DatadogLogsAgent> logsAgent = default;
+            string agentVersion = default;
+            DatadogInstallMethod installMethod = default;
+            DatadogLogsAgent logsAgent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatadogHostMetadata(agentVersion.Value, installMethod.Value, logsAgent.Value, serializedAdditionalRawData);
+            return new DatadogHostMetadata(agentVersion, installMethod, logsAgent, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatadogHostMetadata>.Write(ModelReaderWriterOptions options)

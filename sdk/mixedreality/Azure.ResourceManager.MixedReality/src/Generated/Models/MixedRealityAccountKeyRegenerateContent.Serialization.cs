@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MixedReality;
 
 namespace Azure.ResourceManager.MixedReality.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MixedReality.Models
             }
 
             writer.WriteStartObject();
-            if (Serial.HasValue)
+            if (Optional.IsDefined(Serial))
             {
                 writer.WritePropertyName("serial"u8);
                 writer.WriteNumberValue((int)Serial.Value);
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.MixedReality.Models
             {
                 return null;
             }
-            Optional<MixedRealityAccountKeySerial> serial = default;
+            MixedRealityAccountKeySerial? serial = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.MixedReality.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MixedRealityAccountKeyRegenerateContent(Optional.ToNullable(serial), serializedAdditionalRawData);
+            return new MixedRealityAccountKeyRegenerateContent(serial, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MixedRealityAccountKeyRegenerateContent>.Write(ModelReaderWriterOptions options)

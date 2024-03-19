@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && AmlWorkspaceLocation != null)
+            if (options.Format != "W" && Optional.IsDefined(AmlWorkspaceLocation))
             {
                 writer.WritePropertyName("amlWorkspaceLocation"u8);
                 writer.WriteStringValue(AmlWorkspaceLocation);
             }
-            if (options.Format != "W" && ResourceQuotaType != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceQuotaType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceQuotaType);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteObjectValue(Name);
             }
-            if (options.Format != "W" && Limit.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Limit))
             {
                 writer.WritePropertyName("limit"u8);
                 writer.WriteNumberValue(Limit.Value);
             }
-            if (options.Format != "W" && Unit.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit.Value.ToString());
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> amlWorkspaceLocation = default;
-            Optional<string> type = default;
-            Optional<MachineLearningResourceName> name = default;
-            Optional<long> limit = default;
-            Optional<MachineLearningQuotaUnit> unit = default;
+            string id = default;
+            string amlWorkspaceLocation = default;
+            string type = default;
+            MachineLearningResourceName name = default;
+            long? limit = default;
+            MachineLearningQuotaUnit? unit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -153,12 +154,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MachineLearningResourceQuota(
-                id.Value,
-                amlWorkspaceLocation.Value,
-                type.Value,
-                name.Value,
-                Optional.ToNullable(limit),
-                Optional.ToNullable(unit),
+                id,
+                amlWorkspaceLocation,
+                type,
+                name,
+                limit,
+                unit,
                 serializedAdditionalRawData);
         }
 

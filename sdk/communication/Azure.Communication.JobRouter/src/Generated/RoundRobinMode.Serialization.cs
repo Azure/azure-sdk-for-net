@@ -31,7 +31,7 @@ namespace Azure.Communication.JobRouter
             writer.WriteNumberValue(MinConcurrentOffers);
             writer.WritePropertyName("maxConcurrentOffers"u8);
             writer.WriteNumberValue(MaxConcurrentOffers);
-            if (BypassSelectors.HasValue)
+            if (Optional.IsDefined(BypassSelectors))
             {
                 writer.WritePropertyName("bypassSelectors"u8);
                 writer.WriteBooleanValue(BypassSelectors.Value);
@@ -76,9 +76,9 @@ namespace Azure.Communication.JobRouter
             {
                 return null;
             }
-            Optional<int> minConcurrentOffers = default;
-            Optional<int> maxConcurrentOffers = default;
-            Optional<bool> bypassSelectors = default;
+            int minConcurrentOffers = default;
+            int maxConcurrentOffers = default;
+            bool? bypassSelectors = default;
             DistributionModeKind kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -122,7 +122,7 @@ namespace Azure.Communication.JobRouter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoundRobinMode(minConcurrentOffers, maxConcurrentOffers, Optional.ToNullable(bypassSelectors), kind, serializedAdditionalRawData);
+            return new RoundRobinMode(minConcurrentOffers, maxConcurrentOffers, bypassSelectors, kind, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoundRobinMode>.Write(ModelReaderWriterOptions options)

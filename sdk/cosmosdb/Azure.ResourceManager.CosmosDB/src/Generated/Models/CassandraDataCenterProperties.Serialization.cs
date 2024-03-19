@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (DataCenterLocation.HasValue)
+            if (Optional.IsDefined(DataCenterLocation))
             {
                 writer.WritePropertyName("dataCenterLocation"u8);
                 writer.WriteStringValue(DataCenterLocation.Value);
             }
-            if (DelegatedSubnetId != null)
+            if (Optional.IsDefined(DelegatedSubnetId))
             {
                 writer.WritePropertyName("delegatedSubnetId"u8);
                 writer.WriteStringValue(DelegatedSubnetId);
             }
-            if (NodeCount.HasValue)
+            if (Optional.IsDefined(NodeCount))
             {
                 writer.WritePropertyName("nodeCount"u8);
                 writer.WriteNumberValue(NodeCount.Value);
             }
-            if (options.Format != "W" && !(SeedNodes is ChangeTrackingList<CassandraDataCenterSeedNode> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SeedNodes))
             {
                 writer.WritePropertyName("seedNodes"u8);
                 writer.WriteStartArray();
@@ -56,52 +57,52 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Base64EncodedCassandraYamlFragment != null)
+            if (Optional.IsDefined(Base64EncodedCassandraYamlFragment))
             {
                 writer.WritePropertyName("base64EncodedCassandraYamlFragment"u8);
                 writer.WriteStringValue(Base64EncodedCassandraYamlFragment);
             }
-            if (ManagedDiskCustomerKeyUri != null)
+            if (Optional.IsDefined(ManagedDiskCustomerKeyUri))
             {
                 writer.WritePropertyName("managedDiskCustomerKeyUri"u8);
                 writer.WriteStringValue(ManagedDiskCustomerKeyUri.AbsoluteUri);
             }
-            if (BackupStorageCustomerKeyUri != null)
+            if (Optional.IsDefined(BackupStorageCustomerKeyUri))
             {
                 writer.WritePropertyName("backupStorageCustomerKeyUri"u8);
                 writer.WriteStringValue(BackupStorageCustomerKeyUri.AbsoluteUri);
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteStringValue(Sku);
             }
-            if (DiskSku != null)
+            if (Optional.IsDefined(DiskSku))
             {
                 writer.WritePropertyName("diskSku"u8);
                 writer.WriteStringValue(DiskSku);
             }
-            if (DiskCapacity.HasValue)
+            if (Optional.IsDefined(DiskCapacity))
             {
                 writer.WritePropertyName("diskCapacity"u8);
                 writer.WriteNumberValue(DiskCapacity.Value);
             }
-            if (DoesSupportAvailabilityZone.HasValue)
+            if (Optional.IsDefined(DoesSupportAvailabilityZone))
             {
                 writer.WritePropertyName("availabilityZone"u8);
                 writer.WriteBooleanValue(DoesSupportAvailabilityZone.Value);
             }
-            if (AuthenticationMethodLdapProperties != null)
+            if (Optional.IsDefined(AuthenticationMethodLdapProperties))
             {
                 writer.WritePropertyName("authenticationMethodLdapProperties"u8);
                 writer.WriteObjectValue(AuthenticationMethodLdapProperties);
             }
-            if (Deallocated.HasValue)
+            if (Optional.IsDefined(Deallocated))
             {
                 writer.WritePropertyName("deallocated"u8);
                 writer.WriteBooleanValue(Deallocated.Value);
             }
-            if (ProvisionError != null)
+            if (Optional.IsDefined(ProvisionError))
             {
                 writer.WritePropertyName("provisionError"u8);
                 writer.WriteObjectValue(ProvisionError);
@@ -144,21 +145,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<CassandraProvisioningState> provisioningState = default;
-            Optional<AzureLocation> dataCenterLocation = default;
-            Optional<ResourceIdentifier> delegatedSubnetId = default;
-            Optional<int> nodeCount = default;
+            CassandraProvisioningState? provisioningState = default;
+            AzureLocation? dataCenterLocation = default;
+            ResourceIdentifier delegatedSubnetId = default;
+            int? nodeCount = default;
             IReadOnlyList<CassandraDataCenterSeedNode> seedNodes = default;
-            Optional<string> base64EncodedCassandraYamlFragment = default;
-            Optional<Uri> managedDiskCustomerKeyUri = default;
-            Optional<Uri> backupStorageCustomerKeyUri = default;
-            Optional<string> sku = default;
-            Optional<string> diskSku = default;
-            Optional<int> diskCapacity = default;
-            Optional<bool> availabilityZone = default;
-            Optional<AuthenticationMethodLdapProperties> authenticationMethodLdapProperties = default;
-            Optional<bool> deallocated = default;
-            Optional<CassandraError> provisionError = default;
+            string base64EncodedCassandraYamlFragment = default;
+            Uri managedDiskCustomerKeyUri = default;
+            Uri backupStorageCustomerKeyUri = default;
+            string sku = default;
+            string diskSku = default;
+            int? diskCapacity = default;
+            bool? availabilityZone = default;
+            AuthenticationMethodLdapProperties authenticationMethodLdapProperties = default;
+            bool? deallocated = default;
+            CassandraError provisionError = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -298,21 +299,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new CassandraDataCenterProperties(
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(dataCenterLocation),
-                delegatedSubnetId.Value,
-                Optional.ToNullable(nodeCount),
+                provisioningState,
+                dataCenterLocation,
+                delegatedSubnetId,
+                nodeCount,
                 seedNodes ?? new ChangeTrackingList<CassandraDataCenterSeedNode>(),
-                base64EncodedCassandraYamlFragment.Value,
-                managedDiskCustomerKeyUri.Value,
-                backupStorageCustomerKeyUri.Value,
-                sku.Value,
-                diskSku.Value,
-                Optional.ToNullable(diskCapacity),
-                Optional.ToNullable(availabilityZone),
-                authenticationMethodLdapProperties.Value,
-                Optional.ToNullable(deallocated),
-                provisionError.Value,
+                base64EncodedCassandraYamlFragment,
+                managedDiskCustomerKeyUri,
+                backupStorageCustomerKeyUri,
+                sku,
+                diskSku,
+                diskCapacity,
+                availabilityZone,
+                authenticationMethodLdapProperties,
+                deallocated,
+                provisionError,
                 serializedAdditionalRawData);
         }
 

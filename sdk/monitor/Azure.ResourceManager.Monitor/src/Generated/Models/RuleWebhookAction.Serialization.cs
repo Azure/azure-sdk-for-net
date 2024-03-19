@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (ServiceUri != null)
+            if (Optional.IsDefined(ServiceUri))
             {
                 writer.WritePropertyName("serviceUri"u8);
                 writer.WriteStringValue(ServiceUri.AbsoluteUri);
             }
-            if (!(Properties is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();
@@ -82,7 +83,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<Uri> serviceUri = default;
+            Uri serviceUri = default;
             IDictionary<string, string> properties = default;
             string odataType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -123,7 +124,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RuleWebhookAction(odataType, serializedAdditionalRawData, serviceUri.Value, properties ?? new ChangeTrackingDictionary<string, string>());
+            return new RuleWebhookAction(odataType, serializedAdditionalRawData, serviceUri, properties ?? new ChangeTrackingDictionary<string, string>());
         }
 
         BinaryData IPersistableModel<RuleWebhookAction>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (ContainerType.HasValue)
+            if (Optional.IsDefined(ContainerType))
             {
                 writer.WritePropertyName("containerType"u8);
                 writer.WriteStringValue(ContainerType.Value.ToString());
             }
-            if (Tail.HasValue)
+            if (Optional.IsDefined(Tail))
             {
                 if (Tail != null)
                 {
@@ -81,8 +82,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<MachineLearningContainerType> containerType = default;
-            Optional<int?> tail = default;
+            MachineLearningContainerType? containerType = default;
+            int? tail = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningDeploymentLogsContent(Optional.ToNullable(containerType), Optional.ToNullable(tail), serializedAdditionalRawData);
+            return new MachineLearningDeploymentLogsContent(containerType, tail, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningDeploymentLogsContent>.Write(ModelReaderWriterOptions options)

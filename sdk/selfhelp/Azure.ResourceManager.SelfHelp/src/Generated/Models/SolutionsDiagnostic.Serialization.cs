@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SelfHelp;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
 
             writer.WriteStartObject();
-            if (SolutionId != null)
+            if (Optional.IsDefined(SolutionId))
             {
                 writer.WritePropertyName("solutionId"u8);
                 writer.WriteStringValue(SolutionId);
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (StatusDetails != null)
+            if (Optional.IsDefined(StatusDetails))
             {
                 writer.WritePropertyName("statusDetails"u8);
                 writer.WriteStringValue(StatusDetails);
             }
-            if (ReplacementKey != null)
+            if (Optional.IsDefined(ReplacementKey))
             {
                 writer.WritePropertyName("replacementKey"u8);
                 writer.WriteStringValue(ReplacementKey);
             }
-            if (!(RequiredParameters is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(RequiredParameters))
             {
                 writer.WritePropertyName("requiredParameters"u8);
                 writer.WriteStartArray();
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Insights is ChangeTrackingList<SelfHelpDiagnosticInsight> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Insights))
             {
                 writer.WritePropertyName("insights"u8);
                 writer.WriteStartArray();
@@ -104,10 +105,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Optional<string> solutionId = default;
-            Optional<SelfHelpDiagnosticStatus> status = default;
-            Optional<string> statusDetails = default;
-            Optional<string> replacementKey = default;
+            string solutionId = default;
+            SelfHelpDiagnosticStatus? status = default;
+            string statusDetails = default;
+            string replacementKey = default;
             IList<string> requiredParameters = default;
             IList<SelfHelpDiagnosticInsight> insights = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -173,10 +174,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SolutionsDiagnostic(
-                solutionId.Value,
-                Optional.ToNullable(status),
-                statusDetails.Value,
-                replacementKey.Value,
+                solutionId,
+                status,
+                statusDetails,
+                replacementKey,
                 requiredParameters ?? new ChangeTrackingList<string>(),
                 insights ?? new ChangeTrackingList<SelfHelpDiagnosticInsight>(),
                 serializedAdditionalRawData);

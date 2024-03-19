@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
@@ -28,32 +29,32 @@ namespace Azure.ResourceManager.PostgreSql.Models
             writer.WriteStartObject();
             writer.WritePropertyName("sourceServerId"u8);
             writer.WriteStringValue(SourceServerId);
-            if (Version.HasValue)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version.Value.ToString());
             }
-            if (SslEnforcement.HasValue)
+            if (Optional.IsDefined(SslEnforcement))
             {
                 writer.WritePropertyName("sslEnforcement"u8);
                 writer.WriteStringValue(SslEnforcement.Value.ToSerialString());
             }
-            if (MinimalTlsVersion.HasValue)
+            if (Optional.IsDefined(MinimalTlsVersion))
             {
                 writer.WritePropertyName("minimalTlsVersion"u8);
                 writer.WriteStringValue(MinimalTlsVersion.Value.ToString());
             }
-            if (InfrastructureEncryption.HasValue)
+            if (Optional.IsDefined(InfrastructureEncryption))
             {
                 writer.WritePropertyName("infrastructureEncryption"u8);
                 writer.WriteStringValue(InfrastructureEncryption.Value.ToString());
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (StorageProfile != null)
+            if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
                 writer.WriteObjectValue(StorageProfile);
@@ -99,12 +100,12 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 return null;
             }
             ResourceIdentifier sourceServerId = default;
-            Optional<PostgreSqlServerVersion> version = default;
-            Optional<PostgreSqlSslEnforcementEnum> sslEnforcement = default;
-            Optional<PostgreSqlMinimalTlsVersionEnum> minimalTlsVersion = default;
-            Optional<PostgreSqlInfrastructureEncryption> infrastructureEncryption = default;
-            Optional<PostgreSqlPublicNetworkAccessEnum> publicNetworkAccess = default;
-            Optional<PostgreSqlStorageProfile> storageProfile = default;
+            PostgreSqlServerVersion? version = default;
+            PostgreSqlSslEnforcementEnum? sslEnforcement = default;
+            PostgreSqlMinimalTlsVersionEnum? minimalTlsVersion = default;
+            PostgreSqlInfrastructureEncryption? infrastructureEncryption = default;
+            PostgreSqlPublicNetworkAccessEnum? publicNetworkAccess = default;
+            PostgreSqlStorageProfile storageProfile = default;
             PostgreSqlCreateMode createMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -181,12 +182,12 @@ namespace Azure.ResourceManager.PostgreSql.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new PostgreSqlServerPropertiesForGeoRestore(
-                Optional.ToNullable(version),
-                Optional.ToNullable(sslEnforcement),
-                Optional.ToNullable(minimalTlsVersion),
-                Optional.ToNullable(infrastructureEncryption),
-                Optional.ToNullable(publicNetworkAccess),
-                storageProfile.Value,
+                version,
+                sslEnforcement,
+                minimalTlsVersion,
+                infrastructureEncryption,
+                publicNetworkAccess,
+                storageProfile,
                 createMode,
                 serializedAdditionalRawData,
                 sourceServerId);

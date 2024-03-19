@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (ExtendedLocation != null)
+            if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 JsonSerializer.Serialize(writer, ExtendedLocation);
             }
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (!(Zones is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -49,27 +49,27 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -82,32 +82,32 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Asn != null)
+            if (Optional.IsDefined(Asn))
             {
                 writer.WritePropertyName("asn"u8);
                 writer.WriteStringValue(Asn);
             }
-            if (Cidr != null)
+            if (Optional.IsDefined(Cidr))
             {
                 writer.WritePropertyName("cidr"u8);
                 writer.WriteStringValue(Cidr);
             }
-            if (SignedMessage != null)
+            if (Optional.IsDefined(SignedMessage))
             {
                 writer.WritePropertyName("signedMessage"u8);
                 writer.WriteStringValue(SignedMessage);
             }
-            if (AuthorizationMessage != null)
+            if (Optional.IsDefined(AuthorizationMessage))
             {
                 writer.WritePropertyName("authorizationMessage"u8);
                 writer.WriteStringValue(AuthorizationMessage);
             }
-            if (ParentCustomIPPrefix != null)
+            if (Optional.IsDefined(ParentCustomIPPrefix))
             {
                 writer.WritePropertyName("customIpPrefixParent"u8);
                 JsonSerializer.Serialize(writer, ParentCustomIPPrefix);
             }
-            if (options.Format != "W" && !(ChildCustomIPPrefixList is ChangeTrackingList<WritableSubResource> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ChildCustomIPPrefixList))
             {
                 writer.WritePropertyName("childCustomIpPrefixes"u8);
                 writer.WriteStartArray();
@@ -117,32 +117,32 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (CommissionedState.HasValue)
+            if (Optional.IsDefined(CommissionedState))
             {
                 writer.WritePropertyName("commissionedState"u8);
                 writer.WriteStringValue(CommissionedState.Value.ToString());
             }
-            if (ExpressRouteAdvertise.HasValue)
+            if (Optional.IsDefined(ExpressRouteAdvertise))
             {
                 writer.WritePropertyName("expressRouteAdvertise"u8);
                 writer.WriteBooleanValue(ExpressRouteAdvertise.Value);
             }
-            if (Geo.HasValue)
+            if (Optional.IsDefined(Geo))
             {
                 writer.WritePropertyName("geo"u8);
                 writer.WriteStringValue(Geo.Value.ToString());
             }
-            if (NoInternetAdvertise.HasValue)
+            if (Optional.IsDefined(NoInternetAdvertise))
             {
                 writer.WritePropertyName("noInternetAdvertise"u8);
                 writer.WriteBooleanValue(NoInternetAdvertise.Value);
             }
-            if (PrefixType.HasValue)
+            if (Optional.IsDefined(PrefixType))
             {
                 writer.WritePropertyName("prefixType"u8);
                 writer.WriteStringValue(PrefixType.Value.ToString());
             }
-            if (options.Format != "W" && !(PublicIPPrefixes is ChangeTrackingList<WritableSubResource> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PublicIPPrefixes))
             {
                 writer.WritePropertyName("publicIpPrefixes"u8);
                 writer.WriteStartArray();
@@ -152,17 +152,17 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ResourceGuid.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
             {
                 writer.WritePropertyName("resourceGuid"u8);
                 writer.WriteStringValue(ResourceGuid.Value);
             }
-            if (options.Format != "W" && FailedReason != null)
+            if (options.Format != "W" && Optional.IsDefined(FailedReason))
             {
                 writer.WritePropertyName("failedReason"u8);
                 writer.WriteStringValue(FailedReason);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -206,29 +206,29 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ExtendedLocation> extendedLocation = default;
-            Optional<ETag> etag = default;
+            ExtendedLocation extendedLocation = default;
+            ETag? etag = default;
             IList<string> zones = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
             IDictionary<string, string> tags = default;
-            Optional<string> asn = default;
-            Optional<string> cidr = default;
-            Optional<string> signedMessage = default;
-            Optional<string> authorizationMessage = default;
-            Optional<WritableSubResource> customIPPrefixParent = default;
+            string asn = default;
+            string cidr = default;
+            string signedMessage = default;
+            string authorizationMessage = default;
+            WritableSubResource customIPPrefixParent = default;
             IReadOnlyList<WritableSubResource> childCustomIPPrefixes = default;
-            Optional<CommissionedState> commissionedState = default;
-            Optional<bool> expressRouteAdvertise = default;
-            Optional<CidrAdvertisingGeoCode> geo = default;
-            Optional<bool> noInternetAdvertise = default;
-            Optional<CustomIPPrefixType> prefixType = default;
+            CommissionedState? commissionedState = default;
+            bool? expressRouteAdvertise = default;
+            CidrAdvertisingGeoCode? geo = default;
+            bool? noInternetAdvertise = default;
+            CustomIPPrefixType? prefixType = default;
             IReadOnlyList<WritableSubResource> publicIPPrefixes = default;
-            Optional<Guid> resourceGuid = default;
-            Optional<string> failedReason = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            Guid? resourceGuid = default;
+            string failedReason = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -455,30 +455,30 @@ namespace Azure.ResourceManager.Network
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new CustomIPPrefixData(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
-                Optional.ToNullable(location),
+                id,
+                name,
+                type,
+                location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
                 extendedLocation,
-                Optional.ToNullable(etag),
+                etag,
                 zones ?? new ChangeTrackingList<string>(),
-                asn.Value,
-                cidr.Value,
-                signedMessage.Value,
-                authorizationMessage.Value,
+                asn,
+                cidr,
+                signedMessage,
+                authorizationMessage,
                 customIPPrefixParent,
                 childCustomIPPrefixes ?? new ChangeTrackingList<WritableSubResource>(),
-                Optional.ToNullable(commissionedState),
-                Optional.ToNullable(expressRouteAdvertise),
-                Optional.ToNullable(geo),
-                Optional.ToNullable(noInternetAdvertise),
-                Optional.ToNullable(prefixType),
+                commissionedState,
+                expressRouteAdvertise,
+                geo,
+                noInternetAdvertise,
+                prefixType,
                 publicIPPrefixes ?? new ChangeTrackingList<WritableSubResource>(),
-                Optional.ToNullable(resourceGuid),
-                failedReason.Value,
-                Optional.ToNullable(provisioningState));
+                resourceGuid,
+                failedReason,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<CustomIPPrefixData>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && KeyVaultId != null)
+            if (options.Format != "W" && Optional.IsDefined(KeyVaultId))
             {
                 writer.WritePropertyName("keyVaultId"u8);
                 writer.WriteStringValue(KeyVaultId);
             }
-            if (options.Format != "W" && KeyVaultUri != null)
+            if (options.Format != "W" && Optional.IsDefined(KeyVaultUri))
             {
                 writer.WritePropertyName("keyVaultUri"u8);
                 writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
             }
-            if (options.Format != "W" && StorageAccountId != null)
+            if (options.Format != "W" && Optional.IsDefined(StorageAccountId))
             {
                 writer.WritePropertyName("storageAccountId"u8);
                 writer.WriteStringValue(StorageAccountId);
             }
-            if (options.Format != "W" && StorageAccountSasSecretName != null)
+            if (options.Format != "W" && Optional.IsDefined(StorageAccountSasSecretName))
             {
                 writer.WritePropertyName("storageAccountSasSecretName"u8);
                 writer.WriteStringValue(StorageAccountSasSecretName);
             }
-            if (options.Format != "W" && ServiceBusConnectionStringSecretName != null)
+            if (options.Format != "W" && Optional.IsDefined(ServiceBusConnectionStringSecretName))
             {
                 writer.WritePropertyName("serviceBusConnectionStringSecretName"u8);
                 writer.WriteStringValue(ServiceBusConnectionStringSecretName);
             }
-            if (options.Format != "W" && TargetLocation != null)
+            if (options.Format != "W" && Optional.IsDefined(TargetLocation))
             {
                 writer.WritePropertyName("targetLocation"u8);
                 writer.WriteStringValue(TargetLocation);
             }
-            if (options.Format != "W" && !(RoleSizeToNicCountMap is ChangeTrackingDictionary<string, int> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(RoleSizeToNicCountMap))
             {
                 writer.WritePropertyName("roleSizeToNicCountMap"u8);
                 writer.WriteStartObject();
@@ -67,7 +68,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(ExcludedSkus is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ExcludedSkus))
             {
                 writer.WritePropertyName("excludedSkus"u8);
                 writer.WriteStartArray();
@@ -117,12 +118,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> keyVaultId = default;
-            Optional<Uri> keyVaultUri = default;
-            Optional<ResourceIdentifier> storageAccountId = default;
-            Optional<string> storageAccountSasSecretName = default;
-            Optional<string> serviceBusConnectionStringSecretName = default;
-            Optional<string> targetLocation = default;
+            ResourceIdentifier keyVaultId = default;
+            Uri keyVaultUri = default;
+            ResourceIdentifier storageAccountId = default;
+            string storageAccountSasSecretName = default;
+            string serviceBusConnectionStringSecretName = default;
+            string targetLocation = default;
             IReadOnlyDictionary<string, int> roleSizeToNicCountMap = default;
             IReadOnlyList<string> excludedSkus = default;
             string instanceType = default;
@@ -214,12 +215,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new VMwareCbtProtectionContainerMappingDetails(
                 instanceType,
                 serializedAdditionalRawData,
-                keyVaultId.Value,
-                keyVaultUri.Value,
-                storageAccountId.Value,
-                storageAccountSasSecretName.Value,
-                serviceBusConnectionStringSecretName.Value,
-                targetLocation.Value,
+                keyVaultId,
+                keyVaultUri,
+                storageAccountId,
+                storageAccountSasSecretName,
+                serviceBusConnectionStringSecretName,
+                targetLocation,
                 roleSizeToNicCountMap ?? new ChangeTrackingDictionary<string, int>(),
                 excludedSkus ?? new ChangeTrackingList<string>());
         }

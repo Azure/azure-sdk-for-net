@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (DisablePasswordAuthentication.HasValue)
+            if (Optional.IsDefined(DisablePasswordAuthentication))
             {
                 writer.WritePropertyName("disablePasswordAuthentication"u8);
                 writer.WriteBooleanValue(DisablePasswordAuthentication.Value);
             }
-            if (Ssh != null)
+            if (Optional.IsDefined(Ssh))
             {
                 writer.WritePropertyName("ssh"u8);
                 writer.WriteObjectValue(Ssh);
             }
-            if (SshKeyPair != null)
+            if (Optional.IsDefined(SshKeyPair))
             {
                 writer.WritePropertyName("sshKeyPair"u8);
                 writer.WriteObjectValue(SshKeyPair);
@@ -81,9 +82,9 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<bool> disablePasswordAuthentication = default;
-            Optional<SapSshConfiguration> ssh = default;
-            Optional<SapSshKeyPair> sshKeyPair = default;
+            bool? disablePasswordAuthentication = default;
+            SapSshConfiguration ssh = default;
+            SapSshKeyPair sshKeyPair = default;
             SapOSType osType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -127,7 +128,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SapLinuxConfiguration(osType, serializedAdditionalRawData, Optional.ToNullable(disablePasswordAuthentication), ssh.Value, sshKeyPair.Value);
+            return new SapLinuxConfiguration(osType, serializedAdditionalRawData, disablePasswordAuthentication, ssh, sshKeyPair);
         }
 
         BinaryData IPersistableModel<SapLinuxConfiguration>.Write(ModelReaderWriterOptions options)

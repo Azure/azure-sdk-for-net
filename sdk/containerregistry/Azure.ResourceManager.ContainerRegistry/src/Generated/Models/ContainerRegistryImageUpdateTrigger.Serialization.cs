@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (Id.HasValue)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id.Value);
             }
-            if (Timestamp.HasValue)
+            if (Optional.IsDefined(Timestamp))
             {
                 writer.WritePropertyName("timestamp"u8);
                 writer.WriteStringValue(Timestamp.Value, "O");
             }
-            if (!(Images is ChangeTrackingList<ContainerRegistryImageDescriptor> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Images))
             {
                 writer.WritePropertyName("images"u8);
                 writer.WriteStartArray();
@@ -84,8 +85,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<Guid> id = default;
-            Optional<DateTimeOffset> timestamp = default;
+            Guid? id = default;
+            DateTimeOffset? timestamp = default;
             IList<ContainerRegistryImageDescriptor> images = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryImageUpdateTrigger(Optional.ToNullable(id), Optional.ToNullable(timestamp), images ?? new ChangeTrackingList<ContainerRegistryImageDescriptor>(), serializedAdditionalRawData);
+            return new ContainerRegistryImageUpdateTrigger(id, timestamp, images ?? new ChangeTrackingList<ContainerRegistryImageDescriptor>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryImageUpdateTrigger>.Write(ModelReaderWriterOptions options)

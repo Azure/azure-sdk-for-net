@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.Search
             }
 
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -66,59 +66,59 @@ namespace Azure.ResourceManager.Search
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ReplicaCount.HasValue)
+            if (Optional.IsDefined(ReplicaCount))
             {
                 writer.WritePropertyName("replicaCount"u8);
                 writer.WriteNumberValue(ReplicaCount.Value);
             }
-            if (PartitionCount.HasValue)
+            if (Optional.IsDefined(PartitionCount))
             {
                 writer.WritePropertyName("partitionCount"u8);
                 writer.WriteNumberValue(PartitionCount.Value);
             }
-            if (HostingMode.HasValue)
+            if (Optional.IsDefined(HostingMode))
             {
                 writer.WritePropertyName("hostingMode"u8);
                 writer.WriteStringValue(HostingMode.Value.ToSerialString());
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToSerialString());
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (options.Format != "W" && StatusDetails != null)
+            if (options.Format != "W" && Optional.IsDefined(StatusDetails))
             {
                 writer.WritePropertyName("statusDetails"u8);
                 writer.WriteStringValue(StatusDetails);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
             }
-            if (NetworkRuleSet != null)
+            if (Optional.IsDefined(NetworkRuleSet))
             {
                 writer.WritePropertyName("networkRuleSet"u8);
                 writer.WriteObjectValue(NetworkRuleSet);
             }
-            if (EncryptionWithCmk != null)
+            if (Optional.IsDefined(EncryptionWithCmk))
             {
                 writer.WritePropertyName("encryptionWithCmk"u8);
                 writer.WriteObjectValue(EncryptionWithCmk);
             }
-            if (IsLocalAuthDisabled.HasValue)
+            if (Optional.IsDefined(IsLocalAuthDisabled))
             {
                 if (IsLocalAuthDisabled != null)
                 {
@@ -130,12 +130,12 @@ namespace Azure.ResourceManager.Search
                     writer.WriteNull("disableLocalAuth");
                 }
             }
-            if (AuthOptions != null)
+            if (Optional.IsDefined(AuthOptions))
             {
                 writer.WritePropertyName("authOptions"u8);
                 writer.WriteObjectValue(AuthOptions);
             }
-            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<SearchPrivateEndpointConnectionData> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Search
                 }
                 writer.WriteEndArray();
             }
-            if (SemanticSearch.HasValue)
+            if (Optional.IsDefined(SemanticSearch))
             {
                 if (SemanticSearch != null)
                 {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Search
                     writer.WriteNull("semanticSearch");
                 }
             }
-            if (options.Format != "W" && !(SharedPrivateLinkResources is ChangeTrackingList<SharedSearchServicePrivateLinkResourceData> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SharedPrivateLinkResources))
             {
                 writer.WritePropertyName("sharedPrivateLinkResources"u8);
                 writer.WriteStartArray();
@@ -206,27 +206,27 @@ namespace Azure.ResourceManager.Search
             {
                 return null;
             }
-            Optional<SearchSku> sku = default;
-            Optional<ManagedServiceIdentity> identity = default;
+            SearchSku sku = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> replicaCount = default;
-            Optional<int> partitionCount = default;
-            Optional<SearchServiceHostingMode> hostingMode = default;
-            Optional<SearchServicePublicNetworkAccess> publicNetworkAccess = default;
-            Optional<SearchServiceStatus> status = default;
-            Optional<string> statusDetails = default;
-            Optional<SearchServiceProvisioningState> provisioningState = default;
-            Optional<NetworkRuleSet> networkRuleSet = default;
-            Optional<SearchEncryptionWithCmk> encryptionWithCmk = default;
-            Optional<bool?> disableLocalAuth = default;
-            Optional<SearchAadAuthDataPlaneAuthOptions> authOptions = default;
+            SystemData systemData = default;
+            int? replicaCount = default;
+            int? partitionCount = default;
+            SearchServiceHostingMode? hostingMode = default;
+            SearchServicePublicNetworkAccess? publicNetworkAccess = default;
+            SearchServiceStatus? status = default;
+            string statusDetails = default;
+            SearchServiceProvisioningState? provisioningState = default;
+            NetworkRuleSet networkRuleSet = default;
+            SearchEncryptionWithCmk encryptionWithCmk = default;
+            bool? disableLocalAuth = default;
+            SearchAadAuthDataPlaneAuthOptions authOptions = default;
             IReadOnlyList<SearchPrivateEndpointConnectionData> privateEndpointConnections = default;
-            Optional<SearchSemanticSearch?> semanticSearch = default;
+            SearchSemanticSearch? semanticSearch = default;
             IReadOnlyList<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -449,24 +449,24 @@ namespace Azure.ResourceManager.Search
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                sku.Value,
+                sku,
                 identity,
-                Optional.ToNullable(replicaCount),
-                Optional.ToNullable(partitionCount),
-                Optional.ToNullable(hostingMode),
-                Optional.ToNullable(publicNetworkAccess),
-                Optional.ToNullable(status),
-                statusDetails.Value,
-                Optional.ToNullable(provisioningState),
-                networkRuleSet.Value,
-                encryptionWithCmk.Value,
-                Optional.ToNullable(disableLocalAuth),
-                authOptions.Value,
+                replicaCount,
+                partitionCount,
+                hostingMode,
+                publicNetworkAccess,
+                status,
+                statusDetails,
+                provisioningState,
+                networkRuleSet,
+                encryptionWithCmk,
+                disableLocalAuth,
+                authOptions,
                 privateEndpointConnections ?? new ChangeTrackingList<SearchPrivateEndpointConnectionData>(),
-                Optional.ToNullable(semanticSearch),
+                semanticSearch,
                 sharedPrivateLinkResources ?? new ChangeTrackingList<SharedSearchServicePrivateLinkResourceData>(),
                 serializedAdditionalRawData);
         }

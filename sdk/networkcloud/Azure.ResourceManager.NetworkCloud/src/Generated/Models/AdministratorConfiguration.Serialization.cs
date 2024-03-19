@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (AdminUsername != null)
+            if (Optional.IsDefined(AdminUsername))
             {
                 writer.WritePropertyName("adminUsername"u8);
                 writer.WriteStringValue(AdminUsername);
             }
-            if (!(SshPublicKeys is ChangeTrackingList<NetworkCloudSshPublicKey> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SshPublicKeys))
             {
                 writer.WritePropertyName("sshPublicKeys"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<string> adminUsername = default;
+            string adminUsername = default;
             IList<NetworkCloudSshPublicKey> sshPublicKeys = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AdministratorConfiguration(adminUsername.Value, sshPublicKeys ?? new ChangeTrackingList<NetworkCloudSshPublicKey>(), serializedAdditionalRawData);
+            return new AdministratorConfiguration(adminUsername, sshPublicKeys ?? new ChangeTrackingList<NetworkCloudSshPublicKey>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AdministratorConfiguration>.Write(ModelReaderWriterOptions options)

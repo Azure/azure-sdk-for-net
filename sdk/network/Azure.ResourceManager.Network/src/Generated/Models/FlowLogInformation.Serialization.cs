@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("targetResourceId"u8);
             writer.WriteStringValue(TargetResourceId);
-            if (FlowAnalyticsConfiguration != null)
+            if (Optional.IsDefined(FlowAnalyticsConfiguration))
             {
                 writer.WritePropertyName("flowAnalyticsConfiguration"u8);
                 writer.WriteObjectValue(FlowAnalyticsConfiguration);
@@ -39,12 +40,12 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStringValue(StorageId);
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(Enabled);
-            if (RetentionPolicy != null)
+            if (Optional.IsDefined(RetentionPolicy))
             {
                 writer.WritePropertyName("retentionPolicy"u8);
                 writer.WriteObjectValue(RetentionPolicy);
             }
-            if (Format != null)
+            if (Optional.IsDefined(Format))
             {
                 writer.WritePropertyName("format"u8);
                 writer.WriteObjectValue(Format);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             ResourceIdentifier targetResourceId = default;
-            Optional<TrafficAnalyticsProperties> flowAnalyticsConfiguration = default;
+            TrafficAnalyticsProperties flowAnalyticsConfiguration = default;
             ResourceIdentifier storageId = default;
             bool enabled = default;
-            Optional<RetentionPolicyParameters> retentionPolicy = default;
-            Optional<FlowLogProperties> format = default;
+            RetentionPolicyParameters retentionPolicy = default;
+            FlowLogProperties format = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,11 +161,11 @@ namespace Azure.ResourceManager.Network.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new FlowLogInformation(
                 targetResourceId,
-                flowAnalyticsConfiguration.Value,
+                flowAnalyticsConfiguration,
                 storageId,
                 enabled,
-                retentionPolicy.Value,
-                format.Value,
+                retentionPolicy,
+                format,
                 serializedAdditionalRawData);
         }
 

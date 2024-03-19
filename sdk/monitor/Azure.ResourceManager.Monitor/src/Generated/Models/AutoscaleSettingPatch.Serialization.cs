@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(Profiles is ChangeTrackingList<AutoscaleProfile> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Profiles))
             {
                 writer.WritePropertyName("profiles"u8);
                 writer.WriteStartArray();
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Notifications is ChangeTrackingList<AutoscaleNotification> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Notifications))
             {
                 if (Notifications != null)
                 {
@@ -66,12 +67,12 @@ namespace Azure.ResourceManager.Monitor.Models
                     writer.WriteNull("notifications");
                 }
             }
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (PredictiveAutoscalePolicy != null)
+            if (Optional.IsDefined(PredictiveAutoscalePolicy))
             {
                 if (PredictiveAutoscalePolicy != null)
                 {
@@ -83,17 +84,17 @@ namespace Azure.ResourceManager.Monitor.Models
                     writer.WriteNull("predictiveAutoscalePolicy");
                 }
             }
-            if (AutoscaleSettingName != null)
+            if (Optional.IsDefined(AutoscaleSettingName))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(AutoscaleSettingName);
             }
-            if (TargetResourceId != null)
+            if (Optional.IsDefined(TargetResourceId))
             {
                 writer.WritePropertyName("targetResourceUri"u8);
                 writer.WriteStringValue(TargetResourceId);
             }
-            if (TargetResourceLocation.HasValue)
+            if (Optional.IsDefined(TargetResourceLocation))
             {
                 writer.WritePropertyName("targetResourceLocation"u8);
                 writer.WriteStringValue(TargetResourceLocation.Value);
@@ -140,11 +141,11 @@ namespace Azure.ResourceManager.Monitor.Models
             IDictionary<string, string> tags = default;
             IList<AutoscaleProfile> profiles = default;
             IList<AutoscaleNotification> notifications = default;
-            Optional<bool> enabled = default;
-            Optional<PredictiveAutoscalePolicy> predictiveAutoscalePolicy = default;
-            Optional<string> name = default;
-            Optional<ResourceIdentifier> targetResourceUri = default;
-            Optional<AzureLocation> targetResourceLocation = default;
+            bool? enabled = default;
+            PredictiveAutoscalePolicy predictiveAutoscalePolicy = default;
+            string name = default;
+            ResourceIdentifier targetResourceUri = default;
+            AzureLocation? targetResourceLocation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -256,11 +257,11 @@ namespace Azure.ResourceManager.Monitor.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 profiles ?? new ChangeTrackingList<AutoscaleProfile>(),
                 notifications ?? new ChangeTrackingList<AutoscaleNotification>(),
-                Optional.ToNullable(enabled),
-                predictiveAutoscalePolicy.Value,
-                name.Value,
-                targetResourceUri.Value,
-                Optional.ToNullable(targetResourceLocation),
+                enabled,
+                predictiveAutoscalePolicy,
+                name,
+                targetResourceUri,
+                targetResourceLocation,
                 serializedAdditionalRawData);
         }
 

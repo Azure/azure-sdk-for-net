@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (UnlockDeleteExpireOn.HasValue)
+            if (Optional.IsDefined(UnlockDeleteExpireOn))
             {
                 writer.WritePropertyName("unlockDeleteExpiryTime"u8);
                 writer.WriteStringValue(UnlockDeleteExpireOn.Value, "O");
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> unlockDeleteExpiryTime = default;
+            DateTimeOffset? unlockDeleteExpiryTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnlockDeleteResult(Optional.ToNullable(unlockDeleteExpiryTime), serializedAdditionalRawData);
+            return new UnlockDeleteResult(unlockDeleteExpiryTime, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UnlockDeleteResult>.Write(ModelReaderWriterOptions options)

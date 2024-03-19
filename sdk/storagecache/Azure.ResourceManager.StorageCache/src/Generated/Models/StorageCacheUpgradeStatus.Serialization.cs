@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && CurrentFirmwareVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(CurrentFirmwareVersion))
             {
                 writer.WritePropertyName("currentFirmwareVersion"u8);
                 writer.WriteStringValue(CurrentFirmwareVersion);
             }
-            if (options.Format != "W" && FirmwareUpdateStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(FirmwareUpdateStatus))
             {
                 writer.WritePropertyName("firmwareUpdateStatus"u8);
                 writer.WriteStringValue(FirmwareUpdateStatus.Value.ToString());
             }
-            if (options.Format != "W" && FirmwareUpdateDeadline.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(FirmwareUpdateDeadline))
             {
                 writer.WritePropertyName("firmwareUpdateDeadline"u8);
                 writer.WriteStringValue(FirmwareUpdateDeadline.Value, "O");
             }
-            if (options.Format != "W" && LastFirmwareUpdate.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastFirmwareUpdate))
             {
                 writer.WritePropertyName("lastFirmwareUpdate"u8);
                 writer.WriteStringValue(LastFirmwareUpdate.Value, "O");
             }
-            if (options.Format != "W" && PendingFirmwareVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(PendingFirmwareVersion))
             {
                 writer.WritePropertyName("pendingFirmwareVersion"u8);
                 writer.WriteStringValue(PendingFirmwareVersion);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<string> currentFirmwareVersion = default;
-            Optional<StorageCacheFirmwareStatusType> firmwareUpdateStatus = default;
-            Optional<DateTimeOffset> firmwareUpdateDeadline = default;
-            Optional<DateTimeOffset> lastFirmwareUpdate = default;
-            Optional<string> pendingFirmwareVersion = default;
+            string currentFirmwareVersion = default;
+            StorageCacheFirmwareStatusType? firmwareUpdateStatus = default;
+            DateTimeOffset? firmwareUpdateDeadline = default;
+            DateTimeOffset? lastFirmwareUpdate = default;
+            string pendingFirmwareVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -142,11 +143,11 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new StorageCacheUpgradeStatus(
-                currentFirmwareVersion.Value,
-                Optional.ToNullable(firmwareUpdateStatus),
-                Optional.ToNullable(firmwareUpdateDeadline),
-                Optional.ToNullable(lastFirmwareUpdate),
-                pendingFirmwareVersion.Value,
+                currentFirmwareVersion,
+                firmwareUpdateStatus,
+                firmwareUpdateDeadline,
+                lastFirmwareUpdate,
+                pendingFirmwareVersion,
                 serializedAdditionalRawData);
         }
 

@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -20,12 +21,12 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteStringValue(Code.ToString());
             writer.WritePropertyName("message"u8);
             writer.WriteStringValue(Message);
-            if (Target != null)
+            if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
             }
-            if (!(Details is ChangeTrackingList<Error> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartArray();
@@ -35,7 +36,7 @@ namespace Azure.AI.TextAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Innererror != null)
+            if (Optional.IsDefined(Innererror))
             {
                 writer.WritePropertyName("innererror"u8);
                 writer.WriteObjectValue(Innererror);
@@ -56,9 +57,9 @@ namespace Azure.AI.TextAnalytics.Models
             }
             ErrorCode code = default;
             string message = default;
-            Optional<string> target = default;
+            string target = default;
             IList<Error> details = default;
-            Optional<InnerErrorModel> innererror = default;
+            InnerErrorModel innererror = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -107,9 +108,9 @@ namespace Azure.AI.TextAnalytics.Models
             return new Error(
                 code,
                 message,
-                target.Value,
+                target,
                 details ?? new ChangeTrackingList<Error>(),
-                innererror.Value,
+                innererror,
                 additionalProperties);
         }
     }

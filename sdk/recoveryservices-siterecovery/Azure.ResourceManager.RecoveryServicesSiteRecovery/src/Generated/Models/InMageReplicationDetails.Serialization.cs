@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -27,77 +28,77 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (ActiveSiteType != null)
+            if (Optional.IsDefined(ActiveSiteType))
             {
                 writer.WritePropertyName("activeSiteType"u8);
                 writer.WriteStringValue(ActiveSiteType);
             }
-            if (SourceVmCpuCount.HasValue)
+            if (Optional.IsDefined(SourceVmCpuCount))
             {
                 writer.WritePropertyName("sourceVmCpuCount"u8);
                 writer.WriteNumberValue(SourceVmCpuCount.Value);
             }
-            if (SourceVmRamSizeInMB.HasValue)
+            if (Optional.IsDefined(SourceVmRamSizeInMB))
             {
                 writer.WritePropertyName("sourceVmRamSizeInMB"u8);
                 writer.WriteNumberValue(SourceVmRamSizeInMB.Value);
             }
-            if (OSDetails != null)
+            if (Optional.IsDefined(OSDetails))
             {
                 writer.WritePropertyName("osDetails"u8);
                 writer.WriteObjectValue(OSDetails);
             }
-            if (ProtectionStage != null)
+            if (Optional.IsDefined(ProtectionStage))
             {
                 writer.WritePropertyName("protectionStage"u8);
                 writer.WriteStringValue(ProtectionStage);
             }
-            if (VmId != null)
+            if (Optional.IsDefined(VmId))
             {
                 writer.WritePropertyName("vmId"u8);
                 writer.WriteStringValue(VmId);
             }
-            if (VmProtectionState != null)
+            if (Optional.IsDefined(VmProtectionState))
             {
                 writer.WritePropertyName("vmProtectionState"u8);
                 writer.WriteStringValue(VmProtectionState);
             }
-            if (VmProtectionStateDescription != null)
+            if (Optional.IsDefined(VmProtectionStateDescription))
             {
                 writer.WritePropertyName("vmProtectionStateDescription"u8);
                 writer.WriteStringValue(VmProtectionStateDescription);
             }
-            if (ResyncDetails != null)
+            if (Optional.IsDefined(ResyncDetails))
             {
                 writer.WritePropertyName("resyncDetails"u8);
                 writer.WriteObjectValue(ResyncDetails);
             }
-            if (RetentionWindowStartOn.HasValue)
+            if (Optional.IsDefined(RetentionWindowStartOn))
             {
                 writer.WritePropertyName("retentionWindowStart"u8);
                 writer.WriteStringValue(RetentionWindowStartOn.Value, "O");
             }
-            if (RetentionWindowEndOn.HasValue)
+            if (Optional.IsDefined(RetentionWindowEndOn))
             {
                 writer.WritePropertyName("retentionWindowEnd"u8);
                 writer.WriteStringValue(RetentionWindowEndOn.Value, "O");
             }
-            if (CompressedDataRateInMB.HasValue)
+            if (Optional.IsDefined(CompressedDataRateInMB))
             {
                 writer.WritePropertyName("compressedDataRateInMB"u8);
                 writer.WriteNumberValue(CompressedDataRateInMB.Value);
             }
-            if (UncompressedDataRateInMB.HasValue)
+            if (Optional.IsDefined(UncompressedDataRateInMB))
             {
                 writer.WritePropertyName("uncompressedDataRateInMB"u8);
                 writer.WriteNumberValue(UncompressedDataRateInMB.Value);
             }
-            if (RpoInSeconds.HasValue)
+            if (Optional.IsDefined(RpoInSeconds))
             {
                 writer.WritePropertyName("rpoInSeconds"u8);
                 writer.WriteNumberValue(RpoInSeconds.Value);
             }
-            if (!(ProtectedDisks is ChangeTrackingList<InMageProtectedDiskDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ProtectedDisks))
             {
                 writer.WritePropertyName("protectedDisks"u8);
                 writer.WriteStartArray();
@@ -107,27 +108,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IPAddress != null)
+            if (Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress.ToString());
             }
-            if (LastHeartbeatReceivedOn.HasValue)
+            if (Optional.IsDefined(LastHeartbeatReceivedOn))
             {
                 writer.WritePropertyName("lastHeartbeat"u8);
                 writer.WriteStringValue(LastHeartbeatReceivedOn.Value, "O");
             }
-            if (ProcessServerId.HasValue)
+            if (Optional.IsDefined(ProcessServerId))
             {
                 writer.WritePropertyName("processServerId"u8);
                 writer.WriteStringValue(ProcessServerId.Value);
             }
-            if (MasterTargetId != null)
+            if (Optional.IsDefined(MasterTargetId))
             {
                 writer.WritePropertyName("masterTargetId"u8);
                 writer.WriteStringValue(MasterTargetId);
             }
-            if (!(ConsistencyPoints is ChangeTrackingDictionary<string, DateTimeOffset> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ConsistencyPoints))
             {
                 writer.WritePropertyName("consistencyPoints"u8);
                 writer.WriteStartObject();
@@ -138,47 +139,47 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndObject();
             }
-            if (DiskResized != null)
+            if (Optional.IsDefined(DiskResized))
             {
                 writer.WritePropertyName("diskResized"u8);
                 writer.WriteStringValue(DiskResized);
             }
-            if (RebootAfterUpdateStatus != null)
+            if (Optional.IsDefined(RebootAfterUpdateStatus))
             {
                 writer.WritePropertyName("rebootAfterUpdateStatus"u8);
                 writer.WriteStringValue(RebootAfterUpdateStatus);
             }
-            if (MultiVmGroupId != null)
+            if (Optional.IsDefined(MultiVmGroupId))
             {
                 writer.WritePropertyName("multiVmGroupId"u8);
                 writer.WriteStringValue(MultiVmGroupId);
             }
-            if (MultiVmGroupName != null)
+            if (Optional.IsDefined(MultiVmGroupName))
             {
                 writer.WritePropertyName("multiVmGroupName"u8);
                 writer.WriteStringValue(MultiVmGroupName);
             }
-            if (MultiVmSyncStatus != null)
+            if (Optional.IsDefined(MultiVmSyncStatus))
             {
                 writer.WritePropertyName("multiVmSyncStatus"u8);
                 writer.WriteStringValue(MultiVmSyncStatus);
             }
-            if (AgentDetails != null)
+            if (Optional.IsDefined(AgentDetails))
             {
                 writer.WritePropertyName("agentDetails"u8);
                 writer.WriteObjectValue(AgentDetails);
             }
-            if (VCenterInfrastructureId != null)
+            if (Optional.IsDefined(VCenterInfrastructureId))
             {
                 writer.WritePropertyName("vCenterInfrastructureId"u8);
                 writer.WriteStringValue(VCenterInfrastructureId);
             }
-            if (InfrastructureVmId != null)
+            if (Optional.IsDefined(InfrastructureVmId))
             {
                 writer.WritePropertyName("infrastructureVmId"u8);
                 writer.WriteStringValue(InfrastructureVmId);
             }
-            if (!(VmNics is ChangeTrackingList<VmNicDetails> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(VmNics))
             {
                 writer.WritePropertyName("vmNics"u8);
                 writer.WriteStartArray();
@@ -188,17 +189,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (DiscoveryType != null)
+            if (Optional.IsDefined(DiscoveryType))
             {
                 writer.WritePropertyName("discoveryType"u8);
                 writer.WriteStringValue(DiscoveryType);
             }
-            if (AzureStorageAccountId != null)
+            if (Optional.IsDefined(AzureStorageAccountId))
             {
                 writer.WritePropertyName("azureStorageAccountId"u8);
                 writer.WriteStringValue(AzureStorageAccountId);
             }
-            if (!(Datastores is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(Datastores))
             {
                 writer.WritePropertyName("datastores"u8);
                 writer.WriteStartArray();
@@ -208,7 +209,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ValidationErrors is ChangeTrackingList<SiteRecoveryHealthError> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(ValidationErrors))
             {
                 writer.WritePropertyName("validationErrors"u8);
                 writer.WriteStartArray();
@@ -218,37 +219,37 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (LastRpoCalculatedOn.HasValue)
+            if (Optional.IsDefined(LastRpoCalculatedOn))
             {
                 writer.WritePropertyName("lastRpoCalculatedTime"u8);
                 writer.WriteStringValue(LastRpoCalculatedOn.Value, "O");
             }
-            if (LastUpdateReceivedOn.HasValue)
+            if (Optional.IsDefined(LastUpdateReceivedOn))
             {
                 writer.WritePropertyName("lastUpdateReceivedTime"u8);
                 writer.WriteStringValue(LastUpdateReceivedOn.Value, "O");
             }
-            if (ReplicaId != null)
+            if (Optional.IsDefined(ReplicaId))
             {
                 writer.WritePropertyName("replicaId"u8);
                 writer.WriteStringValue(ReplicaId);
             }
-            if (OSVersion != null)
+            if (Optional.IsDefined(OSVersion))
             {
                 writer.WritePropertyName("osVersion"u8);
                 writer.WriteStringValue(OSVersion);
             }
-            if (IsAdditionalStatsAvailable.HasValue)
+            if (Optional.IsDefined(IsAdditionalStatsAvailable))
             {
                 writer.WritePropertyName("isAdditionalStatsAvailable"u8);
                 writer.WriteBooleanValue(IsAdditionalStatsAvailable.Value);
             }
-            if (TotalDataTransferred.HasValue)
+            if (Optional.IsDefined(TotalDataTransferred))
             {
                 writer.WritePropertyName("totalDataTransferred"u8);
                 writer.WriteNumberValue(TotalDataTransferred.Value);
             }
-            if (TotalProgressHealth != null)
+            if (Optional.IsDefined(TotalProgressHealth))
             {
                 writer.WritePropertyName("totalProgressHealth"u8);
                 writer.WriteStringValue(TotalProgressHealth);
@@ -293,46 +294,46 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> activeSiteType = default;
-            Optional<int> sourceVmCpuCount = default;
-            Optional<int> sourceVmRamSizeInMB = default;
-            Optional<SiteRecoveryOSDiskDetails> osDetails = default;
-            Optional<string> protectionStage = default;
-            Optional<string> vmId = default;
-            Optional<string> vmProtectionState = default;
-            Optional<string> vmProtectionStateDescription = default;
-            Optional<InitialReplicationDetails> resyncDetails = default;
-            Optional<DateTimeOffset> retentionWindowStart = default;
-            Optional<DateTimeOffset> retentionWindowEnd = default;
-            Optional<double> compressedDataRateInMB = default;
-            Optional<double> uncompressedDataRateInMB = default;
-            Optional<long> rpoInSeconds = default;
+            string activeSiteType = default;
+            int? sourceVmCpuCount = default;
+            int? sourceVmRamSizeInMB = default;
+            SiteRecoveryOSDiskDetails osDetails = default;
+            string protectionStage = default;
+            string vmId = default;
+            string vmProtectionState = default;
+            string vmProtectionStateDescription = default;
+            InitialReplicationDetails resyncDetails = default;
+            DateTimeOffset? retentionWindowStart = default;
+            DateTimeOffset? retentionWindowEnd = default;
+            double? compressedDataRateInMB = default;
+            double? uncompressedDataRateInMB = default;
+            long? rpoInSeconds = default;
             IReadOnlyList<InMageProtectedDiskDetails> protectedDisks = default;
-            Optional<IPAddress> ipAddress = default;
-            Optional<DateTimeOffset> lastHeartbeat = default;
-            Optional<Guid> processServerId = default;
-            Optional<string> masterTargetId = default;
+            IPAddress ipAddress = default;
+            DateTimeOffset? lastHeartbeat = default;
+            Guid? processServerId = default;
+            string masterTargetId = default;
             IReadOnlyDictionary<string, DateTimeOffset> consistencyPoints = default;
-            Optional<string> diskResized = default;
-            Optional<string> rebootAfterUpdateStatus = default;
-            Optional<string> multiVmGroupId = default;
-            Optional<string> multiVmGroupName = default;
-            Optional<string> multiVmSyncStatus = default;
-            Optional<InMageAgentDetails> agentDetails = default;
-            Optional<string> vCenterInfrastructureId = default;
-            Optional<string> infrastructureVmId = default;
+            string diskResized = default;
+            string rebootAfterUpdateStatus = default;
+            string multiVmGroupId = default;
+            string multiVmGroupName = default;
+            string multiVmSyncStatus = default;
+            InMageAgentDetails agentDetails = default;
+            string vCenterInfrastructureId = default;
+            string infrastructureVmId = default;
             IReadOnlyList<VmNicDetails> vmNics = default;
-            Optional<string> discoveryType = default;
-            Optional<ResourceIdentifier> azureStorageAccountId = default;
+            string discoveryType = default;
+            ResourceIdentifier azureStorageAccountId = default;
             IReadOnlyList<string> datastores = default;
             IReadOnlyList<SiteRecoveryHealthError> validationErrors = default;
-            Optional<DateTimeOffset> lastRpoCalculatedTime = default;
-            Optional<DateTimeOffset> lastUpdateReceivedTime = default;
-            Optional<string> replicaId = default;
-            Optional<string> osVersion = default;
-            Optional<bool> isAdditionalStatsAvailable = default;
-            Optional<long> totalDataTransferred = default;
-            Optional<string> totalProgressHealth = default;
+            DateTimeOffset? lastRpoCalculatedTime = default;
+            DateTimeOffset? lastUpdateReceivedTime = default;
+            string replicaId = default;
+            string osVersion = default;
+            bool? isAdditionalStatsAvailable = default;
+            long? totalDataTransferred = default;
+            string totalProgressHealth = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -669,46 +670,46 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageReplicationDetails(
                 instanceType,
                 serializedAdditionalRawData,
-                activeSiteType.Value,
-                Optional.ToNullable(sourceVmCpuCount),
-                Optional.ToNullable(sourceVmRamSizeInMB),
-                osDetails.Value,
-                protectionStage.Value,
-                vmId.Value,
-                vmProtectionState.Value,
-                vmProtectionStateDescription.Value,
-                resyncDetails.Value,
-                Optional.ToNullable(retentionWindowStart),
-                Optional.ToNullable(retentionWindowEnd),
-                Optional.ToNullable(compressedDataRateInMB),
-                Optional.ToNullable(uncompressedDataRateInMB),
-                Optional.ToNullable(rpoInSeconds),
+                activeSiteType,
+                sourceVmCpuCount,
+                sourceVmRamSizeInMB,
+                osDetails,
+                protectionStage,
+                vmId,
+                vmProtectionState,
+                vmProtectionStateDescription,
+                resyncDetails,
+                retentionWindowStart,
+                retentionWindowEnd,
+                compressedDataRateInMB,
+                uncompressedDataRateInMB,
+                rpoInSeconds,
                 protectedDisks ?? new ChangeTrackingList<InMageProtectedDiskDetails>(),
-                ipAddress.Value,
-                Optional.ToNullable(lastHeartbeat),
-                Optional.ToNullable(processServerId),
-                masterTargetId.Value,
+                ipAddress,
+                lastHeartbeat,
+                processServerId,
+                masterTargetId,
                 consistencyPoints ?? new ChangeTrackingDictionary<string, DateTimeOffset>(),
-                diskResized.Value,
-                rebootAfterUpdateStatus.Value,
-                multiVmGroupId.Value,
-                multiVmGroupName.Value,
-                multiVmSyncStatus.Value,
-                agentDetails.Value,
-                vCenterInfrastructureId.Value,
-                infrastructureVmId.Value,
+                diskResized,
+                rebootAfterUpdateStatus,
+                multiVmGroupId,
+                multiVmGroupName,
+                multiVmSyncStatus,
+                agentDetails,
+                vCenterInfrastructureId,
+                infrastructureVmId,
                 vmNics ?? new ChangeTrackingList<VmNicDetails>(),
-                discoveryType.Value,
-                azureStorageAccountId.Value,
+                discoveryType,
+                azureStorageAccountId,
                 datastores ?? new ChangeTrackingList<string>(),
                 validationErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(),
-                Optional.ToNullable(lastRpoCalculatedTime),
-                Optional.ToNullable(lastUpdateReceivedTime),
-                replicaId.Value,
-                osVersion.Value,
-                Optional.ToNullable(isAdditionalStatsAvailable),
-                Optional.ToNullable(totalDataTransferred),
-                totalProgressHealth.Value);
+                lastRpoCalculatedTime,
+                lastUpdateReceivedTime,
+                replicaId,
+                osVersion,
+                isAdditionalStatsAvailable,
+                totalDataTransferred,
+                totalProgressHealth);
         }
 
         BinaryData IPersistableModel<InMageReplicationDetails>.Write(ModelReaderWriterOptions options)

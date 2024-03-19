@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Purview;
 
 namespace Azure.ResourceManager.Purview.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Purview.Models
             }
 
             writer.WriteStartObject();
-            if (IdentityId != null)
+            if (Optional.IsDefined(IdentityId))
             {
                 writer.WritePropertyName("identityId"u8);
                 writer.WriteStringValue(IdentityId);
             }
-            if (CredentialsType.HasValue)
+            if (Optional.IsDefined(CredentialsType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(CredentialsType.Value.ToString());
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 return null;
             }
-            Optional<string> identityId = default;
-            Optional<PurviewCredentialsType> type = default;
+            string identityId = default;
+            PurviewCredentialsType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.Purview.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PurviewCredentials(identityId.Value, Optional.ToNullable(type), serializedAdditionalRawData);
+            return new PurviewCredentials(identityId, type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PurviewCredentials>.Write(ModelReaderWriterOptions options)

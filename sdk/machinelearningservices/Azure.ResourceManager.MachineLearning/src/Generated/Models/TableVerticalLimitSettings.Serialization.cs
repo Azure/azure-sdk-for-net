@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (EnableEarlyTermination.HasValue)
+            if (Optional.IsDefined(EnableEarlyTermination))
             {
                 writer.WritePropertyName("enableEarlyTermination"u8);
                 writer.WriteBooleanValue(EnableEarlyTermination.Value);
             }
-            if (ExitScore.HasValue)
+            if (Optional.IsDefined(ExitScore))
             {
                 if (ExitScore != null)
                 {
@@ -43,42 +44,42 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("exitScore");
                 }
             }
-            if (MaxConcurrentTrials.HasValue)
+            if (Optional.IsDefined(MaxConcurrentTrials))
             {
                 writer.WritePropertyName("maxConcurrentTrials"u8);
                 writer.WriteNumberValue(MaxConcurrentTrials.Value);
             }
-            if (MaxCoresPerTrial.HasValue)
+            if (Optional.IsDefined(MaxCoresPerTrial))
             {
                 writer.WritePropertyName("maxCoresPerTrial"u8);
                 writer.WriteNumberValue(MaxCoresPerTrial.Value);
             }
-            if (MaxNodes.HasValue)
+            if (Optional.IsDefined(MaxNodes))
             {
                 writer.WritePropertyName("maxNodes"u8);
                 writer.WriteNumberValue(MaxNodes.Value);
             }
-            if (MaxTrials.HasValue)
+            if (Optional.IsDefined(MaxTrials))
             {
                 writer.WritePropertyName("maxTrials"u8);
                 writer.WriteNumberValue(MaxTrials.Value);
             }
-            if (SweepConcurrentTrials.HasValue)
+            if (Optional.IsDefined(SweepConcurrentTrials))
             {
                 writer.WritePropertyName("sweepConcurrentTrials"u8);
                 writer.WriteNumberValue(SweepConcurrentTrials.Value);
             }
-            if (SweepTrials.HasValue)
+            if (Optional.IsDefined(SweepTrials))
             {
                 writer.WritePropertyName("sweepTrials"u8);
                 writer.WriteNumberValue(SweepTrials.Value);
             }
-            if (Timeout.HasValue)
+            if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout.Value, "P");
             }
-            if (TrialTimeout.HasValue)
+            if (Optional.IsDefined(TrialTimeout))
             {
                 writer.WritePropertyName("trialTimeout"u8);
                 writer.WriteStringValue(TrialTimeout.Value, "P");
@@ -121,16 +122,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<bool> enableEarlyTermination = default;
-            Optional<double?> exitScore = default;
-            Optional<int> maxConcurrentTrials = default;
-            Optional<int> maxCoresPerTrial = default;
-            Optional<int> maxNodes = default;
-            Optional<int> maxTrials = default;
-            Optional<int> sweepConcurrentTrials = default;
-            Optional<int> sweepTrials = default;
-            Optional<TimeSpan> timeout = default;
-            Optional<TimeSpan> trialTimeout = default;
+            bool? enableEarlyTermination = default;
+            double? exitScore = default;
+            int? maxConcurrentTrials = default;
+            int? maxCoresPerTrial = default;
+            int? maxNodes = default;
+            int? maxTrials = default;
+            int? sweepConcurrentTrials = default;
+            int? sweepTrials = default;
+            TimeSpan? timeout = default;
+            TimeSpan? trialTimeout = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -233,16 +234,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new TableVerticalLimitSettings(
-                Optional.ToNullable(enableEarlyTermination),
-                Optional.ToNullable(exitScore),
-                Optional.ToNullable(maxConcurrentTrials),
-                Optional.ToNullable(maxCoresPerTrial),
-                Optional.ToNullable(maxNodes),
-                Optional.ToNullable(maxTrials),
-                Optional.ToNullable(sweepConcurrentTrials),
-                Optional.ToNullable(sweepTrials),
-                Optional.ToNullable(timeout),
-                Optional.ToNullable(trialTimeout),
+                enableEarlyTermination,
+                exitScore,
+                maxConcurrentTrials,
+                maxCoresPerTrial,
+                maxNodes,
+                maxTrials,
+                sweepConcurrentTrials,
+                sweepTrials,
+                timeout,
+                trialTimeout,
                 serializedAdditionalRawData);
         }
 

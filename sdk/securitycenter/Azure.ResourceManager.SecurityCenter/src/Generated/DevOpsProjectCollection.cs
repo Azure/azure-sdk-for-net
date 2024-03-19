@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DevOpsProjectResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string projectName, DevOpsProjectData data, CancellationToken cancellationToken = default)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _devOpsProjectAzureDevOpsProjectsClientDiagnostics.CreateScope("DevOpsProjectCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DevOpsProjectResource> CreateOrUpdate(WaitUntil waitUntil, string projectName, DevOpsProjectData data, CancellationToken cancellationToken = default)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _devOpsProjectAzureDevOpsProjectsClientDiagnostics.CreateScope("DevOpsProjectCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         public virtual async Task<Response<DevOpsProjectResource>> GetAsync(string projectName, CancellationToken cancellationToken = default)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             using var scope = _devOpsProjectAzureDevOpsProjectsClientDiagnostics.CreateScope("DevOpsProjectCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         public virtual Response<DevOpsProjectResource> Get(string projectName, CancellationToken cancellationToken = default)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             using var scope = _devOpsProjectAzureDevOpsProjectsClientDiagnostics.CreateScope("DevOpsProjectCollection.Get");
             scope.Start();
@@ -362,14 +328,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string projectName, CancellationToken cancellationToken = default)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             using var scope = _devOpsProjectAzureDevOpsProjectsClientDiagnostics.CreateScope("DevOpsProjectCollection.Exists");
             scope.Start();
@@ -412,14 +371,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         public virtual Response<bool> Exists(string projectName, CancellationToken cancellationToken = default)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             using var scope = _devOpsProjectAzureDevOpsProjectsClientDiagnostics.CreateScope("DevOpsProjectCollection.Exists");
             scope.Start();
@@ -462,14 +414,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         public virtual async Task<NullableResponse<DevOpsProjectResource>> GetIfExistsAsync(string projectName, CancellationToken cancellationToken = default)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             using var scope = _devOpsProjectAzureDevOpsProjectsClientDiagnostics.CreateScope("DevOpsProjectCollection.GetIfExists");
             scope.Start();
@@ -514,14 +459,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         public virtual NullableResponse<DevOpsProjectResource> GetIfExists(string projectName, CancellationToken cancellationToken = default)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             using var scope = _devOpsProjectAzureDevOpsProjectsClientDiagnostics.CreateScope("DevOpsProjectCollection.GetIfExists");
             scope.Start();

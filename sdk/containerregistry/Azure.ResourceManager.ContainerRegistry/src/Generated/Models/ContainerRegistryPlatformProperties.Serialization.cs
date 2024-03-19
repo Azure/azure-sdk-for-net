@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -28,12 +29,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStartObject();
             writer.WritePropertyName("os"u8);
             writer.WriteStringValue(OS.ToString());
-            if (Architecture.HasValue)
+            if (Optional.IsDefined(Architecture))
             {
                 writer.WritePropertyName("architecture"u8);
                 writer.WriteStringValue(Architecture.Value.ToString());
             }
-            if (Variant.HasValue)
+            if (Optional.IsDefined(Variant))
             {
                 writer.WritePropertyName("variant"u8);
                 writer.WriteStringValue(Variant.Value.ToString());
@@ -77,8 +78,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 return null;
             }
             ContainerRegistryOS os = default;
-            Optional<ContainerRegistryOSArchitecture> architecture = default;
-            Optional<ContainerRegistryCpuVariant> variant = default;
+            ContainerRegistryOSArchitecture? architecture = default;
+            ContainerRegistryCpuVariant? variant = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryPlatformProperties(os, Optional.ToNullable(architecture), Optional.ToNullable(variant), serializedAdditionalRawData);
+            return new ContainerRegistryPlatformProperties(os, architecture, variant, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryPlatformProperties>.Write(ModelReaderWriterOptions options)

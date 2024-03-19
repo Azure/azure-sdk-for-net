@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (IsAuthenticationRequired.HasValue)
+            if (Optional.IsDefined(IsAuthenticationRequired))
             {
                 writer.WritePropertyName("requireAuthentication"u8);
                 writer.WriteBooleanValue(IsAuthenticationRequired.Value);
             }
-            if (UnauthenticatedClientAction.HasValue)
+            if (Optional.IsDefined(UnauthenticatedClientAction))
             {
                 writer.WritePropertyName("unauthenticatedClientAction"u8);
                 writer.WriteStringValue(UnauthenticatedClientAction.Value.ToSerialString());
             }
-            if (RedirectToProvider != null)
+            if (Optional.IsDefined(RedirectToProvider))
             {
                 writer.WritePropertyName("redirectToProvider"u8);
                 writer.WriteStringValue(RedirectToProvider);
             }
-            if (!(ExcludedPaths is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ExcludedPaths))
             {
                 writer.WritePropertyName("excludedPaths"u8);
                 writer.WriteStartArray();
@@ -89,9 +90,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<bool> requireAuthentication = default;
-            Optional<UnauthenticatedClientActionV2> unauthenticatedClientAction = default;
-            Optional<string> redirectToProvider = default;
+            bool? requireAuthentication = default;
+            UnauthenticatedClientActionV2? unauthenticatedClientAction = default;
+            string redirectToProvider = default;
             IList<string> excludedPaths = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -140,7 +141,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GlobalValidation(Optional.ToNullable(requireAuthentication), Optional.ToNullable(unauthenticatedClientAction), redirectToProvider.Value, excludedPaths ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new GlobalValidation(requireAuthentication, unauthenticatedClientAction, redirectToProvider, excludedPaths ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GlobalValidation>.Write(ModelReaderWriterOptions options)

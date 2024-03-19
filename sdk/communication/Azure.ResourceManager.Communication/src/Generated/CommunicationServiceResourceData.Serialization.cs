@@ -28,13 +28,13 @@ namespace Azure.ResourceManager.Communication
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -62,44 +62,44 @@ namespace Azure.ResourceManager.Communication
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && HostName != null)
+            if (options.Format != "W" && Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (DataLocation != null)
+            if (Optional.IsDefined(DataLocation))
             {
                 writer.WritePropertyName("dataLocation"u8);
                 writer.WriteStringValue(DataLocation);
             }
-            if (options.Format != "W" && NotificationHubId != null)
+            if (options.Format != "W" && Optional.IsDefined(NotificationHubId))
             {
                 writer.WritePropertyName("notificationHubId"u8);
                 writer.WriteStringValue(NotificationHubId);
             }
-            if (options.Format != "W" && Version != null)
+            if (options.Format != "W" && Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (options.Format != "W" && ImmutableResourceId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ImmutableResourceId))
             {
                 writer.WritePropertyName("immutableResourceId"u8);
                 writer.WriteStringValue(ImmutableResourceId.Value);
             }
-            if (!(LinkedDomains is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(LinkedDomains))
             {
                 writer.WritePropertyName("linkedDomains"u8);
                 writer.WriteStartArray();
@@ -148,19 +148,19 @@ namespace Azure.ResourceManager.Communication
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<CommunicationServicesProvisioningState> provisioningState = default;
-            Optional<string> hostName = default;
-            Optional<string> dataLocation = default;
-            Optional<ResourceIdentifier> notificationHubId = default;
-            Optional<string> version = default;
-            Optional<Guid> immutableResourceId = default;
+            SystemData systemData = default;
+            CommunicationServicesProvisioningState? provisioningState = default;
+            string hostName = default;
+            string dataLocation = default;
+            ResourceIdentifier notificationHubId = default;
+            string version = default;
+            Guid? immutableResourceId = default;
             IList<string> linkedDomains = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -297,16 +297,16 @@ namespace Azure.ResourceManager.Communication
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 identity,
-                Optional.ToNullable(provisioningState),
-                hostName.Value,
-                dataLocation.Value,
-                notificationHubId.Value,
-                version.Value,
-                Optional.ToNullable(immutableResourceId),
+                provisioningState,
+                hostName,
+                dataLocation,
+                notificationHubId,
+                version,
+                immutableResourceId,
                 linkedDomains ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }

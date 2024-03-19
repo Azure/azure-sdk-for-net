@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Consumption;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
@@ -30,12 +31,12 @@ namespace Azure.ResourceManager.Consumption.Models
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (options.Format != "W" && !(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -46,12 +47,12 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (options.Format != "W" && Sku != null)
+            if (options.Format != "W" && Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteStringValue(Sku);
@@ -71,76 +72,76 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && LookBackPeriod != null)
+            if (options.Format != "W" && Optional.IsDefined(LookBackPeriod))
             {
                 writer.WritePropertyName("lookBackPeriod"u8);
                 writer.WriteStringValue(LookBackPeriod);
             }
-            if (options.Format != "W" && InstanceFlexibilityRatio.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(InstanceFlexibilityRatio))
             {
                 writer.WritePropertyName("instanceFlexibilityRatio"u8);
                 writer.WriteNumberValue(InstanceFlexibilityRatio.Value);
             }
-            if (options.Format != "W" && InstanceFlexibilityGroup != null)
+            if (options.Format != "W" && Optional.IsDefined(InstanceFlexibilityGroup))
             {
                 writer.WritePropertyName("instanceFlexibilityGroup"u8);
                 writer.WriteStringValue(InstanceFlexibilityGroup);
             }
-            if (options.Format != "W" && NormalizedSize != null)
+            if (options.Format != "W" && Optional.IsDefined(NormalizedSize))
             {
                 writer.WritePropertyName("normalizedSize"u8);
                 writer.WriteStringValue(NormalizedSize);
             }
-            if (options.Format != "W" && RecommendedQuantityNormalized.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RecommendedQuantityNormalized))
             {
                 writer.WritePropertyName("recommendedQuantityNormalized"u8);
                 writer.WriteNumberValue(RecommendedQuantityNormalized.Value);
             }
-            if (options.Format != "W" && MeterId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MeterId))
             {
                 writer.WritePropertyName("meterId"u8);
                 writer.WriteStringValue(MeterId.Value);
             }
-            if (options.Format != "W" && Term != null)
+            if (options.Format != "W" && Optional.IsDefined(Term))
             {
                 writer.WritePropertyName("term"u8);
                 writer.WriteStringValue(Term);
             }
-            if (options.Format != "W" && CostWithNoReservedInstances.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CostWithNoReservedInstances))
             {
                 writer.WritePropertyName("costWithNoReservedInstances"u8);
                 writer.WriteNumberValue(CostWithNoReservedInstances.Value);
             }
-            if (options.Format != "W" && RecommendedQuantity.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RecommendedQuantity))
             {
                 writer.WritePropertyName("recommendedQuantity"u8);
                 writer.WriteNumberValue(RecommendedQuantity.Value);
             }
-            if (options.Format != "W" && TotalCostWithReservedInstances.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalCostWithReservedInstances))
             {
                 writer.WritePropertyName("totalCostWithReservedInstances"u8);
                 writer.WriteNumberValue(TotalCostWithReservedInstances.Value);
             }
-            if (options.Format != "W" && NetSavings.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NetSavings))
             {
                 writer.WritePropertyName("netSavings"u8);
                 writer.WriteNumberValue(NetSavings.Value);
             }
-            if (options.Format != "W" && FirstUsageOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(FirstUsageOn))
             {
                 writer.WritePropertyName("firstUsageDate"u8);
                 writer.WriteStringValue(FirstUsageOn.Value, "O");
             }
             writer.WritePropertyName("scope"u8);
             writer.WriteStringValue(Scope);
-            if (options.Format != "W" && !(SkuProperties is ChangeTrackingList<ConsumptionSkuProperty> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SkuProperties))
             {
                 writer.WritePropertyName("skuProperties"u8);
                 writer.WriteStartArray();
@@ -190,26 +191,26 @@ namespace Azure.ResourceManager.Consumption.Models
                 return null;
             }
             ReservationRecommendationKind kind = default;
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             IReadOnlyDictionary<string, string> tags = default;
-            Optional<AzureLocation> location = default;
-            Optional<string> sku = default;
+            AzureLocation? location = default;
+            string sku = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> lookBackPeriod = default;
-            Optional<float> instanceFlexibilityRatio = default;
-            Optional<string> instanceFlexibilityGroup = default;
-            Optional<string> normalizedSize = default;
-            Optional<float> recommendedQuantityNormalized = default;
-            Optional<Guid> meterId = default;
-            Optional<string> term = default;
-            Optional<decimal> costWithNoReservedInstances = default;
-            Optional<decimal> recommendedQuantity = default;
-            Optional<decimal> totalCostWithReservedInstances = default;
-            Optional<decimal> netSavings = default;
-            Optional<DateTimeOffset> firstUsageDate = default;
+            SystemData systemData = default;
+            string lookBackPeriod = default;
+            float? instanceFlexibilityRatio = default;
+            string instanceFlexibilityGroup = default;
+            string normalizedSize = default;
+            float? recommendedQuantityNormalized = default;
+            Guid? meterId = default;
+            string term = default;
+            decimal? costWithNoReservedInstances = default;
+            decimal? recommendedQuantity = default;
+            decimal? totalCostWithReservedInstances = default;
+            decimal? netSavings = default;
+            DateTimeOffset? firstUsageDate = default;
             string scope = default;
             IReadOnlyList<ConsumptionSkuProperty> skuProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -415,25 +416,25 @@ namespace Azure.ResourceManager.Consumption.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 kind,
-                Optional.ToNullable(etag),
+                etag,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                Optional.ToNullable(location),
-                sku.Value,
+                location,
+                sku,
                 serializedAdditionalRawData,
-                lookBackPeriod.Value,
-                Optional.ToNullable(instanceFlexibilityRatio),
-                instanceFlexibilityGroup.Value,
-                normalizedSize.Value,
-                Optional.ToNullable(recommendedQuantityNormalized),
-                Optional.ToNullable(meterId),
-                term.Value,
-                Optional.ToNullable(costWithNoReservedInstances),
-                Optional.ToNullable(recommendedQuantity),
-                Optional.ToNullable(totalCostWithReservedInstances),
-                Optional.ToNullable(netSavings),
-                Optional.ToNullable(firstUsageDate),
+                lookBackPeriod,
+                instanceFlexibilityRatio,
+                instanceFlexibilityGroup,
+                normalizedSize,
+                recommendedQuantityNormalized,
+                meterId,
+                term,
+                costWithNoReservedInstances,
+                recommendedQuantity,
+                totalCostWithReservedInstances,
+                netSavings,
+                firstUsageDate,
                 scope,
                 skuProperties ?? new ChangeTrackingList<ConsumptionSkuProperty>());
         }

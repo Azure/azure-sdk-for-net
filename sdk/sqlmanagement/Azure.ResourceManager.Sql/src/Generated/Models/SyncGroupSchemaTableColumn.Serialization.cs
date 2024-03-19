@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (QuotedName != null)
+            if (Optional.IsDefined(QuotedName))
             {
                 writer.WritePropertyName("quotedName"u8);
                 writer.WriteStringValue(QuotedName);
             }
-            if (DataSize != null)
+            if (Optional.IsDefined(DataSize))
             {
                 writer.WritePropertyName("dataSize"u8);
                 writer.WriteStringValue(DataSize);
             }
-            if (DataType != null)
+            if (Optional.IsDefined(DataType))
             {
                 writer.WritePropertyName("dataType"u8);
                 writer.WriteStringValue(DataType);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> quotedName = default;
-            Optional<string> dataSize = default;
-            Optional<string> dataType = default;
+            string quotedName = default;
+            string dataSize = default;
+            string dataType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SyncGroupSchemaTableColumn(quotedName.Value, dataSize.Value, dataType.Value, serializedAdditionalRawData);
+            return new SyncGroupSchemaTableColumn(quotedName, dataSize, dataType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SyncGroupSchemaTableColumn>.Write(ModelReaderWriterOptions options)

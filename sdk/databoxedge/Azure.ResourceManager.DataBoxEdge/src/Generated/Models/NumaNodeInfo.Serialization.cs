@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (NumaNodeIndex.HasValue)
+            if (Optional.IsDefined(NumaNodeIndex))
             {
                 writer.WritePropertyName("numaNodeIndex"u8);
                 writer.WriteNumberValue(NumaNodeIndex.Value);
             }
-            if (TotalMemoryInMB.HasValue)
+            if (Optional.IsDefined(TotalMemoryInMB))
             {
                 writer.WritePropertyName("totalMemoryInMb"u8);
                 writer.WriteNumberValue(TotalMemoryInMB.Value);
             }
-            if (LogicalCoreCountPerCore.HasValue)
+            if (Optional.IsDefined(LogicalCoreCountPerCore))
             {
                 writer.WritePropertyName("logicalCoreCountPerCore"u8);
                 writer.WriteNumberValue(LogicalCoreCountPerCore.Value);
             }
-            if (EffectiveAvailableMemoryInMB.HasValue)
+            if (Optional.IsDefined(EffectiveAvailableMemoryInMB))
             {
                 writer.WritePropertyName("effectiveAvailableMemoryInMb"u8);
                 writer.WriteNumberValue(EffectiveAvailableMemoryInMB.Value);
             }
-            if (!(FreeVCpuIndexesForHpn is ChangeTrackingList<int> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(FreeVCpuIndexesForHpn))
             {
                 writer.WritePropertyName("freeVCpuIndexesForHpn"u8);
                 writer.WriteStartArray();
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(VCpuIndexesForHpn is ChangeTrackingList<int> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(VCpuIndexesForHpn))
             {
                 writer.WritePropertyName("vCpuIndexesForHpn"u8);
                 writer.WriteStartArray();
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(VCpuIndexesForRoot is ChangeTrackingList<int> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(VCpuIndexesForRoot))
             {
                 writer.WritePropertyName("vCpuIndexesForRoot"u8);
                 writer.WriteStartArray();
@@ -114,10 +115,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<int> numaNodeIndex = default;
-            Optional<long> totalMemoryInMb = default;
-            Optional<int> logicalCoreCountPerCore = default;
-            Optional<long> effectiveAvailableMemoryInMb = default;
+            int? numaNodeIndex = default;
+            long? totalMemoryInMb = default;
+            int? logicalCoreCountPerCore = default;
+            long? effectiveAvailableMemoryInMb = default;
             IList<int> freeVCpuIndexesForHpn = default;
             IList<int> vCpuIndexesForHpn = default;
             IList<int> vCpuIndexesForRoot = default;
@@ -210,10 +211,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new NumaNodeInfo(
-                Optional.ToNullable(numaNodeIndex),
-                Optional.ToNullable(totalMemoryInMb),
-                Optional.ToNullable(logicalCoreCountPerCore),
-                Optional.ToNullable(effectiveAvailableMemoryInMb),
+                numaNodeIndex,
+                totalMemoryInMb,
+                logicalCoreCountPerCore,
+                effectiveAvailableMemoryInMb,
                 freeVCpuIndexesForHpn ?? new ChangeTrackingList<int>(),
                 vCpuIndexesForHpn ?? new ChangeTrackingList<int>(),
                 vCpuIndexesForRoot ?? new ChangeTrackingList<int>(),

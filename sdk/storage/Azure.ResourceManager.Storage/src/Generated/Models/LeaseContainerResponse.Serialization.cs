@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (LeaseId != null)
+            if (Optional.IsDefined(LeaseId))
             {
                 writer.WritePropertyName("leaseId"u8);
                 writer.WriteStringValue(LeaseId);
             }
-            if (LeaseTimeSeconds != null)
+            if (Optional.IsDefined(LeaseTimeSeconds))
             {
                 writer.WritePropertyName("leaseTimeSeconds"u8);
                 writer.WriteStringValue(LeaseTimeSeconds);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<string> leaseId = default;
-            Optional<string> leaseTimeSeconds = default;
+            string leaseId = default;
+            string leaseTimeSeconds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LeaseContainerResponse(leaseId.Value, leaseTimeSeconds.Value, serializedAdditionalRawData);
+            return new LeaseContainerResponse(leaseId, leaseTimeSeconds, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LeaseContainerResponse>.Write(ModelReaderWriterOptions options)

@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.MetricsAdvisor;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -18,17 +19,17 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (CrossMetricsOperator.HasValue)
+            if (Optional.IsDefined(CrossMetricsOperator))
             {
                 writer.WritePropertyName("crossMetricsOperator"u8);
                 writer.WriteStringValue(CrossMetricsOperator.Value.ToString());
             }
-            if (!(DimensionsToSplitAlert is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DimensionsToSplitAlert))
             {
                 writer.WritePropertyName("splitAlertByDimensions"u8);
                 writer.WriteStartArray();
@@ -61,10 +62,10 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 return null;
             }
-            Optional<string> anomalyAlertingConfigurationId = default;
+            string anomalyAlertingConfigurationId = default;
             string name = default;
-            Optional<string> description = default;
-            Optional<MetricAlertConfigurationsOperator> crossMetricsOperator = default;
+            string description = default;
+            MetricAlertConfigurationsOperator? crossMetricsOperator = default;
             IList<string> splitAlertByDimensions = default;
             IList<string> hookIds = default;
             IList<MetricAlertConfiguration> metricAlertingConfigurations = default;
@@ -130,10 +131,10 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
             }
             return new AnomalyAlertConfiguration(
-                anomalyAlertingConfigurationId.Value,
+                anomalyAlertingConfigurationId,
                 name,
-                description.Value,
-                Optional.ToNullable(crossMetricsOperator),
+                description,
+                crossMetricsOperator,
                 splitAlertByDimensions ?? new ChangeTrackingList<string>(),
                 hookIds,
                 metricAlertingConfigurations);

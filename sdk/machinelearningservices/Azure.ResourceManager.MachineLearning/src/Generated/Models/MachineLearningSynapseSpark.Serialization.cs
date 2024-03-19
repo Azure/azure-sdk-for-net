@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,24 +27,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Properties != null)
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
             writer.WritePropertyName("computeType"u8);
             writer.WriteStringValue(ComputeType.ToString());
-            if (ComputeLocation != null)
+            if (Optional.IsDefined(ComputeLocation))
             {
                 writer.WritePropertyName("computeLocation"u8);
                 writer.WriteStringValue(ComputeLocation);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 if (Description != null)
                 {
@@ -55,17 +56,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("description");
                 }
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdOn"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && ModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ModifiedOn))
             {
                 writer.WritePropertyName("modifiedOn"u8);
                 writer.WriteStringValue(ModifiedOn.Value, "O");
             }
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 if (ResourceId != null)
                 {
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("resourceId");
                 }
             }
-            if (options.Format != "W" && !(ProvisioningErrors is ChangeTrackingList<MachineLearningError> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ProvisioningErrors))
             {
                 if (ProvisioningErrors != null)
                 {
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("provisioningErrors");
                 }
             }
-            if (options.Format != "W" && IsAttachedCompute.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsAttachedCompute))
             {
                 writer.WritePropertyName("isAttachedCompute"u8);
                 writer.WriteBooleanValue(IsAttachedCompute.Value);
             }
-            if (DisableLocalAuth.HasValue)
+            if (Optional.IsDefined(DisableLocalAuth))
             {
                 writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(DisableLocalAuth.Value);
@@ -142,17 +143,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<MachineLearningSynapseSparkProperties> properties = default;
+            MachineLearningSynapseSparkProperties properties = default;
             ComputeType computeType = default;
-            Optional<string> computeLocation = default;
-            Optional<MachineLearningProvisioningState> provisioningState = default;
-            Optional<string> description = default;
-            Optional<DateTimeOffset> createdOn = default;
-            Optional<DateTimeOffset> modifiedOn = default;
-            Optional<ResourceIdentifier> resourceId = default;
+            string computeLocation = default;
+            MachineLearningProvisioningState? provisioningState = default;
+            string description = default;
+            DateTimeOffset? createdOn = default;
+            DateTimeOffset? modifiedOn = default;
+            ResourceIdentifier resourceId = default;
             IReadOnlyList<MachineLearningError> provisioningErrors = default;
-            Optional<bool> isAttachedCompute = default;
-            Optional<bool> disableLocalAuth = default;
+            bool? isAttachedCompute = default;
+            bool? disableLocalAuth = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -264,17 +265,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MachineLearningSynapseSpark(
                 computeType,
-                computeLocation.Value,
-                Optional.ToNullable(provisioningState),
-                description.Value,
-                Optional.ToNullable(createdOn),
-                Optional.ToNullable(modifiedOn),
-                resourceId.Value,
+                computeLocation,
+                provisioningState,
+                description,
+                createdOn,
+                modifiedOn,
+                resourceId,
                 provisioningErrors ?? new ChangeTrackingList<MachineLearningError>(),
-                Optional.ToNullable(isAttachedCompute),
-                Optional.ToNullable(disableLocalAuth),
+                isAttachedCompute,
+                disableLocalAuth,
                 serializedAdditionalRawData,
-                properties.Value);
+                properties);
         }
 
         BinaryData IPersistableModel<MachineLearningSynapseSpark>.Write(ModelReaderWriterOptions options)

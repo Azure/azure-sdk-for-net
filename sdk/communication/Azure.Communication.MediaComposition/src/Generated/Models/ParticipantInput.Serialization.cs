@@ -23,7 +23,7 @@ namespace Azure.Communication.MediaComposition.Models
             writer.WriteStringValue(Call);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (PlaceholderImageUri != null)
+            if (Optional.IsDefined(PlaceholderImageUri))
             {
                 writer.WritePropertyName("placeholderImageUri"u8);
                 writer.WriteStringValue(PlaceholderImageUri);
@@ -40,7 +40,7 @@ namespace Azure.Communication.MediaComposition.Models
             CommunicationIdentifierModel id = default;
             string call = default;
             MediaInputType kind = default;
-            Optional<string> placeholderImageUri = default;
+            string placeholderImageUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -64,7 +64,7 @@ namespace Azure.Communication.MediaComposition.Models
                     continue;
                 }
             }
-            return new ParticipantInput(kind, placeholderImageUri.Value, id, call);
+            return new ParticipantInput(kind, placeholderImageUri, id, call);
         }
     }
 }

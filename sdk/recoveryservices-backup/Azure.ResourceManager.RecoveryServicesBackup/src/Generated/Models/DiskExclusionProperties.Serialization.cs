@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (!(DiskLunList is ChangeTrackingList<int> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DiskLunList))
             {
                 writer.WritePropertyName("diskLunList"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IsInclusionList.HasValue)
+            if (Optional.IsDefined(IsInclusionList))
             {
                 writer.WritePropertyName("isInclusionList"u8);
                 writer.WriteBooleanValue(IsInclusionList.Value);
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 return null;
             }
             IList<int> diskLunList = default;
-            Optional<bool> isInclusionList = default;
+            bool? isInclusionList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiskExclusionProperties(diskLunList ?? new ChangeTrackingList<int>(), Optional.ToNullable(isInclusionList), serializedAdditionalRawData);
+            return new DiskExclusionProperties(diskLunList ?? new ChangeTrackingList<int>(), isInclusionList, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiskExclusionProperties>.Write(ModelReaderWriterOptions options)

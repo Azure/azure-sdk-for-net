@@ -7,7 +7,7 @@
 
 using System;
 using System.Text.Json;
-using Azure.Core;
+using Azure.AI.FormRecognizer;
 
 namespace Azure.AI.FormRecognizer.Training
 {
@@ -23,8 +23,8 @@ namespace Azure.AI.FormRecognizer.Training
             CustomFormModelStatus status = default;
             DateTimeOffset createdDateTime = default;
             DateTimeOffset lastUpdatedDateTime = default;
-            Optional<string> modelName = default;
-            Optional<CustomFormModelProperties> attributes = default;
+            string modelName = default;
+            CustomFormModelProperties attributes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("modelId"u8))
@@ -67,8 +67,8 @@ namespace Azure.AI.FormRecognizer.Training
                 status,
                 createdDateTime,
                 lastUpdatedDateTime,
-                modelName.Value,
-                attributes.Value);
+                modelName,
+                attributes);
         }
     }
 }

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && PolicyOptionId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PolicyOptionId))
             {
                 writer.WritePropertyName("policyOptionId"u8);
                 writer.WriteStringValue(PolicyOptionId.Value);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -78,8 +79,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<Guid> policyOptionId = default;
-            Optional<string> name = default;
+            Guid? policyOptionId = default;
+            string name = default;
             ContentKeyPolicyConfiguration configuration = default;
             ContentKeyPolicyRestriction restriction = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -116,7 +117,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContentKeyPolicyOption(Optional.ToNullable(policyOptionId), name.Value, configuration, restriction, serializedAdditionalRawData);
+            return new ContentKeyPolicyOption(policyOptionId, name, configuration, restriction, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContentKeyPolicyOption>.Write(ModelReaderWriterOptions options)

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
             writer.WriteObjectValue(ExtendedLocation);
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -58,24 +58,24 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AadConfiguration != null)
+            if (Optional.IsDefined(AadConfiguration))
             {
                 writer.WritePropertyName("aadConfiguration"u8);
                 writer.WriteObjectValue(AadConfiguration);
             }
-            if (AdministratorConfiguration != null)
+            if (Optional.IsDefined(AdministratorConfiguration))
             {
                 writer.WritePropertyName("administratorConfiguration"u8);
                 writer.WriteObjectValue(AdministratorConfiguration);
             }
-            if (options.Format != "W" && !(AttachedNetworkIds is ChangeTrackingList<ResourceIdentifier> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AttachedNetworkIds))
             {
                 writer.WritePropertyName("attachedNetworkIds"u8);
                 writer.WriteStartArray();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(AvailableUpgrades is ChangeTrackingList<AvailableUpgrade> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AvailableUpgrades))
             {
                 writer.WritePropertyName("availableUpgrades"u8);
                 writer.WriteStartArray();
@@ -100,34 +100,34 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ClusterId != null)
+            if (options.Format != "W" && Optional.IsDefined(ClusterId))
             {
                 writer.WritePropertyName("clusterId"u8);
                 writer.WriteStringValue(ClusterId);
             }
-            if (options.Format != "W" && ConnectedClusterId != null)
+            if (options.Format != "W" && Optional.IsDefined(ConnectedClusterId))
             {
                 writer.WritePropertyName("connectedClusterId"u8);
                 writer.WriteStringValue(ConnectedClusterId);
             }
-            if (options.Format != "W" && ControlPlaneKubernetesVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(ControlPlaneKubernetesVersion))
             {
                 writer.WritePropertyName("controlPlaneKubernetesVersion"u8);
                 writer.WriteStringValue(ControlPlaneKubernetesVersion);
             }
             writer.WritePropertyName("controlPlaneNodeConfiguration"u8);
             writer.WriteObjectValue(ControlPlaneNodeConfiguration);
-            if (options.Format != "W" && DetailedStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DetailedStatus))
             {
                 writer.WritePropertyName("detailedStatus"u8);
                 writer.WriteStringValue(DetailedStatus.Value.ToString());
             }
-            if (options.Format != "W" && DetailedStatusMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(DetailedStatusMessage))
             {
                 writer.WritePropertyName("detailedStatusMessage"u8);
                 writer.WriteStringValue(DetailedStatusMessage);
             }
-            if (options.Format != "W" && !(FeatureStatuses is ChangeTrackingList<FeatureStatus> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(FeatureStatuses))
             {
                 writer.WritePropertyName("featureStatuses"u8);
                 writer.WriteStartArray();
@@ -146,14 +146,14 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteEndArray();
             writer.WritePropertyName("kubernetesVersion"u8);
             writer.WriteStringValue(KubernetesVersion);
-            if (ManagedResourceGroupConfiguration != null)
+            if (Optional.IsDefined(ManagedResourceGroupConfiguration))
             {
                 writer.WritePropertyName("managedResourceGroupConfiguration"u8);
                 writer.WriteObjectValue(ManagedResourceGroupConfiguration);
             }
             writer.WritePropertyName("networkConfiguration"u8);
             writer.WriteObjectValue(NetworkConfiguration);
-            if (options.Format != "W" && !(Nodes is ChangeTrackingList<KubernetesClusterNode> collection3 && collection3.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Nodes))
             {
                 writer.WritePropertyName("nodes"u8);
                 writer.WriteStartArray();
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -213,24 +213,24 @@ namespace Azure.ResourceManager.NetworkCloud
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<NetworkCloudAadConfiguration> aadConfiguration = default;
-            Optional<AdministratorConfiguration> administratorConfiguration = default;
+            SystemData systemData = default;
+            NetworkCloudAadConfiguration aadConfiguration = default;
+            AdministratorConfiguration administratorConfiguration = default;
             IReadOnlyList<ResourceIdentifier> attachedNetworkIds = default;
             IReadOnlyList<AvailableUpgrade> availableUpgrades = default;
-            Optional<ResourceIdentifier> clusterId = default;
-            Optional<ResourceIdentifier> connectedClusterId = default;
-            Optional<string> controlPlaneKubernetesVersion = default;
+            ResourceIdentifier clusterId = default;
+            ResourceIdentifier connectedClusterId = default;
+            string controlPlaneKubernetesVersion = default;
             ControlPlaneNodeConfiguration controlPlaneNodeConfiguration = default;
-            Optional<KubernetesClusterDetailedStatus> detailedStatus = default;
-            Optional<string> detailedStatusMessage = default;
+            KubernetesClusterDetailedStatus? detailedStatus = default;
+            string detailedStatusMessage = default;
             IReadOnlyList<FeatureStatus> featureStatuses = default;
             IList<InitialAgentPoolConfiguration> initialAgentPoolConfigurations = default;
             string kubernetesVersion = default;
-            Optional<ManagedResourceGroupConfiguration> managedResourceGroupConfiguration = default;
+            ManagedResourceGroupConfiguration managedResourceGroupConfiguration = default;
             KubernetesClusterNetworkConfiguration networkConfiguration = default;
             IReadOnlyList<KubernetesClusterNode> nodes = default;
-            Optional<KubernetesClusterProvisioningState> provisioningState = default;
+            KubernetesClusterProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -466,27 +466,27 @@ namespace Azure.ResourceManager.NetworkCloud
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 extendedLocation,
-                aadConfiguration.Value,
-                administratorConfiguration.Value,
+                aadConfiguration,
+                administratorConfiguration,
                 attachedNetworkIds ?? new ChangeTrackingList<ResourceIdentifier>(),
                 availableUpgrades ?? new ChangeTrackingList<AvailableUpgrade>(),
-                clusterId.Value,
-                connectedClusterId.Value,
-                controlPlaneKubernetesVersion.Value,
+                clusterId,
+                connectedClusterId,
+                controlPlaneKubernetesVersion,
                 controlPlaneNodeConfiguration,
-                Optional.ToNullable(detailedStatus),
-                detailedStatusMessage.Value,
+                detailedStatus,
+                detailedStatusMessage,
                 featureStatuses ?? new ChangeTrackingList<FeatureStatus>(),
                 initialAgentPoolConfigurations,
                 kubernetesVersion,
-                managedResourceGroupConfiguration.Value,
+                managedResourceGroupConfiguration,
                 networkConfiguration,
                 nodes ?? new ChangeTrackingList<KubernetesClusterNode>(),
-                Optional.ToNullable(provisioningState),
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

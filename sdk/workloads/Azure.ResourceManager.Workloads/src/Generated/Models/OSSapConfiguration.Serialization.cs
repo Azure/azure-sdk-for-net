@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (DeployerVmPackages != null)
+            if (Optional.IsDefined(DeployerVmPackages))
             {
                 writer.WritePropertyName("deployerVmPackages"u8);
                 writer.WriteObjectValue(DeployerVmPackages);
             }
-            if (SapFqdn != null)
+            if (Optional.IsDefined(SapFqdn))
             {
                 writer.WritePropertyName("sapFqdn"u8);
                 writer.WriteStringValue(SapFqdn);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<DeployerVmPackages> deployerVmPackages = default;
-            Optional<string> sapFqdn = default;
+            DeployerVmPackages deployerVmPackages = default;
+            string sapFqdn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OSSapConfiguration(deployerVmPackages.Value, sapFqdn.Value, serializedAdditionalRawData);
+            return new OSSapConfiguration(deployerVmPackages, sapFqdn, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OSSapConfiguration>.Write(ModelReaderWriterOptions options)

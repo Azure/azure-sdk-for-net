@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (LastUpdatedOn != null)
+            if (Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedTimeUtc"u8);
                 writer.WriteStringValue(LastUpdatedOn);
             }
-            if (!(ThreatTypeMetrics is ChangeTrackingList<ThreatIntelligenceMetricEntity> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ThreatTypeMetrics))
             {
                 writer.WritePropertyName("threatTypeMetrics"u8);
                 writer.WriteStartArray();
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(PatternTypeMetrics is ChangeTrackingList<ThreatIntelligenceMetricEntity> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(PatternTypeMetrics))
             {
                 writer.WritePropertyName("patternTypeMetrics"u8);
                 writer.WriteStartArray();
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(SourceMetrics is ChangeTrackingList<ThreatIntelligenceMetricEntity> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(SourceMetrics))
             {
                 writer.WritePropertyName("sourceMetrics"u8);
                 writer.WriteStartArray();
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<string> lastUpdatedTimeUtc = default;
+            string lastUpdatedTimeUtc = default;
             IReadOnlyList<ThreatIntelligenceMetricEntity> threatTypeMetrics = default;
             IReadOnlyList<ThreatIntelligenceMetricEntity> patternTypeMetrics = default;
             IReadOnlyList<ThreatIntelligenceMetricEntity> sourceMetrics = default;
@@ -160,7 +161,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ThreatIntelligenceMetric(lastUpdatedTimeUtc.Value, threatTypeMetrics ?? new ChangeTrackingList<ThreatIntelligenceMetricEntity>(), patternTypeMetrics ?? new ChangeTrackingList<ThreatIntelligenceMetricEntity>(), sourceMetrics ?? new ChangeTrackingList<ThreatIntelligenceMetricEntity>(), serializedAdditionalRawData);
+            return new ThreatIntelligenceMetric(lastUpdatedTimeUtc, threatTypeMetrics ?? new ChangeTrackingList<ThreatIntelligenceMetricEntity>(), patternTypeMetrics ?? new ChangeTrackingList<ThreatIntelligenceMetricEntity>(), sourceMetrics ?? new ChangeTrackingList<ThreatIntelligenceMetricEntity>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ThreatIntelligenceMetric>.Write(ModelReaderWriterOptions options)

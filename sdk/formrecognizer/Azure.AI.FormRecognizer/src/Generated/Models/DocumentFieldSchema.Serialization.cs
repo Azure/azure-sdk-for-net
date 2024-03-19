@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.AI.FormRecognizer;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
@@ -20,9 +20,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 return null;
             }
             DocumentFieldType type = default;
-            Optional<string> description = default;
-            Optional<string> example = default;
-            Optional<DocumentFieldSchema> items = default;
+            string description = default;
+            string example = default;
+            DocumentFieldSchema items = default;
             IReadOnlyDictionary<string, DocumentFieldSchema> properties = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -65,7 +65,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new DocumentFieldSchema(type, description.Value, example.Value, items.Value, properties ?? new ChangeTrackingDictionary<string, DocumentFieldSchema>());
+            return new DocumentFieldSchema(type, description, example, items, properties ?? new ChangeTrackingDictionary<string, DocumentFieldSchema>());
         }
     }
 }

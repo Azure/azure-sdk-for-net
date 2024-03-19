@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,39 +27,39 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DurationInSeconds.HasValue)
+            if (Optional.IsDefined(DurationInSeconds))
             {
                 writer.WritePropertyName("durationInSeconds"u8);
                 writer.WriteNumberValue(DurationInSeconds.Value);
             }
-            if (NumberOfPacketsToCapture.HasValue)
+            if (Optional.IsDefined(NumberOfPacketsToCapture))
             {
                 writer.WritePropertyName("numberOfPacketsToCapture"u8);
                 writer.WriteNumberValue(NumberOfPacketsToCapture.Value);
             }
-            if (SasUri != null)
+            if (Optional.IsDefined(SasUri))
             {
                 writer.WritePropertyName("sasUrl"u8);
                 writer.WriteStringValue(SasUri.AbsoluteUri);
             }
-            if (FileName != null)
+            if (Optional.IsDefined(FileName))
             {
                 writer.WritePropertyName("fileName"u8);
                 writer.WriteStringValue(FileName);
             }
-            if (Protocol.HasValue)
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (!(Flags is ChangeTrackingList<AzureFirewallPacketCaptureFlags> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Flags))
             {
                 writer.WritePropertyName("flags"u8);
                 writer.WriteStartArray();
@@ -68,7 +69,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Filters is ChangeTrackingList<AzureFirewallPacketCaptureRule> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Filters))
             {
                 writer.WritePropertyName("filters"u8);
                 writer.WriteStartArray();
@@ -117,12 +118,12 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<int> durationInSeconds = default;
-            Optional<int> numberOfPacketsToCapture = default;
-            Optional<Uri> sasUrl = default;
-            Optional<string> fileName = default;
-            Optional<AzureFirewallNetworkRuleProtocol> protocol = default;
+            ResourceIdentifier id = default;
+            int? durationInSeconds = default;
+            int? numberOfPacketsToCapture = default;
+            Uri sasUrl = default;
+            string fileName = default;
+            AzureFirewallNetworkRuleProtocol? protocol = default;
             IList<AzureFirewallPacketCaptureFlags> flags = default;
             IList<AzureFirewallPacketCaptureRule> filters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -226,13 +227,13 @@ namespace Azure.ResourceManager.Network.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new FirewallPacketCaptureContent(
-                id.Value,
+                id,
                 serializedAdditionalRawData,
-                Optional.ToNullable(durationInSeconds),
-                Optional.ToNullable(numberOfPacketsToCapture),
-                sasUrl.Value,
-                fileName.Value,
-                Optional.ToNullable(protocol),
+                durationInSeconds,
+                numberOfPacketsToCapture,
+                sasUrl,
+                fileName,
+                protocol,
                 flags ?? new ChangeTrackingList<AzureFirewallPacketCaptureFlags>(),
                 filters ?? new ChangeTrackingList<AzureFirewallPacketCaptureRule>());
         }

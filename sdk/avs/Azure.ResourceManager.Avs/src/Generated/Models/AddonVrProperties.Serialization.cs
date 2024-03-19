@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.Avs.Models
             writer.WriteNumberValue(VrsCount);
             writer.WritePropertyName("addonType"u8);
             writer.WriteStringValue(AddonType.ToString());
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -75,7 +76,7 @@ namespace Azure.ResourceManager.Avs.Models
             }
             int vrsCount = default;
             AddonType addonType = default;
-            Optional<AddonProvisioningState> provisioningState = default;
+            AddonProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +106,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AddonVrProperties(addonType, Optional.ToNullable(provisioningState), serializedAdditionalRawData, vrsCount);
+            return new AddonVrProperties(addonType, provisioningState, serializedAdditionalRawData, vrsCount);
         }
 
         BinaryData IPersistableModel<AddonVrProperties>.Write(ModelReaderWriterOptions options)

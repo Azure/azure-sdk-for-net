@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (!(LogAnalytics is ChangeTrackingList<LogAnalyticsDestination> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(LogAnalytics))
             {
                 writer.WritePropertyName("logAnalytics"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(MonitoringAccounts is ChangeTrackingList<MonitoringAccountDestination> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(MonitoringAccounts))
             {
                 writer.WritePropertyName("monitoringAccounts"u8);
                 writer.WriteStartArray();
@@ -46,12 +47,12 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (AzureMonitorMetrics != null)
+            if (Optional.IsDefined(AzureMonitorMetrics))
             {
                 writer.WritePropertyName("azureMonitorMetrics"u8);
                 writer.WriteObjectValue(AzureMonitorMetrics);
             }
-            if (!(EventHubs is ChangeTrackingList<DataCollectionRuleEventHubDestination> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(EventHubs))
             {
                 writer.WritePropertyName("eventHubs"u8);
                 writer.WriteStartArray();
@@ -61,7 +62,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(EventHubsDirect is ChangeTrackingList<DataCollectionRuleEventHubDirectDestination> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(EventHubsDirect))
             {
                 writer.WritePropertyName("eventHubsDirect"u8);
                 writer.WriteStartArray();
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(StorageBlobsDirect is ChangeTrackingList<DataCollectionRuleStorageBlobDestination> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(StorageBlobsDirect))
             {
                 writer.WritePropertyName("storageBlobsDirect"u8);
                 writer.WriteStartArray();
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(StorageTablesDirect is ChangeTrackingList<DataCollectionRuleStorageTableDestination> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(StorageTablesDirect))
             {
                 writer.WritePropertyName("storageTablesDirect"u8);
                 writer.WriteStartArray();
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(StorageAccounts is ChangeTrackingList<DataCollectionRuleStorageBlobDestination> collection5 && collection5.IsUndefined))
+            if (Optional.IsCollectionDefined(StorageAccounts))
             {
                 writer.WritePropertyName("storageAccounts"u8);
                 writer.WriteStartArray();
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             IList<LogAnalyticsDestination> logAnalytics = default;
             IList<MonitoringAccountDestination> monitoringAccounts = default;
-            Optional<DestinationsSpecAzureMonitorMetrics> azureMonitorMetrics = default;
+            DestinationsSpecAzureMonitorMetrics azureMonitorMetrics = default;
             IList<DataCollectionRuleEventHubDestination> eventHubs = default;
             IList<DataCollectionRuleEventHubDirectDestination> eventHubsDirect = default;
             IList<DataCollectionRuleStorageBlobDestination> storageBlobsDirect = default;
@@ -267,7 +268,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new DestinationsSpec(
                 logAnalytics ?? new ChangeTrackingList<LogAnalyticsDestination>(),
                 monitoringAccounts ?? new ChangeTrackingList<MonitoringAccountDestination>(),
-                azureMonitorMetrics.Value,
+                azureMonitorMetrics,
                 eventHubs ?? new ChangeTrackingList<DataCollectionRuleEventHubDestination>(),
                 eventHubsDirect ?? new ChangeTrackingList<DataCollectionRuleEventHubDirectDestination>(),
                 storageBlobsDirect ?? new ChangeTrackingList<DataCollectionRuleStorageBlobDestination>(),

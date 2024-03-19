@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (TicketNumber.HasValue)
+            if (Optional.IsDefined(TicketNumber))
             {
                 writer.WritePropertyName("ticketNumber"u8);
                 writer.WriteNumberValue(TicketNumber.Value);
             }
-            if (TicketLink != null)
+            if (Optional.IsDefined(TicketLink))
             {
                 writer.WritePropertyName("ticketLink"u8);
                 writer.WriteStringValue(TicketLink);
             }
-            if (TicketStatus != null)
+            if (Optional.IsDefined(TicketStatus))
             {
                 writer.WritePropertyName("ticketStatus"u8);
                 writer.WriteStringValue(TicketStatus);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<int> ticketNumber = default;
-            Optional<string> ticketLink = default;
-            Optional<string> ticketStatus = default;
+            int? ticketNumber = default;
+            string ticketLink = default;
+            string ticketStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GovernanceAssignmentAdditionalInfo(Optional.ToNullable(ticketNumber), ticketLink.Value, ticketStatus.Value, serializedAdditionalRawData);
+            return new GovernanceAssignmentAdditionalInfo(ticketNumber, ticketLink, ticketStatus, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GovernanceAssignmentAdditionalInfo>.Write(ModelReaderWriterOptions options)

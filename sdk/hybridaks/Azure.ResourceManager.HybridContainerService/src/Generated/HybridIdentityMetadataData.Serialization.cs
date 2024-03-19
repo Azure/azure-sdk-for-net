@@ -43,24 +43,24 @@ namespace Azure.ResourceManager.HybridContainerService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ResourceUid != null)
+            if (Optional.IsDefined(ResourceUid))
             {
                 writer.WritePropertyName("resourceUid"u8);
                 writer.WriteStringValue(ResourceUid);
             }
-            if (PublicKey != null)
+            if (Optional.IsDefined(PublicKey))
             {
                 writer.WritePropertyName("publicKey"u8);
                 writer.WriteStringValue(PublicKey);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.HybridContainerService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> resourceUid = default;
-            Optional<string> publicKey = default;
-            Optional<HybridContainerServiceResourceProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            string resourceUid = default;
+            string publicKey = default;
+            HybridContainerServiceResourceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -180,10 +180,10 @@ namespace Azure.ResourceManager.HybridContainerService
                 id,
                 name,
                 type,
-                systemData.Value,
-                resourceUid.Value,
-                publicKey.Value,
-                Optional.ToNullable(provisioningState),
+                systemData,
+                resourceUid,
+                publicKey,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

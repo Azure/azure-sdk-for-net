@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (ActionableMessage != null)
+            if (Optional.IsDefined(ActionableMessage))
             {
                 writer.WritePropertyName("actionableMessage"u8);
                 writer.WriteStringValue(ActionableMessage);
             }
-            if (FilePath != null)
+            if (Optional.IsDefined(FilePath))
             {
                 writer.WritePropertyName("filePath"u8);
                 writer.WriteStringValue(FilePath);
             }
-            if (LineNumber != null)
+            if (Optional.IsDefined(LineNumber))
             {
                 writer.WritePropertyName("lineNumber"u8);
                 writer.WriteStringValue(LineNumber);
             }
-            if (HResult.HasValue)
+            if (Optional.IsDefined(HResult))
             {
                 writer.WritePropertyName("hResult"u8);
                 writer.WriteNumberValue(HResult.Value);
             }
-            if (StackTrace != null)
+            if (Optional.IsDefined(StackTrace))
             {
                 writer.WritePropertyName("stackTrace"u8);
                 writer.WriteStringValue(StackTrace);
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> message = default;
-            Optional<string> actionableMessage = default;
-            Optional<string> filePath = default;
-            Optional<string> lineNumber = default;
-            Optional<int> hResult = default;
-            Optional<string> stackTrace = default;
+            string message = default;
+            string actionableMessage = default;
+            string filePath = default;
+            string lineNumber = default;
+            int? hResult = default;
+            string stackTrace = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,12 +146,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ReportableException(
-                message.Value,
-                actionableMessage.Value,
-                filePath.Value,
-                lineNumber.Value,
-                Optional.ToNullable(hResult),
-                stackTrace.Value,
+                message,
+                actionableMessage,
+                filePath,
+                lineNumber,
+                hResult,
+                stackTrace,
                 serializedAdditionalRawData);
         }
 

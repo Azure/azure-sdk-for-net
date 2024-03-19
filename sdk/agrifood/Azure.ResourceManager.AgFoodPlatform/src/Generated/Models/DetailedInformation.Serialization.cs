@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AgFoodPlatform;
 
 namespace Azure.ResourceManager.AgFoodPlatform.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (ApiName != null)
+            if (Optional.IsDefined(ApiName))
             {
                 writer.WritePropertyName("apiName"u8);
                 writer.WriteStringValue(ApiName);
             }
-            if (!(CustomParameters is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CustomParameters))
             {
                 writer.WritePropertyName("customParameters"u8);
                 writer.WriteStartArray();
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(PlatformParameters is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(PlatformParameters))
             {
                 writer.WritePropertyName("platformParameters"u8);
                 writer.WriteStartArray();
@@ -51,12 +52,12 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (UnitsSupported != null)
+            if (Optional.IsDefined(UnitsSupported))
             {
                 writer.WritePropertyName("unitsSupported"u8);
                 writer.WriteObjectValue(UnitsSupported);
             }
-            if (!(ApiInputParameters is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(ApiInputParameters))
             {
                 writer.WritePropertyName("apiInputParameters"u8);
                 writer.WriteStartArray();
@@ -104,10 +105,10 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             {
                 return null;
             }
-            Optional<string> apiName = default;
+            string apiName = default;
             IReadOnlyList<string> customParameters = default;
             IReadOnlyList<string> platformParameters = default;
-            Optional<UnitSystemsInfo> unitsSupported = default;
+            UnitSystemsInfo unitsSupported = default;
             IReadOnlyList<string> apiInputParameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -176,10 +177,10 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DetailedInformation(
-                apiName.Value,
+                apiName,
                 customParameters ?? new ChangeTrackingList<string>(),
                 platformParameters ?? new ChangeTrackingList<string>(),
-                unitsSupported.Value,
+                unitsSupported,
                 apiInputParameters ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }

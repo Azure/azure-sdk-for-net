@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Hci;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Hci.Models
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (!(DataDisks is ChangeTrackingList<WritableSubResource> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DataDisks))
             {
                 writer.WritePropertyName("dataDisks"u8);
                 writer.WriteStartArray();
@@ -37,17 +38,17 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ImageReference != null)
+            if (Optional.IsDefined(ImageReference))
             {
                 writer.WritePropertyName("imageReference"u8);
                 JsonSerializer.Serialize(writer, ImageReference);
             }
-            if (OSDisk != null)
+            if (Optional.IsDefined(OSDisk))
             {
                 writer.WritePropertyName("osDisk"u8);
                 writer.WriteObjectValue(OSDisk);
             }
-            if (VmConfigStoragePathId != null)
+            if (Optional.IsDefined(VmConfigStoragePathId))
             {
                 writer.WritePropertyName("vmConfigStoragePathId"u8);
                 writer.WriteStringValue(VmConfigStoragePathId);
@@ -91,9 +92,9 @@ namespace Azure.ResourceManager.Hci.Models
                 return null;
             }
             IList<WritableSubResource> dataDisks = default;
-            Optional<WritableSubResource> imageReference = default;
-            Optional<VirtualMachineInstancePropertiesStorageProfileOSDisk> osDisk = default;
-            Optional<ResourceIdentifier> vmConfigStoragePathId = default;
+            WritableSubResource imageReference = default;
+            VirtualMachineInstancePropertiesStorageProfileOSDisk osDisk = default;
+            ResourceIdentifier vmConfigStoragePathId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,7 +146,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineInstancePropertiesStorageProfile(dataDisks ?? new ChangeTrackingList<WritableSubResource>(), imageReference, osDisk.Value, vmConfigStoragePathId.Value, serializedAdditionalRawData);
+            return new VirtualMachineInstancePropertiesStorageProfile(dataDisks ?? new ChangeTrackingList<WritableSubResource>(), imageReference, osDisk, vmConfigStoragePathId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineInstancePropertiesStorageProfile>.Write(ModelReaderWriterOptions options)

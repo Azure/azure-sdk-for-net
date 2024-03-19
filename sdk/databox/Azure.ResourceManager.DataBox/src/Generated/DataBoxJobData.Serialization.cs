@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.DataBox
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataBox
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -73,72 +73,72 @@ namespace Azure.ResourceManager.DataBox
             writer.WriteStartObject();
             writer.WritePropertyName("transferType"u8);
             writer.WriteStringValue(TransferType.ToSerialString());
-            if (options.Format != "W" && IsCancellable.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsCancellable))
             {
                 writer.WritePropertyName("isCancellable"u8);
                 writer.WriteBooleanValue(IsCancellable.Value);
             }
-            if (options.Format != "W" && IsDeletable.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsDeletable))
             {
                 writer.WritePropertyName("isDeletable"u8);
                 writer.WriteBooleanValue(IsDeletable.Value);
             }
-            if (options.Format != "W" && IsShippingAddressEditable.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsShippingAddressEditable))
             {
                 writer.WritePropertyName("isShippingAddressEditable"u8);
                 writer.WriteBooleanValue(IsShippingAddressEditable.Value);
             }
-            if (options.Format != "W" && ReverseShippingDetailsUpdate.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ReverseShippingDetailsUpdate))
             {
                 writer.WritePropertyName("reverseShippingDetailsUpdate"u8);
                 writer.WriteStringValue(ReverseShippingDetailsUpdate.Value.ToSerialString());
             }
-            if (options.Format != "W" && ReverseTransportPreferenceUpdate.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ReverseTransportPreferenceUpdate))
             {
                 writer.WritePropertyName("reverseTransportPreferenceUpdate"u8);
                 writer.WriteStringValue(ReverseTransportPreferenceUpdate.Value.ToSerialString());
             }
-            if (options.Format != "W" && IsPrepareToShipEnabled.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsPrepareToShipEnabled))
             {
                 writer.WritePropertyName("isPrepareToShipEnabled"u8);
                 writer.WriteBooleanValue(IsPrepareToShipEnabled.Value);
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Error != null)
+            if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, Error);
             }
-            if (Details != null)
+            if (Optional.IsDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteObjectValue(Details);
             }
-            if (options.Format != "W" && CancellationReason != null)
+            if (options.Format != "W" && Optional.IsDefined(CancellationReason))
             {
                 writer.WritePropertyName("cancellationReason"u8);
                 writer.WriteStringValue(CancellationReason);
             }
-            if (DeliveryType.HasValue)
+            if (Optional.IsDefined(DeliveryType))
             {
                 writer.WritePropertyName("deliveryType"u8);
                 writer.WriteStringValue(DeliveryType.Value.ToSerialString());
             }
-            if (DeliveryInfo != null)
+            if (Optional.IsDefined(DeliveryInfo))
             {
                 writer.WritePropertyName("deliveryInfo"u8);
                 writer.WriteObjectValue(DeliveryInfo);
             }
-            if (options.Format != "W" && IsCancellableWithoutFee.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsCancellableWithoutFee))
             {
                 writer.WritePropertyName("isCancellableWithoutFee"u8);
                 writer.WriteBooleanValue(IsCancellableWithoutFee.Value);
@@ -183,28 +183,28 @@ namespace Azure.ResourceManager.DataBox
                 return null;
             }
             DataBoxSku sku = default;
-            Optional<ManagedServiceIdentity> identity = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             DataBoxJobTransferType transferType = default;
-            Optional<bool> isCancellable = default;
-            Optional<bool> isDeletable = default;
-            Optional<bool> isShippingAddressEditable = default;
-            Optional<ReverseShippingDetailsEditStatus> reverseShippingDetailsUpdate = default;
-            Optional<ReverseTransportPreferenceEditStatus> reverseTransportPreferenceUpdate = default;
-            Optional<bool> isPrepareToShipEnabled = default;
-            Optional<DataBoxStageName> status = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<ResponseError> error = default;
-            Optional<DataBoxBasicJobDetails> details = default;
-            Optional<string> cancellationReason = default;
-            Optional<JobDeliveryType> deliveryType = default;
-            Optional<JobDeliveryInfo> deliveryInfo = default;
-            Optional<bool> isCancellableWithoutFee = default;
+            bool? isCancellable = default;
+            bool? isDeletable = default;
+            bool? isShippingAddressEditable = default;
+            ReverseShippingDetailsEditStatus? reverseShippingDetailsUpdate = default;
+            ReverseTransportPreferenceEditStatus? reverseTransportPreferenceUpdate = default;
+            bool? isPrepareToShipEnabled = default;
+            DataBoxStageName? status = default;
+            DateTimeOffset? startTime = default;
+            ResponseError error = default;
+            DataBoxBasicJobDetails details = default;
+            string cancellationReason = default;
+            JobDeliveryType? deliveryType = default;
+            JobDeliveryInfo deliveryInfo = default;
+            bool? isCancellableWithoutFee = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -415,24 +415,24 @@ namespace Azure.ResourceManager.DataBox
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 transferType,
-                Optional.ToNullable(isCancellable),
-                Optional.ToNullable(isDeletable),
-                Optional.ToNullable(isShippingAddressEditable),
-                Optional.ToNullable(reverseShippingDetailsUpdate),
-                Optional.ToNullable(reverseTransportPreferenceUpdate),
-                Optional.ToNullable(isPrepareToShipEnabled),
-                Optional.ToNullable(status),
-                Optional.ToNullable(startTime),
-                error.Value,
-                details.Value,
-                cancellationReason.Value,
-                Optional.ToNullable(deliveryType),
-                deliveryInfo.Value,
-                Optional.ToNullable(isCancellableWithoutFee),
+                isCancellable,
+                isDeletable,
+                isShippingAddressEditable,
+                reverseShippingDetailsUpdate,
+                reverseTransportPreferenceUpdate,
+                isPrepareToShipEnabled,
+                status,
+                startTime,
+                error,
+                details,
+                cancellationReason,
+                deliveryType,
+                deliveryInfo,
+                isCancellableWithoutFee,
                 sku,
                 identity,
                 serializedAdditionalRawData);

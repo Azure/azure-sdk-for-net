@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DefaultMaximumExpirationTimeInDays.HasValue)
+            if (Optional.IsDefined(DefaultMaximumExpirationTimeInDays))
             {
                 writer.WritePropertyName("defaultMaximumExpirationTimeInDays"u8);
                 writer.WriteNumberValue(DefaultMaximumExpirationTimeInDays.Value);
@@ -84,7 +85,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<int> defaultMaximumExpirationTimeInDays = default;
+            int? defaultMaximumExpirationTimeInDays = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PartnerConfigurationPatch(tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(defaultMaximumExpirationTimeInDays), serializedAdditionalRawData);
+            return new PartnerConfigurationPatch(tags ?? new ChangeTrackingDictionary<string, string>(), defaultMaximumExpirationTimeInDays, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PartnerConfigurationPatch>.Write(ModelReaderWriterOptions options)

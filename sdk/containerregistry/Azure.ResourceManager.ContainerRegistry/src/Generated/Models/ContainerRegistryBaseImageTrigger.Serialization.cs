@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -28,17 +29,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStartObject();
             writer.WritePropertyName("baseImageTriggerType"u8);
             writer.WriteStringValue(BaseImageTriggerType.ToString());
-            if (UpdateTriggerEndpoint != null)
+            if (Optional.IsDefined(UpdateTriggerEndpoint))
             {
                 writer.WritePropertyName("updateTriggerEndpoint"u8);
                 writer.WriteStringValue(UpdateTriggerEndpoint);
             }
-            if (UpdateTriggerPayloadType.HasValue)
+            if (Optional.IsDefined(UpdateTriggerPayloadType))
             {
                 writer.WritePropertyName("updateTriggerPayloadType"u8);
                 writer.WriteStringValue(UpdateTriggerPayloadType.Value.ToString());
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -84,9 +85,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 return null;
             }
             ContainerRegistryBaseImageTriggerType baseImageTriggerType = default;
-            Optional<string> updateTriggerEndpoint = default;
-            Optional<ContainerRegistryUpdateTriggerPayloadType> updateTriggerPayloadType = default;
-            Optional<ContainerRegistryTriggerStatus> status = default;
+            string updateTriggerEndpoint = default;
+            ContainerRegistryUpdateTriggerPayloadType? updateTriggerPayloadType = default;
+            ContainerRegistryTriggerStatus? status = default;
             string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -133,9 +134,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ContainerRegistryBaseImageTrigger(
                 baseImageTriggerType,
-                updateTriggerEndpoint.Value,
-                Optional.ToNullable(updateTriggerPayloadType),
-                Optional.ToNullable(status),
+                updateTriggerEndpoint,
+                updateTriggerPayloadType,
+                status,
                 name,
                 serializedAdditionalRawData);
         }

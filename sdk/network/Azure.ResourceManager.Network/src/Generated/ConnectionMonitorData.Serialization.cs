@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -65,34 +65,34 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Source != null)
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteObjectValue(Source);
             }
-            if (Destination != null)
+            if (Optional.IsDefined(Destination))
             {
                 writer.WritePropertyName("destination"u8);
                 writer.WriteObjectValue(Destination);
             }
-            if (AutoStart.HasValue)
+            if (Optional.IsDefined(AutoStart))
             {
                 writer.WritePropertyName("autoStart"u8);
                 writer.WriteBooleanValue(AutoStart.Value);
             }
-            if (MonitoringIntervalInSeconds.HasValue)
+            if (Optional.IsDefined(MonitoringIntervalInSeconds))
             {
                 writer.WritePropertyName("monitoringIntervalInSeconds"u8);
                 writer.WriteNumberValue(MonitoringIntervalInSeconds.Value);
             }
-            if (!(Endpoints is ChangeTrackingList<ConnectionMonitorEndpoint> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Endpoints))
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (!(TestConfigurations is ChangeTrackingList<ConnectionMonitorTestConfiguration> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(TestConfigurations))
             {
                 writer.WritePropertyName("testConfigurations"u8);
                 writer.WriteStartArray();
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (!(TestGroups is ChangeTrackingList<ConnectionMonitorTestGroup> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(TestGroups))
             {
                 writer.WritePropertyName("testGroups"u8);
                 writer.WriteStartArray();
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (!(Outputs is ChangeTrackingList<ConnectionMonitorOutput> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(Outputs))
             {
                 writer.WritePropertyName("outputs"u8);
                 writer.WriteStartArray();
@@ -132,27 +132,27 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Notes != null)
+            if (Optional.IsDefined(Notes))
             {
                 writer.WritePropertyName("notes"u8);
                 writer.WriteStringValue(Notes);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && MonitoringStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(MonitoringStatus))
             {
                 writer.WritePropertyName("monitoringStatus"u8);
                 writer.WriteStringValue(MonitoringStatus);
             }
-            if (options.Format != "W" && ConnectionMonitorType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ConnectionMonitorType))
             {
                 writer.WritePropertyName("connectionMonitorType"u8);
                 writer.WriteStringValue(ConnectionMonitorType.Value.ToString());
@@ -196,26 +196,26 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<AzureLocation> location = default;
+            ETag? etag = default;
+            AzureLocation? location = default;
             IReadOnlyDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ConnectionMonitorSource> source = default;
-            Optional<ConnectionMonitorDestination> destination = default;
-            Optional<bool> autoStart = default;
-            Optional<int> monitoringIntervalInSeconds = default;
+            SystemData systemData = default;
+            ConnectionMonitorSource source = default;
+            ConnectionMonitorDestination destination = default;
+            bool? autoStart = default;
+            int? monitoringIntervalInSeconds = default;
             IReadOnlyList<ConnectionMonitorEndpoint> endpoints = default;
             IReadOnlyList<ConnectionMonitorTestConfiguration> testConfigurations = default;
             IReadOnlyList<ConnectionMonitorTestGroup> testGroups = default;
             IReadOnlyList<ConnectionMonitorOutput> outputs = default;
-            Optional<string> notes = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<string> monitoringStatus = default;
-            Optional<ConnectionMonitorType> connectionMonitorType = default;
+            string notes = default;
+            NetworkProvisioningState? provisioningState = default;
+            DateTimeOffset? startTime = default;
+            string monitoringStatus = default;
+            ConnectionMonitorType? connectionMonitorType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -427,23 +427,23 @@ namespace Azure.ResourceManager.Network
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(etag),
-                Optional.ToNullable(location),
+                systemData,
+                etag,
+                location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                source.Value,
-                destination.Value,
-                Optional.ToNullable(autoStart),
-                Optional.ToNullable(monitoringIntervalInSeconds),
+                source,
+                destination,
+                autoStart,
+                monitoringIntervalInSeconds,
                 endpoints ?? new ChangeTrackingList<ConnectionMonitorEndpoint>(),
                 testConfigurations ?? new ChangeTrackingList<ConnectionMonitorTestConfiguration>(),
                 testGroups ?? new ChangeTrackingList<ConnectionMonitorTestGroup>(),
                 outputs ?? new ChangeTrackingList<ConnectionMonitorOutput>(),
-                notes.Value,
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(startTime),
-                monitoringStatus.Value,
-                Optional.ToNullable(connectionMonitorType),
+                notes,
+                provisioningState,
+                startTime,
+                monitoringStatus,
+                connectionMonitorType,
                 serializedAdditionalRawData);
         }
 

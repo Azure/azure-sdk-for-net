@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (TimeGrain.HasValue)
+            if (Optional.IsDefined(TimeGrain))
             {
                 writer.WritePropertyName("timeGrain"u8);
                 writer.WriteStringValue(TimeGrain.Value, "P");
             }
-            if (Retention.HasValue)
+            if (Optional.IsDefined(Retention))
             {
                 writer.WritePropertyName("retention"u8);
                 writer.WriteStringValue(Retention.Value, "P");
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<TimeSpan> timeGrain = default;
-            Optional<TimeSpan> retention = default;
+            TimeSpan? timeGrain = default;
+            TimeSpan? retention = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorMetricAvailability(Optional.ToNullable(timeGrain), Optional.ToNullable(retention), serializedAdditionalRawData);
+            return new MonitorMetricAvailability(timeGrain, retention, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorMetricAvailability>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Enabled.HasValue)
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteStringValue(Enabled.Value.ToString());
             }
-            if (Markdown != null)
+            if (Optional.IsDefined(Markdown))
             {
                 writer.WritePropertyName("markdown"u8);
                 writer.WriteStringValue(Markdown);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<DevTestLabEnableStatus> enabled = default;
-            Optional<string> markdown = default;
+            DevTestLabEnableStatus? enabled = default;
+            string markdown = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabSupport(Optional.ToNullable(enabled), markdown.Value, serializedAdditionalRawData);
+            return new DevTestLabSupport(enabled, markdown, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabSupport>.Write(ModelReaderWriterOptions options)

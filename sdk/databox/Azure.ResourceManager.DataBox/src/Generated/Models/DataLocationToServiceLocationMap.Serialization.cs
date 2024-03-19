@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && DataLocation.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DataLocation))
             {
                 writer.WritePropertyName("dataLocation"u8);
                 writer.WriteStringValue(DataLocation.Value);
             }
-            if (options.Format != "W" && ServiceLocation.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ServiceLocation))
             {
                 writer.WritePropertyName("serviceLocation"u8);
                 writer.WriteStringValue(ServiceLocation.Value);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<AzureLocation> dataLocation = default;
-            Optional<AzureLocation> serviceLocation = default;
+            AzureLocation? dataLocation = default;
+            AzureLocation? serviceLocation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLocationToServiceLocationMap(Optional.ToNullable(dataLocation), Optional.ToNullable(serviceLocation), serializedAdditionalRawData);
+            return new DataLocationToServiceLocationMap(dataLocation, serviceLocation, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataLocationToServiceLocationMap>.Write(ModelReaderWriterOptions options)

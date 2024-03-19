@@ -7,7 +7,7 @@
 
 using System;
 using System.Text.Json;
-using Azure.Core;
+using Azure.AI.MetricsAdvisor;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
@@ -19,9 +19,9 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 return null;
             }
-            Optional<string> dataFeedId = default;
-            Optional<string> metricId = default;
-            Optional<string> anomalyDetectionConfigurationId = default;
+            string dataFeedId = default;
+            string metricId = default;
+            string anomalyDetectionConfigurationId = default;
             string incidentId = default;
             DateTimeOffset startTime = default;
             DateTimeOffset lastTime = default;
@@ -71,9 +71,9 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
             }
             return new AnomalyIncident(
-                dataFeedId.Value,
-                metricId.Value,
-                anomalyDetectionConfigurationId.Value,
+                dataFeedId,
+                metricId,
+                anomalyDetectionConfigurationId,
                 incidentId,
                 startTime,
                 lastTime,

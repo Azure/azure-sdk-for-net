@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NotificationHubs;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
@@ -28,42 +29,42 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ApnsCertificate != null)
+            if (Optional.IsDefined(ApnsCertificate))
             {
                 writer.WritePropertyName("apnsCertificate"u8);
                 writer.WriteStringValue(ApnsCertificate);
             }
-            if (CertificateKey != null)
+            if (Optional.IsDefined(CertificateKey))
             {
                 writer.WritePropertyName("certificateKey"u8);
                 writer.WriteStringValue(CertificateKey);
             }
-            if (Endpoint != null)
+            if (Optional.IsDefined(Endpoint))
             {
                 writer.WritePropertyName("endpoint"u8);
                 writer.WriteStringValue(Endpoint.AbsoluteUri);
             }
-            if (ThumbprintString != null)
+            if (Optional.IsDefined(ThumbprintString))
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(ThumbprintString);
             }
-            if (KeyId != null)
+            if (Optional.IsDefined(KeyId))
             {
                 writer.WritePropertyName("keyId"u8);
                 writer.WriteStringValue(KeyId);
             }
-            if (AppName != null)
+            if (Optional.IsDefined(AppName))
             {
                 writer.WritePropertyName("appName"u8);
                 writer.WriteStringValue(AppName);
             }
-            if (AppId != null)
+            if (Optional.IsDefined(AppId))
             {
                 writer.WritePropertyName("appId"u8);
                 writer.WriteStringValue(AppId);
             }
-            if (Token != null)
+            if (Optional.IsDefined(Token))
             {
                 writer.WritePropertyName("token"u8);
                 writer.WriteStringValue(Token);
@@ -107,14 +108,14 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             {
                 return null;
             }
-            Optional<string> apnsCertificate = default;
-            Optional<string> certificateKey = default;
-            Optional<Uri> endpoint = default;
-            Optional<string> thumbprint = default;
-            Optional<string> keyId = default;
-            Optional<string> appName = default;
-            Optional<string> appId = default;
-            Optional<string> token = default;
+            string apnsCertificate = default;
+            string certificateKey = default;
+            Uri endpoint = default;
+            string thumbprint = default;
+            string keyId = default;
+            string appName = default;
+            string appId = default;
+            string token = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -182,14 +183,14 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new NotificationHubApnsCredential(
-                apnsCertificate.Value,
-                certificateKey.Value,
-                endpoint.Value,
-                thumbprint.Value,
-                keyId.Value,
-                appName.Value,
-                appId.Value,
-                token.Value,
+                apnsCertificate,
+                certificateKey,
+                endpoint,
+                thumbprint,
+                keyId,
+                appName,
+                appId,
+                token,
                 serializedAdditionalRawData);
         }
 

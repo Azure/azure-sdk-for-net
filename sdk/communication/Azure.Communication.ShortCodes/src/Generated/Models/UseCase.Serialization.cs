@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Communication.ShortCodes;
 using Azure.Core;
 
 namespace Azure.Communication.ShortCodes.Models
@@ -16,12 +17,12 @@ namespace Azure.Communication.ShortCodes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ContentCategory.HasValue)
+            if (Optional.IsDefined(ContentCategory))
             {
                 writer.WritePropertyName("contentCategory"u8);
                 writer.WriteStringValue(ContentCategory.Value.ToString());
             }
-            if (!(Examples is ChangeTrackingList<MessageExampleSequence> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Examples))
             {
                 writer.WritePropertyName("examples"u8);
                 writer.WriteStartArray();
@@ -40,7 +41,7 @@ namespace Azure.Communication.ShortCodes.Models
             {
                 return null;
             }
-            Optional<MessageContentCategory> contentCategory = default;
+            MessageContentCategory? contentCategory = default;
             IList<MessageExampleSequence> examples = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -68,7 +69,7 @@ namespace Azure.Communication.ShortCodes.Models
                     continue;
                 }
             }
-            return new UseCase(Optional.ToNullable(contentCategory), examples ?? new ChangeTrackingList<MessageExampleSequence>());
+            return new UseCase(contentCategory, examples ?? new ChangeTrackingList<MessageExampleSequence>());
         }
     }
 }

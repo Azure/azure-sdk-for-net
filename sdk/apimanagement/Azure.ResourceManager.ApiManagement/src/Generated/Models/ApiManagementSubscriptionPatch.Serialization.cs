@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -28,47 +29,47 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (OwnerId != null)
+            if (Optional.IsDefined(OwnerId))
             {
                 writer.WritePropertyName("ownerId"u8);
                 writer.WriteStringValue(OwnerId);
             }
-            if (Scope != null)
+            if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (ExpireOn.HasValue)
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationDate"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (PrimaryKey != null)
+            if (Optional.IsDefined(PrimaryKey))
             {
                 writer.WritePropertyName("primaryKey"u8);
                 writer.WriteStringValue(PrimaryKey);
             }
-            if (SecondaryKey != null)
+            if (Optional.IsDefined(SecondaryKey))
             {
                 writer.WritePropertyName("secondaryKey"u8);
                 writer.WriteStringValue(SecondaryKey);
             }
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToSerialString());
             }
-            if (StateComment != null)
+            if (Optional.IsDefined(StateComment))
             {
                 writer.WritePropertyName("stateComment"u8);
                 writer.WriteStringValue(StateComment);
             }
-            if (AllowTracing.HasValue)
+            if (Optional.IsDefined(AllowTracing))
             {
                 writer.WritePropertyName("allowTracing"u8);
                 writer.WriteBooleanValue(AllowTracing.Value);
@@ -112,15 +113,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> ownerId = default;
-            Optional<string> scope = default;
-            Optional<DateTimeOffset> expirationDate = default;
-            Optional<string> displayName = default;
-            Optional<string> primaryKey = default;
-            Optional<string> secondaryKey = default;
-            Optional<SubscriptionState> state = default;
-            Optional<string> stateComment = default;
-            Optional<bool> allowTracing = default;
+            string ownerId = default;
+            string scope = default;
+            DateTimeOffset? expirationDate = default;
+            string displayName = default;
+            string primaryKey = default;
+            string secondaryKey = default;
+            SubscriptionState? state = default;
+            string stateComment = default;
+            bool? allowTracing = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -201,15 +202,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ApiManagementSubscriptionPatch(
-                ownerId.Value,
-                scope.Value,
-                Optional.ToNullable(expirationDate),
-                displayName.Value,
-                primaryKey.Value,
-                secondaryKey.Value,
-                Optional.ToNullable(state),
-                stateComment.Value,
-                Optional.ToNullable(allowTracing),
+                ownerId,
+                scope,
+                expirationDate,
+                displayName,
+                primaryKey,
+                secondaryKey,
+                state,
+                stateComment,
+                allowTracing,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && PersistentVolumeClaim != null)
+            if (options.Format != "W" && Optional.IsDefined(PersistentVolumeClaim))
             {
                 writer.WritePropertyName("persistentVolumeClaim"u8);
                 writer.WriteStringValue(PersistentVolumeClaim);
             }
-            if (options.Format != "W" && PersistentVolume != null)
+            if (options.Format != "W" && Optional.IsDefined(PersistentVolume))
             {
                 writer.WritePropertyName("persistentVolume"u8);
                 writer.WriteStringValue(PersistentVolume);
             }
-            if (options.Format != "W" && StorageClass != null)
+            if (options.Format != "W" && Optional.IsDefined(StorageClass))
             {
                 writer.WritePropertyName("storageClass"u8);
                 writer.WriteStringValue(StorageClass);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<string> persistentVolumeClaim = default;
-            Optional<string> persistentVolume = default;
-            Optional<string> storageClass = default;
+            string persistentVolumeClaim = default;
+            string persistentVolume = default;
+            string storageClass = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AmlFileSystemContainerStorageInterface(persistentVolumeClaim.Value, persistentVolume.Value, storageClass.Value, serializedAdditionalRawData);
+            return new AmlFileSystemContainerStorageInterface(persistentVolumeClaim, persistentVolume, storageClass, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AmlFileSystemContainerStorageInterface>.Write(ModelReaderWriterOptions options)

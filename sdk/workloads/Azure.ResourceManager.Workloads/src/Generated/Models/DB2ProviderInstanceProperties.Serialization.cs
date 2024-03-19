@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -26,47 +27,47 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (Hostname != null)
+            if (Optional.IsDefined(Hostname))
             {
                 writer.WritePropertyName("hostname"u8);
                 writer.WriteStringValue(Hostname);
             }
-            if (DBName != null)
+            if (Optional.IsDefined(DBName))
             {
                 writer.WritePropertyName("dbName"u8);
                 writer.WriteStringValue(DBName);
             }
-            if (DBPort != null)
+            if (Optional.IsDefined(DBPort))
             {
                 writer.WritePropertyName("dbPort"u8);
                 writer.WriteStringValue(DBPort);
             }
-            if (DBUsername != null)
+            if (Optional.IsDefined(DBUsername))
             {
                 writer.WritePropertyName("dbUsername"u8);
                 writer.WriteStringValue(DBUsername);
             }
-            if (DBPassword != null)
+            if (Optional.IsDefined(DBPassword))
             {
                 writer.WritePropertyName("dbPassword"u8);
                 writer.WriteStringValue(DBPassword);
             }
-            if (DBPasswordUri != null)
+            if (Optional.IsDefined(DBPasswordUri))
             {
                 writer.WritePropertyName("dbPasswordUri"u8);
                 writer.WriteStringValue(DBPasswordUri.AbsoluteUri);
             }
-            if (SapSid != null)
+            if (Optional.IsDefined(SapSid))
             {
                 writer.WritePropertyName("sapSid"u8);
                 writer.WriteStringValue(SapSid);
             }
-            if (SslPreference.HasValue)
+            if (Optional.IsDefined(SslPreference))
             {
                 writer.WritePropertyName("sslPreference"u8);
                 writer.WriteStringValue(SslPreference.Value.ToString());
             }
-            if (SslCertificateUri != null)
+            if (Optional.IsDefined(SslCertificateUri))
             {
                 writer.WritePropertyName("sslCertificateUri"u8);
                 writer.WriteStringValue(SslCertificateUri.AbsoluteUri);
@@ -111,15 +112,15 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<string> hostname = default;
-            Optional<string> dbName = default;
-            Optional<string> dbPort = default;
-            Optional<string> dbUsername = default;
-            Optional<string> dbPassword = default;
-            Optional<Uri> dbPasswordUri = default;
-            Optional<string> sapSid = default;
-            Optional<SapSslPreference> sslPreference = default;
-            Optional<Uri> sslCertificateUri = default;
+            string hostname = default;
+            string dbName = default;
+            string dbPort = default;
+            string dbUsername = default;
+            string dbPassword = default;
+            Uri dbPasswordUri = default;
+            string sapSid = default;
+            SapSslPreference? sslPreference = default;
+            Uri sslCertificateUri = default;
             string providerType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -196,15 +197,15 @@ namespace Azure.ResourceManager.Workloads.Models
             return new DB2ProviderInstanceProperties(
                 providerType,
                 serializedAdditionalRawData,
-                hostname.Value,
-                dbName.Value,
-                dbPort.Value,
-                dbUsername.Value,
-                dbPassword.Value,
-                dbPasswordUri.Value,
-                sapSid.Value,
-                Optional.ToNullable(sslPreference),
-                sslCertificateUri.Value);
+                hostname,
+                dbName,
+                dbPort,
+                dbUsername,
+                dbPassword,
+                dbPasswordUri,
+                sapSid,
+                sslPreference,
+                sslCertificateUri);
         }
 
         BinaryData IPersistableModel<DB2ProviderInstanceProperties>.Write(ModelReaderWriterOptions options)

@@ -43,49 +43,49 @@ namespace Azure.ResourceManager.RedisEnterprise
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ClientProtocol.HasValue)
+            if (Optional.IsDefined(ClientProtocol))
             {
                 writer.WritePropertyName("clientProtocol"u8);
                 writer.WriteStringValue(ClientProtocol.Value.ToString());
             }
-            if (Port.HasValue)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && ResourceState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceState))
             {
                 writer.WritePropertyName("resourceState"u8);
                 writer.WriteStringValue(ResourceState.Value.ToString());
             }
-            if (ClusteringPolicy.HasValue)
+            if (Optional.IsDefined(ClusteringPolicy))
             {
                 writer.WritePropertyName("clusteringPolicy"u8);
                 writer.WriteStringValue(ClusteringPolicy.Value.ToString());
             }
-            if (EvictionPolicy.HasValue)
+            if (Optional.IsDefined(EvictionPolicy))
             {
                 writer.WritePropertyName("evictionPolicy"u8);
                 writer.WriteStringValue(EvictionPolicy.Value.ToString());
             }
-            if (Persistence != null)
+            if (Optional.IsDefined(Persistence))
             {
                 writer.WritePropertyName("persistence"u8);
                 writer.WriteObjectValue(Persistence);
             }
-            if (!(Modules is ChangeTrackingList<RedisEnterpriseModule> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Modules))
             {
                 writer.WritePropertyName("modules"u8);
                 writer.WriteStartArray();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 }
                 writer.WriteEndArray();
             }
-            if (GeoReplication != null)
+            if (Optional.IsDefined(GeoReplication))
             {
                 writer.WritePropertyName("geoReplication"u8);
                 writer.WriteObjectValue(GeoReplication);
@@ -142,16 +142,16 @@ namespace Azure.ResourceManager.RedisEnterprise
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<RedisEnterpriseClientProtocol> clientProtocol = default;
-            Optional<int> port = default;
-            Optional<RedisEnterpriseProvisioningStatus> provisioningState = default;
-            Optional<RedisEnterpriseClusterResourceState> resourceState = default;
-            Optional<RedisEnterpriseClusteringPolicy> clusteringPolicy = default;
-            Optional<RedisEnterpriseEvictionPolicy> evictionPolicy = default;
-            Optional<RedisPersistenceSettings> persistence = default;
+            SystemData systemData = default;
+            RedisEnterpriseClientProtocol? clientProtocol = default;
+            int? port = default;
+            RedisEnterpriseProvisioningStatus? provisioningState = default;
+            RedisEnterpriseClusterResourceState? resourceState = default;
+            RedisEnterpriseClusteringPolicy? clusteringPolicy = default;
+            RedisEnterpriseEvictionPolicy? evictionPolicy = default;
+            RedisPersistenceSettings persistence = default;
             IList<RedisEnterpriseModule> modules = default;
-            Optional<RedisEnterpriseDatabaseGeoReplication> geoReplication = default;
+            RedisEnterpriseDatabaseGeoReplication geoReplication = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -288,16 +288,16 @@ namespace Azure.ResourceManager.RedisEnterprise
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(clientProtocol),
-                Optional.ToNullable(port),
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(resourceState),
-                Optional.ToNullable(clusteringPolicy),
-                Optional.ToNullable(evictionPolicy),
-                persistence.Value,
+                systemData,
+                clientProtocol,
+                port,
+                provisioningState,
+                resourceState,
+                clusteringPolicy,
+                evictionPolicy,
+                persistence,
                 modules ?? new ChangeTrackingList<RedisEnterpriseModule>(),
-                geoReplication.Value,
+                geoReplication,
                 serializedAdditionalRawData);
         }
 

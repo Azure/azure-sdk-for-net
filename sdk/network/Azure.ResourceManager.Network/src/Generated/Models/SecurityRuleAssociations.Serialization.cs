@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (NetworkInterfaceAssociation != null)
+            if (Optional.IsDefined(NetworkInterfaceAssociation))
             {
                 writer.WritePropertyName("networkInterfaceAssociation"u8);
                 writer.WriteObjectValue(NetworkInterfaceAssociation);
             }
-            if (SubnetAssociation != null)
+            if (Optional.IsDefined(SubnetAssociation))
             {
                 writer.WritePropertyName("subnetAssociation"u8);
                 writer.WriteObjectValue(SubnetAssociation);
             }
-            if (!(DefaultSecurityRules is ChangeTrackingList<SecurityRuleData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DefaultSecurityRules))
             {
                 writer.WritePropertyName("defaultSecurityRules"u8);
                 writer.WriteStartArray();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(EffectiveSecurityRules is ChangeTrackingList<EffectiveNetworkSecurityRule> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(EffectiveSecurityRules))
             {
                 writer.WritePropertyName("effectiveSecurityRules"u8);
                 writer.WriteStartArray();
@@ -95,8 +95,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<NetworkInterfaceAssociation> networkInterfaceAssociation = default;
-            Optional<SubnetAssociation> subnetAssociation = default;
+            NetworkInterfaceAssociation networkInterfaceAssociation = default;
+            SubnetAssociation subnetAssociation = default;
             IReadOnlyList<SecurityRuleData> defaultSecurityRules = default;
             IReadOnlyList<EffectiveNetworkSecurityRule> effectiveSecurityRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityRuleAssociations(networkInterfaceAssociation.Value, subnetAssociation.Value, defaultSecurityRules ?? new ChangeTrackingList<SecurityRuleData>(), effectiveSecurityRules ?? new ChangeTrackingList<EffectiveNetworkSecurityRule>(), serializedAdditionalRawData);
+            return new SecurityRuleAssociations(networkInterfaceAssociation, subnetAssociation, defaultSecurityRules ?? new ChangeTrackingList<SecurityRuleData>(), effectiveSecurityRules ?? new ChangeTrackingList<EffectiveNetworkSecurityRule>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityRuleAssociations>.Write(ModelReaderWriterOptions options)

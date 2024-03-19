@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,42 +27,42 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Java11Runtime != null)
+            if (options.Format != "W" && Optional.IsDefined(Java11Runtime))
             {
                 writer.WritePropertyName("java11Runtime"u8);
                 writer.WriteStringValue(Java11Runtime);
             }
-            if (options.Format != "W" && Java8Runtime != null)
+            if (options.Format != "W" && Optional.IsDefined(Java8Runtime))
             {
                 writer.WritePropertyName("java8Runtime"u8);
                 writer.WriteStringValue(Java8Runtime);
             }
-            if (options.Format != "W" && IsPreview.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsPreview))
             {
                 writer.WritePropertyName("isPreview"u8);
                 writer.WriteBooleanValue(IsPreview.Value);
             }
-            if (options.Format != "W" && IsDeprecated.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsDeprecated))
             {
                 writer.WritePropertyName("isDeprecated"u8);
                 writer.WriteBooleanValue(IsDeprecated.Value);
             }
-            if (options.Format != "W" && IsHidden.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsHidden))
             {
                 writer.WritePropertyName("isHidden"u8);
                 writer.WriteBooleanValue(IsHidden.Value);
             }
-            if (options.Format != "W" && EndOfLifeOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndOfLifeOn))
             {
                 writer.WritePropertyName("endOfLifeDate"u8);
                 writer.WriteStringValue(EndOfLifeOn.Value, "O");
             }
-            if (options.Format != "W" && IsAutoUpdate.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsAutoUpdate))
             {
                 writer.WritePropertyName("isAutoUpdate"u8);
                 writer.WriteBooleanValue(IsAutoUpdate.Value);
             }
-            if (options.Format != "W" && IsEarlyAccess.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsEarlyAccess))
             {
                 writer.WritePropertyName("isEarlyAccess"u8);
                 writer.WriteBooleanValue(IsEarlyAccess.Value);
@@ -104,14 +105,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> java11Runtime = default;
-            Optional<string> java8Runtime = default;
-            Optional<bool> isPreview = default;
-            Optional<bool> isDeprecated = default;
-            Optional<bool> isHidden = default;
-            Optional<DateTimeOffset> endOfLifeDate = default;
-            Optional<bool> isAutoUpdate = default;
-            Optional<bool> isEarlyAccess = default;
+            string java11Runtime = default;
+            string java8Runtime = default;
+            bool? isPreview = default;
+            bool? isDeprecated = default;
+            bool? isHidden = default;
+            DateTimeOffset? endOfLifeDate = default;
+            bool? isAutoUpdate = default;
+            bool? isEarlyAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -187,14 +188,14 @@ namespace Azure.ResourceManager.AppService.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new LinuxJavaContainerSettings(
-                java11Runtime.Value,
-                java8Runtime.Value,
-                Optional.ToNullable(isPreview),
-                Optional.ToNullable(isDeprecated),
-                Optional.ToNullable(isHidden),
-                Optional.ToNullable(endOfLifeDate),
-                Optional.ToNullable(isAutoUpdate),
-                Optional.ToNullable(isEarlyAccess),
+                java11Runtime,
+                java8Runtime,
+                isPreview,
+                isDeprecated,
+                isHidden,
+                endOfLifeDate,
+                isAutoUpdate,
+                isEarlyAccess,
                 serializedAdditionalRawData);
         }
 

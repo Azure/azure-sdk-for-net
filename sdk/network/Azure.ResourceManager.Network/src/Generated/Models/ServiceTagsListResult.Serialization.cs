@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -27,17 +28,17 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ChangeNumber != null)
+            if (options.Format != "W" && Optional.IsDefined(ChangeNumber))
             {
                 writer.WritePropertyName("changeNumber"u8);
                 writer.WriteStringValue(ChangeNumber);
             }
-            if (options.Format != "W" && Cloud != null)
+            if (options.Format != "W" && Optional.IsDefined(Cloud))
             {
                 writer.WritePropertyName("cloud"u8);
                 writer.WriteStringValue(Cloud);
             }
-            if (options.Format != "W" && !(Values is ChangeTrackingList<ServiceTagInformation> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Values))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && NextLink != null)
+            if (options.Format != "W" && Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -67,7 +68,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -110,14 +111,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> changeNumber = default;
-            Optional<string> cloud = default;
+            string changeNumber = default;
+            string cloud = default;
             IReadOnlyList<ServiceTagInformation> values = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -185,11 +186,11 @@ namespace Azure.ResourceManager.Network.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                changeNumber.Value,
-                cloud.Value,
+                systemData,
+                changeNumber,
+                cloud,
                 values ?? new ChangeTrackingList<ServiceTagInformation>(),
-                nextLink.Value,
+                nextLink,
                 serializedAdditionalRawData);
         }
 

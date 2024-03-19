@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.Hci.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ConnectivityProperties != null)
+            if (Optional.IsDefined(ConnectivityProperties))
             {
                 writer.WritePropertyName("connectivityProperties"u8);
 #if NET6_0_OR_GREATER
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.Hci.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<BinaryData> connectivityProperties = default;
+            BinaryData connectivityProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +138,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArcSettingPatch(tags ?? new ChangeTrackingDictionary<string, string>(), connectivityProperties.Value, serializedAdditionalRawData);
+            return new ArcSettingPatch(tags ?? new ChangeTrackingDictionary<string, string>(), connectivityProperties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArcSettingPatch>.Write(ModelReaderWriterOptions options)

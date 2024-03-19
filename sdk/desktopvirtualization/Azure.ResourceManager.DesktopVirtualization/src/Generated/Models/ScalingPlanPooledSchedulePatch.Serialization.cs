@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DesktopVirtualization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
@@ -42,14 +43,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(DaysOfWeek is ChangeTrackingList<DesktopVirtualizationDayOfWeek> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DaysOfWeek))
             {
                 writer.WritePropertyName("daysOfWeek"u8);
                 writer.WriteStartArray();
@@ -59,82 +60,82 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
                 writer.WriteEndArray();
             }
-            if (RampUpStartTime != null)
+            if (Optional.IsDefined(RampUpStartTime))
             {
                 writer.WritePropertyName("rampUpStartTime"u8);
                 writer.WriteObjectValue(RampUpStartTime);
             }
-            if (RampUpLoadBalancingAlgorithm.HasValue)
+            if (Optional.IsDefined(RampUpLoadBalancingAlgorithm))
             {
                 writer.WritePropertyName("rampUpLoadBalancingAlgorithm"u8);
                 writer.WriteStringValue(RampUpLoadBalancingAlgorithm.Value.ToString());
             }
-            if (RampUpMinimumHostsPct.HasValue)
+            if (Optional.IsDefined(RampUpMinimumHostsPct))
             {
                 writer.WritePropertyName("rampUpMinimumHostsPct"u8);
                 writer.WriteNumberValue(RampUpMinimumHostsPct.Value);
             }
-            if (RampUpCapacityThresholdPct.HasValue)
+            if (Optional.IsDefined(RampUpCapacityThresholdPct))
             {
                 writer.WritePropertyName("rampUpCapacityThresholdPct"u8);
                 writer.WriteNumberValue(RampUpCapacityThresholdPct.Value);
             }
-            if (PeakStartTime != null)
+            if (Optional.IsDefined(PeakStartTime))
             {
                 writer.WritePropertyName("peakStartTime"u8);
                 writer.WriteObjectValue(PeakStartTime);
             }
-            if (PeakLoadBalancingAlgorithm.HasValue)
+            if (Optional.IsDefined(PeakLoadBalancingAlgorithm))
             {
                 writer.WritePropertyName("peakLoadBalancingAlgorithm"u8);
                 writer.WriteStringValue(PeakLoadBalancingAlgorithm.Value.ToString());
             }
-            if (RampDownStartTime != null)
+            if (Optional.IsDefined(RampDownStartTime))
             {
                 writer.WritePropertyName("rampDownStartTime"u8);
                 writer.WriteObjectValue(RampDownStartTime);
             }
-            if (RampDownLoadBalancingAlgorithm.HasValue)
+            if (Optional.IsDefined(RampDownLoadBalancingAlgorithm))
             {
                 writer.WritePropertyName("rampDownLoadBalancingAlgorithm"u8);
                 writer.WriteStringValue(RampDownLoadBalancingAlgorithm.Value.ToString());
             }
-            if (RampDownMinimumHostsPct.HasValue)
+            if (Optional.IsDefined(RampDownMinimumHostsPct))
             {
                 writer.WritePropertyName("rampDownMinimumHostsPct"u8);
                 writer.WriteNumberValue(RampDownMinimumHostsPct.Value);
             }
-            if (RampDownCapacityThresholdPct.HasValue)
+            if (Optional.IsDefined(RampDownCapacityThresholdPct))
             {
                 writer.WritePropertyName("rampDownCapacityThresholdPct"u8);
                 writer.WriteNumberValue(RampDownCapacityThresholdPct.Value);
             }
-            if (RampDownForceLogoffUsers.HasValue)
+            if (Optional.IsDefined(RampDownForceLogoffUsers))
             {
                 writer.WritePropertyName("rampDownForceLogoffUsers"u8);
                 writer.WriteBooleanValue(RampDownForceLogoffUsers.Value);
             }
-            if (RampDownStopHostsWhen.HasValue)
+            if (Optional.IsDefined(RampDownStopHostsWhen))
             {
                 writer.WritePropertyName("rampDownStopHostsWhen"u8);
                 writer.WriteStringValue(RampDownStopHostsWhen.Value.ToString());
             }
-            if (RampDownWaitTimeMinutes.HasValue)
+            if (Optional.IsDefined(RampDownWaitTimeMinutes))
             {
                 writer.WritePropertyName("rampDownWaitTimeMinutes"u8);
                 writer.WriteNumberValue(RampDownWaitTimeMinutes.Value);
             }
-            if (RampDownNotificationMessage != null)
+            if (Optional.IsDefined(RampDownNotificationMessage))
             {
                 writer.WritePropertyName("rampDownNotificationMessage"u8);
                 writer.WriteStringValue(RampDownNotificationMessage);
             }
-            if (OffPeakStartTime != null)
+            if (Optional.IsDefined(OffPeakStartTime))
             {
                 writer.WritePropertyName("offPeakStartTime"u8);
                 writer.WriteObjectValue(OffPeakStartTime);
             }
-            if (OffPeakLoadBalancingAlgorithm.HasValue)
+            if (Optional.IsDefined(OffPeakLoadBalancingAlgorithm))
             {
                 writer.WritePropertyName("offPeakLoadBalancingAlgorithm"u8);
                 writer.WriteStringValue(OffPeakLoadBalancingAlgorithm.Value.ToString());
@@ -181,24 +182,24 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IList<DesktopVirtualizationDayOfWeek> daysOfWeek = default;
-            Optional<ScalingActionTime> rampUpStartTime = default;
-            Optional<SessionHostLoadBalancingAlgorithm> rampUpLoadBalancingAlgorithm = default;
-            Optional<int> rampUpMinimumHostsPct = default;
-            Optional<int> rampUpCapacityThresholdPct = default;
-            Optional<ScalingActionTime> peakStartTime = default;
-            Optional<SessionHostLoadBalancingAlgorithm> peakLoadBalancingAlgorithm = default;
-            Optional<ScalingActionTime> rampDownStartTime = default;
-            Optional<SessionHostLoadBalancingAlgorithm> rampDownLoadBalancingAlgorithm = default;
-            Optional<int> rampDownMinimumHostsPct = default;
-            Optional<int> rampDownCapacityThresholdPct = default;
-            Optional<bool> rampDownForceLogoffUsers = default;
-            Optional<DesktopVirtualizationStopHostsWhen> rampDownStopHostsWhen = default;
-            Optional<int> rampDownWaitTimeMinutes = default;
-            Optional<string> rampDownNotificationMessage = default;
-            Optional<ScalingActionTime> offPeakStartTime = default;
-            Optional<SessionHostLoadBalancingAlgorithm> offPeakLoadBalancingAlgorithm = default;
+            ScalingActionTime rampUpStartTime = default;
+            SessionHostLoadBalancingAlgorithm? rampUpLoadBalancingAlgorithm = default;
+            int? rampUpMinimumHostsPct = default;
+            int? rampUpCapacityThresholdPct = default;
+            ScalingActionTime peakStartTime = default;
+            SessionHostLoadBalancingAlgorithm? peakLoadBalancingAlgorithm = default;
+            ScalingActionTime rampDownStartTime = default;
+            SessionHostLoadBalancingAlgorithm? rampDownLoadBalancingAlgorithm = default;
+            int? rampDownMinimumHostsPct = default;
+            int? rampDownCapacityThresholdPct = default;
+            bool? rampDownForceLogoffUsers = default;
+            DesktopVirtualizationStopHostsWhen? rampDownStopHostsWhen = default;
+            int? rampDownWaitTimeMinutes = default;
+            string rampDownNotificationMessage = default;
+            ScalingActionTime offPeakStartTime = default;
+            SessionHostLoadBalancingAlgorithm? offPeakLoadBalancingAlgorithm = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -403,24 +404,24 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 daysOfWeek ?? new ChangeTrackingList<DesktopVirtualizationDayOfWeek>(),
-                rampUpStartTime.Value,
-                Optional.ToNullable(rampUpLoadBalancingAlgorithm),
-                Optional.ToNullable(rampUpMinimumHostsPct),
-                Optional.ToNullable(rampUpCapacityThresholdPct),
-                peakStartTime.Value,
-                Optional.ToNullable(peakLoadBalancingAlgorithm),
-                rampDownStartTime.Value,
-                Optional.ToNullable(rampDownLoadBalancingAlgorithm),
-                Optional.ToNullable(rampDownMinimumHostsPct),
-                Optional.ToNullable(rampDownCapacityThresholdPct),
-                Optional.ToNullable(rampDownForceLogoffUsers),
-                Optional.ToNullable(rampDownStopHostsWhen),
-                Optional.ToNullable(rampDownWaitTimeMinutes),
-                rampDownNotificationMessage.Value,
-                offPeakStartTime.Value,
-                Optional.ToNullable(offPeakLoadBalancingAlgorithm),
+                rampUpStartTime,
+                rampUpLoadBalancingAlgorithm,
+                rampUpMinimumHostsPct,
+                rampUpCapacityThresholdPct,
+                peakStartTime,
+                peakLoadBalancingAlgorithm,
+                rampDownStartTime,
+                rampDownLoadBalancingAlgorithm,
+                rampDownMinimumHostsPct,
+                rampDownCapacityThresholdPct,
+                rampDownForceLogoffUsers,
+                rampDownStopHostsWhen,
+                rampDownWaitTimeMinutes,
+                rampDownNotificationMessage,
+                offPeakStartTime,
+                offPeakLoadBalancingAlgorithm,
                 serializedAdditionalRawData);
         }
 

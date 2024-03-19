@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -38,12 +39,12 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteBooleanValue(NeedLoopForValidMessages);
             writer.WritePropertyName("sendSynchronousAcknowledgement"u8);
             writer.WriteBooleanValue(SendSynchronousAcknowledgement);
-            if (AcknowledgementControlNumberPrefix != null)
+            if (Optional.IsDefined(AcknowledgementControlNumberPrefix))
             {
                 writer.WritePropertyName("acknowledgementControlNumberPrefix"u8);
                 writer.WriteStringValue(AcknowledgementControlNumberPrefix);
             }
-            if (AcknowledgementControlNumberSuffix != null)
+            if (Optional.IsDefined(AcknowledgementControlNumberSuffix))
             {
                 writer.WritePropertyName("acknowledgementControlNumberSuffix"u8);
                 writer.WriteStringValue(AcknowledgementControlNumberSuffix);
@@ -98,8 +99,8 @@ namespace Azure.ResourceManager.Logic.Models
             bool batchFunctionalAcknowledgements = default;
             bool needLoopForValidMessages = default;
             bool sendSynchronousAcknowledgement = default;
-            Optional<string> acknowledgementControlNumberPrefix = default;
-            Optional<string> acknowledgementControlNumberSuffix = default;
+            string acknowledgementControlNumberPrefix = default;
+            string acknowledgementControlNumberSuffix = default;
             int acknowledgementControlNumberLowerBound = default;
             int acknowledgementControlNumberUpperBound = default;
             bool rolloverAcknowledgementControlNumber = default;
@@ -175,8 +176,8 @@ namespace Azure.ResourceManager.Logic.Models
                 batchFunctionalAcknowledgements,
                 needLoopForValidMessages,
                 sendSynchronousAcknowledgement,
-                acknowledgementControlNumberPrefix.Value,
-                acknowledgementControlNumberSuffix.Value,
+                acknowledgementControlNumberPrefix,
+                acknowledgementControlNumberSuffix,
                 acknowledgementControlNumberLowerBound,
                 acknowledgementControlNumberUpperBound,
                 rolloverAcknowledgementControlNumber,

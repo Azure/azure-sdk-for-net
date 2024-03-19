@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && PartitionId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PartitionId))
             {
                 writer.WritePropertyName("partitionId"u8);
                 writer.WriteStringValue(PartitionId.Value);
             }
-            if (options.Format != "W" && PartitionKeyRangeId != null)
+            if (options.Format != "W" && Optional.IsDefined(PartitionKeyRangeId))
             {
                 writer.WritePropertyName("partitionKeyRangeId"u8);
                 writer.WriteStringValue(PartitionKeyRangeId);
             }
-            if (options.Format != "W" && Unit.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit.Value.ToString());
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteObjectValue(Name);
             }
-            if (options.Format != "W" && QuotaPeriod != null)
+            if (options.Format != "W" && Optional.IsDefined(QuotaPeriod))
             {
                 writer.WritePropertyName("quotaPeriod"u8);
                 writer.WriteStringValue(QuotaPeriod);
             }
-            if (options.Format != "W" && Limit.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Limit))
             {
                 writer.WritePropertyName("limit"u8);
                 writer.WriteNumberValue(Limit.Value);
             }
-            if (options.Format != "W" && CurrentValue.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CurrentValue))
             {
                 writer.WritePropertyName("currentValue"u8);
                 writer.WriteNumberValue(CurrentValue.Value);
@@ -99,13 +100,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<Guid> partitionId = default;
-            Optional<string> partitionKeyRangeId = default;
-            Optional<CosmosDBMetricUnitType> unit = default;
-            Optional<CosmosDBMetricName> name = default;
-            Optional<string> quotaPeriod = default;
-            Optional<long> limit = default;
-            Optional<long> currentValue = default;
+            Guid? partitionId = default;
+            string partitionKeyRangeId = default;
+            CosmosDBMetricUnitType? unit = default;
+            CosmosDBMetricName name = default;
+            string quotaPeriod = default;
+            long? limit = default;
+            long? currentValue = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -172,14 +173,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new PartitionUsage(
-                Optional.ToNullable(unit),
-                name.Value,
-                quotaPeriod.Value,
-                Optional.ToNullable(limit),
-                Optional.ToNullable(currentValue),
+                unit,
+                name,
+                quotaPeriod,
+                limit,
+                currentValue,
                 serializedAdditionalRawData,
-                Optional.ToNullable(partitionId),
-                partitionKeyRangeId.Value);
+                partitionId,
+                partitionKeyRangeId);
         }
 
         BinaryData IPersistableModel<PartitionUsage>.Write(ModelReaderWriterOptions options)

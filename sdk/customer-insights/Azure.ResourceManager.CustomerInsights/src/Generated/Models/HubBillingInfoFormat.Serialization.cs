@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CustomerInsights;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
 
             writer.WriteStartObject();
-            if (SkuName != null)
+            if (Optional.IsDefined(SkuName))
             {
                 writer.WritePropertyName("skuName"u8);
                 writer.WriteStringValue(SkuName);
             }
-            if (MinUnits.HasValue)
+            if (Optional.IsDefined(MinUnits))
             {
                 writer.WritePropertyName("minUnits"u8);
                 writer.WriteNumberValue(MinUnits.Value);
             }
-            if (MaxUnits.HasValue)
+            if (Optional.IsDefined(MaxUnits))
             {
                 writer.WritePropertyName("maxUnits"u8);
                 writer.WriteNumberValue(MaxUnits.Value);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<string> skuName = default;
-            Optional<int> minUnits = default;
-            Optional<int> maxUnits = default;
+            string skuName = default;
+            int? minUnits = default;
+            int? maxUnits = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HubBillingInfoFormat(skuName.Value, Optional.ToNullable(minUnits), Optional.ToNullable(maxUnits), serializedAdditionalRawData);
+            return new HubBillingInfoFormat(skuName, minUnits, maxUnits, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HubBillingInfoFormat>.Write(ModelReaderWriterOptions options)

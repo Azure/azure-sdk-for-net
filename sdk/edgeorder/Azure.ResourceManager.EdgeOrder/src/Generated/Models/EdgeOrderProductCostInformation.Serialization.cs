@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(BillingMeterDetails is ChangeTrackingList<EdgeOrderProductBillingMeterDetails> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(BillingMeterDetails))
             {
                 writer.WritePropertyName("billingMeterDetails"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && BillingInfoUri != null)
+            if (options.Format != "W" && Optional.IsDefined(BillingInfoUri))
             {
                 writer.WritePropertyName("billingInfoUrl"u8);
                 writer.WriteStringValue(BillingInfoUri.AbsoluteUri);
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 return null;
             }
             IReadOnlyList<EdgeOrderProductBillingMeterDetails> billingMeterDetails = default;
-            Optional<Uri> billingInfoUrl = default;
+            Uri billingInfoUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeOrderProductCostInformation(billingMeterDetails ?? new ChangeTrackingList<EdgeOrderProductBillingMeterDetails>(), billingInfoUrl.Value, serializedAdditionalRawData);
+            return new EdgeOrderProductCostInformation(billingMeterDetails ?? new ChangeTrackingList<EdgeOrderProductBillingMeterDetails>(), billingInfoUrl, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeOrderProductCostInformation>.Write(ModelReaderWriterOptions options)

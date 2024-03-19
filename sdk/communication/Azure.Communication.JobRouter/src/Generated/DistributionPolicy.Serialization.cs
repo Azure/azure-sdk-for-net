@@ -37,17 +37,17 @@ namespace Azure.Communication.JobRouter
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (OfferExpiresAfter.HasValue)
+            if (Optional.IsDefined(OfferExpiresAfter))
             {
                 writer.WritePropertyName("offerExpiresAfterSeconds"u8);
                 WriteOfferExpiresAfter(writer);
             }
-            if (Mode != null)
+            if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteObjectValue(Mode);
@@ -92,9 +92,9 @@ namespace Azure.Communication.JobRouter
             }
             ETag etag = default;
             string id = default;
-            Optional<string> name = default;
-            Optional<TimeSpan> offerExpiresAfterSeconds = default;
-            Optional<DistributionMode> mode = default;
+            string name = default;
+            TimeSpan? offerExpiresAfterSeconds = default;
+            DistributionMode mode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,9 +137,9 @@ namespace Azure.Communication.JobRouter
             return new DistributionPolicy(
                 etag,
                 id,
-                name.Value,
-                Optional.ToNullable(offerExpiresAfterSeconds),
-                mode.Value,
+                name,
+                offerExpiresAfterSeconds,
+                mode,
                 serializedAdditionalRawData);
         }
 

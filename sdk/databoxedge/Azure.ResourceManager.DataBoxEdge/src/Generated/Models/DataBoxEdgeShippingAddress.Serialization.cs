@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (AddressLine1 != null)
+            if (Optional.IsDefined(AddressLine1))
             {
                 writer.WritePropertyName("addressLine1"u8);
                 writer.WriteStringValue(AddressLine1);
             }
-            if (AddressLine2 != null)
+            if (Optional.IsDefined(AddressLine2))
             {
                 writer.WritePropertyName("addressLine2"u8);
                 writer.WriteStringValue(AddressLine2);
             }
-            if (AddressLine3 != null)
+            if (Optional.IsDefined(AddressLine3))
             {
                 writer.WritePropertyName("addressLine3"u8);
                 writer.WriteStringValue(AddressLine3);
             }
-            if (PostalCode != null)
+            if (Optional.IsDefined(PostalCode))
             {
                 writer.WritePropertyName("postalCode"u8);
                 writer.WriteStringValue(PostalCode);
             }
-            if (City != null)
+            if (Optional.IsDefined(City))
             {
                 writer.WritePropertyName("city"u8);
                 writer.WriteStringValue(City);
             }
-            if (State != null)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
@@ -96,12 +97,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<string> addressLine1 = default;
-            Optional<string> addressLine2 = default;
-            Optional<string> addressLine3 = default;
-            Optional<string> postalCode = default;
-            Optional<string> city = default;
-            Optional<string> state = default;
+            string addressLine1 = default;
+            string addressLine2 = default;
+            string addressLine3 = default;
+            string postalCode = default;
+            string city = default;
+            string state = default;
             string country = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -149,12 +150,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DataBoxEdgeShippingAddress(
-                addressLine1.Value,
-                addressLine2.Value,
-                addressLine3.Value,
-                postalCode.Value,
-                city.Value,
-                state.Value,
+                addressLine1,
+                addressLine2,
+                addressLine3,
+                postalCode,
+                city,
+                state,
                 country,
                 serializedAdditionalRawData);
         }

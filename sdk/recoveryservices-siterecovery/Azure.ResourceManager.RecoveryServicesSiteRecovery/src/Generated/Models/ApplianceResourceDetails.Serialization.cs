@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Capacity.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);
             }
-            if (options.Format != "W" && ProcessUtilization.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProcessUtilization))
             {
                 writer.WritePropertyName("processUtilization"u8);
                 writer.WriteNumberValue(ProcessUtilization.Value);
             }
-            if (options.Format != "W" && TotalUtilization.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalUtilization))
             {
                 writer.WritePropertyName("totalUtilization"u8);
                 writer.WriteNumberValue(TotalUtilization.Value);
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<long> capacity = default;
-            Optional<double> processUtilization = default;
-            Optional<double> totalUtilization = default;
-            Optional<string> status = default;
+            long? capacity = default;
+            double? processUtilization = default;
+            double? totalUtilization = default;
+            string status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplianceResourceDetails(Optional.ToNullable(capacity), Optional.ToNullable(processUtilization), Optional.ToNullable(totalUtilization), status.Value, serializedAdditionalRawData);
+            return new ApplianceResourceDetails(capacity, processUtilization, totalUtilization, status, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplianceResourceDetails>.Write(ModelReaderWriterOptions options)

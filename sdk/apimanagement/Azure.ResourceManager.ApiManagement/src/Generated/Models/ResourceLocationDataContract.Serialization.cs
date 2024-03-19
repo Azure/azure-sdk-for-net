@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -28,17 +29,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (City != null)
+            if (Optional.IsDefined(City))
             {
                 writer.WritePropertyName("city"u8);
                 writer.WriteStringValue(City);
             }
-            if (District != null)
+            if (Optional.IsDefined(District))
             {
                 writer.WritePropertyName("district"u8);
                 writer.WriteStringValue(District);
             }
-            if (CountryOrRegion != null)
+            if (Optional.IsDefined(CountryOrRegion))
             {
                 writer.WritePropertyName("countryOrRegion"u8);
                 writer.WriteStringValue(CountryOrRegion);
@@ -82,9 +83,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 return null;
             }
             string name = default;
-            Optional<string> city = default;
-            Optional<string> district = default;
-            Optional<string> countryOrRegion = default;
+            string city = default;
+            string district = default;
+            string countryOrRegion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceLocationDataContract(name, city.Value, district.Value, countryOrRegion.Value, serializedAdditionalRawData);
+            return new ResourceLocationDataContract(name, city, district, countryOrRegion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceLocationDataContract>.Write(ModelReaderWriterOptions options)

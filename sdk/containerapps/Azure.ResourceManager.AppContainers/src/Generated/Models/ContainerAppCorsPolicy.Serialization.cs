@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (!(AllowedMethods is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AllowedMethods))
             {
                 writer.WritePropertyName("allowedMethods"u8);
                 writer.WriteStartArray();
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(AllowedHeaders is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(AllowedHeaders))
             {
                 writer.WritePropertyName("allowedHeaders"u8);
                 writer.WriteStartArray();
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ExposeHeaders is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(ExposeHeaders))
             {
                 writer.WritePropertyName("exposeHeaders"u8);
                 writer.WriteStartArray();
@@ -63,12 +64,12 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (MaxAge.HasValue)
+            if (Optional.IsDefined(MaxAge))
             {
                 writer.WritePropertyName("maxAge"u8);
                 writer.WriteNumberValue(MaxAge.Value);
             }
-            if (AllowCredentials.HasValue)
+            if (Optional.IsDefined(AllowCredentials))
             {
                 writer.WritePropertyName("allowCredentials"u8);
                 writer.WriteBooleanValue(AllowCredentials.Value);
@@ -115,8 +116,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             IList<string> allowedMethods = default;
             IList<string> allowedHeaders = default;
             IList<string> exposeHeaders = default;
-            Optional<int> maxAge = default;
-            Optional<bool> allowCredentials = default;
+            int? maxAge = default;
+            bool? allowCredentials = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -202,8 +203,8 @@ namespace Azure.ResourceManager.AppContainers.Models
                 allowedMethods ?? new ChangeTrackingList<string>(),
                 allowedHeaders ?? new ChangeTrackingList<string>(),
                 exposeHeaders ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(maxAge),
-                Optional.ToNullable(allowCredentials),
+                maxAge,
+                allowCredentials,
                 serializedAdditionalRawData);
         }
 

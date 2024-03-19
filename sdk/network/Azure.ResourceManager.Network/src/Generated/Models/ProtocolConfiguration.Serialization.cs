@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (HttpProtocolConfiguration != null)
+            if (Optional.IsDefined(HttpProtocolConfiguration))
             {
                 writer.WritePropertyName("HTTPConfiguration"u8);
                 writer.WriteObjectValue(HttpProtocolConfiguration);
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<NetworkHttpConfiguration> httpConfiguration = default;
+            NetworkHttpConfiguration httpConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProtocolConfiguration(httpConfiguration.Value, serializedAdditionalRawData);
+            return new ProtocolConfiguration(httpConfiguration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProtocolConfiguration>.Write(ModelReaderWriterOptions options)

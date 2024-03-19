@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (InsightsToExtract.HasValue)
+            if (Optional.IsDefined(InsightsToExtract))
             {
                 writer.WritePropertyName("insightsToExtract"u8);
                 writer.WriteStringValue(InsightsToExtract.Value.ToString());
             }
-            if (AudioLanguage != null)
+            if (Optional.IsDefined(AudioLanguage))
             {
                 writer.WritePropertyName("audioLanguage"u8);
                 writer.WriteStringValue(AudioLanguage);
             }
-            if (Mode.HasValue)
+            if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (!(ExperimentalOptions is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ExperimentalOptions))
             {
                 writer.WritePropertyName("experimentalOptions"u8);
                 writer.WriteStartObject();
@@ -92,9 +93,9 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<InsightsType> insightsToExtract = default;
-            Optional<string> audioLanguage = default;
-            Optional<AudioAnalysisMode> mode = default;
+            InsightsType? insightsToExtract = default;
+            string audioLanguage = default;
+            AudioAnalysisMode? mode = default;
             IDictionary<string, string> experimentalOptions = default;
             string odataType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -152,10 +153,10 @@ namespace Azure.ResourceManager.Media.Models
             return new VideoAnalyzerPreset(
                 odataType,
                 serializedAdditionalRawData,
-                audioLanguage.Value,
-                Optional.ToNullable(mode),
+                audioLanguage,
+                mode,
                 experimentalOptions ?? new ChangeTrackingDictionary<string, string>(),
-                Optional.ToNullable(insightsToExtract));
+                insightsToExtract);
         }
 
         BinaryData IPersistableModel<VideoAnalyzerPreset>.Write(ModelReaderWriterOptions options)

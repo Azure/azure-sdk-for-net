@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (!(Streams is ChangeTrackingList<PerfCounterDataSourceStream> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Streams))
             {
                 writer.WritePropertyName("streams"u8);
                 writer.WriteStartArray();
@@ -36,12 +37,12 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (SamplingFrequencyInSeconds.HasValue)
+            if (Optional.IsDefined(SamplingFrequencyInSeconds))
             {
                 writer.WritePropertyName("samplingFrequencyInSeconds"u8);
                 writer.WriteNumberValue(SamplingFrequencyInSeconds.Value);
             }
-            if (!(CounterSpecifiers is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(CounterSpecifiers))
             {
                 writer.WritePropertyName("counterSpecifiers"u8);
                 writer.WriteStartArray();
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -95,9 +96,9 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             IList<PerfCounterDataSourceStream> streams = default;
-            Optional<int> samplingFrequencyInSeconds = default;
+            int? samplingFrequencyInSeconds = default;
             IList<string> counterSpecifiers = default;
-            Optional<string> name = default;
+            string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,7 +151,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PerfCounterDataSource(streams ?? new ChangeTrackingList<PerfCounterDataSourceStream>(), Optional.ToNullable(samplingFrequencyInSeconds), counterSpecifiers ?? new ChangeTrackingList<string>(), name.Value, serializedAdditionalRawData);
+            return new PerfCounterDataSource(streams ?? new ChangeTrackingList<PerfCounterDataSourceStream>(), samplingFrequencyInSeconds, counterSpecifiers ?? new ChangeTrackingList<string>(), name, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PerfCounterDataSource>.Write(ModelReaderWriterOptions options)

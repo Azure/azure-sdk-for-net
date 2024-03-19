@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Kusto.Models
             }
 
             writer.WriteStartObject();
-            if (LanguageExtensionName.HasValue)
+            if (Optional.IsDefined(LanguageExtensionName))
             {
                 writer.WritePropertyName("languageExtensionName"u8);
                 writer.WriteStringValue(LanguageExtensionName.Value.ToString());
             }
-            if (LanguageExtensionImageName.HasValue)
+            if (Optional.IsDefined(LanguageExtensionImageName))
             {
                 writer.WritePropertyName("languageExtensionImageName"u8);
                 writer.WriteStringValue(LanguageExtensionImageName.Value.ToString());
             }
-            if (LanguageExtensionCustomImageName != null)
+            if (Optional.IsDefined(LanguageExtensionCustomImageName))
             {
                 writer.WritePropertyName("languageExtensionCustomImageName"u8);
                 writer.WriteStringValue(LanguageExtensionCustomImageName);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Optional<KustoLanguageExtensionName> languageExtensionName = default;
-            Optional<KustoLanguageExtensionImageName> languageExtensionImageName = default;
-            Optional<string> languageExtensionCustomImageName = default;
+            KustoLanguageExtensionName? languageExtensionName = default;
+            KustoLanguageExtensionImageName? languageExtensionImageName = default;
+            string languageExtensionCustomImageName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustoLanguageExtension(Optional.ToNullable(languageExtensionName), Optional.ToNullable(languageExtensionImageName), languageExtensionCustomImageName.Value, serializedAdditionalRawData);
+            return new KustoLanguageExtension(languageExtensionName, languageExtensionImageName, languageExtensionCustomImageName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KustoLanguageExtension>.Write(ModelReaderWriterOptions options)

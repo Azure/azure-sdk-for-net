@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (EstimatedLabCost.HasValue)
+            if (Optional.IsDefined(EstimatedLabCost))
             {
                 writer.WritePropertyName("estimatedLabCost"u8);
                 writer.WriteNumberValue(EstimatedLabCost.Value);
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<double> estimatedLabCost = default;
+            double? estimatedLabCost = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabCostSummaryProperties(Optional.ToNullable(estimatedLabCost), serializedAdditionalRawData);
+            return new LabCostSummaryProperties(estimatedLabCost, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabCostSummaryProperties>.Write(ModelReaderWriterOptions options)

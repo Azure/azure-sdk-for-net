@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && JobName != null)
+            if (options.Format != "W" && Optional.IsDefined(JobName))
             {
                 writer.WritePropertyName("jobName"u8);
                 writer.WriteStringValue(JobName);
             }
-            if (options.Format != "W" && JobId != null)
+            if (options.Format != "W" && Optional.IsDefined(JobId))
             {
                 writer.WritePropertyName("jobId"u8);
                 writer.WriteStringValue(JobId);
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && JobStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(JobStatus))
             {
                 writer.WritePropertyName("jobStatus"u8);
                 writer.WriteStringValue(JobStatus);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> jobName = default;
-            Optional<ResourceIdentifier> jobId = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<string> jobStatus = default;
+            string jobName = default;
+            ResourceIdentifier jobId = default;
+            DateTimeOffset? startTime = default;
+            string jobStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CriticalJobHistoryDetails(jobName.Value, jobId.Value, Optional.ToNullable(startTime), jobStatus.Value, serializedAdditionalRawData);
+            return new CriticalJobHistoryDetails(jobName, jobId, startTime, jobStatus, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CriticalJobHistoryDetails>.Write(ModelReaderWriterOptions options)

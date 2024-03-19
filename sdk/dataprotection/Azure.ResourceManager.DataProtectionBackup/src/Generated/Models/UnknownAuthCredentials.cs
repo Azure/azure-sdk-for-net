@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    /// <summary> The UnknownAuthCredentials. </summary>
+    /// <summary> Unknown version of AuthCredentials. </summary>
     internal partial class UnknownAuthCredentials : DataProtectionBackupAuthCredentials
     {
         /// <summary> Initializes a new instance of <see cref="UnknownAuthCredentials"/>. </summary>

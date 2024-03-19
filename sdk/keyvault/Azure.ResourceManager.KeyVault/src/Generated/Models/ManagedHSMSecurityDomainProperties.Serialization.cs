@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ActivationStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ActivationStatus))
             {
                 writer.WritePropertyName("activationStatus"u8);
                 writer.WriteStringValue(ActivationStatus.Value.ToString());
             }
-            if (options.Format != "W" && ActivationStatusMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(ActivationStatusMessage))
             {
                 writer.WritePropertyName("activationStatusMessage"u8);
                 writer.WriteStringValue(ActivationStatusMessage);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return null;
             }
-            Optional<ManagedHSMSecurityDomainActivationStatus> activationStatus = default;
-            Optional<string> activationStatusMessage = default;
+            ManagedHSMSecurityDomainActivationStatus? activationStatus = default;
+            string activationStatusMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedHSMSecurityDomainProperties(Optional.ToNullable(activationStatus), activationStatusMessage.Value, serializedAdditionalRawData);
+            return new ManagedHSMSecurityDomainProperties(activationStatus, activationStatusMessage, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedHSMSecurityDomainProperties>.Write(ModelReaderWriterOptions options)

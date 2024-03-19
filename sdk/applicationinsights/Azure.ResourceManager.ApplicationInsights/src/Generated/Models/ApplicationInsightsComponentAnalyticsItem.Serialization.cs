@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
@@ -26,47 +27,47 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("Id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("Name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Content != null)
+            if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("Content"u8);
                 writer.WriteStringValue(Content);
             }
-            if (options.Format != "W" && Version != null)
+            if (options.Format != "W" && Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("Version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Scope.HasValue)
+            if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("Scope"u8);
                 writer.WriteStringValue(Scope.Value.ToString());
             }
-            if (ItemType.HasValue)
+            if (Optional.IsDefined(ItemType))
             {
                 writer.WritePropertyName("Type"u8);
                 writer.WriteStringValue(ItemType.Value.ToString());
             }
-            if (options.Format != "W" && TimeCreated != null)
+            if (options.Format != "W" && Optional.IsDefined(TimeCreated))
             {
                 writer.WritePropertyName("TimeCreated"u8);
                 writer.WriteStringValue(TimeCreated);
             }
-            if (options.Format != "W" && TimeModified != null)
+            if (options.Format != "W" && Optional.IsDefined(TimeModified))
             {
                 writer.WritePropertyName("TimeModified"u8);
                 writer.WriteStringValue(TimeModified);
             }
-            if (Properties != null)
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("Properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -109,15 +110,15 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> content = default;
-            Optional<string> version = default;
-            Optional<ItemScope> scope = default;
-            Optional<ItemType> type = default;
-            Optional<string> timeCreated = default;
-            Optional<string> timeModified = default;
-            Optional<ApplicationInsightsComponentAnalyticsItemProperties> properties = default;
+            string id = default;
+            string name = default;
+            string content = default;
+            string version = default;
+            ItemScope? scope = default;
+            ItemType? type = default;
+            string timeCreated = default;
+            string timeModified = default;
+            ApplicationInsightsComponentAnalyticsItemProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -186,15 +187,15 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ApplicationInsightsComponentAnalyticsItem(
-                id.Value,
-                name.Value,
-                content.Value,
-                version.Value,
-                Optional.ToNullable(scope),
-                Optional.ToNullable(type),
-                timeCreated.Value,
-                timeModified.Value,
-                properties.Value,
+                id,
+                name,
+                content,
+                version,
+                scope,
+                type,
+                timeCreated,
+                timeModified,
+                properties,
                 serializedAdditionalRawData);
         }
 

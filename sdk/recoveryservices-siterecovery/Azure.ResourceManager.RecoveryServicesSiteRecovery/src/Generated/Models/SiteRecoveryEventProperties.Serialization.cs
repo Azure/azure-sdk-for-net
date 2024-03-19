@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,57 +27,57 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (EventCode != null)
+            if (Optional.IsDefined(EventCode))
             {
                 writer.WritePropertyName("eventCode"u8);
                 writer.WriteStringValue(EventCode);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (EventType != null)
+            if (Optional.IsDefined(EventType))
             {
                 writer.WritePropertyName("eventType"u8);
                 writer.WriteStringValue(EventType);
             }
-            if (AffectedObjectFriendlyName != null)
+            if (Optional.IsDefined(AffectedObjectFriendlyName))
             {
                 writer.WritePropertyName("affectedObjectFriendlyName"u8);
                 writer.WriteStringValue(AffectedObjectFriendlyName);
             }
-            if (AffectedObjectCorrelationId != null)
+            if (Optional.IsDefined(AffectedObjectCorrelationId))
             {
                 writer.WritePropertyName("affectedObjectCorrelationId"u8);
                 writer.WriteStringValue(AffectedObjectCorrelationId);
             }
-            if (Severity != null)
+            if (Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity);
             }
-            if (OccurredOn.HasValue)
+            if (Optional.IsDefined(OccurredOn))
             {
                 writer.WritePropertyName("timeOfOccurrence"u8);
                 writer.WriteStringValue(OccurredOn.Value, "O");
             }
-            if (FabricId != null)
+            if (Optional.IsDefined(FabricId))
             {
                 writer.WritePropertyName("fabricId"u8);
                 writer.WriteStringValue(FabricId);
             }
-            if (ProviderSpecificDetails != null)
+            if (Optional.IsDefined(ProviderSpecificDetails))
             {
                 writer.WritePropertyName("providerSpecificDetails"u8);
                 writer.WriteObjectValue(ProviderSpecificDetails);
             }
-            if (EventSpecificDetails != null)
+            if (Optional.IsDefined(EventSpecificDetails))
             {
                 writer.WritePropertyName("eventSpecificDetails"u8);
                 writer.WriteObjectValue(EventSpecificDetails);
             }
-            if (!(HealthErrors is ChangeTrackingList<SiteRecoveryHealthError> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(HealthErrors))
             {
                 writer.WritePropertyName("healthErrors"u8);
                 writer.WriteStartArray();
@@ -124,16 +125,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> eventCode = default;
-            Optional<string> description = default;
-            Optional<string> eventType = default;
-            Optional<string> affectedObjectFriendlyName = default;
-            Optional<string> affectedObjectCorrelationId = default;
-            Optional<string> severity = default;
-            Optional<DateTimeOffset> timeOfOccurrence = default;
-            Optional<ResourceIdentifier> fabricId = default;
-            Optional<SiteRecoveryEventProviderSpecificDetails> providerSpecificDetails = default;
-            Optional<SiteRecoveryEventSpecificDetails> eventSpecificDetails = default;
+            string eventCode = default;
+            string description = default;
+            string eventType = default;
+            string affectedObjectFriendlyName = default;
+            string affectedObjectCorrelationId = default;
+            string severity = default;
+            DateTimeOffset? timeOfOccurrence = default;
+            ResourceIdentifier fabricId = default;
+            SiteRecoveryEventProviderSpecificDetails providerSpecificDetails = default;
+            SiteRecoveryEventSpecificDetails eventSpecificDetails = default;
             IReadOnlyList<SiteRecoveryHealthError> healthErrors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -226,16 +227,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SiteRecoveryEventProperties(
-                eventCode.Value,
-                description.Value,
-                eventType.Value,
-                affectedObjectFriendlyName.Value,
-                affectedObjectCorrelationId.Value,
-                severity.Value,
-                Optional.ToNullable(timeOfOccurrence),
-                fabricId.Value,
-                providerSpecificDetails.Value,
-                eventSpecificDetails.Value,
+                eventCode,
+                description,
+                eventType,
+                affectedObjectFriendlyName,
+                affectedObjectCorrelationId,
+                severity,
+                timeOfOccurrence,
+                fabricId,
+                providerSpecificDetails,
+                eventSpecificDetails,
                 healthErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(),
                 serializedAdditionalRawData);
         }

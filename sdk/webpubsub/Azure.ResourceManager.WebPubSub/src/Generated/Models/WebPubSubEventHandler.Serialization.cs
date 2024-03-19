@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.WebPubSub;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
@@ -28,12 +29,12 @@ namespace Azure.ResourceManager.WebPubSub.Models
             writer.WriteStartObject();
             writer.WritePropertyName("urlTemplate"u8);
             writer.WriteStringValue(UrlTemplate);
-            if (UserEventPattern != null)
+            if (Optional.IsDefined(UserEventPattern))
             {
                 writer.WritePropertyName("userEventPattern"u8);
                 writer.WriteStringValue(UserEventPattern);
             }
-            if (!(SystemEvents is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SystemEvents))
             {
                 writer.WritePropertyName("systemEvents"u8);
                 writer.WriteStartArray();
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Auth != null)
+            if (Optional.IsDefined(Auth))
             {
                 writer.WritePropertyName("auth"u8);
                 writer.WriteObjectValue(Auth);
@@ -87,9 +88,9 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 return null;
             }
             string urlTemplate = default;
-            Optional<string> userEventPattern = default;
+            string userEventPattern = default;
             IList<string> systemEvents = default;
-            Optional<UpstreamAuthSettings> auth = default;
+            UpstreamAuthSettings auth = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +134,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebPubSubEventHandler(urlTemplate, userEventPattern.Value, systemEvents ?? new ChangeTrackingList<string>(), auth.Value, serializedAdditionalRawData);
+            return new WebPubSubEventHandler(urlTemplate, userEventPattern, systemEvents ?? new ChangeTrackingList<string>(), auth, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebPubSubEventHandler>.Write(ModelReaderWriterOptions options)

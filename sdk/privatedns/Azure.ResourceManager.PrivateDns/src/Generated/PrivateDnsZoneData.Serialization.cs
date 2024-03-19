@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.PrivateDns
             }
 
             writer.WriteStartObject();
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -62,49 +62,49 @@ namespace Azure.ResourceManager.PrivateDns
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && MaxNumberOfRecords.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MaxNumberOfRecords))
             {
                 writer.WritePropertyName("maxNumberOfRecordSets"u8);
                 writer.WriteNumberValue(MaxNumberOfRecords.Value);
             }
-            if (options.Format != "W" && NumberOfRecords.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NumberOfRecords))
             {
                 writer.WritePropertyName("numberOfRecordSets"u8);
                 writer.WriteNumberValue(NumberOfRecords.Value);
             }
-            if (options.Format != "W" && MaxNumberOfVirtualNetworkLinks.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MaxNumberOfVirtualNetworkLinks))
             {
                 writer.WritePropertyName("maxNumberOfVirtualNetworkLinks"u8);
                 writer.WriteNumberValue(MaxNumberOfVirtualNetworkLinks.Value);
             }
-            if (options.Format != "W" && NumberOfVirtualNetworkLinks.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NumberOfVirtualNetworkLinks))
             {
                 writer.WritePropertyName("numberOfVirtualNetworkLinks"u8);
                 writer.WriteNumberValue(NumberOfVirtualNetworkLinks.Value);
             }
-            if (options.Format != "W" && MaxNumberOfVirtualNetworkLinksWithRegistration.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MaxNumberOfVirtualNetworkLinksWithRegistration))
             {
                 writer.WritePropertyName("maxNumberOfVirtualNetworkLinksWithRegistration"u8);
                 writer.WriteNumberValue(MaxNumberOfVirtualNetworkLinksWithRegistration.Value);
             }
-            if (options.Format != "W" && NumberOfVirtualNetworkLinksWithRegistration.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NumberOfVirtualNetworkLinksWithRegistration))
             {
                 writer.WritePropertyName("numberOfVirtualNetworkLinksWithRegistration"u8);
                 writer.WriteNumberValue(NumberOfVirtualNetworkLinksWithRegistration.Value);
             }
-            if (options.Format != "W" && PrivateDnsProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PrivateDnsProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(PrivateDnsProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && InternalId != null)
+            if (options.Format != "W" && Optional.IsDefined(InternalId))
             {
                 writer.WritePropertyName("internalId"u8);
                 writer.WriteStringValue(InternalId);
@@ -148,21 +148,21 @@ namespace Azure.ResourceManager.PrivateDns
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<long> maxNumberOfRecordSets = default;
-            Optional<long> numberOfRecordSets = default;
-            Optional<long> maxNumberOfVirtualNetworkLinks = default;
-            Optional<long> numberOfVirtualNetworkLinks = default;
-            Optional<long> maxNumberOfVirtualNetworkLinksWithRegistration = default;
-            Optional<long> numberOfVirtualNetworkLinksWithRegistration = default;
-            Optional<PrivateDnsProvisioningState> privateDnsProvisioningState = default;
-            Optional<string> internalId = default;
+            SystemData systemData = default;
+            long? maxNumberOfRecordSets = default;
+            long? numberOfRecordSets = default;
+            long? maxNumberOfVirtualNetworkLinks = default;
+            long? numberOfVirtualNetworkLinks = default;
+            long? maxNumberOfVirtualNetworkLinksWithRegistration = default;
+            long? numberOfVirtualNetworkLinksWithRegistration = default;
+            PrivateDnsProvisioningState? privateDnsProvisioningState = default;
+            string internalId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -309,18 +309,18 @@ namespace Azure.ResourceManager.PrivateDns
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(etag),
-                Optional.ToNullable(maxNumberOfRecordSets),
-                Optional.ToNullable(numberOfRecordSets),
-                Optional.ToNullable(maxNumberOfVirtualNetworkLinks),
-                Optional.ToNullable(numberOfVirtualNetworkLinks),
-                Optional.ToNullable(maxNumberOfVirtualNetworkLinksWithRegistration),
-                Optional.ToNullable(numberOfVirtualNetworkLinksWithRegistration),
-                Optional.ToNullable(privateDnsProvisioningState),
-                internalId.Value,
+                etag,
+                maxNumberOfRecordSets,
+                numberOfRecordSets,
+                maxNumberOfVirtualNetworkLinks,
+                numberOfVirtualNetworkLinks,
+                maxNumberOfVirtualNetworkLinksWithRegistration,
+                numberOfVirtualNetworkLinksWithRegistration,
+                privateDnsProvisioningState,
+                internalId,
                 serializedAdditionalRawData);
         }
 

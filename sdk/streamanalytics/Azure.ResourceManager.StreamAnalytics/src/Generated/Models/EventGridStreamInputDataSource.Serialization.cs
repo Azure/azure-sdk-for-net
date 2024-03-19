@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StreamAnalytics;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
@@ -30,17 +31,17 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStringValue(StreamInputDataSourceType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Subscriber != null)
+            if (Optional.IsDefined(Subscriber))
             {
                 writer.WritePropertyName("subscriber"u8);
                 writer.WriteObjectValue(Subscriber);
             }
-            if (Schema.HasValue)
+            if (Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
                 writer.WriteStringValue(Schema.Value.ToString());
             }
-            if (!(StorageAccounts is ChangeTrackingList<StreamAnalyticsStorageAccount> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(StorageAccounts))
             {
                 writer.WritePropertyName("storageAccounts"u8);
                 writer.WriteStartArray();
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(EventTypes is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(EventTypes))
             {
                 writer.WritePropertyName("eventTypes"u8);
                 writer.WriteStartArray();
@@ -100,8 +101,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string type = default;
-            Optional<EventHubV2StreamInputDataSource> subscriber = default;
-            Optional<EventGridEventSchemaType> schema = default;
+            EventHubV2StreamInputDataSource subscriber = default;
+            EventGridEventSchemaType? schema = default;
             IList<StreamAnalyticsStorageAccount> storageAccounts = default;
             IList<string> eventTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -180,8 +181,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             return new EventGridStreamInputDataSource(
                 type,
                 serializedAdditionalRawData,
-                subscriber.Value,
-                Optional.ToNullable(schema),
+                subscriber,
+                schema,
                 storageAccounts ?? new ChangeTrackingList<StreamAnalyticsStorageAccount>(),
                 eventTypes ?? new ChangeTrackingList<string>());
         }

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
 
             writer.WriteStartObject();
-            if (IsStdOutEnabled.HasValue)
+            if (Optional.IsDefined(IsStdOutEnabled))
             {
                 writer.WritePropertyName("stdOutEnabled"u8);
                 writer.WriteBooleanValue(IsStdOutEnabled.Value);
             }
-            if (IsStdErrorEnabled.HasValue)
+            if (Optional.IsDefined(IsStdErrorEnabled))
             {
                 writer.WritePropertyName("stdErrorEnabled"u8);
                 writer.WriteBooleanValue(IsStdErrorEnabled.Value);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
-            Optional<bool> stdOutEnabled = default;
-            Optional<bool> stdErrorEnabled = default;
+            bool? stdOutEnabled = default;
+            bool? stdErrorEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterLogAnalyticsApplicationLogs(Optional.ToNullable(stdOutEnabled), Optional.ToNullable(stdErrorEnabled), serializedAdditionalRawData);
+            return new ClusterLogAnalyticsApplicationLogs(stdOutEnabled, stdErrorEnabled, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterLogAnalyticsApplicationLogs>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Quota;
 
 namespace Azure.ResourceManager.Quota.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Quota.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Display != null)
+            if (Optional.IsDefined(Display))
             {
                 writer.WritePropertyName("display"u8);
                 writer.WriteObjectValue(Display);
             }
-            if (Origin != null)
+            if (Optional.IsDefined(Origin))
             {
                 writer.WritePropertyName("origin"u8);
                 writer.WriteStringValue(Origin);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Quota.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<QuotaOperationDisplay> display = default;
-            Optional<string> origin = default;
+            string name = default;
+            QuotaOperationDisplay display = default;
+            string origin = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.Quota.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QuotaOperationResult(name.Value, display.Value, origin.Value, serializedAdditionalRawData);
+            return new QuotaOperationResult(name, display, origin, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QuotaOperationResult>.Write(ModelReaderWriterOptions options)

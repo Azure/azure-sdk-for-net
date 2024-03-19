@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Automanage
             }
 
             writer.WriteStartObject();
-            if (Properties != null)
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (options.Format != "W" && ManagedBy != null)
+            if (options.Format != "W" && Optional.IsDefined(ManagedBy))
             {
                 writer.WritePropertyName("managedBy"u8);
                 writer.WriteStringValue(ManagedBy);
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Automanage
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -96,12 +96,12 @@ namespace Azure.ResourceManager.Automanage
             {
                 return null;
             }
-            Optional<AutomanageConfigurationProfileAssignmentProperties> properties = default;
-            Optional<string> managedBy = default;
+            AutomanageConfigurationProfileAssignmentProperties properties = default;
+            string managedBy = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -154,9 +154,9 @@ namespace Azure.ResourceManager.Automanage
                 id,
                 name,
                 type,
-                systemData.Value,
-                properties.Value,
-                managedBy.Value,
+                systemData,
+                properties,
+                managedBy,
                 serializedAdditionalRawData);
         }
 

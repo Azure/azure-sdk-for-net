@@ -28,22 +28,22 @@ namespace Azure.ResourceManager.SignalR
             }
 
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Kind.HasValue)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -71,44 +71,44 @@ namespace Azure.ResourceManager.SignalR
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && ExternalIP != null)
+            if (options.Format != "W" && Optional.IsDefined(ExternalIP))
             {
                 writer.WritePropertyName("externalIP"u8);
                 writer.WriteStringValue(ExternalIP);
             }
-            if (options.Format != "W" && HostName != null)
+            if (options.Format != "W" && Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (options.Format != "W" && PublicPort.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PublicPort))
             {
                 writer.WritePropertyName("publicPort"u8);
                 writer.WriteNumberValue(PublicPort.Value);
             }
-            if (options.Format != "W" && ServerPort.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ServerPort))
             {
                 writer.WritePropertyName("serverPort"u8);
                 writer.WriteNumberValue(ServerPort.Value);
             }
-            if (options.Format != "W" && Version != null)
+            if (options.Format != "W" && Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<SignalRPrivateEndpointConnectionData> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.SignalR
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(SharedPrivateLinkResources is ChangeTrackingList<SignalRSharedPrivateLinkResourceData> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SharedPrivateLinkResources))
             {
                 writer.WritePropertyName("sharedPrivateLinkResources"u8);
                 writer.WriteStartArray();
@@ -128,17 +128,17 @@ namespace Azure.ResourceManager.SignalR
                 }
                 writer.WriteEndArray();
             }
-            if (Tls != null)
+            if (Optional.IsDefined(Tls))
             {
                 writer.WritePropertyName("tls"u8);
                 writer.WriteObjectValue(Tls);
             }
-            if (options.Format != "W" && HostNamePrefix != null)
+            if (options.Format != "W" && Optional.IsDefined(HostNamePrefix))
             {
                 writer.WritePropertyName("hostNamePrefix"u8);
                 writer.WriteStringValue(HostNamePrefix);
             }
-            if (!(Features is ChangeTrackingList<SignalRFeature> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(Features))
             {
                 writer.WritePropertyName("features"u8);
                 writer.WriteStartArray();
@@ -148,42 +148,42 @@ namespace Azure.ResourceManager.SignalR
                 }
                 writer.WriteEndArray();
             }
-            if (LiveTraceConfiguration != null)
+            if (Optional.IsDefined(LiveTraceConfiguration))
             {
                 writer.WritePropertyName("liveTraceConfiguration"u8);
                 writer.WriteObjectValue(LiveTraceConfiguration);
             }
-            if (ResourceLogConfiguration != null)
+            if (Optional.IsDefined(ResourceLogConfiguration))
             {
                 writer.WritePropertyName("resourceLogConfiguration"u8);
                 writer.WriteObjectValue(ResourceLogConfiguration);
             }
-            if (Cors != null)
+            if (Optional.IsDefined(Cors))
             {
                 writer.WritePropertyName("cors"u8);
                 writer.WriteObjectValue(Cors);
             }
-            if (Upstream != null)
+            if (Optional.IsDefined(Upstream))
             {
                 writer.WritePropertyName("upstream"u8);
                 writer.WriteObjectValue(Upstream);
             }
-            if (NetworkACLs != null)
+            if (Optional.IsDefined(NetworkACLs))
             {
                 writer.WritePropertyName("networkACLs"u8);
                 writer.WriteObjectValue(NetworkACLs);
             }
-            if (PublicNetworkAccess != null)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess);
             }
-            if (DisableLocalAuth.HasValue)
+            if (Optional.IsDefined(DisableLocalAuth))
             {
                 writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(DisableLocalAuth.Value);
             }
-            if (DisableAadAuth.HasValue)
+            if (Optional.IsDefined(DisableAadAuth))
             {
                 writer.WritePropertyName("disableAadAuth"u8);
                 writer.WriteBooleanValue(DisableAadAuth.Value);
@@ -227,34 +227,34 @@ namespace Azure.ResourceManager.SignalR
             {
                 return null;
             }
-            Optional<SignalRResourceSku> sku = default;
-            Optional<SignalRServiceKind> kind = default;
-            Optional<ManagedServiceIdentity> identity = default;
+            SignalRResourceSku sku = default;
+            SignalRServiceKind? kind = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SignalRProvisioningState> provisioningState = default;
-            Optional<string> externalIP = default;
-            Optional<string> hostName = default;
-            Optional<int> publicPort = default;
-            Optional<int> serverPort = default;
-            Optional<string> version = default;
+            SystemData systemData = default;
+            SignalRProvisioningState? provisioningState = default;
+            string externalIP = default;
+            string hostName = default;
+            int? publicPort = default;
+            int? serverPort = default;
+            string version = default;
             IReadOnlyList<SignalRPrivateEndpointConnectionData> privateEndpointConnections = default;
             IReadOnlyList<SignalRSharedPrivateLinkResourceData> sharedPrivateLinkResources = default;
-            Optional<SignalRTlsSettings> tls = default;
-            Optional<string> hostNamePrefix = default;
+            SignalRTlsSettings tls = default;
+            string hostNamePrefix = default;
             IList<SignalRFeature> features = default;
-            Optional<SignalRLiveTraceConfiguration> liveTraceConfiguration = default;
-            Optional<SignalRResourceLogCategoryListResult> resourceLogConfiguration = default;
-            Optional<SignalRCorsSettings> cors = default;
-            Optional<ServerlessUpstreamSettings> upstream = default;
-            Optional<SignalRNetworkAcls> networkACLs = default;
-            Optional<string> publicNetworkAccess = default;
-            Optional<bool> disableLocalAuth = default;
-            Optional<bool> disableAadAuth = default;
+            SignalRLiveTraceConfiguration liveTraceConfiguration = default;
+            SignalRResourceLogCategoryListResult resourceLogConfiguration = default;
+            SignalRCorsSettings cors = default;
+            ServerlessUpstreamSettings upstream = default;
+            SignalRNetworkAcls networkACLs = default;
+            string publicNetworkAccess = default;
+            bool? disableLocalAuth = default;
+            bool? disableAadAuth = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -517,31 +517,31 @@ namespace Azure.ResourceManager.SignalR
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                sku.Value,
-                Optional.ToNullable(kind),
+                sku,
+                kind,
                 identity,
-                Optional.ToNullable(provisioningState),
-                externalIP.Value,
-                hostName.Value,
-                Optional.ToNullable(publicPort),
-                Optional.ToNullable(serverPort),
-                version.Value,
+                provisioningState,
+                externalIP,
+                hostName,
+                publicPort,
+                serverPort,
+                version,
                 privateEndpointConnections ?? new ChangeTrackingList<SignalRPrivateEndpointConnectionData>(),
                 sharedPrivateLinkResources ?? new ChangeTrackingList<SignalRSharedPrivateLinkResourceData>(),
-                tls.Value,
-                hostNamePrefix.Value,
+                tls,
+                hostNamePrefix,
                 features ?? new ChangeTrackingList<SignalRFeature>(),
-                liveTraceConfiguration.Value,
-                resourceLogConfiguration.Value,
-                cors.Value,
-                upstream.Value,
-                networkACLs.Value,
-                publicNetworkAccess.Value,
-                Optional.ToNullable(disableLocalAuth),
-                Optional.ToNullable(disableAadAuth),
+                liveTraceConfiguration,
+                resourceLogConfiguration,
+                cors,
+                upstream,
+                networkACLs,
+                publicNetworkAccess,
+                disableLocalAuth,
+                disableAadAuth,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -26,39 +27,39 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (DefenderForServers != null)
+            if (Optional.IsDefined(DefenderForServers))
             {
                 writer.WritePropertyName("defenderForServers"u8);
                 writer.WriteObjectValue(DefenderForServers);
             }
-            if (ArcAutoProvisioning != null)
+            if (Optional.IsDefined(ArcAutoProvisioning))
             {
                 writer.WritePropertyName("arcAutoProvisioning"u8);
                 writer.WriteObjectValue(ArcAutoProvisioning);
             }
-            if (VaAutoProvisioning != null)
+            if (Optional.IsDefined(VaAutoProvisioning))
             {
                 writer.WritePropertyName("vaAutoProvisioning"u8);
                 writer.WriteObjectValue(VaAutoProvisioning);
             }
-            if (MdeAutoProvisioning != null)
+            if (Optional.IsDefined(MdeAutoProvisioning))
             {
                 writer.WritePropertyName("mdeAutoProvisioning"u8);
                 writer.WriteObjectValue(MdeAutoProvisioning);
             }
-            if (SubPlan != null)
+            if (Optional.IsDefined(SubPlan))
             {
                 writer.WritePropertyName("subPlan"u8);
                 writer.WriteObjectValue(SubPlan);
             }
-            if (VmScanners != null)
+            if (Optional.IsDefined(VmScanners))
             {
                 writer.WritePropertyName("vmScanners"u8);
                 writer.WriteObjectValue(VmScanners);
             }
             writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -101,14 +102,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<AwsDefenderForServersInfo> defenderForServers = default;
-            Optional<DefenderForServersAwsOfferingArcAutoProvisioning> arcAutoProvisioning = default;
-            Optional<DefenderForServersAwsOfferingVulnerabilityAssessmentAutoProvisioning> vaAutoProvisioning = default;
-            Optional<DefenderForServersAwsOfferingMdeAutoProvisioning> mdeAutoProvisioning = default;
-            Optional<DefenderForServersAwsOfferingSubPlan> subPlan = default;
-            Optional<DefenderForServersAwsOfferingVmScanners> vmScanners = default;
+            AwsDefenderForServersInfo defenderForServers = default;
+            DefenderForServersAwsOfferingArcAutoProvisioning arcAutoProvisioning = default;
+            DefenderForServersAwsOfferingVulnerabilityAssessmentAutoProvisioning vaAutoProvisioning = default;
+            DefenderForServersAwsOfferingMdeAutoProvisioning mdeAutoProvisioning = default;
+            DefenderForServersAwsOfferingSubPlan subPlan = default;
+            DefenderForServersAwsOfferingVmScanners vmScanners = default;
             OfferingType offeringType = default;
-            Optional<string> description = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -185,14 +186,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DefenderForServersAwsOffering(
                 offeringType,
-                description.Value,
+                description,
                 serializedAdditionalRawData,
-                defenderForServers.Value,
-                arcAutoProvisioning.Value,
-                vaAutoProvisioning.Value,
-                mdeAutoProvisioning.Value,
-                subPlan.Value,
-                vmScanners.Value);
+                defenderForServers,
+                arcAutoProvisioning,
+                vaAutoProvisioning,
+                mdeAutoProvisioning,
+                subPlan,
+                vmScanners);
         }
 
         BinaryData IPersistableModel<DefenderForServersAwsOffering>.Write(ModelReaderWriterOptions options)

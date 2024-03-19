@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Resources.Models
@@ -27,19 +28,19 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(ResourceSelectors is ChangeTrackingList<ResourceSelector> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ResourceSelectors))
             {
                 writer.WritePropertyName("resourceSelectors"u8);
                 writer.WriteStartArray();
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Overrides is ChangeTrackingList<PolicyOverride> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Overrides))
             {
                 writer.WritePropertyName("overrides"u8);
                 writer.WriteStartArray();
@@ -98,8 +99,8 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<ManagedServiceIdentity> identity = default;
+            AzureLocation? location = default;
+            ManagedServiceIdentity identity = default;
             IList<ResourceSelector> resourceSelectors = default;
             IList<PolicyOverride> overrides = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -170,7 +171,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyAssignmentPatch(Optional.ToNullable(location), identity, resourceSelectors ?? new ChangeTrackingList<ResourceSelector>(), overrides ?? new ChangeTrackingList<PolicyOverride>(), serializedAdditionalRawData);
+            return new PolicyAssignmentPatch(location, identity, resourceSelectors ?? new ChangeTrackingList<ResourceSelector>(), overrides ?? new ChangeTrackingList<PolicyOverride>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicyAssignmentPatch>.Write(ModelReaderWriterOptions options)

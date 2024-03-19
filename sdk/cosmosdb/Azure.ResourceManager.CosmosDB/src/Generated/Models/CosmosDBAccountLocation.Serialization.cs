@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (LocationName.HasValue)
+            if (Optional.IsDefined(LocationName))
             {
                 writer.WritePropertyName("locationName"u8);
                 writer.WriteStringValue(LocationName.Value);
             }
-            if (options.Format != "W" && DocumentEndpoint != null)
+            if (options.Format != "W" && Optional.IsDefined(DocumentEndpoint))
             {
                 writer.WritePropertyName("documentEndpoint"u8);
                 writer.WriteStringValue(DocumentEndpoint);
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (FailoverPriority.HasValue)
+            if (Optional.IsDefined(FailoverPriority))
             {
                 writer.WritePropertyName("failoverPriority"u8);
                 writer.WriteNumberValue(FailoverPriority.Value);
             }
-            if (IsZoneRedundant.HasValue)
+            if (Optional.IsDefined(IsZoneRedundant))
             {
                 writer.WritePropertyName("isZoneRedundant"u8);
                 writer.WriteBooleanValue(IsZoneRedundant.Value);
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<AzureLocation> locationName = default;
-            Optional<string> documentEndpoint = default;
-            Optional<string> provisioningState = default;
-            Optional<int> failoverPriority = default;
-            Optional<bool> isZoneRedundant = default;
+            string id = default;
+            AzureLocation? locationName = default;
+            string documentEndpoint = default;
+            string provisioningState = default;
+            int? failoverPriority = default;
+            bool? isZoneRedundant = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -153,12 +154,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new CosmosDBAccountLocation(
-                id.Value,
-                Optional.ToNullable(locationName),
-                documentEndpoint.Value,
-                provisioningState.Value,
-                Optional.ToNullable(failoverPriority),
-                Optional.ToNullable(isZoneRedundant),
+                id,
+                locationName,
+                documentEndpoint,
+                provisioningState,
+                failoverPriority,
+                isZoneRedundant,
                 serializedAdditionalRawData);
         }
 

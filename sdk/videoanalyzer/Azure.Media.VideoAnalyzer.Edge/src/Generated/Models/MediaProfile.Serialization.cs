@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Media.VideoAnalyzer.Edge;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -15,17 +16,17 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (MediaUri != null)
+            if (Optional.IsDefined(MediaUri))
             {
                 writer.WritePropertyName("mediaUri"u8);
                 writer.WriteObjectValue(MediaUri);
             }
-            if (VideoEncoderConfiguration != null)
+            if (Optional.IsDefined(VideoEncoderConfiguration))
             {
                 writer.WritePropertyName("videoEncoderConfiguration"u8);
                 writer.WriteObjectValue(VideoEncoderConfiguration);
@@ -39,9 +40,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<object> mediaUri = default;
-            Optional<VideoEncoderConfiguration> videoEncoderConfiguration = default;
+            string name = default;
+            object mediaUri = default;
+            VideoEncoderConfiguration videoEncoderConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -68,7 +69,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new MediaProfile(name.Value, mediaUri.Value, videoEncoderConfiguration.Value);
+            return new MediaProfile(name, mediaUri, videoEncoderConfiguration);
         }
     }
 }

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -26,44 +27,44 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (NativeCloudConnection != null)
+            if (Optional.IsDefined(NativeCloudConnection))
             {
                 writer.WritePropertyName("nativeCloudConnection"u8);
                 writer.WriteObjectValue(NativeCloudConnection);
             }
-            if (DataPipelineNativeCloudConnection != null)
+            if (Optional.IsDefined(DataPipelineNativeCloudConnection))
             {
                 writer.WritePropertyName("dataPipelineNativeCloudConnection"u8);
                 writer.WriteObjectValue(DataPipelineNativeCloudConnection);
             }
-            if (IsAuditLogsAutoProvisioningEnabled.HasValue)
+            if (Optional.IsDefined(IsAuditLogsAutoProvisioningEnabled))
             {
                 writer.WritePropertyName("auditLogsAutoProvisioningFlag"u8);
                 writer.WriteBooleanValue(IsAuditLogsAutoProvisioningEnabled.Value);
             }
-            if (IsDefenderAgentAutoProvisioningEnabled.HasValue)
+            if (Optional.IsDefined(IsDefenderAgentAutoProvisioningEnabled))
             {
                 writer.WritePropertyName("defenderAgentAutoProvisioningFlag"u8);
                 writer.WriteBooleanValue(IsDefenderAgentAutoProvisioningEnabled.Value);
             }
-            if (IsPolicyAgentAutoProvisioningEnabled.HasValue)
+            if (Optional.IsDefined(IsPolicyAgentAutoProvisioningEnabled))
             {
                 writer.WritePropertyName("policyAgentAutoProvisioningFlag"u8);
                 writer.WriteBooleanValue(IsPolicyAgentAutoProvisioningEnabled.Value);
             }
-            if (MdcContainersImageAssessment != null)
+            if (Optional.IsDefined(MdcContainersImageAssessment))
             {
                 writer.WritePropertyName("mdcContainersImageAssessment"u8);
                 writer.WriteObjectValue(MdcContainersImageAssessment);
             }
-            if (MdcContainersAgentlessDiscoveryK8S != null)
+            if (Optional.IsDefined(MdcContainersAgentlessDiscoveryK8S))
             {
                 writer.WritePropertyName("mdcContainersAgentlessDiscoveryK8s"u8);
                 writer.WriteObjectValue(MdcContainersAgentlessDiscoveryK8S);
             }
             writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -106,15 +107,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<DefenderForContainersGcpOfferingNativeCloudConnection> nativeCloudConnection = default;
-            Optional<DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection> dataPipelineNativeCloudConnection = default;
-            Optional<bool> auditLogsAutoProvisioningFlag = default;
-            Optional<bool> defenderAgentAutoProvisioningFlag = default;
-            Optional<bool> policyAgentAutoProvisioningFlag = default;
-            Optional<DefenderForContainersGcpOfferingMdcContainersImageAssessment> mdcContainersImageAssessment = default;
-            Optional<DefenderForContainersGcpOfferingMdcContainersAgentlessDiscoveryK8S> mdcContainersAgentlessDiscoveryK8S = default;
+            DefenderForContainersGcpOfferingNativeCloudConnection nativeCloudConnection = default;
+            DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection dataPipelineNativeCloudConnection = default;
+            bool? auditLogsAutoProvisioningFlag = default;
+            bool? defenderAgentAutoProvisioningFlag = default;
+            bool? policyAgentAutoProvisioningFlag = default;
+            DefenderForContainersGcpOfferingMdcContainersImageAssessment mdcContainersImageAssessment = default;
+            DefenderForContainersGcpOfferingMdcContainersAgentlessDiscoveryK8S mdcContainersAgentlessDiscoveryK8S = default;
             OfferingType offeringType = default;
-            Optional<string> description = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -200,15 +201,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DefenderForContainersGcpOffering(
                 offeringType,
-                description.Value,
+                description,
                 serializedAdditionalRawData,
-                nativeCloudConnection.Value,
-                dataPipelineNativeCloudConnection.Value,
-                Optional.ToNullable(auditLogsAutoProvisioningFlag),
-                Optional.ToNullable(defenderAgentAutoProvisioningFlag),
-                Optional.ToNullable(policyAgentAutoProvisioningFlag),
-                mdcContainersImageAssessment.Value,
-                mdcContainersAgentlessDiscoveryK8S.Value);
+                nativeCloudConnection,
+                dataPipelineNativeCloudConnection,
+                auditLogsAutoProvisioningFlag,
+                defenderAgentAutoProvisioningFlag,
+                policyAgentAutoProvisioningFlag,
+                mdcContainersImageAssessment,
+                mdcContainersAgentlessDiscoveryK8S);
         }
 
         BinaryData IPersistableModel<DefenderForContainersGcpOffering>.Write(ModelReaderWriterOptions options)

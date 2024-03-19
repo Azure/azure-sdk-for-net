@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Messaging.EventGrid;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -19,8 +19,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> displayName = default;
-            Optional<CommunicationIdentifierModel> participantCommunicationIdentifier = default;
+            string displayName = default;
+            CommunicationIdentifierModel participantCommunicationIdentifier = default;
             IReadOnlyDictionary<string, string> metadata = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -53,7 +53,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsChatThreadParticipantProperties(displayName.Value, participantCommunicationIdentifier.Value, metadata ?? new ChangeTrackingDictionary<string, string>());
+            return new AcsChatThreadParticipantProperties(displayName, participantCommunicationIdentifier, metadata ?? new ChangeTrackingDictionary<string, string>());
         }
     }
 }

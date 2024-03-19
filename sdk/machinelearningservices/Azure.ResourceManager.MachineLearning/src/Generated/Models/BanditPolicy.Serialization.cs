@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (SlackAmount.HasValue)
+            if (Optional.IsDefined(SlackAmount))
             {
                 writer.WritePropertyName("slackAmount"u8);
                 writer.WriteNumberValue(SlackAmount.Value);
             }
-            if (SlackFactor.HasValue)
+            if (Optional.IsDefined(SlackFactor))
             {
                 writer.WritePropertyName("slackFactor"u8);
                 writer.WriteNumberValue(SlackFactor.Value);
             }
-            if (DelayEvaluation.HasValue)
+            if (Optional.IsDefined(DelayEvaluation))
             {
                 writer.WritePropertyName("delayEvaluation"u8);
                 writer.WriteNumberValue(DelayEvaluation.Value);
             }
-            if (EvaluationInterval.HasValue)
+            if (Optional.IsDefined(EvaluationInterval))
             {
                 writer.WritePropertyName("evaluationInterval"u8);
                 writer.WriteNumberValue(EvaluationInterval.Value);
@@ -86,10 +87,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<float> slackAmount = default;
-            Optional<float> slackFactor = default;
-            Optional<int> delayEvaluation = default;
-            Optional<int> evaluationInterval = default;
+            float? slackAmount = default;
+            float? slackFactor = default;
+            int? delayEvaluation = default;
+            int? evaluationInterval = default;
             EarlyTerminationPolicyType policyType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -143,12 +144,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new BanditPolicy(
-                Optional.ToNullable(delayEvaluation),
-                Optional.ToNullable(evaluationInterval),
+                delayEvaluation,
+                evaluationInterval,
                 policyType,
                 serializedAdditionalRawData,
-                Optional.ToNullable(slackAmount),
-                Optional.ToNullable(slackFactor));
+                slackAmount,
+                slackFactor);
         }
 
         BinaryData IPersistableModel<BanditPolicy>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && DimensionName != null)
+            if (options.Format != "W" && Optional.IsDefined(DimensionName))
             {
                 writer.WritePropertyName("dimensionName"u8);
                 writer.WriteStringValue(DimensionName);
             }
-            if (options.Format != "W" && Unit != null)
+            if (options.Format != "W" && Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit);
             }
-            if (options.Format != "W" && AbsoluteValue.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AbsoluteValue))
             {
                 writer.WritePropertyName("absoluteValue"u8);
                 writer.WriteNumberValue(AbsoluteValue.Value);
             }
-            if (options.Format != "W" && ChangeValueAbsolute.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ChangeValueAbsolute))
             {
                 writer.WritePropertyName("changeValueAbsolute"u8);
                 writer.WriteNumberValue(ChangeValueAbsolute.Value);
             }
-            if (options.Format != "W" && ChangeValueRelative.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ChangeValueRelative))
             {
                 writer.WritePropertyName("changeValueRelative"u8);
                 writer.WriteNumberValue(ChangeValueRelative.Value);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> dimensionName = default;
-            Optional<string> unit = default;
-            Optional<double> absoluteValue = default;
-            Optional<double> changeValueAbsolute = default;
-            Optional<double> changeValueRelative = default;
+            string dimensionName = default;
+            string unit = default;
+            double? absoluteValue = default;
+            double? changeValueAbsolute = default;
+            double? changeValueRelative = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -142,11 +143,11 @@ namespace Azure.ResourceManager.Sql.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new RecommendedActionImpactRecord(
-                dimensionName.Value,
-                unit.Value,
-                Optional.ToNullable(absoluteValue),
-                Optional.ToNullable(changeValueAbsolute),
-                Optional.ToNullable(changeValueRelative),
+                dimensionName,
+                unit,
+                absoluteValue,
+                changeValueAbsolute,
+                changeValueRelative,
                 serializedAdditionalRawData);
         }
 

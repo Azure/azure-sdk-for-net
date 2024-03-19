@@ -48,10 +48,7 @@ namespace Azure.ResourceManager.Grafana
         /// <returns> Returns a <see cref="ManagedGrafanaResource"/> object. </returns>
         public static ManagedGrafanaResource GetManagedGrafanaResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableGrafanaArmClient(client).GetManagedGrafanaResource(id);
         }
@@ -70,10 +67,7 @@ namespace Azure.ResourceManager.Grafana
         /// <returns> Returns a <see cref="GrafanaPrivateEndpointConnectionResource"/> object. </returns>
         public static GrafanaPrivateEndpointConnectionResource GetGrafanaPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableGrafanaArmClient(client).GetGrafanaPrivateEndpointConnectionResource(id);
         }
@@ -92,10 +86,7 @@ namespace Azure.ResourceManager.Grafana
         /// <returns> Returns a <see cref="GrafanaPrivateLinkResource"/> object. </returns>
         public static GrafanaPrivateLinkResource GetGrafanaPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableGrafanaArmClient(client).GetGrafanaPrivateLinkResource(id);
         }
@@ -114,10 +105,7 @@ namespace Azure.ResourceManager.Grafana
         /// <returns> Returns a <see cref="ManagedPrivateEndpointModelResource"/> object. </returns>
         public static ManagedPrivateEndpointModelResource GetManagedPrivateEndpointModelResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableGrafanaArmClient(client).GetManagedPrivateEndpointModelResource(id);
         }
@@ -134,10 +122,7 @@ namespace Azure.ResourceManager.Grafana
         /// <returns> An object representing collection of ManagedGrafanaResources and their operations over a ManagedGrafanaResource. </returns>
         public static ManagedGrafanaCollection GetManagedGrafanas(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableGrafanaResourceGroupResource(resourceGroupResource).GetManagedGrafanas();
         }
@@ -175,10 +160,7 @@ namespace Azure.ResourceManager.Grafana
         [ForwardsClientCalls]
         public static async Task<Response<ManagedGrafanaResource>> GetManagedGrafanaAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableGrafanaResourceGroupResource(resourceGroupResource).GetManagedGrafanaAsync(workspaceName, cancellationToken).ConfigureAwait(false);
         }
@@ -216,10 +198,7 @@ namespace Azure.ResourceManager.Grafana
         [ForwardsClientCalls]
         public static Response<ManagedGrafanaResource> GetManagedGrafana(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableGrafanaResourceGroupResource(resourceGroupResource).GetManagedGrafana(workspaceName, cancellationToken);
         }
@@ -255,10 +234,7 @@ namespace Azure.ResourceManager.Grafana
         /// <returns> An async collection of <see cref="ManagedGrafanaResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ManagedGrafanaResource> GetManagedGrafanasAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableGrafanaSubscriptionResource(subscriptionResource).GetManagedGrafanasAsync(cancellationToken);
         }
@@ -294,10 +270,7 @@ namespace Azure.ResourceManager.Grafana
         /// <returns> A collection of <see cref="ManagedGrafanaResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ManagedGrafanaResource> GetManagedGrafanas(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableGrafanaSubscriptionResource(subscriptionResource).GetManagedGrafanas(cancellationToken);
         }

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StoragePool;
 
 namespace Azure.ResourceManager.StoragePool.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Tier != null)
+            if (Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier);
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 return null;
             }
             string name = default;
-            Optional<string> tier = default;
+            string tier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StoragePoolSku(name, tier.Value, serializedAdditionalRawData);
+            return new StoragePoolSku(name, tier, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StoragePoolSku>.Write(ModelReaderWriterOptions options)

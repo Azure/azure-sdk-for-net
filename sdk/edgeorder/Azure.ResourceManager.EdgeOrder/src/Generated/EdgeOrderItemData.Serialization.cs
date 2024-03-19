@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.EdgeOrder
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.EdgeOrder
             writer.WriteObjectValue(OrderItemDetails);
             writer.WritePropertyName("addressDetails"u8);
             writer.WriteObjectValue(AddressDetails);
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
@@ -118,10 +118,10 @@ namespace Azure.ResourceManager.EdgeOrder
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             EdgeOrderItemDetails orderItemDetails = default;
             EdgeOrderItemAddressDetails addressDetails = default;
-            Optional<DateTimeOffset> startTime = default;
+            DateTimeOffset? startTime = default;
             ResourceIdentifier orderId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -216,12 +216,12 @@ namespace Azure.ResourceManager.EdgeOrder
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 orderItemDetails,
                 addressDetails,
-                Optional.ToNullable(startTime),
+                startTime,
                 orderId,
                 serializedAdditionalRawData);
         }

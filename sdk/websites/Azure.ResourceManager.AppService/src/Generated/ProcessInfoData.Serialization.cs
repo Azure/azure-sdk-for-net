@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -48,54 +48,54 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Identifier.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Identifier))
             {
                 writer.WritePropertyName("identifier"u8);
                 writer.WriteNumberValue(Identifier.Value);
             }
-            if (DeploymentName != null)
+            if (Optional.IsDefined(DeploymentName))
             {
                 writer.WritePropertyName("deployment_name"u8);
                 writer.WriteStringValue(DeploymentName);
             }
-            if (Href != null)
+            if (Optional.IsDefined(Href))
             {
                 writer.WritePropertyName("href"u8);
                 writer.WriteStringValue(Href);
             }
-            if (Minidump != null)
+            if (Optional.IsDefined(Minidump))
             {
                 writer.WritePropertyName("minidump"u8);
                 writer.WriteStringValue(Minidump);
             }
-            if (IsProfileRunning.HasValue)
+            if (Optional.IsDefined(IsProfileRunning))
             {
                 writer.WritePropertyName("is_profile_running"u8);
                 writer.WriteBooleanValue(IsProfileRunning.Value);
             }
-            if (IsIisProfileRunning.HasValue)
+            if (Optional.IsDefined(IsIisProfileRunning))
             {
                 writer.WritePropertyName("is_iis_profile_running"u8);
                 writer.WriteBooleanValue(IsIisProfileRunning.Value);
             }
-            if (IisProfileTimeoutInSeconds.HasValue)
+            if (Optional.IsDefined(IisProfileTimeoutInSeconds))
             {
                 writer.WritePropertyName("iis_profile_timeout_in_seconds"u8);
                 writer.WriteNumberValue(IisProfileTimeoutInSeconds.Value);
             }
-            if (Parent != null)
+            if (Optional.IsDefined(Parent))
             {
                 writer.WritePropertyName("parent"u8);
                 writer.WriteStringValue(Parent);
             }
-            if (!(Children is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Children))
             {
                 writer.WritePropertyName("children"u8);
                 writer.WriteStartArray();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndArray();
             }
-            if (!(Threads is ChangeTrackingList<ProcessThreadInfo> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Threads))
             {
                 writer.WritePropertyName("threads"u8);
                 writer.WriteStartArray();
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndArray();
             }
-            if (!(OpenFileHandles is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(OpenFileHandles))
             {
                 writer.WritePropertyName("open_file_handles"u8);
                 writer.WriteStartArray();
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndArray();
             }
-            if (!(Modules is ChangeTrackingList<ProcessModuleInfoData> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(Modules))
             {
                 writer.WritePropertyName("modules"u8);
                 writer.WriteStartArray();
@@ -135,107 +135,107 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndArray();
             }
-            if (FileName != null)
+            if (Optional.IsDefined(FileName))
             {
                 writer.WritePropertyName("file_name"u8);
                 writer.WriteStringValue(FileName);
             }
-            if (CommandLine != null)
+            if (Optional.IsDefined(CommandLine))
             {
                 writer.WritePropertyName("command_line"u8);
                 writer.WriteStringValue(CommandLine);
             }
-            if (UserName != null)
+            if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("user_name"u8);
                 writer.WriteStringValue(UserName);
             }
-            if (HandleCount.HasValue)
+            if (Optional.IsDefined(HandleCount))
             {
                 writer.WritePropertyName("handle_count"u8);
                 writer.WriteNumberValue(HandleCount.Value);
             }
-            if (ModuleCount.HasValue)
+            if (Optional.IsDefined(ModuleCount))
             {
                 writer.WritePropertyName("module_count"u8);
                 writer.WriteNumberValue(ModuleCount.Value);
             }
-            if (ThreadCount.HasValue)
+            if (Optional.IsDefined(ThreadCount))
             {
                 writer.WritePropertyName("thread_count"u8);
                 writer.WriteNumberValue(ThreadCount.Value);
             }
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("start_time"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (TotalCpuTime != null)
+            if (Optional.IsDefined(TotalCpuTime))
             {
                 writer.WritePropertyName("total_cpu_time"u8);
                 writer.WriteStringValue(TotalCpuTime);
             }
-            if (UserCpuTime != null)
+            if (Optional.IsDefined(UserCpuTime))
             {
                 writer.WritePropertyName("user_cpu_time"u8);
                 writer.WriteStringValue(UserCpuTime);
             }
-            if (PrivilegedCpuTime != null)
+            if (Optional.IsDefined(PrivilegedCpuTime))
             {
                 writer.WritePropertyName("privileged_cpu_time"u8);
                 writer.WriteStringValue(PrivilegedCpuTime);
             }
-            if (WorkingSet.HasValue)
+            if (Optional.IsDefined(WorkingSet))
             {
                 writer.WritePropertyName("working_set"u8);
                 writer.WriteNumberValue(WorkingSet.Value);
             }
-            if (PeakWorkingSet.HasValue)
+            if (Optional.IsDefined(PeakWorkingSet))
             {
                 writer.WritePropertyName("peak_working_set"u8);
                 writer.WriteNumberValue(PeakWorkingSet.Value);
             }
-            if (PrivateMemory.HasValue)
+            if (Optional.IsDefined(PrivateMemory))
             {
                 writer.WritePropertyName("private_memory"u8);
                 writer.WriteNumberValue(PrivateMemory.Value);
             }
-            if (VirtualMemory.HasValue)
+            if (Optional.IsDefined(VirtualMemory))
             {
                 writer.WritePropertyName("virtual_memory"u8);
                 writer.WriteNumberValue(VirtualMemory.Value);
             }
-            if (PeakVirtualMemory.HasValue)
+            if (Optional.IsDefined(PeakVirtualMemory))
             {
                 writer.WritePropertyName("peak_virtual_memory"u8);
                 writer.WriteNumberValue(PeakVirtualMemory.Value);
             }
-            if (PagedSystemMemory.HasValue)
+            if (Optional.IsDefined(PagedSystemMemory))
             {
                 writer.WritePropertyName("paged_system_memory"u8);
                 writer.WriteNumberValue(PagedSystemMemory.Value);
             }
-            if (NonPagedSystemMemory.HasValue)
+            if (Optional.IsDefined(NonPagedSystemMemory))
             {
                 writer.WritePropertyName("non_paged_system_memory"u8);
                 writer.WriteNumberValue(NonPagedSystemMemory.Value);
             }
-            if (PagedMemory.HasValue)
+            if (Optional.IsDefined(PagedMemory))
             {
                 writer.WritePropertyName("paged_memory"u8);
                 writer.WriteNumberValue(PagedMemory.Value);
             }
-            if (PeakPagedMemory.HasValue)
+            if (Optional.IsDefined(PeakPagedMemory))
             {
                 writer.WritePropertyName("peak_paged_memory"u8);
                 writer.WriteNumberValue(PeakPagedMemory.Value);
             }
-            if (TimeStamp.HasValue)
+            if (Optional.IsDefined(TimeStamp))
             {
                 writer.WritePropertyName("time_stamp"u8);
                 writer.WriteStringValue(TimeStamp.Value, "O");
             }
-            if (!(EnvironmentVariables is ChangeTrackingDictionary<string, string> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(EnvironmentVariables))
             {
                 writer.WritePropertyName("environment_variables"u8);
                 writer.WriteStartObject();
@@ -246,17 +246,17 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndObject();
             }
-            if (IsScmSite.HasValue)
+            if (Optional.IsDefined(IsScmSite))
             {
                 writer.WritePropertyName("is_scm_site"u8);
                 writer.WriteBooleanValue(IsScmSite.Value);
             }
-            if (IsWebjob.HasValue)
+            if (Optional.IsDefined(IsWebjob))
             {
                 writer.WritePropertyName("is_webjob"u8);
                 writer.WriteBooleanValue(IsWebjob.Value);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -300,47 +300,47 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> identifier = default;
-            Optional<string> deploymentName = default;
-            Optional<string> href = default;
-            Optional<string> minidump = default;
-            Optional<bool> isProfileRunning = default;
-            Optional<bool> isIisProfileRunning = default;
-            Optional<double> iisProfileTimeoutInSeconds = default;
-            Optional<string> parent = default;
+            SystemData systemData = default;
+            int? identifier = default;
+            string deploymentName = default;
+            string href = default;
+            string minidump = default;
+            bool? isProfileRunning = default;
+            bool? isIisProfileRunning = default;
+            double? iisProfileTimeoutInSeconds = default;
+            string parent = default;
             IList<string> children = default;
             IList<ProcessThreadInfo> threads = default;
             IList<string> openFileHandles = default;
             IList<ProcessModuleInfoData> modules = default;
-            Optional<string> fileName = default;
-            Optional<string> commandLine = default;
-            Optional<string> userName = default;
-            Optional<int> handleCount = default;
-            Optional<int> moduleCount = default;
-            Optional<int> threadCount = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<string> totalCpuTime = default;
-            Optional<string> userCpuTime = default;
-            Optional<string> privilegedCpuTime = default;
-            Optional<long> workingSet = default;
-            Optional<long> peakWorkingSet = default;
-            Optional<long> privateMemory = default;
-            Optional<long> virtualMemory = default;
-            Optional<long> peakVirtualMemory = default;
-            Optional<long> pagedSystemMemory = default;
-            Optional<long> nonPagedSystemMemory = default;
-            Optional<long> pagedMemory = default;
-            Optional<long> peakPagedMemory = default;
-            Optional<DateTimeOffset> timeStamp = default;
+            string fileName = default;
+            string commandLine = default;
+            string userName = default;
+            int? handleCount = default;
+            int? moduleCount = default;
+            int? threadCount = default;
+            DateTimeOffset? startTime = default;
+            string totalCpuTime = default;
+            string userCpuTime = default;
+            string privilegedCpuTime = default;
+            long? workingSet = default;
+            long? peakWorkingSet = default;
+            long? privateMemory = default;
+            long? virtualMemory = default;
+            long? peakVirtualMemory = default;
+            long? pagedSystemMemory = default;
+            long? nonPagedSystemMemory = default;
+            long? pagedMemory = default;
+            long? peakPagedMemory = default;
+            DateTimeOffset? timeStamp = default;
             IDictionary<string, string> environmentVariables = default;
-            Optional<bool> isScmSite = default;
-            Optional<bool> isWebjob = default;
-            Optional<string> description = default;
+            bool? isScmSite = default;
+            bool? isWebjob = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -701,44 +701,44 @@ namespace Azure.ResourceManager.AppService
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(identifier),
-                deploymentName.Value,
-                href.Value,
-                minidump.Value,
-                Optional.ToNullable(isProfileRunning),
-                Optional.ToNullable(isIisProfileRunning),
-                Optional.ToNullable(iisProfileTimeoutInSeconds),
-                parent.Value,
+                systemData,
+                identifier,
+                deploymentName,
+                href,
+                minidump,
+                isProfileRunning,
+                isIisProfileRunning,
+                iisProfileTimeoutInSeconds,
+                parent,
                 children ?? new ChangeTrackingList<string>(),
                 threads ?? new ChangeTrackingList<ProcessThreadInfo>(),
                 openFileHandles ?? new ChangeTrackingList<string>(),
                 modules ?? new ChangeTrackingList<ProcessModuleInfoData>(),
-                fileName.Value,
-                commandLine.Value,
-                userName.Value,
-                Optional.ToNullable(handleCount),
-                Optional.ToNullable(moduleCount),
-                Optional.ToNullable(threadCount),
-                Optional.ToNullable(startTime),
-                totalCpuTime.Value,
-                userCpuTime.Value,
-                privilegedCpuTime.Value,
-                Optional.ToNullable(workingSet),
-                Optional.ToNullable(peakWorkingSet),
-                Optional.ToNullable(privateMemory),
-                Optional.ToNullable(virtualMemory),
-                Optional.ToNullable(peakVirtualMemory),
-                Optional.ToNullable(pagedSystemMemory),
-                Optional.ToNullable(nonPagedSystemMemory),
-                Optional.ToNullable(pagedMemory),
-                Optional.ToNullable(peakPagedMemory),
-                Optional.ToNullable(timeStamp),
+                fileName,
+                commandLine,
+                userName,
+                handleCount,
+                moduleCount,
+                threadCount,
+                startTime,
+                totalCpuTime,
+                userCpuTime,
+                privilegedCpuTime,
+                workingSet,
+                peakWorkingSet,
+                privateMemory,
+                virtualMemory,
+                peakVirtualMemory,
+                pagedSystemMemory,
+                nonPagedSystemMemory,
+                pagedMemory,
+                peakPagedMemory,
+                timeStamp,
                 environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
-                Optional.ToNullable(isScmSite),
-                Optional.ToNullable(isWebjob),
-                description.Value,
-                kind.Value,
+                isScmSite,
+                isWebjob,
+                description,
+                kind,
                 serializedAdditionalRawData);
         }
 

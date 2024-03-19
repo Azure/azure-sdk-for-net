@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ResourceGraph;
 
 namespace Azure.ResourceManager.ResourceGraph.Models
 {
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             writer.WriteNumberValue(Count);
             writer.WritePropertyName("resultTruncated"u8);
             writer.WriteStringValue(ResultTruncated.ToSerialString());
-            if (SkipToken != null)
+            if (Optional.IsDefined(SkipToken))
             {
                 writer.WritePropertyName("$skipToken"u8);
                 writer.WriteStringValue(SkipToken);
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 JsonSerializer.Serialize(writer, document.RootElement);
             }
 #endif
-            if (!(Facets is ChangeTrackingList<Facet> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Facets))
             {
                 writer.WritePropertyName("facets"u8);
                 writer.WriteStartArray();
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             long totalRecords = default;
             long count = default;
             ResultTruncated resultTruncated = default;
-            Optional<string> skipToken = default;
+            string skipToken = default;
             BinaryData data = default;
             IReadOnlyList<Facet> facets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -153,7 +154,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 totalRecords,
                 count,
                 resultTruncated,
-                skipToken.Value,
+                skipToken,
                 data,
                 facets ?? new ChangeTrackingList<Facet>(),
                 serializedAdditionalRawData);

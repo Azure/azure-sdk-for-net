@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (RecoveryAzureV1ResourceGroupId != null)
+            if (Optional.IsDefined(RecoveryAzureV1ResourceGroupId))
             {
                 writer.WritePropertyName("recoveryAzureV1ResourceGroupId"u8);
                 writer.WriteStringValue(RecoveryAzureV1ResourceGroupId);
             }
-            if (RecoveryAzureV2ResourceGroupId != null)
+            if (Optional.IsDefined(RecoveryAzureV2ResourceGroupId))
             {
                 writer.WritePropertyName("recoveryAzureV2ResourceGroupId"u8);
                 writer.WriteStringValue(RecoveryAzureV2ResourceGroupId);
             }
-            if (UseManagedDisks != null)
+            if (Optional.IsDefined(UseManagedDisks))
             {
                 writer.WritePropertyName("useManagedDisks"u8);
                 writer.WriteStringValue(UseManagedDisks);
             }
-            if (TargetProximityPlacementGroupId != null)
+            if (Optional.IsDefined(TargetProximityPlacementGroupId))
             {
                 writer.WritePropertyName("targetProximityPlacementGroupId"u8);
                 writer.WriteStringValue(TargetProximityPlacementGroupId);
             }
-            if (TargetAvailabilityZone != null)
+            if (Optional.IsDefined(TargetAvailabilityZone))
             {
                 writer.WritePropertyName("targetAvailabilityZone"u8);
                 writer.WriteStringValue(TargetAvailabilityZone);
             }
-            if (!(TargetVmTags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(TargetVmTags))
             {
                 writer.WritePropertyName("targetVmTags"u8);
                 writer.WriteStartObject();
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(TargetManagedDiskTags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(TargetManagedDiskTags))
             {
                 writer.WritePropertyName("targetManagedDiskTags"u8);
                 writer.WriteStartObject();
@@ -73,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(TargetNicTags is ChangeTrackingDictionary<string, string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(TargetNicTags))
             {
                 writer.WritePropertyName("targetNicTags"u8);
                 writer.WriteStartObject();
@@ -84,12 +85,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndObject();
             }
-            if (SqlServerLicenseType.HasValue)
+            if (Optional.IsDefined(SqlServerLicenseType))
             {
                 writer.WritePropertyName("sqlServerLicenseType"u8);
                 writer.WriteStringValue(SqlServerLicenseType.Value.ToString());
             }
-            if (!(VmDisks is ChangeTrackingList<UpdateDiskContent> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(VmDisks))
             {
                 writer.WritePropertyName("vmDisks"u8);
                 writer.WriteStartArray();
@@ -139,15 +140,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> recoveryAzureV1ResourceGroupId = default;
-            Optional<ResourceIdentifier> recoveryAzureV2ResourceGroupId = default;
-            Optional<string> useManagedDisks = default;
-            Optional<ResourceIdentifier> targetProximityPlacementGroupId = default;
-            Optional<string> targetAvailabilityZone = default;
+            ResourceIdentifier recoveryAzureV1ResourceGroupId = default;
+            ResourceIdentifier recoveryAzureV2ResourceGroupId = default;
+            string useManagedDisks = default;
+            ResourceIdentifier targetProximityPlacementGroupId = default;
+            string targetAvailabilityZone = default;
             IDictionary<string, string> targetVmTags = default;
             IDictionary<string, string> targetManagedDiskTags = default;
             IDictionary<string, string> targetNicTags = default;
-            Optional<SiteRecoverySqlServerLicenseType> sqlServerLicenseType = default;
+            SiteRecoverySqlServerLicenseType? sqlServerLicenseType = default;
             IList<UpdateDiskContent> vmDisks = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -270,15 +271,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageAzureV2UpdateReplicationProtectedItemContent(
                 instanceType,
                 serializedAdditionalRawData,
-                recoveryAzureV1ResourceGroupId.Value,
-                recoveryAzureV2ResourceGroupId.Value,
-                useManagedDisks.Value,
-                targetProximityPlacementGroupId.Value,
-                targetAvailabilityZone.Value,
+                recoveryAzureV1ResourceGroupId,
+                recoveryAzureV2ResourceGroupId,
+                useManagedDisks,
+                targetProximityPlacementGroupId,
+                targetAvailabilityZone,
                 targetVmTags ?? new ChangeTrackingDictionary<string, string>(),
                 targetManagedDiskTags ?? new ChangeTrackingDictionary<string, string>(),
                 targetNicTags ?? new ChangeTrackingDictionary<string, string>(),
-                Optional.ToNullable(sqlServerLicenseType),
+                sqlServerLicenseType,
                 vmDisks ?? new ChangeTrackingList<UpdateDiskContent>());
         }
 

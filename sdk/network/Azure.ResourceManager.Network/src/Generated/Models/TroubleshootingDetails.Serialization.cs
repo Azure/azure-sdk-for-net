@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (ReasonType != null)
+            if (Optional.IsDefined(ReasonType))
             {
                 writer.WritePropertyName("reasonType"u8);
                 writer.WriteStringValue(ReasonType);
             }
-            if (Summary != null)
+            if (Optional.IsDefined(Summary))
             {
                 writer.WritePropertyName("summary"u8);
                 writer.WriteStringValue(Summary);
             }
-            if (Detail != null)
+            if (Optional.IsDefined(Detail))
             {
                 writer.WritePropertyName("detail"u8);
                 writer.WriteStringValue(Detail);
             }
-            if (!(RecommendedActions is ChangeTrackingList<TroubleshootingRecommendedActions> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(RecommendedActions))
             {
                 writer.WritePropertyName("recommendedActions"u8);
                 writer.WriteStartArray();
@@ -94,10 +95,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> reasonType = default;
-            Optional<string> summary = default;
-            Optional<string> detail = default;
+            string id = default;
+            string reasonType = default;
+            string summary = default;
+            string detail = default;
             IReadOnlyList<TroubleshootingRecommendedActions> recommendedActions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -144,10 +145,10 @@ namespace Azure.ResourceManager.Network.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new TroubleshootingDetails(
-                id.Value,
-                reasonType.Value,
-                summary.Value,
-                detail.Value,
+                id,
+                reasonType,
+                summary,
+                detail,
                 recommendedActions ?? new ChangeTrackingList<TroubleshootingRecommendedActions>(),
                 serializedAdditionalRawData);
         }

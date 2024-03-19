@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -21,7 +22,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(Format);
             writer.WritePropertyName("synonyms"u8);
             writer.WriteStringValue(Synonyms);
-            if (EncryptionKey != null)
+            if (Optional.IsDefined(EncryptionKey))
             {
                 if (EncryptionKey != null)
                 {
@@ -33,7 +34,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("encryptionKey");
                 }
             }
-            if (_etag != null)
+            if (Optional.IsDefined(_etag))
             {
                 writer.WritePropertyName("@odata.etag"u8);
                 writer.WriteStringValue(_etag);
@@ -50,8 +51,8 @@ namespace Azure.Search.Documents.Indexes.Models
             string name = default;
             string format = default;
             string synonyms = default;
-            Optional<SearchResourceEncryptionKey> encryptionKey = default;
-            Optional<string> odataEtag = default;
+            SearchResourceEncryptionKey encryptionKey = default;
+            string odataEtag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -85,7 +86,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SynonymMap(name, format, synonyms, encryptionKey.Value, odataEtag.Value);
+            return new SynonymMap(name, format, synonyms, encryptionKey, odataEtag);
         }
     }
 }

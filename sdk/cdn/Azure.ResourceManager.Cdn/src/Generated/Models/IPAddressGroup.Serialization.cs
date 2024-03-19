@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (DeliveryRegion != null)
+            if (Optional.IsDefined(DeliveryRegion))
             {
                 writer.WritePropertyName("deliveryRegion"u8);
                 writer.WriteStringValue(DeliveryRegion);
             }
-            if (!(IPv4Addresses is ChangeTrackingList<CidrIPAddress> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(IPv4Addresses))
             {
                 writer.WritePropertyName("ipv4Addresses"u8);
                 writer.WriteStartArray();
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(IPv6Addresses is ChangeTrackingList<CidrIPAddress> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(IPv6Addresses))
             {
                 writer.WritePropertyName("ipv6Addresses"u8);
                 writer.WriteStartArray();
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<string> deliveryRegion = default;
+            string deliveryRegion = default;
             IList<CidrIPAddress> ipv4Addresses = default;
             IList<CidrIPAddress> ipv6Addresses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -135,7 +136,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IPAddressGroup(deliveryRegion.Value, ipv4Addresses ?? new ChangeTrackingList<CidrIPAddress>(), ipv6Addresses ?? new ChangeTrackingList<CidrIPAddress>(), serializedAdditionalRawData);
+            return new IPAddressGroup(deliveryRegion, ipv4Addresses ?? new ChangeTrackingList<CidrIPAddress>(), ipv6Addresses ?? new ChangeTrackingList<CidrIPAddress>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IPAddressGroup>.Write(ModelReaderWriterOptions options)

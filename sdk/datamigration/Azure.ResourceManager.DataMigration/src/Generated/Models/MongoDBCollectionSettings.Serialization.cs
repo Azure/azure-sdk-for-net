@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (CanDelete.HasValue)
+            if (Optional.IsDefined(CanDelete))
             {
                 writer.WritePropertyName("canDelete"u8);
                 writer.WriteBooleanValue(CanDelete.Value);
             }
-            if (ShardKey != null)
+            if (Optional.IsDefined(ShardKey))
             {
                 writer.WritePropertyName("shardKey"u8);
                 writer.WriteObjectValue(ShardKey);
             }
-            if (TargetRUs.HasValue)
+            if (Optional.IsDefined(TargetRUs))
             {
                 writer.WritePropertyName("targetRUs"u8);
                 writer.WriteNumberValue(TargetRUs.Value);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<bool> canDelete = default;
-            Optional<MongoDBShardKeySetting> shardKey = default;
-            Optional<int> targetRUs = default;
+            bool? canDelete = default;
+            MongoDBShardKeySetting shardKey = default;
+            int? targetRUs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MongoDBCollectionSettings(Optional.ToNullable(canDelete), shardKey.Value, Optional.ToNullable(targetRUs), serializedAdditionalRawData);
+            return new MongoDBCollectionSettings(canDelete, shardKey, targetRUs, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MongoDBCollectionSettings>.Write(ModelReaderWriterOptions options)

@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -17,12 +18,12 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             writer.WritePropertyName("sourceFieldName"u8);
             writer.WriteStringValue(SourceFieldName);
-            if (TargetFieldName != null)
+            if (Optional.IsDefined(TargetFieldName))
             {
                 writer.WritePropertyName("targetFieldName"u8);
                 writer.WriteStringValue(TargetFieldName);
             }
-            if (MappingFunction != null)
+            if (Optional.IsDefined(MappingFunction))
             {
                 if (MappingFunction != null)
                 {
@@ -44,8 +45,8 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             string sourceFieldName = default;
-            Optional<string> targetFieldName = default;
-            Optional<FieldMappingFunction> mappingFunction = default;
+            string targetFieldName = default;
+            FieldMappingFunction mappingFunction = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceFieldName"u8))
@@ -69,7 +70,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new FieldMapping(sourceFieldName, targetFieldName.Value, mappingFunction.Value);
+            return new FieldMapping(sourceFieldName, targetFieldName, mappingFunction);
         }
     }
 }

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Port.HasValue)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (Method.HasValue)
+            if (Optional.IsDefined(Method))
             {
                 writer.WritePropertyName("method"u8);
                 writer.WriteStringValue(Method.Value.ToString());
             }
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (!(RequestHeaders is ChangeTrackingList<NetworkWatcherHttpHeader> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(RequestHeaders))
             {
                 writer.WritePropertyName("requestHeaders"u8);
                 writer.WriteStartArray();
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ValidStatusCodeRanges is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ValidStatusCodeRanges))
             {
                 writer.WritePropertyName("validStatusCodeRanges"u8);
                 writer.WriteStartArray();
@@ -61,7 +62,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (PreferHttps.HasValue)
+            if (Optional.IsDefined(PreferHttps))
             {
                 writer.WritePropertyName("preferHTTPS"u8);
                 writer.WriteBooleanValue(PreferHttps.Value);
@@ -104,12 +105,12 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<int> port = default;
-            Optional<NetworkHttpConfigurationMethod> method = default;
-            Optional<string> path = default;
+            int? port = default;
+            NetworkHttpConfigurationMethod? method = default;
+            string path = default;
             IList<NetworkWatcherHttpHeader> requestHeaders = default;
             IList<string> validStatusCodeRanges = default;
-            Optional<bool> preferHTTPS = default;
+            bool? preferHTTPS = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -181,12 +182,12 @@ namespace Azure.ResourceManager.Network.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ConnectionMonitorHttpConfiguration(
-                Optional.ToNullable(port),
-                Optional.ToNullable(method),
-                path.Value,
+                port,
+                method,
+                path,
                 requestHeaders ?? new ChangeTrackingList<NetworkWatcherHttpHeader>(),
                 validStatusCodeRanges ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(preferHTTPS),
+                preferHTTPS,
                 serializedAdditionalRawData);
         }
 

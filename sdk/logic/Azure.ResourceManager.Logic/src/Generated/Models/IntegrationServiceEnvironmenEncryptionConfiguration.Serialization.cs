@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (EncryptionKeyReference != null)
+            if (Optional.IsDefined(EncryptionKeyReference))
             {
                 writer.WritePropertyName("encryptionKeyReference"u8);
                 writer.WriteObjectValue(EncryptionKeyReference);
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<IntegrationServiceEnvironmenEncryptionKeyReference> encryptionKeyReference = default;
+            IntegrationServiceEnvironmenEncryptionKeyReference encryptionKeyReference = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationServiceEnvironmenEncryptionConfiguration(encryptionKeyReference.Value, serializedAdditionalRawData);
+            return new IntegrationServiceEnvironmenEncryptionConfiguration(encryptionKeyReference, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationServiceEnvironmenEncryptionConfiguration>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (NotificationSetting != null)
+            if (Optional.IsDefined(NotificationSetting))
             {
                 if (NotificationSetting != null)
                 {
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<PartialNotificationSetting> notificationSetting = default;
+            PartialNotificationSetting notificationSetting = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PartialJobBase(notificationSetting.Value, serializedAdditionalRawData);
+            return new PartialJobBase(notificationSetting, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PartialJobBase>.Write(ModelReaderWriterOptions options)

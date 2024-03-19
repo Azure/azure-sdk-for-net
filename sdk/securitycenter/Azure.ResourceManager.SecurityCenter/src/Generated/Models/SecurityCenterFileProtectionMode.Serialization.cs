@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Exe.HasValue)
+            if (Optional.IsDefined(Exe))
             {
                 writer.WritePropertyName("exe"u8);
                 writer.WriteStringValue(Exe.Value.ToString());
             }
-            if (Msi.HasValue)
+            if (Optional.IsDefined(Msi))
             {
                 writer.WritePropertyName("msi"u8);
                 writer.WriteStringValue(Msi.Value.ToString());
             }
-            if (Script.HasValue)
+            if (Optional.IsDefined(Script))
             {
                 writer.WritePropertyName("script"u8);
                 writer.WriteStringValue(Script.Value.ToString());
             }
-            if (Executable.HasValue)
+            if (Optional.IsDefined(Executable))
             {
                 writer.WritePropertyName("executable"u8);
                 writer.WriteStringValue(Executable.Value.ToString());
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<AdaptiveApplicationControlEnforcementMode> exe = default;
-            Optional<AdaptiveApplicationControlEnforcementMode> msi = default;
-            Optional<AdaptiveApplicationControlEnforcementMode> script = default;
-            Optional<AdaptiveApplicationControlEnforcementMode> executable = default;
+            AdaptiveApplicationControlEnforcementMode? exe = default;
+            AdaptiveApplicationControlEnforcementMode? msi = default;
+            AdaptiveApplicationControlEnforcementMode? script = default;
+            AdaptiveApplicationControlEnforcementMode? executable = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityCenterFileProtectionMode(Optional.ToNullable(exe), Optional.ToNullable(msi), Optional.ToNullable(script), Optional.ToNullable(executable), serializedAdditionalRawData);
+            return new SecurityCenterFileProtectionMode(exe, msi, script, executable, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityCenterFileProtectionMode>.Write(ModelReaderWriterOptions options)

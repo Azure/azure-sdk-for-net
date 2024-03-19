@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,24 +27,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (KeyVaultId != null)
+            if (Optional.IsDefined(KeyVaultId))
             {
                 writer.WritePropertyName("keyVaultId"u8);
                 writer.WriteStringValue(KeyVaultId);
             }
-            if (KeyVaultUri != null)
+            if (Optional.IsDefined(KeyVaultUri))
             {
                 writer.WritePropertyName("keyVaultUri"u8);
                 writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
             }
             writer.WritePropertyName("storageAccountId"u8);
             writer.WriteStringValue(StorageAccountId);
-            if (StorageAccountSasSecretName != null)
+            if (Optional.IsDefined(StorageAccountSasSecretName))
             {
                 writer.WritePropertyName("storageAccountSasSecretName"u8);
                 writer.WriteStringValue(StorageAccountSasSecretName);
             }
-            if (ServiceBusConnectionStringSecretName != null)
+            if (Optional.IsDefined(ServiceBusConnectionStringSecretName))
             {
                 writer.WritePropertyName("serviceBusConnectionStringSecretName"u8);
                 writer.WriteStringValue(ServiceBusConnectionStringSecretName);
@@ -90,11 +91,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> keyVaultId = default;
-            Optional<Uri> keyVaultUri = default;
+            ResourceIdentifier keyVaultId = default;
+            Uri keyVaultUri = default;
             ResourceIdentifier storageAccountId = default;
-            Optional<string> storageAccountSasSecretName = default;
-            Optional<string> serviceBusConnectionStringSecretName = default;
+            string storageAccountSasSecretName = default;
+            string serviceBusConnectionStringSecretName = default;
             string targetLocation = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -153,11 +154,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new VMwareCbtContainerMappingContent(
                 instanceType,
                 serializedAdditionalRawData,
-                keyVaultId.Value,
-                keyVaultUri.Value,
+                keyVaultId,
+                keyVaultUri,
                 storageAccountId,
-                storageAccountSasSecretName.Value,
-                serviceBusConnectionStringSecretName.Value,
+                storageAccountSasSecretName,
+                serviceBusConnectionStringSecretName,
                 targetLocation);
         }
 

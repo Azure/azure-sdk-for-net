@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.Support
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && CommunicationType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CommunicationType))
             {
                 writer.WritePropertyName("communicationType"u8);
                 writer.WriteStringValue(CommunicationType.Value.ToString());
             }
-            if (options.Format != "W" && CommunicationDirection.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CommunicationDirection))
             {
                 writer.WritePropertyName("communicationDirection"u8);
                 writer.WriteStringValue(CommunicationDirection.Value.ToString());
             }
-            if (Sender != null)
+            if (Optional.IsDefined(Sender))
             {
                 writer.WritePropertyName("sender"u8);
                 writer.WriteStringValue(Sender);
             }
-            if (Subject != null)
+            if (Optional.IsDefined(Subject))
             {
                 writer.WritePropertyName("subject"u8);
                 writer.WriteStringValue(Subject);
             }
-            if (Body != null)
+            if (Optional.IsDefined(Body))
             {
                 writer.WritePropertyName("body"u8);
                 writer.WriteStringValue(Body);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
@@ -122,13 +122,13 @@ namespace Azure.ResourceManager.Support
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SupportTicketCommunicationType> communicationType = default;
-            Optional<SupportTicketCommunicationDirection> communicationDirection = default;
-            Optional<string> sender = default;
-            Optional<string> subject = default;
-            Optional<string> body = default;
-            Optional<DateTimeOffset> createdDate = default;
+            SystemData systemData = default;
+            SupportTicketCommunicationType? communicationType = default;
+            SupportTicketCommunicationDirection? communicationDirection = default;
+            string sender = default;
+            string subject = default;
+            string body = default;
+            DateTimeOffset? createdDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -221,13 +221,13 @@ namespace Azure.ResourceManager.Support
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(communicationType),
-                Optional.ToNullable(communicationDirection),
-                sender.Value,
-                subject.Value,
-                body.Value,
-                Optional.ToNullable(createdDate),
+                systemData,
+                communicationType,
+                communicationDirection,
+                sender,
+                subject,
+                body,
+                createdDate,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,29 +48,29 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AzurefilesConnectionString != null)
+            if (Optional.IsDefined(AzurefilesConnectionString))
             {
                 writer.WritePropertyName("azurefilesConnectionString"u8);
                 writer.WriteStringValue(AzurefilesConnectionString);
             }
-            if (AzurefilesShare != null)
+            if (Optional.IsDefined(AzurefilesShare))
             {
                 writer.WritePropertyName("azurefilesShare"u8);
                 writer.WriteStringValue(AzurefilesShare);
             }
-            if (SwitchSiteAfterMigration.HasValue)
+            if (Optional.IsDefined(SwitchSiteAfterMigration))
             {
                 writer.WritePropertyName("switchSiteAfterMigration"u8);
                 writer.WriteBooleanValue(SwitchSiteAfterMigration.Value);
             }
-            if (BlockWriteAccessToSite.HasValue)
+            if (Optional.IsDefined(BlockWriteAccessToSite))
             {
                 writer.WritePropertyName("blockWriteAccessToSite"u8);
                 writer.WriteBooleanValue(BlockWriteAccessToSite.Value);
@@ -113,15 +114,15 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> azurefilesConnectionString = default;
-            Optional<string> azurefilesShare = default;
-            Optional<bool> switchSiteAfterMigration = default;
-            Optional<bool> blockWriteAccessToSite = default;
+            SystemData systemData = default;
+            string azurefilesConnectionString = default;
+            string azurefilesShare = default;
+            bool? switchSiteAfterMigration = default;
+            bool? blockWriteAccessToSite = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -205,12 +206,12 @@ namespace Azure.ResourceManager.AppService.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                azurefilesConnectionString.Value,
-                azurefilesShare.Value,
-                Optional.ToNullable(switchSiteAfterMigration),
-                Optional.ToNullable(blockWriteAccessToSite),
-                kind.Value,
+                systemData,
+                azurefilesConnectionString,
+                azurefilesShare,
+                switchSiteAfterMigration,
+                blockWriteAccessToSite,
+                kind,
                 serializedAdditionalRawData);
         }
 

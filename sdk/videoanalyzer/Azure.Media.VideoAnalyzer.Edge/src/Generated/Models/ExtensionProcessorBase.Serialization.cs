@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Media.VideoAnalyzer.Edge;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -20,7 +21,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteObjectValue(Endpoint);
             writer.WritePropertyName("image"u8);
             writer.WriteObjectValue(Image);
-            if (SamplingOptions != null)
+            if (Optional.IsDefined(SamplingOptions))
             {
                 writer.WritePropertyName("samplingOptions"u8);
                 writer.WriteObjectValue(SamplingOptions);
@@ -55,7 +56,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             }
             EndpointBase endpoint = default;
             ImageProperties image = default;
-            Optional<SamplingOptions> samplingOptions = default;
+            SamplingOptions samplingOptions = default;
             string type = "#Microsoft.VideoAnalyzer.ExtensionProcessorBase";
             string name = default;
             IList<NodeInput> inputs = default;
@@ -107,7 +108,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 inputs,
                 endpoint,
                 image,
-                samplingOptions.Value);
+                samplingOptions);
         }
     }
 }

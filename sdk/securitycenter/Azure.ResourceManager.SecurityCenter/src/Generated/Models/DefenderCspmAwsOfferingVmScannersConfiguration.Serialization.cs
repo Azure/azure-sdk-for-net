@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (CloudRoleArn != null)
+            if (Optional.IsDefined(CloudRoleArn))
             {
                 writer.WritePropertyName("cloudRoleArn"u8);
                 writer.WriteStringValue(CloudRoleArn);
             }
-            if (ScanningMode.HasValue)
+            if (Optional.IsDefined(ScanningMode))
             {
                 writer.WritePropertyName("scanningMode"u8);
                 writer.WriteStringValue(ScanningMode.Value.ToString());
             }
-            if (!(ExclusionTags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ExclusionTags))
             {
                 writer.WritePropertyName("exclusionTags"u8);
                 writer.WriteStartObject();
@@ -85,8 +86,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> cloudRoleArn = default;
-            Optional<DefenderForServersScanningMode> scanningMode = default;
+            string cloudRoleArn = default;
+            DefenderForServersScanningMode? scanningMode = default;
             IDictionary<string, string> exclusionTags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DefenderCspmAwsOfferingVmScannersConfiguration(cloudRoleArn.Value, Optional.ToNullable(scanningMode), exclusionTags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new DefenderCspmAwsOfferingVmScannersConfiguration(cloudRoleArn, scanningMode, exclusionTags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DefenderCspmAwsOfferingVmScannersConfiguration>.Write(ModelReaderWriterOptions options)

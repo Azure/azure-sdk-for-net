@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ResourceHealth;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             }
 
             writer.WriteStartObject();
-            if (Question != null)
+            if (Optional.IsDefined(Question))
             {
                 writer.WritePropertyName("question"u8);
                 writer.WriteStringValue(Question);
             }
-            if (Answer != null)
+            if (Optional.IsDefined(Answer))
             {
                 writer.WritePropertyName("answer"u8);
                 writer.WriteStringValue(Answer);
             }
-            if (LocaleCode != null)
+            if (Optional.IsDefined(LocaleCode))
             {
                 writer.WritePropertyName("localeCode"u8);
                 writer.WriteStringValue(LocaleCode);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Optional<string> question = default;
-            Optional<string> answer = default;
-            Optional<string> localeCode = default;
+            string question = default;
+            string answer = default;
+            string localeCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceHealthEventFaq(question.Value, answer.Value, localeCode.Value, serializedAdditionalRawData);
+            return new ResourceHealthEventFaq(question, answer, localeCode, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceHealthEventFaq>.Write(ModelReaderWriterOptions options)

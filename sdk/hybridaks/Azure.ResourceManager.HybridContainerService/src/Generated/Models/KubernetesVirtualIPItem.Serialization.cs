@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridContainerService;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (EndIP != null)
+            if (Optional.IsDefined(EndIP))
             {
                 writer.WritePropertyName("endIP"u8);
                 writer.WriteStringValue(EndIP);
             }
-            if (StartIP != null)
+            if (Optional.IsDefined(StartIP))
             {
                 writer.WritePropertyName("startIP"u8);
                 writer.WriteStringValue(StartIP);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<string> endIP = default;
-            Optional<string> startIP = default;
+            string endIP = default;
+            string startIP = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesVirtualIPItem(endIP.Value, startIP.Value, serializedAdditionalRawData);
+            return new KubernetesVirtualIPItem(endIP, startIP, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesVirtualIPItem>.Write(ModelReaderWriterOptions options)

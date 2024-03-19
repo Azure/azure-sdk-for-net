@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Language != null)
+            if (Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
             }
-            if (!(InputTrackSelection is ChangeTrackingList<LiveEventInputTrackSelection> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(InputTrackSelection))
             {
                 writer.WritePropertyName("inputTrackSelection"u8);
                 writer.WriteStartArray();
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 writer.WriteEndArray();
             }
-            if (OutputTranscriptionTrack != null)
+            if (Optional.IsDefined(OutputTranscriptionTrack))
             {
                 writer.WritePropertyName("outputTranscriptionTrack"u8);
                 writer.WriteObjectValue(OutputTranscriptionTrack);
@@ -84,9 +85,9 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<string> language = default;
+            string language = default;
             IList<LiveEventInputTrackSelection> inputTrackSelection = default;
-            Optional<LiveEventOutputTranscriptionTrack> outputTranscriptionTrack = default;
+            LiveEventOutputTranscriptionTrack outputTranscriptionTrack = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LiveEventTranscription(language.Value, inputTrackSelection ?? new ChangeTrackingList<LiveEventInputTrackSelection>(), outputTranscriptionTrack.Value, serializedAdditionalRawData);
+            return new LiveEventTranscription(language, inputTrackSelection ?? new ChangeTrackingList<LiveEventInputTrackSelection>(), outputTranscriptionTrack, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LiveEventTranscription>.Write(ModelReaderWriterOptions options)

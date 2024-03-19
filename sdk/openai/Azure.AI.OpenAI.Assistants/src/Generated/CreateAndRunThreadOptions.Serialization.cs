@@ -29,22 +29,22 @@ namespace Azure.AI.OpenAI.Assistants
             writer.WriteStartObject();
             writer.WritePropertyName("assistant_id"u8);
             writer.WriteStringValue(AssistantId);
-            if (Thread != null)
+            if (Optional.IsDefined(Thread))
             {
                 writer.WritePropertyName("thread"u8);
                 writer.WriteObjectValue(Thread);
             }
-            if (OverrideModelName != null)
+            if (Optional.IsDefined(OverrideModelName))
             {
                 writer.WritePropertyName("model"u8);
                 writer.WriteStringValue(OverrideModelName);
             }
-            if (OverrideInstructions != null)
+            if (Optional.IsDefined(OverrideInstructions))
             {
                 writer.WritePropertyName("instructions"u8);
                 writer.WriteStringValue(OverrideInstructions);
             }
-            if (!(OverrideTools is ChangeTrackingList<ToolDefinition> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(OverrideTools))
             {
                 writer.WritePropertyName("tools"u8);
                 writer.WriteStartArray();
@@ -54,7 +54,7 @@ namespace Azure.AI.OpenAI.Assistants
                 }
                 writer.WriteEndArray();
             }
-            if (!(Metadata is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Metadata))
             {
                 if (Metadata != null)
                 {
@@ -111,9 +111,9 @@ namespace Azure.AI.OpenAI.Assistants
                 return null;
             }
             string assistantId = default;
-            Optional<AssistantThreadCreationOptions> thread = default;
-            Optional<string> model = default;
-            Optional<string> instructions = default;
+            AssistantThreadCreationOptions thread = default;
+            string model = default;
+            string instructions = default;
             IList<ToolDefinition> tools = default;
             IDictionary<string, string> metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -180,9 +180,9 @@ namespace Azure.AI.OpenAI.Assistants
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new CreateAndRunThreadOptions(
                 assistantId,
-                thread.Value,
-                model.Value,
-                instructions.Value,
+                thread,
+                model,
+                instructions,
                 tools ?? new ChangeTrackingList<ToolDefinition>(),
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);

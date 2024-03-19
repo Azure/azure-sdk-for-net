@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MySql;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (CustomWindow != null)
+            if (Optional.IsDefined(CustomWindow))
             {
                 writer.WritePropertyName("customWindow"u8);
                 writer.WriteStringValue(CustomWindow);
             }
-            if (StartHour.HasValue)
+            if (Optional.IsDefined(StartHour))
             {
                 writer.WritePropertyName("startHour"u8);
                 writer.WriteNumberValue(StartHour.Value);
             }
-            if (StartMinute.HasValue)
+            if (Optional.IsDefined(StartMinute))
             {
                 writer.WritePropertyName("startMinute"u8);
                 writer.WriteNumberValue(StartMinute.Value);
             }
-            if (DayOfWeek.HasValue)
+            if (Optional.IsDefined(DayOfWeek))
             {
                 writer.WritePropertyName("dayOfWeek"u8);
                 writer.WriteNumberValue(DayOfWeek.Value);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<string> customWindow = default;
-            Optional<int> startHour = default;
-            Optional<int> startMinute = default;
-            Optional<int> dayOfWeek = default;
+            string customWindow = default;
+            int? startHour = default;
+            int? startMinute = default;
+            int? dayOfWeek = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlFlexibleServerMaintenanceWindow(customWindow.Value, Optional.ToNullable(startHour), Optional.ToNullable(startMinute), Optional.ToNullable(dayOfWeek), serializedAdditionalRawData);
+            return new MySqlFlexibleServerMaintenanceWindow(customWindow, startHour, startMinute, dayOfWeek, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFlexibleServerMaintenanceWindow>.Write(ModelReaderWriterOptions options)

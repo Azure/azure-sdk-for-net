@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HealthcareApis;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
@@ -84,7 +85,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<HealthcareApisPublicNetworkAccess> publicNetworkAccess = default;
+            HealthcareApisPublicNetworkAccess? publicNetworkAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HealthcareApisServicePatch(tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(publicNetworkAccess), serializedAdditionalRawData);
+            return new HealthcareApisServicePatch(tags ?? new ChangeTrackingDictionary<string, string>(), publicNetworkAccess, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HealthcareApisServicePatch>.Write(ModelReaderWriterOptions options)

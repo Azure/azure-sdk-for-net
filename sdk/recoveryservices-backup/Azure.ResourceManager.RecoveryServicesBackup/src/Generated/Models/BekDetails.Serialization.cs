@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (SecretUri != null)
+            if (Optional.IsDefined(SecretUri))
             {
                 writer.WritePropertyName("secretUrl"u8);
                 writer.WriteStringValue(SecretUri.AbsoluteUri);
             }
-            if (SecretVaultId != null)
+            if (Optional.IsDefined(SecretVaultId))
             {
                 writer.WritePropertyName("secretVaultId"u8);
                 writer.WriteStringValue(SecretVaultId);
             }
-            if (SecretData != null)
+            if (Optional.IsDefined(SecretData))
             {
                 writer.WritePropertyName("secretData"u8);
                 writer.WriteStringValue(SecretData);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<Uri> secretUrl = default;
-            Optional<ResourceIdentifier> secretVaultId = default;
-            Optional<string> secretData = default;
+            Uri secretUrl = default;
+            ResourceIdentifier secretVaultId = default;
+            string secretData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BekDetails(secretUrl.Value, secretVaultId.Value, secretData.Value, serializedAdditionalRawData);
+            return new BekDetails(secretUrl, secretVaultId, secretData, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BekDetails>.Write(ModelReaderWriterOptions options)

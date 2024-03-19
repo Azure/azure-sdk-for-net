@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (ConnectorId != null)
+            if (Optional.IsDefined(ConnectorId))
             {
                 writer.WritePropertyName("ConnectorId"u8);
                 writer.WriteStringValue(ConnectorId);
             }
-            if (ConfigDisplayName != null)
+            if (Optional.IsDefined(ConfigDisplayName))
             {
                 writer.WritePropertyName("ConfigDisplayName"u8);
                 writer.WriteStringValue(ConfigDisplayName);
             }
-            if (IsDefault.HasValue)
+            if (Optional.IsDefined(IsDefault))
             {
                 writer.WritePropertyName("IsDefault"u8);
                 writer.WriteBooleanValue(IsDefault.Value);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("Id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (ConfigProperties != null)
+            if (Optional.IsDefined(ConfigProperties))
             {
                 writer.WritePropertyName("ConfigProperties"u8);
                 writer.WriteStringValue(ConfigProperties);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<string> connectorId = default;
-            Optional<string> configDisplayName = default;
-            Optional<bool> isDefault = default;
-            Optional<string> id = default;
-            Optional<string> configProperties = default;
+            string connectorId = default;
+            string configDisplayName = default;
+            bool? isDefault = default;
+            string id = default;
+            string configProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,11 +135,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new WorkItemConfiguration(
-                connectorId.Value,
-                configDisplayName.Value,
-                Optional.ToNullable(isDefault),
-                id.Value,
-                configProperties.Value,
+                connectorId,
+                configDisplayName,
+                isDefault,
+                id,
+                configProperties,
                 serializedAdditionalRawData);
         }
 

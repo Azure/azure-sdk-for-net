@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -30,19 +31,19 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStringValue(Operator.ToSerialString());
             writer.WritePropertyName("threshold"u8);
             writer.WriteNumberValue(Threshold);
-            if (WindowSize.HasValue)
+            if (Optional.IsDefined(WindowSize))
             {
                 writer.WritePropertyName("windowSize"u8);
                 writer.WriteStringValue(WindowSize.Value, "P");
             }
-            if (TimeAggregation.HasValue)
+            if (Optional.IsDefined(TimeAggregation))
             {
                 writer.WritePropertyName("timeAggregation"u8);
                 writer.WriteStringValue(TimeAggregation.Value.ToSerialString());
             }
             writer.WritePropertyName("odata.type"u8);
             writer.WriteStringValue(OdataType);
-            if (DataSource != null)
+            if (Optional.IsDefined(DataSource))
             {
                 writer.WritePropertyName("dataSource"u8);
                 writer.WriteObjectValue(DataSource);
@@ -87,10 +88,10 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             MonitorConditionOperator @operator = default;
             double threshold = default;
-            Optional<TimeSpan> windowSize = default;
-            Optional<ThresholdRuleConditionTimeAggregationType> timeAggregation = default;
+            TimeSpan? windowSize = default;
+            ThresholdRuleConditionTimeAggregationType? timeAggregation = default;
             string odataType = default;
-            Optional<RuleDataSource> dataSource = default;
+            RuleDataSource dataSource = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,12 +146,12 @@ namespace Azure.ResourceManager.Monitor.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ThresholdRuleCondition(
                 odataType,
-                dataSource.Value,
+                dataSource,
                 serializedAdditionalRawData,
                 @operator,
                 threshold,
-                Optional.ToNullable(windowSize),
-                Optional.ToNullable(timeAggregation));
+                windowSize,
+                timeAggregation);
         }
 
         BinaryData IPersistableModel<ThresholdRuleCondition>.Write(ModelReaderWriterOptions options)

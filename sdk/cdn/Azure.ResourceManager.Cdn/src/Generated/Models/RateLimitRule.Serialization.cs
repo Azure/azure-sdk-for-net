@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteNumberValue(RateLimitDurationInMinutes);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (EnabledState.HasValue)
+            if (Optional.IsDefined(EnabledState))
             {
                 writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToString());
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.Cdn.Models
             int rateLimitThreshold = default;
             int rateLimitDurationInMinutes = default;
             string name = default;
-            Optional<CustomRuleEnabledState> enabledState = default;
+            CustomRuleEnabledState? enabledState = default;
             int priority = default;
             IList<CustomRuleMatchCondition> matchConditions = default;
             OverrideActionType action = default;
@@ -149,7 +150,7 @@ namespace Azure.ResourceManager.Cdn.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new RateLimitRule(
                 name,
-                Optional.ToNullable(enabledState),
+                enabledState,
                 priority,
                 matchConditions,
                 action,

@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="apiName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<IntegrationServiceEnvironmentManagedApiResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string apiName, IntegrationServiceEnvironmentManagedApiData data, CancellationToken cancellationToken = default)
         {
-            if (apiName == null)
-            {
-                throw new ArgumentNullException(nameof(apiName));
-            }
-            if (apiName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(apiName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _integrationServiceEnvironmentManagedApiClientDiagnostics.CreateScope("IntegrationServiceEnvironmentManagedApiCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="apiName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<IntegrationServiceEnvironmentManagedApiResource> CreateOrUpdate(WaitUntil waitUntil, string apiName, IntegrationServiceEnvironmentManagedApiData data, CancellationToken cancellationToken = default)
         {
-            if (apiName == null)
-            {
-                throw new ArgumentNullException(nameof(apiName));
-            }
-            if (apiName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(apiName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _integrationServiceEnvironmentManagedApiClientDiagnostics.CreateScope("IntegrationServiceEnvironmentManagedApiCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="apiName"/> is null. </exception>
         public virtual async Task<Response<IntegrationServiceEnvironmentManagedApiResource>> GetAsync(string apiName, CancellationToken cancellationToken = default)
         {
-            if (apiName == null)
-            {
-                throw new ArgumentNullException(nameof(apiName));
-            }
-            if (apiName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(apiName));
-            }
+            Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
 
             using var scope = _integrationServiceEnvironmentManagedApiClientDiagnostics.CreateScope("IntegrationServiceEnvironmentManagedApiCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="apiName"/> is null. </exception>
         public virtual Response<IntegrationServiceEnvironmentManagedApiResource> Get(string apiName, CancellationToken cancellationToken = default)
         {
-            if (apiName == null)
-            {
-                throw new ArgumentNullException(nameof(apiName));
-            }
-            if (apiName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(apiName));
-            }
+            Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
 
             using var scope = _integrationServiceEnvironmentManagedApiClientDiagnostics.CreateScope("IntegrationServiceEnvironmentManagedApiCollection.Get");
             scope.Start();
@@ -362,14 +328,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="apiName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string apiName, CancellationToken cancellationToken = default)
         {
-            if (apiName == null)
-            {
-                throw new ArgumentNullException(nameof(apiName));
-            }
-            if (apiName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(apiName));
-            }
+            Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
 
             using var scope = _integrationServiceEnvironmentManagedApiClientDiagnostics.CreateScope("IntegrationServiceEnvironmentManagedApiCollection.Exists");
             scope.Start();
@@ -412,14 +371,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="apiName"/> is null. </exception>
         public virtual Response<bool> Exists(string apiName, CancellationToken cancellationToken = default)
         {
-            if (apiName == null)
-            {
-                throw new ArgumentNullException(nameof(apiName));
-            }
-            if (apiName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(apiName));
-            }
+            Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
 
             using var scope = _integrationServiceEnvironmentManagedApiClientDiagnostics.CreateScope("IntegrationServiceEnvironmentManagedApiCollection.Exists");
             scope.Start();
@@ -462,14 +414,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="apiName"/> is null. </exception>
         public virtual async Task<NullableResponse<IntegrationServiceEnvironmentManagedApiResource>> GetIfExistsAsync(string apiName, CancellationToken cancellationToken = default)
         {
-            if (apiName == null)
-            {
-                throw new ArgumentNullException(nameof(apiName));
-            }
-            if (apiName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(apiName));
-            }
+            Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
 
             using var scope = _integrationServiceEnvironmentManagedApiClientDiagnostics.CreateScope("IntegrationServiceEnvironmentManagedApiCollection.GetIfExists");
             scope.Start();
@@ -514,14 +459,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="apiName"/> is null. </exception>
         public virtual NullableResponse<IntegrationServiceEnvironmentManagedApiResource> GetIfExists(string apiName, CancellationToken cancellationToken = default)
         {
-            if (apiName == null)
-            {
-                throw new ArgumentNullException(nameof(apiName));
-            }
-            if (apiName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(apiName));
-            }
+            Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
 
             using var scope = _integrationServiceEnvironmentManagedApiClientDiagnostics.CreateScope("IntegrationServiceEnvironmentManagedApiCollection.GetIfExists");
             scope.Start();

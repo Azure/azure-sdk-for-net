@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && State.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && Error != null)
+            if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteStringValue(Error);
             }
-            if (options.Format != "W" && CurrentSubStateDetails != null)
+            if (options.Format != "W" && Optional.IsDefined(CurrentSubStateDetails))
             {
                 writer.WritePropertyName("currentSubStateDetails"u8);
                 writer.WriteObjectValue(CurrentSubStateDetails);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<PostgreSqlMigrationState> state = default;
-            Optional<string> error = default;
-            Optional<PostgreSqlMigrationSubStateDetails> currentSubStateDetails = default;
+            PostgreSqlMigrationState? state = default;
+            string error = default;
+            PostgreSqlMigrationSubStateDetails currentSubStateDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlMigrationStatus(Optional.ToNullable(state), error.Value, currentSubStateDetails.Value, serializedAdditionalRawData);
+            return new PostgreSqlMigrationStatus(state, error, currentSubStateDetails, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlMigrationStatus>.Write(ModelReaderWriterOptions options)

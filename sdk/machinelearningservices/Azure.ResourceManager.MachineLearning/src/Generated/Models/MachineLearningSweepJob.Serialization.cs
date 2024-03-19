@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (EarlyTermination != null)
+            if (Optional.IsDefined(EarlyTermination))
             {
                 if (EarlyTermination != null)
                 {
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("earlyTermination");
                 }
             }
-            if (!(Inputs is ChangeTrackingDictionary<string, MachineLearningJobInput> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Inputs))
             {
                 if (Inputs != null)
                 {
@@ -56,14 +57,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("inputs");
                 }
             }
-            if (Limits != null)
+            if (Optional.IsDefined(Limits))
             {
                 writer.WritePropertyName("limits"u8);
                 writer.WriteObjectValue(Limits);
             }
             writer.WritePropertyName("objective"u8);
             writer.WriteObjectValue(Objective);
-            if (!(Outputs is ChangeTrackingDictionary<string, MachineLearningJobOutput> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Outputs))
             {
                 if (Outputs != null)
                 {
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("outputs");
                 }
             }
-            if (QueueSettings != null)
+            if (Optional.IsDefined(QueueSettings))
             {
                 if (QueueSettings != null)
                 {
@@ -106,7 +107,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 #endif
             writer.WritePropertyName("trial"u8);
             writer.WriteObjectValue(Trial);
-            if (ComponentId != null)
+            if (Optional.IsDefined(ComponentId))
             {
                 if (ComponentId != null)
                 {
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("componentId");
                 }
             }
-            if (ComputeId != null)
+            if (Optional.IsDefined(ComputeId))
             {
                 if (ComputeId != null)
                 {
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("computeId");
                 }
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 if (DisplayName != null)
                 {
@@ -142,12 +143,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("displayName");
                 }
             }
-            if (ExperimentName != null)
+            if (Optional.IsDefined(ExperimentName))
             {
                 writer.WritePropertyName("experimentName"u8);
                 writer.WriteStringValue(ExperimentName);
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 if (Identity != null)
                 {
@@ -159,14 +160,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("identity");
                 }
             }
-            if (IsArchived.HasValue)
+            if (Optional.IsDefined(IsArchived))
             {
                 writer.WritePropertyName("isArchived"u8);
                 writer.WriteBooleanValue(IsArchived.Value);
             }
             writer.WritePropertyName("jobType"u8);
             writer.WriteStringValue(JobType.ToString());
-            if (NotificationSetting != null)
+            if (Optional.IsDefined(NotificationSetting))
             {
                 if (NotificationSetting != null)
                 {
@@ -178,7 +179,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("notificationSetting");
                 }
             }
-            if (!(SecretsConfiguration is ChangeTrackingDictionary<string, SecretConfiguration> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(SecretsConfiguration))
             {
                 if (SecretsConfiguration != null)
                 {
@@ -196,7 +197,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("secretsConfiguration");
                 }
             }
-            if (!(Services is ChangeTrackingDictionary<string, MachineLearningJobService> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(Services))
             {
                 if (Services != null)
                 {
@@ -214,12 +215,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("services");
                 }
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 if (Description != null)
                 {
@@ -231,7 +232,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("description");
                 }
             }
-            if (!(Properties is ChangeTrackingDictionary<string, string> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(Properties))
             {
                 if (Properties != null)
                 {
@@ -249,7 +250,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("properties");
                 }
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 if (Tags != null)
                 {
@@ -305,27 +306,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<MachineLearningEarlyTerminationPolicy> earlyTermination = default;
+            MachineLearningEarlyTerminationPolicy earlyTermination = default;
             IDictionary<string, MachineLearningJobInput> inputs = default;
-            Optional<MachineLearningSweepJobLimits> limits = default;
+            MachineLearningSweepJobLimits limits = default;
             MachineLearningObjective objective = default;
             IDictionary<string, MachineLearningJobOutput> outputs = default;
-            Optional<JobQueueSettings> queueSettings = default;
+            JobQueueSettings queueSettings = default;
             SamplingAlgorithm samplingAlgorithm = default;
             BinaryData searchSpace = default;
             MachineLearningTrialComponent trial = default;
-            Optional<ResourceIdentifier> componentId = default;
-            Optional<ResourceIdentifier> computeId = default;
-            Optional<string> displayName = default;
-            Optional<string> experimentName = default;
-            Optional<MachineLearningIdentityConfiguration> identity = default;
-            Optional<bool> isArchived = default;
+            ResourceIdentifier componentId = default;
+            ResourceIdentifier computeId = default;
+            string displayName = default;
+            string experimentName = default;
+            MachineLearningIdentityConfiguration identity = default;
+            bool? isArchived = default;
             JobType jobType = default;
-            Optional<NotificationSetting> notificationSetting = default;
+            NotificationSetting notificationSetting = default;
             IDictionary<string, SecretConfiguration> secretsConfiguration = default;
             IDictionary<string, MachineLearningJobService> services = default;
-            Optional<MachineLearningJobStatus> status = default;
-            Optional<string> description = default;
+            MachineLearningJobStatus? status = default;
+            string description = default;
             IDictionary<string, string> properties = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -566,27 +567,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MachineLearningSweepJob(
-                description.Value,
+                description,
                 properties ?? new ChangeTrackingDictionary<string, string>(),
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
-                componentId.Value,
-                computeId.Value,
-                displayName.Value,
-                experimentName.Value,
-                identity.Value,
-                Optional.ToNullable(isArchived),
+                componentId,
+                computeId,
+                displayName,
+                experimentName,
+                identity,
+                isArchived,
                 jobType,
-                notificationSetting.Value,
+                notificationSetting,
                 secretsConfiguration ?? new ChangeTrackingDictionary<string, SecretConfiguration>(),
                 services ?? new ChangeTrackingDictionary<string, MachineLearningJobService>(),
-                Optional.ToNullable(status),
-                earlyTermination.Value,
+                status,
+                earlyTermination,
                 inputs ?? new ChangeTrackingDictionary<string, MachineLearningJobInput>(),
-                limits.Value,
+                limits,
                 objective,
                 outputs ?? new ChangeTrackingDictionary<string, MachineLearningJobOutput>(),
-                queueSettings.Value,
+                queueSettings,
                 samplingAlgorithm,
                 searchSpace,
                 trial);

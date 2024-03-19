@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Maintenance
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,19 +56,19 @@ namespace Azure.ResourceManager.Maintenance
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Namespace != null)
+            if (Optional.IsDefined(Namespace))
             {
                 writer.WritePropertyName("namespace"u8);
                 writer.WriteStringValue(Namespace);
             }
-            if (!(ExtensionProperties is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ExtensionProperties))
             {
                 writer.WritePropertyName("extensionProperties"u8);
                 writer.WriteStartObject();
@@ -79,44 +79,44 @@ namespace Azure.ResourceManager.Maintenance
                 }
                 writer.WriteEndObject();
             }
-            if (MaintenanceScope.HasValue)
+            if (Optional.IsDefined(MaintenanceScope))
             {
                 writer.WritePropertyName("maintenanceScope"u8);
                 writer.WriteStringValue(MaintenanceScope.Value.ToString());
             }
-            if (Visibility.HasValue)
+            if (Optional.IsDefined(Visibility))
             {
                 writer.WritePropertyName("visibility"u8);
                 writer.WriteStringValue(Visibility.Value.ToString());
             }
-            if (InstallPatches != null)
+            if (Optional.IsDefined(InstallPatches))
             {
                 writer.WritePropertyName("installPatches"u8);
                 writer.WriteObjectValue(InstallPatches);
             }
             writer.WritePropertyName("maintenanceWindow"u8);
             writer.WriteStartObject();
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startDateTime"u8);
                 SerializeStartOn(writer);
             }
-            if (ExpireOn.HasValue)
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationDateTime"u8);
                 SerializeExpireOn(writer);
             }
-            if (Duration.HasValue)
+            if (Optional.IsDefined(Duration))
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration.Value, "c");
             }
-            if (TimeZone != null)
+            if (Optional.IsDefined(TimeZone))
             {
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
-            if (RecurEvery != null)
+            if (Optional.IsDefined(RecurEvery))
             {
                 writer.WritePropertyName("recurEvery"u8);
                 writer.WriteStringValue(RecurEvery);
@@ -166,17 +166,17 @@ namespace Azure.ResourceManager.Maintenance
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> @namespace = default;
+            SystemData systemData = default;
+            string @namespace = default;
             IDictionary<string, string> extensionProperties = default;
-            Optional<MaintenanceScope> maintenanceScope = default;
-            Optional<MaintenanceConfigurationVisibility> visibility = default;
-            Optional<MaintenancePatchConfiguration> installPatches = default;
-            Optional<DateTimeOffset> startDateTime = default;
-            Optional<DateTimeOffset> expirationDateTime = default;
-            Optional<TimeSpan> duration = default;
-            Optional<string> timeZone = default;
-            Optional<string> recurEvery = default;
+            MaintenanceScope? maintenanceScope = default;
+            MaintenanceConfigurationVisibility? visibility = default;
+            MaintenancePatchConfiguration installPatches = default;
+            DateTimeOffset? startDateTime = default;
+            DateTimeOffset? expirationDateTime = default;
+            TimeSpan? duration = default;
+            string timeZone = default;
+            string recurEvery = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -341,19 +341,19 @@ namespace Azure.ResourceManager.Maintenance
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                @namespace.Value,
+                @namespace,
                 extensionProperties ?? new ChangeTrackingDictionary<string, string>(),
-                Optional.ToNullable(maintenanceScope),
-                Optional.ToNullable(visibility),
-                installPatches.Value,
-                Optional.ToNullable(startDateTime),
-                Optional.ToNullable(expirationDateTime),
-                Optional.ToNullable(duration),
-                timeZone.Value,
-                recurEvery.Value,
+                maintenanceScope,
+                visibility,
+                installPatches,
+                startDateTime,
+                expirationDateTime,
+                duration,
+                timeZone,
+                recurEvery,
                 serializedAdditionalRawData);
         }
 

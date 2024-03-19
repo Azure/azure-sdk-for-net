@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartObject();
             writer.WritePropertyName("sourceType"u8);
             writer.WriteStringValue(SourceType);
-            if (TrackEventsOptions.HasValue)
+            if (Optional.IsDefined(TrackEventsOptions))
             {
                 writer.WritePropertyName("trackEventsOptions"u8);
                 writer.WriteStringValue(TrackEventsOptions.Value.ToString());
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.Logic.Models
                 return null;
             }
             string sourceType = default;
-            Optional<IntegrationAccountTrackEventOperationOption> trackEventsOptions = default;
+            IntegrationAccountTrackEventOperationOption? trackEventsOptions = default;
             IList<IntegrationAccountTrackingEvent> events = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationAccountTrackingEventsContent(sourceType, Optional.ToNullable(trackEventsOptions), events, serializedAdditionalRawData);
+            return new IntegrationAccountTrackingEventsContent(sourceType, trackEventsOptions, events, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationAccountTrackingEventsContent>.Write(ModelReaderWriterOptions options)

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (!(Value is ChangeTrackingList<StreamingLocatorData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 writer.WriteEndArray();
             }
-            if (OdataNextLink != null)
+            if (Optional.IsDefined(OdataNextLink))
             {
                 writer.WritePropertyName("@odata.nextLink"u8);
                 writer.WriteStringValue(OdataNextLink);
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Media.Models
                 return null;
             }
             IReadOnlyList<StreamingLocatorData> value = default;
-            Optional<string> odataNextLink = default;
+            string odataNextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingLocatorListResult(value ?? new ChangeTrackingList<StreamingLocatorData>(), odataNextLink.Value, serializedAdditionalRawData);
+            return new StreamingLocatorListResult(value ?? new ChangeTrackingList<StreamingLocatorData>(), odataNextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamingLocatorListResult>.Write(ModelReaderWriterOptions options)

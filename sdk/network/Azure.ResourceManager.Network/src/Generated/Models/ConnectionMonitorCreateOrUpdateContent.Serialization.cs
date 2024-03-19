@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -44,27 +45,27 @@ namespace Azure.ResourceManager.Network.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Source != null)
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteObjectValue(Source);
             }
-            if (Destination != null)
+            if (Optional.IsDefined(Destination))
             {
                 writer.WritePropertyName("destination"u8);
                 writer.WriteObjectValue(Destination);
             }
-            if (AutoStart.HasValue)
+            if (Optional.IsDefined(AutoStart))
             {
                 writer.WritePropertyName("autoStart"u8);
                 writer.WriteBooleanValue(AutoStart.Value);
             }
-            if (MonitoringIntervalInSeconds.HasValue)
+            if (Optional.IsDefined(MonitoringIntervalInSeconds))
             {
                 writer.WritePropertyName("monitoringIntervalInSeconds"u8);
                 writer.WriteNumberValue(MonitoringIntervalInSeconds.Value);
             }
-            if (!(Endpoints is ChangeTrackingList<ConnectionMonitorEndpoint> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Endpoints))
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(TestConfigurations is ChangeTrackingList<ConnectionMonitorTestConfiguration> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(TestConfigurations))
             {
                 writer.WritePropertyName("testConfigurations"u8);
                 writer.WriteStartArray();
@@ -84,7 +85,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(TestGroups is ChangeTrackingList<ConnectionMonitorTestGroup> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(TestGroups))
             {
                 writer.WritePropertyName("testGroups"u8);
                 writer.WriteStartArray();
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Outputs is ChangeTrackingList<ConnectionMonitorOutput> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(Outputs))
             {
                 writer.WritePropertyName("outputs"u8);
                 writer.WriteStartArray();
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Notes != null)
+            if (Optional.IsDefined(Notes))
             {
                 writer.WritePropertyName("notes"u8);
                 writer.WriteStringValue(Notes);
@@ -148,17 +149,17 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             IDictionary<string, string> tags = default;
-            Optional<ConnectionMonitorSource> source = default;
-            Optional<ConnectionMonitorDestination> destination = default;
-            Optional<bool> autoStart = default;
-            Optional<int> monitoringIntervalInSeconds = default;
+            ConnectionMonitorSource source = default;
+            ConnectionMonitorDestination destination = default;
+            bool? autoStart = default;
+            int? monitoringIntervalInSeconds = default;
             IList<ConnectionMonitorEndpoint> endpoints = default;
             IList<ConnectionMonitorTestConfiguration> testConfigurations = default;
             IList<ConnectionMonitorTestGroup> testGroups = default;
             IList<ConnectionMonitorOutput> outputs = default;
-            Optional<string> notes = default;
+            string notes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -302,17 +303,17 @@ namespace Azure.ResourceManager.Network.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ConnectionMonitorCreateOrUpdateContent(
-                Optional.ToNullable(location),
+                location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                source.Value,
-                destination.Value,
-                Optional.ToNullable(autoStart),
-                Optional.ToNullable(monitoringIntervalInSeconds),
+                source,
+                destination,
+                autoStart,
+                monitoringIntervalInSeconds,
                 endpoints ?? new ChangeTrackingList<ConnectionMonitorEndpoint>(),
                 testConfigurations ?? new ChangeTrackingList<ConnectionMonitorTestConfiguration>(),
                 testGroups ?? new ChangeTrackingList<ConnectionMonitorTestGroup>(),
                 outputs ?? new ChangeTrackingList<ConnectionMonitorOutput>(),
-                notes.Value,
+                notes,
                 serializedAdditionalRawData);
         }
 

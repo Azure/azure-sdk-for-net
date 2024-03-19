@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (AllowBlobPublicAccess.HasValue)
+            if (Optional.IsDefined(AllowBlobPublicAccess))
             {
                 writer.WritePropertyName("allowBlobPublicAccess"u8);
                 writer.WriteBooleanValue(AllowBlobPublicAccess.Value);
             }
-            if (ArmResourceIdentifier != null)
+            if (Optional.IsDefined(ArmResourceIdentifier))
             {
                 if (ArmResourceIdentifier != null)
                 {
@@ -43,12 +44,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("armResourceId");
                 }
             }
-            if (StorageAccountHnsEnabled.HasValue)
+            if (Optional.IsDefined(StorageAccountHnsEnabled))
             {
                 writer.WritePropertyName("storageAccountHnsEnabled"u8);
                 writer.WriteBooleanValue(StorageAccountHnsEnabled.Value);
             }
-            if (StorageAccountName != null)
+            if (Optional.IsDefined(StorageAccountName))
             {
                 if (StorageAccountName != null)
                 {
@@ -60,7 +61,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("storageAccountName");
                 }
             }
-            if (StorageAccountType != null)
+            if (Optional.IsDefined(StorageAccountType))
             {
                 if (StorageAccountType != null)
                 {
@@ -110,11 +111,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<bool> allowBlobPublicAccess = default;
-            Optional<ArmResourceId> armResourceId = default;
-            Optional<bool> storageAccountHnsEnabled = default;
-            Optional<string> storageAccountName = default;
-            Optional<string> storageAccountType = default;
+            bool? allowBlobPublicAccess = default;
+            ArmResourceId armResourceId = default;
+            bool? storageAccountHnsEnabled = default;
+            string storageAccountName = default;
+            string storageAccountType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -174,11 +175,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SystemCreatedStorageAccount(
-                Optional.ToNullable(allowBlobPublicAccess),
-                armResourceId.Value,
-                Optional.ToNullable(storageAccountHnsEnabled),
-                storageAccountName.Value,
-                storageAccountType.Value,
+                allowBlobPublicAccess,
+                armResourceId,
+                storageAccountHnsEnabled,
+                storageAccountName,
+                storageAccountType,
                 serializedAdditionalRawData);
         }
 

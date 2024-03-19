@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (BaseBlob != null)
+            if (Optional.IsDefined(BaseBlob))
             {
                 writer.WritePropertyName("baseBlob"u8);
                 writer.WriteObjectValue(BaseBlob);
             }
-            if (Snapshot != null)
+            if (Optional.IsDefined(Snapshot))
             {
                 writer.WritePropertyName("snapshot"u8);
                 writer.WriteObjectValue(Snapshot);
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteObjectValue(Version);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<ManagementPolicyBaseBlob> baseBlob = default;
-            Optional<ManagementPolicySnapShot> snapshot = default;
-            Optional<ManagementPolicyVersion> version = default;
+            ManagementPolicyBaseBlob baseBlob = default;
+            ManagementPolicySnapShot snapshot = default;
+            ManagementPolicyVersion version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagementPolicyAction(baseBlob.Value, snapshot.Value, version.Value, serializedAdditionalRawData);
+            return new ManagementPolicyAction(baseBlob, snapshot, version, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagementPolicyAction>.Write(ModelReaderWriterOptions options)

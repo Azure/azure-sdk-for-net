@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ServiceBus
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -48,29 +48,29 @@ namespace Azure.ResourceManager.ServiceBus
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Action != null)
+            if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteObjectValue(Action);
             }
-            if (FilterType.HasValue)
+            if (Optional.IsDefined(FilterType))
             {
                 writer.WritePropertyName("filterType"u8);
                 writer.WriteStringValue(FilterType.Value.ToSerialString());
             }
-            if (SqlFilter != null)
+            if (Optional.IsDefined(SqlFilter))
             {
                 writer.WritePropertyName("sqlFilter"u8);
                 writer.WriteObjectValue(SqlFilter);
             }
-            if (CorrelationFilter != null)
+            if (Optional.IsDefined(CorrelationFilter))
             {
                 writer.WritePropertyName("correlationFilter"u8);
                 writer.WriteObjectValue(CorrelationFilter);
@@ -114,15 +114,15 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ServiceBusFilterAction> action = default;
-            Optional<ServiceBusFilterType> filterType = default;
-            Optional<ServiceBusSqlFilter> sqlFilter = default;
-            Optional<ServiceBusCorrelationFilter> correlationFilter = default;
+            SystemData systemData = default;
+            ServiceBusFilterAction action = default;
+            ServiceBusFilterType? filterType = default;
+            ServiceBusSqlFilter sqlFilter = default;
+            ServiceBusCorrelationFilter correlationFilter = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -218,12 +218,12 @@ namespace Azure.ResourceManager.ServiceBus
                 id,
                 name,
                 type,
-                systemData.Value,
-                action.Value,
-                Optional.ToNullable(filterType),
-                sqlFilter.Value,
-                correlationFilter.Value,
-                Optional.ToNullable(location),
+                systemData,
+                action,
+                filterType,
+                sqlFilter,
+                correlationFilter,
+                location,
                 serializedAdditionalRawData);
         }
 

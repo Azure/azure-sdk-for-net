@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MobileNetwork;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (PlatformType.HasValue)
+            if (Optional.IsDefined(PlatformType))
             {
                 writer.WritePropertyName("platformType"u8);
                 writer.WriteStringValue(PlatformType.Value.ToString());
             }
-            if (VersionState.HasValue)
+            if (Optional.IsDefined(VersionState))
             {
                 writer.WritePropertyName("versionState"u8);
                 writer.WriteStringValue(VersionState.Value.ToString());
             }
-            if (MinimumPlatformSoftwareVersion != null)
+            if (Optional.IsDefined(MinimumPlatformSoftwareVersion))
             {
                 writer.WritePropertyName("minimumPlatformSoftwareVersion"u8);
                 writer.WriteStringValue(MinimumPlatformSoftwareVersion);
             }
-            if (MaximumPlatformSoftwareVersion != null)
+            if (Optional.IsDefined(MaximumPlatformSoftwareVersion))
             {
                 writer.WritePropertyName("maximumPlatformSoftwareVersion"u8);
                 writer.WriteStringValue(MaximumPlatformSoftwareVersion);
             }
-            if (RecommendedVersion.HasValue)
+            if (Optional.IsDefined(RecommendedVersion))
             {
                 writer.WritePropertyName("recommendedVersion"u8);
                 writer.WriteStringValue(RecommendedVersion.Value.ToString());
             }
-            if (ObsoleteVersion.HasValue)
+            if (Optional.IsDefined(ObsoleteVersion))
             {
                 writer.WritePropertyName("obsoleteVersion"u8);
                 writer.WriteStringValue(ObsoleteVersion.Value.ToString());
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            Optional<MobileNetworkPlatformType> platformType = default;
-            Optional<MobileNetworkVersionState> versionState = default;
-            Optional<string> minimumPlatformSoftwareVersion = default;
-            Optional<string> maximumPlatformSoftwareVersion = default;
-            Optional<MobileNetworkRecommendedVersion> recommendedVersion = default;
-            Optional<MobileNetworkObsoleteVersion> obsoleteVersion = default;
+            MobileNetworkPlatformType? platformType = default;
+            MobileNetworkVersionState? versionState = default;
+            string minimumPlatformSoftwareVersion = default;
+            string maximumPlatformSoftwareVersion = default;
+            MobileNetworkRecommendedVersion? recommendedVersion = default;
+            MobileNetworkObsoleteVersion? obsoleteVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,12 +158,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MobileNetworkPlatform(
-                Optional.ToNullable(platformType),
-                Optional.ToNullable(versionState),
-                minimumPlatformSoftwareVersion.Value,
-                maximumPlatformSoftwareVersion.Value,
-                Optional.ToNullable(recommendedVersion),
-                Optional.ToNullable(obsoleteVersion),
+                platformType,
+                versionState,
+                minimumPlatformSoftwareVersion,
+                maximumPlatformSoftwareVersion,
+                recommendedVersion,
+                obsoleteVersion,
                 serializedAdditionalRawData);
         }
 

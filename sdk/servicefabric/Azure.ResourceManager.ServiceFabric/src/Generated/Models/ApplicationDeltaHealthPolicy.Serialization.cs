@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceFabric;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
 
             writer.WriteStartObject();
-            if (DefaultServiceTypeDeltaHealthPolicy != null)
+            if (Optional.IsDefined(DefaultServiceTypeDeltaHealthPolicy))
             {
                 writer.WritePropertyName("defaultServiceTypeDeltaHealthPolicy"u8);
                 writer.WriteObjectValue(DefaultServiceTypeDeltaHealthPolicy);
             }
-            if (!(ServiceTypeDeltaHealthPolicies is ChangeTrackingDictionary<string, ServiceTypeDeltaHealthPolicy> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ServiceTypeDeltaHealthPolicies))
             {
                 writer.WritePropertyName("serviceTypeDeltaHealthPolicies"u8);
                 writer.WriteStartObject();
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 return null;
             }
-            Optional<ServiceTypeDeltaHealthPolicy> defaultServiceTypeDeltaHealthPolicy = default;
+            ServiceTypeDeltaHealthPolicy defaultServiceTypeDeltaHealthPolicy = default;
             IDictionary<string, ServiceTypeDeltaHealthPolicy> serviceTypeDeltaHealthPolicies = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationDeltaHealthPolicy(defaultServiceTypeDeltaHealthPolicy.Value, serviceTypeDeltaHealthPolicies ?? new ChangeTrackingDictionary<string, ServiceTypeDeltaHealthPolicy>(), serializedAdditionalRawData);
+            return new ApplicationDeltaHealthPolicy(defaultServiceTypeDeltaHealthPolicy, serviceTypeDeltaHealthPolicies ?? new ChangeTrackingDictionary<string, ServiceTypeDeltaHealthPolicy>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationDeltaHealthPolicy>.Write(ModelReaderWriterOptions options)

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Consumption;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Consumption.Models
             }
 
             writer.WriteStartObject();
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -48,119 +49,119 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && TransactOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TransactOn))
             {
                 writer.WritePropertyName("transactionDate"u8);
                 writer.WriteStringValue(TransactOn.Value, "O");
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && NewCredit != null)
+            if (options.Format != "W" && Optional.IsDefined(NewCredit))
             {
                 writer.WritePropertyName("newCredit"u8);
                 writer.WriteObjectValue(NewCredit);
             }
-            if (options.Format != "W" && Adjustments != null)
+            if (options.Format != "W" && Optional.IsDefined(Adjustments))
             {
                 writer.WritePropertyName("adjustments"u8);
                 writer.WriteObjectValue(Adjustments);
             }
-            if (options.Format != "W" && CreditExpired != null)
+            if (options.Format != "W" && Optional.IsDefined(CreditExpired))
             {
                 writer.WritePropertyName("creditExpired"u8);
                 writer.WriteObjectValue(CreditExpired);
             }
-            if (options.Format != "W" && Charges != null)
+            if (options.Format != "W" && Optional.IsDefined(Charges))
             {
                 writer.WritePropertyName("charges"u8);
                 writer.WriteObjectValue(Charges);
             }
-            if (options.Format != "W" && ClosedBalance != null)
+            if (options.Format != "W" && Optional.IsDefined(ClosedBalance))
             {
                 writer.WritePropertyName("closedBalance"u8);
                 writer.WriteObjectValue(ClosedBalance);
             }
-            if (EventType.HasValue)
+            if (Optional.IsDefined(EventType))
             {
                 writer.WritePropertyName("eventType"u8);
                 writer.WriteStringValue(EventType.Value.ToString());
             }
-            if (options.Format != "W" && InvoiceNumber != null)
+            if (options.Format != "W" && Optional.IsDefined(InvoiceNumber))
             {
                 writer.WritePropertyName("invoiceNumber"u8);
                 writer.WriteStringValue(InvoiceNumber);
             }
-            if (options.Format != "W" && BillingProfileId != null)
+            if (options.Format != "W" && Optional.IsDefined(BillingProfileId))
             {
                 writer.WritePropertyName("billingProfileId"u8);
                 writer.WriteStringValue(BillingProfileId);
             }
-            if (options.Format != "W" && BillingProfileDisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(BillingProfileDisplayName))
             {
                 writer.WritePropertyName("billingProfileDisplayName"u8);
                 writer.WriteStringValue(BillingProfileDisplayName);
             }
-            if (options.Format != "W" && LotId != null)
+            if (options.Format != "W" && Optional.IsDefined(LotId))
             {
                 writer.WritePropertyName("lotId"u8);
                 writer.WriteStringValue(LotId);
             }
-            if (options.Format != "W" && LotSource != null)
+            if (options.Format != "W" && Optional.IsDefined(LotSource))
             {
                 writer.WritePropertyName("lotSource"u8);
                 writer.WriteStringValue(LotSource);
             }
-            if (options.Format != "W" && CanceledCredit != null)
+            if (options.Format != "W" && Optional.IsDefined(CanceledCredit))
             {
                 writer.WritePropertyName("canceledCredit"u8);
                 writer.WriteObjectValue(CanceledCredit);
             }
-            if (options.Format != "W" && CreditCurrency != null)
+            if (options.Format != "W" && Optional.IsDefined(CreditCurrency))
             {
                 writer.WritePropertyName("creditCurrency"u8);
                 writer.WriteStringValue(CreditCurrency);
             }
-            if (options.Format != "W" && BillingCurrency != null)
+            if (options.Format != "W" && Optional.IsDefined(BillingCurrency))
             {
                 writer.WritePropertyName("billingCurrency"u8);
                 writer.WriteStringValue(BillingCurrency);
             }
-            if (options.Format != "W" && Reseller != null)
+            if (options.Format != "W" && Optional.IsDefined(Reseller))
             {
                 writer.WritePropertyName("reseller"u8);
                 writer.WriteObjectValue(Reseller);
             }
-            if (options.Format != "W" && CreditExpiredInBillingCurrency != null)
+            if (options.Format != "W" && Optional.IsDefined(CreditExpiredInBillingCurrency))
             {
                 writer.WritePropertyName("creditExpiredInBillingCurrency"u8);
                 writer.WriteObjectValue(CreditExpiredInBillingCurrency);
             }
-            if (options.Format != "W" && NewCreditInBillingCurrency != null)
+            if (options.Format != "W" && Optional.IsDefined(NewCreditInBillingCurrency))
             {
                 writer.WritePropertyName("newCreditInBillingCurrency"u8);
                 writer.WriteObjectValue(NewCreditInBillingCurrency);
             }
-            if (options.Format != "W" && AdjustmentsInBillingCurrency != null)
+            if (options.Format != "W" && Optional.IsDefined(AdjustmentsInBillingCurrency))
             {
                 writer.WritePropertyName("adjustmentsInBillingCurrency"u8);
                 writer.WriteObjectValue(AdjustmentsInBillingCurrency);
             }
-            if (options.Format != "W" && ChargesInBillingCurrency != null)
+            if (options.Format != "W" && Optional.IsDefined(ChargesInBillingCurrency))
             {
                 writer.WritePropertyName("chargesInBillingCurrency"u8);
                 writer.WriteObjectValue(ChargesInBillingCurrency);
             }
-            if (options.Format != "W" && ClosedBalanceInBillingCurrency != null)
+            if (options.Format != "W" && Optional.IsDefined(ClosedBalanceInBillingCurrency))
             {
                 writer.WritePropertyName("closedBalanceInBillingCurrency"u8);
                 writer.WriteObjectValue(ClosedBalanceInBillingCurrency);
@@ -204,33 +205,33 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<ETag> eTag = default;
+            ETag? eTag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> transactionDate = default;
-            Optional<string> description = default;
-            Optional<ConsumptionAmount> newCredit = default;
-            Optional<ConsumptionAmount> adjustments = default;
-            Optional<ConsumptionAmount> creditExpired = default;
-            Optional<ConsumptionAmount> charges = default;
-            Optional<ConsumptionAmount> closedBalance = default;
-            Optional<ConsumptionEventType> eventType = default;
-            Optional<string> invoiceNumber = default;
-            Optional<ResourceIdentifier> billingProfileId = default;
-            Optional<string> billingProfileDisplayName = default;
-            Optional<ResourceIdentifier> lotId = default;
-            Optional<string> lotSource = default;
-            Optional<ConsumptionAmount> canceledCredit = default;
-            Optional<string> creditCurrency = default;
-            Optional<string> billingCurrency = default;
-            Optional<ConsumptionReseller> reseller = default;
-            Optional<ConsumptionAmountWithExchangeRate> creditExpiredInBillingCurrency = default;
-            Optional<ConsumptionAmountWithExchangeRate> newCreditInBillingCurrency = default;
-            Optional<ConsumptionAmountWithExchangeRate> adjustmentsInBillingCurrency = default;
-            Optional<ConsumptionAmountWithExchangeRate> chargesInBillingCurrency = default;
-            Optional<ConsumptionAmountWithExchangeRate> closedBalanceInBillingCurrency = default;
+            SystemData systemData = default;
+            DateTimeOffset? transactionDate = default;
+            string description = default;
+            ConsumptionAmount newCredit = default;
+            ConsumptionAmount adjustments = default;
+            ConsumptionAmount creditExpired = default;
+            ConsumptionAmount charges = default;
+            ConsumptionAmount closedBalance = default;
+            ConsumptionEventType? eventType = default;
+            string invoiceNumber = default;
+            ResourceIdentifier billingProfileId = default;
+            string billingProfileDisplayName = default;
+            ResourceIdentifier lotId = default;
+            string lotSource = default;
+            ConsumptionAmount canceledCredit = default;
+            string creditCurrency = default;
+            string billingCurrency = default;
+            ConsumptionReseller reseller = default;
+            ConsumptionAmountWithExchangeRate creditExpiredInBillingCurrency = default;
+            ConsumptionAmountWithExchangeRate newCreditInBillingCurrency = default;
+            ConsumptionAmountWithExchangeRate adjustmentsInBillingCurrency = default;
+            ConsumptionAmountWithExchangeRate chargesInBillingCurrency = default;
+            ConsumptionAmountWithExchangeRate closedBalanceInBillingCurrency = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -464,30 +465,30 @@ namespace Azure.ResourceManager.Consumption.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(transactionDate),
-                description.Value,
-                newCredit.Value,
-                adjustments.Value,
-                creditExpired.Value,
-                charges.Value,
-                closedBalance.Value,
-                Optional.ToNullable(eventType),
-                invoiceNumber.Value,
-                billingProfileId.Value,
-                billingProfileDisplayName.Value,
-                lotId.Value,
-                lotSource.Value,
-                canceledCredit.Value,
-                creditCurrency.Value,
-                billingCurrency.Value,
-                reseller.Value,
-                creditExpiredInBillingCurrency.Value,
-                newCreditInBillingCurrency.Value,
-                adjustmentsInBillingCurrency.Value,
-                chargesInBillingCurrency.Value,
-                closedBalanceInBillingCurrency.Value,
-                Optional.ToNullable(eTag),
+                systemData,
+                transactionDate,
+                description,
+                newCredit,
+                adjustments,
+                creditExpired,
+                charges,
+                closedBalance,
+                eventType,
+                invoiceNumber,
+                billingProfileId,
+                billingProfileDisplayName,
+                lotId,
+                lotSource,
+                canceledCredit,
+                creditCurrency,
+                billingCurrency,
+                reseller,
+                creditExpiredInBillingCurrency,
+                newCreditInBillingCurrency,
+                adjustmentsInBillingCurrency,
+                chargesInBillingCurrency,
+                closedBalanceInBillingCurrency,
+                eTag,
                 serializedAdditionalRawData);
         }
 

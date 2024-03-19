@@ -43,24 +43,24 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DesiredState.HasValue)
+            if (Optional.IsDefined(DesiredState))
             {
                 writer.WritePropertyName("desiredState"u8);
                 writer.WriteStringValue(DesiredState.Value.ToSerialString());
             }
-            if (options.Format != "W" && ActualState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ActualState))
             {
                 writer.WritePropertyName("actualState"u8);
                 writer.WriteStringValue(ActualState.Value.ToSerialString());
             }
-            if (!(Options is ChangeTrackingDictionary<string, AutomaticTuningServerOptions> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Options))
             {
                 writer.WritePropertyName("options"u8);
                 writer.WriteStartObject();
@@ -113,9 +113,9 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<AutomaticTuningServerMode> desiredState = default;
-            Optional<AutomaticTuningServerMode> actualState = default;
+            SystemData systemData = default;
+            AutomaticTuningServerMode? desiredState = default;
+            AutomaticTuningServerMode? actualState = default;
             IDictionary<string, AutomaticTuningServerOptions> options0 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -199,9 +199,9 @@ namespace Azure.ResourceManager.Sql
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(desiredState),
-                Optional.ToNullable(actualState),
+                systemData,
+                desiredState,
+                actualState,
                 options0 ?? new ChangeTrackingDictionary<string, AutomaticTuningServerOptions>(),
                 serializedAdditionalRawData);
         }

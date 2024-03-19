@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -28,17 +29,17 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WriteStartObject();
             writer.WritePropertyName("instanceCount"u8);
             writer.WriteNumberValue(InstanceCount);
-            if (MinInstanceCount.HasValue)
+            if (Optional.IsDefined(MinInstanceCount))
             {
                 writer.WritePropertyName("minInstanceCount"u8);
                 writer.WriteNumberValue(MinInstanceCount.Value);
             }
-            if (MinInstancePercentage.HasValue)
+            if (Optional.IsDefined(MinInstancePercentage))
             {
                 writer.WritePropertyName("minInstancePercentage"u8);
                 writer.WriteNumberValue(MinInstancePercentage.Value);
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
@@ -49,22 +50,22 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WriteStringValue(ServiceTypeName);
             writer.WritePropertyName("partitionDescription"u8);
             writer.WriteObjectValue(PartitionDescription);
-            if (ServicePackageActivationMode.HasValue)
+            if (Optional.IsDefined(ServicePackageActivationMode))
             {
                 writer.WritePropertyName("servicePackageActivationMode"u8);
                 writer.WriteStringValue(ServicePackageActivationMode.Value.ToString());
             }
-            if (ServiceDnsName != null)
+            if (Optional.IsDefined(ServiceDnsName))
             {
                 writer.WritePropertyName("serviceDnsName"u8);
                 writer.WriteStringValue(ServiceDnsName);
             }
-            if (PlacementConstraints != null)
+            if (Optional.IsDefined(PlacementConstraints))
             {
                 writer.WritePropertyName("placementConstraints"u8);
                 writer.WriteStringValue(PlacementConstraints);
             }
-            if (!(CorrelationScheme is ChangeTrackingList<ManagedServiceCorrelation> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CorrelationScheme))
             {
                 writer.WritePropertyName("correlationScheme"u8);
                 writer.WriteStartArray();
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ServiceLoadMetrics is ChangeTrackingList<ManagedServiceLoadMetric> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ServiceLoadMetrics))
             {
                 writer.WritePropertyName("serviceLoadMetrics"u8);
                 writer.WriteStartArray();
@@ -84,7 +85,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ServicePlacementPolicies is ChangeTrackingList<ManagedServicePlacementPolicy> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(ServicePlacementPolicies))
             {
                 writer.WritePropertyName("servicePlacementPolicies"u8);
                 writer.WriteStartArray();
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
                 writer.WriteEndArray();
             }
-            if (DefaultMoveCost.HasValue)
+            if (Optional.IsDefined(DefaultMoveCost))
             {
                 writer.WritePropertyName("defaultMoveCost"u8);
                 writer.WriteStringValue(DefaultMoveCost.Value.ToString());
             }
-            if (!(ScalingPolicies is ChangeTrackingList<ManagedServiceScalingPolicy> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(ScalingPolicies))
             {
                 writer.WritePropertyName("scalingPolicies"u8);
                 writer.WriteStartArray();
@@ -148,19 +149,19 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 return null;
             }
             int instanceCount = default;
-            Optional<int> minInstanceCount = default;
-            Optional<int> minInstancePercentage = default;
-            Optional<string> provisioningState = default;
+            int? minInstanceCount = default;
+            int? minInstancePercentage = default;
+            string provisioningState = default;
             ServiceKind serviceKind = default;
             string serviceTypeName = default;
             ManagedServicePartitionScheme partitionDescription = default;
-            Optional<ManagedServicePackageActivationMode> servicePackageActivationMode = default;
-            Optional<string> serviceDnsName = default;
-            Optional<string> placementConstraints = default;
+            ManagedServicePackageActivationMode? servicePackageActivationMode = default;
+            string serviceDnsName = default;
+            string placementConstraints = default;
             IList<ManagedServiceCorrelation> correlationScheme = default;
             IList<ManagedServiceLoadMetric> serviceLoadMetrics = default;
             IList<ManagedServicePlacementPolicy> servicePlacementPolicies = default;
-            Optional<ServiceFabricManagedServiceMoveCost> defaultMoveCost = default;
+            ServiceFabricManagedServiceMoveCost? defaultMoveCost = default;
             IList<ManagedServiceScalingPolicy> scalingPolicies = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -300,22 +301,22 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new StatelessServiceProperties(
-                placementConstraints.Value,
+                placementConstraints,
                 correlationScheme ?? new ChangeTrackingList<ManagedServiceCorrelation>(),
                 serviceLoadMetrics ?? new ChangeTrackingList<ManagedServiceLoadMetric>(),
                 servicePlacementPolicies ?? new ChangeTrackingList<ManagedServicePlacementPolicy>(),
-                Optional.ToNullable(defaultMoveCost),
+                defaultMoveCost,
                 scalingPolicies ?? new ChangeTrackingList<ManagedServiceScalingPolicy>(),
                 serializedAdditionalRawData,
-                provisioningState.Value,
+                provisioningState,
                 serviceKind,
                 serviceTypeName,
                 partitionDescription,
-                Optional.ToNullable(servicePackageActivationMode),
-                serviceDnsName.Value,
+                servicePackageActivationMode,
+                serviceDnsName,
                 instanceCount,
-                Optional.ToNullable(minInstanceCount),
-                Optional.ToNullable(minInstancePercentage));
+                minInstanceCount,
+                minInstancePercentage);
         }
 
         BinaryData IPersistableModel<StatelessServiceProperties>.Write(ModelReaderWriterOptions options)

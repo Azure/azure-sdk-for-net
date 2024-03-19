@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppPlatform;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (KPackVersion != null)
+            if (Optional.IsDefined(KPackVersion))
             {
                 writer.WritePropertyName("kPackVersion"u8);
                 writer.WriteStringValue(KPackVersion);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (ResourceRequests != null)
+            if (Optional.IsDefined(ResourceRequests))
             {
                 writer.WritePropertyName("resourceRequests"u8);
                 writer.WriteObjectValue(ResourceRequests);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> kPackVersion = default;
-            Optional<AppPlatformBuildServiceProvisioningState> provisioningState = default;
-            Optional<AppPlatformBuildServiceResourceRequirements> resourceRequests = default;
+            string kPackVersion = default;
+            AppPlatformBuildServiceProvisioningState? provisioningState = default;
+            AppPlatformBuildServiceResourceRequirements resourceRequests = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformBuildServiceProperties(kPackVersion.Value, Optional.ToNullable(provisioningState), resourceRequests.Value, serializedAdditionalRawData);
+            return new AppPlatformBuildServiceProperties(kPackVersion, provisioningState, resourceRequests, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformBuildServiceProperties>.Write(ModelReaderWriterOptions options)

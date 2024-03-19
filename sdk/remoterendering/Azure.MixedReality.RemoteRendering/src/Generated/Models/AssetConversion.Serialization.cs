@@ -7,7 +7,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.MixedReality.RemoteRendering
 {
@@ -21,7 +20,7 @@ namespace Azure.MixedReality.RemoteRendering
             }
             string id = default;
             AssetConversionOptions settings = default;
-            Optional<AssetConversionOutput> output = default;
+            AssetConversionOutput output = default;
             RemoteRenderingServiceError error = default;
             AssetConversionStatus status = default;
             DateTimeOffset creationTime = default;
@@ -70,7 +69,7 @@ namespace Azure.MixedReality.RemoteRendering
             return new AssetConversion(
                 id,
                 settings,
-                output.Value,
+                output,
                 error,
                 status,
                 creationTime);

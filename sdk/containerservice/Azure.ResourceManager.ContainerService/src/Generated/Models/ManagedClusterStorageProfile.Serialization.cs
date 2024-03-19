@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (DiskCsiDriver != null)
+            if (Optional.IsDefined(DiskCsiDriver))
             {
                 writer.WritePropertyName("diskCSIDriver"u8);
                 writer.WriteObjectValue(DiskCsiDriver);
             }
-            if (FileCsiDriver != null)
+            if (Optional.IsDefined(FileCsiDriver))
             {
                 writer.WritePropertyName("fileCSIDriver"u8);
                 writer.WriteObjectValue(FileCsiDriver);
             }
-            if (SnapshotController != null)
+            if (Optional.IsDefined(SnapshotController))
             {
                 writer.WritePropertyName("snapshotController"u8);
                 writer.WriteObjectValue(SnapshotController);
             }
-            if (BlobCsiDriver != null)
+            if (Optional.IsDefined(BlobCsiDriver))
             {
                 writer.WritePropertyName("blobCSIDriver"u8);
                 writer.WriteObjectValue(BlobCsiDriver);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<ManagedClusterStorageProfileDiskCsiDriver> diskCsiDriver = default;
-            Optional<ManagedClusterStorageProfileFileCsiDriver> fileCsiDriver = default;
-            Optional<ManagedClusterStorageProfileSnapshotController> snapshotController = default;
-            Optional<ManagedClusterStorageProfileBlobCsiDriver> blobCsiDriver = default;
+            ManagedClusterStorageProfileDiskCsiDriver diskCsiDriver = default;
+            ManagedClusterStorageProfileFileCsiDriver fileCsiDriver = default;
+            ManagedClusterStorageProfileSnapshotController snapshotController = default;
+            ManagedClusterStorageProfileBlobCsiDriver blobCsiDriver = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterStorageProfile(diskCsiDriver.Value, fileCsiDriver.Value, snapshotController.Value, blobCsiDriver.Value, serializedAdditionalRawData);
+            return new ManagedClusterStorageProfile(diskCsiDriver, fileCsiDriver, snapshotController, blobCsiDriver, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterStorageProfile>.Write(ModelReaderWriterOptions options)

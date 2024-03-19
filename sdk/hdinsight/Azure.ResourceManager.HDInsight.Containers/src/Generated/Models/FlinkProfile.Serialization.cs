@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -28,21 +29,21 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStartObject();
             writer.WritePropertyName("storage"u8);
             writer.WriteObjectValue(Storage);
-            if (NumReplicas.HasValue)
+            if (Optional.IsDefined(NumReplicas))
             {
                 writer.WritePropertyName("numReplicas"u8);
                 writer.WriteNumberValue(NumReplicas.Value);
             }
             writer.WritePropertyName("jobManager"u8);
             writer.WriteObjectValue(JobManager);
-            if (HistoryServer != null)
+            if (Optional.IsDefined(HistoryServer))
             {
                 writer.WritePropertyName("historyServer"u8);
                 writer.WriteObjectValue(HistoryServer);
             }
             writer.WritePropertyName("taskManager"u8);
             writer.WriteObjectValue(TaskManager);
-            if (CatalogOptions != null)
+            if (Optional.IsDefined(CatalogOptions))
             {
                 writer.WritePropertyName("catalogOptions"u8);
                 writer.WriteObjectValue(CatalogOptions);
@@ -86,11 +87,11 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 return null;
             }
             FlinkStorageProfile storage = default;
-            Optional<int> numReplicas = default;
+            int? numReplicas = default;
             ComputeResourceRequirement jobManager = default;
-            Optional<ComputeResourceRequirement> historyServer = default;
+            ComputeResourceRequirement historyServer = default;
             ComputeResourceRequirement taskManager = default;
-            Optional<FlinkCatalogOptions> catalogOptions = default;
+            FlinkCatalogOptions catalogOptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,11 +146,11 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new FlinkProfile(
                 storage,
-                Optional.ToNullable(numReplicas),
+                numReplicas,
                 jobManager,
-                historyServer.Value,
+                historyServer,
                 taskManager,
-                catalogOptions.Value,
+                catalogOptions,
                 serializedAdditionalRawData);
         }
 

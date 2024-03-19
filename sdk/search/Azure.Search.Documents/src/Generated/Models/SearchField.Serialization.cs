@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -20,37 +21,42 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
-            if (IsKey.HasValue)
+            if (Optional.IsDefined(IsKey))
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteBooleanValue(IsKey.Value);
             }
-            if (IsRetrievable.HasValue)
+            if (Optional.IsDefined(IsRetrievable))
             {
                 writer.WritePropertyName("retrievable"u8);
                 writer.WriteBooleanValue(IsRetrievable.Value);
             }
-            if (IsSearchable.HasValue)
+            if (Optional.IsDefined(IsStored))
+            {
+                writer.WritePropertyName("stored"u8);
+                writer.WriteBooleanValue(IsStored.Value);
+            }
+            if (Optional.IsDefined(IsSearchable))
             {
                 writer.WritePropertyName("searchable"u8);
                 writer.WriteBooleanValue(IsSearchable.Value);
             }
-            if (IsFilterable.HasValue)
+            if (Optional.IsDefined(IsFilterable))
             {
                 writer.WritePropertyName("filterable"u8);
                 writer.WriteBooleanValue(IsFilterable.Value);
             }
-            if (IsSortable.HasValue)
+            if (Optional.IsDefined(IsSortable))
             {
                 writer.WritePropertyName("sortable"u8);
                 writer.WriteBooleanValue(IsSortable.Value);
             }
-            if (IsFacetable.HasValue)
+            if (Optional.IsDefined(IsFacetable))
             {
                 writer.WritePropertyName("facetable"u8);
                 writer.WriteBooleanValue(IsFacetable.Value);
             }
-            if (AnalyzerName.HasValue)
+            if (Optional.IsDefined(AnalyzerName))
             {
                 if (AnalyzerName != null)
                 {
@@ -62,7 +68,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("analyzer");
                 }
             }
-            if (SearchAnalyzerName.HasValue)
+            if (Optional.IsDefined(SearchAnalyzerName))
             {
                 if (SearchAnalyzerName != null)
                 {
@@ -74,7 +80,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("searchAnalyzer");
                 }
             }
-            if (IndexAnalyzerName.HasValue)
+            if (Optional.IsDefined(IndexAnalyzerName))
             {
                 if (IndexAnalyzerName != null)
                 {
@@ -86,7 +92,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("indexAnalyzer");
                 }
             }
-            if (NormalizerName.HasValue)
+            if (Optional.IsDefined(NormalizerName))
             {
                 if (NormalizerName != null)
                 {
@@ -98,7 +104,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("normalizer");
                 }
             }
-            if (VectorSearchDimensions.HasValue)
+            if (Optional.IsDefined(VectorSearchDimensions))
             {
                 if (VectorSearchDimensions != null)
                 {
@@ -110,7 +116,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("dimensions");
                 }
             }
-            if (VectorSearchProfileName != null)
+            if (Optional.IsDefined(VectorSearchProfileName))
             {
                 if (VectorSearchProfileName != null)
                 {
@@ -122,7 +128,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("vectorSearchProfile");
                 }
             }
-            if (!(SynonymMapNames is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SynonymMapNames))
             {
                 writer.WritePropertyName("synonymMaps"u8);
                 writer.WriteStartArray();
@@ -132,7 +138,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Fields is ChangeTrackingList<SearchField> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Fields))
             {
                 writer.WritePropertyName("fields"u8);
                 writer.WriteStartArray();
@@ -153,18 +159,19 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             string name = default;
             SearchFieldDataType type = default;
-            Optional<bool> key = default;
-            Optional<bool> retrievable = default;
-            Optional<bool> searchable = default;
-            Optional<bool> filterable = default;
-            Optional<bool> sortable = default;
-            Optional<bool> facetable = default;
-            Optional<LexicalAnalyzerName?> analyzer = default;
-            Optional<LexicalAnalyzerName?> searchAnalyzer = default;
-            Optional<LexicalAnalyzerName?> indexAnalyzer = default;
-            Optional<LexicalNormalizerName?> normalizer = default;
-            Optional<int?> dimensions = default;
-            Optional<string> vectorSearchProfile = default;
+            bool? key = default;
+            bool? retrievable = default;
+            bool? stored = default;
+            bool? searchable = default;
+            bool? filterable = default;
+            bool? sortable = default;
+            bool? facetable = default;
+            LexicalAnalyzerName? analyzer = default;
+            LexicalAnalyzerName? searchAnalyzer = default;
+            LexicalAnalyzerName? indexAnalyzer = default;
+            LexicalNormalizerName? normalizer = default;
+            int? dimensions = default;
+            string vectorSearchProfile = default;
             IList<string> synonymMaps = default;
             IList<SearchField> fields = default;
             foreach (var property in element.EnumerateObject())
@@ -195,6 +202,15 @@ namespace Azure.Search.Documents.Indexes.Models
                         continue;
                     }
                     retrievable = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("stored"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    stored = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("searchable"u8))
@@ -325,18 +341,19 @@ namespace Azure.Search.Documents.Indexes.Models
             return new SearchField(
                 name,
                 type,
-                Optional.ToNullable(key),
-                Optional.ToNullable(retrievable),
-                Optional.ToNullable(searchable),
-                Optional.ToNullable(filterable),
-                Optional.ToNullable(sortable),
-                Optional.ToNullable(facetable),
-                Optional.ToNullable(analyzer),
-                Optional.ToNullable(searchAnalyzer),
-                Optional.ToNullable(indexAnalyzer),
-                Optional.ToNullable(normalizer),
-                Optional.ToNullable(dimensions),
-                vectorSearchProfile.Value,
+                key,
+                retrievable,
+                stored,
+                searchable,
+                filterable,
+                sortable,
+                facetable,
+                analyzer,
+                searchAnalyzer,
+                indexAnalyzer,
+                normalizer,
+                dimensions,
+                vectorSearchProfile,
                 synonymMaps ?? new ChangeTrackingList<string>(),
                 fields ?? new ChangeTrackingList<SearchField>());
         }

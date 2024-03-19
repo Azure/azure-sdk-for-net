@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SelfHelp;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
 
             writer.WriteStartObject();
-            if (Title != null)
+            if (Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Content != null)
+            if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content);
             }
-            if (ReplacementMaps != null)
+            if (Optional.IsDefined(ReplacementMaps))
             {
                 writer.WritePropertyName("replacementMaps"u8);
                 writer.WriteObjectValue(ReplacementMaps);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Optional<string> title = default;
-            Optional<string> content = default;
-            Optional<ReplacementMaps> replacementMaps = default;
+            string title = default;
+            string content = default;
+            ReplacementMaps replacementMaps = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SelfHelpSection(title.Value, content.Value, replacementMaps.Value, serializedAdditionalRawData);
+            return new SelfHelpSection(title, content, replacementMaps, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SelfHelpSection>.Write(ModelReaderWriterOptions options)

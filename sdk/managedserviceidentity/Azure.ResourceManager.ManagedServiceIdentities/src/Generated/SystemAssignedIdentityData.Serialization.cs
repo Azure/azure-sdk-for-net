@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -55,29 +55,29 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && TenantId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (options.Format != "W" && PrincipalId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PrincipalId))
             {
                 writer.WritePropertyName("principalId"u8);
                 writer.WriteStringValue(PrincipalId.Value);
             }
-            if (options.Format != "W" && ClientId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId.Value);
             }
-            if (options.Format != "W" && ClientSecretUri != null)
+            if (options.Format != "W" && Optional.IsDefined(ClientSecretUri))
             {
                 writer.WritePropertyName("clientSecretUrl"u8);
                 writer.WriteStringValue(ClientSecretUri.AbsoluteUri);
@@ -126,11 +126,11 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> tenantId = default;
-            Optional<Guid> principalId = default;
-            Optional<Guid> clientId = default;
-            Optional<Uri> clientSecretUrl = default;
+            SystemData systemData = default;
+            Guid? tenantId = default;
+            Guid? principalId = default;
+            Guid? clientId = default;
+            Uri clientSecretUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -236,13 +236,13 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(tenantId),
-                Optional.ToNullable(principalId),
-                Optional.ToNullable(clientId),
-                clientSecretUrl.Value,
+                tenantId,
+                principalId,
+                clientId,
+                clientSecretUrl,
                 serializedAdditionalRawData);
         }
 

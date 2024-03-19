@@ -43,36 +43,36 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (StorageAccountStatus.HasValue)
+            if (Optional.IsDefined(StorageAccountStatus))
             {
                 writer.WritePropertyName("storageAccountStatus"u8);
                 writer.WriteStringValue(StorageAccountStatus.Value.ToString());
             }
             writer.WritePropertyName("dataPolicy"u8);
             writer.WriteStringValue(DataPolicy.ToString());
-            if (StorageAccountCredentialId != null)
+            if (Optional.IsDefined(StorageAccountCredentialId))
             {
                 writer.WritePropertyName("storageAccountCredentialId"u8);
                 writer.WriteStringValue(StorageAccountCredentialId);
             }
-            if (options.Format != "W" && BlobEndpoint != null)
+            if (options.Format != "W" && Optional.IsDefined(BlobEndpoint))
             {
                 writer.WritePropertyName("blobEndpoint"u8);
                 writer.WriteStringValue(BlobEndpoint);
             }
-            if (options.Format != "W" && ContainerCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ContainerCount))
             {
                 writer.WritePropertyName("containerCount"u8);
                 writer.WriteNumberValue(ContainerCount.Value);
@@ -119,13 +119,13 @@ namespace Azure.ResourceManager.DataBoxEdge
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<DataBoxEdgeStorageAccountStatus> storageAccountStatus = default;
+            SystemData systemData = default;
+            string description = default;
+            DataBoxEdgeStorageAccountStatus? storageAccountStatus = default;
             DataBoxEdgeDataPolicy dataPolicy = default;
-            Optional<ResourceIdentifier> storageAccountCredentialId = default;
-            Optional<string> blobEndpoint = default;
-            Optional<int> containerCount = default;
+            ResourceIdentifier storageAccountCredentialId = default;
+            string blobEndpoint = default;
+            int? containerCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -218,13 +218,13 @@ namespace Azure.ResourceManager.DataBoxEdge
                 id,
                 name,
                 type,
-                systemData.Value,
-                description.Value,
-                Optional.ToNullable(storageAccountStatus),
+                systemData,
+                description,
+                storageAccountStatus,
                 dataPolicy,
-                storageAccountCredentialId.Value,
-                blobEndpoint.Value,
-                Optional.ToNullable(containerCount),
+                storageAccountCredentialId,
+                blobEndpoint,
+                containerCount,
                 serializedAdditionalRawData);
         }
 

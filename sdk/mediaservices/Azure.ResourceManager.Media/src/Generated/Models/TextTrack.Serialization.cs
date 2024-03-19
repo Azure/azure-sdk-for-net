@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (FileName != null)
+            if (Optional.IsDefined(FileName))
             {
                 writer.WritePropertyName("fileName"u8);
                 writer.WriteStringValue(FileName);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && LanguageCode != null)
+            if (options.Format != "W" && Optional.IsDefined(LanguageCode))
             {
                 writer.WritePropertyName("languageCode"u8);
                 writer.WriteStringValue(LanguageCode);
             }
-            if (PlayerVisibility.HasValue)
+            if (Optional.IsDefined(PlayerVisibility))
             {
                 writer.WritePropertyName("playerVisibility"u8);
                 writer.WriteStringValue(PlayerVisibility.Value.ToString());
             }
-            if (HlsSettings != null)
+            if (Optional.IsDefined(HlsSettings))
             {
                 writer.WritePropertyName("hlsSettings"u8);
                 writer.WriteObjectValue(HlsSettings);
@@ -91,11 +92,11 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<string> fileName = default;
-            Optional<string> displayName = default;
-            Optional<string> languageCode = default;
-            Optional<PlayerVisibility> playerVisibility = default;
-            Optional<HlsSettings> hlsSettings = default;
+            string fileName = default;
+            string displayName = default;
+            string languageCode = default;
+            PlayerVisibility? playerVisibility = default;
+            HlsSettings hlsSettings = default;
             string odataType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -148,11 +149,11 @@ namespace Azure.ResourceManager.Media.Models
             return new TextTrack(
                 odataType,
                 serializedAdditionalRawData,
-                fileName.Value,
-                displayName.Value,
-                languageCode.Value,
-                Optional.ToNullable(playerVisibility),
-                hlsSettings.Value);
+                fileName,
+                displayName,
+                languageCode,
+                playerVisibility,
+                hlsSettings);
         }
 
         BinaryData IPersistableModel<TextTrack>.Write(ModelReaderWriterOptions options)

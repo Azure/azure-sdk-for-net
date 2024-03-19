@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -47,24 +47,24 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ServiceId != null)
+            if (Optional.IsDefined(ServiceId))
             {
                 writer.WritePropertyName("serviceId"u8);
                 writer.WriteStringValue(ServiceId);
             }
-            if (ScheduledPurgeOn.HasValue)
+            if (Optional.IsDefined(ScheduledPurgeOn))
             {
                 writer.WritePropertyName("scheduledPurgeDate"u8);
                 writer.WriteStringValue(ScheduledPurgeOn.Value, "O");
             }
-            if (DeletedOn.HasValue)
+            if (Optional.IsDefined(DeletedOn))
             {
                 writer.WritePropertyName("deletionDate"u8);
                 writer.WriteStringValue(DeletedOn.Value, "O");
@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> serviceId = default;
-            Optional<DateTimeOffset> scheduledPurgeDate = default;
-            Optional<DateTimeOffset> deletionDate = default;
+            SystemData systemData = default;
+            ResourceIdentifier serviceId = default;
+            DateTimeOffset? scheduledPurgeDate = default;
+            DateTimeOffset? deletionDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -202,11 +202,11 @@ namespace Azure.ResourceManager.ApiManagement
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(location),
-                serviceId.Value,
-                Optional.ToNullable(scheduledPurgeDate),
-                Optional.ToNullable(deletionDate),
+                systemData,
+                location,
+                serviceId,
+                scheduledPurgeDate,
+                deletionDate,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (ProfileUri != null)
+            if (Optional.IsDefined(ProfileUri))
             {
                 writer.WritePropertyName("profileUrl"u8);
                 writer.WriteStringValue(ProfileUri.AbsoluteUri);
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<Uri> profileUrl = default;
+            Uri profileUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VpnProfileResponse(profileUrl.Value, serializedAdditionalRawData);
+            return new VpnProfileResponse(profileUrl, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VpnProfileResponse>.Write(ModelReaderWriterOptions options)

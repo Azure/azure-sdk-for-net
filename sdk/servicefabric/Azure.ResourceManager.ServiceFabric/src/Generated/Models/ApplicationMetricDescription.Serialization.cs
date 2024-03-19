@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceFabric;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (MaximumCapacity.HasValue)
+            if (Optional.IsDefined(MaximumCapacity))
             {
                 writer.WritePropertyName("maximumCapacity"u8);
                 writer.WriteNumberValue(MaximumCapacity.Value);
             }
-            if (ReservationCapacity.HasValue)
+            if (Optional.IsDefined(ReservationCapacity))
             {
                 writer.WritePropertyName("reservationCapacity"u8);
                 writer.WriteNumberValue(ReservationCapacity.Value);
             }
-            if (TotalApplicationCapacity.HasValue)
+            if (Optional.IsDefined(TotalApplicationCapacity))
             {
                 writer.WritePropertyName("totalApplicationCapacity"u8);
                 writer.WriteNumberValue(TotalApplicationCapacity.Value);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<long> maximumCapacity = default;
-            Optional<long> reservationCapacity = default;
-            Optional<long> totalApplicationCapacity = default;
+            string name = default;
+            long? maximumCapacity = default;
+            long? reservationCapacity = default;
+            long? totalApplicationCapacity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationMetricDescription(name.Value, Optional.ToNullable(maximumCapacity), Optional.ToNullable(reservationCapacity), Optional.ToNullable(totalApplicationCapacity), serializedAdditionalRawData);
+            return new ApplicationMetricDescription(name, maximumCapacity, reservationCapacity, totalApplicationCapacity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationMetricDescription>.Write(ModelReaderWriterOptions options)

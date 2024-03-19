@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (ExtendedLocation != null)
+            if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 writer.WriteObjectValue(ExtendedLocation);
             }
-            if (ExtendedLocationReplicaCount.HasValue)
+            if (Optional.IsDefined(ExtendedLocationReplicaCount))
             {
                 writer.WritePropertyName("extendedLocationReplicaCount"u8);
                 writer.WriteNumberValue(ExtendedLocationReplicaCount.Value);
             }
-            if (GalleryStorageAccountType.HasValue)
+            if (Optional.IsDefined(GalleryStorageAccountType))
             {
                 writer.WritePropertyName("storageAccountType"u8);
                 writer.WriteStringValue(GalleryStorageAccountType.Value.ToString());
             }
-            if (Encryption != null)
+            if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<GalleryExtendedLocation> extendedLocation = default;
-            Optional<int> extendedLocationReplicaCount = default;
-            Optional<EdgeZoneStorageAccountType> storageAccountType = default;
-            Optional<EncryptionImages> encryption = default;
+            string name = default;
+            GalleryExtendedLocation extendedLocation = default;
+            int? extendedLocationReplicaCount = default;
+            EdgeZoneStorageAccountType? storageAccountType = default;
+            EncryptionImages encryption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,11 +147,11 @@ namespace Azure.ResourceManager.Compute.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new GalleryTargetExtendedLocation(
-                name.Value,
-                extendedLocation.Value,
-                Optional.ToNullable(extendedLocationReplicaCount),
-                Optional.ToNullable(storageAccountType),
-                encryption.Value,
+                name,
+                extendedLocation,
+                extendedLocationReplicaCount,
+                storageAccountType,
+                encryption,
                 serializedAdditionalRawData);
         }
 

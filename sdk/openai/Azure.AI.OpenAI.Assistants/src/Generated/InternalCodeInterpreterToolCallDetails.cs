@@ -52,14 +52,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> or <paramref name="outputs"/> is null. </exception>
         internal InternalCodeInterpreterToolCallDetails(string input, IEnumerable<RunStepCodeInterpreterToolCallOutput> outputs)
         {
-            if (input == null)
-            {
-                throw new ArgumentNullException(nameof(input));
-            }
-            if (outputs == null)
-            {
-                throw new ArgumentNullException(nameof(outputs));
-            }
+            Argument.AssertNotNull(input, nameof(input));
+            Argument.AssertNotNull(outputs, nameof(outputs));
 
             Input = input;
             Outputs = outputs.ToList();
@@ -86,7 +80,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <summary>
         /// The outputs produced by the code interpreter tool back to the model in response to the tool call.
         /// Please note <see cref="RunStepCodeInterpreterToolCallOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="RunStepCodeInterpreterLogOutput"/> and <see cref="RunStepCodeInterpreterImageOutput"/>.
+        /// The available derived classes include <see cref="RunStepCodeInterpreterImageOutput"/> and <see cref="RunStepCodeInterpreterLogOutput"/>.
         /// </summary>
         public IReadOnlyList<RunStepCodeInterpreterToolCallOutput> Outputs { get; }
     }

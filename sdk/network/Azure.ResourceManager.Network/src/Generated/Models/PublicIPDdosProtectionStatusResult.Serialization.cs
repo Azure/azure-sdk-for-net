@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -27,22 +28,22 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (PublicIPAddressId != null)
+            if (Optional.IsDefined(PublicIPAddressId))
             {
                 writer.WritePropertyName("publicIpAddressId"u8);
                 writer.WriteStringValue(PublicIPAddressId);
             }
-            if (PublicIPAddress != null)
+            if (Optional.IsDefined(PublicIPAddress))
             {
                 writer.WritePropertyName("publicIpAddress"u8);
                 writer.WriteStringValue(PublicIPAddress.ToString());
             }
-            if (IsWorkloadProtected.HasValue)
+            if (Optional.IsDefined(IsWorkloadProtected))
             {
                 writer.WritePropertyName("isWorkloadProtected"u8);
                 writer.WriteStringValue(IsWorkloadProtected.Value.ToString());
             }
-            if (DdosProtectionPlanId != null)
+            if (Optional.IsDefined(DdosProtectionPlanId))
             {
                 writer.WritePropertyName("ddosProtectionPlanId"u8);
                 writer.WriteStringValue(DdosProtectionPlanId);
@@ -85,10 +86,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> publicIPAddressId = default;
-            Optional<IPAddress> publicIPAddress = default;
-            Optional<WorkloadProtectedFlag> isWorkloadProtected = default;
-            Optional<ResourceIdentifier> ddosProtectionPlanId = default;
+            ResourceIdentifier publicIPAddressId = default;
+            IPAddress publicIPAddress = default;
+            WorkloadProtectedFlag? isWorkloadProtected = default;
+            ResourceIdentifier ddosProtectionPlanId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -135,7 +136,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PublicIPDdosProtectionStatusResult(publicIPAddressId.Value, publicIPAddress.Value, Optional.ToNullable(isWorkloadProtected), ddosProtectionPlanId.Value, serializedAdditionalRawData);
+            return new PublicIPDdosProtectionStatusResult(publicIPAddressId, publicIPAddress, isWorkloadProtected, ddosProtectionPlanId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PublicIPDdosProtectionStatusResult>.Write(ModelReaderWriterOptions options)

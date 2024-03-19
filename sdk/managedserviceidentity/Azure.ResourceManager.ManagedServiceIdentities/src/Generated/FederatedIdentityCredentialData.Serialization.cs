@@ -42,24 +42,24 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (IssuerUri != null)
+            if (Optional.IsDefined(IssuerUri))
             {
                 writer.WritePropertyName("issuer"u8);
                 writer.WriteStringValue(IssuerUri.AbsoluteUri);
             }
-            if (Subject != null)
+            if (Optional.IsDefined(Subject))
             {
                 writer.WritePropertyName("subject"u8);
                 writer.WriteStringValue(Subject);
             }
-            if (!(Audiences is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Audiences))
             {
                 writer.WritePropertyName("audiences"u8);
                 writer.WriteStartArray();
@@ -111,9 +111,9 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Uri> issuer = default;
-            Optional<string> subject = default;
+            SystemData systemData = default;
+            Uri issuer = default;
+            string subject = default;
             IList<string> audiences = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -193,9 +193,9 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                 id,
                 name,
                 type,
-                systemData.Value,
-                issuer.Value,
-                subject.Value,
+                systemData,
+                issuer,
+                subject,
                 audiences ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }

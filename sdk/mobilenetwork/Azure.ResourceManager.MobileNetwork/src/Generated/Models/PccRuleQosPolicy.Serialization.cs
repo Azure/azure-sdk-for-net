@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MobileNetwork;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (GuaranteedBitRate != null)
+            if (Optional.IsDefined(GuaranteedBitRate))
             {
                 writer.WritePropertyName("guaranteedBitRate"u8);
                 writer.WriteObjectValue(GuaranteedBitRate);
             }
-            if (FiveQi.HasValue)
+            if (Optional.IsDefined(FiveQi))
             {
                 writer.WritePropertyName("5qi"u8);
                 writer.WriteNumberValue(FiveQi.Value);
             }
-            if (AllocationAndRetentionPriorityLevel.HasValue)
+            if (Optional.IsDefined(AllocationAndRetentionPriorityLevel))
             {
                 writer.WritePropertyName("allocationAndRetentionPriorityLevel"u8);
                 writer.WriteNumberValue(AllocationAndRetentionPriorityLevel.Value);
             }
-            if (PreemptionCapability.HasValue)
+            if (Optional.IsDefined(PreemptionCapability))
             {
                 writer.WritePropertyName("preemptionCapability"u8);
                 writer.WriteStringValue(PreemptionCapability.Value.ToString());
             }
-            if (PreemptionVulnerability.HasValue)
+            if (Optional.IsDefined(PreemptionVulnerability))
             {
                 writer.WritePropertyName("preemptionVulnerability"u8);
                 writer.WriteStringValue(PreemptionVulnerability.Value.ToString());
@@ -91,11 +92,11 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            Optional<Ambr> guaranteedBitRate = default;
-            Optional<int> _5qi = default;
-            Optional<int> allocationAndRetentionPriorityLevel = default;
-            Optional<MobileNetworkPreemptionCapability> preemptionCapability = default;
-            Optional<MobileNetworkPreemptionVulnerability> preemptionVulnerability = default;
+            Ambr guaranteedBitRate = default;
+            int? _5qi = default;
+            int? allocationAndRetentionPriorityLevel = default;
+            MobileNetworkPreemptionCapability? preemptionCapability = default;
+            MobileNetworkPreemptionVulnerability? preemptionVulnerability = default;
             Ambr maximumBitRate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -158,13 +159,13 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new PccRuleQosPolicy(
-                Optional.ToNullable(_5qi),
-                Optional.ToNullable(allocationAndRetentionPriorityLevel),
-                Optional.ToNullable(preemptionCapability),
-                Optional.ToNullable(preemptionVulnerability),
+                _5qi,
+                allocationAndRetentionPriorityLevel,
+                preemptionCapability,
+                preemptionVulnerability,
                 maximumBitRate,
                 serializedAdditionalRawData,
-                guaranteedBitRate.Value);
+                guaranteedBitRate);
         }
 
         BinaryData IPersistableModel<PccRuleQosPolicy>.Write(ModelReaderWriterOptions options)

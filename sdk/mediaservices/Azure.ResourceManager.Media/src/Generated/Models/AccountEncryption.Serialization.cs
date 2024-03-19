@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -28,17 +29,17 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(KeyType.ToString());
-            if (KeyVaultProperties != null)
+            if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
                 writer.WriteObjectValue(KeyVaultProperties);
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
@@ -82,9 +83,9 @@ namespace Azure.ResourceManager.Media.Models
                 return null;
             }
             AccountEncryptionKeyType type = default;
-            Optional<KeyVaultProperties> keyVaultProperties = default;
-            Optional<ResourceIdentity> identity = default;
-            Optional<string> status = default;
+            KeyVaultProperties keyVaultProperties = default;
+            ResourceIdentity identity = default;
+            string status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,7 +124,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AccountEncryption(type, keyVaultProperties.Value, identity.Value, status.Value, serializedAdditionalRawData);
+            return new AccountEncryption(type, keyVaultProperties, identity, status, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AccountEncryption>.Write(ModelReaderWriterOptions options)

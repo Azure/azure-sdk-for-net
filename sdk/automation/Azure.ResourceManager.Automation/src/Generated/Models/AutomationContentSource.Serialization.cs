@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Hash != null)
+            if (Optional.IsDefined(Hash))
             {
                 writer.WritePropertyName("hash"u8);
                 writer.WriteObjectValue(Hash);
             }
-            if (SourceType.HasValue)
+            if (Optional.IsDefined(SourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(SourceType.Value.ToString());
             }
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<AutomationContentHash> hash = default;
-            Optional<AutomationContentSourceType> type = default;
-            Optional<string> value = default;
-            Optional<string> version = default;
+            AutomationContentHash hash = default;
+            AutomationContentSourceType? type = default;
+            string value = default;
+            string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationContentSource(hash.Value, Optional.ToNullable(type), value.Value, version.Value, serializedAdditionalRawData);
+            return new AutomationContentSource(hash, type, value, version, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationContentSource>.Write(ModelReaderWriterOptions options)

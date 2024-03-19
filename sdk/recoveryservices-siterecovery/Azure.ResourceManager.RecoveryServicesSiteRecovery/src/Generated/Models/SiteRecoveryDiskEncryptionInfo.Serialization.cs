@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (DiskEncryptionKeyInfo != null)
+            if (Optional.IsDefined(DiskEncryptionKeyInfo))
             {
                 writer.WritePropertyName("diskEncryptionKeyInfo"u8);
                 writer.WriteObjectValue(DiskEncryptionKeyInfo);
             }
-            if (KeyEncryptionKeyInfo != null)
+            if (Optional.IsDefined(KeyEncryptionKeyInfo))
             {
                 writer.WritePropertyName("keyEncryptionKeyInfo"u8);
                 writer.WriteObjectValue(KeyEncryptionKeyInfo);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<SiteRecoveryDiskEncryptionKeyInfo> diskEncryptionKeyInfo = default;
-            Optional<SiteRecoveryKeyEncryptionKeyInfo> keyEncryptionKeyInfo = default;
+            SiteRecoveryDiskEncryptionKeyInfo diskEncryptionKeyInfo = default;
+            SiteRecoveryKeyEncryptionKeyInfo keyEncryptionKeyInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryDiskEncryptionInfo(diskEncryptionKeyInfo.Value, keyEncryptionKeyInfo.Value, serializedAdditionalRawData);
+            return new SiteRecoveryDiskEncryptionInfo(diskEncryptionKeyInfo, keyEncryptionKeyInfo, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryDiskEncryptionInfo>.Write(ModelReaderWriterOptions options)

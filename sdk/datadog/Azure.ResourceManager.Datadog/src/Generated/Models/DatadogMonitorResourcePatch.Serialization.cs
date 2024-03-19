@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Datadog;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Datadog.Models
             }
 
             writer.WriteStartObject();
-            if (Properties != null)
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
@@ -85,9 +86,9 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            Optional<MonitorUpdateProperties> properties = default;
+            MonitorUpdateProperties properties = default;
             IDictionary<string, string> tags = default;
-            Optional<ResourceSku> sku = default;
+            ResourceSku sku = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatadogMonitorResourcePatch(properties.Value, tags ?? new ChangeTrackingDictionary<string, string>(), sku.Value, serializedAdditionalRawData);
+            return new DatadogMonitorResourcePatch(properties, tags ?? new ChangeTrackingDictionary<string, string>(), sku, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatadogMonitorResourcePatch>.Write(ModelReaderWriterOptions options)

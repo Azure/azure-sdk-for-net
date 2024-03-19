@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -26,14 +27,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (IpamEnabled.HasValue)
+            if (Optional.IsDefined(IpamEnabled))
             {
                 writer.WritePropertyName("ipamEnabled"u8);
                 writer.WriteStringValue(IpamEnabled.Value.ToString());
             }
             writer.WritePropertyName("networkId"u8);
             writer.WriteStringValue(NetworkId);
-            if (PluginType.HasValue)
+            if (Optional.IsDefined(PluginType))
             {
                 writer.WritePropertyName("pluginType"u8);
                 writer.WriteStringValue(PluginType.Value.ToString());
@@ -76,9 +77,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<L3NetworkConfigurationIpamEnabled> ipamEnabled = default;
+            L3NetworkConfigurationIpamEnabled? ipamEnabled = default;
             ResourceIdentifier networkId = default;
-            Optional<KubernetesPluginType> pluginType = default;
+            KubernetesPluginType? pluginType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new L3NetworkAttachmentConfiguration(Optional.ToNullable(ipamEnabled), networkId, Optional.ToNullable(pluginType), serializedAdditionalRawData);
+            return new L3NetworkAttachmentConfiguration(ipamEnabled, networkId, pluginType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<L3NetworkAttachmentConfiguration>.Write(ModelReaderWriterOptions options)

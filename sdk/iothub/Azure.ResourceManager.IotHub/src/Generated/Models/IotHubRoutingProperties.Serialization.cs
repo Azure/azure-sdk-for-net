@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.IotHub.Models
             }
 
             writer.WriteStartObject();
-            if (Endpoints != null)
+            if (Optional.IsDefined(Endpoints))
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteObjectValue(Endpoints);
             }
-            if (!(Routes is ChangeTrackingList<RoutingRuleProperties> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Routes))
             {
                 writer.WritePropertyName("routes"u8);
                 writer.WriteStartArray();
@@ -41,12 +42,12 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (FallbackRoute != null)
+            if (Optional.IsDefined(FallbackRoute))
             {
                 writer.WritePropertyName("fallbackRoute"u8);
                 writer.WriteObjectValue(FallbackRoute);
             }
-            if (!(Enrichments is ChangeTrackingList<IotHubEnrichmentProperties> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Enrichments))
             {
                 writer.WritePropertyName("enrichments"u8);
                 writer.WriteStartArray();
@@ -94,9 +95,9 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<RoutingEndpoints> endpoints = default;
+            RoutingEndpoints endpoints = default;
             IList<RoutingRuleProperties> routes = default;
-            Optional<IotHubFallbackRouteProperties> fallbackRoute = default;
+            IotHubFallbackRouteProperties fallbackRoute = default;
             IList<IotHubEnrichmentProperties> enrichments = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -154,7 +155,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotHubRoutingProperties(endpoints.Value, routes ?? new ChangeTrackingList<RoutingRuleProperties>(), fallbackRoute.Value, enrichments ?? new ChangeTrackingList<IotHubEnrichmentProperties>(), serializedAdditionalRawData);
+            return new IotHubRoutingProperties(endpoints, routes ?? new ChangeTrackingList<RoutingRuleProperties>(), fallbackRoute, enrichments ?? new ChangeTrackingList<IotHubEnrichmentProperties>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotHubRoutingProperties>.Write(ModelReaderWriterOptions options)

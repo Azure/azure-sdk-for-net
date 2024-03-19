@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (IncludedUpdateClassifications.HasValue)
+            if (Optional.IsDefined(IncludedUpdateClassifications))
             {
                 writer.WritePropertyName("includedUpdateClassifications"u8);
                 writer.WriteStringValue(IncludedUpdateClassifications.Value.ToString());
             }
-            if (!(ExcludedKBNumbers is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ExcludedKBNumbers))
             {
                 writer.WritePropertyName("excludedKbNumbers"u8);
                 writer.WriteStartArray();
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(IncludedKBNumbers is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(IncludedKBNumbers))
             {
                 writer.WritePropertyName("includedKbNumbers"u8);
                 writer.WriteStartArray();
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (RebootSetting != null)
+            if (Optional.IsDefined(RebootSetting))
             {
                 writer.WritePropertyName("rebootSetting"u8);
                 writer.WriteStringValue(RebootSetting);
@@ -94,10 +95,10 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<WindowsUpdateClassification> includedUpdateClassifications = default;
+            WindowsUpdateClassification? includedUpdateClassifications = default;
             IList<string> excludedKbNumbers = default;
             IList<string> includedKbNumbers = default;
-            Optional<string> rebootSetting = default;
+            string rebootSetting = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,7 +151,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WindowsUpdateConfigurationProperties(Optional.ToNullable(includedUpdateClassifications), excludedKbNumbers ?? new ChangeTrackingList<string>(), includedKbNumbers ?? new ChangeTrackingList<string>(), rebootSetting.Value, serializedAdditionalRawData);
+            return new WindowsUpdateConfigurationProperties(includedUpdateClassifications, excludedKbNumbers ?? new ChangeTrackingList<string>(), includedKbNumbers ?? new ChangeTrackingList<string>(), rebootSetting, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WindowsUpdateConfigurationProperties>.Write(ModelReaderWriterOptions options)

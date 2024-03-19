@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Models
 {
@@ -17,20 +18,25 @@ namespace Azure.Search.Documents.Models
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (KNearestNeighborsCount.HasValue)
+            if (Optional.IsDefined(KNearestNeighborsCount))
             {
                 writer.WritePropertyName("k"u8);
                 writer.WriteNumberValue(KNearestNeighborsCount.Value);
             }
-            if (FieldsRaw != null)
+            if (Optional.IsDefined(FieldsRaw))
             {
                 writer.WritePropertyName("fields"u8);
                 writer.WriteStringValue(FieldsRaw);
             }
-            if (Exhaustive.HasValue)
+            if (Optional.IsDefined(Exhaustive))
             {
                 writer.WritePropertyName("exhaustive"u8);
                 writer.WriteBooleanValue(Exhaustive.Value);
+            }
+            if (Optional.IsDefined(Oversampling))
+            {
+                writer.WritePropertyName("oversampling"u8);
+                writer.WriteNumberValue(Oversampling.Value);
             }
             writer.WriteEndObject();
         }
@@ -42,9 +48,10 @@ namespace Azure.Search.Documents.Models
                 return null;
             }
             VectorQueryKind kind = "Unknown";
-            Optional<int> k = default;
-            Optional<string> fields = default;
-            Optional<bool> exhaustive = default;
+            int? k = default;
+            string fields = default;
+            bool? exhaustive = default;
+            double? oversampling = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -75,8 +82,17 @@ namespace Azure.Search.Documents.Models
                     exhaustive = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("oversampling"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    oversampling = property.Value.GetDouble();
+                    continue;
+                }
             }
-            return new UnknownVectorQuery(kind, Optional.ToNullable(k), fields.Value, Optional.ToNullable(exhaustive));
+            return new UnknownVectorQuery(kind, k, fields, exhaustive, oversampling);
         }
     }
 }

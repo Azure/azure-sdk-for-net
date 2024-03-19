@@ -42,54 +42,54 @@ namespace Azure.ResourceManager.MySql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (EndOn.HasValue)
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (EventName != null)
+            if (Optional.IsDefined(EventName))
             {
                 writer.WritePropertyName("eventName"u8);
                 writer.WriteStringValue(EventName);
             }
-            if (EventTypeName != null)
+            if (Optional.IsDefined(EventTypeName))
             {
                 writer.WritePropertyName("eventTypeName"u8);
                 writer.WriteStringValue(EventTypeName);
             }
-            if (QueryId.HasValue)
+            if (Optional.IsDefined(QueryId))
             {
                 writer.WritePropertyName("queryId"u8);
                 writer.WriteNumberValue(QueryId.Value);
             }
-            if (DatabaseName != null)
+            if (Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (UserId.HasValue)
+            if (Optional.IsDefined(UserId))
             {
                 writer.WritePropertyName("userId"u8);
                 writer.WriteNumberValue(UserId.Value);
             }
-            if (Count.HasValue)
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (TotalTimeInMinutes.HasValue)
+            if (Optional.IsDefined(TotalTimeInMinutes))
             {
                 writer.WritePropertyName("totalTimeInMs"u8);
                 writer.WriteNumberValue(TotalTimeInMinutes.Value);
@@ -136,16 +136,16 @@ namespace Azure.ResourceManager.MySql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<string> eventName = default;
-            Optional<string> eventTypeName = default;
-            Optional<long> queryId = default;
-            Optional<string> databaseName = default;
-            Optional<long> userId = default;
-            Optional<long> count = default;
-            Optional<double> totalTimeInMs = default;
+            SystemData systemData = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            string eventName = default;
+            string eventTypeName = default;
+            long? queryId = default;
+            string databaseName = default;
+            long? userId = default;
+            long? count = default;
+            double? totalTimeInMs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -265,16 +265,16 @@ namespace Azure.ResourceManager.MySql
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(startTime),
-                Optional.ToNullable(endTime),
-                eventName.Value,
-                eventTypeName.Value,
-                Optional.ToNullable(queryId),
-                databaseName.Value,
-                Optional.ToNullable(userId),
-                Optional.ToNullable(count),
-                Optional.ToNullable(totalTimeInMs),
+                systemData,
+                startTime,
+                endTime,
+                eventName,
+                eventTypeName,
+                queryId,
+                databaseName,
+                userId,
+                count,
+                totalTimeInMs,
                 serializedAdditionalRawData);
         }
 

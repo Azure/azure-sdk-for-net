@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ContainerInstance
             }
 
             writer.WriteStartObject();
-            if (!(Zones is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.ContainerInstance
                 }
                 writer.WriteEndArray();
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -71,14 +71,14 @@ namespace Azure.ResourceManager.ContainerInstance
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (!(ImageRegistryCredentials is ChangeTrackingList<ContainerGroupImageRegistryCredential> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(ImageRegistryCredentials))
             {
                 writer.WritePropertyName("imageRegistryCredentials"u8);
                 writer.WriteStartArray();
@@ -100,19 +100,19 @@ namespace Azure.ResourceManager.ContainerInstance
                 }
                 writer.WriteEndArray();
             }
-            if (RestartPolicy.HasValue)
+            if (Optional.IsDefined(RestartPolicy))
             {
                 writer.WritePropertyName("restartPolicy"u8);
                 writer.WriteStringValue(RestartPolicy.Value.ToString());
             }
-            if (IPAddress != null)
+            if (Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteObjectValue(IPAddress);
             }
             writer.WritePropertyName("osType"u8);
             writer.WriteStringValue(OSType.ToString());
-            if (!(Volumes is ChangeTrackingList<ContainerVolume> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(Volumes))
             {
                 writer.WritePropertyName("volumes"u8);
                 writer.WriteStartArray();
@@ -122,17 +122,17 @@ namespace Azure.ResourceManager.ContainerInstance
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && InstanceView != null)
+            if (options.Format != "W" && Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
                 writer.WriteObjectValue(InstanceView);
             }
-            if (Diagnostics != null)
+            if (Optional.IsDefined(Diagnostics))
             {
                 writer.WritePropertyName("diagnostics"u8);
                 writer.WriteObjectValue(Diagnostics);
             }
-            if (!(SubnetIds is ChangeTrackingList<ContainerGroupSubnetId> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(SubnetIds))
             {
                 writer.WritePropertyName("subnetIds"u8);
                 writer.WriteStartArray();
@@ -142,22 +142,22 @@ namespace Azure.ResourceManager.ContainerInstance
                 }
                 writer.WriteEndArray();
             }
-            if (DnsConfig != null)
+            if (Optional.IsDefined(DnsConfig))
             {
                 writer.WritePropertyName("dnsConfig"u8);
                 writer.WriteObjectValue(DnsConfig);
             }
-            if (Sku.HasValue)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteStringValue(Sku.Value.ToString());
             }
-            if (EncryptionProperties != null)
+            if (Optional.IsDefined(EncryptionProperties))
             {
                 writer.WritePropertyName("encryptionProperties"u8);
                 writer.WriteObjectValue(EncryptionProperties);
             }
-            if (!(InitContainers is ChangeTrackingList<InitContainerDefinitionContent> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(InitContainers))
             {
                 writer.WritePropertyName("initContainers"u8);
                 writer.WriteStartArray();
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 }
                 writer.WriteEndArray();
             }
-            if (!(Extensions is ChangeTrackingList<DeploymentExtensionSpec> collection5 && collection5.IsUndefined))
+            if (Optional.IsCollectionDefined(Extensions))
             {
                 writer.WritePropertyName("extensions"u8);
                 writer.WriteStartArray();
@@ -177,12 +177,12 @@ namespace Azure.ResourceManager.ContainerInstance
                 }
                 writer.WriteEndArray();
             }
-            if (ConfidentialComputeProperties != null)
+            if (Optional.IsDefined(ConfidentialComputeProperties))
             {
                 writer.WritePropertyName("confidentialComputeProperties"u8);
                 writer.WriteObjectValue(ConfidentialComputeProperties);
             }
-            if (Priority.HasValue)
+            if (Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteStringValue(Priority.Value.ToString());
@@ -227,30 +227,30 @@ namespace Azure.ResourceManager.ContainerInstance
                 return null;
             }
             IList<string> zones = default;
-            Optional<ManagedServiceIdentity> identity = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> provisioningState = default;
+            SystemData systemData = default;
+            string provisioningState = default;
             IList<ContainerInstanceContainer> containers = default;
             IList<ContainerGroupImageRegistryCredential> imageRegistryCredentials = default;
-            Optional<ContainerGroupRestartPolicy> restartPolicy = default;
-            Optional<ContainerGroupIPAddress> ipAddress = default;
+            ContainerGroupRestartPolicy? restartPolicy = default;
+            ContainerGroupIPAddress ipAddress = default;
             ContainerInstanceOperatingSystemType osType = default;
             IList<ContainerVolume> volumes = default;
-            Optional<ContainerGroupInstanceView> instanceView = default;
-            Optional<ContainerGroupDiagnostics> diagnostics = default;
+            ContainerGroupInstanceView instanceView = default;
+            ContainerGroupDiagnostics diagnostics = default;
             IList<ContainerGroupSubnetId> subnetIds = default;
-            Optional<ContainerGroupDnsConfiguration> dnsConfig = default;
-            Optional<ContainerGroupSku> sku = default;
-            Optional<ContainerGroupEncryptionProperties> encryptionProperties = default;
+            ContainerGroupDnsConfiguration dnsConfig = default;
+            ContainerGroupSku? sku = default;
+            ContainerGroupEncryptionProperties encryptionProperties = default;
             IList<InitContainerDefinitionContent> initContainers = default;
             IList<DeploymentExtensionSpec> extensions = default;
-            Optional<ConfidentialComputeProperties> confidentialComputeProperties = default;
-            Optional<ContainerGroupPriority> priority = default;
+            ConfidentialComputeProperties confidentialComputeProperties = default;
+            ContainerGroupPriority? priority = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -514,28 +514,28 @@ namespace Azure.ResourceManager.ContainerInstance
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 zones ?? new ChangeTrackingList<string>(),
                 identity,
-                provisioningState.Value,
+                provisioningState,
                 containers,
                 imageRegistryCredentials ?? new ChangeTrackingList<ContainerGroupImageRegistryCredential>(),
-                Optional.ToNullable(restartPolicy),
-                ipAddress.Value,
+                restartPolicy,
+                ipAddress,
                 osType,
                 volumes ?? new ChangeTrackingList<ContainerVolume>(),
-                instanceView.Value,
-                diagnostics.Value,
+                instanceView,
+                diagnostics,
                 subnetIds ?? new ChangeTrackingList<ContainerGroupSubnetId>(),
-                dnsConfig.Value,
-                Optional.ToNullable(sku),
-                encryptionProperties.Value,
+                dnsConfig,
+                sku,
+                encryptionProperties,
                 initContainers ?? new ChangeTrackingList<InitContainerDefinitionContent>(),
                 extensions ?? new ChangeTrackingList<DeploymentExtensionSpec>(),
-                confidentialComputeProperties.Value,
-                Optional.ToNullable(priority),
+                confidentialComputeProperties,
+                priority,
                 serializedAdditionalRawData);
         }
 

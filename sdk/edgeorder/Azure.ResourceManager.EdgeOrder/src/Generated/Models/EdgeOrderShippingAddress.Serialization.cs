@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -28,44 +29,44 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             writer.WriteStartObject();
             writer.WritePropertyName("streetAddress1"u8);
             writer.WriteStringValue(StreetAddress1);
-            if (StreetAddress2 != null)
+            if (Optional.IsDefined(StreetAddress2))
             {
                 writer.WritePropertyName("streetAddress2"u8);
                 writer.WriteStringValue(StreetAddress2);
             }
-            if (StreetAddress3 != null)
+            if (Optional.IsDefined(StreetAddress3))
             {
                 writer.WritePropertyName("streetAddress3"u8);
                 writer.WriteStringValue(StreetAddress3);
             }
-            if (City != null)
+            if (Optional.IsDefined(City))
             {
                 writer.WritePropertyName("city"u8);
                 writer.WriteStringValue(City);
             }
-            if (StateOrProvince != null)
+            if (Optional.IsDefined(StateOrProvince))
             {
                 writer.WritePropertyName("stateOrProvince"u8);
                 writer.WriteStringValue(StateOrProvince);
             }
             writer.WritePropertyName("country"u8);
             writer.WriteStringValue(Country);
-            if (PostalCode != null)
+            if (Optional.IsDefined(PostalCode))
             {
                 writer.WritePropertyName("postalCode"u8);
                 writer.WriteStringValue(PostalCode);
             }
-            if (ZipExtendedCode != null)
+            if (Optional.IsDefined(ZipExtendedCode))
             {
                 writer.WritePropertyName("zipExtendedCode"u8);
                 writer.WriteStringValue(ZipExtendedCode);
             }
-            if (CompanyName != null)
+            if (Optional.IsDefined(CompanyName))
             {
                 writer.WritePropertyName("companyName"u8);
                 writer.WriteStringValue(CompanyName);
             }
-            if (AddressType.HasValue)
+            if (Optional.IsDefined(AddressType))
             {
                 writer.WritePropertyName("addressType"u8);
                 writer.WriteStringValue(AddressType.Value.ToString());
@@ -109,15 +110,15 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 return null;
             }
             string streetAddress1 = default;
-            Optional<string> streetAddress2 = default;
-            Optional<string> streetAddress3 = default;
-            Optional<string> city = default;
-            Optional<string> stateOrProvince = default;
+            string streetAddress2 = default;
+            string streetAddress3 = default;
+            string city = default;
+            string stateOrProvince = default;
             string country = default;
-            Optional<string> postalCode = default;
-            Optional<string> zipExtendedCode = default;
-            Optional<string> companyName = default;
-            Optional<EdgeOrderAddressType> addressType = default;
+            string postalCode = default;
+            string zipExtendedCode = default;
+            string companyName = default;
+            EdgeOrderAddressType? addressType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -184,15 +185,15 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new EdgeOrderShippingAddress(
                 streetAddress1,
-                streetAddress2.Value,
-                streetAddress3.Value,
-                city.Value,
-                stateOrProvince.Value,
+                streetAddress2,
+                streetAddress3,
+                city,
+                stateOrProvince,
                 country,
-                postalCode.Value,
-                zipExtendedCode.Value,
-                companyName.Value,
-                Optional.ToNullable(addressType),
+                postalCode,
+                zipExtendedCode,
+                companyName,
+                addressType,
                 serializedAdditionalRawData);
         }
 

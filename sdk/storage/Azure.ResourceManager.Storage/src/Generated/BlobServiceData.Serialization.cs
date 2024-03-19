@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Storage
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Sku != null)
+            if (options.Format != "W" && Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
@@ -48,54 +48,54 @@ namespace Azure.ResourceManager.Storage
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Cors != null)
+            if (Optional.IsDefined(Cors))
             {
                 writer.WritePropertyName("cors"u8);
                 writer.WriteObjectValue(Cors);
             }
-            if (DefaultServiceVersion != null)
+            if (Optional.IsDefined(DefaultServiceVersion))
             {
                 writer.WritePropertyName("defaultServiceVersion"u8);
                 writer.WriteStringValue(DefaultServiceVersion);
             }
-            if (DeleteRetentionPolicy != null)
+            if (Optional.IsDefined(DeleteRetentionPolicy))
             {
                 writer.WritePropertyName("deleteRetentionPolicy"u8);
                 writer.WriteObjectValue(DeleteRetentionPolicy);
             }
-            if (IsVersioningEnabled.HasValue)
+            if (Optional.IsDefined(IsVersioningEnabled))
             {
                 writer.WritePropertyName("isVersioningEnabled"u8);
                 writer.WriteBooleanValue(IsVersioningEnabled.Value);
             }
-            if (IsAutomaticSnapshotPolicyEnabled.HasValue)
+            if (Optional.IsDefined(IsAutomaticSnapshotPolicyEnabled))
             {
                 writer.WritePropertyName("automaticSnapshotPolicyEnabled"u8);
                 writer.WriteBooleanValue(IsAutomaticSnapshotPolicyEnabled.Value);
             }
-            if (ChangeFeed != null)
+            if (Optional.IsDefined(ChangeFeed))
             {
                 writer.WritePropertyName("changeFeed"u8);
                 writer.WriteObjectValue(ChangeFeed);
             }
-            if (RestorePolicy != null)
+            if (Optional.IsDefined(RestorePolicy))
             {
                 writer.WritePropertyName("restorePolicy"u8);
                 writer.WriteObjectValue(RestorePolicy);
             }
-            if (ContainerDeleteRetentionPolicy != null)
+            if (Optional.IsDefined(ContainerDeleteRetentionPolicy))
             {
                 writer.WritePropertyName("containerDeleteRetentionPolicy"u8);
                 writer.WriteObjectValue(ContainerDeleteRetentionPolicy);
             }
-            if (LastAccessTimeTrackingPolicy != null)
+            if (Optional.IsDefined(LastAccessTimeTrackingPolicy))
             {
                 writer.WritePropertyName("lastAccessTimeTrackingPolicy"u8);
                 writer.WriteObjectValue(LastAccessTimeTrackingPolicy);
@@ -139,20 +139,20 @@ namespace Azure.ResourceManager.Storage
             {
                 return null;
             }
-            Optional<StorageSku> sku = default;
+            StorageSku sku = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<StorageCorsRules> cors = default;
-            Optional<string> defaultServiceVersion = default;
-            Optional<DeleteRetentionPolicy> deleteRetentionPolicy = default;
-            Optional<bool> isVersioningEnabled = default;
-            Optional<bool> automaticSnapshotPolicyEnabled = default;
-            Optional<BlobServiceChangeFeed> changeFeed = default;
-            Optional<RestorePolicy> restorePolicy = default;
-            Optional<DeleteRetentionPolicy> containerDeleteRetentionPolicy = default;
-            Optional<LastAccessTimeTrackingPolicy> lastAccessTimeTrackingPolicy = default;
+            SystemData systemData = default;
+            StorageCorsRules cors = default;
+            string defaultServiceVersion = default;
+            DeleteRetentionPolicy deleteRetentionPolicy = default;
+            bool? isVersioningEnabled = default;
+            bool? automaticSnapshotPolicyEnabled = default;
+            BlobServiceChangeFeed changeFeed = default;
+            RestorePolicy restorePolicy = default;
+            DeleteRetentionPolicy containerDeleteRetentionPolicy = default;
+            LastAccessTimeTrackingPolicy lastAccessTimeTrackingPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -289,17 +289,17 @@ namespace Azure.ResourceManager.Storage
                 id,
                 name,
                 type,
-                systemData.Value,
-                sku.Value,
-                cors.Value,
-                defaultServiceVersion.Value,
-                deleteRetentionPolicy.Value,
-                Optional.ToNullable(isVersioningEnabled),
-                Optional.ToNullable(automaticSnapshotPolicyEnabled),
-                changeFeed.Value,
-                restorePolicy.Value,
-                containerDeleteRetentionPolicy.Value,
-                lastAccessTimeTrackingPolicy.Value,
+                systemData,
+                sku,
+                cors,
+                defaultServiceVersion,
+                deleteRetentionPolicy,
+                isVersioningEnabled,
+                automaticSnapshotPolicyEnabled,
+                changeFeed,
+                restorePolicy,
+                containerDeleteRetentionPolicy,
+                lastAccessTimeTrackingPolicy,
                 serializedAdditionalRawData);
         }
 

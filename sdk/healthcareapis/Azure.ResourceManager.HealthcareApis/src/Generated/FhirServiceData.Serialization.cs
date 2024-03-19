@@ -29,23 +29,23 @@ namespace Azure.ResourceManager.HealthcareApis
             }
 
             writer.WriteStartObject();
-            if (Kind.HasValue)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -73,39 +73,39 @@ namespace Azure.ResourceManager.HealthcareApis
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (AcrConfiguration != null)
+            if (Optional.IsDefined(AcrConfiguration))
             {
                 writer.WritePropertyName("acrConfiguration"u8);
                 writer.WriteObjectValue(AcrConfiguration);
             }
-            if (AuthenticationConfiguration != null)
+            if (Optional.IsDefined(AuthenticationConfiguration))
             {
                 writer.WritePropertyName("authenticationConfiguration"u8);
                 writer.WriteObjectValue(AuthenticationConfiguration);
             }
-            if (CorsConfiguration != null)
+            if (Optional.IsDefined(CorsConfiguration))
             {
                 writer.WritePropertyName("corsConfiguration"u8);
                 writer.WriteObjectValue(CorsConfiguration);
             }
-            if (ExportConfiguration != null)
+            if (Optional.IsDefined(ExportConfiguration))
             {
                 writer.WritePropertyName("exportConfiguration"u8);
                 writer.WriteObjectValue(ExportConfiguration);
             }
-            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<HealthcareApisPrivateEndpointConnectionData> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -115,32 +115,32 @@ namespace Azure.ResourceManager.HealthcareApis
                 }
                 writer.WriteEndArray();
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (options.Format != "W" && EventState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EventState))
             {
                 writer.WritePropertyName("eventState"u8);
                 writer.WriteStringValue(EventState.Value.ToString());
             }
-            if (ResourceVersionPolicyConfiguration != null)
+            if (Optional.IsDefined(ResourceVersionPolicyConfiguration))
             {
                 writer.WritePropertyName("resourceVersionPolicyConfiguration"u8);
                 writer.WriteObjectValue(ResourceVersionPolicyConfiguration);
             }
-            if (ImportConfiguration != null)
+            if (Optional.IsDefined(ImportConfiguration))
             {
                 writer.WritePropertyName("importConfiguration"u8);
                 writer.WriteObjectValue(ImportConfiguration);
             }
-            if (ImplementationGuidesConfiguration != null)
+            if (Optional.IsDefined(ImplementationGuidesConfiguration))
             {
                 writer.WritePropertyName("implementationGuidesConfiguration"u8);
                 writer.WriteObjectValue(ImplementationGuidesConfiguration);
             }
-            if (Encryption != null)
+            if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
@@ -184,27 +184,27 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 return null;
             }
-            Optional<FhirServiceKind> kind = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<ETag> etag = default;
+            FhirServiceKind? kind = default;
+            ManagedServiceIdentity identity = default;
+            ETag? etag = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<HealthcareApisProvisioningState> provisioningState = default;
-            Optional<FhirServiceAcrConfiguration> acrConfiguration = default;
-            Optional<FhirServiceAuthenticationConfiguration> authenticationConfiguration = default;
-            Optional<FhirServiceCorsConfiguration> corsConfiguration = default;
-            Optional<FhirServiceExportConfiguration> exportConfiguration = default;
+            SystemData systemData = default;
+            HealthcareApisProvisioningState? provisioningState = default;
+            FhirServiceAcrConfiguration acrConfiguration = default;
+            FhirServiceAuthenticationConfiguration authenticationConfiguration = default;
+            FhirServiceCorsConfiguration corsConfiguration = default;
+            FhirServiceExportConfiguration exportConfiguration = default;
             IReadOnlyList<HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections = default;
-            Optional<HealthcareApisPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<FhirServiceEventState> eventState = default;
-            Optional<FhirServiceResourceVersionPolicyConfiguration> resourceVersionPolicyConfiguration = default;
-            Optional<FhirServiceImportConfiguration> importConfiguration = default;
-            Optional<ImplementationGuidesConfiguration> implementationGuidesConfiguration = default;
-            Optional<Encryption> encryption = default;
+            HealthcareApisPublicNetworkAccess? publicNetworkAccess = default;
+            FhirServiceEventState? eventState = default;
+            FhirServiceResourceVersionPolicyConfiguration resourceVersionPolicyConfiguration = default;
+            FhirServiceImportConfiguration importConfiguration = default;
+            ImplementationGuidesConfiguration implementationGuidesConfiguration = default;
+            Encryption encryption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -415,24 +415,24 @@ namespace Azure.ResourceManager.HealthcareApis
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(kind),
-                Optional.ToNullable(provisioningState),
-                acrConfiguration.Value,
-                authenticationConfiguration.Value,
-                corsConfiguration.Value,
-                exportConfiguration.Value,
+                kind,
+                provisioningState,
+                acrConfiguration,
+                authenticationConfiguration,
+                corsConfiguration,
+                exportConfiguration,
                 privateEndpointConnections ?? new ChangeTrackingList<HealthcareApisPrivateEndpointConnectionData>(),
-                Optional.ToNullable(publicNetworkAccess),
-                Optional.ToNullable(eventState),
-                resourceVersionPolicyConfiguration.Value,
-                importConfiguration.Value,
-                implementationGuidesConfiguration.Value,
-                encryption.Value,
+                publicNetworkAccess,
+                eventState,
+                resourceVersionPolicyConfiguration,
+                importConfiguration,
+                implementationGuidesConfiguration,
+                encryption,
                 identity,
-                Optional.ToNullable(etag),
+                etag,
                 serializedAdditionalRawData);
         }
 

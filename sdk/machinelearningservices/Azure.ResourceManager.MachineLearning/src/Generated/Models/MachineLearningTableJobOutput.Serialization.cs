@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (AssetName != null)
+            if (Optional.IsDefined(AssetName))
             {
                 if (AssetName != null)
                 {
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("assetName");
                 }
             }
-            if (AssetVersion != null)
+            if (Optional.IsDefined(AssetVersion))
             {
                 if (AssetVersion != null)
                 {
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("assetVersion");
                 }
             }
-            if (AutoDeleteSetting != null)
+            if (Optional.IsDefined(AutoDeleteSetting))
             {
                 if (AutoDeleteSetting != null)
                 {
@@ -62,12 +63,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("autoDeleteSetting");
                 }
             }
-            if (Mode.HasValue)
+            if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (Uri != null)
+            if (Optional.IsDefined(Uri))
             {
                 if (Uri != null)
                 {
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("uri");
                 }
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 if (Description != null)
                 {
@@ -131,12 +132,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> assetName = default;
-            Optional<string> assetVersion = default;
-            Optional<AutoDeleteSetting> autoDeleteSetting = default;
-            Optional<MachineLearningOutputDeliveryMode> mode = default;
-            Optional<Uri> uri = default;
-            Optional<string> description = default;
+            string assetName = default;
+            string assetVersion = default;
+            AutoDeleteSetting autoDeleteSetting = default;
+            MachineLearningOutputDeliveryMode? mode = default;
+            Uri uri = default;
+            string description = default;
             JobOutputType jobOutputType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -213,14 +214,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MachineLearningTableJobOutput(
-                description.Value,
+                description,
                 jobOutputType,
                 serializedAdditionalRawData,
-                assetName.Value,
-                assetVersion.Value,
-                autoDeleteSetting.Value,
-                Optional.ToNullable(mode),
-                uri.Value);
+                assetName,
+                assetVersion,
+                autoDeleteSetting,
+                mode,
+                uri);
         }
 
         BinaryData IPersistableModel<MachineLearningTableJobOutput>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (KeyName != null)
+            if (Optional.IsDefined(KeyName))
             {
                 writer.WritePropertyName("keyname"u8);
                 writer.WriteStringValue(KeyName);
             }
-            if (KeyVersion != null)
+            if (Optional.IsDefined(KeyVersion))
             {
                 writer.WritePropertyName("keyversion"u8);
                 writer.WriteStringValue(KeyVersion);
             }
-            if (KeyVaultUri != null)
+            if (Optional.IsDefined(KeyVaultUri))
             {
                 writer.WritePropertyName("keyvaulturi"u8);
                 writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
             }
-            if (options.Format != "W" && CurrentVersionedKeyIdentifier != null)
+            if (options.Format != "W" && Optional.IsDefined(CurrentVersionedKeyIdentifier))
             {
                 writer.WritePropertyName("currentVersionedKeyIdentifier"u8);
                 writer.WriteStringValue(CurrentVersionedKeyIdentifier);
             }
-            if (options.Format != "W" && LastKeyRotationTimestamp.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastKeyRotationTimestamp))
             {
                 writer.WritePropertyName("lastKeyRotationTimestamp"u8);
                 writer.WriteStringValue(LastKeyRotationTimestamp.Value, "O");
             }
-            if (options.Format != "W" && CurrentVersionedKeyExpirationTimestamp.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CurrentVersionedKeyExpirationTimestamp))
             {
                 writer.WritePropertyName("currentVersionedKeyExpirationTimestamp"u8);
                 writer.WriteStringValue(CurrentVersionedKeyExpirationTimestamp.Value, "O");
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<string> keyname = default;
-            Optional<string> keyversion = default;
-            Optional<Uri> keyvaulturi = default;
-            Optional<string> currentVersionedKeyIdentifier = default;
-            Optional<DateTimeOffset> lastKeyRotationTimestamp = default;
-            Optional<DateTimeOffset> currentVersionedKeyExpirationTimestamp = default;
+            string keyname = default;
+            string keyversion = default;
+            Uri keyvaulturi = default;
+            string currentVersionedKeyIdentifier = default;
+            DateTimeOffset? lastKeyRotationTimestamp = default;
+            DateTimeOffset? currentVersionedKeyExpirationTimestamp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -153,12 +154,12 @@ namespace Azure.ResourceManager.Storage.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new StorageAccountKeyVaultProperties(
-                keyname.Value,
-                keyversion.Value,
-                keyvaulturi.Value,
-                currentVersionedKeyIdentifier.Value,
-                Optional.ToNullable(lastKeyRotationTimestamp),
-                Optional.ToNullable(currentVersionedKeyExpirationTimestamp),
+                keyname,
+                keyversion,
+                keyvaulturi,
+                currentVersionedKeyIdentifier,
+                lastKeyRotationTimestamp,
+                currentVersionedKeyExpirationTimestamp,
                 serializedAdditionalRawData);
         }
 

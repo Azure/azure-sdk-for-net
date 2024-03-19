@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (ServiceErrorDetails != null)
+            if (Optional.IsDefined(ServiceErrorDetails))
             {
                 writer.WritePropertyName("serviceErrorDetails"u8);
                 writer.WriteObjectValue(ServiceErrorDetails);
             }
-            if (ProviderErrorDetails != null)
+            if (Optional.IsDefined(ProviderErrorDetails))
             {
                 writer.WritePropertyName("providerErrorDetails"u8);
                 writer.WriteObjectValue(ProviderErrorDetails);
             }
-            if (ErrorLevel != null)
+            if (Optional.IsDefined(ErrorLevel))
             {
                 writer.WritePropertyName("errorLevel"u8);
                 writer.WriteStringValue(ErrorLevel);
             }
-            if (CreatedOn.HasValue)
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (TaskId != null)
+            if (Optional.IsDefined(TaskId))
             {
                 writer.WritePropertyName("taskId"u8);
                 writer.WriteStringValue(TaskId);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<SiteRecoveryServiceError> serviceErrorDetails = default;
-            Optional<SiteRecoveryJobProviderError> providerErrorDetails = default;
-            Optional<string> errorLevel = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<string> taskId = default;
+            SiteRecoveryServiceError serviceErrorDetails = default;
+            SiteRecoveryJobProviderError providerErrorDetails = default;
+            string errorLevel = default;
+            DateTimeOffset? creationTime = default;
+            string taskId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -142,11 +143,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SiteRecoveryJobErrorDetails(
-                serviceErrorDetails.Value,
-                providerErrorDetails.Value,
-                errorLevel.Value,
-                Optional.ToNullable(creationTime),
-                taskId.Value,
+                serviceErrorDetails,
+                providerErrorDetails,
+                errorLevel,
+                creationTime,
+                taskId,
                 serializedAdditionalRawData);
         }
 

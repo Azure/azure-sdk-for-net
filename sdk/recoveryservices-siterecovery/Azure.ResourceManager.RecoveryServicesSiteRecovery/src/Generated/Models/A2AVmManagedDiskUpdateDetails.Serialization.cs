@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (DiskId != null)
+            if (Optional.IsDefined(DiskId))
             {
                 writer.WritePropertyName("diskId"u8);
                 writer.WriteStringValue(DiskId);
             }
-            if (RecoveryTargetDiskAccountType != null)
+            if (Optional.IsDefined(RecoveryTargetDiskAccountType))
             {
                 writer.WritePropertyName("recoveryTargetDiskAccountType"u8);
                 writer.WriteStringValue(RecoveryTargetDiskAccountType);
             }
-            if (RecoveryReplicaDiskAccountType != null)
+            if (Optional.IsDefined(RecoveryReplicaDiskAccountType))
             {
                 writer.WritePropertyName("recoveryReplicaDiskAccountType"u8);
                 writer.WriteStringValue(RecoveryReplicaDiskAccountType);
             }
-            if (DiskEncryptionInfo != null)
+            if (Optional.IsDefined(DiskEncryptionInfo))
             {
                 writer.WritePropertyName("diskEncryptionInfo"u8);
                 writer.WriteObjectValue(DiskEncryptionInfo);
             }
-            if (FailoverDiskName != null)
+            if (Optional.IsDefined(FailoverDiskName))
             {
                 writer.WritePropertyName("failoverDiskName"u8);
                 writer.WriteStringValue(FailoverDiskName);
             }
-            if (TfoDiskName != null)
+            if (Optional.IsDefined(TfoDiskName))
             {
                 writer.WritePropertyName("tfoDiskName"u8);
                 writer.WriteStringValue(TfoDiskName);
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> diskId = default;
-            Optional<string> recoveryTargetDiskAccountType = default;
-            Optional<string> recoveryReplicaDiskAccountType = default;
-            Optional<SiteRecoveryDiskEncryptionInfo> diskEncryptionInfo = default;
-            Optional<string> failoverDiskName = default;
-            Optional<string> tfoDiskName = default;
+            string diskId = default;
+            string recoveryTargetDiskAccountType = default;
+            string recoveryReplicaDiskAccountType = default;
+            SiteRecoveryDiskEncryptionInfo diskEncryptionInfo = default;
+            string failoverDiskName = default;
+            string tfoDiskName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,12 +146,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new A2AVmManagedDiskUpdateDetails(
-                diskId.Value,
-                recoveryTargetDiskAccountType.Value,
-                recoveryReplicaDiskAccountType.Value,
-                diskEncryptionInfo.Value,
-                failoverDiskName.Value,
-                tfoDiskName.Value,
+                diskId,
+                recoveryTargetDiskAccountType,
+                recoveryReplicaDiskAccountType,
+                diskEncryptionInfo,
+                failoverDiskName,
+                tfoDiskName,
                 serializedAdditionalRawData);
         }
 

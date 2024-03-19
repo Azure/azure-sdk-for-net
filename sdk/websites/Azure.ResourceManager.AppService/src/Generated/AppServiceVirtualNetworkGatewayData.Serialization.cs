@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,19 +47,19 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (VnetName != null)
+            if (Optional.IsDefined(VnetName))
             {
                 writer.WritePropertyName("vnetName"u8);
                 writer.WriteStringValue(VnetName);
             }
-            if (VpnPackageUri != null)
+            if (Optional.IsDefined(VpnPackageUri))
             {
                 writer.WritePropertyName("vpnPackageUri"u8);
                 writer.WriteStringValue(VpnPackageUri.AbsoluteUri);
@@ -103,13 +103,13 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> vnetName = default;
-            Optional<Uri> vpnPackageUri = default;
+            SystemData systemData = default;
+            string vnetName = default;
+            Uri vpnPackageUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,10 +179,10 @@ namespace Azure.ResourceManager.AppService
                 id,
                 name,
                 type,
-                systemData.Value,
-                vnetName.Value,
-                vpnPackageUri.Value,
-                kind.Value,
+                systemData,
+                vnetName,
+                vpnPackageUri,
+                kind,
                 serializedAdditionalRawData);
         }
 

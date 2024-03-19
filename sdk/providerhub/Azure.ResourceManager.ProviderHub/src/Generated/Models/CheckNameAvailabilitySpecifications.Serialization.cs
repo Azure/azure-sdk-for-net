@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
 
             writer.WriteStartObject();
-            if (IsDefaultValidationEnabled.HasValue)
+            if (Optional.IsDefined(IsDefaultValidationEnabled))
             {
                 writer.WritePropertyName("enableDefaultValidation"u8);
                 writer.WriteBooleanValue(IsDefaultValidationEnabled.Value);
             }
-            if (!(ResourceTypesWithCustomValidation is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ResourceTypesWithCustomValidation))
             {
                 writer.WritePropertyName("resourceTypesWithCustomValidation"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<bool> enableDefaultValidation = default;
+            bool? enableDefaultValidation = default;
             IList<string> resourceTypesWithCustomValidation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CheckNameAvailabilitySpecifications(Optional.ToNullable(enableDefaultValidation), resourceTypesWithCustomValidation ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new CheckNameAvailabilitySpecifications(enableDefaultValidation, resourceTypesWithCustomValidation ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CheckNameAvailabilitySpecifications>.Write(ModelReaderWriterOptions options)

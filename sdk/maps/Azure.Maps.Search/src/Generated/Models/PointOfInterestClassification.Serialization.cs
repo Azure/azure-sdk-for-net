@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {
@@ -19,7 +19,7 @@ namespace Azure.Maps.Search.Models
             {
                 return null;
             }
-            Optional<string> code = default;
+            string code = default;
             IReadOnlyList<ClassificationName> names = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -43,7 +43,7 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new PointOfInterestClassification(code.Value, names ?? new ChangeTrackingList<ClassificationName>());
+            return new PointOfInterestClassification(code, names ?? new ChangeTrackingList<ClassificationName>());
         }
     }
 }

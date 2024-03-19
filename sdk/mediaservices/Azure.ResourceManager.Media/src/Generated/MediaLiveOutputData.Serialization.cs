@@ -43,29 +43,29 @@ namespace Azure.ResourceManager.Media
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (AssetName != null)
+            if (Optional.IsDefined(AssetName))
             {
                 writer.WritePropertyName("assetName"u8);
                 writer.WriteStringValue(AssetName);
             }
-            if (ArchiveWindowLength.HasValue)
+            if (Optional.IsDefined(ArchiveWindowLength))
             {
                 writer.WritePropertyName("archiveWindowLength"u8);
                 writer.WriteStringValue(ArchiveWindowLength.Value, "P");
             }
-            if (RewindWindowLength.HasValue)
+            if (Optional.IsDefined(RewindWindowLength))
             {
                 if (RewindWindowLength != null)
                 {
@@ -77,37 +77,37 @@ namespace Azure.ResourceManager.Media
                     writer.WriteNull("rewindWindowLength");
                 }
             }
-            if (ManifestName != null)
+            if (Optional.IsDefined(ManifestName))
             {
                 writer.WritePropertyName("manifestName"u8);
                 writer.WriteStringValue(ManifestName);
             }
-            if (Hls != null)
+            if (Optional.IsDefined(Hls))
             {
                 writer.WritePropertyName("hls"u8);
                 writer.WriteObjectValue(Hls);
             }
-            if (OutputSnapTime.HasValue)
+            if (Optional.IsDefined(OutputSnapTime))
             {
                 writer.WritePropertyName("outputSnapTime"u8);
                 writer.WriteNumberValue(OutputSnapTime.Value);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && LastModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModified"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && ResourceState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceState))
             {
                 writer.WritePropertyName("resourceState"u8);
                 writer.WriteStringValue(ResourceState.Value.ToString());
@@ -154,18 +154,18 @@ namespace Azure.ResourceManager.Media
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<string> assetName = default;
-            Optional<TimeSpan> archiveWindowLength = default;
-            Optional<TimeSpan?> rewindWindowLength = default;
-            Optional<string> manifestName = default;
-            Optional<Hls> hls = default;
-            Optional<long> outputSnapTime = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<DateTimeOffset> lastModified = default;
-            Optional<string> provisioningState = default;
-            Optional<LiveOutputResourceState> resourceState = default;
+            SystemData systemData = default;
+            string description = default;
+            string assetName = default;
+            TimeSpan? archiveWindowLength = default;
+            TimeSpan? rewindWindowLength = default;
+            string manifestName = default;
+            Hls hls = default;
+            long? outputSnapTime = default;
+            DateTimeOffset? created = default;
+            DateTimeOffset? lastModified = default;
+            string provisioningState = default;
+            LiveOutputResourceState? resourceState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -300,18 +300,18 @@ namespace Azure.ResourceManager.Media
                 id,
                 name,
                 type,
-                systemData.Value,
-                description.Value,
-                assetName.Value,
-                Optional.ToNullable(archiveWindowLength),
-                Optional.ToNullable(rewindWindowLength),
-                manifestName.Value,
-                hls.Value,
-                Optional.ToNullable(outputSnapTime),
-                Optional.ToNullable(created),
-                Optional.ToNullable(lastModified),
-                provisioningState.Value,
-                Optional.ToNullable(resourceState),
+                systemData,
+                description,
+                assetName,
+                archiveWindowLength,
+                rewindWindowLength,
+                manifestName,
+                hls,
+                outputSnapTime,
+                created,
+                lastModified,
+                provisioningState,
+                resourceState,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (!(Addresses is ChangeTrackingList<AzureFirewallPublicIPAddress> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Addresses))
             {
                 writer.WritePropertyName("addresses"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Count.HasValue)
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             IList<AzureFirewallPublicIPAddress> addresses = default;
-            Optional<int> count = default;
+            int? count = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HubPublicIPAddresses(addresses ?? new ChangeTrackingList<AzureFirewallPublicIPAddress>(), Optional.ToNullable(count), serializedAdditionalRawData);
+            return new HubPublicIPAddresses(addresses ?? new ChangeTrackingList<AzureFirewallPublicIPAddress>(), count, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HubPublicIPAddresses>.Write(ModelReaderWriterOptions options)

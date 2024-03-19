@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Media.VideoAnalyzer.Edge;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -16,7 +17,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Accuracy.HasValue)
+            if (Optional.IsDefined(Accuracy))
             {
                 writer.WritePropertyName("accuracy"u8);
                 writer.WriteStringValue(Accuracy.Value.ToString());
@@ -41,7 +42,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<ObjectTrackingAccuracy> accuracy = default;
+            ObjectTrackingAccuracy? accuracy = default;
             string type = default;
             string name = default;
             IList<NodeInput> inputs = default;
@@ -77,7 +78,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new ObjectTrackingProcessor(type, name, inputs, Optional.ToNullable(accuracy));
+            return new ObjectTrackingProcessor(type, name, inputs, accuracy);
         }
     }
 }

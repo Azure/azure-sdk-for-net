@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.BillingBenefits;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             }
 
             writer.WriteStartObject();
-            if (Grain.HasValue)
+            if (Optional.IsDefined(Grain))
             {
                 writer.WritePropertyName("grain"u8);
                 writer.WriteStringValue(Grain.Value.ToString());
             }
-            if (CurrencyCode != null)
+            if (Optional.IsDefined(CurrencyCode))
             {
                 writer.WritePropertyName("currencyCode"u8);
                 writer.WriteStringValue(CurrencyCode);
             }
-            if (Amount.HasValue)
+            if (Optional.IsDefined(Amount))
             {
                 writer.WritePropertyName("amount"u8);
                 writer.WriteNumberValue(Amount.Value);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             {
                 return null;
             }
-            Optional<BillingBenefitsCommitmentGrain> grain = default;
-            Optional<string> currencyCode = default;
-            Optional<double> amount = default;
+            BillingBenefitsCommitmentGrain? grain = default;
+            string currencyCode = default;
+            double? amount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BillingBenefitsCommitment(currencyCode.Value, Optional.ToNullable(amount), serializedAdditionalRawData, Optional.ToNullable(grain));
+            return new BillingBenefitsCommitment(currencyCode, amount, serializedAdditionalRawData, grain);
         }
 
         BinaryData IPersistableModel<BillingBenefitsCommitment>.Write(ModelReaderWriterOptions options)

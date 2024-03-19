@@ -83,18 +83,8 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="cloudServicesNetworkName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkCloudCloudServicesNetworkResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string cloudServicesNetworkName, NetworkCloudCloudServicesNetworkData data, CancellationToken cancellationToken = default)
         {
-            if (cloudServicesNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudServicesNetworkName));
-            }
-            if (cloudServicesNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudServicesNetworkName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(cloudServicesNetworkName, nameof(cloudServicesNetworkName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _networkCloudCloudServicesNetworkCloudServicesNetworksClientDiagnostics.CreateScope("NetworkCloudCloudServicesNetworkCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +132,8 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="cloudServicesNetworkName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NetworkCloudCloudServicesNetworkResource> CreateOrUpdate(WaitUntil waitUntil, string cloudServicesNetworkName, NetworkCloudCloudServicesNetworkData data, CancellationToken cancellationToken = default)
         {
-            if (cloudServicesNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudServicesNetworkName));
-            }
-            if (cloudServicesNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudServicesNetworkName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(cloudServicesNetworkName, nameof(cloudServicesNetworkName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _networkCloudCloudServicesNetworkCloudServicesNetworksClientDiagnostics.CreateScope("NetworkCloudCloudServicesNetworkCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +179,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="cloudServicesNetworkName"/> is null. </exception>
         public virtual async Task<Response<NetworkCloudCloudServicesNetworkResource>> GetAsync(string cloudServicesNetworkName, CancellationToken cancellationToken = default)
         {
-            if (cloudServicesNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudServicesNetworkName));
-            }
-            if (cloudServicesNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudServicesNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(cloudServicesNetworkName, nameof(cloudServicesNetworkName));
 
             using var scope = _networkCloudCloudServicesNetworkCloudServicesNetworksClientDiagnostics.CreateScope("NetworkCloudCloudServicesNetworkCollection.Get");
             scope.Start();
@@ -251,14 +224,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="cloudServicesNetworkName"/> is null. </exception>
         public virtual Response<NetworkCloudCloudServicesNetworkResource> Get(string cloudServicesNetworkName, CancellationToken cancellationToken = default)
         {
-            if (cloudServicesNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudServicesNetworkName));
-            }
-            if (cloudServicesNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudServicesNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(cloudServicesNetworkName, nameof(cloudServicesNetworkName));
 
             using var scope = _networkCloudCloudServicesNetworkCloudServicesNetworksClientDiagnostics.CreateScope("NetworkCloudCloudServicesNetworkCollection.Get");
             scope.Start();
@@ -363,14 +329,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="cloudServicesNetworkName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string cloudServicesNetworkName, CancellationToken cancellationToken = default)
         {
-            if (cloudServicesNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudServicesNetworkName));
-            }
-            if (cloudServicesNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudServicesNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(cloudServicesNetworkName, nameof(cloudServicesNetworkName));
 
             using var scope = _networkCloudCloudServicesNetworkCloudServicesNetworksClientDiagnostics.CreateScope("NetworkCloudCloudServicesNetworkCollection.Exists");
             scope.Start();
@@ -413,14 +372,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="cloudServicesNetworkName"/> is null. </exception>
         public virtual Response<bool> Exists(string cloudServicesNetworkName, CancellationToken cancellationToken = default)
         {
-            if (cloudServicesNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudServicesNetworkName));
-            }
-            if (cloudServicesNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudServicesNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(cloudServicesNetworkName, nameof(cloudServicesNetworkName));
 
             using var scope = _networkCloudCloudServicesNetworkCloudServicesNetworksClientDiagnostics.CreateScope("NetworkCloudCloudServicesNetworkCollection.Exists");
             scope.Start();
@@ -463,14 +415,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="cloudServicesNetworkName"/> is null. </exception>
         public virtual async Task<NullableResponse<NetworkCloudCloudServicesNetworkResource>> GetIfExistsAsync(string cloudServicesNetworkName, CancellationToken cancellationToken = default)
         {
-            if (cloudServicesNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudServicesNetworkName));
-            }
-            if (cloudServicesNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudServicesNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(cloudServicesNetworkName, nameof(cloudServicesNetworkName));
 
             using var scope = _networkCloudCloudServicesNetworkCloudServicesNetworksClientDiagnostics.CreateScope("NetworkCloudCloudServicesNetworkCollection.GetIfExists");
             scope.Start();
@@ -515,14 +460,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="cloudServicesNetworkName"/> is null. </exception>
         public virtual NullableResponse<NetworkCloudCloudServicesNetworkResource> GetIfExists(string cloudServicesNetworkName, CancellationToken cancellationToken = default)
         {
-            if (cloudServicesNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudServicesNetworkName));
-            }
-            if (cloudServicesNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudServicesNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(cloudServicesNetworkName, nameof(cloudServicesNetworkName));
 
             using var scope = _networkCloudCloudServicesNetworkCloudServicesNetworksClientDiagnostics.CreateScope("NetworkCloudCloudServicesNetworkCollection.GetIfExists");
             scope.Start();

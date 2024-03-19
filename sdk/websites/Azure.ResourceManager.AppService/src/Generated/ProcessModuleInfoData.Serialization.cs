@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,64 +47,64 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (BaseAddress != null)
+            if (Optional.IsDefined(BaseAddress))
             {
                 writer.WritePropertyName("base_address"u8);
                 writer.WriteStringValue(BaseAddress);
             }
-            if (FileName != null)
+            if (Optional.IsDefined(FileName))
             {
                 writer.WritePropertyName("file_name"u8);
                 writer.WriteStringValue(FileName);
             }
-            if (Href != null)
+            if (Optional.IsDefined(Href))
             {
                 writer.WritePropertyName("href"u8);
                 writer.WriteStringValue(Href);
             }
-            if (FilePath != null)
+            if (Optional.IsDefined(FilePath))
             {
                 writer.WritePropertyName("file_path"u8);
                 writer.WriteStringValue(FilePath);
             }
-            if (ModuleMemorySize.HasValue)
+            if (Optional.IsDefined(ModuleMemorySize))
             {
                 writer.WritePropertyName("module_memory_size"u8);
                 writer.WriteNumberValue(ModuleMemorySize.Value);
             }
-            if (FileVersion != null)
+            if (Optional.IsDefined(FileVersion))
             {
                 writer.WritePropertyName("file_version"u8);
                 writer.WriteStringValue(FileVersion);
             }
-            if (FileDescription != null)
+            if (Optional.IsDefined(FileDescription))
             {
                 writer.WritePropertyName("file_description"u8);
                 writer.WriteStringValue(FileDescription);
             }
-            if (Product != null)
+            if (Optional.IsDefined(Product))
             {
                 writer.WritePropertyName("product"u8);
                 writer.WriteStringValue(Product);
             }
-            if (ProductVersion != null)
+            if (Optional.IsDefined(ProductVersion))
             {
                 writer.WritePropertyName("product_version"u8);
                 writer.WriteStringValue(ProductVersion);
             }
-            if (IsDebug.HasValue)
+            if (Optional.IsDefined(IsDebug))
             {
                 writer.WritePropertyName("is_debug"u8);
                 writer.WriteBooleanValue(IsDebug.Value);
             }
-            if (Language != null)
+            if (Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
@@ -148,22 +148,22 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> baseAddress = default;
-            Optional<string> fileName = default;
-            Optional<string> href = default;
-            Optional<string> filePath = default;
-            Optional<int> moduleMemorySize = default;
-            Optional<string> fileVersion = default;
-            Optional<string> fileDescription = default;
-            Optional<string> product = default;
-            Optional<string> productVersion = default;
-            Optional<bool> isDebug = default;
-            Optional<string> language = default;
+            SystemData systemData = default;
+            string baseAddress = default;
+            string fileName = default;
+            string href = default;
+            string filePath = default;
+            int? moduleMemorySize = default;
+            string fileVersion = default;
+            string fileDescription = default;
+            string product = default;
+            string productVersion = default;
+            bool? isDebug = default;
+            string language = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -282,19 +282,19 @@ namespace Azure.ResourceManager.AppService
                 id,
                 name,
                 type,
-                systemData.Value,
-                baseAddress.Value,
-                fileName.Value,
-                href.Value,
-                filePath.Value,
-                Optional.ToNullable(moduleMemorySize),
-                fileVersion.Value,
-                fileDescription.Value,
-                product.Value,
-                productVersion.Value,
-                Optional.ToNullable(isDebug),
-                language.Value,
-                kind.Value,
+                systemData,
+                baseAddress,
+                fileName,
+                href,
+                filePath,
+                moduleMemorySize,
+                fileVersion,
+                fileDescription,
+                product,
+                productVersion,
+                isDebug,
+                language,
+                kind,
                 serializedAdditionalRawData);
         }
 

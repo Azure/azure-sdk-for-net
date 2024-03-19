@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Extension != null)
+            if (Optional.IsDefined(Extension))
             {
                 writer.WritePropertyName("extension"u8);
                 writer.WriteStringValue(Extension);
             }
-            if (ScriptProcessor != null)
+            if (Optional.IsDefined(ScriptProcessor))
             {
                 writer.WritePropertyName("scriptProcessor"u8);
                 writer.WriteStringValue(ScriptProcessor);
             }
-            if (Arguments != null)
+            if (Optional.IsDefined(Arguments))
             {
                 writer.WritePropertyName("arguments"u8);
                 writer.WriteStringValue(Arguments);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> extension = default;
-            Optional<string> scriptProcessor = default;
-            Optional<string> arguments = default;
+            string extension = default;
+            string scriptProcessor = default;
+            string arguments = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HttpRequestHandlerMapping(extension.Value, scriptProcessor.Value, arguments.Value, serializedAdditionalRawData);
+            return new HttpRequestHandlerMapping(extension, scriptProcessor, arguments, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HttpRequestHandlerMapping>.Write(ModelReaderWriterOptions options)

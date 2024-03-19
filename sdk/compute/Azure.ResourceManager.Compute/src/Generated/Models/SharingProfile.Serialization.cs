@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Permission.HasValue)
+            if (Optional.IsDefined(Permission))
             {
                 writer.WritePropertyName("permissions"u8);
                 writer.WriteStringValue(Permission.Value.ToString());
             }
-            if (options.Format != "W" && !(Groups is ChangeTrackingList<SharingProfileGroup> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Groups))
             {
                 writer.WritePropertyName("groups"u8);
                 writer.WriteStartArray();
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (CommunityGalleryInfo != null)
+            if (Optional.IsDefined(CommunityGalleryInfo))
             {
                 writer.WritePropertyName("communityGalleryInfo"u8);
                 writer.WriteObjectValue(CommunityGalleryInfo);
@@ -84,9 +85,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<GallerySharingPermissionType> permissions = default;
+            GallerySharingPermissionType? permissions = default;
             IReadOnlyList<SharingProfileGroup> groups = default;
-            Optional<CommunityGalleryInfo> communityGalleryInfo = default;
+            CommunityGalleryInfo communityGalleryInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SharingProfile(Optional.ToNullable(permissions), groups ?? new ChangeTrackingList<SharingProfileGroup>(), communityGalleryInfo.Value, serializedAdditionalRawData);
+            return new SharingProfile(permissions, groups ?? new ChangeTrackingList<SharingProfileGroup>(), communityGalleryInfo, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SharingProfile>.Write(ModelReaderWriterOptions options)

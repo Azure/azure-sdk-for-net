@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ResourceGraph;
 
 namespace Azure.ResourceManager.ResourceGraph.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             }
 
             writer.WriteStartObject();
-            if (Interval != null)
+            if (Optional.IsDefined(Interval))
             {
                 writer.WritePropertyName("interval"u8);
                 writer.WriteObjectValue(Interval);
             }
-            if (Top.HasValue)
+            if (Optional.IsDefined(Top))
             {
                 writer.WritePropertyName("$top"u8);
                 writer.WriteNumberValue(Top.Value);
             }
-            if (Skip.HasValue)
+            if (Optional.IsDefined(Skip))
             {
                 writer.WritePropertyName("$skip"u8);
                 writer.WriteNumberValue(Skip.Value);
             }
-            if (SkipToken != null)
+            if (Optional.IsDefined(SkipToken))
             {
                 writer.WritePropertyName("$skipToken"u8);
                 writer.WriteStringValue(SkipToken);
             }
-            if (ResultFormat.HasValue)
+            if (Optional.IsDefined(ResultFormat))
             {
                 writer.WritePropertyName("resultFormat"u8);
                 writer.WriteStringValue(ResultFormat.Value.ToSerialString());
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             {
                 return null;
             }
-            Optional<DateTimeInterval> interval = default;
-            Optional<int> top = default;
-            Optional<int> skip = default;
-            Optional<string> skipToken = default;
-            Optional<ResultFormat> resultFormat = default;
+            DateTimeInterval interval = default;
+            int? top = default;
+            int? skip = default;
+            string skipToken = default;
+            ResultFormat? resultFormat = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,11 +147,11 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ResourcesHistoryRequestOptions(
-                interval.Value,
-                Optional.ToNullable(top),
-                Optional.ToNullable(skip),
-                skipToken.Value,
-                Optional.ToNullable(resultFormat),
+                interval,
+                top,
+                skip,
+                skipToken,
+                resultFormat,
                 serializedAdditionalRawData);
         }
 

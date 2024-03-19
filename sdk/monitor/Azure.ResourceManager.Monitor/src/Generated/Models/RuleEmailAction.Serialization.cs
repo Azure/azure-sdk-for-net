@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (SendToServiceOwners.HasValue)
+            if (Optional.IsDefined(SendToServiceOwners))
             {
                 writer.WritePropertyName("sendToServiceOwners"u8);
                 writer.WriteBooleanValue(SendToServiceOwners.Value);
             }
-            if (!(CustomEmails is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CustomEmails))
             {
                 writer.WritePropertyName("customEmails"u8);
                 writer.WriteStartArray();
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<bool> sendToServiceOwners = default;
+            bool? sendToServiceOwners = default;
             IList<string> customEmails = default;
             string odataType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RuleEmailAction(odataType, serializedAdditionalRawData, Optional.ToNullable(sendToServiceOwners), customEmails ?? new ChangeTrackingList<string>());
+            return new RuleEmailAction(odataType, serializedAdditionalRawData, sendToServiceOwners, customEmails ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<RuleEmailAction>.Write(ModelReaderWriterOptions options)

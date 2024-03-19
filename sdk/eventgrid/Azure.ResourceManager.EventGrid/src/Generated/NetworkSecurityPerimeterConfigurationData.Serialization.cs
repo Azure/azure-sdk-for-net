@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (!(ProvisioningIssues is ChangeTrackingList<NetworkSecurityPerimeterConfigurationIssues> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ProvisioningIssues))
             {
                 writer.WritePropertyName("provisioningIssues"u8);
                 writer.WriteStartArray();
@@ -65,17 +65,17 @@ namespace Azure.ResourceManager.EventGrid
                 }
                 writer.WriteEndArray();
             }
-            if (NetworkSecurityPerimeter != null)
+            if (Optional.IsDefined(NetworkSecurityPerimeter))
             {
                 writer.WritePropertyName("networkSecurityPerimeter"u8);
                 writer.WriteObjectValue(NetworkSecurityPerimeter);
             }
-            if (ResourceAssociation != null)
+            if (Optional.IsDefined(ResourceAssociation))
             {
                 writer.WritePropertyName("resourceAssociation"u8);
                 writer.WriteObjectValue(ResourceAssociation);
             }
-            if (Profile != null)
+            if (Optional.IsDefined(Profile))
             {
                 writer.WritePropertyName("profile"u8);
                 writer.WriteObjectValue(Profile);
@@ -122,12 +122,12 @@ namespace Azure.ResourceManager.EventGrid
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<NetworkSecurityPerimeterConfigProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            NetworkSecurityPerimeterConfigProvisioningState? provisioningState = default;
             IList<NetworkSecurityPerimeterConfigurationIssues> provisioningIssues = default;
-            Optional<NetworkSecurityPerimeterInfo> networkSecurityPerimeter = default;
-            Optional<ResourceAssociation> resourceAssociation = default;
-            Optional<NetworkSecurityPerimeterConfigurationProfile> profile = default;
+            NetworkSecurityPerimeterInfo networkSecurityPerimeter = default;
+            ResourceAssociation resourceAssociation = default;
+            NetworkSecurityPerimeterConfigurationProfile profile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -228,12 +228,12 @@ namespace Azure.ResourceManager.EventGrid
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(provisioningState),
+                systemData,
+                provisioningState,
                 provisioningIssues ?? new ChangeTrackingList<NetworkSecurityPerimeterConfigurationIssues>(),
-                networkSecurityPerimeter.Value,
-                resourceAssociation.Value,
-                profile.Value,
+                networkSecurityPerimeter,
+                resourceAssociation,
+                profile,
                 serializedAdditionalRawData);
         }
 

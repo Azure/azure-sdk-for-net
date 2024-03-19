@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridContainerService;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Phase.HasValue)
+            if (Optional.IsDefined(Phase))
             {
                 writer.WritePropertyName("phase"u8);
                 writer.WriteStringValue(Phase.Value.ToString());
             }
-            if (Ready.HasValue)
+            if (Optional.IsDefined(Ready))
             {
                 writer.WritePropertyName("ready"u8);
                 writer.WriteBooleanValue(Ready.Value);
             }
-            if (ErrorMessage != null)
+            if (Optional.IsDefined(ErrorMessage))
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ProvisionedClusterAddonPhase> phase = default;
-            Optional<bool> ready = default;
-            Optional<string> errorMessage = default;
+            string name = default;
+            ProvisionedClusterAddonPhase? phase = default;
+            bool? ready = default;
+            string errorMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProvisionedClusterAddonStatusProfile(name.Value, Optional.ToNullable(phase), Optional.ToNullable(ready), errorMessage.Value, serializedAdditionalRawData);
+            return new ProvisionedClusterAddonStatusProfile(name, phase, ready, errorMessage, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProvisionedClusterAddonStatusProfile>.Write(ModelReaderWriterOptions options)

@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.NetApp;
 using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
@@ -137,16 +138,16 @@ namespace Azure.ResourceManager.NetApp
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<Azure.ResourceManager.Models.SystemData> systemData = default;
-            Optional<string> backupId = default;
-            Optional<DateTimeOffset> creationDate = default;
-            Optional<string> provisioningState = default;
-            Optional<long> size = default;
-            Optional<string> label = default;
-            Optional<NetAppBackupType> backupType = default;
-            Optional<string> failureReason = default;
-            Optional<string> volumeName = default;
-            Optional<bool> useExistingSnapshot = default;
+            Azure.ResourceManager.Models.SystemData systemData = default;
+            string backupId = default;
+            DateTimeOffset creationDate = default;
+            string provisioningState = default;
+            long size = default;
+            string label = default;
+            NetAppBackupType backupType = default;
+            string failureReason = default;
+            string volumeName = default;
+            bool useExistingSnapshot = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -258,7 +259,7 @@ namespace Azure.ResourceManager.NetApp
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppBackupData(id, name, type, systemData.Value, location, backupId.Value, Optional.ToNullable(creationDate), provisioningState.Value, Optional.ToNullable(size), label.Value, Optional.ToNullable(backupType), failureReason.Value, volumeName.Value, Optional.ToNullable(useExistingSnapshot), serializedAdditionalRawData);
+            return new NetAppBackupData(id, name, type, systemData, location, backupId, creationDate, provisioningState, size, label, backupType, failureReason, volumeName, useExistingSnapshot, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppBackupData>.Write(ModelReaderWriterOptions options)

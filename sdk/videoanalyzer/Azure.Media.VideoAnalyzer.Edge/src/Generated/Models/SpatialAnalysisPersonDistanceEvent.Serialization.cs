@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Media.VideoAnalyzer.Edge;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -15,32 +16,32 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Trigger.HasValue)
+            if (Optional.IsDefined(Trigger))
             {
                 writer.WritePropertyName("trigger"u8);
                 writer.WriteStringValue(Trigger.Value.ToString());
             }
-            if (OutputFrequency != null)
+            if (Optional.IsDefined(OutputFrequency))
             {
                 writer.WritePropertyName("outputFrequency"u8);
                 writer.WriteStringValue(OutputFrequency);
             }
-            if (MinimumDistanceThreshold != null)
+            if (Optional.IsDefined(MinimumDistanceThreshold))
             {
                 writer.WritePropertyName("minimumDistanceThreshold"u8);
                 writer.WriteStringValue(MinimumDistanceThreshold);
             }
-            if (MaximumDistanceThreshold != null)
+            if (Optional.IsDefined(MaximumDistanceThreshold))
             {
                 writer.WritePropertyName("maximumDistanceThreshold"u8);
                 writer.WriteStringValue(MaximumDistanceThreshold);
             }
-            if (Threshold != null)
+            if (Optional.IsDefined(Threshold))
             {
                 writer.WritePropertyName("threshold"u8);
                 writer.WriteStringValue(Threshold);
             }
-            if (Focus.HasValue)
+            if (Optional.IsDefined(Focus))
             {
                 writer.WritePropertyName("focus"u8);
                 writer.WriteStringValue(Focus.Value.ToString());
@@ -54,12 +55,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<SpatialAnalysisPersonDistanceEventTrigger> trigger = default;
-            Optional<string> outputFrequency = default;
-            Optional<string> minimumDistanceThreshold = default;
-            Optional<string> maximumDistanceThreshold = default;
-            Optional<string> threshold = default;
-            Optional<SpatialAnalysisOperationFocus> focus = default;
+            SpatialAnalysisPersonDistanceEventTrigger? trigger = default;
+            string outputFrequency = default;
+            string minimumDistanceThreshold = default;
+            string maximumDistanceThreshold = default;
+            string threshold = default;
+            SpatialAnalysisOperationFocus? focus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("trigger"u8))
@@ -102,12 +103,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 }
             }
             return new SpatialAnalysisPersonDistanceEvent(
-                threshold.Value,
-                Optional.ToNullable(focus),
-                Optional.ToNullable(trigger),
-                outputFrequency.Value,
-                minimumDistanceThreshold.Value,
-                maximumDistanceThreshold.Value);
+                threshold,
+                focus,
+                trigger,
+                outputFrequency,
+                minimumDistanceThreshold,
+                maximumDistanceThreshold);
         }
     }
 }

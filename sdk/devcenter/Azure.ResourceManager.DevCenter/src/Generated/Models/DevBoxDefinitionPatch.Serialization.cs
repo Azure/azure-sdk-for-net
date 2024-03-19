@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DevCenter;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -37,29 +38,29 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ImageReference != null)
+            if (Optional.IsDefined(ImageReference))
             {
                 writer.WritePropertyName("imageReference"u8);
                 writer.WriteObjectValue(ImageReference);
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (OSStorageType != null)
+            if (Optional.IsDefined(OSStorageType))
             {
                 writer.WritePropertyName("osStorageType"u8);
                 writer.WriteStringValue(OSStorageType);
             }
-            if (HibernateSupport.HasValue)
+            if (Optional.IsDefined(HibernateSupport))
             {
                 writer.WritePropertyName("hibernateSupport"u8);
                 writer.WriteStringValue(HibernateSupport.Value.ToString());
@@ -104,11 +105,11 @@ namespace Azure.ResourceManager.DevCenter.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<AzureLocation> location = default;
-            Optional<DevCenterImageReference> imageReference = default;
-            Optional<DevCenterSku> sku = default;
-            Optional<string> osStorageType = default;
-            Optional<DevCenterHibernateSupport> hibernateSupport = default;
+            AzureLocation? location = default;
+            DevCenterImageReference imageReference = default;
+            DevCenterSku sku = default;
+            string osStorageType = default;
+            DevCenterHibernateSupport? hibernateSupport = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -188,12 +189,12 @@ namespace Azure.ResourceManager.DevCenter.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DevBoxDefinitionPatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                Optional.ToNullable(location),
+                location,
                 serializedAdditionalRawData,
-                imageReference.Value,
-                sku.Value,
-                osStorageType.Value,
-                Optional.ToNullable(hibernateSupport));
+                imageReference,
+                sku,
+                osStorageType,
+                hibernateSupport);
         }
 
         BinaryData IPersistableModel<DevBoxDefinitionPatch>.Write(ModelReaderWriterOptions options)

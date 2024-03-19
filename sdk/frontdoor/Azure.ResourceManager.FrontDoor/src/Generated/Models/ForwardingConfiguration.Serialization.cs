@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.FrontDoor;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.FrontDoor.Models
@@ -27,17 +28,17 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
 
             writer.WriteStartObject();
-            if (CustomForwardingPath != null)
+            if (Optional.IsDefined(CustomForwardingPath))
             {
                 writer.WritePropertyName("customForwardingPath"u8);
                 writer.WriteStringValue(CustomForwardingPath);
             }
-            if (ForwardingProtocol.HasValue)
+            if (Optional.IsDefined(ForwardingProtocol))
             {
                 writer.WritePropertyName("forwardingProtocol"u8);
                 writer.WriteStringValue(ForwardingProtocol.Value.ToString());
             }
-            if (CacheConfiguration != null)
+            if (Optional.IsDefined(CacheConfiguration))
             {
                 if (CacheConfiguration != null)
                 {
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     writer.WriteNull("cacheConfiguration");
                 }
             }
-            if (BackendPool != null)
+            if (Optional.IsDefined(BackendPool))
             {
                 writer.WritePropertyName("backendPool"u8);
                 JsonSerializer.Serialize(writer, BackendPool);
@@ -94,10 +95,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<string> customForwardingPath = default;
-            Optional<FrontDoorForwardingProtocol> forwardingProtocol = default;
-            Optional<FrontDoorCacheConfiguration> cacheConfiguration = default;
-            Optional<WritableSubResource> backendPool = default;
+            string customForwardingPath = default;
+            FrontDoorForwardingProtocol? forwardingProtocol = default;
+            FrontDoorCacheConfiguration cacheConfiguration = default;
+            WritableSubResource backendPool = default;
             string odataType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -150,9 +151,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
             return new ForwardingConfiguration(
                 odataType,
                 serializedAdditionalRawData,
-                customForwardingPath.Value,
-                Optional.ToNullable(forwardingProtocol),
-                cacheConfiguration.Value,
+                customForwardingPath,
+                forwardingProtocol,
+                cacheConfiguration,
                 backendPool);
         }
 

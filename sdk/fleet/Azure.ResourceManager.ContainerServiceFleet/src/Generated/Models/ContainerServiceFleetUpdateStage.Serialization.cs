@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerServiceFleet;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (!(Groups is ChangeTrackingList<ContainerServiceFleetUpdateGroup> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Groups))
             {
                 writer.WritePropertyName("groups"u8);
                 writer.WriteStartArray();
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 }
                 writer.WriteEndArray();
             }
-            if (AfterStageWaitInSeconds.HasValue)
+            if (Optional.IsDefined(AfterStageWaitInSeconds))
             {
                 writer.WritePropertyName("afterStageWaitInSeconds"u8);
                 writer.WriteNumberValue(AfterStageWaitInSeconds.Value);
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             }
             string name = default;
             IList<ContainerServiceFleetUpdateGroup> groups = default;
-            Optional<int> afterStageWaitInSeconds = default;
+            int? afterStageWaitInSeconds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServiceFleetUpdateStage(name, groups ?? new ChangeTrackingList<ContainerServiceFleetUpdateGroup>(), Optional.ToNullable(afterStageWaitInSeconds), serializedAdditionalRawData);
+            return new ContainerServiceFleetUpdateStage(name, groups ?? new ChangeTrackingList<ContainerServiceFleetUpdateGroup>(), afterStageWaitInSeconds, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServiceFleetUpdateStage>.Write(ModelReaderWriterOptions options)

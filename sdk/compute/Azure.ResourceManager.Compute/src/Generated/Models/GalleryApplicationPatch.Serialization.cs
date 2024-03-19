@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -53,44 +54,44 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Eula != null)
+            if (Optional.IsDefined(Eula))
             {
                 writer.WritePropertyName("eula"u8);
                 writer.WriteStringValue(Eula);
             }
-            if (PrivacyStatementUri != null)
+            if (Optional.IsDefined(PrivacyStatementUri))
             {
                 writer.WritePropertyName("privacyStatementUri"u8);
                 writer.WriteStringValue(PrivacyStatementUri.AbsoluteUri);
             }
-            if (ReleaseNoteUri != null)
+            if (Optional.IsDefined(ReleaseNoteUri))
             {
                 writer.WritePropertyName("releaseNoteUri"u8);
                 writer.WriteStringValue(ReleaseNoteUri.AbsoluteUri);
             }
-            if (EndOfLifeOn.HasValue)
+            if (Optional.IsDefined(EndOfLifeOn))
             {
                 writer.WritePropertyName("endOfLifeDate"u8);
                 writer.WriteStringValue(EndOfLifeOn.Value, "O");
             }
-            if (SupportedOSType.HasValue)
+            if (Optional.IsDefined(SupportedOSType))
             {
                 writer.WritePropertyName("supportedOSType"u8);
                 writer.WriteStringValue(SupportedOSType.Value.ToSerialString());
             }
-            if (!(CustomActions is ChangeTrackingList<GalleryApplicationCustomAction> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(CustomActions))
             {
                 writer.WritePropertyName("customActions"u8);
                 writer.WriteStartArray();
@@ -143,13 +144,13 @@ namespace Azure.ResourceManager.Compute.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<string> eula = default;
-            Optional<Uri> privacyStatementUri = default;
-            Optional<Uri> releaseNoteUri = default;
-            Optional<DateTimeOffset> endOfLifeDate = default;
-            Optional<SupportedOperatingSystemType> supportedOSType = default;
+            SystemData systemData = default;
+            string description = default;
+            string eula = default;
+            Uri privacyStatementUri = default;
+            Uri releaseNoteUri = default;
+            DateTimeOffset? endOfLifeDate = default;
+            SupportedOperatingSystemType? supportedOSType = default;
             IList<GalleryApplicationCustomAction> customActions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -275,13 +276,13 @@ namespace Azure.ResourceManager.Compute.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                description.Value,
-                eula.Value,
-                privacyStatementUri.Value,
-                releaseNoteUri.Value,
-                Optional.ToNullable(endOfLifeDate),
-                Optional.ToNullable(supportedOSType),
+                systemData,
+                description,
+                eula,
+                privacyStatementUri,
+                releaseNoteUri,
+                endOfLifeDate,
+                supportedOSType,
                 customActions ?? new ChangeTrackingList<GalleryApplicationCustomAction>(),
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && AggregatedState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AggregatedState))
             {
                 writer.WritePropertyName("aggregatedState"u8);
                 writer.WriteStringValue(AggregatedState.Value.ToString());
             }
-            if (!(Summary is ChangeTrackingList<RegionalSharingStatus> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Summary))
             {
                 writer.WritePropertyName("summary"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<SharingState> aggregatedState = default;
+            SharingState? aggregatedState = default;
             IReadOnlyList<RegionalSharingStatus> summary = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SharingStatus(Optional.ToNullable(aggregatedState), summary ?? new ChangeTrackingList<RegionalSharingStatus>(), serializedAdditionalRawData);
+            return new SharingStatus(aggregatedState, summary ?? new ChangeTrackingList<RegionalSharingStatus>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SharingStatus>.Write(ModelReaderWriterOptions options)

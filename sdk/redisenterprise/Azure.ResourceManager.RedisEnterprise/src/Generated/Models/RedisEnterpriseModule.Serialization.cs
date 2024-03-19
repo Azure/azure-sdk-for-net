@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RedisEnterprise;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
@@ -28,12 +29,12 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Args != null)
+            if (Optional.IsDefined(Args))
             {
                 writer.WritePropertyName("args"u8);
                 writer.WriteStringValue(Args);
             }
-            if (options.Format != "W" && Version != null)
+            if (options.Format != "W" && Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
@@ -77,8 +78,8 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 return null;
             }
             string name = default;
-            Optional<string> args = default;
-            Optional<string> version = default;
+            string args = default;
+            string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisEnterpriseModule(name, args.Value, version.Value, serializedAdditionalRawData);
+            return new RedisEnterpriseModule(name, args, version, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisEnterpriseModule>.Write(ModelReaderWriterOptions options)

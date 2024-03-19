@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (On.HasValue)
+            if (Optional.IsDefined(On))
             {
                 writer.WritePropertyName("date"u8);
                 writer.WriteStringValue(On.Value, "O");
             }
-            if (Cost.HasValue)
+            if (Optional.IsDefined(Cost))
             {
                 writer.WritePropertyName("cost"u8);
                 writer.WriteNumberValue(Cost.Value);
             }
-            if (CostType.HasValue)
+            if (Optional.IsDefined(CostType))
             {
                 writer.WritePropertyName("costType"u8);
                 writer.WriteStringValue(CostType.Value.ToString());
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> date = default;
-            Optional<double> cost = default;
-            Optional<DevTestLabCostType> costType = default;
+            DateTimeOffset? date = default;
+            double? cost = default;
+            DevTestLabCostType? costType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabCostDetails(Optional.ToNullable(date), Optional.ToNullable(cost), Optional.ToNullable(costType), serializedAdditionalRawData);
+            return new DevTestLabCostDetails(date, cost, costType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabCostDetails>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (ObjectId.HasValue)
+            if (Optional.IsDefined(ObjectId))
             {
                 writer.WritePropertyName("oid"u8);
                 writer.WriteStringValue(ObjectId.Value);
             }
-            if (Puid != null)
+            if (Optional.IsDefined(Puid))
             {
                 writer.WritePropertyName("puid"u8);
                 writer.WriteStringValue(Puid);
             }
-            if (ApplicationId.HasValue)
+            if (Optional.IsDefined(ApplicationId))
             {
                 writer.WritePropertyName("applicationId"u8);
                 writer.WriteStringValue(ApplicationId.Value);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<Guid> oid = default;
-            Optional<string> puid = default;
-            Optional<Guid> applicationId = default;
+            Guid? oid = default;
+            string puid = default;
+            Guid? applicationId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmApplicationDetails(Optional.ToNullable(oid), puid.Value, Optional.ToNullable(applicationId), serializedAdditionalRawData);
+            return new ArmApplicationDetails(oid, puid, applicationId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmApplicationDetails>.Write(ModelReaderWriterOptions options)

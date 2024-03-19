@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Usable != null)
+            if (options.Format != "W" && Optional.IsDefined(Usable))
             {
                 writer.WritePropertyName("usable"u8);
                 writer.WriteStringValue(Usable);
             }
-            if (options.Format != "W" && Maximum != null)
+            if (options.Format != "W" && Optional.IsDefined(Maximum))
             {
                 writer.WritePropertyName("maximum"u8);
                 writer.WriteStringValue(Maximum);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<string> usable = default;
-            Optional<string> maximum = default;
+            string usable = default;
+            string maximum = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxSkuCapacity(usable.Value, maximum.Value, serializedAdditionalRawData);
+            return new DataBoxSkuCapacity(usable, maximum, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxSkuCapacity>.Write(ModelReaderWriterOptions options)

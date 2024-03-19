@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -27,54 +28,54 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (PackagePath != null)
+            if (Optional.IsDefined(PackagePath))
             {
                 writer.WritePropertyName("packagePath"u8);
                 JsonSerializer.Serialize(writer, PackagePath);
             }
-            if (LocationType.HasValue)
+            if (Optional.IsDefined(LocationType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(LocationType.Value.ToString());
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (PackagePassword != null)
+            if (Optional.IsDefined(PackagePassword))
             {
                 writer.WritePropertyName("packagePassword"u8);
                 JsonSerializer.Serialize(writer, PackagePassword);
             }
-            if (AccessCredential != null)
+            if (Optional.IsDefined(AccessCredential))
             {
                 writer.WritePropertyName("accessCredential"u8);
                 writer.WriteObjectValue(AccessCredential);
             }
-            if (ConfigurationPath != null)
+            if (Optional.IsDefined(ConfigurationPath))
             {
                 writer.WritePropertyName("configurationPath"u8);
                 JsonSerializer.Serialize(writer, ConfigurationPath);
             }
-            if (ConfigurationAccessCredential != null)
+            if (Optional.IsDefined(ConfigurationAccessCredential))
             {
                 writer.WritePropertyName("configurationAccessCredential"u8);
                 writer.WriteObjectValue(ConfigurationAccessCredential);
             }
-            if (PackageName != null)
+            if (Optional.IsDefined(PackageName))
             {
                 writer.WritePropertyName("packageName"u8);
                 writer.WriteStringValue(PackageName);
             }
-            if (PackageContent != null)
+            if (Optional.IsDefined(PackageContent))
             {
                 writer.WritePropertyName("packageContent"u8);
                 JsonSerializer.Serialize(writer, PackageContent);
             }
-            if (PackageLastModifiedDate != null)
+            if (Optional.IsDefined(PackageLastModifiedDate))
             {
                 writer.WritePropertyName("packageLastModifiedDate"u8);
                 writer.WriteStringValue(PackageLastModifiedDate);
             }
-            if (!(ChildPackages is ChangeTrackingList<SsisChildPackage> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ChildPackages))
             {
                 writer.WritePropertyName("childPackages"u8);
                 writer.WriteStartArray();
@@ -123,15 +124,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<string>> packagePath = default;
-            Optional<SsisPackageLocationType> type = default;
-            Optional<DataFactorySecretBaseDefinition> packagePassword = default;
-            Optional<SsisAccessCredential> accessCredential = default;
-            Optional<DataFactoryElement<string>> configurationPath = default;
-            Optional<SsisAccessCredential> configurationAccessCredential = default;
-            Optional<string> packageName = default;
-            Optional<DataFactoryElement<string>> packageContent = default;
-            Optional<string> packageLastModifiedDate = default;
+            DataFactoryElement<string> packagePath = default;
+            SsisPackageLocationType? type = default;
+            DataFactorySecret packagePassword = default;
+            SsisAccessCredential accessCredential = default;
+            DataFactoryElement<string> configurationPath = default;
+            SsisAccessCredential configurationAccessCredential = default;
+            string packageName = default;
+            DataFactoryElement<string> packageContent = default;
+            string packageLastModifiedDate = default;
             IList<SsisChildPackage> childPackages = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -170,7 +171,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            packagePassword = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
+                            packagePassword = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("accessCredential"u8))
@@ -243,15 +244,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SsisPackageLocation(
-                packagePath.Value,
-                Optional.ToNullable(type),
+                packagePath,
+                type,
                 packagePassword,
-                accessCredential.Value,
-                configurationPath.Value,
-                configurationAccessCredential.Value,
-                packageName.Value,
-                packageContent.Value,
-                packageLastModifiedDate.Value,
+                accessCredential,
+                configurationPath,
+                configurationAccessCredential,
+                packageName,
+                packageContent,
+                packageLastModifiedDate,
                 childPackages ?? new ChangeTrackingList<SsisChildPackage>(),
                 serializedAdditionalRawData);
         }

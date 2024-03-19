@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Kusto.Models
             writer.WriteStartObject();
             writer.WritePropertyName("inviteeEmail"u8);
             writer.WriteStringValue(InviteeEmail);
-            if (TableLevelSharingProperties != null)
+            if (Optional.IsDefined(TableLevelSharingProperties))
             {
                 writer.WritePropertyName("tableLevelSharingProperties"u8);
                 writer.WriteObjectValue(TableLevelSharingProperties);
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 return null;
             }
             string inviteeEmail = default;
-            Optional<KustoDatabaseTableLevelSharingProperties> tableLevelSharingProperties = default;
+            KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatabaseInviteFollowerContent(inviteeEmail, tableLevelSharingProperties.Value, serializedAdditionalRawData);
+            return new DatabaseInviteFollowerContent(inviteeEmail, tableLevelSharingProperties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatabaseInviteFollowerContent>.Write(ModelReaderWriterOptions options)

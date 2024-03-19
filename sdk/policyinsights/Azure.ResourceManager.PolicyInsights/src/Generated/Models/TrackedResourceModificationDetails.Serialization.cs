@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PolicyInsights;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && PolicyDetails != null)
+            if (options.Format != "W" && Optional.IsDefined(PolicyDetails))
             {
                 writer.WritePropertyName("policyDetails"u8);
                 writer.WriteObjectValue(PolicyDetails);
             }
-            if (options.Format != "W" && DeploymentId != null)
+            if (options.Format != "W" && Optional.IsDefined(DeploymentId))
             {
                 writer.WritePropertyName("deploymentId"u8);
                 writer.WriteStringValue(DeploymentId);
             }
-            if (options.Format != "W" && DeploymentOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DeploymentOn))
             {
                 writer.WritePropertyName("deploymentTime"u8);
                 writer.WriteStringValue(DeploymentOn.Value, "O");
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<PolicyDetails> policyDetails = default;
-            Optional<ResourceIdentifier> deploymentId = default;
-            Optional<DateTimeOffset> deploymentTime = default;
+            PolicyDetails policyDetails = default;
+            ResourceIdentifier deploymentId = default;
+            DateTimeOffset? deploymentTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrackedResourceModificationDetails(policyDetails.Value, deploymentId.Value, Optional.ToNullable(deploymentTime), serializedAdditionalRawData);
+            return new TrackedResourceModificationDetails(policyDetails, deploymentId, deploymentTime, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrackedResourceModificationDetails>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (MemberValue != null)
+            if (Optional.IsDefined(MemberValue))
             {
                 writer.WritePropertyName("memberValue"u8);
                 writer.WriteStringValue(MemberValue);
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> memberValue = default;
+            string memberValue = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationActivityParameterValidationSet(memberValue.Value, serializedAdditionalRawData);
+            return new AutomationActivityParameterValidationSet(memberValue, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationActivityParameterValidationSet>.Write(ModelReaderWriterOptions options)

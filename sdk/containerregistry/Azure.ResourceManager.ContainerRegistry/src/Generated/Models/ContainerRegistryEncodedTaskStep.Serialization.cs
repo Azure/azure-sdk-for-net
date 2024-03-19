@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -28,12 +29,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStartObject();
             writer.WritePropertyName("encodedTaskContent"u8);
             writer.WriteStringValue(EncodedTaskContent);
-            if (EncodedValuesContent != null)
+            if (Optional.IsDefined(EncodedValuesContent))
             {
                 writer.WritePropertyName("encodedValuesContent"u8);
                 writer.WriteStringValue(EncodedValuesContent);
             }
-            if (!(Values is ChangeTrackingList<ContainerRegistryTaskOverridableValue> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Values))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ContainerRegistryTaskStepType.ToString());
-            if (options.Format != "W" && !(BaseImageDependencies is ChangeTrackingList<ContainerRegistryBaseImageDependency> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(BaseImageDependencies))
             {
                 writer.WritePropertyName("baseImageDependencies"u8);
                 writer.WriteStartArray();
@@ -55,12 +56,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ContextPath != null)
+            if (Optional.IsDefined(ContextPath))
             {
                 writer.WritePropertyName("contextPath"u8);
                 writer.WriteStringValue(ContextPath);
             }
-            if (ContextAccessToken != null)
+            if (Optional.IsDefined(ContextAccessToken))
             {
                 writer.WritePropertyName("contextAccessToken"u8);
                 writer.WriteStringValue(ContextAccessToken);
@@ -104,12 +105,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 return null;
             }
             string encodedTaskContent = default;
-            Optional<string> encodedValuesContent = default;
+            string encodedValuesContent = default;
             IList<ContainerRegistryTaskOverridableValue> values = default;
             ContainerRegistryTaskStepType type = default;
             IReadOnlyList<ContainerRegistryBaseImageDependency> baseImageDependencies = default;
-            Optional<string> contextPath = default;
-            Optional<string> contextAccessToken = default;
+            string contextPath = default;
+            string contextAccessToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -176,11 +177,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new ContainerRegistryEncodedTaskStep(
                 type,
                 baseImageDependencies ?? new ChangeTrackingList<ContainerRegistryBaseImageDependency>(),
-                contextPath.Value,
-                contextAccessToken.Value,
+                contextPath,
+                contextAccessToken,
                 serializedAdditionalRawData,
                 encodedTaskContent,
-                encodedValuesContent.Value,
+                encodedValuesContent,
                 values ?? new ChangeTrackingList<ContainerRegistryTaskOverridableValue>());
         }
 

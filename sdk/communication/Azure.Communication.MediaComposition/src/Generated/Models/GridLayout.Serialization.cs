@@ -40,17 +40,17 @@ namespace Azure.Communication.MediaComposition
             writer.WriteEndArray();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Resolution != null)
+            if (Optional.IsDefined(Resolution))
             {
                 writer.WritePropertyName("resolution"u8);
                 writer.WriteObjectValue(Resolution);
             }
-            if (PlaceholderImageUri != null)
+            if (Optional.IsDefined(PlaceholderImageUri))
             {
                 writer.WritePropertyName("placeholderImageUri"u8);
                 writer.WriteStringValue(PlaceholderImageUri);
             }
-            if (ScalingMode.HasValue)
+            if (Optional.IsDefined(ScalingMode))
             {
                 writer.WritePropertyName("scalingMode"u8);
                 writer.WriteStringValue(ScalingMode.Value.ToString());
@@ -68,9 +68,9 @@ namespace Azure.Communication.MediaComposition
             int columns = default;
             IList<IList<string>> inputIds = default;
             LayoutType kind = default;
-            Optional<LayoutResolution> resolution = default;
-            Optional<string> placeholderImageUri = default;
-            Optional<ScalingMode> scalingMode = default;
+            LayoutResolution resolution = default;
+            string placeholderImageUri = default;
+            ScalingMode? scalingMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rows"u8))
@@ -136,9 +136,9 @@ namespace Azure.Communication.MediaComposition
             }
             return new GridLayout(
                 kind,
-                resolution.Value,
-                placeholderImageUri.Value,
-                Optional.ToNullable(scalingMode),
+                resolution,
+                placeholderImageUri,
+                scalingMode,
                 rows,
                 columns,
                 inputIds);

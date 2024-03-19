@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Network != null)
+            if (Optional.IsDefined(Network))
             {
                 writer.WritePropertyName("network"u8);
                 writer.WriteStringValue(Network);
             }
-            if (NextHop != null)
+            if (Optional.IsDefined(NextHop))
             {
                 writer.WritePropertyName("nextHop"u8);
                 writer.WriteStringValue(NextHop);
             }
-            if (LocPrf != null)
+            if (Optional.IsDefined(LocPrf))
             {
                 writer.WritePropertyName("locPrf"u8);
                 writer.WriteStringValue(LocPrf);
             }
-            if (Weight.HasValue)
+            if (Optional.IsDefined(Weight))
             {
                 writer.WritePropertyName("weight"u8);
                 writer.WriteNumberValue(Weight.Value);
             }
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> network = default;
-            Optional<string> nextHop = default;
-            Optional<string> locPrf = default;
-            Optional<int> weight = default;
-            Optional<string> path = default;
+            string network = default;
+            string nextHop = default;
+            string locPrf = default;
+            int? weight = default;
+            string path = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,11 +135,11 @@ namespace Azure.ResourceManager.Network.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ExpressRouteCircuitRoutesTable(
-                network.Value,
-                nextHop.Value,
-                locPrf.Value,
-                Optional.ToNullable(weight),
-                path.Value,
+                network,
+                nextHop,
+                locPrf,
+                weight,
+                path,
                 serializedAdditionalRawData);
         }
 

@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Hci
             }
 
             writer.WriteStartObject();
-            if (ExtendedLocation != null)
+            if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 writer.WriteObjectValue(ExtendedLocation);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.Hci
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DhcpOptions != null)
+            if (Optional.IsDefined(DhcpOptions))
             {
                 writer.WritePropertyName("dhcpOptions"u8);
                 writer.WriteObjectValue(DhcpOptions);
             }
-            if (!(Subnets is ChangeTrackingList<Subnet> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Subnets))
             {
                 writer.WritePropertyName("subnets"u8);
                 writer.WriteStartArray();
@@ -83,17 +83,17 @@ namespace Azure.ResourceManager.Hci
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (VmSwitchName != null)
+            if (Optional.IsDefined(VmSwitchName))
             {
                 writer.WritePropertyName("vmSwitchName"u8);
                 writer.WriteStringValue(VmSwitchName);
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
@@ -137,18 +137,18 @@ namespace Azure.ResourceManager.Hci
             {
                 return null;
             }
-            Optional<ArcVmExtendedLocation> extendedLocation = default;
+            ArcVmExtendedLocation extendedLocation = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<LogicalNetworkPropertiesDhcpOptions> dhcpOptions = default;
+            SystemData systemData = default;
+            LogicalNetworkPropertiesDhcpOptions dhcpOptions = default;
             IList<Subnet> subnets = default;
-            Optional<ProvisioningStateEnum> provisioningState = default;
-            Optional<string> vmSwitchName = default;
-            Optional<LogicalNetworkStatus> status = default;
+            ProvisioningStateEnum? provisioningState = default;
+            string vmSwitchName = default;
+            LogicalNetworkStatus status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -273,15 +273,15 @@ namespace Azure.ResourceManager.Hci
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                extendedLocation.Value,
-                dhcpOptions.Value,
+                extendedLocation,
+                dhcpOptions,
                 subnets ?? new ChangeTrackingList<Subnet>(),
-                Optional.ToNullable(provisioningState),
-                vmSwitchName.Value,
-                status.Value,
+                provisioningState,
+                vmSwitchName,
+                status,
                 serializedAdditionalRawData);
         }
 

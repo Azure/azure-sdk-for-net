@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HealthcareApis;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             }
 
             writer.WriteStartObject();
-            if (IntegrationDataStore != null)
+            if (Optional.IsDefined(IntegrationDataStore))
             {
                 writer.WritePropertyName("integrationDataStore"u8);
                 writer.WriteStringValue(IntegrationDataStore);
             }
-            if (IsInitialImportMode.HasValue)
+            if (Optional.IsDefined(IsInitialImportMode))
             {
                 writer.WritePropertyName("initialImportMode"u8);
                 writer.WriteBooleanValue(IsInitialImportMode.Value);
             }
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             {
                 return null;
             }
-            Optional<string> integrationDataStore = default;
-            Optional<bool> initialImportMode = default;
-            Optional<bool> enabled = default;
+            string integrationDataStore = default;
+            bool? initialImportMode = default;
+            bool? enabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HealthcareApisServiceImportConfiguration(integrationDataStore.Value, Optional.ToNullable(initialImportMode), Optional.ToNullable(enabled), serializedAdditionalRawData);
+            return new HealthcareApisServiceImportConfiguration(integrationDataStore, initialImportMode, enabled, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HealthcareApisServiceImportConfiguration>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AlertsManagement;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             }
 
             writer.WriteStartObject();
-            if (EffectiveFrom.HasValue)
+            if (Optional.IsDefined(EffectiveFrom))
             {
                 writer.WritePropertyName("effectiveFrom"u8);
                 writer.WriteStringValue(EffectiveFrom.Value, "O");
             }
-            if (EffectiveUntil.HasValue)
+            if (Optional.IsDefined(EffectiveUntil))
             {
                 writer.WritePropertyName("effectiveUntil"u8);
                 writer.WriteStringValue(EffectiveUntil.Value, "O");
             }
-            if (TimeZone != null)
+            if (Optional.IsDefined(TimeZone))
             {
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
-            if (!(Recurrences is ChangeTrackingList<AlertProcessingRuleRecurrence> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Recurrences))
             {
                 writer.WritePropertyName("recurrences"u8);
                 writer.WriteStartArray();
@@ -89,9 +90,9 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> effectiveFrom = default;
-            Optional<DateTimeOffset> effectiveUntil = default;
-            Optional<string> timeZone = default;
+            DateTimeOffset? effectiveFrom = default;
+            DateTimeOffset? effectiveUntil = default;
+            string timeZone = default;
             IList<AlertProcessingRuleRecurrence> recurrences = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -140,7 +141,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AlertProcessingRuleSchedule(Optional.ToNullable(effectiveFrom), Optional.ToNullable(effectiveUntil), timeZone.Value, recurrences ?? new ChangeTrackingList<AlertProcessingRuleRecurrence>(), serializedAdditionalRawData);
+            return new AlertProcessingRuleSchedule(effectiveFrom, effectiveUntil, timeZone, recurrences ?? new ChangeTrackingList<AlertProcessingRuleRecurrence>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AlertProcessingRuleSchedule>.Write(ModelReaderWriterOptions options)

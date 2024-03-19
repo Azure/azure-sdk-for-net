@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Field != null)
+            if (Optional.IsDefined(Field))
             {
                 writer.WritePropertyName("field"u8);
                 writer.WriteStringValue(Field);
             }
-            if (EqualsValue != null)
+            if (Optional.IsDefined(EqualsValue))
             {
                 writer.WritePropertyName("equals"u8);
                 writer.WriteStringValue(EqualsValue);
             }
-            if (!(ContainsAny is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ContainsAny))
             {
                 writer.WritePropertyName("containsAny"u8);
                 writer.WriteStartArray();
@@ -84,8 +85,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<string> field = default;
-            Optional<string> @equals = default;
+            string field = default;
+            string @equals = default;
             IList<string> containsAny = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AlertRuleLeafCondition(field.Value, @equals.Value, containsAny ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new AlertRuleLeafCondition(field, @equals, containsAny ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AlertRuleLeafCondition>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Cpu.HasValue)
+            if (Optional.IsDefined(Cpu))
             {
                 writer.WritePropertyName("cpu"u8);
                 writer.WriteNumberValue(Cpu.Value);
             }
-            if (Memory != null)
+            if (Optional.IsDefined(Memory))
             {
                 writer.WritePropertyName("memory"u8);
                 writer.WriteStringValue(Memory);
             }
-            if (options.Format != "W" && EphemeralStorage != null)
+            if (options.Format != "W" && Optional.IsDefined(EphemeralStorage))
             {
                 writer.WritePropertyName("ephemeralStorage"u8);
                 writer.WriteStringValue(EphemeralStorage);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<double> cpu = default;
-            Optional<string> memory = default;
-            Optional<string> ephemeralStorage = default;
+            double? cpu = default;
+            string memory = default;
+            string ephemeralStorage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppContainerResources(Optional.ToNullable(cpu), memory.Value, ephemeralStorage.Value, serializedAdditionalRawData);
+            return new AppContainerResources(cpu, memory, ephemeralStorage, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppContainerResources>.Write(ModelReaderWriterOptions options)

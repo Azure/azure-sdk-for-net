@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -28,34 +29,34 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (TestFrequencySec.HasValue)
+            if (Optional.IsDefined(TestFrequencySec))
             {
                 writer.WritePropertyName("testFrequencySec"u8);
                 writer.WriteNumberValue(TestFrequencySec.Value);
             }
             writer.WritePropertyName("protocol"u8);
             writer.WriteStringValue(Protocol.ToString());
-            if (PreferredIPVersion.HasValue)
+            if (Optional.IsDefined(PreferredIPVersion))
             {
                 writer.WritePropertyName("preferredIPVersion"u8);
                 writer.WriteStringValue(PreferredIPVersion.Value.ToString());
             }
-            if (HttpConfiguration != null)
+            if (Optional.IsDefined(HttpConfiguration))
             {
                 writer.WritePropertyName("httpConfiguration"u8);
                 writer.WriteObjectValue(HttpConfiguration);
             }
-            if (TcpConfiguration != null)
+            if (Optional.IsDefined(TcpConfiguration))
             {
                 writer.WritePropertyName("tcpConfiguration"u8);
                 writer.WriteObjectValue(TcpConfiguration);
             }
-            if (IcmpConfiguration != null)
+            if (Optional.IsDefined(IcmpConfiguration))
             {
                 writer.WritePropertyName("icmpConfiguration"u8);
                 writer.WriteObjectValue(IcmpConfiguration);
             }
-            if (SuccessThreshold != null)
+            if (Optional.IsDefined(SuccessThreshold))
             {
                 writer.WritePropertyName("successThreshold"u8);
                 writer.WriteObjectValue(SuccessThreshold);
@@ -99,13 +100,13 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             string name = default;
-            Optional<int> testFrequencySec = default;
+            int? testFrequencySec = default;
             ConnectionMonitorTestConfigurationProtocol protocol = default;
-            Optional<TestEvalPreferredIPVersion> preferredIPVersion = default;
-            Optional<ConnectionMonitorHttpConfiguration> httpConfiguration = default;
-            Optional<ConnectionMonitorTcpConfiguration> tcpConfiguration = default;
-            Optional<ConnectionMonitorIcmpConfiguration> icmpConfiguration = default;
-            Optional<ConnectionMonitorSuccessThreshold> successThreshold = default;
+            TestEvalPreferredIPVersion? preferredIPVersion = default;
+            ConnectionMonitorHttpConfiguration httpConfiguration = default;
+            ConnectionMonitorTcpConfiguration tcpConfiguration = default;
+            ConnectionMonitorIcmpConfiguration icmpConfiguration = default;
+            ConnectionMonitorSuccessThreshold successThreshold = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -182,13 +183,13 @@ namespace Azure.ResourceManager.Network.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ConnectionMonitorTestConfiguration(
                 name,
-                Optional.ToNullable(testFrequencySec),
+                testFrequencySec,
                 protocol,
-                Optional.ToNullable(preferredIPVersion),
-                httpConfiguration.Value,
-                tcpConfiguration.Value,
-                icmpConfiguration.Value,
-                successThreshold.Value,
+                preferredIPVersion,
+                httpConfiguration,
+                tcpConfiguration,
+                icmpConfiguration,
+                successThreshold,
                 serializedAdditionalRawData);
         }
 

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -51,10 +52,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <exception cref="ArgumentNullException"> <paramref name="countries"/> is null. </exception>
         internal AvailableProvidersList(IEnumerable<AvailableProvidersListCountry> countries)
         {
-            if (countries == null)
-            {
-                throw new ArgumentNullException(nameof(countries));
-            }
+            Argument.AssertNotNull(countries, nameof(countries));
 
             Countries = countries.ToList();
         }

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (ResourceHealthStatus.HasValue)
+            if (Optional.IsDefined(ResourceHealthStatus))
             {
                 writer.WritePropertyName("resourceHealthStatus"u8);
                 writer.WriteStringValue(ResourceHealthStatus.Value.ToString());
             }
-            if (!(ResourceHealthDetails is ChangeTrackingList<ResourceHealthDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ResourceHealthDetails))
             {
                 writer.WritePropertyName("resourceHealthDetails"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<ResourceHealthStatus> resourceHealthStatus = default;
+            ResourceHealthStatus? resourceHealthStatus = default;
             IList<ResourceHealthDetails> resourceHealthDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KpiResourceHealthDetails(Optional.ToNullable(resourceHealthStatus), resourceHealthDetails ?? new ChangeTrackingList<ResourceHealthDetails>(), serializedAdditionalRawData);
+            return new KpiResourceHealthDetails(resourceHealthStatus, resourceHealthDetails ?? new ChangeTrackingList<ResourceHealthDetails>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KpiResourceHealthDetails>.Write(ModelReaderWriterOptions options)

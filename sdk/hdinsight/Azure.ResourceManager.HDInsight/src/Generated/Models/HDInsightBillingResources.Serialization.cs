@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Region.HasValue)
+            if (Optional.IsDefined(Region))
             {
                 writer.WritePropertyName("region"u8);
                 writer.WriteStringValue(Region.Value);
             }
-            if (!(BillingMeters is ChangeTrackingList<HDInsightBillingMeters> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(BillingMeters))
             {
                 writer.WritePropertyName("billingMeters"u8);
                 writer.WriteStartArray();
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(DiskBillingMeters is ChangeTrackingList<HDInsightDiskBillingMeters> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(DiskBillingMeters))
             {
                 writer.WritePropertyName("diskBillingMeters"u8);
                 writer.WriteStartArray();
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<AzureLocation> region = default;
+            AzureLocation? region = default;
             IReadOnlyList<HDInsightBillingMeters> billingMeters = default;
             IReadOnlyList<HDInsightDiskBillingMeters> diskBillingMeters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -139,7 +140,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightBillingResources(Optional.ToNullable(region), billingMeters ?? new ChangeTrackingList<HDInsightBillingMeters>(), diskBillingMeters ?? new ChangeTrackingList<HDInsightDiskBillingMeters>(), serializedAdditionalRawData);
+            return new HDInsightBillingResources(region, billingMeters ?? new ChangeTrackingList<HDInsightBillingMeters>(), diskBillingMeters ?? new ChangeTrackingList<HDInsightDiskBillingMeters>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightBillingResources>.Write(ModelReaderWriterOptions options)

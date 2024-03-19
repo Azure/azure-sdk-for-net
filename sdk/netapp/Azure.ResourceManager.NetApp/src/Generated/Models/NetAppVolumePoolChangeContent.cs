@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -51,10 +52,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <exception cref="ArgumentNullException"> <paramref name="newPoolResourceId"/> is null. </exception>
         public NetAppVolumePoolChangeContent(ResourceIdentifier newPoolResourceId)
         {
-            if (newPoolResourceId == null)
-            {
-                throw new ArgumentNullException(nameof(newPoolResourceId));
-            }
+            Argument.AssertNotNull(newPoolResourceId, nameof(newPoolResourceId));
 
             NewPoolResourceId = newPoolResourceId;
         }

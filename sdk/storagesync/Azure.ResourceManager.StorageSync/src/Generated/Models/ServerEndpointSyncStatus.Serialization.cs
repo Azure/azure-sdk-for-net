@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageSync;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
@@ -26,62 +27,62 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && DownloadHealth.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DownloadHealth))
             {
                 writer.WritePropertyName("downloadHealth"u8);
                 writer.WriteStringValue(DownloadHealth.Value.ToString());
             }
-            if (options.Format != "W" && UploadHealth.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UploadHealth))
             {
                 writer.WritePropertyName("uploadHealth"u8);
                 writer.WriteStringValue(UploadHealth.Value.ToString());
             }
-            if (options.Format != "W" && CombinedHealth.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CombinedHealth))
             {
                 writer.WritePropertyName("combinedHealth"u8);
                 writer.WriteStringValue(CombinedHealth.Value.ToString());
             }
-            if (options.Format != "W" && SyncActivity.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SyncActivity))
             {
                 writer.WritePropertyName("syncActivity"u8);
                 writer.WriteStringValue(SyncActivity.Value.ToString());
             }
-            if (options.Format != "W" && TotalPersistentFilesNotSyncingCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalPersistentFilesNotSyncingCount))
             {
                 writer.WritePropertyName("totalPersistentFilesNotSyncingCount"u8);
                 writer.WriteNumberValue(TotalPersistentFilesNotSyncingCount.Value);
             }
-            if (options.Format != "W" && LastUpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedTimestamp"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && UploadStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(UploadStatus))
             {
                 writer.WritePropertyName("uploadStatus"u8);
                 writer.WriteObjectValue(UploadStatus);
             }
-            if (options.Format != "W" && DownloadStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(DownloadStatus))
             {
                 writer.WritePropertyName("downloadStatus"u8);
                 writer.WriteObjectValue(DownloadStatus);
             }
-            if (options.Format != "W" && UploadActivity != null)
+            if (options.Format != "W" && Optional.IsDefined(UploadActivity))
             {
                 writer.WritePropertyName("uploadActivity"u8);
                 writer.WriteObjectValue(UploadActivity);
             }
-            if (options.Format != "W" && DownloadActivity != null)
+            if (options.Format != "W" && Optional.IsDefined(DownloadActivity))
             {
                 writer.WritePropertyName("downloadActivity"u8);
                 writer.WriteObjectValue(DownloadActivity);
             }
-            if (options.Format != "W" && OfflineDataTransferStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(OfflineDataTransferStatus))
             {
                 writer.WritePropertyName("offlineDataTransferStatus"u8);
                 writer.WriteStringValue(OfflineDataTransferStatus.Value.ToString());
             }
-            if (options.Format != "W" && BackgroundDataDownloadActivity != null)
+            if (options.Format != "W" && Optional.IsDefined(BackgroundDataDownloadActivity))
             {
                 writer.WritePropertyName("backgroundDataDownloadActivity"u8);
                 writer.WriteObjectValue(BackgroundDataDownloadActivity);
@@ -124,18 +125,18 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<ServerEndpointHealthState> downloadHealth = default;
-            Optional<ServerEndpointHealthState> uploadHealth = default;
-            Optional<ServerEndpointHealthState> combinedHealth = default;
-            Optional<ServerEndpointSyncActivityState> syncActivity = default;
-            Optional<long> totalPersistentFilesNotSyncingCount = default;
-            Optional<DateTimeOffset> lastUpdatedTimestamp = default;
-            Optional<ServerEndpointSyncSessionStatus> uploadStatus = default;
-            Optional<ServerEndpointSyncSessionStatus> downloadStatus = default;
-            Optional<ServerEndpointSyncActivityStatus> uploadActivity = default;
-            Optional<ServerEndpointSyncActivityStatus> downloadActivity = default;
-            Optional<ServerEndpointOfflineDataTransferState> offlineDataTransferStatus = default;
-            Optional<ServerEndpointBackgroundDataDownloadActivity> backgroundDataDownloadActivity = default;
+            ServerEndpointHealthState? downloadHealth = default;
+            ServerEndpointHealthState? uploadHealth = default;
+            ServerEndpointHealthState? combinedHealth = default;
+            ServerEndpointSyncActivityState? syncActivity = default;
+            long? totalPersistentFilesNotSyncingCount = default;
+            DateTimeOffset? lastUpdatedTimestamp = default;
+            ServerEndpointSyncSessionStatus uploadStatus = default;
+            ServerEndpointSyncSessionStatus downloadStatus = default;
+            ServerEndpointSyncActivityStatus uploadActivity = default;
+            ServerEndpointSyncActivityStatus downloadActivity = default;
+            ServerEndpointOfflineDataTransferState? offlineDataTransferStatus = default;
+            ServerEndpointBackgroundDataDownloadActivity backgroundDataDownloadActivity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -255,18 +256,18 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ServerEndpointSyncStatus(
-                Optional.ToNullable(downloadHealth),
-                Optional.ToNullable(uploadHealth),
-                Optional.ToNullable(combinedHealth),
-                Optional.ToNullable(syncActivity),
-                Optional.ToNullable(totalPersistentFilesNotSyncingCount),
-                Optional.ToNullable(lastUpdatedTimestamp),
-                uploadStatus.Value,
-                downloadStatus.Value,
-                uploadActivity.Value,
-                downloadActivity.Value,
-                Optional.ToNullable(offlineDataTransferStatus),
-                backgroundDataDownloadActivity.Value,
+                downloadHealth,
+                uploadHealth,
+                combinedHealth,
+                syncActivity,
+                totalPersistentFilesNotSyncingCount,
+                lastUpdatedTimestamp,
+                uploadStatus,
+                downloadStatus,
+                uploadActivity,
+                downloadActivity,
+                offlineDataTransferStatus,
+                backgroundDataDownloadActivity,
                 serializedAdditionalRawData);
         }
 

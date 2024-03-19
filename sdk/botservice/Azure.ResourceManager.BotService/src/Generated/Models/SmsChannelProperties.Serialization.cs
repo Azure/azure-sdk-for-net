@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.BotService;
 
 namespace Azure.ResourceManager.BotService.Models
 {
@@ -30,12 +31,12 @@ namespace Azure.ResourceManager.BotService.Models
             writer.WriteStringValue(Phone);
             writer.WritePropertyName("accountSID"u8);
             writer.WriteStringValue(AccountSID);
-            if (AuthToken != null)
+            if (Optional.IsDefined(AuthToken))
             {
                 writer.WritePropertyName("authToken"u8);
                 writer.WriteStringValue(AuthToken);
             }
-            if (IsValidated.HasValue)
+            if (Optional.IsDefined(IsValidated))
             {
                 writer.WritePropertyName("isValidated"u8);
                 writer.WriteBooleanValue(IsValidated.Value);
@@ -82,8 +83,8 @@ namespace Azure.ResourceManager.BotService.Models
             }
             string phone = default;
             string accountSID = default;
-            Optional<string> authToken = default;
-            Optional<bool> isValidated = default;
+            string authToken = default;
+            bool? isValidated = default;
             bool isEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -127,8 +128,8 @@ namespace Azure.ResourceManager.BotService.Models
             return new SmsChannelProperties(
                 phone,
                 accountSID,
-                authToken.Value,
-                Optional.ToNullable(isValidated),
+                authToken,
+                isValidated,
                 isEnabled,
                 serializedAdditionalRawData);
         }

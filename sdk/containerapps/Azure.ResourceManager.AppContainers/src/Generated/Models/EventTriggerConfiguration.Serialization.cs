@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (ReplicaCompletionCount.HasValue)
+            if (Optional.IsDefined(ReplicaCompletionCount))
             {
                 writer.WritePropertyName("replicaCompletionCount"u8);
                 writer.WriteNumberValue(ReplicaCompletionCount.Value);
             }
-            if (Parallelism.HasValue)
+            if (Optional.IsDefined(Parallelism))
             {
                 writer.WritePropertyName("parallelism"u8);
                 writer.WriteNumberValue(Parallelism.Value);
             }
-            if (Scale != null)
+            if (Optional.IsDefined(Scale))
             {
                 writer.WritePropertyName("scale"u8);
                 writer.WriteObjectValue(Scale);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<int> replicaCompletionCount = default;
-            Optional<int> parallelism = default;
-            Optional<ContainerAppJobScale> scale = default;
+            int? replicaCompletionCount = default;
+            int? parallelism = default;
+            ContainerAppJobScale scale = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventTriggerConfiguration(Optional.ToNullable(replicaCompletionCount), Optional.ToNullable(parallelism), scale.Value, serializedAdditionalRawData);
+            return new EventTriggerConfiguration(replicaCompletionCount, parallelism, scale, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventTriggerConfiguration>.Write(ModelReaderWriterOptions options)

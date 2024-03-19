@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Datadog;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
@@ -26,42 +27,42 @@ namespace Azure.ResourceManager.Datadog.Models
             }
 
             writer.WriteStartObject();
-            if (Publisher != null)
+            if (Optional.IsDefined(Publisher))
             {
                 writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
             }
-            if (Product != null)
+            if (Optional.IsDefined(Product))
             {
                 writer.WritePropertyName("product"u8);
                 writer.WriteStringValue(Product);
             }
-            if (Plan != null)
+            if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
                 writer.WriteStringValue(Plan);
             }
-            if (LicenseTextLink != null)
+            if (Optional.IsDefined(LicenseTextLink))
             {
                 writer.WritePropertyName("licenseTextLink"u8);
                 writer.WriteStringValue(LicenseTextLink);
             }
-            if (PrivacyPolicyLink != null)
+            if (Optional.IsDefined(PrivacyPolicyLink))
             {
                 writer.WritePropertyName("privacyPolicyLink"u8);
                 writer.WriteStringValue(PrivacyPolicyLink);
             }
-            if (RetrieveDatetime.HasValue)
+            if (Optional.IsDefined(RetrieveDatetime))
             {
                 writer.WritePropertyName("retrieveDatetime"u8);
                 writer.WriteStringValue(RetrieveDatetime.Value, "O");
             }
-            if (Signature != null)
+            if (Optional.IsDefined(Signature))
             {
                 writer.WritePropertyName("signature"u8);
                 writer.WriteStringValue(Signature);
             }
-            if (Accepted.HasValue)
+            if (Optional.IsDefined(Accepted))
             {
                 writer.WritePropertyName("accepted"u8);
                 writer.WriteBooleanValue(Accepted.Value);
@@ -104,14 +105,14 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            Optional<string> publisher = default;
-            Optional<string> product = default;
-            Optional<string> plan = default;
-            Optional<string> licenseTextLink = default;
-            Optional<string> privacyPolicyLink = default;
-            Optional<DateTimeOffset> retrieveDatetime = default;
-            Optional<string> signature = default;
-            Optional<bool> accepted = default;
+            string publisher = default;
+            string product = default;
+            string plan = default;
+            string licenseTextLink = default;
+            string privacyPolicyLink = default;
+            DateTimeOffset? retrieveDatetime = default;
+            string signature = default;
+            bool? accepted = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -171,14 +172,14 @@ namespace Azure.ResourceManager.Datadog.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DatadogAgreementProperties(
-                publisher.Value,
-                product.Value,
-                plan.Value,
-                licenseTextLink.Value,
-                privacyPolicyLink.Value,
-                Optional.ToNullable(retrieveDatetime),
-                signature.Value,
-                Optional.ToNullable(accepted),
+                publisher,
+                product,
+                plan,
+                licenseTextLink,
+                privacyPolicyLink,
+                retrieveDatetime,
+                signature,
+                accepted,
                 serializedAdditionalRawData);
         }
 

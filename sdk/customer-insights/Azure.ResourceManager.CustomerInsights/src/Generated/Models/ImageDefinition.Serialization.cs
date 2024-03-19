@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CustomerInsights;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
 
             writer.WriteStartObject();
-            if (ImageExists.HasValue)
+            if (Optional.IsDefined(ImageExists))
             {
                 writer.WritePropertyName("imageExists"u8);
                 writer.WriteBooleanValue(ImageExists.Value);
             }
-            if (ContentUri != null)
+            if (Optional.IsDefined(ContentUri))
             {
                 writer.WritePropertyName("contentUrl"u8);
                 writer.WriteStringValue(ContentUri.AbsoluteUri);
             }
-            if (RelativePath != null)
+            if (Optional.IsDefined(RelativePath))
             {
                 writer.WritePropertyName("relativePath"u8);
                 writer.WriteStringValue(RelativePath);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<bool> imageExists = default;
-            Optional<Uri> contentUrl = default;
-            Optional<string> relativePath = default;
+            bool? imageExists = default;
+            Uri contentUrl = default;
+            string relativePath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImageDefinition(Optional.ToNullable(imageExists), contentUrl.Value, relativePath.Value, serializedAdditionalRawData);
+            return new ImageDefinition(imageExists, contentUrl, relativePath, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ImageDefinition>.Write(ModelReaderWriterOptions options)

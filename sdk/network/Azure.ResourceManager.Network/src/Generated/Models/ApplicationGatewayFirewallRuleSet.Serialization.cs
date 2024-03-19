@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -59,22 +60,22 @@ namespace Azure.ResourceManager.Network.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (RuleSetType != null)
+            if (Optional.IsDefined(RuleSetType))
             {
                 writer.WritePropertyName("ruleSetType"u8);
                 writer.WriteStringValue(RuleSetType);
             }
-            if (RuleSetVersion != null)
+            if (Optional.IsDefined(RuleSetVersion))
             {
                 writer.WritePropertyName("ruleSetVersion"u8);
                 writer.WriteStringValue(RuleSetVersion);
             }
-            if (!(RuleGroups is ChangeTrackingList<ApplicationGatewayFirewallRuleGroup> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(RuleGroups))
             {
                 writer.WritePropertyName("ruleGroups"u8);
                 writer.WriteStartArray();
@@ -84,7 +85,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Tiers is ChangeTrackingList<ApplicationGatewayTierType> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Tiers))
             {
                 writer.WritePropertyName("tiers"u8);
                 writer.WriteStartArray();
@@ -133,14 +134,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
             IDictionary<string, string> tags = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<string> ruleSetType = default;
-            Optional<string> ruleSetVersion = default;
+            NetworkProvisioningState? provisioningState = default;
+            string ruleSetType = default;
+            string ruleSetVersion = default;
             IList<ApplicationGatewayFirewallRuleGroup> ruleGroups = default;
             IList<ApplicationGatewayTierType> tiers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -259,15 +260,15 @@ namespace Azure.ResourceManager.Network.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ApplicationGatewayFirewallRuleSet(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
-                Optional.ToNullable(location),
+                id,
+                name,
+                type,
+                location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
-                Optional.ToNullable(provisioningState),
-                ruleSetType.Value,
-                ruleSetVersion.Value,
+                provisioningState,
+                ruleSetType,
+                ruleSetVersion,
                 ruleGroups ?? new ChangeTrackingList<ApplicationGatewayFirewallRuleGroup>(),
                 tiers ?? new ChangeTrackingList<ApplicationGatewayTierType>());
         }

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -19,59 +20,59 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ColumnDelimiter != null)
+            if (Optional.IsDefined(ColumnDelimiter))
             {
                 writer.WritePropertyName("columnDelimiter"u8);
                 writer.WriteObjectValue(ColumnDelimiter);
             }
-            if (RowDelimiter != null)
+            if (Optional.IsDefined(RowDelimiter))
             {
                 writer.WritePropertyName("rowDelimiter"u8);
                 writer.WriteObjectValue(RowDelimiter);
             }
-            if (EscapeChar != null)
+            if (Optional.IsDefined(EscapeChar))
             {
                 writer.WritePropertyName("escapeChar"u8);
                 writer.WriteObjectValue(EscapeChar);
             }
-            if (QuoteChar != null)
+            if (Optional.IsDefined(QuoteChar))
             {
                 writer.WritePropertyName("quoteChar"u8);
                 writer.WriteObjectValue(QuoteChar);
             }
-            if (NullValue != null)
+            if (Optional.IsDefined(NullValue))
             {
                 writer.WritePropertyName("nullValue"u8);
                 writer.WriteObjectValue(NullValue);
             }
-            if (EncodingName != null)
+            if (Optional.IsDefined(EncodingName))
             {
                 writer.WritePropertyName("encodingName"u8);
                 writer.WriteObjectValue(EncodingName);
             }
-            if (TreatEmptyAsNull != null)
+            if (Optional.IsDefined(TreatEmptyAsNull))
             {
                 writer.WritePropertyName("treatEmptyAsNull"u8);
                 writer.WriteObjectValue(TreatEmptyAsNull);
             }
-            if (SkipLineCount != null)
+            if (Optional.IsDefined(SkipLineCount))
             {
                 writer.WritePropertyName("skipLineCount"u8);
                 writer.WriteObjectValue(SkipLineCount);
             }
-            if (FirstRowAsHeader != null)
+            if (Optional.IsDefined(FirstRowAsHeader))
             {
                 writer.WritePropertyName("firstRowAsHeader"u8);
                 writer.WriteObjectValue(FirstRowAsHeader);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Serializer != null)
+            if (Optional.IsDefined(Serializer))
             {
                 writer.WritePropertyName("serializer"u8);
                 writer.WriteObjectValue(Serializer);
             }
-            if (Deserializer != null)
+            if (Optional.IsDefined(Deserializer))
             {
                 writer.WritePropertyName("deserializer"u8);
                 writer.WriteObjectValue(Deserializer);
@@ -90,18 +91,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> columnDelimiter = default;
-            Optional<object> rowDelimiter = default;
-            Optional<object> escapeChar = default;
-            Optional<object> quoteChar = default;
-            Optional<object> nullValue = default;
-            Optional<object> encodingName = default;
-            Optional<object> treatEmptyAsNull = default;
-            Optional<object> skipLineCount = default;
-            Optional<object> firstRowAsHeader = default;
+            object columnDelimiter = default;
+            object rowDelimiter = default;
+            object escapeChar = default;
+            object quoteChar = default;
+            object nullValue = default;
+            object encodingName = default;
+            object treatEmptyAsNull = default;
+            object skipLineCount = default;
+            object firstRowAsHeader = default;
             string type = default;
-            Optional<object> serializer = default;
-            Optional<object> deserializer = default;
+            object serializer = default;
+            object deserializer = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -215,18 +216,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new TextFormat(
                 type,
-                serializer.Value,
-                deserializer.Value,
+                serializer,
+                deserializer,
                 additionalProperties,
-                columnDelimiter.Value,
-                rowDelimiter.Value,
-                escapeChar.Value,
-                quoteChar.Value,
-                nullValue.Value,
-                encodingName.Value,
-                treatEmptyAsNull.Value,
-                skipLineCount.Value,
-                firstRowAsHeader.Value);
+                columnDelimiter,
+                rowDelimiter,
+                escapeChar,
+                quoteChar,
+                nullValue,
+                encodingName,
+                treatEmptyAsNull,
+                skipLineCount,
+                firstRowAsHeader);
         }
 
         internal partial class TextFormatConverter : JsonConverter<TextFormat>

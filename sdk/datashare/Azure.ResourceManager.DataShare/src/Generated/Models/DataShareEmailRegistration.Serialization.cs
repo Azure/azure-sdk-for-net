@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataShare;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.DataShare.Models
             }
 
             writer.WriteStartObject();
-            if (ActivationCode != null)
+            if (Optional.IsDefined(ActivationCode))
             {
                 writer.WritePropertyName("activationCode"u8);
                 writer.WriteStringValue(ActivationCode);
             }
-            if (options.Format != "W" && ActivationExpireOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ActivationExpireOn))
             {
                 writer.WritePropertyName("activationExpirationDate"u8);
                 writer.WriteStringValue(ActivationExpireOn.Value, "O");
             }
-            if (options.Format != "W" && Email != null)
+            if (options.Format != "W" && Optional.IsDefined(Email))
             {
                 writer.WritePropertyName("email"u8);
                 writer.WriteStringValue(Email);
             }
-            if (options.Format != "W" && RegistrationStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RegistrationStatus))
             {
                 writer.WritePropertyName("registrationStatus"u8);
                 writer.WriteStringValue(RegistrationStatus.Value.ToString());
             }
-            if (options.Format != "W" && TenantId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.DataShare.Models
             {
                 return null;
             }
-            Optional<string> activationCode = default;
-            Optional<DateTimeOffset> activationExpirationDate = default;
-            Optional<string> email = default;
-            Optional<DataShareEmailRegistrationStatus> registrationStatus = default;
-            Optional<Guid> tenantId = default;
+            string activationCode = default;
+            DateTimeOffset? activationExpirationDate = default;
+            string email = default;
+            DataShareEmailRegistrationStatus? registrationStatus = default;
+            Guid? tenantId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -142,11 +143,11 @@ namespace Azure.ResourceManager.DataShare.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DataShareEmailRegistration(
-                activationCode.Value,
-                Optional.ToNullable(activationExpirationDate),
-                email.Value,
-                Optional.ToNullable(registrationStatus),
-                Optional.ToNullable(tenantId),
+                activationCode,
+                activationExpirationDate,
+                email,
+                registrationStatus,
+                tenantId,
                 serializedAdditionalRawData);
         }
 

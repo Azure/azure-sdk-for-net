@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (ObjectType != null)
+            if (Optional.IsDefined(ObjectType))
             {
                 writer.WritePropertyName("objectType"u8);
                 writer.WriteStringValue(ObjectType);
             }
-            if (Action != null)
+            if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action);
             }
-            if (ObjectKey != null)
+            if (Optional.IsDefined(ObjectKey))
             {
                 writer.WritePropertyName("objectKey"u8);
                 writer.WriteStringValue(ObjectKey);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> objectType = default;
-            Optional<string> action = default;
-            Optional<string> objectKey = default;
+            string objectType = default;
+            string action = default;
+            string objectKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationResultLogItemContract(objectType.Value, action.Value, objectKey.Value, serializedAdditionalRawData);
+            return new OperationResultLogItemContract(objectType, action, objectKey, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationResultLogItemContract>.Write(ModelReaderWriterOptions options)

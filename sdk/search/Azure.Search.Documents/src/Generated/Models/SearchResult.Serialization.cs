@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Models
 {
@@ -20,7 +20,7 @@ namespace Azure.Search.Documents.Models
                 return null;
             }
             double searchScore = default;
-            Optional<double?> searchRerankerScore = default;
+            double? searchRerankerScore = default;
             IReadOnlyDictionary<string, IList<string>> searchHighlights = default;
             IReadOnlyList<QueryCaptionResult> searchCaptions = default;
             IReadOnlyList<DocumentDebugInfo> searchDocumentDebugInfo = default;
@@ -104,7 +104,7 @@ namespace Azure.Search.Documents.Models
             additionalProperties = additionalPropertiesDictionary;
             return new SearchResult(
                 searchScore,
-                Optional.ToNullable(searchRerankerScore),
+                searchRerankerScore,
                 searchHighlights ?? new ChangeTrackingDictionary<string, IList<string>>(),
                 searchCaptions ?? new ChangeTrackingList<QueryCaptionResult>(),
                 searchDocumentDebugInfo ?? new ChangeTrackingList<DocumentDebugInfo>(),

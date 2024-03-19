@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (IsSecondaryIPEnabled.HasValue)
+            if (Optional.IsDefined(IsSecondaryIPEnabled))
             {
                 writer.WritePropertyName("isSecondaryIpEnabled"u8);
                 writer.WriteBooleanValue(IsSecondaryIPEnabled.Value);
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<bool> isSecondaryIPEnabled = default;
+            bool? isSecondaryIPEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkConfiguration(Optional.ToNullable(isSecondaryIPEnabled), serializedAdditionalRawData);
+            return new NetworkConfiguration(isSecondaryIPEnabled, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkConfiguration>.Write(ModelReaderWriterOptions options)

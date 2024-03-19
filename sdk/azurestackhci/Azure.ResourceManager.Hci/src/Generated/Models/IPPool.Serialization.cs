@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (IPPoolType.HasValue)
+            if (Optional.IsDefined(IPPoolType))
             {
                 writer.WritePropertyName("ipPoolType"u8);
                 writer.WriteStringValue(IPPoolType.Value.ToSerialString());
             }
-            if (Start != null)
+            if (Optional.IsDefined(Start))
             {
                 writer.WritePropertyName("start"u8);
                 writer.WriteStringValue(Start);
             }
-            if (End != null)
+            if (Optional.IsDefined(End))
             {
                 writer.WritePropertyName("end"u8);
                 writer.WriteStringValue(End);
             }
-            if (Info != null)
+            if (Optional.IsDefined(Info))
             {
                 writer.WritePropertyName("info"u8);
                 writer.WriteObjectValue(Info);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<IPPoolTypeEnum> ipPoolType = default;
-            Optional<string> start = default;
-            Optional<string> end = default;
-            Optional<IPPoolInfo> info = default;
+            string name = default;
+            IPPoolTypeEnum? ipPoolType = default;
+            string start = default;
+            string end = default;
+            IPPoolInfo info = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,11 +139,11 @@ namespace Azure.ResourceManager.Hci.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new IPPool(
-                name.Value,
-                Optional.ToNullable(ipPoolType),
-                start.Value,
-                end.Value,
-                info.Value,
+                name,
+                ipPoolType,
+                start,
+                end,
+                info,
                 serializedAdditionalRawData);
         }
 

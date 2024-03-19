@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Subscription;
 
 namespace Azure.ResourceManager.Subscription.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Subscription.Models
             }
 
             writer.WriteStartObject();
-            if (!(ServiceTenants is ChangeTrackingList<ServiceTenant> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ServiceTenants))
             {
                 writer.WritePropertyName("serviceTenants"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Subscription.Models
                 }
                 writer.WriteEndArray();
             }
-            if (AllowTransfers.HasValue)
+            if (Optional.IsDefined(AllowTransfers))
             {
                 writer.WritePropertyName("allowTransfers"u8);
                 writer.WriteBooleanValue(AllowTransfers.Value);
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.Subscription.Models
                 return null;
             }
             IReadOnlyList<ServiceTenant> serviceTenants = default;
-            Optional<bool> allowTransfers = default;
+            bool? allowTransfers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.Subscription.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BillingAccountPolicyProperties(serviceTenants ?? new ChangeTrackingList<ServiceTenant>(), Optional.ToNullable(allowTransfers), serializedAdditionalRawData);
+            return new BillingAccountPolicyProperties(serviceTenants ?? new ChangeTrackingList<ServiceTenant>(), allowTransfers, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BillingAccountPolicyProperties>.Write(ModelReaderWriterOptions options)

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -27,12 +28,12 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (DefaultAction.HasValue)
+            if (Optional.IsDefined(DefaultAction))
             {
                 writer.WritePropertyName("defaultAction"u8);
                 writer.WriteStringValue(DefaultAction.Value.ToString());
             }
-            if (!(IPAllowList is ChangeTrackingList<IPAddress> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(IPAllowList))
             {
                 writer.WritePropertyName("ipAllowList"u8);
                 writer.WriteStartArray();
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<IPAccessControlDefaultAction> defaultAction = default;
+            IPAccessControlDefaultAction? defaultAction = default;
             IList<IPAddress> ipAllowList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -127,7 +128,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaAccessControl(Optional.ToNullable(defaultAction), ipAllowList ?? new ChangeTrackingList<IPAddress>(), serializedAdditionalRawData);
+            return new MediaAccessControl(defaultAction, ipAllowList ?? new ChangeTrackingList<IPAddress>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MediaAccessControl>.Write(ModelReaderWriterOptions options)

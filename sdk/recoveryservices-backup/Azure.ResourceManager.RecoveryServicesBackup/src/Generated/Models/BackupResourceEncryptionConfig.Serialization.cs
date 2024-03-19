@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (EncryptionAtRestType.HasValue)
+            if (Optional.IsDefined(EncryptionAtRestType))
             {
                 writer.WritePropertyName("encryptionAtRestType"u8);
                 writer.WriteStringValue(EncryptionAtRestType.Value.ToString());
             }
-            if (KeyUri != null)
+            if (Optional.IsDefined(KeyUri))
             {
                 writer.WritePropertyName("keyUri"u8);
                 writer.WriteStringValue(KeyUri.AbsoluteUri);
             }
-            if (SubscriptionId != null)
+            if (Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (LastUpdateStatus.HasValue)
+            if (Optional.IsDefined(LastUpdateStatus))
             {
                 writer.WritePropertyName("lastUpdateStatus"u8);
                 writer.WriteStringValue(LastUpdateStatus.Value.ToString());
             }
-            if (InfrastructureEncryptionState.HasValue)
+            if (Optional.IsDefined(InfrastructureEncryptionState))
             {
                 writer.WritePropertyName("infrastructureEncryptionState"u8);
                 writer.WriteStringValue(InfrastructureEncryptionState.Value.ToString());
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<BackupEncryptionAtRestType> encryptionAtRestType = default;
-            Optional<Uri> keyUri = default;
-            Optional<string> subscriptionId = default;
-            Optional<LastUpdateStatus> lastUpdateStatus = default;
-            Optional<InfrastructureEncryptionState> infrastructureEncryptionState = default;
+            BackupEncryptionAtRestType? encryptionAtRestType = default;
+            Uri keyUri = default;
+            string subscriptionId = default;
+            LastUpdateStatus? lastUpdateStatus = default;
+            InfrastructureEncryptionState? infrastructureEncryptionState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,11 +147,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new BackupResourceEncryptionConfig(
-                Optional.ToNullable(encryptionAtRestType),
-                keyUri.Value,
-                subscriptionId.Value,
-                Optional.ToNullable(lastUpdateStatus),
-                Optional.ToNullable(infrastructureEncryptionState),
+                encryptionAtRestType,
+                keyUri,
+                subscriptionId,
+                lastUpdateStatus,
+                infrastructureEncryptionState,
                 serializedAdditionalRawData);
         }
 

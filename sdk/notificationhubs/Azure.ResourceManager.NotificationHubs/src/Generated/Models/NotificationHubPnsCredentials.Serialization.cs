@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.NotificationHubs;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
@@ -27,12 +28,12 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             }
 
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -60,39 +61,39 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ApnsCredential != null)
+            if (Optional.IsDefined(ApnsCredential))
             {
                 writer.WritePropertyName("apnsCredential"u8);
                 writer.WriteObjectValue(ApnsCredential);
             }
-            if (WnsCredential != null)
+            if (Optional.IsDefined(WnsCredential))
             {
                 writer.WritePropertyName("wnsCredential"u8);
                 writer.WriteObjectValue(WnsCredential);
             }
-            if (GcmCredential != null)
+            if (Optional.IsDefined(GcmCredential))
             {
                 writer.WritePropertyName("gcmCredential"u8);
                 writer.WriteObjectValue(GcmCredential);
             }
-            if (MpnsCredential != null)
+            if (Optional.IsDefined(MpnsCredential))
             {
                 writer.WritePropertyName("mpnsCredential"u8);
                 writer.WriteObjectValue(MpnsCredential);
             }
-            if (AdmCredential != null)
+            if (Optional.IsDefined(AdmCredential))
             {
                 writer.WritePropertyName("admCredential"u8);
                 writer.WriteObjectValue(AdmCredential);
             }
-            if (BaiduCredential != null)
+            if (Optional.IsDefined(BaiduCredential))
             {
                 writer.WritePropertyName("baiduCredential"u8);
                 writer.WriteObjectValue(BaiduCredential);
@@ -136,19 +137,19 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             {
                 return null;
             }
-            Optional<NotificationHubSku> sku = default;
+            NotificationHubSku sku = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<NotificationHubApnsCredential> apnsCredential = default;
-            Optional<NotificationHubWnsCredential> wnsCredential = default;
-            Optional<NotificationHubGcmCredential> gcmCredential = default;
-            Optional<NotificationHubMpnsCredential> mpnsCredential = default;
-            Optional<NotificationHubAdmCredential> admCredential = default;
-            Optional<NotificationHubBaiduCredential> baiduCredential = default;
+            SystemData systemData = default;
+            NotificationHubApnsCredential apnsCredential = default;
+            NotificationHubWnsCredential wnsCredential = default;
+            NotificationHubGcmCredential gcmCredential = default;
+            NotificationHubMpnsCredential mpnsCredential = default;
+            NotificationHubAdmCredential admCredential = default;
+            NotificationHubBaiduCredential baiduCredential = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -281,16 +282,16 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                apnsCredential.Value,
-                wnsCredential.Value,
-                gcmCredential.Value,
-                mpnsCredential.Value,
-                admCredential.Value,
-                baiduCredential.Value,
-                sku.Value,
+                apnsCredential,
+                wnsCredential,
+                gcmCredential,
+                mpnsCredential,
+                admCredential,
+                baiduCredential,
+                sku,
                 serializedAdditionalRawData);
         }
 

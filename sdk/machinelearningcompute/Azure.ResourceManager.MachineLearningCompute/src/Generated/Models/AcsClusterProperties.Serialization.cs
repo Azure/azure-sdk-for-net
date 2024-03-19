@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearningCompute;
 
 namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
@@ -26,19 +27,19 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ClusterFqdn != null)
+            if (options.Format != "W" && Optional.IsDefined(ClusterFqdn))
             {
                 writer.WritePropertyName("clusterFqdn"u8);
                 writer.WriteStringValue(ClusterFqdn);
             }
             writer.WritePropertyName("orchestratorType"u8);
             writer.WriteStringValue(OrchestratorType.ToString());
-            if (OrchestratorProperties != null)
+            if (Optional.IsDefined(OrchestratorProperties))
             {
                 writer.WritePropertyName("orchestratorProperties"u8);
                 writer.WriteObjectValue(OrchestratorProperties);
             }
-            if (!(SystemServices is ChangeTrackingList<SystemService> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SystemServices))
             {
                 writer.WritePropertyName("systemServices"u8);
                 writer.WriteStartArray();
@@ -48,17 +49,17 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (MasterCount.HasValue)
+            if (Optional.IsDefined(MasterCount))
             {
                 writer.WritePropertyName("masterCount"u8);
                 writer.WriteNumberValue(MasterCount.Value);
             }
-            if (AgentCount.HasValue)
+            if (Optional.IsDefined(AgentCount))
             {
                 writer.WritePropertyName("agentCount"u8);
                 writer.WriteNumberValue(AgentCount.Value);
             }
-            if (AgentVmSize.HasValue)
+            if (Optional.IsDefined(AgentVmSize))
             {
                 writer.WritePropertyName("agentVmSize"u8);
                 writer.WriteStringValue(AgentVmSize.Value.ToString());
@@ -101,13 +102,13 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             {
                 return null;
             }
-            Optional<string> clusterFqdn = default;
+            string clusterFqdn = default;
             OrchestratorType orchestratorType = default;
-            Optional<KubernetesClusterProperties> orchestratorProperties = default;
+            KubernetesClusterProperties orchestratorProperties = default;
             IList<SystemService> systemServices = default;
-            Optional<int> masterCount = default;
-            Optional<int> agentCount = default;
-            Optional<AgentVmSizeType> agentVmSize = default;
+            int? masterCount = default;
+            int? agentCount = default;
+            AgentVmSizeType? agentVmSize = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,13 +180,13 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AcsClusterProperties(
-                clusterFqdn.Value,
+                clusterFqdn,
                 orchestratorType,
-                orchestratorProperties.Value,
+                orchestratorProperties,
                 systemServices ?? new ChangeTrackingList<SystemService>(),
-                Optional.ToNullable(masterCount),
-                Optional.ToNullable(agentCount),
-                Optional.ToNullable(agentVmSize),
+                masterCount,
+                agentCount,
+                agentVmSize,
                 serializedAdditionalRawData);
         }
 

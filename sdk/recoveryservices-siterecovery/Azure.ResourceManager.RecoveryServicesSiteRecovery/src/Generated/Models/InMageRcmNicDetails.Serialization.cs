@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -27,67 +28,67 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && NicId != null)
+            if (options.Format != "W" && Optional.IsDefined(NicId))
             {
                 writer.WritePropertyName("nicId"u8);
                 writer.WriteStringValue(NicId);
             }
-            if (IsPrimaryNic != null)
+            if (Optional.IsDefined(IsPrimaryNic))
             {
                 writer.WritePropertyName("isPrimaryNic"u8);
                 writer.WriteStringValue(IsPrimaryNic);
             }
-            if (IsSelectedForFailover != null)
+            if (Optional.IsDefined(IsSelectedForFailover))
             {
                 writer.WritePropertyName("isSelectedForFailover"u8);
                 writer.WriteStringValue(IsSelectedForFailover);
             }
-            if (options.Format != "W" && SourceIPAddress != null)
+            if (options.Format != "W" && Optional.IsDefined(SourceIPAddress))
             {
                 writer.WritePropertyName("sourceIPAddress"u8);
                 writer.WriteStringValue(SourceIPAddress.ToString());
             }
-            if (options.Format != "W" && SourceIPAddressType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SourceIPAddressType))
             {
                 writer.WritePropertyName("sourceIPAddressType"u8);
                 writer.WriteStringValue(SourceIPAddressType.Value.ToString());
             }
-            if (options.Format != "W" && SourceNetworkId != null)
+            if (options.Format != "W" && Optional.IsDefined(SourceNetworkId))
             {
                 writer.WritePropertyName("sourceNetworkId"u8);
                 writer.WriteStringValue(SourceNetworkId);
             }
-            if (options.Format != "W" && SourceSubnetName != null)
+            if (options.Format != "W" && Optional.IsDefined(SourceSubnetName))
             {
                 writer.WritePropertyName("sourceSubnetName"u8);
                 writer.WriteStringValue(SourceSubnetName);
             }
-            if (TargetIPAddress != null)
+            if (Optional.IsDefined(TargetIPAddress))
             {
                 writer.WritePropertyName("targetIPAddress"u8);
                 writer.WriteStringValue(TargetIPAddress.ToString());
             }
-            if (TargetIPAddressType.HasValue)
+            if (Optional.IsDefined(TargetIPAddressType))
             {
                 writer.WritePropertyName("targetIPAddressType"u8);
                 writer.WriteStringValue(TargetIPAddressType.Value.ToString());
             }
-            if (TargetSubnetName != null)
+            if (Optional.IsDefined(TargetSubnetName))
             {
                 writer.WritePropertyName("targetSubnetName"u8);
                 writer.WriteStringValue(TargetSubnetName);
             }
-            if (TestSubnetName != null)
+            if (Optional.IsDefined(TestSubnetName))
             {
                 writer.WritePropertyName("testSubnetName"u8);
                 writer.WriteStringValue(TestSubnetName);
             }
-            if (TestIPAddress != null)
+            if (Optional.IsDefined(TestIPAddress))
             {
                 writer.WritePropertyName("testIPAddress"u8);
                 writer.WriteStringValue(TestIPAddress.ToString());
             }
-            if (TestIPAddressType.HasValue)
+            if (Optional.IsDefined(TestIPAddressType))
             {
                 writer.WritePropertyName("testIPAddressType"u8);
                 writer.WriteStringValue(TestIPAddressType.Value.ToString());
@@ -130,19 +131,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> nicId = default;
-            Optional<string> isPrimaryNic = default;
-            Optional<string> isSelectedForFailover = default;
-            Optional<IPAddress> sourceIPAddress = default;
-            Optional<SiteRecoveryEthernetAddressType> sourceIPAddressType = default;
-            Optional<ResourceIdentifier> sourceNetworkId = default;
-            Optional<string> sourceSubnetName = default;
-            Optional<IPAddress> targetIPAddress = default;
-            Optional<SiteRecoveryEthernetAddressType> targetIPAddressType = default;
-            Optional<string> targetSubnetName = default;
-            Optional<string> testSubnetName = default;
-            Optional<IPAddress> testIPAddress = default;
-            Optional<SiteRecoveryEthernetAddressType> testIPAddressType = default;
+            string nicId = default;
+            string isPrimaryNic = default;
+            string isSelectedForFailover = default;
+            IPAddress sourceIPAddress = default;
+            SiteRecoveryEthernetAddressType? sourceIPAddressType = default;
+            ResourceIdentifier sourceNetworkId = default;
+            string sourceSubnetName = default;
+            IPAddress targetIPAddress = default;
+            SiteRecoveryEthernetAddressType? targetIPAddressType = default;
+            string targetSubnetName = default;
+            string testSubnetName = default;
+            IPAddress testIPAddress = default;
+            SiteRecoveryEthernetAddressType? testIPAddressType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -247,19 +248,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new InMageRcmNicDetails(
-                nicId.Value,
-                isPrimaryNic.Value,
-                isSelectedForFailover.Value,
-                sourceIPAddress.Value,
-                Optional.ToNullable(sourceIPAddressType),
-                sourceNetworkId.Value,
-                sourceSubnetName.Value,
-                targetIPAddress.Value,
-                Optional.ToNullable(targetIPAddressType),
-                targetSubnetName.Value,
-                testSubnetName.Value,
-                testIPAddress.Value,
-                Optional.ToNullable(testIPAddressType),
+                nicId,
+                isPrimaryNic,
+                isSelectedForFailover,
+                sourceIPAddress,
+                sourceIPAddressType,
+                sourceNetworkId,
+                sourceSubnetName,
+                targetIPAddress,
+                targetIPAddressType,
+                targetSubnetName,
+                testSubnetName,
+                testIPAddress,
+                testIPAddressType,
                 serializedAdditionalRawData);
         }
 

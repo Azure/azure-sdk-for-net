@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -26,19 +27,19 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
 
             writer.WriteStartObject();
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
             writer.WritePropertyName("port"u8);
             writer.WriteNumberValue(Port);
-            if (Scheme.HasValue)
+            if (Optional.IsDefined(Scheme))
             {
                 writer.WritePropertyName("scheme"u8);
                 writer.WriteStringValue(Scheme.Value.ToString());
             }
-            if (!(HttpHeaders is ChangeTrackingList<ContainerHttpHeader> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(HttpHeaders))
             {
                 writer.WritePropertyName("httpHeaders"u8);
                 writer.WriteStartArray();
@@ -86,9 +87,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            Optional<string> path = default;
+            string path = default;
             int port = default;
-            Optional<ContainerHttpGetScheme> scheme = default;
+            ContainerHttpGetScheme? scheme = default;
             IList<ContainerHttpHeader> httpHeaders = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -133,7 +134,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerHttpGet(path.Value, port, Optional.ToNullable(scheme), httpHeaders ?? new ChangeTrackingList<ContainerHttpHeader>(), serializedAdditionalRawData);
+            return new ContainerHttpGet(path, port, scheme, httpHeaders ?? new ChangeTrackingList<ContainerHttpHeader>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerHttpGet>.Write(ModelReaderWriterOptions options)

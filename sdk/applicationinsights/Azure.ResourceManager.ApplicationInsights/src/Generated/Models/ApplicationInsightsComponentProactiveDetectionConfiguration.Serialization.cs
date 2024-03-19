@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("Name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("Enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (SendEmailsToSubscriptionOwners.HasValue)
+            if (Optional.IsDefined(SendEmailsToSubscriptionOwners))
             {
                 writer.WritePropertyName("SendEmailsToSubscriptionOwners"u8);
                 writer.WriteBooleanValue(SendEmailsToSubscriptionOwners.Value);
             }
-            if (!(CustomEmails is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CustomEmails))
             {
                 writer.WritePropertyName("CustomEmails"u8);
                 writer.WriteStartArray();
@@ -51,12 +52,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (LastUpdatedTime != null)
+            if (Optional.IsDefined(LastUpdatedTime))
             {
                 writer.WritePropertyName("LastUpdatedTime"u8);
                 writer.WriteStringValue(LastUpdatedTime);
             }
-            if (RuleDefinitions != null)
+            if (Optional.IsDefined(RuleDefinitions))
             {
                 writer.WritePropertyName("RuleDefinitions"u8);
                 writer.WriteObjectValue(RuleDefinitions);
@@ -99,12 +100,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<bool> enabled = default;
-            Optional<bool> sendEmailsToSubscriptionOwners = default;
+            string name = default;
+            bool? enabled = default;
+            bool? sendEmailsToSubscriptionOwners = default;
             IList<string> customEmails = default;
-            Optional<string> lastUpdatedTime = default;
-            Optional<ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions> ruleDefinitions = default;
+            string lastUpdatedTime = default;
+            ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions ruleDefinitions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -167,12 +168,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ApplicationInsightsComponentProactiveDetectionConfiguration(
-                name.Value,
-                Optional.ToNullable(enabled),
-                Optional.ToNullable(sendEmailsToSubscriptionOwners),
+                name,
+                enabled,
+                sendEmailsToSubscriptionOwners,
                 customEmails ?? new ChangeTrackingList<string>(),
-                lastUpdatedTime.Value,
-                ruleDefinitions.Value,
+                lastUpdatedTime,
+                ruleDefinitions,
                 serializedAdditionalRawData);
         }
 

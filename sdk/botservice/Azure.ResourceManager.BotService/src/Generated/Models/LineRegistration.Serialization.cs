@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.BotService;
 
 namespace Azure.ResourceManager.BotService.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.BotService.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && GeneratedId != null)
+            if (options.Format != "W" && Optional.IsDefined(GeneratedId))
             {
                 writer.WritePropertyName("generatedId"u8);
                 writer.WriteStringValue(GeneratedId);
             }
-            if (ChannelSecret != null)
+            if (Optional.IsDefined(ChannelSecret))
             {
                 writer.WritePropertyName("channelSecret"u8);
                 writer.WriteStringValue(ChannelSecret);
             }
-            if (ChannelAccessToken != null)
+            if (Optional.IsDefined(ChannelAccessToken))
             {
                 writer.WritePropertyName("channelAccessToken"u8);
                 writer.WriteStringValue(ChannelAccessToken);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Optional<string> generatedId = default;
-            Optional<string> channelSecret = default;
-            Optional<string> channelAccessToken = default;
+            string generatedId = default;
+            string channelSecret = default;
+            string channelAccessToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LineRegistration(generatedId.Value, channelSecret.Value, channelAccessToken.Value, serializedAdditionalRawData);
+            return new LineRegistration(generatedId, channelSecret, channelAccessToken, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LineRegistration>.Write(ModelReaderWriterOptions options)

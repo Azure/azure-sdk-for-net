@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppPlatform;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Source != null)
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteObjectValue(Source);
             }
-            if (DeploymentSettings != null)
+            if (Optional.IsDefined(DeploymentSettings))
             {
                 writer.WritePropertyName("deploymentSettings"u8);
                 writer.WriteObjectValue(DeploymentSettings);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (IsActive.HasValue)
+            if (Optional.IsDefined(IsActive))
             {
                 writer.WritePropertyName("active"u8);
                 writer.WriteBooleanValue(IsActive.Value);
             }
-            if (options.Format != "W" && !(Instances is ChangeTrackingList<AppPlatformDeploymentInstance> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Instances))
             {
                 writer.WritePropertyName("instances"u8);
                 writer.WriteStartArray();
@@ -99,11 +100,11 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<AppPlatformUserSourceInfo> source = default;
-            Optional<AppPlatformDeploymentSettings> deploymentSettings = default;
-            Optional<AppPlatformDeploymentProvisioningState> provisioningState = default;
-            Optional<AppPlatformDeploymentStatus> status = default;
-            Optional<bool> active = default;
+            AppPlatformUserSourceInfo source = default;
+            AppPlatformDeploymentSettings deploymentSettings = default;
+            AppPlatformDeploymentProvisioningState? provisioningState = default;
+            AppPlatformDeploymentStatus? status = default;
+            bool? active = default;
             IReadOnlyList<AppPlatformDeploymentInstance> instances = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -175,11 +176,11 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AppPlatformDeploymentProperties(
-                source.Value,
-                deploymentSettings.Value,
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(status),
-                Optional.ToNullable(active),
+                source,
+                deploymentSettings,
+                provisioningState,
+                status,
+                active,
                 instances ?? new ChangeTrackingList<AppPlatformDeploymentInstance>(),
                 serializedAdditionalRawData);
         }

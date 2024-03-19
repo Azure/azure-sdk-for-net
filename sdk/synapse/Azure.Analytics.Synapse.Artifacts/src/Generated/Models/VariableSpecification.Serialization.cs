@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -20,7 +21,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
-            if (DefaultValue != null)
+            if (Optional.IsDefined(DefaultValue))
             {
                 writer.WritePropertyName("defaultValue"u8);
                 writer.WriteObjectValue(DefaultValue);
@@ -35,7 +36,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             VariableType type = default;
-            Optional<object> defaultValue = default;
+            object defaultValue = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -53,7 +54,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new VariableSpecification(type, defaultValue.Value);
+            return new VariableSpecification(type, defaultValue);
         }
 
         internal partial class VariableSpecificationConverter : JsonConverter<VariableSpecification>

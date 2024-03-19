@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -27,12 +28,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (AttachedNetworkConfiguration != null)
+            if (Optional.IsDefined(AttachedNetworkConfiguration))
             {
                 writer.WritePropertyName("attachedNetworkConfiguration"u8);
                 writer.WriteObjectValue(AttachedNetworkConfiguration);
             }
-            if (BgpServiceLoadBalancerConfiguration != null)
+            if (Optional.IsDefined(BgpServiceLoadBalancerConfiguration))
             {
                 writer.WritePropertyName("bgpServiceLoadBalancerConfiguration"u8);
                 writer.WriteObjectValue(BgpServiceLoadBalancerConfiguration);
@@ -41,12 +42,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             writer.WriteStringValue(CloudServicesNetworkId);
             writer.WritePropertyName("cniNetworkId"u8);
             writer.WriteStringValue(CniNetworkId);
-            if (DnsServiceIP != null)
+            if (Optional.IsDefined(DnsServiceIP))
             {
                 writer.WritePropertyName("dnsServiceIp"u8);
                 writer.WriteStringValue(DnsServiceIP.ToString());
             }
-            if (!(PodCidrs is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PodCidrs))
             {
                 writer.WritePropertyName("podCidrs"u8);
                 writer.WriteStartArray();
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ServiceCidrs is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ServiceCidrs))
             {
                 writer.WritePropertyName("serviceCidrs"u8);
                 writer.WriteStartArray();
@@ -104,11 +105,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<AttachedNetworkConfiguration> attachedNetworkConfiguration = default;
-            Optional<BgpServiceLoadBalancerConfiguration> bgpServiceLoadBalancerConfiguration = default;
+            AttachedNetworkConfiguration attachedNetworkConfiguration = default;
+            BgpServiceLoadBalancerConfiguration bgpServiceLoadBalancerConfiguration = default;
             ResourceIdentifier cloudServicesNetworkId = default;
             ResourceIdentifier cniNetworkId = default;
-            Optional<IPAddress> dnsServiceIP = default;
+            IPAddress dnsServiceIP = default;
             IList<string> podCidrs = default;
             IList<string> serviceCidrs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -187,11 +188,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new KubernetesClusterNetworkConfiguration(
-                attachedNetworkConfiguration.Value,
-                bgpServiceLoadBalancerConfiguration.Value,
+                attachedNetworkConfiguration,
+                bgpServiceLoadBalancerConfiguration,
                 cloudServicesNetworkId,
                 cniNetworkId,
-                dnsServiceIP.Value,
+                dnsServiceIP,
                 podCidrs ?? new ChangeTrackingList<string>(),
                 serviceCidrs ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);

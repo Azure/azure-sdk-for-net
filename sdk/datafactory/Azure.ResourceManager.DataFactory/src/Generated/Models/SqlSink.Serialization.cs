@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -27,22 +28,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (SqlWriterStoredProcedureName != null)
+            if (Optional.IsDefined(SqlWriterStoredProcedureName))
             {
                 writer.WritePropertyName("sqlWriterStoredProcedureName"u8);
                 JsonSerializer.Serialize(writer, SqlWriterStoredProcedureName);
             }
-            if (SqlWriterTableType != null)
+            if (Optional.IsDefined(SqlWriterTableType))
             {
                 writer.WritePropertyName("sqlWriterTableType"u8);
                 JsonSerializer.Serialize(writer, SqlWriterTableType);
             }
-            if (PreCopyScript != null)
+            if (Optional.IsDefined(PreCopyScript))
             {
                 writer.WritePropertyName("preCopyScript"u8);
                 JsonSerializer.Serialize(writer, PreCopyScript);
             }
-            if (StoredProcedureParameters != null)
+            if (Optional.IsDefined(StoredProcedureParameters))
             {
                 writer.WritePropertyName("storedProcedureParameters"u8);
 #if NET6_0_OR_GREATER
@@ -54,59 +55,59 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            if (StoredProcedureTableTypeParameterName != null)
+            if (Optional.IsDefined(StoredProcedureTableTypeParameterName))
             {
                 writer.WritePropertyName("storedProcedureTableTypeParameterName"u8);
                 JsonSerializer.Serialize(writer, StoredProcedureTableTypeParameterName);
             }
-            if (TableOption != null)
+            if (Optional.IsDefined(TableOption))
             {
                 writer.WritePropertyName("tableOption"u8);
                 JsonSerializer.Serialize(writer, TableOption);
             }
-            if (SqlWriterUseTableLock != null)
+            if (Optional.IsDefined(SqlWriterUseTableLock))
             {
                 writer.WritePropertyName("sqlWriterUseTableLock"u8);
                 JsonSerializer.Serialize(writer, SqlWriterUseTableLock);
             }
-            if (WriteBehavior != null)
+            if (Optional.IsDefined(WriteBehavior))
             {
                 writer.WritePropertyName("writeBehavior"u8);
                 JsonSerializer.Serialize(writer, WriteBehavior);
             }
-            if (UpsertSettings != null)
+            if (Optional.IsDefined(UpsertSettings))
             {
                 writer.WritePropertyName("upsertSettings"u8);
                 writer.WriteObjectValue(UpsertSettings);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CopySinkType);
-            if (WriteBatchSize != null)
+            if (Optional.IsDefined(WriteBatchSize))
             {
                 writer.WritePropertyName("writeBatchSize"u8);
                 JsonSerializer.Serialize(writer, WriteBatchSize);
             }
-            if (WriteBatchTimeout != null)
+            if (Optional.IsDefined(WriteBatchTimeout))
             {
                 writer.WritePropertyName("writeBatchTimeout"u8);
                 JsonSerializer.Serialize(writer, WriteBatchTimeout);
             }
-            if (SinkRetryCount != null)
+            if (Optional.IsDefined(SinkRetryCount))
             {
                 writer.WritePropertyName("sinkRetryCount"u8);
                 JsonSerializer.Serialize(writer, SinkRetryCount);
             }
-            if (SinkRetryWait != null)
+            if (Optional.IsDefined(SinkRetryWait))
             {
                 writer.WritePropertyName("sinkRetryWait"u8);
                 JsonSerializer.Serialize(writer, SinkRetryWait);
             }
-            if (MaxConcurrentConnections != null)
+            if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 JsonSerializer.Serialize(writer, MaxConcurrentConnections);
             }
-            if (DisableMetricsCollection != null)
+            if (Optional.IsDefined(DisableMetricsCollection))
             {
                 writer.WritePropertyName("disableMetricsCollection"u8);
                 JsonSerializer.Serialize(writer, DisableMetricsCollection);
@@ -146,22 +147,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<string>> sqlWriterStoredProcedureName = default;
-            Optional<DataFactoryElement<string>> sqlWriterTableType = default;
-            Optional<DataFactoryElement<string>> preCopyScript = default;
-            Optional<BinaryData> storedProcedureParameters = default;
-            Optional<DataFactoryElement<string>> storedProcedureTableTypeParameterName = default;
-            Optional<DataFactoryElement<string>> tableOption = default;
-            Optional<DataFactoryElement<bool>> sqlWriterUseTableLock = default;
-            Optional<DataFactoryElement<string>> writeBehavior = default;
-            Optional<SqlUpsertSettings> upsertSettings = default;
+            DataFactoryElement<string> sqlWriterStoredProcedureName = default;
+            DataFactoryElement<string> sqlWriterTableType = default;
+            DataFactoryElement<string> preCopyScript = default;
+            BinaryData storedProcedureParameters = default;
+            DataFactoryElement<string> storedProcedureTableTypeParameterName = default;
+            DataFactoryElement<string> tableOption = default;
+            DataFactoryElement<bool> sqlWriterUseTableLock = default;
+            DataFactoryElement<string> writeBehavior = default;
+            SqlUpsertSettings upsertSettings = default;
             string type = default;
-            Optional<DataFactoryElement<int>> writeBatchSize = default;
-            Optional<DataFactoryElement<string>> writeBatchTimeout = default;
-            Optional<DataFactoryElement<int>> sinkRetryCount = default;
-            Optional<DataFactoryElement<string>> sinkRetryWait = default;
-            Optional<DataFactoryElement<int>> maxConcurrentConnections = default;
-            Optional<DataFactoryElement<bool>> disableMetricsCollection = default;
+            DataFactoryElement<int> writeBatchSize = default;
+            DataFactoryElement<string> writeBatchTimeout = default;
+            DataFactoryElement<int> sinkRetryCount = default;
+            DataFactoryElement<string> sinkRetryWait = default;
+            DataFactoryElement<int> maxConcurrentConnections = default;
+            DataFactoryElement<bool> disableMetricsCollection = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -311,22 +312,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new SqlSink(
                 type,
-                writeBatchSize.Value,
-                writeBatchTimeout.Value,
-                sinkRetryCount.Value,
-                sinkRetryWait.Value,
-                maxConcurrentConnections.Value,
-                disableMetricsCollection.Value,
+                writeBatchSize,
+                writeBatchTimeout,
+                sinkRetryCount,
+                sinkRetryWait,
+                maxConcurrentConnections,
+                disableMetricsCollection,
                 additionalProperties,
-                sqlWriterStoredProcedureName.Value,
-                sqlWriterTableType.Value,
-                preCopyScript.Value,
-                storedProcedureParameters.Value,
-                storedProcedureTableTypeParameterName.Value,
-                tableOption.Value,
-                sqlWriterUseTableLock.Value,
-                writeBehavior.Value,
-                upsertSettings.Value);
+                sqlWriterStoredProcedureName,
+                sqlWriterTableType,
+                preCopyScript,
+                storedProcedureParameters,
+                storedProcedureTableTypeParameterName,
+                tableOption,
+                sqlWriterUseTableLock,
+                writeBehavior,
+                upsertSettings);
         }
 
         BinaryData IPersistableModel<SqlSink>.Write(ModelReaderWriterOptions options)

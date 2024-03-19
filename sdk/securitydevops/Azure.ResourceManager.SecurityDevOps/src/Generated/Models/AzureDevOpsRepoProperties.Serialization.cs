@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityDevOps;
 
 namespace Azure.ResourceManager.SecurityDevOps.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             }
 
             writer.WriteStartObject();
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (RepoId != null)
+            if (Optional.IsDefined(RepoId))
             {
                 writer.WritePropertyName("repoId"u8);
                 writer.WriteStringValue(RepoId);
             }
-            if (RepoUri != null)
+            if (Optional.IsDefined(RepoUri))
             {
                 writer.WritePropertyName("repoUrl"u8);
                 writer.WriteStringValue(RepoUri.AbsoluteUri);
             }
-            if (OrgName != null)
+            if (Optional.IsDefined(OrgName))
             {
                 writer.WritePropertyName("orgName"u8);
                 writer.WriteStringValue(OrgName);
             }
-            if (ProjectName != null)
+            if (Optional.IsDefined(ProjectName))
             {
                 writer.WritePropertyName("projectName"u8);
                 writer.WriteStringValue(ProjectName);
             }
-            if (Visibility != null)
+            if (Optional.IsDefined(Visibility))
             {
                 writer.WritePropertyName("visibility"u8);
                 writer.WriteStringValue(Visibility);
             }
-            if (ActionableRemediation != null)
+            if (Optional.IsDefined(ActionableRemediation))
             {
                 writer.WritePropertyName("actionableRemediation"u8);
                 writer.WriteObjectValue(ActionableRemediation);
@@ -99,13 +100,13 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             {
                 return null;
             }
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<string> repoId = default;
-            Optional<Uri> repoUrl = default;
-            Optional<string> orgName = default;
-            Optional<string> projectName = default;
-            Optional<string> visibility = default;
-            Optional<ActionableRemediation> actionableRemediation = default;
+            ProvisioningState? provisioningState = default;
+            string repoId = default;
+            Uri repoUrl = default;
+            string orgName = default;
+            string projectName = default;
+            string visibility = default;
+            ActionableRemediation actionableRemediation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,13 +165,13 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AzureDevOpsRepoProperties(
-                Optional.ToNullable(provisioningState),
-                repoId.Value,
-                repoUrl.Value,
-                orgName.Value,
-                projectName.Value,
-                visibility.Value,
-                actionableRemediation.Value,
+                provisioningState,
+                repoId,
+                repoUrl,
+                orgName,
+                projectName,
+                visibility,
+                actionableRemediation,
                 serializedAdditionalRawData);
         }
 

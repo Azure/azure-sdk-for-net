@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (SummaryCode != null)
+            if (Optional.IsDefined(SummaryCode))
             {
                 writer.WritePropertyName("summaryCode"u8);
                 writer.WriteStringValue(SummaryCode);
             }
-            if (Category.HasValue)
+            if (Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category.Value.ToString());
             }
-            if (Severity.HasValue)
+            if (Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (SummaryMessage != null)
+            if (Optional.IsDefined(SummaryMessage))
             {
                 writer.WritePropertyName("summaryMessage"u8);
                 writer.WriteStringValue(SummaryMessage);
             }
-            if (AffectedResourceType != null)
+            if (Optional.IsDefined(AffectedResourceType))
             {
                 writer.WritePropertyName("affectedResourceType"u8);
                 writer.WriteStringValue(AffectedResourceType);
             }
-            if (AffectedResourceSubtype != null)
+            if (Optional.IsDefined(AffectedResourceSubtype))
             {
                 writer.WritePropertyName("affectedResourceSubtype"u8);
                 writer.WriteStringValue(AffectedResourceSubtype);
             }
-            if (!(AffectedResourceCorrelationIds is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AffectedResourceCorrelationIds))
             {
                 writer.WritePropertyName("affectedResourceCorrelationIds"u8);
                 writer.WriteStartArray();
@@ -104,12 +105,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> summaryCode = default;
-            Optional<HealthErrorCategory> category = default;
-            Optional<SiteRecoveryErrorSeverity> severity = default;
-            Optional<string> summaryMessage = default;
-            Optional<string> affectedResourceType = default;
-            Optional<string> affectedResourceSubtype = default;
+            string summaryCode = default;
+            HealthErrorCategory? category = default;
+            SiteRecoveryErrorSeverity? severity = default;
+            string summaryMessage = default;
+            string affectedResourceType = default;
+            string affectedResourceSubtype = default;
             IReadOnlyList<string> affectedResourceCorrelationIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -174,12 +175,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new HealthErrorSummary(
-                summaryCode.Value,
-                Optional.ToNullable(category),
-                Optional.ToNullable(severity),
-                summaryMessage.Value,
-                affectedResourceType.Value,
-                affectedResourceSubtype.Value,
+                summaryCode,
+                category,
+                severity,
+                summaryMessage,
+                affectedResourceType,
+                affectedResourceSubtype,
                 affectedResourceCorrelationIds ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }

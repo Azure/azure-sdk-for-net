@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -16,7 +17,7 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (DefaultLanguageCode.HasValue)
+            if (Optional.IsDefined(DefaultLanguageCode))
             {
                 if (DefaultLanguageCode != null)
                 {
@@ -28,12 +29,12 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("defaultLanguageCode");
                 }
             }
-            if (TextSplitMode.HasValue)
+            if (Optional.IsDefined(TextSplitMode))
             {
                 writer.WritePropertyName("textSplitMode"u8);
                 writer.WriteStringValue(TextSplitMode.Value.ToString());
             }
-            if (MaximumPageLength.HasValue)
+            if (Optional.IsDefined(MaximumPageLength))
             {
                 if (MaximumPageLength != null)
                 {
@@ -45,7 +46,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("maximumPageLength");
                 }
             }
-            if (PageOverlapLength.HasValue)
+            if (Optional.IsDefined(PageOverlapLength))
             {
                 if (PageOverlapLength != null)
                 {
@@ -57,7 +58,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("pageOverlapLength");
                 }
             }
-            if (MaximumPagesToTake.HasValue)
+            if (Optional.IsDefined(MaximumPagesToTake))
             {
                 if (MaximumPagesToTake != null)
                 {
@@ -71,17 +72,17 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Context != null)
+            if (Optional.IsDefined(Context))
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteStringValue(Context);
@@ -109,15 +110,15 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<SplitSkillLanguage?> defaultLanguageCode = default;
-            Optional<TextSplitMode> textSplitMode = default;
-            Optional<int?> maximumPageLength = default;
-            Optional<int?> pageOverlapLength = default;
-            Optional<int?> maximumPagesToTake = default;
+            SplitSkillLanguage? defaultLanguageCode = default;
+            TextSplitMode? textSplitMode = default;
+            int? maximumPageLength = default;
+            int? pageOverlapLength = default;
+            int? maximumPagesToTake = default;
             string odataType = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<string> context = default;
+            string name = default;
+            string description = default;
+            string context = default;
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
             foreach (var property in element.EnumerateObject())
@@ -214,16 +215,16 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             return new SplitSkill(
                 odataType,
-                name.Value,
-                description.Value,
-                context.Value,
+                name,
+                description,
+                context,
                 inputs,
                 outputs,
-                Optional.ToNullable(defaultLanguageCode),
-                Optional.ToNullable(textSplitMode),
-                Optional.ToNullable(maximumPageLength),
-                Optional.ToNullable(pageOverlapLength),
-                Optional.ToNullable(maximumPagesToTake));
+                defaultLanguageCode,
+                textSplitMode,
+                maximumPageLength,
+                pageOverlapLength,
+                maximumPagesToTake);
         }
     }
 }

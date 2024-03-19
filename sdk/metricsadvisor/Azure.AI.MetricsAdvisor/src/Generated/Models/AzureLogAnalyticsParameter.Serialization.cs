@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.AI.MetricsAdvisor;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -15,17 +16,17 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (TenantId != null)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId);
             }
-            if (ClientId != null)
+            if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
-            if (ClientSecret != null)
+            if (Optional.IsDefined(ClientSecret))
             {
                 writer.WritePropertyName("clientSecret"u8);
                 writer.WriteStringValue(ClientSecret);
@@ -43,9 +44,9 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 return null;
             }
-            Optional<string> tenantId = default;
-            Optional<string> clientId = default;
-            Optional<string> clientSecret = default;
+            string tenantId = default;
+            string clientId = default;
+            string clientSecret = default;
             string workspaceId = default;
             string query = default;
             foreach (var property in element.EnumerateObject())
@@ -76,7 +77,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new AzureLogAnalyticsParameter(tenantId.Value, clientId.Value, clientSecret.Value, workspaceId, query);
+            return new AzureLogAnalyticsParameter(tenantId, clientId, clientSecret, workspaceId, query);
         }
     }
 }

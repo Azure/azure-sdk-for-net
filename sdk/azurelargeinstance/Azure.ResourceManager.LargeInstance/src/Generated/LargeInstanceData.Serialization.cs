@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.LargeInstance
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,59 +56,59 @@ namespace Azure.ResourceManager.LargeInstance
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (HardwareProfile != null)
+            if (Optional.IsDefined(HardwareProfile))
             {
                 writer.WritePropertyName("hardwareProfile"u8);
                 writer.WriteObjectValue(HardwareProfile);
             }
-            if (StorageProfile != null)
+            if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
                 writer.WriteObjectValue(StorageProfile);
             }
-            if (OSProfile != null)
+            if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
                 writer.WriteObjectValue(OSProfile);
             }
-            if (NetworkProfile != null)
+            if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
                 writer.WriteObjectValue(NetworkProfile);
             }
-            if (options.Format != "W" && AzureLargeInstanceId != null)
+            if (options.Format != "W" && Optional.IsDefined(AzureLargeInstanceId))
             {
                 writer.WritePropertyName("azureLargeInstanceId"u8);
                 writer.WriteStringValue(AzureLargeInstanceId);
             }
-            if (options.Format != "W" && PowerState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PowerState))
             {
                 writer.WritePropertyName("powerState"u8);
                 writer.WriteStringValue(PowerState.Value.ToString());
             }
-            if (options.Format != "W" && ProximityPlacementGroup != null)
+            if (options.Format != "W" && Optional.IsDefined(ProximityPlacementGroup))
             {
                 writer.WritePropertyName("proximityPlacementGroup"u8);
                 writer.WriteStringValue(ProximityPlacementGroup);
             }
-            if (options.Format != "W" && HwRevision != null)
+            if (options.Format != "W" && Optional.IsDefined(HwRevision))
             {
                 writer.WritePropertyName("hwRevision"u8);
                 writer.WriteStringValue(HwRevision);
             }
-            if (PartnerNodeId != null)
+            if (Optional.IsDefined(PartnerNodeId))
             {
                 writer.WritePropertyName("partnerNodeId"u8);
                 writer.WriteStringValue(PartnerNodeId);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -157,17 +157,17 @@ namespace Azure.ResourceManager.LargeInstance
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<LargeInstanceHardwareProfile> hardwareProfile = default;
-            Optional<LargeInstanceStorageProfile> storageProfile = default;
-            Optional<LargeInstanceOSProfile> osProfile = default;
-            Optional<LargeInstanceNetworkProfile> networkProfile = default;
-            Optional<string> azureLargeInstanceId = default;
-            Optional<LargeInstancePowerState> powerState = default;
-            Optional<string> proximityPlacementGroup = default;
-            Optional<string> hwRevision = default;
-            Optional<string> partnerNodeId = default;
-            Optional<LargeInstanceProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            LargeInstanceHardwareProfile hardwareProfile = default;
+            LargeInstanceStorageProfile storageProfile = default;
+            LargeInstanceOSProfile osProfile = default;
+            LargeInstanceNetworkProfile networkProfile = default;
+            string azureLargeInstanceId = default;
+            LargeInstancePowerState? powerState = default;
+            string proximityPlacementGroup = default;
+            string hwRevision = default;
+            string partnerNodeId = default;
+            LargeInstanceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -311,17 +311,17 @@ namespace Azure.ResourceManager.LargeInstance
                 id,
                 name,
                 type,
-                systemData.Value,
-                hardwareProfile.Value,
-                storageProfile.Value,
-                osProfile.Value,
-                networkProfile.Value,
-                azureLargeInstanceId.Value,
-                Optional.ToNullable(powerState),
-                proximityPlacementGroup.Value,
-                hwRevision.Value,
-                partnerNodeId.Value,
-                Optional.ToNullable(provisioningState),
+                systemData,
+                hardwareProfile,
+                storageProfile,
+                osProfile,
+                networkProfile,
+                azureLargeInstanceId,
+                powerState,
+                proximityPlacementGroup,
+                hwRevision,
+                partnerNodeId,
+                provisioningState,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 serializedAdditionalRawData);

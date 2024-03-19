@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (CreatedOn.HasValue)
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (StatusDetails != null)
+            if (Optional.IsDefined(StatusDetails))
             {
                 writer.WritePropertyName("statusDetails"u8);
                 writer.WriteStringValue(StatusDetails);
             }
-            if (RunOn != null)
+            if (Optional.IsDefined(RunOn))
             {
                 writer.WritePropertyName("runOn"u8);
                 writer.WriteStringValue(RunOn);
             }
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 if (StartOn != null)
                 {
@@ -58,7 +59,7 @@ namespace Azure.ResourceManager.Automation.Models
                     writer.WriteNull("startTime");
                 }
             }
-            if (EndOn.HasValue)
+            if (Optional.IsDefined(EndOn))
             {
                 if (EndOn != null)
                 {
@@ -70,17 +71,17 @@ namespace Azure.ResourceManager.Automation.Models
                     writer.WriteNull("endTime");
                 }
             }
-            if (Exception != null)
+            if (Optional.IsDefined(Exception))
             {
                 writer.WritePropertyName("exception"u8);
                 writer.WriteStringValue(Exception);
             }
-            if (LastModifiedOn.HasValue)
+            if (Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (LastStatusModifiedOn.HasValue)
+            if (Optional.IsDefined(LastStatusModifiedOn))
             {
                 if (LastStatusModifiedOn != null)
                 {
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.Automation.Models
                     writer.WriteNull("lastStatusModifiedTime");
                 }
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndObject();
             }
-            if (LogActivityTrace.HasValue)
+            if (Optional.IsDefined(LogActivityTrace))
             {
                 writer.WritePropertyName("logActivityTrace"u8);
                 writer.WriteNumberValue(LogActivityTrace.Value);
@@ -146,17 +147,17 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<string> status = default;
-            Optional<string> statusDetails = default;
-            Optional<string> runOn = default;
-            Optional<DateTimeOffset?> startTime = default;
-            Optional<DateTimeOffset?> endTime = default;
-            Optional<string> exception = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<DateTimeOffset?> lastStatusModifiedTime = default;
+            DateTimeOffset? creationTime = default;
+            string status = default;
+            string statusDetails = default;
+            string runOn = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            string exception = default;
+            DateTimeOffset? lastModifiedTime = default;
+            DateTimeOffset? lastStatusModifiedTime = default;
             IReadOnlyDictionary<string, string> parameters = default;
-            Optional<int> logActivityTrace = default;
+            int? logActivityTrace = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -259,17 +260,17 @@ namespace Azure.ResourceManager.Automation.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new RunbookTestJob(
-                Optional.ToNullable(creationTime),
-                status.Value,
-                statusDetails.Value,
-                runOn.Value,
-                Optional.ToNullable(startTime),
-                Optional.ToNullable(endTime),
-                exception.Value,
-                Optional.ToNullable(lastModifiedTime),
-                Optional.ToNullable(lastStatusModifiedTime),
+                creationTime,
+                status,
+                statusDetails,
+                runOn,
+                startTime,
+                endTime,
+                exception,
+                lastModifiedTime,
+                lastStatusModifiedTime,
                 parameters ?? new ChangeTrackingDictionary<string, string>(),
-                Optional.ToNullable(logActivityTrace),
+                logActivityTrace,
                 serializedAdditionalRawData);
         }
 

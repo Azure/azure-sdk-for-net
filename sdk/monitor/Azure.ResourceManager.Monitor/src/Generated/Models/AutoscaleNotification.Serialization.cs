@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -28,12 +29,12 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartObject();
             writer.WritePropertyName("operation"u8);
             writer.WriteStringValue(Operation.ToString());
-            if (Email != null)
+            if (Optional.IsDefined(Email))
             {
                 writer.WritePropertyName("email"u8);
                 writer.WriteObjectValue(Email);
             }
-            if (!(Webhooks is ChangeTrackingList<WebhookNotification> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Webhooks))
             {
                 writer.WritePropertyName("webhooks"u8);
                 writer.WriteStartArray();
@@ -82,7 +83,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             MonitorOperationType operation = default;
-            Optional<EmailNotification> email = default;
+            EmailNotification email = default;
             IList<WebhookNotification> webhooks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutoscaleNotification(operation, email.Value, webhooks ?? new ChangeTrackingList<WebhookNotification>(), serializedAdditionalRawData);
+            return new AutoscaleNotification(operation, email, webhooks ?? new ChangeTrackingList<WebhookNotification>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutoscaleNotification>.Write(ModelReaderWriterOptions options)

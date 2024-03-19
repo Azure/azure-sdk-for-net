@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && NodeId != null)
+            if (options.Format != "W" && Optional.IsDefined(NodeId))
             {
                 writer.WritePropertyName("nodeId"u8);
                 writer.WriteStringValue(NodeId);
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (!(Errors is ChangeTrackingList<SynapseManagedIntegrationRuntimeError> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
@@ -81,8 +82,8 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<string> nodeId = default;
-            Optional<SynapseManagedIntegrationRuntimeNodeStatus> status = default;
+            string nodeId = default;
+            SynapseManagedIntegrationRuntimeNodeStatus? status = default;
             IReadOnlyList<SynapseManagedIntegrationRuntimeError> errors = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SynapseManagedIntegrationRuntimeNode(nodeId.Value, Optional.ToNullable(status), errors ?? new ChangeTrackingList<SynapseManagedIntegrationRuntimeError>(), additionalProperties);
+            return new SynapseManagedIntegrationRuntimeNode(nodeId, status, errors ?? new ChangeTrackingList<SynapseManagedIntegrationRuntimeError>(), additionalProperties);
         }
 
         BinaryData IPersistableModel<SynapseManagedIntegrationRuntimeNode>.Write(ModelReaderWriterOptions options)

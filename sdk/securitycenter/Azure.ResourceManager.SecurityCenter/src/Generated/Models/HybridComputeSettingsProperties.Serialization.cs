@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -26,29 +27,29 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && HybridComputeProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(HybridComputeProvisioningState))
             {
                 writer.WritePropertyName("hybridComputeProvisioningState"u8);
                 writer.WriteStringValue(HybridComputeProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("autoProvision"u8);
             writer.WriteStringValue(AutoProvision.ToString());
-            if (ResourceGroupName != null)
+            if (Optional.IsDefined(ResourceGroupName))
             {
                 writer.WritePropertyName("resourceGroupName"u8);
                 writer.WriteStringValue(ResourceGroupName);
             }
-            if (Region != null)
+            if (Optional.IsDefined(Region))
             {
                 writer.WritePropertyName("region"u8);
                 writer.WriteStringValue(Region);
             }
-            if (ProxyServer != null)
+            if (Optional.IsDefined(ProxyServer))
             {
                 writer.WritePropertyName("proxyServer"u8);
                 writer.WriteObjectValue(ProxyServer);
             }
-            if (ServicePrincipal != null)
+            if (Optional.IsDefined(ServicePrincipal))
             {
                 writer.WritePropertyName("servicePrincipal"u8);
                 writer.WriteObjectValue(ServicePrincipal);
@@ -91,12 +92,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<HybridComputeProvisioningState> hybridComputeProvisioningState = default;
+            HybridComputeProvisioningState? hybridComputeProvisioningState = default;
             AutoProvisionState autoProvision = default;
-            Optional<string> resourceGroupName = default;
-            Optional<string> region = default;
-            Optional<ProxyServerProperties> proxyServer = default;
-            Optional<ServicePrincipalProperties> servicePrincipal = default;
+            string resourceGroupName = default;
+            string region = default;
+            ProxyServerProperties proxyServer = default;
+            ServicePrincipalProperties servicePrincipal = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,12 +151,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new HybridComputeSettingsProperties(
-                Optional.ToNullable(hybridComputeProvisioningState),
+                hybridComputeProvisioningState,
                 autoProvision,
-                resourceGroupName.Value,
-                region.Value,
-                proxyServer.Value,
-                servicePrincipal.Value,
+                resourceGroupName,
+                region,
+                proxyServer,
+                servicePrincipal,
                 serializedAdditionalRawData);
         }
 

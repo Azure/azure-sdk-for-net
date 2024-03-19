@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (!(LoginParameters is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(LoginParameters))
             {
                 writer.WritePropertyName("loginParameters"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IsWwwAuthenticationDisabled.HasValue)
+            if (Optional.IsDefined(IsWwwAuthenticationDisabled))
             {
                 writer.WritePropertyName("disableWWWAuthenticate"u8);
                 writer.WriteBooleanValue(IsWwwAuthenticationDisabled.Value);
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 return null;
             }
             IList<string> loginParameters = default;
-            Optional<bool> disableWWWAuthenticate = default;
+            bool? disableWWWAuthenticate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppAzureActiveDirectoryLoginConfiguration(loginParameters ?? new ChangeTrackingList<string>(), Optional.ToNullable(disableWWWAuthenticate), serializedAdditionalRawData);
+            return new ContainerAppAzureActiveDirectoryLoginConfiguration(loginParameters ?? new ChangeTrackingList<string>(), disableWWWAuthenticate, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppAzureActiveDirectoryLoginConfiguration>.Write(ModelReaderWriterOptions options)

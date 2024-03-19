@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SqlVirtualMachine;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             }
 
             writer.WriteStartObject();
-            if (SqlWorkloadType.HasValue)
+            if (Optional.IsDefined(SqlWorkloadType))
             {
                 writer.WritePropertyName("sqlWorkloadType"u8);
                 writer.WriteStringValue(SqlWorkloadType.Value.ToString());
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 return null;
             }
-            Optional<SqlWorkloadType> sqlWorkloadType = default;
+            SqlWorkloadType? sqlWorkloadType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlWorkloadTypeUpdateSettings(Optional.ToNullable(sqlWorkloadType), serializedAdditionalRawData);
+            return new SqlWorkloadTypeUpdateSettings(sqlWorkloadType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlWorkloadTypeUpdateSettings>.Write(ModelReaderWriterOptions options)

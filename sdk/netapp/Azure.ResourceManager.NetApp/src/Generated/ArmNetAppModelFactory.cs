@@ -887,10 +887,9 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="applicationType"> Application Type. </param>
         /// <param name="applicationIdentifier"> Application specific identifier. </param>
         /// <param name="globalPlacementRules"> Application specific placement rules for the volume group. </param>
-        /// <param name="deploymentSpecId"> Application specific identifier of deployment rules for the volume group. </param>
         /// <param name="volumesCount"> Number of volumes in volume group. </param>
         /// <returns> A new <see cref="Models.NetAppVolumeGroupMetadata"/> instance for mocking. </returns>
-        public static NetAppVolumeGroupMetadata NetAppVolumeGroupMetadata(string groupDescription = null, NetAppApplicationType? applicationType = null, string applicationIdentifier = null, IEnumerable<NetAppVolumePlacementRule> globalPlacementRules = null, string deploymentSpecId = null, long? volumesCount = null)
+        public static NetAppVolumeGroupMetadata NetAppVolumeGroupMetadata(string groupDescription = null, NetAppApplicationType? applicationType = null, string applicationIdentifier = null, IEnumerable<NetAppVolumePlacementRule> globalPlacementRules = null, long? volumesCount = null)
         {
             globalPlacementRules ??= new List<NetAppVolumePlacementRule>();
 
@@ -899,7 +898,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 applicationType,
                 applicationIdentifier,
                 globalPlacementRules?.ToList(),
-                deploymentSpecId,
                 volumesCount,
                 serializedAdditionalRawData: null);
         }

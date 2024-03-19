@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Key != null)
+            if (Optional.IsDefined(Key))
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteObjectValue(Key);
             }
-            if (KekIdentity != null)
+            if (Optional.IsDefined(KekIdentity))
             {
                 writer.WritePropertyName("kekIdentity"u8);
                 writer.WriteObjectValue(KekIdentity);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<string> status = default;
-            Optional<SynapseWorkspaceKeyDetails> key = default;
-            Optional<KekIdentityProperties> kekIdentity = default;
+            string status = default;
+            SynapseWorkspaceKeyDetails key = default;
+            KekIdentityProperties kekIdentity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkspaceCustomerManagedKeyDetails(status.Value, key.Value, kekIdentity.Value, serializedAdditionalRawData);
+            return new WorkspaceCustomerManagedKeyDetails(status, key, kekIdentity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkspaceCustomerManagedKeyDetails>.Write(ModelReaderWriterOptions options)

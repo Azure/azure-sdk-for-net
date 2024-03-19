@@ -272,6 +272,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("house").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("level").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueBoolean").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueSelectionGroup")[0].ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("content").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
@@ -296,6 +297,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("house").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("level").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueBoolean").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueSelectionGroup")[0].ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("content").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
@@ -491,6 +493,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("house").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("level").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueBoolean").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueSelectionGroup")[0].ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("content").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
@@ -515,6 +518,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("house").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("level").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueBoolean").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueSelectionGroup")[0].ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("content").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
@@ -814,6 +818,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("house").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("level").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueBoolean").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueSelectionGroup")[0].ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("content").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
@@ -838,6 +843,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("house").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("level").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueBoolean").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueSelectionGroup")[0].ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("content").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
@@ -1033,6 +1039,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("house").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("level").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueBoolean").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueSelectionGroup")[0].ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("content").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
@@ -1057,6 +1064,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("house").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueAddress").GetProperty("level").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueBoolean").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueSelectionGroup")[0].ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("content").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());

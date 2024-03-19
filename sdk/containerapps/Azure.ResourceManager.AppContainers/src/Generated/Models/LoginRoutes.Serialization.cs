@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (LogoutEndpoint != null)
+            if (Optional.IsDefined(LogoutEndpoint))
             {
                 writer.WritePropertyName("logoutEndpoint"u8);
                 writer.WriteStringValue(LogoutEndpoint);
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> logoutEndpoint = default;
+            string logoutEndpoint = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LoginRoutes(logoutEndpoint.Value, serializedAdditionalRawData);
+            return new LoginRoutes(logoutEndpoint, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LoginRoutes>.Write(ModelReaderWriterOptions options)

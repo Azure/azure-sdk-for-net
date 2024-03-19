@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServices;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
 
             writer.WriteStartObject();
-            if (AzureMonitorAlertSettings != null)
+            if (Optional.IsDefined(AzureMonitorAlertSettings))
             {
                 writer.WritePropertyName("azureMonitorAlertSettings"u8);
                 writer.WriteObjectValue(AzureMonitorAlertSettings);
             }
-            if (ClassicAlertSettings != null)
+            if (Optional.IsDefined(ClassicAlertSettings))
             {
                 writer.WritePropertyName("classicAlertSettings"u8);
                 writer.WriteObjectValue(ClassicAlertSettings);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Optional<AzureMonitorAlertSettings> azureMonitorAlertSettings = default;
-            Optional<ClassicAlertSettings> classicAlertSettings = default;
+            AzureMonitorAlertSettings azureMonitorAlertSettings = default;
+            ClassicAlertSettings classicAlertSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VaultMonitoringSettings(azureMonitorAlertSettings.Value, classicAlertSettings.Value, serializedAdditionalRawData);
+            return new VaultMonitoringSettings(azureMonitorAlertSettings, classicAlertSettings, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VaultMonitoringSettings>.Write(ModelReaderWriterOptions options)

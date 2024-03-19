@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServices;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
 
             writer.WriteStartObject();
-            if (ImmutabilitySettings != null)
+            if (Optional.IsDefined(ImmutabilitySettings))
             {
                 writer.WritePropertyName("immutabilitySettings"u8);
                 writer.WriteObjectValue(ImmutabilitySettings);
             }
-            if (SoftDeleteSettings != null)
+            if (Optional.IsDefined(SoftDeleteSettings))
             {
                 writer.WritePropertyName("softDeleteSettings"u8);
                 writer.WriteObjectValue(SoftDeleteSettings);
             }
-            if (options.Format != "W" && MultiUserAuthorization.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MultiUserAuthorization))
             {
                 writer.WritePropertyName("multiUserAuthorization"u8);
                 writer.WriteStringValue(MultiUserAuthorization.Value.ToString());
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Optional<ImmutabilitySettings> immutabilitySettings = default;
-            Optional<RecoveryServicesSoftDeleteSettings> softDeleteSettings = default;
-            Optional<MultiUserAuthorization> multiUserAuthorization = default;
+            ImmutabilitySettings immutabilitySettings = default;
+            RecoveryServicesSoftDeleteSettings softDeleteSettings = default;
+            MultiUserAuthorization? multiUserAuthorization = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecoveryServicesSecuritySettings(immutabilitySettings.Value, softDeleteSettings.Value, Optional.ToNullable(multiUserAuthorization), serializedAdditionalRawData);
+            return new RecoveryServicesSecuritySettings(immutabilitySettings, softDeleteSettings, multiUserAuthorization, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecoveryServicesSecuritySettings>.Write(ModelReaderWriterOptions options)

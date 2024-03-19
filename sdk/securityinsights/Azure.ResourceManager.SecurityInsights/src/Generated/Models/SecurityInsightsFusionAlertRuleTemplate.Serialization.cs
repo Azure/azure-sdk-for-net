@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -44,39 +45,39 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AlertRulesCreatedByTemplateCount.HasValue)
+            if (Optional.IsDefined(AlertRulesCreatedByTemplateCount))
             {
                 writer.WritePropertyName("alertRulesCreatedByTemplateCount"u8);
                 writer.WriteNumberValue(AlertRulesCreatedByTemplateCount.Value);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDateUTC"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && LastUpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedDateUTC"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (!(RequiredDataConnectors is ChangeTrackingList<AlertRuleTemplateDataSource> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(RequiredDataConnectors))
             {
                 writer.WritePropertyName("requiredDataConnectors"u8);
                 writer.WriteStartArray();
@@ -86,17 +87,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Severity.HasValue)
+            if (Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (!(Tactics is ChangeTrackingList<SecurityInsightsAttackTactic> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Tactics))
             {
                 writer.WritePropertyName("tactics"u8);
                 writer.WriteStartArray();
@@ -106,7 +107,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Techniques is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Techniques))
             {
                 writer.WritePropertyName("techniques"u8);
                 writer.WriteStartArray();
@@ -159,15 +160,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> alertRulesCreatedByTemplateCount = default;
-            Optional<DateTimeOffset> createdDateUTC = default;
-            Optional<DateTimeOffset> lastUpdatedDateUTC = default;
-            Optional<string> description = default;
-            Optional<string> displayName = default;
+            SystemData systemData = default;
+            int? alertRulesCreatedByTemplateCount = default;
+            DateTimeOffset? createdDateUTC = default;
+            DateTimeOffset? lastUpdatedDateUTC = default;
+            string description = default;
+            string displayName = default;
             IList<AlertRuleTemplateDataSource> requiredDataConnectors = default;
-            Optional<SecurityInsightsAlertRuleTemplateStatus> status = default;
-            Optional<SecurityInsightsAlertSeverity> severity = default;
+            SecurityInsightsAlertRuleTemplateStatus? status = default;
+            SecurityInsightsAlertSeverity? severity = default;
             IList<SecurityInsightsAttackTactic> tactics = default;
             IList<string> techniques = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -322,17 +323,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 kind,
                 serializedAdditionalRawData,
-                Optional.ToNullable(alertRulesCreatedByTemplateCount),
-                Optional.ToNullable(createdDateUTC),
-                Optional.ToNullable(lastUpdatedDateUTC),
-                description.Value,
-                displayName.Value,
+                alertRulesCreatedByTemplateCount,
+                createdDateUTC,
+                lastUpdatedDateUTC,
+                description,
+                displayName,
                 requiredDataConnectors ?? new ChangeTrackingList<AlertRuleTemplateDataSource>(),
-                Optional.ToNullable(status),
-                Optional.ToNullable(severity),
+                status,
+                severity,
                 tactics ?? new ChangeTrackingList<SecurityInsightsAttackTactic>(),
                 techniques ?? new ChangeTrackingList<string>());
         }

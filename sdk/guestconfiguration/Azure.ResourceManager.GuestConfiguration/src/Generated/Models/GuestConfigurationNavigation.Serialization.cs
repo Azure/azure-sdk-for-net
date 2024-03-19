@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.GuestConfiguration;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (Kind.HasValue)
+            if (Optional.IsDefined(Kind))
             {
                 if (Kind != null)
                 {
@@ -38,27 +39,27 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     writer.WriteNull("kind");
                 }
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (ContentUri != null)
+            if (Optional.IsDefined(ContentUri))
             {
                 writer.WritePropertyName("contentUri"u8);
                 writer.WriteStringValue(ContentUri.AbsoluteUri);
             }
-            if (ContentHash != null)
+            if (Optional.IsDefined(ContentHash))
             {
                 writer.WritePropertyName("contentHash"u8);
                 writer.WriteStringValue(ContentHash);
             }
-            if (AssignmentType.HasValue)
+            if (Optional.IsDefined(AssignmentType))
             {
                 if (AssignmentType != null)
                 {
@@ -70,7 +71,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     writer.WriteNull("assignmentType");
                 }
             }
-            if (options.Format != "W" && AssignmentSource != null)
+            if (options.Format != "W" && Optional.IsDefined(AssignmentSource))
             {
                 if (AssignmentSource != null)
                 {
@@ -82,7 +83,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     writer.WriteNull("assignmentSource");
                 }
             }
-            if (options.Format != "W" && ContentType != null)
+            if (options.Format != "W" && Optional.IsDefined(ContentType))
             {
                 if (ContentType != null)
                 {
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     writer.WriteNull("contentType");
                 }
             }
-            if (!(ConfigurationParameters is ChangeTrackingList<GuestConfigurationParameter> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ConfigurationParameters))
             {
                 writer.WritePropertyName("configurationParameter"u8);
                 writer.WriteStartArray();
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ConfigurationProtectedParameters is ChangeTrackingList<GuestConfigurationParameter> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ConfigurationProtectedParameters))
             {
                 writer.WritePropertyName("configurationProtectedParameter"u8);
                 writer.WriteStartArray();
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ConfigurationSetting != null)
+            if (options.Format != "W" && Optional.IsDefined(ConfigurationSetting))
             {
                 if (ConfigurationSetting != null)
                 {
@@ -164,17 +165,17 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             {
                 return null;
             }
-            Optional<GuestConfigurationKind?> kind = default;
-            Optional<string> name = default;
-            Optional<string> version = default;
-            Optional<Uri> contentUri = default;
-            Optional<string> contentHash = default;
-            Optional<GuestConfigurationAssignmentType?> assignmentType = default;
-            Optional<string> assignmentSource = default;
-            Optional<string> contentType = default;
+            GuestConfigurationKind? kind = default;
+            string name = default;
+            string version = default;
+            Uri contentUri = default;
+            string contentHash = default;
+            GuestConfigurationAssignmentType? assignmentType = default;
+            string assignmentSource = default;
+            string contentType = default;
             IList<GuestConfigurationParameter> configurationParameter = default;
             IList<GuestConfigurationParameter> configurationProtectedParameter = default;
-            Optional<LcmConfigurationSetting> configurationSetting = default;
+            LcmConfigurationSetting configurationSetting = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -288,17 +289,17 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new GuestConfigurationNavigation(
-                Optional.ToNullable(kind),
-                name.Value,
-                version.Value,
-                contentUri.Value,
-                contentHash.Value,
-                Optional.ToNullable(assignmentType),
-                assignmentSource.Value,
-                contentType.Value,
+                kind,
+                name,
+                version,
+                contentUri,
+                contentHash,
+                assignmentType,
+                assignmentSource,
+                contentType,
                 configurationParameter ?? new ChangeTrackingList<GuestConfigurationParameter>(),
                 configurationProtectedParameter ?? new ChangeTrackingList<GuestConfigurationParameter>(),
-                configurationSetting.Value,
+                configurationSetting,
                 serializedAdditionalRawData);
         }
 

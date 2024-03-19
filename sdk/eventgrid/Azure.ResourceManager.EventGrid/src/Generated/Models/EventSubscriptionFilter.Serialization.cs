@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (SubjectBeginsWith != null)
+            if (Optional.IsDefined(SubjectBeginsWith))
             {
                 writer.WritePropertyName("subjectBeginsWith"u8);
                 writer.WriteStringValue(SubjectBeginsWith);
             }
-            if (SubjectEndsWith != null)
+            if (Optional.IsDefined(SubjectEndsWith))
             {
                 writer.WritePropertyName("subjectEndsWith"u8);
                 writer.WriteStringValue(SubjectEndsWith);
             }
-            if (!(IncludedEventTypes is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(IncludedEventTypes))
             {
                 writer.WritePropertyName("includedEventTypes"u8);
                 writer.WriteStartArray();
@@ -46,17 +47,17 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IsSubjectCaseSensitive.HasValue)
+            if (Optional.IsDefined(IsSubjectCaseSensitive))
             {
                 writer.WritePropertyName("isSubjectCaseSensitive"u8);
                 writer.WriteBooleanValue(IsSubjectCaseSensitive.Value);
             }
-            if (IsAdvancedFilteringOnArraysEnabled.HasValue)
+            if (Optional.IsDefined(IsAdvancedFilteringOnArraysEnabled))
             {
                 writer.WritePropertyName("enableAdvancedFilteringOnArrays"u8);
                 writer.WriteBooleanValue(IsAdvancedFilteringOnArraysEnabled.Value);
             }
-            if (!(AdvancedFilters is ChangeTrackingList<AdvancedFilter> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(AdvancedFilters))
             {
                 writer.WritePropertyName("advancedFilters"u8);
                 writer.WriteStartArray();
@@ -104,11 +105,11 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<string> subjectBeginsWith = default;
-            Optional<string> subjectEndsWith = default;
+            string subjectBeginsWith = default;
+            string subjectEndsWith = default;
             IList<string> includedEventTypes = default;
-            Optional<bool> isSubjectCaseSensitive = default;
-            Optional<bool> enableAdvancedFilteringOnArrays = default;
+            bool? isSubjectCaseSensitive = default;
+            bool? enableAdvancedFilteringOnArrays = default;
             IList<AdvancedFilter> advancedFilters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -177,11 +178,11 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new EventSubscriptionFilter(
-                subjectBeginsWith.Value,
-                subjectEndsWith.Value,
+                subjectBeginsWith,
+                subjectEndsWith,
                 includedEventTypes ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(isSubjectCaseSensitive),
-                Optional.ToNullable(enableAdvancedFilteringOnArrays),
+                isSubjectCaseSensitive,
+                enableAdvancedFilteringOnArrays,
                 advancedFilters ?? new ChangeTrackingList<AdvancedFilter>(),
                 serializedAdditionalRawData);
         }

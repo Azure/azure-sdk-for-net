@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AlertsManagement;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && AlertId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AlertId))
             {
                 writer.WritePropertyName("alertId"u8);
                 writer.WriteStringValue(AlertId.Value);
             }
-            if (!(Modifications is ChangeTrackingList<ServiceAlertModificationItemInfo> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Modifications))
             {
                 writer.WritePropertyName("modifications"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             {
                 return null;
             }
-            Optional<Guid> alertId = default;
+            Guid? alertId = default;
             IList<ServiceAlertModificationItemInfo> modifications = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceAlertModificationProperties(Optional.ToNullable(alertId), modifications ?? new ChangeTrackingList<ServiceAlertModificationItemInfo>(), serializedAdditionalRawData);
+            return new ServiceAlertModificationProperties(alertId, modifications ?? new ChangeTrackingList<ServiceAlertModificationItemInfo>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceAlertModificationProperties>.Write(ModelReaderWriterOptions options)

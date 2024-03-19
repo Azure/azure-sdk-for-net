@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearningCompute;
 
 namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             }
 
             writer.WriteStartObject();
-            if (AppId != null)
+            if (Optional.IsDefined(AppId))
             {
                 writer.WritePropertyName("appId"u8);
                 writer.WriteStringValue(AppId);
             }
-            if (InstrumentationKey != null)
+            if (Optional.IsDefined(InstrumentationKey))
             {
                 writer.WritePropertyName("instrumentationKey"u8);
                 writer.WriteStringValue(InstrumentationKey);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             {
                 return null;
             }
-            Optional<string> appId = default;
-            Optional<string> instrumentationKey = default;
+            string appId = default;
+            string instrumentationKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppInsightsCredentials(appId.Value, instrumentationKey.Value, serializedAdditionalRawData);
+            return new AppInsightsCredentials(appId, instrumentationKey, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppInsightsCredentials>.Write(ModelReaderWriterOptions options)

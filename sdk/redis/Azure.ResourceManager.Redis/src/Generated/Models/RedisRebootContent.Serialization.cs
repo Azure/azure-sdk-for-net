@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Redis;
 
 namespace Azure.ResourceManager.Redis.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Redis.Models
             }
 
             writer.WriteStartObject();
-            if (RebootType.HasValue)
+            if (Optional.IsDefined(RebootType))
             {
                 writer.WritePropertyName("rebootType"u8);
                 writer.WriteStringValue(RebootType.Value.ToString());
             }
-            if (ShardId.HasValue)
+            if (Optional.IsDefined(ShardId))
             {
                 writer.WritePropertyName("shardId"u8);
                 writer.WriteNumberValue(ShardId.Value);
             }
-            if (!(Ports is ChangeTrackingList<int> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Ports))
             {
                 writer.WritePropertyName("ports"u8);
                 writer.WriteStartArray();
@@ -84,8 +85,8 @@ namespace Azure.ResourceManager.Redis.Models
             {
                 return null;
             }
-            Optional<RedisRebootType> rebootType = default;
-            Optional<int> shardId = default;
+            RedisRebootType? rebootType = default;
+            int? shardId = default;
             IList<int> ports = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.Redis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisRebootContent(Optional.ToNullable(rebootType), Optional.ToNullable(shardId), ports ?? new ChangeTrackingList<int>(), serializedAdditionalRawData);
+            return new RedisRebootContent(rebootType, shardId, ports ?? new ChangeTrackingList<int>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisRebootContent>.Write(ModelReaderWriterOptions options)

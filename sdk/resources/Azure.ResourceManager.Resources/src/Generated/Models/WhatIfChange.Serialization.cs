@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -30,12 +31,12 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteStringValue(ResourceId);
             writer.WritePropertyName("changeType"u8);
             writer.WriteStringValue(ChangeType.ToSerialString());
-            if (UnsupportedReason != null)
+            if (Optional.IsDefined(UnsupportedReason))
             {
                 writer.WritePropertyName("unsupportedReason"u8);
                 writer.WriteStringValue(UnsupportedReason);
             }
-            if (Before != null)
+            if (Optional.IsDefined(Before))
             {
                 writer.WritePropertyName("before"u8);
 #if NET6_0_OR_GREATER
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
 #endif
             }
-            if (After != null)
+            if (Optional.IsDefined(After))
             {
                 writer.WritePropertyName("after"u8);
 #if NET6_0_OR_GREATER
@@ -59,7 +60,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
 #endif
             }
-            if (!(Delta is ChangeTrackingList<WhatIfPropertyChange> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Delta))
             {
                 writer.WritePropertyName("delta"u8);
                 writer.WriteStartArray();
@@ -109,9 +110,9 @@ namespace Azure.ResourceManager.Resources.Models
             }
             string resourceId = default;
             WhatIfChangeType changeType = default;
-            Optional<string> unsupportedReason = default;
-            Optional<BinaryData> before = default;
-            Optional<BinaryData> after = default;
+            string unsupportedReason = default;
+            BinaryData before = default;
+            BinaryData after = default;
             IReadOnlyList<WhatIfPropertyChange> delta = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -173,9 +174,9 @@ namespace Azure.ResourceManager.Resources.Models
             return new WhatIfChange(
                 resourceId,
                 changeType,
-                unsupportedReason.Value,
-                before.Value,
-                after.Value,
+                unsupportedReason,
+                before,
+                after,
                 delta ?? new ChangeTrackingList<WhatIfPropertyChange>(),
                 serializedAdditionalRawData);
         }

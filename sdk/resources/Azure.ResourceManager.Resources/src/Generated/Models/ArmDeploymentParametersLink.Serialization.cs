@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteStartObject();
             writer.WritePropertyName("uri"u8);
             writer.WriteStringValue(Uri.AbsoluteUri);
-            if (ContentVersion != null)
+            if (Optional.IsDefined(ContentVersion))
             {
                 writer.WritePropertyName("contentVersion"u8);
                 writer.WriteStringValue(ContentVersion);
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.Resources.Models
                 return null;
             }
             Uri uri = default;
-            Optional<string> contentVersion = default;
+            string contentVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmDeploymentParametersLink(uri, contentVersion.Value, serializedAdditionalRawData);
+            return new ArmDeploymentParametersLink(uri, contentVersion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmDeploymentParametersLink>.Write(ModelReaderWriterOptions options)

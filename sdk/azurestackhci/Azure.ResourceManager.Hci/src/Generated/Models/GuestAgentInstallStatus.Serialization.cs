@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -27,27 +28,27 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && VmUuid != null)
+            if (options.Format != "W" && Optional.IsDefined(VmUuid))
             {
                 writer.WritePropertyName("vmUuid"u8);
                 writer.WriteStringValue(VmUuid);
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && LastStatusChange.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastStatusChange))
             {
                 writer.WritePropertyName("lastStatusChange"u8);
                 writer.WriteStringValue(LastStatusChange.Value, "O");
             }
-            if (options.Format != "W" && AgentVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(AgentVersion))
             {
                 writer.WritePropertyName("agentVersion"u8);
                 writer.WriteStringValue(AgentVersion);
             }
-            if (options.Format != "W" && !(ErrorDetails is ChangeTrackingList<ResponseError> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ErrorDetails))
             {
                 writer.WritePropertyName("errorDetails"u8);
                 writer.WriteStartArray();
@@ -95,10 +96,10 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> vmUuid = default;
-            Optional<StatusType> status = default;
-            Optional<DateTimeOffset> lastStatusChange = default;
-            Optional<string> agentVersion = default;
+            string vmUuid = default;
+            StatusType? status = default;
+            DateTimeOffset? lastStatusChange = default;
+            string agentVersion = default;
             IReadOnlyList<ResponseError> errorDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -153,10 +154,10 @@ namespace Azure.ResourceManager.Hci.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new GuestAgentInstallStatus(
-                vmUuid.Value,
-                Optional.ToNullable(status),
-                Optional.ToNullable(lastStatusChange),
-                agentVersion.Value,
+                vmUuid,
+                status,
+                lastStatusChange,
+                agentVersion,
                 errorDetails ?? new ChangeTrackingList<ResponseError>(),
                 serializedAdditionalRawData);
         }

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -28,22 +29,22 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartObject();
             writer.WritePropertyName("assemblyName"u8);
             writer.WriteStringValue(AssemblyName);
-            if (AssemblyVersion != null)
+            if (Optional.IsDefined(AssemblyVersion))
             {
                 writer.WritePropertyName("assemblyVersion"u8);
                 writer.WriteStringValue(AssemblyVersion);
             }
-            if (AssemblyCulture != null)
+            if (Optional.IsDefined(AssemblyCulture))
             {
                 writer.WritePropertyName("assemblyCulture"u8);
                 writer.WriteStringValue(AssemblyCulture);
             }
-            if (AssemblyPublicKeyToken != null)
+            if (Optional.IsDefined(AssemblyPublicKeyToken))
             {
                 writer.WritePropertyName("assemblyPublicKeyToken"u8);
                 writer.WriteStringValue(AssemblyPublicKeyToken);
             }
-            if (Content != null)
+            if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
 #if NET6_0_OR_GREATER
@@ -55,27 +56,27 @@ namespace Azure.ResourceManager.Logic.Models
                 }
 #endif
             }
-            if (ContentType.HasValue)
+            if (Optional.IsDefined(ContentType))
             {
                 writer.WritePropertyName("contentType"u8);
                 writer.WriteStringValue(ContentType.Value.ToString());
             }
-            if (ContentLink != null)
+            if (Optional.IsDefined(ContentLink))
             {
                 writer.WritePropertyName("contentLink"u8);
                 writer.WriteObjectValue(ContentLink);
             }
-            if (CreatedOn.HasValue)
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (ChangedOn.HasValue)
+            if (Optional.IsDefined(ChangedOn))
             {
                 writer.WritePropertyName("changedTime"u8);
                 writer.WriteStringValue(ChangedOn.Value, "O");
             }
-            if (Metadata != null)
+            if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
 #if NET6_0_OR_GREATER
@@ -126,15 +127,15 @@ namespace Azure.ResourceManager.Logic.Models
                 return null;
             }
             string assemblyName = default;
-            Optional<string> assemblyVersion = default;
-            Optional<string> assemblyCulture = default;
-            Optional<string> assemblyPublicKeyToken = default;
-            Optional<BinaryData> content = default;
-            Optional<ContentType> contentType = default;
-            Optional<LogicContentLink> contentLink = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<DateTimeOffset> changedTime = default;
-            Optional<BinaryData> metadata = default;
+            string assemblyVersion = default;
+            string assemblyCulture = default;
+            string assemblyPublicKeyToken = default;
+            BinaryData content = default;
+            ContentType? contentType = default;
+            LogicContentLink contentLink = default;
+            DateTimeOffset? createdTime = default;
+            DateTimeOffset? changedTime = default;
+            BinaryData metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -220,17 +221,17 @@ namespace Azure.ResourceManager.Logic.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new IntegrationAccountAssemblyProperties(
-                Optional.ToNullable(createdTime),
-                Optional.ToNullable(changedTime),
-                metadata.Value,
+                createdTime,
+                changedTime,
+                metadata,
                 serializedAdditionalRawData,
-                content.Value,
-                Optional.ToNullable(contentType),
-                contentLink.Value,
+                content,
+                contentType,
+                contentLink,
                 assemblyName,
-                assemblyVersion.Value,
-                assemblyCulture.Value,
-                assemblyPublicKeyToken.Value);
+                assemblyVersion,
+                assemblyCulture,
+                assemblyPublicKeyToken);
         }
 
         BinaryData IPersistableModel<IntegrationAccountAssemblyProperties>.Write(ModelReaderWriterOptions options)

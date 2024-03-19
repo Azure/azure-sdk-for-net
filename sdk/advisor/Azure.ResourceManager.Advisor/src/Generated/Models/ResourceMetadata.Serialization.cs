@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Advisor;
 
 namespace Azure.ResourceManager.Advisor.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Advisor.Models
             }
 
             writer.WriteStartObject();
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Source != null)
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
-            if (!(Action is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStartObject();
@@ -59,12 +60,12 @@ namespace Azure.ResourceManager.Advisor.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Singular != null)
+            if (Optional.IsDefined(Singular))
             {
                 writer.WritePropertyName("singular"u8);
                 writer.WriteStringValue(Singular);
             }
-            if (Plural != null)
+            if (Optional.IsDefined(Plural))
             {
                 writer.WritePropertyName("plural"u8);
                 writer.WriteStringValue(Plural);
@@ -107,11 +108,11 @@ namespace Azure.ResourceManager.Advisor.Models
             {
                 return null;
             }
-            Optional<string> resourceId = default;
-            Optional<string> source = default;
+            string resourceId = default;
+            string source = default;
             IDictionary<string, BinaryData> action = default;
-            Optional<string> singular = default;
-            Optional<string> plural = default;
+            string singular = default;
+            string plural = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,11 +165,11 @@ namespace Azure.ResourceManager.Advisor.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ResourceMetadata(
-                resourceId.Value,
-                source.Value,
+                resourceId,
+                source,
                 action ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                singular.Value,
-                plural.Value,
+                singular,
+                plural,
                 serializedAdditionalRawData);
         }
 

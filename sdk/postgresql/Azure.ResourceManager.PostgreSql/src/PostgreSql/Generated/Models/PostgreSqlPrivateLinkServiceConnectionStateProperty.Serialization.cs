@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             writer.WriteStringValue(Status);
             writer.WritePropertyName("description"u8);
             writer.WriteStringValue(Description);
-            if (options.Format != "W" && ActionsRequired != null)
+            if (options.Format != "W" && Optional.IsDefined(ActionsRequired))
             {
                 writer.WritePropertyName("actionsRequired"u8);
                 writer.WriteStringValue(ActionsRequired);
@@ -75,7 +76,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             }
             string status = default;
             string description = default;
-            Optional<string> actionsRequired = default;
+            string actionsRequired = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlPrivateLinkServiceConnectionStateProperty(status, description, actionsRequired.Value, serializedAdditionalRawData);
+            return new PostgreSqlPrivateLinkServiceConnectionStateProperty(status, description, actionsRequired, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlPrivateLinkServiceConnectionStateProperty>.Write(ModelReaderWriterOptions options)

@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Sql
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Kind != null)
+            if (options.Format != "W" && Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -53,39 +53,39 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && AdvisorStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AdvisorStatus))
             {
                 writer.WritePropertyName("advisorStatus"u8);
                 writer.WriteStringValue(AdvisorStatus.Value.ToSerialString());
             }
-            if (AutoExecuteStatus.HasValue)
+            if (Optional.IsDefined(AutoExecuteStatus))
             {
                 writer.WritePropertyName("autoExecuteStatus"u8);
                 writer.WriteStringValue(AutoExecuteStatus.Value.ToSerialString());
             }
-            if (options.Format != "W" && AutoExecuteStatusInheritedFrom.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AutoExecuteStatusInheritedFrom))
             {
                 writer.WritePropertyName("autoExecuteStatusInheritedFrom"u8);
                 writer.WriteStringValue(AutoExecuteStatusInheritedFrom.Value.ToSerialString());
             }
-            if (options.Format != "W" && RecommendationsStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(RecommendationsStatus))
             {
                 writer.WritePropertyName("recommendationsStatus"u8);
                 writer.WriteStringValue(RecommendationsStatus);
             }
-            if (options.Format != "W" && LastCheckedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastCheckedOn))
             {
                 writer.WritePropertyName("lastChecked"u8);
                 writer.WriteStringValue(LastCheckedOn.Value, "O");
             }
-            if (options.Format != "W" && !(RecommendedActions is ChangeTrackingList<RecommendedActionData> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(RecommendedActions))
             {
                 writer.WritePropertyName("recommendedActions"u8);
                 writer.WriteStartArray();
@@ -134,17 +134,17 @@ namespace Azure.ResourceManager.Sql
             {
                 return null;
             }
-            Optional<string> kind = default;
-            Optional<AzureLocation> location = default;
+            string kind = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SqlAdvisorStatus> advisorStatus = default;
-            Optional<AutoExecuteStatus> autoExecuteStatus = default;
-            Optional<AutoExecuteStatusInheritedFrom> autoExecuteStatusInheritedFrom = default;
-            Optional<string> recommendationsStatus = default;
-            Optional<DateTimeOffset> lastChecked = default;
+            SystemData systemData = default;
+            SqlAdvisorStatus? advisorStatus = default;
+            AutoExecuteStatus? autoExecuteStatus = default;
+            AutoExecuteStatusInheritedFrom? autoExecuteStatusInheritedFrom = default;
+            string recommendationsStatus = default;
+            DateTimeOffset? lastChecked = default;
             IReadOnlyList<RecommendedActionData> recommendedActions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -265,14 +265,14 @@ namespace Azure.ResourceManager.Sql
                 id,
                 name,
                 type,
-                systemData.Value,
-                kind.Value,
-                Optional.ToNullable(location),
-                Optional.ToNullable(advisorStatus),
-                Optional.ToNullable(autoExecuteStatus),
-                Optional.ToNullable(autoExecuteStatusInheritedFrom),
-                recommendationsStatus.Value,
-                Optional.ToNullable(lastChecked),
+                systemData,
+                kind,
+                location,
+                advisorStatus,
+                autoExecuteStatus,
+                autoExecuteStatusInheritedFrom,
+                recommendationsStatus,
+                lastChecked,
                 recommendedActions ?? new ChangeTrackingList<RecommendedActionData>(),
                 serializedAdditionalRawData);
         }

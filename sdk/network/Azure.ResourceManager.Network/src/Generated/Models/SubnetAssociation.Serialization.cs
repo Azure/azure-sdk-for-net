@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (!(SecurityRules is ChangeTrackingList<SecurityRuleData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SecurityRules))
             {
                 writer.WritePropertyName("securityRules"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
+            ResourceIdentifier id = default;
             IReadOnlyList<SecurityRuleData> securityRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubnetAssociation(id.Value, securityRules ?? new ChangeTrackingList<SecurityRuleData>(), serializedAdditionalRawData);
+            return new SubnetAssociation(id, securityRules ?? new ChangeTrackingList<SecurityRuleData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubnetAssociation>.Write(ModelReaderWriterOptions options)

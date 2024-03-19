@@ -27,42 +27,42 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
 
             writer.WriteStartObject();
-            if (Canary != null)
+            if (Optional.IsDefined(Canary))
             {
                 writer.WritePropertyName("canary"u8);
                 writer.WriteObjectValue(Canary);
             }
-            if (LowTraffic != null)
+            if (Optional.IsDefined(LowTraffic))
             {
                 writer.WritePropertyName("lowTraffic"u8);
                 writer.WriteObjectValue(LowTraffic);
             }
-            if (MediumTraffic != null)
+            if (Optional.IsDefined(MediumTraffic))
             {
                 writer.WritePropertyName("mediumTraffic"u8);
                 writer.WriteObjectValue(MediumTraffic);
             }
-            if (HighTraffic != null)
+            if (Optional.IsDefined(HighTraffic))
             {
                 writer.WritePropertyName("highTraffic"u8);
                 writer.WriteObjectValue(HighTraffic);
             }
-            if (RestOfTheWorldGroupOne != null)
+            if (Optional.IsDefined(RestOfTheWorldGroupOne))
             {
                 writer.WritePropertyName("restOfTheWorldGroupOne"u8);
                 writer.WriteObjectValue(RestOfTheWorldGroupOne);
             }
-            if (RestOfTheWorldGroupTwo != null)
+            if (Optional.IsDefined(RestOfTheWorldGroupTwo))
             {
                 writer.WritePropertyName("restOfTheWorldGroupTwo"u8);
                 writer.WriteObjectValue(RestOfTheWorldGroupTwo);
             }
-            if (ProviderRegistration != null)
+            if (Optional.IsDefined(ProviderRegistration))
             {
                 writer.WritePropertyName("providerRegistration"u8);
                 writer.WriteObjectValue(ProviderRegistration);
             }
-            if (!(ResourceTypeRegistrations is ChangeTrackingList<ResourceTypeRegistrationData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ResourceTypeRegistrations))
             {
                 writer.WritePropertyName("resourceTypeRegistrations"u8);
                 writer.WriteStartArray();
@@ -110,13 +110,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<CanaryTrafficRegionRolloutConfiguration> canary = default;
-            Optional<TrafficRegionRolloutConfiguration> lowTraffic = default;
-            Optional<TrafficRegionRolloutConfiguration> mediumTraffic = default;
-            Optional<TrafficRegionRolloutConfiguration> highTraffic = default;
-            Optional<TrafficRegionRolloutConfiguration> restOfTheWorldGroupOne = default;
-            Optional<TrafficRegionRolloutConfiguration> restOfTheWorldGroupTwo = default;
-            Optional<ProviderRegistrationData> providerRegistration = default;
+            CanaryTrafficRegionRolloutConfiguration canary = default;
+            TrafficRegionRolloutConfiguration lowTraffic = default;
+            TrafficRegionRolloutConfiguration mediumTraffic = default;
+            TrafficRegionRolloutConfiguration highTraffic = default;
+            TrafficRegionRolloutConfiguration restOfTheWorldGroupOne = default;
+            TrafficRegionRolloutConfiguration restOfTheWorldGroupTwo = default;
+            ProviderRegistrationData providerRegistration = default;
             IList<ResourceTypeRegistrationData> resourceTypeRegistrations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -206,13 +206,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DefaultRolloutSpecification(
-                canary.Value,
-                lowTraffic.Value,
-                mediumTraffic.Value,
-                highTraffic.Value,
-                restOfTheWorldGroupOne.Value,
-                restOfTheWorldGroupTwo.Value,
-                providerRegistration.Value,
+                canary,
+                lowTraffic,
+                mediumTraffic,
+                highTraffic,
+                restOfTheWorldGroupOne,
+                restOfTheWorldGroupTwo,
+                providerRegistration,
                 resourceTypeRegistrations ?? new ChangeTrackingList<ResourceTypeRegistrationData>(),
                 serializedAdditionalRawData);
         }

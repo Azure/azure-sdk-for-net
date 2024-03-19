@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Value != null)
+            if (options.Format != "W" && Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (options.Format != "W" && Method.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Method))
             {
                 writer.WritePropertyName("method"u8);
                 writer.WriteStringValue(Method.Value.ToString());
             }
-            if (options.Format != "W" && BasePath != null)
+            if (options.Format != "W" && Optional.IsDefined(BasePath))
             {
                 writer.WritePropertyName("basePath"u8);
                 writer.WriteStringValue(BasePath);
             }
-            if (options.Format != "W" && RelativePath != null)
+            if (options.Format != "W" && Optional.IsDefined(RelativePath))
             {
                 writer.WritePropertyName("relativePath"u8);
                 writer.WriteStringValue(RelativePath);
             }
-            if (!(RelativePathParameters is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(RelativePathParameters))
             {
                 writer.WritePropertyName("relativePathParameters"u8);
                 writer.WriteStartArray();
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Queries != null)
+            if (Optional.IsDefined(Queries))
             {
                 writer.WritePropertyName("queries"u8);
                 writer.WriteObjectValue(Queries);
@@ -99,12 +100,12 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> value = default;
-            Optional<RequestMethod> method = default;
-            Optional<string> basePath = default;
-            Optional<string> relativePath = default;
+            string value = default;
+            RequestMethod? method = default;
+            string basePath = default;
+            string relativePath = default;
             IReadOnlyList<string> relativePathParameters = default;
-            Optional<LogicWorkflowTriggerCallbackQueryParameterInfo> queries = default;
+            LogicWorkflowTriggerCallbackQueryParameterInfo queries = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -163,12 +164,12 @@ namespace Azure.ResourceManager.Logic.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new LogicWorkflowTriggerCallbackUri(
-                value.Value,
-                Optional.ToNullable(method),
-                basePath.Value,
-                relativePath.Value,
+                value,
+                method,
+                basePath,
+                relativePath,
                 relativePathParameters ?? new ChangeTrackingList<string>(),
-                queries.Value,
+                queries,
                 serializedAdditionalRawData);
         }
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Id.HasValue)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteNumberValue(Id.Value);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Order.HasValue)
+            if (Optional.IsDefined(Order))
             {
                 writer.WritePropertyName("order"u8);
                 writer.WriteNumberValue(Order.Value);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (SolutionType.HasValue)
+            if (Optional.IsDefined(SolutionType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(SolutionType.Value.ToSerialString());
             }
-            if (!(Data is ChangeTrackingList<IList<AppServiceNameValuePair>> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Data))
             {
                 writer.WritePropertyName("data"u8);
                 writer.WriteStartArray();
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Metadata is ChangeTrackingList<IList<AppServiceNameValuePair>> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartArray();
@@ -129,11 +130,11 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<double> id = default;
-            Optional<string> displayName = default;
-            Optional<double> order = default;
-            Optional<string> description = default;
-            Optional<DiagnosticSolutionType> type = default;
+            double? id = default;
+            string displayName = default;
+            double? order = default;
+            string description = default;
+            DiagnosticSolutionType? type = default;
             IList<IList<AppServiceNameValuePair>> data = default;
             IList<IList<AppServiceNameValuePair>> metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -236,11 +237,11 @@ namespace Azure.ResourceManager.AppService.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DiagnosticSolution(
-                Optional.ToNullable(id),
-                displayName.Value,
-                Optional.ToNullable(order),
-                description.Value,
-                Optional.ToNullable(type),
+                id,
+                displayName,
+                order,
+                description,
+                type,
                 data ?? new ChangeTrackingList<IList<AppServiceNameValuePair>>(),
                 metadata ?? new ChangeTrackingList<IList<AppServiceNameValuePair>>(),
                 serializedAdditionalRawData);

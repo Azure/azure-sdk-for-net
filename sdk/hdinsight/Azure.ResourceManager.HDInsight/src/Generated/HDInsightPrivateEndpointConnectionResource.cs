@@ -281,10 +281,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<HDInsightPrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, HDInsightPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _hdInsightPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("HDInsightPrivateEndpointConnectionResource.Update");
             scope.Start();
@@ -330,10 +327,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<HDInsightPrivateEndpointConnectionResource> Update(WaitUntil waitUntil, HDInsightPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _hdInsightPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("HDInsightPrivateEndpointConnectionResource.Update");
             scope.Start();

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation.Models
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -47,29 +48,29 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AutomationAccountResourceId != null)
+            if (Optional.IsDefined(AutomationAccountResourceId))
             {
                 writer.WritePropertyName("automationAccountResourceId"u8);
                 writer.WriteStringValue(AutomationAccountResourceId);
             }
-            if (AutomationAccountId != null)
+            if (Optional.IsDefined(AutomationAccountId))
             {
                 writer.WritePropertyName("automationAccountId"u8);
                 writer.WriteStringValue(AutomationAccountId);
             }
-            if (LocationPropertiesLocation != null)
+            if (Optional.IsDefined(LocationPropertiesLocation))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(LocationPropertiesLocation);
             }
-            if (options.Format != "W" && DeletedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DeletedOn))
             {
                 writer.WritePropertyName("deletionTime"u8);
                 writer.WriteStringValue(DeletedOn.Value, "O");
@@ -113,15 +114,15 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> automationAccountResourceId = default;
-            Optional<string> automationAccountId = default;
-            Optional<string> location0 = default;
-            Optional<DateTimeOffset> deletionTime = default;
+            SystemData systemData = default;
+            ResourceIdentifier automationAccountResourceId = default;
+            string automationAccountId = default;
+            string location0 = default;
+            DateTimeOffset? deletionTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -209,12 +210,12 @@ namespace Azure.ResourceManager.Automation.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(location),
-                automationAccountResourceId.Value,
-                automationAccountId.Value,
-                location0.Value,
-                Optional.ToNullable(deletionTime),
+                systemData,
+                location,
+                automationAccountResourceId,
+                automationAccountId,
+                location0,
+                deletionTime,
                 serializedAdditionalRawData);
         }
 

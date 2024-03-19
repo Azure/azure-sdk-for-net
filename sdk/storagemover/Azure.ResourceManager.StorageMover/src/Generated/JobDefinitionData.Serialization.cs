@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.StorageMover
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -59,54 +59,54 @@ namespace Azure.ResourceManager.StorageMover
             writer.WriteStringValue(CopyMode.ToString());
             writer.WritePropertyName("sourceName"u8);
             writer.WriteStringValue(SourceName);
-            if (options.Format != "W" && SourceResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(SourceResourceId))
             {
                 writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
             }
-            if (SourceSubpath != null)
+            if (Optional.IsDefined(SourceSubpath))
             {
                 writer.WritePropertyName("sourceSubpath"u8);
                 writer.WriteStringValue(SourceSubpath);
             }
             writer.WritePropertyName("targetName"u8);
             writer.WriteStringValue(TargetName);
-            if (options.Format != "W" && TargetResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(TargetResourceId))
             {
                 writer.WritePropertyName("targetResourceId"u8);
                 writer.WriteStringValue(TargetResourceId);
             }
-            if (TargetSubpath != null)
+            if (Optional.IsDefined(TargetSubpath))
             {
                 writer.WritePropertyName("targetSubpath"u8);
                 writer.WriteStringValue(TargetSubpath);
             }
-            if (options.Format != "W" && LatestJobRunName != null)
+            if (options.Format != "W" && Optional.IsDefined(LatestJobRunName))
             {
                 writer.WritePropertyName("latestJobRunName"u8);
                 writer.WriteStringValue(LatestJobRunName);
             }
-            if (options.Format != "W" && LatestJobRunResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(LatestJobRunResourceId))
             {
                 writer.WritePropertyName("latestJobRunResourceId"u8);
                 writer.WriteStringValue(LatestJobRunResourceId);
             }
-            if (options.Format != "W" && LatestJobRunStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LatestJobRunStatus))
             {
                 writer.WritePropertyName("latestJobRunStatus"u8);
                 writer.WriteStringValue(LatestJobRunStatus.Value.ToString());
             }
-            if (AgentName != null)
+            if (Optional.IsDefined(AgentName))
             {
                 writer.WritePropertyName("agentName"u8);
                 writer.WriteStringValue(AgentName);
             }
-            if (options.Format != "W" && AgentResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(AgentResourceId))
             {
                 writer.WritePropertyName("agentResourceId"u8);
                 writer.WriteStringValue(AgentResourceId);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -153,21 +153,21 @@ namespace Azure.ResourceManager.StorageMover
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
+            SystemData systemData = default;
+            string description = default;
             StorageMoverCopyMode copyMode = default;
             string sourceName = default;
-            Optional<ResourceIdentifier> sourceResourceId = default;
-            Optional<string> sourceSubpath = default;
+            ResourceIdentifier sourceResourceId = default;
+            string sourceSubpath = default;
             string targetName = default;
-            Optional<ResourceIdentifier> targetResourceId = default;
-            Optional<string> targetSubpath = default;
-            Optional<string> latestJobRunName = default;
-            Optional<ResourceIdentifier> latestJobRunResourceId = default;
-            Optional<JobRunStatus> latestJobRunStatus = default;
-            Optional<string> agentName = default;
-            Optional<ResourceIdentifier> agentResourceId = default;
-            Optional<StorageMoverProvisioningState> provisioningState = default;
+            ResourceIdentifier targetResourceId = default;
+            string targetSubpath = default;
+            string latestJobRunName = default;
+            ResourceIdentifier latestJobRunResourceId = default;
+            JobRunStatus? latestJobRunStatus = default;
+            string agentName = default;
+            ResourceIdentifier agentResourceId = default;
+            StorageMoverProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -312,21 +312,21 @@ namespace Azure.ResourceManager.StorageMover
                 id,
                 name,
                 type,
-                systemData.Value,
-                description.Value,
+                systemData,
+                description,
                 copyMode,
                 sourceName,
-                sourceResourceId.Value,
-                sourceSubpath.Value,
+                sourceResourceId,
+                sourceSubpath,
                 targetName,
-                targetResourceId.Value,
-                targetSubpath.Value,
-                latestJobRunName.Value,
-                latestJobRunResourceId.Value,
-                Optional.ToNullable(latestJobRunStatus),
-                agentName.Value,
-                agentResourceId.Value,
-                Optional.ToNullable(provisioningState),
+                targetResourceId,
+                targetSubpath,
+                latestJobRunName,
+                latestJobRunResourceId,
+                latestJobRunStatus,
+                agentName,
+                agentResourceId,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

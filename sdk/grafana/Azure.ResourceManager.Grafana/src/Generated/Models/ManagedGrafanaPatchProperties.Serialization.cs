@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Grafana;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
@@ -26,42 +27,42 @@ namespace Azure.ResourceManager.Grafana.Models
             }
 
             writer.WriteStartObject();
-            if (ZoneRedundancy.HasValue)
+            if (Optional.IsDefined(ZoneRedundancy))
             {
                 writer.WritePropertyName("zoneRedundancy"u8);
                 writer.WriteStringValue(ZoneRedundancy.Value.ToString());
             }
-            if (ApiKey.HasValue)
+            if (Optional.IsDefined(ApiKey))
             {
                 writer.WritePropertyName("apiKey"u8);
                 writer.WriteStringValue(ApiKey.Value.ToString());
             }
-            if (DeterministicOutboundIP.HasValue)
+            if (Optional.IsDefined(DeterministicOutboundIP))
             {
                 writer.WritePropertyName("deterministicOutboundIP"u8);
                 writer.WriteStringValue(DeterministicOutboundIP.Value.ToString());
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (GrafanaIntegrations != null)
+            if (Optional.IsDefined(GrafanaIntegrations))
             {
                 writer.WritePropertyName("grafanaIntegrations"u8);
                 writer.WriteObjectValue(GrafanaIntegrations);
             }
-            if (EnterpriseConfigurations != null)
+            if (Optional.IsDefined(EnterpriseConfigurations))
             {
                 writer.WritePropertyName("enterpriseConfigurations"u8);
                 writer.WriteObjectValue(EnterpriseConfigurations);
             }
-            if (GrafanaConfigurations != null)
+            if (Optional.IsDefined(GrafanaConfigurations))
             {
                 writer.WritePropertyName("grafanaConfigurations"u8);
                 writer.WriteObjectValue(GrafanaConfigurations);
             }
-            if (!(GrafanaPlugins is ChangeTrackingDictionary<string, GrafanaPlugin> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(GrafanaPlugins))
             {
                 writer.WritePropertyName("grafanaPlugins"u8);
                 writer.WriteStartObject();
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 }
                 writer.WriteEndObject();
             }
-            if (GrafanaMajorVersion != null)
+            if (Optional.IsDefined(GrafanaMajorVersion))
             {
                 writer.WritePropertyName("grafanaMajorVersion"u8);
                 writer.WriteStringValue(GrafanaMajorVersion);
@@ -115,15 +116,15 @@ namespace Azure.ResourceManager.Grafana.Models
             {
                 return null;
             }
-            Optional<GrafanaZoneRedundancy> zoneRedundancy = default;
-            Optional<GrafanaApiKey> apiKey = default;
-            Optional<DeterministicOutboundIP> deterministicOutboundIP = default;
-            Optional<GrafanaPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<GrafanaIntegrations> grafanaIntegrations = default;
-            Optional<EnterpriseConfigurations> enterpriseConfigurations = default;
-            Optional<GrafanaConfigurations> grafanaConfigurations = default;
+            GrafanaZoneRedundancy? zoneRedundancy = default;
+            GrafanaApiKey? apiKey = default;
+            DeterministicOutboundIP? deterministicOutboundIP = default;
+            GrafanaPublicNetworkAccess? publicNetworkAccess = default;
+            GrafanaIntegrations grafanaIntegrations = default;
+            EnterpriseConfigurations enterpriseConfigurations = default;
+            GrafanaConfigurations grafanaConfigurations = default;
             IDictionary<string, GrafanaPlugin> grafanaPlugins = default;
-            Optional<string> grafanaMajorVersion = default;
+            string grafanaMajorVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -217,15 +218,15 @@ namespace Azure.ResourceManager.Grafana.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ManagedGrafanaPatchProperties(
-                Optional.ToNullable(zoneRedundancy),
-                Optional.ToNullable(apiKey),
-                Optional.ToNullable(deterministicOutboundIP),
-                Optional.ToNullable(publicNetworkAccess),
-                grafanaIntegrations.Value,
-                enterpriseConfigurations.Value,
-                grafanaConfigurations.Value,
+                zoneRedundancy,
+                apiKey,
+                deterministicOutboundIP,
+                publicNetworkAccess,
+                grafanaIntegrations,
+                enterpriseConfigurations,
+                grafanaConfigurations,
                 grafanaPlugins ?? new ChangeTrackingDictionary<string, GrafanaPlugin>(),
-                grafanaMajorVersion.Value,
+                grafanaMajorVersion,
                 serializedAdditionalRawData);
         }
 

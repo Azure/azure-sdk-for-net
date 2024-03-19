@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,34 +56,34 @@ namespace Azure.ResourceManager.PlaywrightTesting
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && DashboardUri != null)
+            if (options.Format != "W" && Optional.IsDefined(DashboardUri))
             {
                 writer.WritePropertyName("dashboardUri"u8);
                 writer.WriteStringValue(DashboardUri.AbsoluteUri);
             }
-            if (RegionalAffinity.HasValue)
+            if (Optional.IsDefined(RegionalAffinity))
             {
                 writer.WritePropertyName("regionalAffinity"u8);
                 writer.WriteStringValue(RegionalAffinity.Value.ToString());
             }
-            if (ScalableExecution.HasValue)
+            if (Optional.IsDefined(ScalableExecution))
             {
                 writer.WritePropertyName("scalableExecution"u8);
                 writer.WriteStringValue(ScalableExecution.Value.ToString());
             }
-            if (Reporting.HasValue)
+            if (Optional.IsDefined(Reporting))
             {
                 writer.WritePropertyName("reporting"u8);
                 writer.WriteStringValue(Reporting.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -132,12 +132,12 @@ namespace Azure.ResourceManager.PlaywrightTesting
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Uri> dashboardUri = default;
-            Optional<EnablementStatus> regionalAffinity = default;
-            Optional<EnablementStatus> scalableExecution = default;
-            Optional<EnablementStatus> reporting = default;
-            Optional<PlaywrightTestingProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            Uri dashboardUri = default;
+            EnablementStatus? regionalAffinity = default;
+            EnablementStatus? scalableExecution = default;
+            EnablementStatus? reporting = default;
+            PlaywrightTestingProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -252,14 +252,14 @@ namespace Azure.ResourceManager.PlaywrightTesting
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                dashboardUri.Value,
-                Optional.ToNullable(regionalAffinity),
-                Optional.ToNullable(scalableExecution),
-                Optional.ToNullable(reporting),
-                Optional.ToNullable(provisioningState),
+                dashboardUri,
+                regionalAffinity,
+                scalableExecution,
+                reporting,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

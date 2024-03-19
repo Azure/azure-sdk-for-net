@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
 
             writer.WriteStartObject();
-            if (Address != null)
+            if (Optional.IsDefined(Address))
             {
                 writer.WritePropertyName("address"u8);
                 writer.WriteStringValue(Address);
             }
-            if (IPAddressVersion != null)
+            if (Optional.IsDefined(IPAddressVersion))
             {
                 writer.WritePropertyName("ipAddressVersion"u8);
                 writer.WriteStringValue(IPAddressVersion);
             }
-            if (options.Format != "W" && Subnet != null)
+            if (options.Format != "W" && Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
                 writer.WriteObjectValue(Subnet);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<string> address = default;
-            Optional<string> ipAddressVersion = default;
-            Optional<HybridComputeSubnet> subnet = default;
+            string address = default;
+            string ipAddressVersion = default;
+            HybridComputeSubnet subnet = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridComputeIPAddress(address.Value, ipAddressVersion.Value, subnet.Value, serializedAdditionalRawData);
+            return new HybridComputeIPAddress(address, ipAddressVersion, subnet, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridComputeIPAddress>.Write(ModelReaderWriterOptions options)

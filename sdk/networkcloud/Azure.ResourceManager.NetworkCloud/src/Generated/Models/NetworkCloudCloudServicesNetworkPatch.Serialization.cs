@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(AdditionalEgressEndpoints is ChangeTrackingList<EgressEndpoint> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(AdditionalEgressEndpoints))
             {
                 writer.WritePropertyName("additionalEgressEndpoints"u8);
                 writer.WriteStartArray();
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 writer.WriteEndArray();
             }
-            if (EnableDefaultEgressEndpoints.HasValue)
+            if (Optional.IsDefined(EnableDefaultEgressEndpoints))
             {
                 writer.WritePropertyName("enableDefaultEgressEndpoints"u8);
                 writer.WriteStringValue(EnableDefaultEgressEndpoints.Value.ToString());
@@ -95,7 +96,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             IDictionary<string, string> tags = default;
             IList<EgressEndpoint> additionalEgressEndpoints = default;
-            Optional<CloudServicesNetworkEnableDefaultEgressEndpoint> enableDefaultEgressEndpoints = default;
+            CloudServicesNetworkEnableDefaultEgressEndpoint? enableDefaultEgressEndpoints = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -155,7 +156,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudCloudServicesNetworkPatch(tags ?? new ChangeTrackingDictionary<string, string>(), additionalEgressEndpoints ?? new ChangeTrackingList<EgressEndpoint>(), Optional.ToNullable(enableDefaultEgressEndpoints), serializedAdditionalRawData);
+            return new NetworkCloudCloudServicesNetworkPatch(tags ?? new ChangeTrackingDictionary<string, string>(), additionalEgressEndpoints ?? new ChangeTrackingList<EgressEndpoint>(), enableDefaultEgressEndpoints, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudCloudServicesNetworkPatch>.Write(ModelReaderWriterOptions options)

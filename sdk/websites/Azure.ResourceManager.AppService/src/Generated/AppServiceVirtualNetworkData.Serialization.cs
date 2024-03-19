@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -48,29 +48,29 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (VnetResourceId != null)
+            if (Optional.IsDefined(VnetResourceId))
             {
                 writer.WritePropertyName("vnetResourceId"u8);
                 writer.WriteStringValue(VnetResourceId);
             }
-            if (options.Format != "W" && CertThumbprintString != null)
+            if (options.Format != "W" && Optional.IsDefined(CertThumbprintString))
             {
                 writer.WritePropertyName("certThumbprint"u8);
                 writer.WriteStringValue(CertThumbprintString);
             }
-            if (CertBlob != null)
+            if (Optional.IsDefined(CertBlob))
             {
                 writer.WritePropertyName("certBlob"u8);
                 writer.WriteStringValue(CertBlob);
             }
-            if (options.Format != "W" && !(Routes is ChangeTrackingList<AppServiceVirtualNetworkRoute> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Routes))
             {
                 writer.WritePropertyName("routes"u8);
                 writer.WriteStartArray();
@@ -80,17 +80,17 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && IsResyncRequired.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsResyncRequired))
             {
                 writer.WritePropertyName("resyncRequired"u8);
                 writer.WriteBooleanValue(IsResyncRequired.Value);
             }
-            if (DnsServers != null)
+            if (Optional.IsDefined(DnsServers))
             {
                 writer.WritePropertyName("dnsServers"u8);
                 writer.WriteStringValue(DnsServers);
             }
-            if (IsSwift.HasValue)
+            if (Optional.IsDefined(IsSwift))
             {
                 writer.WritePropertyName("isSwift"u8);
                 writer.WriteBooleanValue(IsSwift.Value);
@@ -134,18 +134,18 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> vnetResourceId = default;
-            Optional<string> certThumbprint = default;
-            Optional<string> certBlob = default;
+            SystemData systemData = default;
+            ResourceIdentifier vnetResourceId = default;
+            string certThumbprint = default;
+            string certBlob = default;
             IReadOnlyList<AppServiceVirtualNetworkRoute> routes = default;
-            Optional<bool> resyncRequired = default;
-            Optional<string> dnsServers = default;
-            Optional<bool> isSwift = default;
+            bool? resyncRequired = default;
+            string dnsServers = default;
+            bool? isSwift = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -257,15 +257,15 @@ namespace Azure.ResourceManager.AppService
                 id,
                 name,
                 type,
-                systemData.Value,
-                vnetResourceId.Value,
-                certThumbprint.Value,
-                certBlob.Value,
+                systemData,
+                vnetResourceId,
+                certThumbprint,
+                certBlob,
                 routes ?? new ChangeTrackingList<AppServiceVirtualNetworkRoute>(),
-                Optional.ToNullable(resyncRequired),
-                dnsServers.Value,
-                Optional.ToNullable(isSwift),
-                kind.Value,
+                resyncRequired,
+                dnsServers,
+                isSwift,
+                kind,
                 serializedAdditionalRawData);
         }
 

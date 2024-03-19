@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
 
             writer.WriteStartObject();
-            if (MessageTitle != null)
+            if (Optional.IsDefined(MessageTitle))
             {
                 writer.WritePropertyName("messageTitle"u8);
                 writer.WriteStringValue(MessageTitle);
             }
-            if (MessageBody != null)
+            if (Optional.IsDefined(MessageBody))
             {
                 writer.WritePropertyName("messageBody"u8);
                 writer.WriteStringValue(MessageBody);
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            Optional<string> messageTitle = default;
-            Optional<string> messageBody = default;
+            string messageTitle = default;
+            string messageBody = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UserSessionMessage(messageTitle.Value, messageBody.Value, serializedAdditionalRawData);
+            return new UserSessionMessage(messageTitle, messageBody, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UserSessionMessage>.Write(ModelReaderWriterOptions options)

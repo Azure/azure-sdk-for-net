@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && LocationPlacementId != null)
+            if (options.Format != "W" && Optional.IsDefined(LocationPlacementId))
             {
                 writer.WritePropertyName("locationPlacementId"u8);
                 writer.WriteStringValue(LocationPlacementId);
             }
-            if (options.Format != "W" && QuotaId != null)
+            if (options.Format != "W" && Optional.IsDefined(QuotaId))
             {
                 writer.WritePropertyName("quotaId"u8);
                 writer.WriteStringValue(QuotaId);
             }
-            if (options.Format != "W" && SpendingLimit.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SpendingLimit))
             {
                 writer.WritePropertyName("spendingLimit"u8);
                 writer.WriteStringValue(SpendingLimit.Value.ToSerialString());
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<string> locationPlacementId = default;
-            Optional<string> quotaId = default;
-            Optional<SpendingLimit> spendingLimit = default;
+            string locationPlacementId = default;
+            string quotaId = default;
+            SpendingLimit? spendingLimit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubscriptionPolicies(locationPlacementId.Value, quotaId.Value, Optional.ToNullable(spendingLimit), serializedAdditionalRawData);
+            return new SubscriptionPolicies(locationPlacementId, quotaId, spendingLimit, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubscriptionPolicies>.Write(ModelReaderWriterOptions options)

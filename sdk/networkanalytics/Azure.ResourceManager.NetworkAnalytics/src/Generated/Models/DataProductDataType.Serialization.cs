@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.NetworkAnalytics;
 
 namespace Azure.ResourceManager.NetworkAnalytics.Models
 {
@@ -42,44 +43,44 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && StateReason != null)
+            if (options.Format != "W" && Optional.IsDefined(StateReason))
             {
                 writer.WritePropertyName("stateReason"u8);
                 writer.WriteStringValue(StateReason);
             }
-            if (StorageOutputRetention.HasValue)
+            if (Optional.IsDefined(StorageOutputRetention))
             {
                 writer.WritePropertyName("storageOutputRetention"u8);
                 writer.WriteNumberValue(StorageOutputRetention.Value);
             }
-            if (DatabaseCacheRetention.HasValue)
+            if (Optional.IsDefined(DatabaseCacheRetention))
             {
                 writer.WritePropertyName("databaseCacheRetention"u8);
                 writer.WriteNumberValue(DatabaseCacheRetention.Value);
             }
-            if (DatabaseRetention.HasValue)
+            if (Optional.IsDefined(DatabaseRetention))
             {
                 writer.WritePropertyName("databaseRetention"u8);
                 writer.WriteNumberValue(DatabaseRetention.Value);
             }
-            if (options.Format != "W" && VisualizationUri != null)
+            if (options.Format != "W" && Optional.IsDefined(VisualizationUri))
             {
                 writer.WritePropertyName("visualizationUrl"u8);
                 writer.WriteStringValue(VisualizationUri.AbsoluteUri);
@@ -126,14 +127,14 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<NetworkAnalyticsProvisioningState> provisioningState = default;
-            Optional<DataProductDataTypeState> state = default;
-            Optional<string> stateReason = default;
-            Optional<int> storageOutputRetention = default;
-            Optional<int> databaseCacheRetention = default;
-            Optional<int> databaseRetention = default;
-            Optional<Uri> visualizationUrl = default;
+            SystemData systemData = default;
+            NetworkAnalyticsProvisioningState? provisioningState = default;
+            DataProductDataTypeState? state = default;
+            string stateReason = default;
+            int? storageOutputRetention = default;
+            int? databaseCacheRetention = default;
+            int? databaseRetention = default;
+            Uri visualizationUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -243,14 +244,14 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(state),
-                stateReason.Value,
-                Optional.ToNullable(storageOutputRetention),
-                Optional.ToNullable(databaseCacheRetention),
-                Optional.ToNullable(databaseRetention),
-                visualizationUrl.Value,
+                systemData,
+                provisioningState,
+                state,
+                stateReason,
+                storageOutputRetention,
+                databaseCacheRetention,
+                databaseRetention,
+                visualizationUrl,
                 serializedAdditionalRawData);
         }
 

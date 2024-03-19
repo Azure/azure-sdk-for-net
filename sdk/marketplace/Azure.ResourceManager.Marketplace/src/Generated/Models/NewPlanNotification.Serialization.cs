@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Marketplace;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.Marketplace.Models
             }
 
             writer.WriteStartObject();
-            if (OfferId != null)
+            if (Optional.IsDefined(OfferId))
             {
                 writer.WritePropertyName("offerId"u8);
                 writer.WriteStringValue(OfferId);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (IsFuturePlansEnabled.HasValue)
+            if (Optional.IsDefined(IsFuturePlansEnabled))
             {
                 writer.WritePropertyName("isFuturePlansEnabled"u8);
                 writer.WriteBooleanValue(IsFuturePlansEnabled.Value);
             }
-            if (MessageCode.HasValue)
+            if (Optional.IsDefined(MessageCode))
             {
                 writer.WritePropertyName("messageCode"u8);
                 writer.WriteNumberValue(MessageCode.Value);
             }
-            if (IconUri != null)
+            if (Optional.IsDefined(IconUri))
             {
                 writer.WritePropertyName("icon"u8);
                 writer.WriteStringValue(IconUri.AbsoluteUri);
             }
-            if (!(Plans is ChangeTrackingList<PlanNotificationDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Plans))
             {
                 writer.WritePropertyName("plans"u8);
                 writer.WriteStartArray();
@@ -99,11 +100,11 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<string> offerId = default;
-            Optional<string> displayName = default;
-            Optional<bool> isFuturePlansEnabled = default;
-            Optional<long> messageCode = default;
-            Optional<Uri> icon = default;
+            string offerId = default;
+            string displayName = default;
+            bool? isFuturePlansEnabled = default;
+            long? messageCode = default;
+            Uri icon = default;
             IReadOnlyList<PlanNotificationDetails> plans = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -167,11 +168,11 @@ namespace Azure.ResourceManager.Marketplace.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new NewPlanNotification(
-                offerId.Value,
-                displayName.Value,
-                Optional.ToNullable(isFuturePlansEnabled),
-                Optional.ToNullable(messageCode),
-                icon.Value,
+                offerId,
+                displayName,
+                isFuturePlansEnabled,
+                messageCode,
+                icon,
                 plans ?? new ChangeTrackingList<PlanNotificationDetails>(),
                 serializedAdditionalRawData);
         }

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ResourceName != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceName))
             {
                 writer.WritePropertyName("resourceName"u8);
                 writer.WriteStringValue(ResourceName);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (options.Format != "W" && IsZoneResilient.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsZoneResilient))
             {
                 writer.WritePropertyName("isZoneResilient"u8);
                 writer.WriteBooleanValue(IsZoneResilient.Value);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 return null;
             }
-            Optional<string> resourceName = default;
-            Optional<ResourceType> resourceType = default;
-            Optional<bool> isZoneResilient = default;
+            string resourceName = default;
+            ResourceType? resourceType = default;
+            bool? isZoneResilient = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceAzStatus(resourceName.Value, Optional.ToNullable(resourceType), Optional.ToNullable(isZoneResilient), serializedAdditionalRawData);
+            return new ResourceAzStatus(resourceName, resourceType, isZoneResilient, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceAzStatus>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (IncludeSpark.HasValue)
+            if (Optional.IsDefined(IncludeSpark))
             {
                 writer.WritePropertyName("includeSpark"u8);
                 writer.WriteBooleanValue(IncludeSpark.Value);
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<bool> includeSpark = default;
+            bool? includeSpark = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedNetworkProvisionContent(Optional.ToNullable(includeSpark), serializedAdditionalRawData);
+            return new ManagedNetworkProvisionContent(includeSpark, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedNetworkProvisionContent>.Write(ModelReaderWriterOptions options)

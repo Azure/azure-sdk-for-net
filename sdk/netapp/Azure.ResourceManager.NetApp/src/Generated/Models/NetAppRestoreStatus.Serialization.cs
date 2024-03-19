@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && IsHealthy.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsHealthy))
             {
                 writer.WritePropertyName("healthy"u8);
                 writer.WriteBooleanValue(IsHealthy.Value);
             }
-            if (options.Format != "W" && RelationshipStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RelationshipStatus))
             {
                 writer.WritePropertyName("relationshipStatus"u8);
                 writer.WriteStringValue(RelationshipStatus.Value.ToString());
             }
-            if (options.Format != "W" && MirrorState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MirrorState))
             {
                 writer.WritePropertyName("mirrorState"u8);
                 writer.WriteStringValue(MirrorState.Value.ToString());
             }
-            if (options.Format != "W" && UnhealthyReason != null)
+            if (options.Format != "W" && Optional.IsDefined(UnhealthyReason))
             {
                 writer.WritePropertyName("unhealthyReason"u8);
                 writer.WriteStringValue(UnhealthyReason);
             }
-            if (options.Format != "W" && ErrorMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(ErrorMessage))
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
             }
-            if (options.Format != "W" && TotalTransferBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalTransferBytes))
             {
                 writer.WritePropertyName("totalTransferBytes"u8);
                 writer.WriteNumberValue(TotalTransferBytes.Value);
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<bool> healthy = default;
-            Optional<NetAppRelationshipStatus> relationshipStatus = default;
-            Optional<NetAppMirrorState> mirrorState = default;
-            Optional<string> unhealthyReason = default;
-            Optional<string> errorMessage = default;
-            Optional<long> totalTransferBytes = default;
+            bool? healthy = default;
+            NetAppRelationshipStatus? relationshipStatus = default;
+            NetAppMirrorState? mirrorState = default;
+            string unhealthyReason = default;
+            string errorMessage = default;
+            long? totalTransferBytes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,12 +158,12 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new NetAppRestoreStatus(
-                Optional.ToNullable(healthy),
-                Optional.ToNullable(relationshipStatus),
-                Optional.ToNullable(mirrorState),
-                unhealthyReason.Value,
-                errorMessage.Value,
-                Optional.ToNullable(totalTransferBytes),
+                healthy,
+                relationshipStatus,
+                mirrorState,
+                unhealthyReason,
+                errorMessage,
+                totalTransferBytes,
                 serializedAdditionalRawData);
         }
 

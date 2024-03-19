@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (ObjectType.HasValue)
+            if (Optional.IsDefined(ObjectType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ObjectType.Value.ToString());
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<string> value = default;
-            Optional<ContainerRegistrySecretObjectType> type = default;
+            string value = default;
+            ContainerRegistrySecretObjectType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistrySecretObject(value.Value, Optional.ToNullable(type), serializedAdditionalRawData);
+            return new ContainerRegistrySecretObject(value, type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistrySecretObject>.Write(ModelReaderWriterOptions options)

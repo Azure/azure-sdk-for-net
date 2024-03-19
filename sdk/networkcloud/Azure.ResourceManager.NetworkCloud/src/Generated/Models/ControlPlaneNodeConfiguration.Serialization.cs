@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (AdministratorConfiguration != null)
+            if (Optional.IsDefined(AdministratorConfiguration))
             {
                 writer.WritePropertyName("administratorConfiguration"u8);
                 writer.WriteObjectValue(AdministratorConfiguration);
             }
-            if (!(AvailabilityZones is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AvailabilityZones))
             {
                 writer.WritePropertyName("availabilityZones"u8);
                 writer.WriteStartArray();
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<AdministratorConfiguration> administratorConfiguration = default;
+            AdministratorConfiguration administratorConfiguration = default;
             IList<string> availabilityZones = default;
             long count = default;
             string vmSkuName = default;
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ControlPlaneNodeConfiguration(administratorConfiguration.Value, availabilityZones ?? new ChangeTrackingList<string>(), count, vmSkuName, serializedAdditionalRawData);
+            return new ControlPlaneNodeConfiguration(administratorConfiguration, availabilityZones ?? new ChangeTrackingList<string>(), count, vmSkuName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ControlPlaneNodeConfiguration>.Write(ModelReaderWriterOptions options)

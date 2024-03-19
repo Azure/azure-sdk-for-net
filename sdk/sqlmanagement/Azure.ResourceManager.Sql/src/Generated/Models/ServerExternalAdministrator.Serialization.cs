@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (AdministratorType.HasValue)
+            if (Optional.IsDefined(AdministratorType))
             {
                 writer.WritePropertyName("administratorType"u8);
                 writer.WriteStringValue(AdministratorType.Value.ToString());
             }
-            if (PrincipalType.HasValue)
+            if (Optional.IsDefined(PrincipalType))
             {
                 writer.WritePropertyName("principalType"u8);
                 writer.WriteStringValue(PrincipalType.Value.ToString());
             }
-            if (Login != null)
+            if (Optional.IsDefined(Login))
             {
                 writer.WritePropertyName("login"u8);
                 writer.WriteStringValue(Login);
             }
-            if (Sid.HasValue)
+            if (Optional.IsDefined(Sid))
             {
                 writer.WritePropertyName("sid"u8);
                 writer.WriteStringValue(Sid.Value);
             }
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (IsAzureADOnlyAuthenticationEnabled.HasValue)
+            if (Optional.IsDefined(IsAzureADOnlyAuthenticationEnabled))
             {
                 writer.WritePropertyName("azureADOnlyAuthentication"u8);
                 writer.WriteBooleanValue(IsAzureADOnlyAuthenticationEnabled.Value);
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<SqlAdministratorType> administratorType = default;
-            Optional<SqlServerPrincipalType> principalType = default;
-            Optional<string> login = default;
-            Optional<Guid> sid = default;
-            Optional<Guid> tenantId = default;
-            Optional<bool> azureADOnlyAuthentication = default;
+            SqlAdministratorType? administratorType = default;
+            SqlServerPrincipalType? principalType = default;
+            string login = default;
+            Guid? sid = default;
+            Guid? tenantId = default;
+            bool? azureADOnlyAuthentication = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -161,12 +162,12 @@ namespace Azure.ResourceManager.Sql.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ServerExternalAdministrator(
-                Optional.ToNullable(administratorType),
-                Optional.ToNullable(principalType),
-                login.Value,
-                Optional.ToNullable(sid),
-                Optional.ToNullable(tenantId),
-                Optional.ToNullable(azureADOnlyAuthentication),
+                administratorType,
+                principalType,
+                login,
+                sid,
+                tenantId,
+                azureADOnlyAuthentication,
                 serializedAdditionalRawData);
         }
 

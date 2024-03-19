@@ -19,7 +19,7 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteStartObject();
             writer.WritePropertyName("relationType"u8);
             writer.WriteStringValue(RelationType.ToString());
-            if (ConfidenceScore.HasValue)
+            if (Optional.IsDefined(ConfidenceScore))
             {
                 writer.WritePropertyName("confidenceScore"u8);
                 writer.WriteNumberValue(ConfidenceScore.Value);
@@ -41,7 +41,7 @@ namespace Azure.AI.TextAnalytics.Models
                 return null;
             }
             HealthcareEntityRelationType relationType = default;
-            Optional<double> confidenceScore = default;
+            double? confidenceScore = default;
             IList<HealthcareRelationEntity> entities = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -70,7 +70,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new HealthcareRelationInternal(relationType, Optional.ToNullable(confidenceScore), entities);
+            return new HealthcareRelationInternal(relationType, confidenceScore, entities);
         }
     }
 }

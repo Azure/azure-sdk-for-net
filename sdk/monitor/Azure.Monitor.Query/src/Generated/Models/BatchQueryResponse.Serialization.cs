@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Monitor.Query;
 
 namespace Azure.Monitor.Query.Models
 {
@@ -19,9 +19,9 @@ namespace Azure.Monitor.Query.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<int> status = default;
-            Optional<LogsBatchQueryResult> body = default;
+            string id = default;
+            int? status = default;
+            LogsBatchQueryResult body = default;
             IReadOnlyDictionary<string, string> headers = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -63,7 +63,7 @@ namespace Azure.Monitor.Query.Models
                     continue;
                 }
             }
-            return new BatchQueryResponse(id.Value, Optional.ToNullable(status), body.Value, headers ?? new ChangeTrackingDictionary<string, string>());
+            return new BatchQueryResponse(id, status, body, headers ?? new ChangeTrackingDictionary<string, string>());
         }
     }
 }

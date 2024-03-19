@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppComplianceAutomation;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (options.Format != "W" && ResourceStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceStatus))
             {
                 writer.WritePropertyName("resourceStatus"u8);
                 writer.WriteStringValue(ResourceStatus.Value.ToString());
             }
-            if (options.Format != "W" && Reason != null)
+            if (options.Format != "W" && Optional.IsDefined(Reason))
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
             }
-            if (options.Format != "W" && StatusChangeDate != null)
+            if (options.Format != "W" && Optional.IsDefined(StatusChangeDate))
             {
                 writer.WritePropertyName("statusChangeDate"u8);
                 writer.WriteStringValue(StatusChangeDate);
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 return null;
             }
-            Optional<string> resourceId = default;
-            Optional<ResourceStatus> resourceStatus = default;
-            Optional<string> reason = default;
-            Optional<string> statusChangeDate = default;
+            string resourceId = default;
+            ResourceStatus? resourceStatus = default;
+            string reason = default;
+            string statusChangeDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssessmentResourceContent(resourceId.Value, Optional.ToNullable(resourceStatus), reason.Value, statusChangeDate.Value, serializedAdditionalRawData);
+            return new AssessmentResourceContent(resourceId, resourceStatus, reason, statusChangeDate, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssessmentResourceContent>.Write(ModelReaderWriterOptions options)

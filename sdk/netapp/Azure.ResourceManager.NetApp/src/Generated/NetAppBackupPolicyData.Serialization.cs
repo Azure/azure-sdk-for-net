@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.NetApp
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -62,49 +62,49 @@ namespace Azure.ResourceManager.NetApp
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && BackupPolicyId != null)
+            if (options.Format != "W" && Optional.IsDefined(BackupPolicyId))
             {
                 writer.WritePropertyName("backupPolicyId"u8);
                 writer.WriteStringValue(BackupPolicyId);
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (DailyBackupsToKeep.HasValue)
+            if (Optional.IsDefined(DailyBackupsToKeep))
             {
                 writer.WritePropertyName("dailyBackupsToKeep"u8);
                 writer.WriteNumberValue(DailyBackupsToKeep.Value);
             }
-            if (WeeklyBackupsToKeep.HasValue)
+            if (Optional.IsDefined(WeeklyBackupsToKeep))
             {
                 writer.WritePropertyName("weeklyBackupsToKeep"u8);
                 writer.WriteNumberValue(WeeklyBackupsToKeep.Value);
             }
-            if (MonthlyBackupsToKeep.HasValue)
+            if (Optional.IsDefined(MonthlyBackupsToKeep))
             {
                 writer.WritePropertyName("monthlyBackupsToKeep"u8);
                 writer.WriteNumberValue(MonthlyBackupsToKeep.Value);
             }
-            if (options.Format != "W" && VolumesAssigned.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(VolumesAssigned))
             {
                 writer.WritePropertyName("volumesAssigned"u8);
                 writer.WriteNumberValue(VolumesAssigned.Value);
             }
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (options.Format != "W" && !(VolumeBackups is ChangeTrackingList<NetAppVolumeBackupDetail> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(VolumeBackups))
             {
                 writer.WritePropertyName("volumeBackups"u8);
                 writer.WriteStartArray();
@@ -153,20 +153,20 @@ namespace Azure.ResourceManager.NetApp
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> backupPolicyId = default;
-            Optional<string> provisioningState = default;
-            Optional<int> dailyBackupsToKeep = default;
-            Optional<int> weeklyBackupsToKeep = default;
-            Optional<int> monthlyBackupsToKeep = default;
-            Optional<int> volumesAssigned = default;
-            Optional<bool> enabled = default;
+            SystemData systemData = default;
+            ResourceIdentifier backupPolicyId = default;
+            string provisioningState = default;
+            int? dailyBackupsToKeep = default;
+            int? weeklyBackupsToKeep = default;
+            int? monthlyBackupsToKeep = default;
+            int? volumesAssigned = default;
+            bool? enabled = default;
             IReadOnlyList<NetAppVolumeBackupDetail> volumeBackups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -319,17 +319,17 @@ namespace Azure.ResourceManager.NetApp
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(etag),
-                backupPolicyId.Value,
-                provisioningState.Value,
-                Optional.ToNullable(dailyBackupsToKeep),
-                Optional.ToNullable(weeklyBackupsToKeep),
-                Optional.ToNullable(monthlyBackupsToKeep),
-                Optional.ToNullable(volumesAssigned),
-                Optional.ToNullable(enabled),
+                etag,
+                backupPolicyId,
+                provisioningState,
+                dailyBackupsToKeep,
+                weeklyBackupsToKeep,
+                monthlyBackupsToKeep,
+                volumesAssigned,
+                enabled,
                 volumeBackups ?? new ChangeTrackingList<NetAppVolumeBackupDetail>(),
                 serializedAdditionalRawData);
         }
