@@ -59,15 +59,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("isAdmin"u8);
                 writer.WriteBooleanValue(IsAdmin.Value);
             }
-            if (Optional.IsDefined(CassandraStopStart))
+            if (Optional.IsDefined(ShouldStopCassandraBeforeStart))
             {
                 writer.WritePropertyName("cassandraStopStart"u8);
-                writer.WriteBooleanValue(CassandraStopStart.Value);
+                writer.WriteBooleanValue(ShouldStopCassandraBeforeStart.Value);
             }
-            if (Optional.IsDefined(ReadWrite))
+            if (Optional.IsDefined(IsReadWrite))
             {
                 writer.WritePropertyName("readWrite"u8);
-                writer.WriteBooleanValue(ReadWrite.Value);
+                writer.WriteBooleanValue(IsReadWrite.Value);
             }
             if (Optional.IsDefined(Result))
             {

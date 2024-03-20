@@ -56,21 +56,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="arguments"> The arguments for the command to be run. </param>
         /// <param name="host"> IP address of the cassandra host to run the command on. </param>
         /// <param name="isAdmin"> Whether command has admin privileges. </param>
-        /// <param name="cassandraStopStart"> If true, stops cassandra before executing the command and then start it again. </param>
-        /// <param name="readWrite"> If true, allows the command to *write* to the cassandra directory, otherwise read-only. </param>
+        /// <param name="shouldStopCassandraBeforeStart"> If true, stops cassandra before executing the command and then start it again. </param>
+        /// <param name="isReadWrite"> If true, allows the command to *write* to the cassandra directory, otherwise read-only. </param>
         /// <param name="result"> Result output of the command. </param>
         /// <param name="status"> Status of the command. </param>
         /// <param name="outputFile"> The name of the file where the result is written. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CassandraClusterCommand(string command, string commandId, BinaryData arguments, string host, bool? isAdmin, bool? cassandraStopStart, bool? readWrite, string result, CommandStatus? status, string outputFile, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CassandraClusterCommand(string command, string commandId, BinaryData arguments, string host, bool? isAdmin, bool? shouldStopCassandraBeforeStart, bool? isReadWrite, string result, CommandStatus? status, string outputFile, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Command = command;
             CommandId = commandId;
             Arguments = arguments;
             Host = host;
             IsAdmin = isAdmin;
-            CassandraStopStart = cassandraStopStart;
-            ReadWrite = readWrite;
+            ShouldStopCassandraBeforeStart = shouldStopCassandraBeforeStart;
+            IsReadWrite = isReadWrite;
             Result = result;
             Status = status;
             OutputFile = outputFile;
@@ -117,9 +117,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Whether command has admin privileges. </summary>
         public bool? IsAdmin { get; }
         /// <summary> If true, stops cassandra before executing the command and then start it again. </summary>
-        public bool? CassandraStopStart { get; }
+        public bool? ShouldStopCassandraBeforeStart { get; }
         /// <summary> If true, allows the command to *write* to the cassandra directory, otherwise read-only. </summary>
-        public bool? ReadWrite { get; }
+        public bool? IsReadWrite { get; }
         /// <summary> Result output of the command. </summary>
         public string Result { get; }
         /// <summary> Status of the command. </summary>

@@ -439,6 +439,11 @@ directive:
     $.properties.arguments['additionalProperties'] = {
         'type':'string'
     };
+- from: managedCassandra.json
+  where: $.definitions
+  transform: >
+    $.CommandPublicResource.properties.cassandraStopStart["x-ms-client-name"] = "shouldStopCassandraBeforeStart";
+    $.CommandPublicResource.properties.readWrite["x-ms-client-name"] = "isReadWrite";
 # Below is a workaround for ADO 6196
 - remove-operation:
   - DatabaseAccounts_GetReadOnlyKeys

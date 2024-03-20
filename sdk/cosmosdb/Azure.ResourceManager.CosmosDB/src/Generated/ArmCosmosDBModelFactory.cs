@@ -2284,13 +2284,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="arguments"> The arguments for the command to be run. </param>
         /// <param name="host"> IP address of the cassandra host to run the command on. </param>
         /// <param name="isAdmin"> Whether command has admin privileges. </param>
-        /// <param name="cassandraStopStart"> If true, stops cassandra before executing the command and then start it again. </param>
-        /// <param name="readWrite"> If true, allows the command to *write* to the cassandra directory, otherwise read-only. </param>
+        /// <param name="shouldStopCassandraBeforeStart"> If true, stops cassandra before executing the command and then start it again. </param>
+        /// <param name="isReadWrite"> If true, allows the command to *write* to the cassandra directory, otherwise read-only. </param>
         /// <param name="result"> Result output of the command. </param>
         /// <param name="status"> Status of the command. </param>
         /// <param name="outputFile"> The name of the file where the result is written. </param>
         /// <returns> A new <see cref="Models.CassandraClusterCommand"/> instance for mocking. </returns>
-        public static CassandraClusterCommand CassandraClusterCommand(string command = null, string commandId = null, BinaryData arguments = null, string host = null, bool? isAdmin = null, bool? cassandraStopStart = null, bool? readWrite = null, string result = null, CommandStatus? status = null, string outputFile = null)
+        public static CassandraClusterCommand CassandraClusterCommand(string command = null, string commandId = null, BinaryData arguments = null, string host = null, bool? isAdmin = null, bool? shouldStopCassandraBeforeStart = null, bool? isReadWrite = null, string result = null, CommandStatus? status = null, string outputFile = null)
         {
             return new CassandraClusterCommand(
                 command,
@@ -2298,8 +2298,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 arguments,
                 host,
                 isAdmin,
-                cassandraStopStart,
-                readWrite,
+                shouldStopCassandraBeforeStart,
+                isReadWrite,
                 result,
                 status,
                 outputFile,
