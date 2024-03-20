@@ -182,7 +182,7 @@
 
 # ServiceLabel: %Code Signing
 # AzureSdkOwners:                                                  @jsquire
-# ServiceOwners                                                    @jaxelr
+# ServiceOwners:                                                   @jaxelr
 
 # PRLabel: %Cognitive - Language
 /sdk/cognitivelanguage/                                            @quentinRobinson @bidisha-c
