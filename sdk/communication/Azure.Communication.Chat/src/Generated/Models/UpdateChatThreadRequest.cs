@@ -21,10 +21,16 @@ namespace Azure.Communication.Chat
         /// <summary> Initializes a new instance of <see cref="UpdateChatThreadRequest"/>. </summary>
         /// <param name="topic"> Chat thread topic. </param>
         /// <param name="metadata"> Contextual metadata for the thread. The metadata consists of name/value pairs. The total size of all metadata pairs can be up to 1KB in size. </param>
-        internal UpdateChatThreadRequest(string topic, IDictionary<string, string> metadata)
+        /// <param name="retentionPolicy">
+        /// Data retention policy for auto deletion.
+        /// Please note <see cref="ChatRetentionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ThreadCreationDateRetentionPolicy"/>.
+        /// </param>
+        internal UpdateChatThreadRequest(string topic, IDictionary<string, string> metadata, ChatRetentionPolicy retentionPolicy)
         {
             Topic = topic;
             Metadata = metadata;
+            RetentionPolicy = retentionPolicy;
         }
 
         /// <summary> Chat thread topic. </summary>

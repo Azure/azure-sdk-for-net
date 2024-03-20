@@ -20,7 +20,7 @@ namespace Azure.Communication.Chat
                 writer.WritePropertyName("topic"u8);
                 writer.WriteStringValue(Topic);
             }
-            if (!(Metadata is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();
@@ -31,7 +31,7 @@ namespace Azure.Communication.Chat
                 }
                 writer.WriteEndObject();
             }
-            if (RetentionPolicy != null)
+            if (Optional.IsDefined(RetentionPolicy))
             {
                 writer.WritePropertyName("retentionPolicy"u8);
                 writer.WriteObjectValue(RetentionPolicy);
