@@ -4388,6 +4388,38 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2024_08_04)]
+        public async Task UploadRangeFromUriAsync_SourceErrorAndStatusCode()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync(shareName: GetNewShareName());
+            ShareClient share = test.Share;
+
+            ShareDirectoryClient directory = InstrumentClient(share.GetDirectoryClient(GetNewDirectoryName()));
+            await directory.CreateIfNotExistsAsync();
+
+            ShareFileClient sourceFile = InstrumentClient(directory.GetFileClient(GetNewFileName()));
+
+            ShareFileClient destFile = directory.GetFileClient(GetNewFileName());
+            await destFile.CreateAsync(maxSize: Constants.KB);
+
+            HttpRange range = new HttpRange(0, Constants.KB);
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                destFile.UploadRangeFromUriAsync(
+                sourceUri: destFile.Uri,
+                range: range,
+                sourceRange: range),
+                e =>
+                {
+                    Assert.IsTrue(e.Message.Contains("CopySourceStatusCode: 401"));
+                    Assert.IsTrue(e.Message.Contains("CopySourceErrorCode: NoAuthenticationInformation"));
+                    Assert.IsTrue(e.Message.Contains("CopySourceErrorMessage: Server failed to authenticate the request. Please refer to the information in the www-authenticate header."));
+                });
+        }
+
+        [RecordedTest]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_06_08)]
         [TestCase(null)]
         [TestCase(FileLastWrittenMode.Now)]
