@@ -8,7 +8,7 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Messaging.EventGrid;
+using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
