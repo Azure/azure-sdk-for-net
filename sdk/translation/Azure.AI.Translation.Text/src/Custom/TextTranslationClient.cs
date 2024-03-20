@@ -139,6 +139,21 @@ namespace Azure.AI.Translation.Text
             }
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TextTranslationClient"/> class.
+        /// </summary>
+        /// <param name="credential">Cognitive Services Token</param>
+        /// <param name="resourceId">The value is the Resource ID for your Translator resource instance.</param>
+        /// <param name="region">Azure Resource Region</param>
+        /// <param name="options">Translate Client Options</param>
+        public TextTranslationClient(TokenCredential credential, string resourceId, string region = DEFAULT_REGION, TextTranslationClientOptions options = default) : this(DEFAULT_ENDPOINT, options)
+        {
+            var policy = new TextTranslationAADAuthenticationPolicy(credential, TOKEN_SCOPE, region, resourceId);
+            options = options ?? new TextTranslationClientOptions();
+
+            this._pipeline = HttpPipelineBuilder.Build(options, new[] { policy }, Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
+        }
+
         /// <summary> Translate Text. </summary>
         /// <param name="targetLanguages">
         /// Specifies the language of the output text. The target language must be one of the supported languages included
