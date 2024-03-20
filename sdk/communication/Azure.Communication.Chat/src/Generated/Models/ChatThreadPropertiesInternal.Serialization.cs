@@ -72,7 +72,13 @@ namespace Azure.Communication.Chat
                     continue;
                 }
             }
-            return new ChatThreadPropertiesInternal(id, topic, createdOn, createdByCommunicationIdentifier, deletedOn, metadata);
+            return new ChatThreadPropertiesInternal(
+                id,
+                topic,
+                createdOn,
+                createdByCommunicationIdentifier,
+                deletedOn,
+                metadata ?? new ChangeTrackingDictionary<string, string>());
         }
     }
 }
