@@ -128,11 +128,14 @@ namespace Azure.Identity
             {
                 builder.WithClaims(claims);
             }
-            UriBuilder uriBuilder = new UriBuilder(AuthorityHost)
+            if (tenantId != null)
             {
-                Path = TenantId ?? tenantId
-            };
-            builder.WithTenantIdFromAuthority(uriBuilder.Uri);
+                UriBuilder uriBuilder = new UriBuilder(AuthorityHost)
+                {
+                    Path = TenantId ?? tenantId
+                };
+                builder.WithTenantIdFromAuthority(uriBuilder.Uri);
+            }
 
 #if PREVIEW_FEATURE_FLAG
             if (popTokenRequestContext.HasValue && popTokenRequestContext.Value.IsProofOfPossessionEnabled)
@@ -192,11 +195,11 @@ namespace Azure.Identity
             // user authenticated to originally.
             var builder = client.AcquireTokenSilent(scopes, (AuthenticationAccount)record);
 
-            if (tenantId != null)
+            if (tenantId != null || record.TenantId != null)
             {
                 UriBuilder uriBuilder = new UriBuilder(AuthorityHost)
                 {
-                    Path = tenantId
+                    Path = tenantId ?? record.TenantId
                 };
                 builder.WithTenantIdFromAuthority(uriBuilder.Uri);
             }
