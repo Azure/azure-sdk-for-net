@@ -7,7 +7,7 @@ using Azure.Core;
 namespace Azure.Communication.JobRouter
 {
     [CodeGenModel("CommunicationJobRouterModelFactory")]
-    [CodeGenSuppress("WaitTimeExceptionTrigger", typeof(TimeSpan), typeof(string))]
+    [CodeGenSuppress("WaitTimeExceptionTrigger", typeof(TimeSpan))]
     public static partial class JobRouterModelFactory
     {
     }
