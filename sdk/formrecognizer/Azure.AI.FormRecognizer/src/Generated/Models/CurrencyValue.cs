@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using Azure.AI.FormRecognizer;
+
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     /// <summary> Currency field value. </summary>

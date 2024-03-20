@@ -17,7 +17,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="kind"> Discriminator. </param>
         /// <param name="extension"> Additional Content defined by implementations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownRadiologyInsightsInference(string kind, IReadOnlyList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, extension, serializedAdditionalRawData)
+        internal UnknownRadiologyInsightsInference(RadiologyInsightsInferenceType kind, IReadOnlyList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, extension, serializedAdditionalRawData)
         {
         }
 
