@@ -51,6 +51,12 @@ namespace Azure.Identity
             {
                 if (response.Status == 200)
                 {
+                    // This avoids the json parsing if we have already been cancelled.
+                    // Also, this handles the sync case, where we don't have to check for cancellation.
+                    if (cancellationToken.IsCancellationRequested)
+                    {
+                        throw new TaskCanceledException();
+                    }
                     using JsonDocument json = async
                     ? await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false)
                     : JsonDocument.Parse(response.ContentStream);
