@@ -18,12 +18,13 @@ namespace Azure.Communication.Sms
         public enum ServiceVersion
         {
             V2021_03_07 = 1,
-            V2024_02_05_Preview = 2
+            V2024_02_05_Preview = 2,
         }
     }
     public partial class SmsSendOptions
     {
         public SmsSendOptions(bool enableDeliveryReport) { }
+        public int? DeliveryReportTimeoutInSeconds { get { throw null; } set { } }
         public bool EnableDeliveryReport { get { throw null; } }
         public string Tag { get { throw null; } set { } }
     }
