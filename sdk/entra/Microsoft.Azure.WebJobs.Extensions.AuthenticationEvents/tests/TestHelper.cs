@@ -105,7 +105,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                     {
 
                         Response = CreateTokenIssuanceStartResponse(),
-                        RequestStatus = RequestStatusType.Successful
+                        RequestStatus = AuthenticationEventRequestType.Successful
                     };
 
                     action(eventsResponseHandler);
@@ -229,14 +229,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         }
 
         /// <summary>Creates the issuance start Legacy response.</summary>
-        /// <returns>A newly created TokenIssuanceStartResponse for version preview_10_01_2021</returns>
-        public static TokenIssuanceStartResponse CreateTokenIssuanceStartResponse()
+        /// <returns>A newly created OnTokenIssuanceStartResponseData for version preview_10_01_2021</returns>
+        public static OnTokenIssuanceStartResponseData CreateTokenIssuanceStartResponse()
         {
             JObject jBody = JObject.Parse(ReadResource(MainAssembly, String.Join(".", DefaultNamespace, "Templates", "CloudEventActionableTemplate.json")));
             (jBody["data"]["@odata.type"] as JValue).Value = "microsoft.graph.onTokenIssuanceStartResponseData";
 
 
-            return new TokenIssuanceStartResponse()
+            return new OnTokenIssuanceStartResponseData()
             {
                 Body = jBody.ToString()
             };
@@ -307,7 +307,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                 case ActionTestTypes.NullClaims:
                     return (new ProvideClaimsForToken(null),
                         HttpStatusCode.InternalServerError,
-                        "{\"errors\":[\"TokenIssuanceStartResponse: ProvideClaimsForToken: The Claims field is required.\"]}");
+                        "{\"errors\":[\"OnTokenIssuanceStartResponseData: ProvideClaimsForToken: The Claims field is required.\"]}");
                 case ActionTestTypes.EmptyClaims:
                     return (new ProvideClaimsForToken(),
                         HttpStatusCode.OK,
@@ -315,11 +315,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                 case ActionTestTypes.NullClaimId:
                     return (new ProvideClaimsForToken(new TokenClaim[] { new TokenClaim(null, string.Empty) }),
                         HttpStatusCode.InternalServerError,
-                        "{\"errors\":[\"TokenIssuanceStartResponse: ProvideClaimsForToken: TokenClaim: The Id field is required.\"]}");
+                        "{\"errors\":[\"OnTokenIssuanceStartResponseData: ProvideClaimsForToken: TokenClaim: The Id field is required.\"]}");
                 case ActionTestTypes.EmptyClaimsId:
                     return (new ProvideClaimsForToken(new TokenClaim[] { new TokenClaim(String.Empty, string.Empty) }),
                         HttpStatusCode.InternalServerError,
-                        "{\"errors\":[\"TokenIssuanceStartResponse: ProvideClaimsForToken: TokenClaim: The Id field is required.\"]}");
+                        "{\"errors\":[\"OnTokenIssuanceStartResponseData: ProvideClaimsForToken: TokenClaim: The Id field is required.\"]}");
                 case ActionTestTypes.EmptyValueString:
                     return (new ProvideClaimsForToken(new TokenClaim[] { new TokenClaim("key", string.Empty) }),
                         HttpStatusCode.OK,
@@ -343,7 +343,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                 case ActionTestTypes.NullActionItems:
                     return (null,
                         HttpStatusCode.InternalServerError,
-                        "{\"errors\":[\"TokenIssuanceStartResponse: Actions can not contain null items.\"]}");
+                        "{\"errors\":[\"OnTokenIssuanceStartResponseData: Actions can not contain null items.\"]}");
                 default:
                     return (null,
                     HttpStatusCode.InternalServerError,

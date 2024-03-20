@@ -30,7 +30,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         /// <param name="args">The arguments.</param>
         /// <returns>A newly create EventRequest with related EventResponse and EventData based on event type.</returns>
         /// <seealso cref="AuthenticationEventRequestBase" />
-        /// <seealso cref="AuthenticationEventData" />
+        /// <seealso cref="CustomExtensionCalloutRequestData" />
         internal AuthenticationEventRequestBase CreateEventRequestValidate(HttpRequestMessage request, string payload, params object[] args)
         {
             return CreateEventRequest(request, payload, true, args);
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         /// <param name="args">The arguments.</param>
         /// <returns>A newly create EventRequest with related EventResponse and EventData based on event type.</returns>
         /// <seealso cref="AuthenticationEventRequestBase" />
-        /// <seealso cref="AuthenticationEventData" />
+        /// <seealso cref="CustomExtensionCalloutRequestData" />
         internal AuthenticationEventRequestBase CreateEventRequest(HttpRequestMessage request, string payload, bool validate, params object[] args)
         {
             AuthenticationEventRequestBase eventRequest = (AuthenticationEventRequestBase)Activator.CreateInstance(RequestType, new object[] { request });
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
             {
                 AuthenticationEventJsonElement jsonPayload = new AuthenticationEventJsonElement(payload);
                 eventResponse.InstanceCreated(jsonPayload);
-                dataInfo.SetValue(eventRequest, AuthenticationEventData.CreateInstance(dataInfo.PropertyType, jsonPayload));
+                dataInfo.SetValue(eventRequest, CustomExtensionCalloutRequestData.CreateInstance(dataInfo.PropertyType, jsonPayload));
                 eventRequest.ParseInbound(jsonPayload);
             }
 

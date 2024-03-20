@@ -144,10 +144,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 
             eventResponseHandler.Request.RequestStatus = ex switch
             {
-                UnauthorizedAccessException => RequestStatusType.TokenInvalid,
-                ValidationException => RequestStatusType.ValidationError,
-                AuthenticationEventTriggerRequestValidationException => RequestStatusType.ValidationError,
-                _ => RequestStatusType.Failed,
+                UnauthorizedAccessException => AuthenticationEventRequestType.TokenInvalid,
+                ValidationException => AuthenticationEventRequestType.ValidationError,
+                AuthenticationEventTriggerRequestValidationException => AuthenticationEventRequestType.ValidationError,
+                _ => AuthenticationEventRequestType.Failed,
             };
 
             if (eventResponseHandler.Response != null)
@@ -208,7 +208,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             }
 
             requestEvent.StatusMessage = ex == null ? AuthenticationEventResource.Status_Good : ex.Message;
-            requestEvent.RequestStatus = ex == null ? RequestStatusType.Successful : ex is UnauthorizedAccessException ? RequestStatusType.TokenInvalid : RequestStatusType.Failed;
+            requestEvent.RequestStatus = ex == null ? AuthenticationEventRequestType.Successful : ex is UnauthorizedAccessException ? AuthenticationEventRequestType.TokenInvalid : AuthenticationEventRequestType.Failed;
 
             return requestEvent;
         }

@@ -1,11 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.Validators;
 using System;
-using System.Text.Json.Serialization;
 
-namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.Data
+namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
     /// <summary>Represents the Context Data Model Object.</summary>
     public class AuthenticationEventContext
@@ -24,7 +22,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceS
         /// <value>The authentication protocol.</value>
         [JsonPropertyName("protocol")]
         [OneOf("OAUTH2.0", "SAML", "WS-FED", "unknownFutureValue", "")]
-        public string Protocol { get; set; }
+        public AuthenticationProtocolType AuthenticationProtocolType { get; set; }
 
         /// <summary>Gets the client service principal.</summary>
         /// <value>The client service principal.</value>

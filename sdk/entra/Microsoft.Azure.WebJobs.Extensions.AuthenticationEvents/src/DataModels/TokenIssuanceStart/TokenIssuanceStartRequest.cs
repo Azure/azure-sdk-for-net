@@ -12,11 +12,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceS
 {
     /// <summary>
     ///   <para>A representation of the onTokenIssuanceStart event request for preview_10_01_2021.</para>
-    ///   <para>Relates the EventResponse-TokenIssuanceStartResponse(preview_10_01_2021) and EventData-TokenIssuanceStartData(preview_10_01_2021).</para>
+    ///   <para>Relates the EventResponse-OnTokenIssuanceStartResponseData(preview_10_01_2021) and EventData-TokenIssuanceStartData(preview_10_01_2021).</para>
     /// </summary>
     ///
     [Serializable]
-    public class TokenIssuanceStartRequest : CloudEventRequest<TokenIssuanceStartResponse, TokenIssuanceStartData>
+    public class TokenIssuanceStartRequest : CloudEventRequest<OnTokenIssuanceStartResponseData, TokenIssuanceStartData>
     {
         /// <summary>Initializes a new instance of the <see cref="TokenIssuanceStartRequest" /> class.</summary>
         /// <param name="request">The incoming HTTP request message.</param>

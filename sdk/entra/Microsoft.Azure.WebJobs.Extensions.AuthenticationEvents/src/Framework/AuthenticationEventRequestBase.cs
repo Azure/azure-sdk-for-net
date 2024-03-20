@@ -39,7 +39,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         [JsonPropertyName("requestStatus")]
         [JsonConverter(typeof(JsonStringEnumConverter))]
         [Required]
-        public RequestStatusType RequestStatus { get; internal set; }
+        public AuthenticationEventRequestType RequestStatus { get; internal set; }
 
         /// <summary>Gets or sets the status message.</summary>
         /// <value>The status message.</value>
