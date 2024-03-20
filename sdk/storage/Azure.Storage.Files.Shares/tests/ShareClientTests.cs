@@ -368,6 +368,30 @@ namespace Azure.Storage.Files.Shares.Tests
             await share.DeleteAsync(false);
         }
 
+        /// <summary>
+        /// This test exists to ensure AuthenticationErrorDetail is being properly communicated to the customer.
+        /// </summary>
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2024_08_04)]
+        public async Task CreateAsync_SasError()
+        {
+            // Arrange
+            var shareName = GetNewShareName();
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_SharedKey();
+            Uri sasUri = service.GenerateAccountSasUri(AccountSasPermissions.All, GetUtcNow().AddDays(1), AccountSasResourceTypes.All);
+            ShareServiceClient unauthorizedServiceClient = InstrumentClient(new ShareServiceClient(sasUri));
+            ShareClient share = InstrumentClient(unauthorizedServiceClient.GetShareClient(shareName));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                share.CreateAsync(),
+                e =>
+                {
+                    Assert.AreEqual("AuthenticationFailed", e.ErrorCode);
+                    Assert.IsTrue(e.Message.Contains("AuthenticationErrorDetail"));
+                });
+        }
+
         [RecordedTest]
         public async Task CreateAsync_WithAccountSas()
         {
