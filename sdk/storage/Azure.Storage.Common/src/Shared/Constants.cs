@@ -193,6 +193,7 @@ namespace Azure.Storage
             public const string LeaseId = "x-ms-lease-id";
             public const string LastModified = "Last-Modified";
             public const string ETag = "ETag";
+            public const string CopySourceErrorCode = "x-ms-copy-source-error-code";
         }
 
         internal static class ErrorCodes
