@@ -38,9 +38,8 @@ function ProcessPackage($PackageName, $ConfigFileDir)
     if ($LASTEXITCODE -ne 0)
     {
         Write-Error "Failed to validate package $PackageName"
-        return $false
+        exit 1
     }
-    return $true
 }
 
 # Check if package config file is present. This file has package version, SDK type etc info.

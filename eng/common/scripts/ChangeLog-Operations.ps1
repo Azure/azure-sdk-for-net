@@ -148,6 +148,10 @@ function Confirm-ChangeLogEntry {
       Message = ""
     }
   }
+  else {
+    # Do not stop the script on error when status object is passed as param
+    $ErrorActionPreference = 'Continue'
+  }
   $changeLogEntries = Get-ChangeLogEntries -ChangeLogLocation $ChangeLogLocation
   $changeLogEntry = $changeLogEntries[$VersionString]
 
