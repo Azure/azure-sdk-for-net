@@ -19,7 +19,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
     /// Upon initialization
     ///   - it creates collection-time instances of <see cref="DerivedMetric&lt;T&gt;"/> and maintains them in separate collections by telemetry type.
     ///     These are used to filter and calculated calculated metrics configured by the service.
-    ///   - it creates collection-time instances of DocumentStream which are used to filter and send out full telemetry documents. // TODO: Add DocumentStream back
     ///   - it creates certain metadata collections which are used by other collection-time components to learn more about what is being collected at any given time.
     /// </remarks>
     internal class CollectionConfiguration
@@ -36,8 +35,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
             new List<DerivedMetric<ExceptionDocument>>();
 
         private readonly List<DerivedMetric<Trace>> traceTelemetryMetrics = new List<DerivedMetric<Trace>>();
-
-        // TODO: Add back: private readonly List<DocumentStream> documentStreams = new List<DocumentStream>();
         #endregion
 
         #region Metadata used by other components
@@ -57,13 +54,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
             // this includes both telemetry metrics and Metric metrics
             this.CreateMetadata();
 
-            //// create document streams based on description in info
-            //this.CreateDocumentStreams(out CollectionConfigurationError[] documentStreamErrors, timeProvider, previousDocumentStreams ?? ArrayExtensions.Empty<DocumentStream>());
-
-            //// create performance counters
-            //this.CreatePerformanceCounters(out CollectionConfigurationError[] performanceCounterErrors);
-
-            //errors = metricErrors.Concat(documentStreamErrors).Concat(performanceCounterErrors).ToArray();
             errors = metricErrors.ToArray();
 
             foreach (var error in errors)
@@ -130,8 +120,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
                         }).ToArray();
             }
         }
-
-        // TODO: Add back the removed CreateDocumentStreams method.
 
         private void CreateTelemetryMetrics(out CollectionConfigurationError[] errors)
         {
