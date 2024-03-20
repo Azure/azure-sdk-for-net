@@ -3,11 +3,13 @@
 
 using System;
 using Azure.Core.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.Developer.Signing.Tests.Samples
 {
     public partial class DeveloperSigningSample : SamplesBase<DevSigningClientTestEnvironment>
     {
+        [Test]
         public void CreateClients(string region)
         {
             #region Snippet:Azure_Developer_Signing_CreateCertificateProfileClient
