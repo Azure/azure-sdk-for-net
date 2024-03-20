@@ -10,11 +10,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    [CodeGenSerialization(nameof(BackendResponseCode), SerializationValueHook = nameof(SerializeNameValue),DeserializationValueHook = nameof(DeserializeBackendResponseCodeValue))]
+    [CodeGenSerialization(nameof(BackendResponseCode), SerializationValueHook = nameof(SerializeBackendResponseCodeValue),DeserializationValueHook = nameof(DeserializeBackendResponseCodeValue))]
     public partial class RequestReportRecordContract : IUtf8JsonSerializable, IJsonModel<RequestReportRecordContract>
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void SerializeNameValue(Utf8JsonWriter writer)
+        private void SerializeBackendResponseCodeValue(Utf8JsonWriter writer)
         {
             writer.WriteStringValue(BackendResponseCode);
         }

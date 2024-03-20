@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(BackendResponseCode))
             {
                 writer.WritePropertyName("backendResponseCode"u8);
-                SerializeNameValue(writer);
+                SerializeBackendResponseCodeValue(writer);
             }
             if (Optional.IsDefined(ResponseCode))
             {
