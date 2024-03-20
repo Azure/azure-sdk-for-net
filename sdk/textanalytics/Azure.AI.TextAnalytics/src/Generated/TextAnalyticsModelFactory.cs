@@ -5,10 +5,10 @@
 
 #nullable disable
 
-namespace Azure.Storage.Files.Shares.Models
+namespace Azure.AI.TextAnalytics
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class ShareModelFactory
+    public static partial class TextAnalyticsModelFactory
     {
     }
 }
