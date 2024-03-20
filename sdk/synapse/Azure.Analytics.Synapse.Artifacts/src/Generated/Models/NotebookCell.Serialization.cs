@@ -33,15 +33,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndArray();
             if (Optional.IsDefined(Attachments))
             {
-                if (Attachments != null)
-                {
-                    writer.WritePropertyName("attachments"u8);
-                    writer.WriteObjectValue(Attachments);
-                }
-                else
-                {
-                    writer.WriteNull("attachments");
-                }
+                writer.WritePropertyName("attachments"u8);
+                writer.WriteObjectValue(Attachments);
             }
             if (Optional.IsCollectionDefined(Outputs))
             {
@@ -100,7 +93,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        attachments = null;
                         continue;
                     }
                     attachments = property.Value.GetObject();
