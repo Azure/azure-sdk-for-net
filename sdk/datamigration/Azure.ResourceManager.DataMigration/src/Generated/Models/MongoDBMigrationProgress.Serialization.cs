@@ -38,6 +38,8 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndObject();
             }
+            writer.WritePropertyName("resultType"u8);
+            writer.WriteStringValue(ResultType.ToString());
             writer.WritePropertyName("bytesCopied"u8);
             writer.WriteNumberValue(BytesCopied);
             writer.WritePropertyName("documentsCopied"u8);
@@ -76,8 +78,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("qualifiedName"u8);
                 writer.WriteStringValue(QualifiedName);
             }
-            writer.WritePropertyName("resultType"u8);
-            writer.WriteStringValue(ResultType.ToString());
             writer.WritePropertyName("state"u8);
             writer.WriteStringValue(State.ToString());
             writer.WritePropertyName("totalBytes"u8);
@@ -123,6 +123,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             IReadOnlyDictionary<string, MongoDBDatabaseProgress> databases = default;
+            MongoDBProgressResultType resultType = default;
             long bytesCopied = default;
             long documentsCopied = default;
             string elapsedTime = default;
@@ -133,7 +134,6 @@ namespace Azure.ResourceManager.DataMigration.Models
             DateTimeOffset? lastReplayTime = default;
             string name = default;
             string qualifiedName = default;
-            MongoDBProgressResultType resultType = default;
             MongoDBMigrationState state = default;
             long totalBytes = default;
             long totalDocuments = default;
@@ -153,6 +153,11 @@ namespace Azure.ResourceManager.DataMigration.Models
                         dictionary.Add(property0.Name, MongoDBDatabaseProgress.DeserializeMongoDBDatabaseProgress(property0.Value, options));
                     }
                     databases = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("resultType"u8))
+                {
+                    resultType = new MongoDBProgressResultType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("bytesCopied"u8))
@@ -216,11 +221,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 if (property.NameEquals("qualifiedName"u8))
                 {
                     qualifiedName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("resultType"u8))
-                {
-                    resultType = new MongoDBProgressResultType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("state"u8))

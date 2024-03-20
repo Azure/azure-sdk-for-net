@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("size"u8);
                 writer.WriteStringValue(Size);
             }
-            writer.WritePropertyName("referenceTrigger"u8);
-            writer.WriteObjectValue(ReferenceTrigger);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DependencyReferenceType);
+            writer.WritePropertyName("referenceTrigger"u8);
+            writer.WriteObjectValue(ReferenceTrigger);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             string offset = default;
             string size = default;
-            DataFactoryTriggerReference referenceTrigger = default;
             string type = default;
+            DataFactoryTriggerReference referenceTrigger = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,14 +97,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                     size = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("referenceTrigger"u8))
-                {
-                    referenceTrigger = DataFactoryTriggerReference.DeserializeDataFactoryTriggerReference(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("referenceTrigger"u8))
+                {
+                    referenceTrigger = DataFactoryTriggerReference.DeserializeDataFactoryTriggerReference(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

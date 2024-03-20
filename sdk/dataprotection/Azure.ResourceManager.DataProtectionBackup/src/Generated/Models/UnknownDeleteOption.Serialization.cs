@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("duration"u8);
-            writer.WriteStringValue(Duration, "P");
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
+            writer.WritePropertyName("duration"u8);
+            writer.WriteStringValue(Duration, "P");
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -69,20 +69,20 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            TimeSpan duration = default;
             string objectType = "Unknown";
+            TimeSpan duration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("duration"u8))
-                {
-                    duration = property.Value.GetTimeSpan("P");
-                    continue;
-                }
                 if (property.NameEquals("objectType"u8))
                 {
                     objectType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("duration"u8))
+                {
+                    duration = property.Value.GetTimeSpan("P");
                     continue;
                 }
                 if (options.Format != "W")

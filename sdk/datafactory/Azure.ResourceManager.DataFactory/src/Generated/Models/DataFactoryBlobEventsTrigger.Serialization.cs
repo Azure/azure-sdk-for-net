@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(TriggerType);
             if (Optional.IsCollectionDefined(Pipelines))
             {
                 writer.WritePropertyName("pipelines"u8);
@@ -37,8 +39,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(TriggerType);
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
@@ -133,8 +133,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            IList<TriggerPipelineReference> pipelines = default;
             string type = default;
+            IList<TriggerPipelineReference> pipelines = default;
             string description = default;
             DataFactoryTriggerRuntimeState? runtimeState = default;
             IList<BinaryData> annotations = default;
@@ -147,6 +147,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("type"u8))
+                {
+                    type = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("pipelines"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -159,11 +164,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                         array.Add(TriggerPipelineReference.DeserializeTriggerPipelineReference(item, options));
                     }
                     pipelines = array;
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("description"u8))

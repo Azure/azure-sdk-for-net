@@ -43,6 +43,8 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("partitionSettings"u8);
                 writer.WriteObjectValue(PartitionSettings);
             }
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(CopySourceType);
             if (Optional.IsDefined(QueryTimeout))
             {
                 writer.WritePropertyName("queryTimeout"u8);
@@ -60,8 +62,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(CopySourceType);
             if (Optional.IsDefined(SourceRetryCount))
             {
                 writer.WritePropertyName("sourceRetryCount"u8);
@@ -120,9 +120,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> query = default;
             DataFactoryElement<string> partitionOption = default;
             NetezzaPartitionSettings partitionSettings = default;
+            string type = default;
             DataFactoryElement<string> queryTimeout = default;
             BinaryData additionalColumns = default;
-            string type = default;
             DataFactoryElement<int> sourceRetryCount = default;
             DataFactoryElement<string> sourceRetryWait = default;
             DataFactoryElement<int> maxConcurrentConnections = default;
@@ -158,6 +158,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                     partitionSettings = NetezzaPartitionSettings.DeserializeNetezzaPartitionSettings(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("type"u8))
+                {
+                    type = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("queryTimeout"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -174,11 +179,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                         continue;
                     }
                     additionalColumns = BinaryData.FromString(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("sourceRetryCount"u8))

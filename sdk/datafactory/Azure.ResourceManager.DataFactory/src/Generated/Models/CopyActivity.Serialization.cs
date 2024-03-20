@@ -48,6 +48,8 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(ActivityType);
             if (Optional.IsDefined(LinkedServiceName))
             {
                 writer.WritePropertyName("linkedServiceName"u8);
@@ -60,8 +62,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(ActivityType);
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
@@ -247,10 +247,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             IList<DatasetReference> inputs = default;
             IList<DatasetReference> outputs = default;
+            string type = default;
             DataFactoryLinkedServiceReference linkedServiceName = default;
             PipelineActivityPolicy policy = default;
             string name = default;
-            string type = default;
             string description = default;
             PipelineActivityState? state = default;
             ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
@@ -303,6 +303,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                     outputs = array;
                     continue;
                 }
+                if (property.NameEquals("type"u8))
+                {
+                    type = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("linkedServiceName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -324,11 +329,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("description"u8))

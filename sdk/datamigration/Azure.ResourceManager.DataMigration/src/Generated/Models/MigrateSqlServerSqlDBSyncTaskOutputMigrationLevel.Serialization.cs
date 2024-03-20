@@ -62,13 +62,13 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("databaseCount"u8);
                 writer.WriteNumberValue(DatabaseCount.Value);
             }
+            writer.WritePropertyName("resultType"u8);
+            writer.WriteStringValue(ResultType);
             if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            writer.WritePropertyName("resultType"u8);
-            writer.WriteStringValue(ResultType);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -114,8 +114,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             string targetServerVersion = default;
             string targetServer = default;
             int? databaseCount = default;
-            string id = default;
             string resultType = default;
+            string id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -167,14 +167,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                     databaseCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("id"u8))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("resultType"u8))
                 {
                     resultType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("id"u8))
+                {
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
