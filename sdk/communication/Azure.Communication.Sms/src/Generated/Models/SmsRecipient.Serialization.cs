@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Communication.Sms;
 using Azure.Core;
 
 namespace Azure.Communication.Sms.Models
