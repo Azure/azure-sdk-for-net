@@ -32,6 +32,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WritePropertyName("networkFunctionTemplate"u8);
                 writer.WriteObjectValue(NetworkFunctionTemplate);
             }
+            writer.WritePropertyName("networkFunctionType"u8);
+            writer.WriteStringValue(NetworkFunctionType.ToString());
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -52,8 +54,6 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WritePropertyName("deployParameters"u8);
                 writer.WriteStringValue(DeployParameters);
             }
-            writer.WritePropertyName("networkFunctionType"u8);
-            writer.WriteStringValue(NetworkFunctionType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -93,11 +93,11 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 return null;
             }
             ContainerizedNetworkFunctionTemplate networkFunctionTemplate = default;
+            NetworkFunctionType networkFunctionType = default;
             ProvisioningState? provisioningState = default;
             VersionState? versionState = default;
             string description = default;
             string deployParameters = default;
-            NetworkFunctionType networkFunctionType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -109,6 +109,11 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         continue;
                     }
                     networkFunctionTemplate = ContainerizedNetworkFunctionTemplate.DeserializeContainerizedNetworkFunctionTemplate(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("networkFunctionType"u8))
+                {
+                    networkFunctionType = new NetworkFunctionType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -137,11 +142,6 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 if (property.NameEquals("deployParameters"u8))
                 {
                     deployParameters = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("networkFunctionType"u8))
-                {
-                    networkFunctionType = new NetworkFunctionType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
