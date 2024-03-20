@@ -11,8 +11,8 @@ using System.Linq;
 
 namespace Azure.Communication.JobRouter
 {
-    /// <summary> Contains the weight percentage and worker selectors to be applied if selected for weighted distributions. </summary>
-    public partial class WorkerWeightedAllocation
+    /// <summary> Paged collection of RouterQueue items. </summary>
+    internal partial class PagedRouterQueueRouterQueue
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,25 +46,35 @@ namespace Azure.Communication.JobRouter
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="WorkerWeightedAllocation"/>. </summary>
-        /// <param name="weight"> The percentage of this weight, expressed as a fraction of 1. </param>
-        /// <param name="workerSelectors"> A collection of worker selectors that will be applied if this allocation is selected. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkerWeightedAllocation(double weight, IList<RouterWorkerSelector> workerSelectors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <summary> Initializes a new instance of <see cref="PagedRouterQueueRouterQueue"/>. </summary>
+        /// <param name="value"> The RouterQueue items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal PagedRouterQueueRouterQueue(IEnumerable<RouterQueue> value)
         {
-            Weight = weight;
-            WorkerSelectors = workerSelectors;
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PagedRouterQueueRouterQueue"/>. </summary>
+        /// <param name="value"> The RouterQueue items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PagedRouterQueueRouterQueue(IReadOnlyList<RouterQueue> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="WorkerWeightedAllocation"/> for deserialization. </summary>
-        internal WorkerWeightedAllocation()
+        /// <summary> Initializes a new instance of <see cref="PagedRouterQueueRouterQueue"/> for deserialization. </summary>
+        internal PagedRouterQueueRouterQueue()
         {
         }
 
-        /// <summary> The percentage of this weight, expressed as a fraction of 1. </summary>
-        public double Weight { get; set; }
-        /// <summary> A collection of worker selectors that will be applied if this allocation is selected. </summary>
-        public IList<RouterWorkerSelector> WorkerSelectors { get; }
+        /// <summary> The RouterQueue items on this page. </summary>
+        public IReadOnlyList<RouterQueue> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }
