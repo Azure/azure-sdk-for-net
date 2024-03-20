@@ -59,6 +59,11 @@ namespace Azure.ResourceManager.Compute
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(Placement))
+            {
+                writer.WritePropertyName("placement"u8);
+                writer.WriteObjectValue(Placement);
+            }
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
@@ -113,6 +118,11 @@ namespace Azure.ResourceManager.Compute
             {
                 writer.WritePropertyName("hardwareProfile"u8);
                 writer.WriteObjectValue(HardwareProfile);
+            }
+            if (Optional.IsDefined(ScheduledEventsPolicy))
+            {
+                writer.WritePropertyName("scheduledEventsPolicy"u8);
+                writer.WriteObjectValue(ScheduledEventsPolicy);
             }
             if (Optional.IsDefined(StorageProfile))
             {
@@ -282,6 +292,7 @@ namespace Azure.ResourceManager.Compute
             IReadOnlyList<VirtualMachineExtensionData> resources = default;
             ManagedServiceIdentity identity = default;
             IList<string> zones = default;
+            Placement placement = default;
             ExtendedLocation extendedLocation = default;
             string managedBy = default;
             string etag = default;
@@ -292,6 +303,7 @@ namespace Azure.ResourceManager.Compute
             ResourceType type = default;
             SystemData systemData = default;
             VirtualMachineHardwareProfile hardwareProfile = default;
+            ScheduledEventsPolicy scheduledEventsPolicy = default;
             VirtualMachineStorageProfile storageProfile = default;
             AdditionalCapabilities additionalCapabilities = default;
             VirtualMachineOSProfile osProfile = default;
@@ -365,6 +377,15 @@ namespace Azure.ResourceManager.Compute
                         array.Add(item.GetString());
                     }
                     zones = array;
+                    continue;
+                }
+                if (property.NameEquals("placement"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    placement = Placement.DeserializePlacement(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("extendedLocation"u8))
@@ -445,6 +466,15 @@ namespace Azure.ResourceManager.Compute
                                 continue;
                             }
                             hardwareProfile = VirtualMachineHardwareProfile.DeserializeVirtualMachineHardwareProfile(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("scheduledEventsPolicy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            scheduledEventsPolicy = ScheduledEventsPolicy.DeserializeScheduledEventsPolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("storageProfile"u8))
@@ -672,10 +702,12 @@ namespace Azure.ResourceManager.Compute
                 resources ?? new ChangeTrackingList<VirtualMachineExtensionData>(),
                 identity,
                 zones ?? new ChangeTrackingList<string>(),
+                placement,
                 extendedLocation,
                 managedBy,
                 etag,
                 hardwareProfile,
+                scheduledEventsPolicy,
                 storageProfile,
                 additionalCapabilities,
                 osProfile,

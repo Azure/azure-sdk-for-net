@@ -37,6 +37,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(ForceUpdateOSDiskForEphemeral))
+            {
+                writer.WritePropertyName("forceUpdateOSDiskForEphemeral"u8);
+                writer.WriteBooleanValue(ForceUpdateOSDiskForEphemeral.Value);
+            }
             if (Optional.IsDefined(TempDisk))
             {
                 writer.WritePropertyName("tempDisk"u8);
@@ -91,6 +96,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             IList<string> instanceIds = default;
+            bool? forceUpdateOSDiskForEphemeral = default;
             bool? tempDisk = default;
             string exactVersion = default;
             OSProfileProvisioningData osProfile = default;
@@ -110,6 +116,15 @@ namespace Azure.ResourceManager.Compute.Models
                         array.Add(item.GetString());
                     }
                     instanceIds = array;
+                    continue;
+                }
+                if (property.NameEquals("forceUpdateOSDiskForEphemeral"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    forceUpdateOSDiskForEphemeral = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("tempDisk"u8))
@@ -141,7 +156,13 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineScaleSetReimageContent(tempDisk, exactVersion, osProfile, serializedAdditionalRawData, instanceIds ?? new ChangeTrackingList<string>());
+            return new VirtualMachineScaleSetReimageContent(
+                tempDisk,
+                exactVersion,
+                osProfile,
+                serializedAdditionalRawData,
+                forceUpdateOSDiskForEphemeral,
+                instanceIds ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<VirtualMachineScaleSetReimageContent>.Write(ModelReaderWriterOptions options)

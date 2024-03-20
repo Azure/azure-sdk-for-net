@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Compute;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -33,6 +34,26 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("lun"u8);
                 writer.WriteNumberValue(Lun.Value);
+            }
+            if (Optional.IsDefined(Caching))
+            {
+                writer.WritePropertyName("caching"u8);
+                writer.WriteStringValue(Caching.Value.ToSerialString());
+            }
+            if (Optional.IsDefined(DeleteOption))
+            {
+                writer.WritePropertyName("deleteOption"u8);
+                writer.WriteStringValue(DeleteOption.Value.ToString());
+            }
+            if (Optional.IsDefined(DiskEncryptionSet))
+            {
+                writer.WritePropertyName("diskEncryptionSet"u8);
+                JsonSerializer.Serialize(writer, DiskEncryptionSet);
+            }
+            if (Optional.IsDefined(WriteAcceleratorEnabled))
+            {
+                writer.WritePropertyName("writeAcceleratorEnabled"u8);
+                writer.WriteBooleanValue(WriteAcceleratorEnabled.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -74,6 +95,10 @@ namespace Azure.ResourceManager.Compute.Models
             }
             string diskId = default;
             int? lun = default;
+            CachingType? caching = default;
+            DiskDeleteOptionType? deleteOption = default;
+            WritableSubResource diskEncryptionSet = default;
+            bool? writeAcceleratorEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,13 +117,56 @@ namespace Azure.ResourceManager.Compute.Models
                     lun = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("caching"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    caching = property.Value.GetString().ToCachingType();
+                    continue;
+                }
+                if (property.NameEquals("deleteOption"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    deleteOption = new DiskDeleteOptionType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("diskEncryptionSet"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    diskEncryptionSet = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("writeAcceleratorEnabled"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    writeAcceleratorEnabled = property.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataDisksToAttach(diskId, lun, serializedAdditionalRawData);
+            return new DataDisksToAttach(
+                diskId,
+                lun,
+                caching,
+                deleteOption,
+                diskEncryptionSet,
+                writeAcceleratorEnabled,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataDisksToAttach>.Write(ModelReaderWriterOptions options)

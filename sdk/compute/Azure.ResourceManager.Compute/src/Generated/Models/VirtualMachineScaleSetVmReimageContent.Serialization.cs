@@ -27,6 +27,11 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
+            if (Optional.IsDefined(ForceUpdateOSDiskForEphemeral))
+            {
+                writer.WritePropertyName("forceUpdateOSDiskForEphemeral"u8);
+                writer.WriteBooleanValue(ForceUpdateOSDiskForEphemeral.Value);
+            }
             if (Optional.IsDefined(TempDisk))
             {
                 writer.WritePropertyName("tempDisk"u8);
@@ -80,6 +85,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
+            bool? forceUpdateOSDiskForEphemeral = default;
             bool? tempDisk = default;
             string exactVersion = default;
             OSProfileProvisioningData osProfile = default;
@@ -87,6 +93,15 @@ namespace Azure.ResourceManager.Compute.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("forceUpdateOSDiskForEphemeral"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    forceUpdateOSDiskForEphemeral = property.Value.GetBoolean();
+                    continue;
+                }
                 if (property.NameEquals("tempDisk"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -116,7 +131,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineScaleSetVmReimageContent(tempDisk, exactVersion, osProfile, serializedAdditionalRawData);
+            return new VirtualMachineScaleSetVmReimageContent(tempDisk, exactVersion, osProfile, serializedAdditionalRawData, forceUpdateOSDiskForEphemeral);
         }
 
         BinaryData IPersistableModel<VirtualMachineScaleSetVmReimageContent>.Write(ModelReaderWriterOptions options)
