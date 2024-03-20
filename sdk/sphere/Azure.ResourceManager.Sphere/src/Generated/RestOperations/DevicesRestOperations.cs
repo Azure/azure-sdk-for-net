@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Sphere
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-09-01-preview";
+            _apiVersion = apiVersion ?? "2024-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -324,96 +324,6 @@ namespace Azure.ResourceManager.Sphere
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, string deviceName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.AzureSphere/catalogs/", false);
-            uri.AppendPath(catalogName, true);
-            uri.AppendPath("/products/", false);
-            uri.AppendPath(productName, true);
-            uri.AppendPath("/deviceGroups/", false);
-            uri.AppendPath(deviceGroupName, true);
-            uri.AppendPath("/devices/", false);
-            uri.AppendPath(deviceName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Delete a Device. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="catalogName"> Name of catalog. </param>
-        /// <param name="productName"> Name of product. </param>
-        /// <param name="deviceGroupName"> Name of device group. </param>
-        /// <param name="deviceName"> Device name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/>, <paramref name="deviceGroupName"/> or <paramref name="deviceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/>, <paramref name="deviceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, string deviceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
-            Argument.AssertNotNullOrEmpty(productName, nameof(productName));
-            Argument.AssertNotNullOrEmpty(deviceGroupName, nameof(deviceGroupName));
-            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
-
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, catalogName, productName, deviceGroupName, deviceName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Delete a Device. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="catalogName"> Name of catalog. </param>
-        /// <param name="productName"> Name of product. </param>
-        /// <param name="deviceGroupName"> Name of device group. </param>
-        /// <param name="deviceName"> Device name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/>, <paramref name="deviceGroupName"/> or <paramref name="deviceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/>, <paramref name="deviceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, string deviceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
-            Argument.AssertNotNullOrEmpty(productName, nameof(productName));
-            Argument.AssertNotNullOrEmpty(deviceGroupName, nameof(deviceGroupName));
-            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
-
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, catalogName, productName, deviceGroupName, deviceName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, string deviceName, SphereDevicePatch patch)
         {
             var message = _pipeline.CreateMessage();
@@ -504,6 +414,96 @@ namespace Azure.ResourceManager.Sphere
             {
                 case 200:
                 case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, string deviceName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AzureSphere/catalogs/", false);
+            uri.AppendPath(catalogName, true);
+            uri.AppendPath("/products/", false);
+            uri.AppendPath(productName, true);
+            uri.AppendPath("/deviceGroups/", false);
+            uri.AppendPath(deviceGroupName, true);
+            uri.AppendPath("/devices/", false);
+            uri.AppendPath(deviceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Delete a Device. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="catalogName"> Name of catalog. </param>
+        /// <param name="productName"> Name of product. </param>
+        /// <param name="deviceGroupName"> Name of device group. </param>
+        /// <param name="deviceName"> Device name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/>, <paramref name="deviceGroupName"/> or <paramref name="deviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/>, <paramref name="deviceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, string deviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+            Argument.AssertNotNullOrEmpty(productName, nameof(productName));
+            Argument.AssertNotNullOrEmpty(deviceGroupName, nameof(deviceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
+
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, catalogName, productName, deviceGroupName, deviceName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Delete a Device. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="catalogName"> Name of catalog. </param>
+        /// <param name="productName"> Name of product. </param>
+        /// <param name="deviceGroupName"> Name of device group. </param>
+        /// <param name="deviceName"> Device name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/>, <paramref name="deviceGroupName"/> or <paramref name="deviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/>, <paramref name="deviceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, string deviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+            Argument.AssertNotNullOrEmpty(productName, nameof(productName));
+            Argument.AssertNotNullOrEmpty(deviceGroupName, nameof(deviceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
+
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, catalogName, productName, deviceGroupName, deviceName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                case 204:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);

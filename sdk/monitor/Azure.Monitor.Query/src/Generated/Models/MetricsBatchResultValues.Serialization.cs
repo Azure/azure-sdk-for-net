@@ -5,14 +5,12 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
-    public partial class MetricsBatchResultValues
+    internal partial class MetricsBatchResultValues
     {
         internal static MetricsBatchResultValues DeserializeMetricsBatchResultValues(JsonElement element)
         {
@@ -20,32 +18,28 @@ namespace Azure.Monitor.Query.Models
             {
                 return null;
             }
-            DateTimeOffset starttime = default;
-            DateTimeOffset endtime = default;
-            TimeSpan? interval = default;
+            string starttime = default;
+            string endtime = default;
+            string interval = default;
             string @namespace = default;
-            AzureLocation resourceregion = default;
-            ResourceIdentifier resourceid = default;
+            string resourceregion = default;
+            string resourceid = default;
             IReadOnlyList<MetricResult> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("starttime"u8))
                 {
-                    starttime = property.Value.GetDateTimeOffset(null);
+                    starttime = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("endtime"u8))
                 {
-                    endtime = property.Value.GetDateTimeOffset(null);
+                    endtime = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("interval"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    interval = property.Value.GetTimeSpan("P");
+                    interval = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("namespace"u8))
@@ -55,20 +49,12 @@ namespace Azure.Monitor.Query.Models
                 }
                 if (property.NameEquals("resourceregion"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    resourceregion = new AzureLocation(property.Value.GetString());
+                    resourceregion = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("resourceid"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    resourceid = new ResourceIdentifier(property.Value.GetString());
+                    resourceid = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("value"u8))

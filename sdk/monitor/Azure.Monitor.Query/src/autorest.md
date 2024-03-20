@@ -5,11 +5,11 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 title: MonitorQuery
 input-file:
+    - https://github.com/Azure/azure-rest-api-specs/blob/0373f0edc4414fd402603fac51d0df93f1f70507/specification/monitor/resource-manager/Microsoft.Insights/stable/2023-10-01/metricDefinitions_API.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/0373f0edc4414fd402603fac51d0df93f1f70507/specification/monitor/resource-manager/Microsoft.Insights/stable/2023-10-01/metrics_API.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/0373f0edc4414fd402603fac51d0df93f1f70507/specification/monitor/resource-manager/Microsoft.Insights/preview/2017-12-01-preview/metricNamespaces_API.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/0550754fb421cd3a5859abf6713a542b682f626c/specification/monitor/data-plane/Microsoft.Insights/stable/2023-10-01/metricBatch.json
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/21f5332f2dc7437d1446edf240e9a3d4c90c6431/specification/operationalinsights/data-plane/Microsoft.OperationalInsights/stable/2022-10-27/OperationalInsights.json
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/21f5332f2dc7437d1446edf240e9a3d4c90c6431/specification/monitor/data-plane/Microsoft.Insights/preview/2023-05-01-preview/metricBatch.json
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/21f5332f2dc7437d1446edf240e9a3d4c90c6431/specification/monitor/resource-manager/Microsoft.Insights/stable/2018-01-01/metricDefinitions_API.json
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/21f5332f2dc7437d1446edf240e9a3d4c90c6431/specification/monitor/resource-manager/Microsoft.Insights/preview/2017-12-01-preview/metricNamespaces_API.json
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/21f5332f2dc7437d1446edf240e9a3d4c90c6431/specification/monitor/resource-manager/Microsoft.Insights/stable/2018-01-01/metrics_API.json
 generation1-convenience-client: true
 modelerfour:
     lenient-model-deduplication: true
@@ -119,4 +119,23 @@ directive:
   where: $.definitions.Response.properties.interval
   transform: >
     $["format"] = "duration";
+```
+
+### Remove subscription scoped operations
+
+``` yaml
+directive:
+  - remove-operation: MetricDefinitions_ListAtSubscriptionScope
+  - remove-operation: Metrics_ListAtSubscriptionScope
+  - remove-operation: Metrics_ListAtSubscriptionScopePost
+```
+
+### Convert guid/uuid format of subscriptionId to string
+
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters.SubscriptionIdParameter
+  transform: >
+    $["format"] = "string";
 ```
