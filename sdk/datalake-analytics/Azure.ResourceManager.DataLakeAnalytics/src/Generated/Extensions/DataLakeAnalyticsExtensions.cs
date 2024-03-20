@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.DataLakeAnalytics.Mocking;
 using Azure.ResourceManager.DataLakeAnalytics.Models;
 using Azure.ResourceManager.Resources;
