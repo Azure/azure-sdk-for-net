@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
@@ -42,8 +44,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("rpGroupType"u8);
                 writer.WriteStringValue(RpGroupType);
             }
-            writer.WritePropertyName("instanceType"u8);
-            writer.WriteStringValue(InstanceType);
             if (Optional.IsCollectionDefined(ChildTasks))
             {
                 writer.WritePropertyName("childTasks"u8);
@@ -92,15 +92,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
+            string instanceType = default;
             string name = default;
             string groupId = default;
             string rpGroupType = default;
-            string instanceType = default;
             IReadOnlyList<AsrTask> childTasks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("instanceType"u8))
+                {
+                    instanceType = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
@@ -114,11 +119,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 if (property.NameEquals("rpGroupType"u8))
                 {
                     rpGroupType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("instanceType"u8))
-                {
-                    instanceType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("childTasks"u8))

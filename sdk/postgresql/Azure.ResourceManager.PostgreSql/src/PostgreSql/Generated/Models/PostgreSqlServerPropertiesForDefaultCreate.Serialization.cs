@@ -31,6 +31,8 @@ namespace Azure.ResourceManager.PostgreSql.Models
             writer.WriteStringValue(AdministratorLogin);
             writer.WritePropertyName("administratorLoginPassword"u8);
             writer.WriteStringValue(AdministratorLoginPassword);
+            writer.WritePropertyName("createMode"u8);
+            writer.WriteStringValue(CreateMode.ToString());
             if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
@@ -61,8 +63,6 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 writer.WritePropertyName("storageProfile"u8);
                 writer.WriteObjectValue(StorageProfile);
             }
-            writer.WritePropertyName("createMode"u8);
-            writer.WriteStringValue(CreateMode.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -103,13 +103,13 @@ namespace Azure.ResourceManager.PostgreSql.Models
             }
             string administratorLogin = default;
             string administratorLoginPassword = default;
+            PostgreSqlCreateMode createMode = default;
             PostgreSqlServerVersion? version = default;
             PostgreSqlSslEnforcementEnum? sslEnforcement = default;
             PostgreSqlMinimalTlsVersionEnum? minimalTlsVersion = default;
             PostgreSqlInfrastructureEncryption? infrastructureEncryption = default;
             PostgreSqlPublicNetworkAccessEnum? publicNetworkAccess = default;
             PostgreSqlStorageProfile storageProfile = default;
-            PostgreSqlCreateMode createMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,6 +122,11 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 if (property.NameEquals("administratorLoginPassword"u8))
                 {
                     administratorLoginPassword = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("createMode"u8))
+                {
+                    createMode = new PostgreSqlCreateMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("version"u8))
@@ -176,11 +181,6 @@ namespace Azure.ResourceManager.PostgreSql.Models
                         continue;
                     }
                     storageProfile = PostgreSqlStorageProfile.DeserializePostgreSqlStorageProfile(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("createMode"u8))
-                {
-                    createMode = new PostgreSqlCreateMode(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

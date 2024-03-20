@@ -37,6 +37,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
+            writer.WritePropertyName("objectType"u8);
+            writer.WriteStringValue(ObjectType);
             if (Optional.IsDefined(ExtendedInfo))
             {
                 writer.WritePropertyName("extendedInfo"u8);
@@ -78,8 +80,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("recoveryPointProperties"u8);
                 writer.WriteObjectValue(RecoveryPointProperties);
             }
-            writer.WritePropertyName("objectType"u8);
-            writer.WriteStringValue(ObjectType);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -119,13 +119,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 return null;
             }
             IList<PointInTimeRange> timeRanges = default;
+            string objectType = default;
             WorkloadSqlRecoveryPointExtendedInfo extendedInfo = default;
             DateTimeOffset? recoveryPointTimeInUTC = default;
             RestorePointType? type = default;
             IList<RecoveryPointTierInformationV2> recoveryPointTierDetails = default;
             IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo = default;
             RecoveryPointProperties recoveryPointProperties = default;
-            string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -142,6 +142,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         array.Add(PointInTimeRange.DeserializePointInTimeRange(item, options));
                     }
                     timeRanges = array;
+                    continue;
+                }
+                if (property.NameEquals("objectType"u8))
+                {
+                    objectType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("extendedInfo"u8))
@@ -206,11 +211,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         continue;
                     }
                     recoveryPointProperties = RecoveryPointProperties.DeserializeRecoveryPointProperties(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("objectType"u8))
-                {
-                    objectType = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")

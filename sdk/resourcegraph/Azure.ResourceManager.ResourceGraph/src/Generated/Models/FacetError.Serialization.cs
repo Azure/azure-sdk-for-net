@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("expression"u8);
-            writer.WriteStringValue(Expression);
             writer.WritePropertyName("resultType"u8);
             writer.WriteStringValue(ResultType);
+            writer.WritePropertyName("expression"u8);
+            writer.WriteStringValue(Expression);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 return null;
             }
             IReadOnlyList<FacetErrorDetails> errors = default;
-            string expression = default;
             string resultType = default;
+            string expression = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,14 +93,14 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                     errors = array;
                     continue;
                 }
-                if (property.NameEquals("expression"u8))
-                {
-                    expression = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("resultType"u8))
                 {
                     resultType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("expression"u8))
+                {
+                    expression = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")

@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             writer.WritePropertyName("policyName"u8);
             writer.WriteStringValue(PolicyName);
+            writer.WritePropertyName("objectType"u8);
+            writer.WriteStringValue(ObjectType);
             writer.WritePropertyName("sourceTierType"u8);
             writer.WriteStringValue(SourceTierType.ToSerialString());
             writer.WritePropertyName("targetTierType"u8);
             writer.WriteStringValue(TargetTierType.ToSerialString());
-            writer.WritePropertyName("objectType"u8);
-            writer.WriteStringValue(ObjectType);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -73,9 +73,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 return null;
             }
             string policyName = default;
+            string objectType = default;
             RecoveryPointTierType sourceTierType = default;
             RecoveryPointTierType targetTierType = default;
-            string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -83,6 +83,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 if (property.NameEquals("policyName"u8))
                 {
                     policyName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("objectType"u8))
+                {
+                    objectType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("sourceTierType"u8))
@@ -93,11 +98,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 if (property.NameEquals("targetTierType"u8))
                 {
                     targetTierType = property.Value.GetString().ToRecoveryPointTierType();
-                    continue;
-                }
-                if (property.NameEquals("objectType"u8))
-                {
-                    objectType = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")

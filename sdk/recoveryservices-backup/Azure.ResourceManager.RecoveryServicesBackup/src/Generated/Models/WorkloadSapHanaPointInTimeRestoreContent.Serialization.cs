@@ -32,6 +32,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("pointInTime"u8);
                 writer.WriteStringValue(PointInTime.Value, "O");
             }
+            writer.WritePropertyName("objectType"u8);
+            writer.WriteStringValue(ObjectType);
             if (Optional.IsDefined(RecoveryType))
             {
                 writer.WritePropertyName("recoveryType"u8);
@@ -83,8 +85,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("targetVirtualMachineId"u8);
                 writer.WriteStringValue(TargetVirtualMachineId);
             }
-            writer.WritePropertyName("objectType"u8);
-            writer.WriteStringValue(ObjectType);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -131,6 +131,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             DateTimeOffset? pointInTime = default;
+            string objectType = "AzureWorkloadSAPHanaPointInTimeRestoreRequest";
             FileShareRecoveryType? recoveryType = default;
             ResourceIdentifier sourceResourceId = default;
             IDictionary<string, string> propertyBag = default;
@@ -140,7 +141,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             UserAssignedManagedIdentityDetails userAssignedManagedIdentityDetails = default;
             SnapshotRestoreContent snapshotRestoreParameters = default;
             ResourceIdentifier targetVirtualMachineId = default;
-            string objectType = "AzureWorkloadSAPHanaPointInTimeRestoreRequest";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,6 +152,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         continue;
                     }
                     pointInTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("objectType"u8))
+                {
+                    objectType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("recoveryType"u8))
@@ -234,11 +239,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         continue;
                     }
                     targetVirtualMachineId = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("objectType"u8))
-                {
-                    objectType = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")

@@ -32,6 +32,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("recoveryPointRehydrationInfo"u8);
                 writer.WriteObjectValue(RecoveryPointRehydrationInfo);
             }
+            writer.WritePropertyName("objectType"u8);
+            writer.WriteStringValue(ObjectType);
             if (Optional.IsDefined(PointInTime))
             {
                 writer.WritePropertyName("pointInTime"u8);
@@ -88,8 +90,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("targetVirtualMachineId"u8);
                 writer.WriteStringValue(TargetVirtualMachineId);
             }
-            writer.WritePropertyName("objectType"u8);
-            writer.WriteStringValue(ObjectType);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -129,6 +129,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 return null;
             }
             RecoveryPointRehydrationInfo recoveryPointRehydrationInfo = default;
+            string objectType = default;
             DateTimeOffset? pointInTime = default;
             FileShareRecoveryType? recoveryType = default;
             ResourceIdentifier sourceResourceId = default;
@@ -139,7 +140,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             UserAssignedManagedIdentityDetails userAssignedManagedIdentityDetails = default;
             SnapshotRestoreContent snapshotRestoreParameters = default;
             ResourceIdentifier targetVirtualMachineId = default;
-            string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -151,6 +151,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         continue;
                     }
                     recoveryPointRehydrationInfo = RecoveryPointRehydrationInfo.DeserializeRecoveryPointRehydrationInfo(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("objectType"u8))
+                {
+                    objectType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("pointInTime"u8))
@@ -242,11 +247,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         continue;
                     }
                     targetVirtualMachineId = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("objectType"u8))
-                {
-                    objectType = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")

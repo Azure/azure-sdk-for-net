@@ -37,6 +37,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
+            writer.WritePropertyName("protectableItemType"u8);
+            writer.WriteStringValue(ProtectableItemType);
             if (Optional.IsDefined(ParentName))
             {
                 writer.WritePropertyName("parentName"u8);
@@ -92,8 +94,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("workloadType"u8);
                 writer.WriteStringValue(WorkloadType);
             }
-            writer.WritePropertyName("protectableItemType"u8);
-            writer.WriteStringValue(ProtectableItemType);
             if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
@@ -143,6 +143,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 return null;
             }
             IList<DistributedNodesInfo> nodesList = default;
+            string protectableItemType = default;
             string parentName = default;
             string parentUniqueName = default;
             string serverName = default;
@@ -154,7 +155,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             bool? isProtectable = default;
             string backupManagementType = default;
             string workloadType = default;
-            string protectableItemType = default;
             string friendlyName = default;
             BackupProtectionStatus? protectionState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -173,6 +173,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         array.Add(DistributedNodesInfo.DeserializeDistributedNodesInfo(item, options));
                     }
                     nodesList = array;
+                    continue;
+                }
+                if (property.NameEquals("protectableItemType"u8))
+                {
+                    protectableItemType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("parentName"u8))
@@ -252,11 +257,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 if (property.NameEquals("workloadType"u8))
                 {
                     workloadType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("protectableItemType"u8))
-                {
-                    protectableItemType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("friendlyName"u8))

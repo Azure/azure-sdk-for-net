@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("backupEngineType"u8);
+            writer.WriteStringValue(BackupEngineType.ToString());
             if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
@@ -52,8 +54,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("healthStatus"u8);
                 writer.WriteStringValue(HealthStatus);
             }
-            writer.WritePropertyName("backupEngineType"u8);
-            writer.WriteStringValue(BackupEngineType.ToString());
             if (Optional.IsDefined(CanReRegister))
             {
                 writer.WritePropertyName("canReRegister"u8);
@@ -127,12 +127,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
+            BackupEngineType backupEngineType = default;
             string friendlyName = default;
             BackupManagementType? backupManagementType = default;
             string registrationStatus = default;
             string backupEngineState = default;
             string healthStatus = default;
-            BackupEngineType backupEngineType = default;
             bool? canReRegister = default;
             string backupEngineId = default;
             string dpmVersion = default;
@@ -144,6 +144,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("backupEngineType"u8))
+                {
+                    backupEngineType = new BackupEngineType(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("friendlyName"u8))
                 {
                     friendlyName = property.Value.GetString();
@@ -171,11 +176,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 if (property.NameEquals("healthStatus"u8))
                 {
                     healthStatus = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("backupEngineType"u8))
-                {
-                    backupEngineType = new BackupEngineType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("canReRegister"u8))

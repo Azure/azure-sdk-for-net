@@ -37,13 +37,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("skippedReasonString"u8);
                 writer.WriteStringValue(SkippedReasonString);
             }
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
             if (Optional.IsDefined(JobTask))
             {
                 writer.WritePropertyName("jobTask"u8);
                 writer.WriteObjectValue(JobTask);
             }
-            writer.WritePropertyName("instanceType"u8);
-            writer.WriteStringValue(InstanceType);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             string skippedReason = default;
             string skippedReasonString = default;
-            SiteRecoveryJobEntity jobTask = default;
             string instanceType = default;
+            SiteRecoveryJobEntity jobTask = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,6 +100,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     skippedReasonString = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("instanceType"u8))
+                {
+                    instanceType = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("jobTask"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -107,11 +112,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         continue;
                     }
                     jobTask = SiteRecoveryJobEntity.DeserializeSiteRecoveryJobEntity(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("instanceType"u8))
-                {
-                    instanceType = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")

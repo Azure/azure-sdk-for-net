@@ -32,6 +32,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("replicationFrequencyInSeconds"u8);
                 writer.WriteNumberValue(ReplicationFrequencyInSeconds.Value);
             }
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
             if (Optional.IsDefined(RecoveryPoints))
             {
                 writer.WritePropertyName("recoveryPoints"u8);
@@ -82,8 +84,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("replicaDeletion"u8);
                 writer.WriteStringValue(ReplicaDeletion);
             }
-            writer.WritePropertyName("instanceType"u8);
-            writer.WriteStringValue(InstanceType);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -123,6 +123,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             int? replicationFrequencyInSeconds = default;
+            string instanceType = default;
             int? recoveryPoints = default;
             int? applicationConsistentSnapshotFrequencyInHours = default;
             string compression = default;
@@ -133,7 +134,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             int? replicationPort = default;
             int? allowedAuthenticationType = default;
             string replicaDeletion = default;
-            string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,6 +145,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         continue;
                     }
                     replicationFrequencyInSeconds = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("instanceType"u8))
+                {
+                    instanceType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("recoveryPoints"u8))
@@ -211,11 +216,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 if (property.NameEquals("replicaDeletion"u8))
                 {
                     replicaDeletion = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("instanceType"u8))
-                {
-                    instanceType = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")

@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("objectType"u8);
+            writer.WriteStringValue(ObjectType);
             if (Optional.IsDefined(RecoveryPointCreatedOn))
             {
                 writer.WritePropertyName("recoveryPointTimeInUTC"u8);
@@ -63,8 +65,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("recoveryPointProperties"u8);
                 writer.WriteObjectValue(RecoveryPointProperties);
             }
-            writer.WritePropertyName("objectType"u8);
-            writer.WriteStringValue(ObjectType);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -103,16 +103,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
+            string objectType = default;
             DateTimeOffset? recoveryPointTimeInUTC = default;
             RestorePointType? type = default;
             IList<RecoveryPointTierInformationV2> recoveryPointTierDetails = default;
             IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo = default;
             RecoveryPointProperties recoveryPointProperties = default;
-            string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("objectType"u8))
+                {
+                    objectType = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("recoveryPointTimeInUTC"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -166,11 +171,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         continue;
                     }
                     recoveryPointProperties = RecoveryPointProperties.DeserializeRecoveryPointProperties(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("objectType"u8))
-                {
-                    objectType = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
