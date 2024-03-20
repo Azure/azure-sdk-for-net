@@ -1,7 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
-
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Azure.ResourceManager.TrustedSigning;
 using System;
 using System.Collections.Generic;
@@ -50,7 +47,7 @@ namespace Azure.ResourceManager.TrustedSigning.Tests
             Assert.Fail();
         }
 
-        [Test]
+        [Test()]
         public void ExistsAsyncTest()
         {
             Assert.Fail();
