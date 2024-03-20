@@ -57,13 +57,13 @@ namespace Azure.ResourceManager.Authorization.Models
                 writer.WritePropertyName("isDefaultRecipientsEnabled"u8);
                 writer.WriteBooleanValue(AreDefaultRecipientsEnabled.Value);
             }
+            writer.WritePropertyName("ruleType"u8);
+            writer.WriteStringValue(RuleType.ToString());
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            writer.WritePropertyName("ruleType"u8);
-            writer.WriteStringValue(RuleType.ToString());
             if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
@@ -112,8 +112,8 @@ namespace Azure.ResourceManager.Authorization.Models
             RoleManagementPolicyRecipientType? recipientType = default;
             IList<string> notificationRecipients = default;
             bool? isDefaultRecipientsEnabled = default;
-            string id = default;
             RoleManagementPolicyRuleType ruleType = default;
+            string id = default;
             RoleManagementPolicyRuleTarget target = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -169,14 +169,14 @@ namespace Azure.ResourceManager.Authorization.Models
                     isDefaultRecipientsEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("id"u8))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("ruleType"u8))
                 {
                     ruleType = new RoleManagementPolicyRuleType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("id"u8))
+                {
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("target"u8))
