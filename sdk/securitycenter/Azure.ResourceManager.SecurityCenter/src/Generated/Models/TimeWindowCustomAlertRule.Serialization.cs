@@ -29,6 +29,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartObject();
             writer.WritePropertyName("timeWindowSize"u8);
             writer.WriteStringValue(TimeWindowSize, "P");
+            writer.WritePropertyName("ruleType"u8);
+            writer.WriteStringValue(RuleType);
             writer.WritePropertyName("minThreshold"u8);
             writer.WriteNumberValue(MinThreshold);
             writer.WritePropertyName("maxThreshold"u8);
@@ -45,8 +47,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             writer.WritePropertyName("isEnabled"u8);
             writer.WriteBooleanValue(IsEnabled);
-            writer.WritePropertyName("ruleType"u8);
-            writer.WriteStringValue(RuleType);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -108,12 +108,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             TimeSpan timeWindowSize = default;
+            string ruleType = "TimeWindowCustomAlertRule";
             int minThreshold = default;
             int maxThreshold = default;
             string displayName = default;
             string description = default;
             bool isEnabled = default;
-            string ruleType = "TimeWindowCustomAlertRule";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,6 +121,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 if (property.NameEquals("timeWindowSize"u8))
                 {
                     timeWindowSize = property.Value.GetTimeSpan("P");
+                    continue;
+                }
+                if (property.NameEquals("ruleType"u8))
+                {
+                    ruleType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("minThreshold"u8))
@@ -146,11 +151,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 if (property.NameEquals("isEnabled"u8))
                 {
                     isEnabled = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("ruleType"u8))
-                {
-                    ruleType = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")

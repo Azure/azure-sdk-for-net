@@ -31,6 +31,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteNumberValue(MinThreshold);
             writer.WritePropertyName("maxThreshold"u8);
             writer.WriteNumberValue(MaxThreshold);
+            writer.WritePropertyName("ruleType"u8);
+            writer.WriteStringValue(RuleType);
             if (options.Format != "W" && Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
@@ -43,8 +45,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             writer.WritePropertyName("isEnabled"u8);
             writer.WriteBooleanValue(IsEnabled);
-            writer.WritePropertyName("ruleType"u8);
-            writer.WriteStringValue(RuleType);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -108,10 +108,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             int minThreshold = default;
             int maxThreshold = default;
+            string ruleType = "ThresholdCustomAlertRule";
             string displayName = default;
             string description = default;
             bool isEnabled = default;
-            string ruleType = "ThresholdCustomAlertRule";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,6 +124,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 if (property.NameEquals("maxThreshold"u8))
                 {
                     maxThreshold = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("ruleType"u8))
+                {
+                    ruleType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("displayName"u8))
@@ -139,11 +144,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 if (property.NameEquals("isEnabled"u8))
                 {
                     isEnabled = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("ruleType"u8))
-                {
-                    ruleType = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")

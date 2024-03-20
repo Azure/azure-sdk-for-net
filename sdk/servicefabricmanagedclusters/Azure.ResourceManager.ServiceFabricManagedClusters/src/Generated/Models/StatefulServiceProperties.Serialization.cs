@@ -62,13 +62,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WritePropertyName("servicePlacementTimeLimit"u8);
                 writer.WriteStringValue(ServicePlacementTimeLimit.Value, "c");
             }
+            writer.WritePropertyName("serviceKind"u8);
+            writer.WriteStringValue(ServiceKind.ToString());
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            writer.WritePropertyName("serviceKind"u8);
-            writer.WriteStringValue(ServiceKind.ToString());
             writer.WritePropertyName("serviceTypeName"u8);
             writer.WriteStringValue(ServiceTypeName);
             writer.WritePropertyName("partitionDescription"u8);
@@ -178,8 +178,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             TimeSpan? quorumLossWaitDuration = default;
             TimeSpan? standByReplicaKeepDuration = default;
             TimeSpan? servicePlacementTimeLimit = default;
-            string provisioningState = default;
             ServiceKind serviceKind = default;
+            string provisioningState = default;
             string serviceTypeName = default;
             ManagedServicePartitionScheme partitionDescription = default;
             ManagedServicePackageActivationMode? servicePackageActivationMode = default;
@@ -257,14 +257,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     servicePlacementTimeLimit = property.Value.GetTimeSpan("c");
                     continue;
                 }
-                if (property.NameEquals("provisioningState"u8))
-                {
-                    provisioningState = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("serviceKind"u8))
                 {
                     serviceKind = new ServiceKind(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("provisioningState"u8))
+                {
+                    provisioningState = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("serviceTypeName"u8))
