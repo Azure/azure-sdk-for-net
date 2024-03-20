@@ -25,14 +25,5 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             return new UnknownDataSourceCredential(credentialKind, id, name, description);
         }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DataFeedDimension"/>. </summary>
-        /// <param name="name"> dimension name. </param>
-        /// <param name="displayName"> dimension display name. </param>
-        /// <returns> A new <see cref="Models.DataFeedDimension"/> instance for mocking. </returns>
-        public static DataFeedDimension DataFeedDimension(string name = null, string displayName = null)
-        {
-            return new DataFeedDimension(name, displayName);
-        }
     }
 }

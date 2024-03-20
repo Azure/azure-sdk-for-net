@@ -383,16 +383,5 @@ namespace Azure.Communication.JobRouter
 
             return new WeightedAllocationWorkerSelectorAttachment(WorkerSelectorAttachmentKind.WeightedAllocation, serializedAdditionalRawData: null, allocations?.ToList());
         }
-
-        /// <summary> Initializes a new instance of <see cref="JobRouter.WorkerWeightedAllocation"/>. </summary>
-        /// <param name="weight"> The percentage of this weight, expressed as a fraction of 1. </param>
-        /// <param name="workerSelectors"> A collection of worker selectors that will be applied if this allocation is selected. </param>
-        /// <returns> A new <see cref="JobRouter.WorkerWeightedAllocation"/> instance for mocking. </returns>
-        public static WorkerWeightedAllocation WorkerWeightedAllocation(double weight = default, IEnumerable<RouterWorkerSelector> workerSelectors = null)
-        {
-            workerSelectors ??= new List<RouterWorkerSelector>();
-
-            return new WorkerWeightedAllocation(weight, workerSelectors?.ToList(), serializedAdditionalRawData: null);
-        }
     }
 }
