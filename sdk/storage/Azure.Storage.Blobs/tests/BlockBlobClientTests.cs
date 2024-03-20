@@ -2819,6 +2819,27 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2024_08_04)]
+        public async Task SyncUploadFromUriAsync_SourceErrorAndStatusCode()
+        {
+            // Arrange
+            var constants = TestConstants.Create(this);
+            await using DisposingContainer test = await GetTestContainerAsync(publicAccessType: PublicAccessType.None);
+            BlockBlobClient sourceBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                destBlob.SyncUploadFromUriAsync(sourceBlob.Uri),
+                e =>
+                {
+                    Assert.IsTrue(e.Message.Contains("CopySourceStatusCode: 409"));
+                    Assert.IsTrue(e.Message.Contains("CopySourceErrorCode: PublicAccessNotPermitted"));
+                    Assert.IsTrue(e.Message.Contains("CopySourceErrorMessage: Public access is not permitted on this storage account."));
+                });
+        }
+
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
         public async Task SyncUploadFromUriAsync_OverwriteSourceBlobProperties()
         {
