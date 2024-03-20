@@ -27,8 +27,11 @@ namespace Azure.AI.ContentSafety
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("blocklistName"u8);
-            writer.WriteStringValue(Name);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("blocklistName"u8);
+                writer.WriteStringValue(Name);
+            }
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
