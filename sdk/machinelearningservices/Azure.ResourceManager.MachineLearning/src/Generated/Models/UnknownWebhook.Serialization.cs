@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("webhookType"u8);
+            writer.WriteStringValue(WebhookType.ToString());
             if (Optional.IsDefined(EventType))
             {
                 if (EventType != null)
@@ -39,8 +41,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("eventType");
                 }
             }
-            writer.WritePropertyName("webhookType"u8);
-            writer.WriteStringValue(WebhookType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -79,12 +79,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            string eventType = default;
             MachineLearningWebhookType webhookType = "Unknown";
+            string eventType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("webhookType"u8))
+                {
+                    webhookType = new MachineLearningWebhookType(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("eventType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -93,11 +98,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     eventType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("webhookType"u8))
-                {
-                    webhookType = new MachineLearningWebhookType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("credentials"u8);
-            writer.WriteObjectValue(Credentials);
             writer.WritePropertyName("datastoreType"u8);
             writer.WriteStringValue(DatastoreType.ToString());
+            writer.WritePropertyName("credentials"u8);
+            writer.WriteObjectValue(Credentials);
             if (Optional.IsDefined(IntellectualProperty))
             {
                 if (IntellectualProperty != null)
@@ -134,8 +134,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            MachineLearningDatastoreCredentials credentials = default;
             DatastoreType datastoreType = "Unknown";
+            MachineLearningDatastoreCredentials credentials = default;
             IntellectualProperty intellectualProperty = default;
             bool? isDefault = default;
             string description = default;
@@ -145,14 +145,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("credentials"u8))
-                {
-                    credentials = MachineLearningDatastoreCredentials.DeserializeMachineLearningDatastoreCredentials(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("datastoreType"u8))
                 {
                     datastoreType = new DatastoreType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("credentials"u8))
+                {
+                    credentials = MachineLearningDatastoreCredentials.DeserializeMachineLearningDatastoreCredentials(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("intellectualProperty"u8))

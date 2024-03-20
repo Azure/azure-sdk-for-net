@@ -80,6 +80,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("uri");
                 }
             }
+            writer.WritePropertyName("jobOutputType"u8);
+            writer.WriteStringValue(JobOutputType.ToString());
             if (Optional.IsDefined(Description))
             {
                 if (Description != null)
@@ -92,8 +94,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("description");
                 }
             }
-            writer.WritePropertyName("jobOutputType"u8);
-            writer.WriteStringValue(JobOutputType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -137,8 +137,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             AutoDeleteSetting autoDeleteSetting = default;
             MachineLearningOutputDeliveryMode? mode = default;
             Uri uri = default;
-            string description = default;
             JobOutputType jobOutputType = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -192,6 +192,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     uri = new Uri(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("jobOutputType"u8))
+                {
+                    jobOutputType = new JobOutputType(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("description"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -200,11 +205,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     description = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("jobOutputType"u8))
-                {
-                    jobOutputType = new JobOutputType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

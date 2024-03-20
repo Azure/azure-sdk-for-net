@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("inputDataType"u8);
+            writer.WriteStringValue(InputDataType.ToString());
             if (Optional.IsCollectionDefined(Columns))
             {
                 if (Columns != null)
@@ -57,8 +59,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("dataContext");
                 }
             }
-            writer.WritePropertyName("inputDataType"u8);
-            writer.WriteStringValue(InputDataType.ToString());
             writer.WritePropertyName("jobInputType"u8);
             writer.WriteStringValue(JobInputType.ToString());
             writer.WritePropertyName("uri"u8);
@@ -101,15 +101,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            MonitoringInputDataType inputDataType = "Unknown";
             IDictionary<string, string> columns = default;
             string dataContext = default;
-            MonitoringInputDataType inputDataType = "Unknown";
             JobInputType jobInputType = default;
             Uri uri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("inputDataType"u8))
+                {
+                    inputDataType = new MonitoringInputDataType(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("columns"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -133,11 +138,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     dataContext = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("inputDataType"u8))
-                {
-                    inputDataType = new MonitoringInputDataType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("jobInputType"u8))

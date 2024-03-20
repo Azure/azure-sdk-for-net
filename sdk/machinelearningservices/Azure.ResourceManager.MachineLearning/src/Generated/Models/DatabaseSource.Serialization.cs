@@ -91,6 +91,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("tableName");
                 }
             }
+            writer.WritePropertyName("sourceType"u8);
+            writer.WriteStringValue(SourceType.ToString());
             if (Optional.IsDefined(Connection))
             {
                 if (Connection != null)
@@ -103,8 +105,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("connection");
                 }
             }
-            writer.WritePropertyName("sourceType"u8);
-            writer.WriteStringValue(SourceType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -147,8 +147,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             string storedProcedure = default;
             IList<IDictionary<string, string>> storedProcedureParams = default;
             string tableName = default;
-            string connection = default;
             DataImportSourceType sourceType = default;
+            string connection = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -210,6 +210,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     tableName = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("sourceType"u8))
+                {
+                    sourceType = new DataImportSourceType(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("connection"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -218,11 +223,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     connection = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("sourceType"u8))
-                {
-                    sourceType = new DataImportSourceType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

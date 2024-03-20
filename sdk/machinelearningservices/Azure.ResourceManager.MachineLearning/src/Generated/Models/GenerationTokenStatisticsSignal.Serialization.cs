@@ -48,6 +48,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("samplingRate"u8);
             writer.WriteNumberValue(SamplingRate);
+            writer.WritePropertyName("signalType"u8);
+            writer.WriteStringValue(SignalType.ToString());
             if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
@@ -71,8 +73,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("properties");
                 }
             }
-            writer.WritePropertyName("signalType"u8);
-            writer.WriteStringValue(SignalType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -114,9 +114,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             IList<GenerationTokenStatisticsMetricThreshold> metricThresholds = default;
             MonitoringInputDataBase productionData = default;
             double samplingRate = default;
+            MonitoringSignalType signalType = default;
             MonitoringNotificationMode? mode = default;
             IDictionary<string, string> properties = default;
-            MonitoringSignalType signalType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,6 +146,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     samplingRate = property.Value.GetDouble();
                     continue;
                 }
+                if (property.NameEquals("signalType"u8))
+                {
+                    signalType = new MonitoringSignalType(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("mode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -168,11 +173,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     properties = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("signalType"u8))
-                {
-                    signalType = new MonitoringSignalType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

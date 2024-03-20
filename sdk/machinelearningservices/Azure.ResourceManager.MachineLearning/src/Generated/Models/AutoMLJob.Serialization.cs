@@ -94,6 +94,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("taskDetails"u8);
             writer.WriteObjectValue(TaskDetails);
+            writer.WritePropertyName("jobType"u8);
+            writer.WriteStringValue(JobType.ToString());
             if (Optional.IsDefined(ComponentId))
             {
                 if (ComponentId != null)
@@ -152,8 +154,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("isArchived"u8);
                 writer.WriteBooleanValue(IsArchived.Value);
             }
-            writer.WritePropertyName("jobType"u8);
-            writer.WriteStringValue(JobType.ToString());
             if (Optional.IsDefined(NotificationSetting))
             {
                 if (NotificationSetting != null)
@@ -299,13 +299,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             JobQueueSettings queueSettings = default;
             MachineLearningJobResourceConfiguration resources = default;
             AutoMLVertical taskDetails = default;
+            JobType jobType = default;
             ResourceIdentifier componentId = default;
             ResourceIdentifier computeId = default;
             string displayName = default;
             string experimentName = default;
             MachineLearningIdentityConfiguration identity = default;
             bool? isArchived = default;
-            JobType jobType = default;
             NotificationSetting notificationSetting = default;
             IDictionary<string, SecretConfiguration> secretsConfiguration = default;
             IDictionary<string, MachineLearningJobService> services = default;
@@ -381,6 +381,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     taskDetails = AutoMLVertical.DeserializeAutoMLVertical(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("jobType"u8))
+                {
+                    jobType = new JobType(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("componentId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -433,11 +438,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     isArchived = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("jobType"u8))
-                {
-                    jobType = new JobType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("notificationSetting"u8))

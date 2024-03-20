@@ -39,6 +39,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("labeledAssetName");
                 }
             }
+            writer.WritePropertyName("format"u8);
+            writer.WriteStringValue(Format.ToString());
             if (options.Format != "W" && Optional.IsDefined(EndOn))
             {
                 if (EndOn != null)
@@ -63,8 +65,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("exportedRowCount");
                 }
             }
-            writer.WritePropertyName("format"u8);
-            writer.WriteStringValue(Format.ToString());
             if (options.Format != "W" && Optional.IsDefined(LabelingJobId))
             {
                 if (LabelingJobId != null)
@@ -128,9 +128,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             string labeledAssetName = default;
+            ExportFormatType format = default;
             DateTimeOffset? endDateTime = default;
             long? exportedRowCount = default;
-            ExportFormatType format = default;
             string labelingJobId = default;
             DateTimeOffset? startDateTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -145,6 +145,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     labeledAssetName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("format"u8))
+                {
+                    format = new ExportFormatType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("endDateTime"u8))
@@ -165,11 +170,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     exportedRowCount = property.Value.GetInt64();
-                    continue;
-                }
-                if (property.NameEquals("format"u8))
-                {
-                    format = new ExportFormatType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("labelingJobId"u8))

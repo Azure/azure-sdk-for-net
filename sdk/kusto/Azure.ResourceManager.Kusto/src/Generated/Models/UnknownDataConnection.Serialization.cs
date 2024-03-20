@@ -28,13 +28,13 @@ namespace Azure.ResourceManager.Kusto.Models
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
@@ -93,8 +93,8 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            AzureLocation? location = default;
             DataConnectionKind kind = "Unknown";
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -103,6 +103,11 @@ namespace Azure.ResourceManager.Kusto.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("kind"u8))
+                {
+                    kind = new DataConnectionKind(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -110,11 +115,6 @@ namespace Azure.ResourceManager.Kusto.Models
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("kind"u8))
-                {
-                    kind = new DataConnectionKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"u8))

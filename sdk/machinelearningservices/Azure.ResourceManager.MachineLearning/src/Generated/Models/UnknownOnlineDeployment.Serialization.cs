@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("endpointComputeType"u8);
+            writer.WriteStringValue(EndpointComputeType.ToString());
             if (Optional.IsDefined(AppInsightsEnabled))
             {
                 writer.WritePropertyName("appInsightsEnabled"u8);
@@ -49,8 +51,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("egressPublicNetworkAccess"u8);
                 writer.WriteStringValue(EgressPublicNetworkAccess.Value.ToString());
             }
-            writer.WritePropertyName("endpointComputeType"u8);
-            writer.WriteStringValue(EndpointComputeType.ToString());
             if (Optional.IsDefined(InstanceType))
             {
                 if (InstanceType != null)
@@ -250,10 +250,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            MachineLearningEndpointComputeType endpointComputeType = "Unknown";
             bool? appInsightsEnabled = default;
             DataCollector dataCollector = default;
             MachineLearningEgressPublicNetworkAccessType? egressPublicNetworkAccess = default;
-            MachineLearningEndpointComputeType endpointComputeType = "Unknown";
             string instanceType = default;
             MachineLearningProbeSettings livenessProbe = default;
             string model = default;
@@ -271,6 +271,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("endpointComputeType"u8))
+                {
+                    endpointComputeType = new MachineLearningEndpointComputeType(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("appInsightsEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -297,11 +302,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     egressPublicNetworkAccess = new MachineLearningEgressPublicNetworkAccessType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("endpointComputeType"u8))
-                {
-                    endpointComputeType = new MachineLearningEndpointComputeType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("instanceType"u8))
