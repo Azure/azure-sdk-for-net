@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Communication.AlphaIds;
 
 namespace Azure.Communication.AlphaIds.Models
 {
