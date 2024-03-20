@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.TextAnalytics.Legacy.Models;
+using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {

@@ -21,8 +21,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Value))
             {
-                writer.WritePropertyName("value"u8);
-                writer.WriteObjectValue(Value);
+                if (Value != null)
+                {
+                    writer.WritePropertyName("value"u8);
+                    writer.WriteObjectValue(Value);
+                }
+                else
+                {
+                    writer.WriteNull("value");
+                }
             }
             if (Optional.IsDefined(Type))
             {
@@ -46,6 +53,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        value = null;
                         continue;
                     }
                     value = property.Value.GetObject();
