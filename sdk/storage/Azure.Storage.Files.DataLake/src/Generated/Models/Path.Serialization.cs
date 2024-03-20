@@ -7,7 +7,7 @@
 
 using System;
 using System.Text.Json;
-using Azure.Storage.Common;
+using Azure.Core;
 
 namespace Azure.Storage.Files.DataLake.Models
 {

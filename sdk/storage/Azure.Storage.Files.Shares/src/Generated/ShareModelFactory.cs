@@ -5,13 +5,10 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
-namespace Azure.Storage.Blobs.Models
+namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class BlobsModelFactory
+    public static partial class ShareModelFactory
     {
     }
 }

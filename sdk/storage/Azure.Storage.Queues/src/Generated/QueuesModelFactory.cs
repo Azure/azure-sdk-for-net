@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Storage.Blobs.Models
+namespace Azure.Storage.Queues.Models
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class BlobsModelFactory
+    public static partial class QueuesModelFactory
     {
     }
 }
