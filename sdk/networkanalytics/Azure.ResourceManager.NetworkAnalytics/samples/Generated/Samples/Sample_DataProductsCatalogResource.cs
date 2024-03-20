@@ -9,8 +9,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.NetworkAnalytics;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.NetworkAnalytics.Samples
