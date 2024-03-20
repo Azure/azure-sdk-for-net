@@ -419,34 +419,6 @@ namespace Azure.ResourceManager.TrustedSigning
             }
         }
 
-        /// <summary> Revoke a certificate under a certificate profile. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="accountName"> Trusted Signing account name. </param>
-        /// <param name="profileName"> Certificate profile name. </param>
-        /// <param name="body"> Parameters to revoke the certificate profile. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="profileName"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response RevokeCertificate(string subscriptionId, string resourceGroupName, string accountName, string profileName, RevokeCertificate body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
-            Argument.AssertNotNull(body, nameof(body));
-
-            using var message = CreateRevokeCertificateRequest(subscriptionId, resourceGroupName, accountName, profileName, body);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
         internal HttpMessage CreateListByCodeSigningAccountNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string accountName)
         {
             var message = _pipeline.CreateMessage();

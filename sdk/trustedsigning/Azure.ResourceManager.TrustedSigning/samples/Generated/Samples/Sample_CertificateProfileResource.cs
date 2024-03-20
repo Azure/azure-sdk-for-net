@@ -50,46 +50,7 @@ namespace Azure.ResourceManager.TrustedSigning.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a certificate profile.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_CreateACertificateProfile()
-        {
-            // Generated from example definition: specification/codesigning/resource-manager/Microsoft.CodeSigning/preview/2024-02-05-preview/examples/CertificateProfiles_Create.json
-            // this example is just showing the usage of "CertificateProfiles_Create" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this CertificateProfileResource created on azure
-            // for more information of creating CertificateProfileResource, please refer to the document of CertificateProfileResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            string resourceGroupName = "MyResourceGroup";
-            string accountName = "MyAccount";
-            string profileName = "profileA";
-            ResourceIdentifier certificateProfileResourceId = CertificateProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, profileName);
-            CertificateProfileResource certificateProfile = client.GetCertificateProfileResource(certificateProfileResourceId);
-
-            // invoke the operation
-            CertificateProfileData data = new CertificateProfileData()
-            {
-                ProfileType = ProfileType.PublicTrust,
-                IncludeStreetAddress = false,
-                IncludePostalCode = true,
-                IdentityValidationId = "00000000-1234-5678-3333-444444444444",
-            };
-            ArmOperation<CertificateProfileResource> lro = await certificateProfile.UpdateAsync(WaitUntil.Completed, data);
-            CertificateProfileResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            CertificateProfileData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
+        
         // Delete a certificate profile.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
@@ -114,38 +75,6 @@ namespace Azure.ResourceManager.TrustedSigning.Samples
 
             // invoke the operation
             await certificateProfile.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Revoke a certificate under a certificate profile.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task RevokeCertificate_RevokeACertificateUnderACertificateProfile()
-        {
-            // Generated from example definition: specification/codesigning/resource-manager/Microsoft.CodeSigning/preview/2024-02-05-preview/examples/CertificateProfiles_RevokeCertificate.json
-            // this example is just showing the usage of "CertificateProfiles_RevokeCertificate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this CertificateProfileResource created on azure
-            // for more information of creating CertificateProfileResource, please refer to the document of CertificateProfileResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            string resourceGroupName = "MyResourceGroup";
-            string accountName = "MyAccount";
-            string profileName = "profileA";
-            ResourceIdentifier certificateProfileResourceId = CertificateProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, profileName);
-            CertificateProfileResource certificateProfile = client.GetCertificateProfileResource(certificateProfileResourceId);
-
-            // invoke the operation
-            RevokeCertificate body = new RevokeCertificate("xxxxxxxxxxxxxxxxxx", "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", DateTimeOffset.Parse("2023-11-12T23:40:25+00:00"), "KeyCompromised")
-            {
-                Remarks = "test",
-            };
-            await certificateProfile.RevokeCertificateAsync(body);
 
             Console.WriteLine($"Succeeded");
         }

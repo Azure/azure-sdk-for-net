@@ -96,6 +96,7 @@ namespace Azure.ResourceManager.TrustedSigning
         /// <returns> An object representing collection of CertificateProfileResources and their operations over a CertificateProfileResource. </returns>
         public virtual CertificateProfileCollection GetCertificateProfiles()
         {
+            //required
             return GetCachedClient(client => new CertificateProfileCollection(client, Id));
         }
 
@@ -127,6 +128,7 @@ namespace Azure.ResourceManager.TrustedSigning
         [ForwardsClientCalls]
         public virtual async Task<Response<CertificateProfileResource>> GetCertificateProfileAsync(string profileName, CancellationToken cancellationToken = default)
         {
+            //required
             return await GetCertificateProfiles().GetAsync(profileName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -158,6 +160,7 @@ namespace Azure.ResourceManager.TrustedSigning
         [ForwardsClientCalls]
         public virtual Response<CertificateProfileResource> GetCertificateProfile(string profileName, CancellationToken cancellationToken = default)
         {
+            //required
             return GetCertificateProfiles().Get(profileName, cancellationToken);
         }
 
@@ -188,7 +191,7 @@ namespace Azure.ResourceManager.TrustedSigning
             using var scope = _codeSigningAccountClientDiagnostics.CreateScope("CodeSigningAccountResource.Get");
             scope.Start();
             try
-            {
+            {  //required
                 var response = await _codeSigningAccountRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
@@ -229,6 +232,7 @@ namespace Azure.ResourceManager.TrustedSigning
             scope.Start();
             try
             {
+                //required
                 var response = _codeSigningAccountRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
@@ -270,6 +274,7 @@ namespace Azure.ResourceManager.TrustedSigning
             scope.Start();
             try
             {
+                //required
                 var response = await _codeSigningAccountRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new TrustedSigningArmOperation(_codeSigningAccountClientDiagnostics, Pipeline, _codeSigningAccountRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -312,6 +317,7 @@ namespace Azure.ResourceManager.TrustedSigning
             scope.Start();
             try
             {
+                //required
                 var response = _codeSigningAccountRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 var operation = new TrustedSigningArmOperation(_codeSigningAccountClientDiagnostics, Pipeline, _codeSigningAccountRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -358,6 +364,7 @@ namespace Azure.ResourceManager.TrustedSigning
             scope.Start();
             try
             {
+                //required
                 var response = await _codeSigningAccountRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
                 var operation = new TrustedSigningArmOperation<CodeSigningAccountResource>(new CodeSigningAccountOperationSource(Client), _codeSigningAccountClientDiagnostics, Pipeline, _codeSigningAccountRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -404,6 +411,7 @@ namespace Azure.ResourceManager.TrustedSigning
             scope.Start();
             try
             {
+                //required
                 var response = _codeSigningAccountRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
                 var operation = new TrustedSigningArmOperation<CodeSigningAccountResource>(new CodeSigningAccountOperationSource(Client), _codeSigningAccountClientDiagnostics, Pipeline, _codeSigningAccountRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -451,6 +459,7 @@ namespace Azure.ResourceManager.TrustedSigning
             scope.Start();
             try
             {
+                //required
                 if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
                 {
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
@@ -513,6 +522,7 @@ namespace Azure.ResourceManager.TrustedSigning
             scope.Start();
             try
             {
+                //required
                 if (CanUseTagResource(cancellationToken: cancellationToken))
                 {
                     var originalTags = GetTagResource().Get(cancellationToken);
@@ -573,6 +583,7 @@ namespace Azure.ResourceManager.TrustedSigning
             scope.Start();
             try
             {
+                //required
                 if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
                 {
                     await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -630,6 +641,7 @@ namespace Azure.ResourceManager.TrustedSigning
             scope.Start();
             try
             {
+                //required
                 if (CanUseTagResource(cancellationToken: cancellationToken))
                 {
                     GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
@@ -747,6 +759,7 @@ namespace Azure.ResourceManager.TrustedSigning
             scope.Start();
             try
             {
+                //required
                 if (CanUseTagResource(cancellationToken: cancellationToken))
                 {
                     var originalTags = GetTagResource().Get(cancellationToken);
