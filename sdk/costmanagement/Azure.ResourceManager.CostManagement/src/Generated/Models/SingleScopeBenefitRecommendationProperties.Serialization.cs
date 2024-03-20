@@ -37,6 +37,8 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WritePropertyName("resourceGroup"u8);
                 writer.WriteStringValue(ResourceGroup);
             }
+            writer.WritePropertyName("scope"u8);
+            writer.WriteStringValue(Scope.ToString());
             if (options.Format != "W" && Optional.IsDefined(FirstConsumptionOn))
             {
                 writer.WritePropertyName("firstConsumptionDate"u8);
@@ -97,8 +99,6 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WritePropertyName("allRecommendationDetails"u8);
                 writer.WriteObjectValue(AllRecommendationDetails);
             }
-            writer.WritePropertyName("scope"u8);
-            writer.WriteStringValue(Scope.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -139,6 +139,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
             string subscriptionId = default;
             string resourceGroup = default;
+            BenefitRecommendationScope scope = default;
             DateTimeOffset? firstConsumptionDate = default;
             DateTimeOffset? lastConsumptionDate = default;
             LookBackPeriod? lookBackPeriod = default;
@@ -151,7 +152,6 @@ namespace Azure.ResourceManager.CostManagement.Models
             decimal? costWithoutBenefit = default;
             AllSavingsBenefitDetails recommendationDetails = default;
             AllSavingsList allRecommendationDetails = default;
-            BenefitRecommendationScope scope = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,6 +164,11 @@ namespace Azure.ResourceManager.CostManagement.Models
                 if (property.NameEquals("resourceGroup"u8))
                 {
                     resourceGroup = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("scope"u8))
+                {
+                    scope = new BenefitRecommendationScope(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("firstConsumptionDate"u8))
@@ -264,11 +269,6 @@ namespace Azure.ResourceManager.CostManagement.Models
                         continue;
                     }
                     allRecommendationDetails = AllSavingsList.DeserializeAllSavingsList(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("scope"u8))
-                {
-                    scope = new BenefitRecommendationScope(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

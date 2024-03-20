@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("scope"u8);
+            writer.WriteStringValue(Scope.ToString());
             if (options.Format != "W" && Optional.IsDefined(FirstConsumptionOn))
             {
                 writer.WritePropertyName("firstConsumptionDate"u8);
@@ -87,8 +89,6 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WritePropertyName("allRecommendationDetails"u8);
                 writer.WriteObjectValue(AllRecommendationDetails);
             }
-            writer.WritePropertyName("scope"u8);
-            writer.WriteStringValue(Scope.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -127,6 +127,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
+            BenefitRecommendationScope scope = "Unknown";
             DateTimeOffset? firstConsumptionDate = default;
             DateTimeOffset? lastConsumptionDate = default;
             LookBackPeriod? lookBackPeriod = default;
@@ -139,11 +140,15 @@ namespace Azure.ResourceManager.CostManagement.Models
             decimal? costWithoutBenefit = default;
             AllSavingsBenefitDetails recommendationDetails = default;
             AllSavingsList allRecommendationDetails = default;
-            BenefitRecommendationScope scope = "Unknown";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("scope"u8))
+                {
+                    scope = new BenefitRecommendationScope(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("firstConsumptionDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -242,11 +247,6 @@ namespace Azure.ResourceManager.CostManagement.Models
                         continue;
                     }
                     allRecommendationDetails = AllSavingsList.DeserializeAllSavingsList(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("scope"u8))
-                {
-                    scope = new BenefitRecommendationScope(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStartObject();
             writer.WritePropertyName("expectedDataSizeInTeraBytes"u8);
             writer.WriteNumberValue(ExpectedDataSizeInTerabytes);
-            writer.WritePropertyName("storageLocation"u8);
-            writer.WriteStringValue(StorageLocation);
             writer.WritePropertyName("skuName"u8);
             writer.WriteStringValue(SkuName.ToSerialString());
+            writer.WritePropertyName("storageLocation"u8);
+            writer.WriteStringValue(StorageLocation);
             if (Optional.IsDefined(Country))
             {
                 writer.WritePropertyName("country"u8);
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.DataBox.Models
                 return null;
             }
             int expectedDataSizeInTerabytes = default;
-            AzureLocation storageLocation = default;
             DataBoxSkuName skuName = default;
+            AzureLocation storageLocation = default;
             string country = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -89,14 +89,14 @@ namespace Azure.ResourceManager.DataBox.Models
                     expectedDataSizeInTerabytes = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("storageLocation"u8))
-                {
-                    storageLocation = new AzureLocation(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("skuName"u8))
                 {
                     skuName = property.Value.GetString().ToDataBoxSkuName();
+                    continue;
+                }
+                if (property.NameEquals("storageLocation"u8))
+                {
+                    storageLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("country"u8))
