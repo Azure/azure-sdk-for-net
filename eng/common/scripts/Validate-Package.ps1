@@ -247,5 +247,6 @@ if ($IsReleaseBuild)
 {
     if (!$updatedWi -or $changelogStatus.Status -ne "Success" -or $apireviewDetails.ApiviewApproval.Status -ne "Approved" -or $apireviewDetails.PackageNameApproval.Status -ne "Approved") {        
         Write-Error "At least one of the Validations above failed for package $PackageName with version $versionString."
+        exit 1
     }
 }

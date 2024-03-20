@@ -37,6 +37,7 @@ function ProcessPackage($PackageName, $ConfigFileDir)
         -Devops_pat $Devops_pat
     if ($LASTEXITCODE -ne 0) {
         Write-Error "Failed to validate package $PackageName"
+        exit 1
     }
 }
 
