@@ -132,6 +132,7 @@ namespace Azure.ResourceManager.TrustedSigning
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<CodeSigningAccountResource> CreateOrUpdate(WaitUntil waitUntil, string accountName, CodeSigningAccountData data, CancellationToken cancellationToken = default)
         {
+            //Required
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
             Argument.AssertNotNull(data, nameof(data));
 
@@ -378,6 +379,7 @@ namespace Azure.ResourceManager.TrustedSigning
             scope.Start();
             try
             {
+                //Required
                 var response = _codeSigningAccountRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, accountName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
@@ -466,6 +468,7 @@ namespace Azure.ResourceManager.TrustedSigning
             scope.Start();
             try
             {
+                //Required
                 var response = _codeSigningAccountRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, accountName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<CodeSigningAccountResource>(response.GetRawResponse());

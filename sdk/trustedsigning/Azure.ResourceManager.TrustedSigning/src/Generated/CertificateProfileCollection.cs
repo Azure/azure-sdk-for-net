@@ -89,6 +89,7 @@ namespace Azure.ResourceManager.TrustedSigning
             scope.Start();
             try
             {
+                //Required
                 var response = await _certificateProfileRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileName, data, cancellationToken).ConfigureAwait(false);
                 var operation = new TrustedSigningArmOperation<CertificateProfileResource>(new CertificateProfileOperationSource(Client), _certificateProfileClientDiagnostics, Pipeline, _certificateProfileRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -138,6 +139,7 @@ namespace Azure.ResourceManager.TrustedSigning
             scope.Start();
             try
             {
+                //Required
                 var response = _certificateProfileRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileName, data, cancellationToken);
                 var operation = new TrustedSigningArmOperation<CertificateProfileResource>(new CertificateProfileOperationSource(Client), _certificateProfileClientDiagnostics, Pipeline, _certificateProfileRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -229,6 +231,7 @@ namespace Azure.ResourceManager.TrustedSigning
             scope.Start();
             try
             {
+                //Required
                 var response = _certificateProfileRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, profileName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
