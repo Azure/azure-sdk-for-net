@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<GranularityType> granularity = default;
-            Optional<ExportDatasetConfiguration> configuration = default;
+            GranularityType? granularity = default;
+            ExportDatasetConfiguration configuration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +96,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    configuration = ExportDatasetConfiguration.DeserializeExportDatasetConfiguration(property.Value);
+                    configuration = ExportDatasetConfiguration.DeserializeExportDatasetConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExportDataset(Optional.ToNullable(granularity), configuration.Value, serializedAdditionalRawData);
+            return new ExportDataset(granularity, configuration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExportDataset>.Write(ModelReaderWriterOptions options)

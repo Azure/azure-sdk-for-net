@@ -117,12 +117,12 @@ namespace Azure.ResourceManager.ContainerRegistry
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> creationDate = default;
-            Optional<ContainerRegistryProvisioningState> provisioningState = default;
-            Optional<ResourceIdentifier> scopeMapId = default;
-            Optional<ContainerRegistryTokenCredentials> credentials = default;
-            Optional<ContainerRegistryTokenStatus> status = default;
+            SystemData systemData = default;
+            DateTimeOffset? creationDate = default;
+            ContainerRegistryProvisioningState? provisioningState = default;
+            ResourceIdentifier scopeMapId = default;
+            ContainerRegistryTokenCredentials credentials = default;
+            ContainerRegistryTokenStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             {
                                 continue;
                             }
-                            credentials = ContainerRegistryTokenCredentials.DeserializeContainerRegistryTokenCredentials(property0.Value);
+                            credentials = ContainerRegistryTokenCredentials.DeserializeContainerRegistryTokenCredentials(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("status"u8))
@@ -214,7 +214,17 @@ namespace Azure.ResourceManager.ContainerRegistry
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryTokenData(id, name, type, systemData.Value, Optional.ToNullable(creationDate), Optional.ToNullable(provisioningState), scopeMapId.Value, credentials.Value, Optional.ToNullable(status), serializedAdditionalRawData);
+            return new ContainerRegistryTokenData(
+                id,
+                name,
+                type,
+                systemData,
+                creationDate,
+                provisioningState,
+                scopeMapId,
+                credentials,
+                status,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryTokenData>.Write(ModelReaderWriterOptions options)

@@ -117,10 +117,10 @@ namespace Azure.ResourceManager.ResourceHealth
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> refreshTimestamp = default;
-            Optional<IReadOnlyList<EmergingIssueBannerType>> statusBanners = default;
-            Optional<IReadOnlyList<EmergingIssueActiveEventType>> statusActiveEvents = default;
+            SystemData systemData = default;
+            DateTimeOffset? refreshTimestamp = default;
+            IReadOnlyList<EmergingIssueBannerType> statusBanners = default;
+            IReadOnlyList<EmergingIssueActiveEventType> statusActiveEvents = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ResourceHealth
                             List<EmergingIssueBannerType> array = new List<EmergingIssueBannerType>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EmergingIssueBannerType.DeserializeEmergingIssueBannerType(item));
+                                array.Add(EmergingIssueBannerType.DeserializeEmergingIssueBannerType(item, options));
                             }
                             statusBanners = array;
                             continue;
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.ResourceHealth
                             List<EmergingIssueActiveEventType> array = new List<EmergingIssueActiveEventType>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EmergingIssueActiveEventType.DeserializeEmergingIssueActiveEventType(item));
+                                array.Add(EmergingIssueActiveEventType.DeserializeEmergingIssueActiveEventType(item, options));
                             }
                             statusActiveEvents = array;
                             continue;
@@ -204,7 +204,15 @@ namespace Azure.ResourceManager.ResourceHealth
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceEmergingIssueData(id, name, type, systemData.Value, Optional.ToNullable(refreshTimestamp), Optional.ToList(statusBanners), Optional.ToList(statusActiveEvents), serializedAdditionalRawData);
+            return new ServiceEmergingIssueData(
+                id,
+                name,
+                type,
+                systemData,
+                refreshTimestamp,
+                statusBanners ?? new ChangeTrackingList<EmergingIssueBannerType>(),
+                statusActiveEvents ?? new ChangeTrackingList<EmergingIssueActiveEventType>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceEmergingIssueData>.Write(ModelReaderWriterOptions options)

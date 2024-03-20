@@ -202,29 +202,29 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<AppServiceSkuDescription> sku = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<string> kind = default;
-            Optional<IDictionary<string, string>> tags = default;
+            AppServiceSkuDescription sku = default;
+            ManagedServiceIdentity identity = default;
+            string kind = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> defaultHostname = default;
-            Optional<Uri> repositoryUrl = default;
-            Optional<string> branch = default;
-            Optional<IReadOnlyList<string>> customDomains = default;
-            Optional<string> repositoryToken = default;
-            Optional<StaticSiteBuildProperties> buildProperties = default;
-            Optional<IReadOnlyList<ResponseMessageEnvelopeRemotePrivateEndpointConnection>> privateEndpointConnections = default;
-            Optional<StagingEnvironmentPolicy> stagingEnvironmentPolicy = default;
-            Optional<bool> allowConfigFileUpdates = default;
-            Optional<StaticSiteTemplate> templateProperties = default;
-            Optional<string> contentDistributionEndpoint = default;
-            Optional<string> keyVaultReferenceIdentity = default;
-            Optional<IReadOnlyList<StaticSiteUserProvidedFunctionAppData>> userProvidedFunctionApps = default;
-            Optional<string> provider = default;
+            SystemData systemData = default;
+            string defaultHostname = default;
+            Uri repositoryUrl = default;
+            string branch = default;
+            IReadOnlyList<string> customDomains = default;
+            string repositoryToken = default;
+            StaticSiteBuildProperties buildProperties = default;
+            IReadOnlyList<ResponseMessageEnvelopeRemotePrivateEndpointConnection> privateEndpointConnections = default;
+            StagingEnvironmentPolicy? stagingEnvironmentPolicy = default;
+            bool? allowConfigFileUpdates = default;
+            StaticSiteTemplate templateProperties = default;
+            string contentDistributionEndpoint = default;
+            string keyVaultReferenceIdentity = default;
+            IReadOnlyList<StaticSiteUserProvidedFunctionAppData> userProvidedFunctionApps = default;
+            string provider = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.AppService
                     {
                         continue;
                     }
-                    sku = AppServiceSkuDescription.DeserializeAppServiceSkuDescription(property.Value);
+                    sku = AppServiceSkuDescription.DeserializeAppServiceSkuDescription(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            buildProperties = StaticSiteBuildProperties.DeserializeStaticSiteBuildProperties(property0.Value);
+                            buildProperties = StaticSiteBuildProperties.DeserializeStaticSiteBuildProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("privateEndpointConnections"u8))
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.AppService
                             List<ResponseMessageEnvelopeRemotePrivateEndpointConnection> array = new List<ResponseMessageEnvelopeRemotePrivateEndpointConnection>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ResponseMessageEnvelopeRemotePrivateEndpointConnection.DeserializeResponseMessageEnvelopeRemotePrivateEndpointConnection(item));
+                                array.Add(ResponseMessageEnvelopeRemotePrivateEndpointConnection.DeserializeResponseMessageEnvelopeRemotePrivateEndpointConnection(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            templateProperties = StaticSiteTemplate.DeserializeStaticSiteTemplate(property0.Value);
+                            templateProperties = StaticSiteTemplate.DeserializeStaticSiteTemplate(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("contentDistributionEndpoint"u8))
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.AppService
                             List<StaticSiteUserProvidedFunctionAppData> array = new List<StaticSiteUserProvidedFunctionAppData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StaticSiteUserProvidedFunctionAppData.DeserializeStaticSiteUserProvidedFunctionAppData(item));
+                                array.Add(StaticSiteUserProvidedFunctionAppData.DeserializeStaticSiteUserProvidedFunctionAppData(item, options));
                             }
                             userProvidedFunctionApps = array;
                             continue;
@@ -430,7 +430,31 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StaticSiteData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, identity, defaultHostname.Value, repositoryUrl.Value, branch.Value, Optional.ToList(customDomains), repositoryToken.Value, buildProperties.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(stagingEnvironmentPolicy), Optional.ToNullable(allowConfigFileUpdates), templateProperties.Value, contentDistributionEndpoint.Value, keyVaultReferenceIdentity.Value, Optional.ToList(userProvidedFunctionApps), provider.Value, kind.Value, serializedAdditionalRawData);
+            return new StaticSiteData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                identity,
+                defaultHostname,
+                repositoryUrl,
+                branch,
+                customDomains ?? new ChangeTrackingList<string>(),
+                repositoryToken,
+                buildProperties,
+                privateEndpointConnections ?? new ChangeTrackingList<ResponseMessageEnvelopeRemotePrivateEndpointConnection>(),
+                stagingEnvironmentPolicy,
+                allowConfigFileUpdates,
+                templateProperties,
+                contentDistributionEndpoint,
+                keyVaultReferenceIdentity,
+                userProvidedFunctionApps ?? new ChangeTrackingList<StaticSiteUserProvidedFunctionAppData>(),
+                provider,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StaticSiteData>.Write(ModelReaderWriterOptions options)

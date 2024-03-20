@@ -238,37 +238,37 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Optional<string> instanceId = default;
-            Optional<ComputeSku> sku = default;
-            Optional<ComputePlan> plan = default;
-            Optional<IReadOnlyList<VirtualMachineExtensionData>> resources = default;
-            Optional<IReadOnlyList<string>> zones = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<string> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            string instanceId = default;
+            ComputeSku sku = default;
+            ComputePlan plan = default;
+            IReadOnlyList<VirtualMachineExtensionData> resources = default;
+            IReadOnlyList<string> zones = default;
+            ManagedServiceIdentity identity = default;
+            string etag = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> latestModelApplied = default;
-            Optional<string> vmId = default;
-            Optional<VirtualMachineScaleSetVmInstanceView> instanceView = default;
-            Optional<VirtualMachineHardwareProfile> hardwareProfile = default;
-            Optional<VirtualMachineStorageProfile> storageProfile = default;
-            Optional<AdditionalCapabilities> additionalCapabilities = default;
-            Optional<VirtualMachineOSProfile> osProfile = default;
-            Optional<SecurityProfile> securityProfile = default;
-            Optional<VirtualMachineNetworkProfile> networkProfile = default;
-            Optional<VirtualMachineScaleSetVmNetworkProfileConfiguration> networkProfileConfiguration = default;
-            Optional<DiagnosticsProfile> diagnosticsProfile = default;
-            Optional<WritableSubResource> availabilitySet = default;
-            Optional<string> provisioningState = default;
-            Optional<string> licenseType = default;
-            Optional<string> modelDefinitionApplied = default;
-            Optional<VirtualMachineScaleSetVmProtectionPolicy> protectionPolicy = default;
-            Optional<string> userData = default;
-            Optional<DateTimeOffset> timeCreated = default;
+            SystemData systemData = default;
+            bool? latestModelApplied = default;
+            string vmId = default;
+            VirtualMachineScaleSetVmInstanceView instanceView = default;
+            VirtualMachineHardwareProfile hardwareProfile = default;
+            VirtualMachineStorageProfile storageProfile = default;
+            AdditionalCapabilities additionalCapabilities = default;
+            VirtualMachineOSProfile osProfile = default;
+            SecurityProfile securityProfile = default;
+            VirtualMachineNetworkProfile networkProfile = default;
+            VirtualMachineScaleSetVmNetworkProfileConfiguration networkProfileConfiguration = default;
+            DiagnosticsProfile diagnosticsProfile = default;
+            WritableSubResource availabilitySet = default;
+            string provisioningState = default;
+            string licenseType = default;
+            string modelDefinitionApplied = default;
+            VirtualMachineScaleSetVmProtectionPolicy protectionPolicy = default;
+            string userData = default;
+            DateTimeOffset? timeCreated = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         continue;
                     }
-                    sku = ComputeSku.DeserializeComputeSku(property.Value);
+                    sku = ComputeSku.DeserializeComputeSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("plan"u8))
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         continue;
                     }
-                    plan = ComputePlan.DeserializeComputePlan(property.Value);
+                    plan = ComputePlan.DeserializeComputePlan(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("resources"u8))
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Compute
                     List<VirtualMachineExtensionData> array = new List<VirtualMachineExtensionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachineExtensionData.DeserializeVirtualMachineExtensionData(item));
+                        array.Add(VirtualMachineExtensionData.DeserializeVirtualMachineExtensionData(item, options));
                     }
                     resources = array;
                     continue;
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            instanceView = VirtualMachineScaleSetVmInstanceView.DeserializeVirtualMachineScaleSetVmInstanceView(property0.Value);
+                            instanceView = VirtualMachineScaleSetVmInstanceView.DeserializeVirtualMachineScaleSetVmInstanceView(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("hardwareProfile"u8))
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            hardwareProfile = VirtualMachineHardwareProfile.DeserializeVirtualMachineHardwareProfile(property0.Value);
+                            hardwareProfile = VirtualMachineHardwareProfile.DeserializeVirtualMachineHardwareProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("storageProfile"u8))
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            storageProfile = VirtualMachineStorageProfile.DeserializeVirtualMachineStorageProfile(property0.Value);
+                            storageProfile = VirtualMachineStorageProfile.DeserializeVirtualMachineStorageProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("additionalCapabilities"u8))
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            additionalCapabilities = AdditionalCapabilities.DeserializeAdditionalCapabilities(property0.Value);
+                            additionalCapabilities = AdditionalCapabilities.DeserializeAdditionalCapabilities(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("osProfile"u8))
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            osProfile = VirtualMachineOSProfile.DeserializeVirtualMachineOSProfile(property0.Value);
+                            osProfile = VirtualMachineOSProfile.DeserializeVirtualMachineOSProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("securityProfile"u8))
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            securityProfile = SecurityProfile.DeserializeSecurityProfile(property0.Value);
+                            securityProfile = SecurityProfile.DeserializeSecurityProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("networkProfile"u8))
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            networkProfile = VirtualMachineNetworkProfile.DeserializeVirtualMachineNetworkProfile(property0.Value);
+                            networkProfile = VirtualMachineNetworkProfile.DeserializeVirtualMachineNetworkProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("networkProfileConfiguration"u8))
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            networkProfileConfiguration = VirtualMachineScaleSetVmNetworkProfileConfiguration.DeserializeVirtualMachineScaleSetVmNetworkProfileConfiguration(property0.Value);
+                            networkProfileConfiguration = VirtualMachineScaleSetVmNetworkProfileConfiguration.DeserializeVirtualMachineScaleSetVmNetworkProfileConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("diagnosticsProfile"u8))
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            diagnosticsProfile = DiagnosticsProfile.DeserializeDiagnosticsProfile(property0.Value);
+                            diagnosticsProfile = DiagnosticsProfile.DeserializeDiagnosticsProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("availabilitySet"u8))
@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            protectionPolicy = VirtualMachineScaleSetVmProtectionPolicy.DeserializeVirtualMachineScaleSetVmProtectionPolicy(property0.Value);
+                            protectionPolicy = VirtualMachineScaleSetVmProtectionPolicy.DeserializeVirtualMachineScaleSetVmProtectionPolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("userData"u8))
@@ -541,7 +541,39 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineScaleSetVmData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, instanceId.Value, sku.Value, plan.Value, Optional.ToList(resources), Optional.ToList(zones), identity, etag.Value, Optional.ToNullable(latestModelApplied), vmId.Value, instanceView.Value, hardwareProfile.Value, storageProfile.Value, additionalCapabilities.Value, osProfile.Value, securityProfile.Value, networkProfile.Value, networkProfileConfiguration.Value, diagnosticsProfile.Value, availabilitySet, provisioningState.Value, licenseType.Value, modelDefinitionApplied.Value, protectionPolicy.Value, userData.Value, Optional.ToNullable(timeCreated), serializedAdditionalRawData);
+            return new VirtualMachineScaleSetVmData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                instanceId,
+                sku,
+                plan,
+                resources ?? new ChangeTrackingList<VirtualMachineExtensionData>(),
+                zones ?? new ChangeTrackingList<string>(),
+                identity,
+                etag,
+                latestModelApplied,
+                vmId,
+                instanceView,
+                hardwareProfile,
+                storageProfile,
+                additionalCapabilities,
+                osProfile,
+                securityProfile,
+                networkProfile,
+                networkProfileConfiguration,
+                diagnosticsProfile,
+                availabilitySet,
+                provisioningState,
+                licenseType,
+                modelDefinitionApplied,
+                protectionPolicy,
+                userData,
+                timeCreated,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineScaleSetVmData>.Write(ModelReaderWriterOptions options)

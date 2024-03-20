@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<IReadOnlyList<AutomationActivityParameterDefinition>> parameters = default;
+            string name = default;
+            IReadOnlyList<AutomationActivityParameterDefinition> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<AutomationActivityParameterDefinition> array = new List<AutomationActivityParameterDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomationActivityParameterDefinition.DeserializeAutomationActivityParameterDefinition(item));
+                        array.Add(AutomationActivityParameterDefinition.DeserializeAutomationActivityParameterDefinition(item, options));
                     }
                     parameters = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationActivityParameterSet(name.Value, Optional.ToList(parameters), serializedAdditionalRawData);
+            return new AutomationActivityParameterSet(name, parameters ?? new ChangeTrackingList<AutomationActivityParameterDefinition>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationActivityParameterSet>.Write(ModelReaderWriterOptions options)

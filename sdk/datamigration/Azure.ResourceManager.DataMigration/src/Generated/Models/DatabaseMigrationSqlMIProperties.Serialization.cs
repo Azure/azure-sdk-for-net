@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -146,23 +147,23 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<MigrationStatusDetails> migrationStatusDetails = default;
-            Optional<BackupConfiguration> backupConfiguration = default;
-            Optional<OfflineConfiguration> offlineConfiguration = default;
+            MigrationStatusDetails migrationStatusDetails = default;
+            BackupConfiguration backupConfiguration = default;
+            OfflineConfiguration offlineConfiguration = default;
             ResourceType kind = default;
-            Optional<string> scope = default;
-            Optional<string> provisioningState = default;
-            Optional<string> migrationStatus = default;
-            Optional<DateTimeOffset> startedOn = default;
-            Optional<DateTimeOffset> endedOn = default;
-            Optional<SqlConnectionInformation> sourceSqlConnection = default;
-            Optional<string> sourceDatabaseName = default;
-            Optional<string> sourceServerName = default;
-            Optional<string> migrationService = default;
-            Optional<string> migrationOperationId = default;
-            Optional<ErrorInfo> migrationFailureError = default;
-            Optional<string> targetDatabaseCollation = default;
-            Optional<string> provisioningError = default;
+            string scope = default;
+            string provisioningState = default;
+            string migrationStatus = default;
+            DateTimeOffset? startedOn = default;
+            DateTimeOffset? endedOn = default;
+            SqlConnectionInformation sourceSqlConnection = default;
+            string sourceDatabaseName = default;
+            string sourceServerName = default;
+            string migrationService = default;
+            string migrationOperationId = default;
+            ErrorInfo migrationFailureError = default;
+            string targetDatabaseCollation = default;
+            string provisioningError = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -173,7 +174,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    migrationStatusDetails = MigrationStatusDetails.DeserializeMigrationStatusDetails(property.Value);
+                    migrationStatusDetails = MigrationStatusDetails.DeserializeMigrationStatusDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("backupConfiguration"u8))
@@ -182,7 +183,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    backupConfiguration = BackupConfiguration.DeserializeBackupConfiguration(property.Value);
+                    backupConfiguration = BackupConfiguration.DeserializeBackupConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("offlineConfiguration"u8))
@@ -191,7 +192,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    offlineConfiguration = OfflineConfiguration.DeserializeOfflineConfiguration(property.Value);
+                    offlineConfiguration = OfflineConfiguration.DeserializeOfflineConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -238,7 +239,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    sourceSqlConnection = SqlConnectionInformation.DeserializeSqlConnectionInformation(property.Value);
+                    sourceSqlConnection = SqlConnectionInformation.DeserializeSqlConnectionInformation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sourceDatabaseName"u8))
@@ -267,7 +268,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    migrationFailureError = ErrorInfo.DeserializeErrorInfo(property.Value);
+                    migrationFailureError = ErrorInfo.DeserializeErrorInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetDatabaseCollation"u8))
@@ -286,7 +287,25 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatabaseMigrationSqlMIProperties(kind, scope.Value, provisioningState.Value, migrationStatus.Value, Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), sourceSqlConnection.Value, sourceDatabaseName.Value, sourceServerName.Value, migrationService.Value, migrationOperationId.Value, migrationFailureError.Value, targetDatabaseCollation.Value, provisioningError.Value, serializedAdditionalRawData, migrationStatusDetails.Value, backupConfiguration.Value, offlineConfiguration.Value);
+            return new DatabaseMigrationSqlMIProperties(
+                kind,
+                scope,
+                provisioningState,
+                migrationStatus,
+                startedOn,
+                endedOn,
+                sourceSqlConnection,
+                sourceDatabaseName,
+                sourceServerName,
+                migrationService,
+                migrationOperationId,
+                migrationFailureError,
+                targetDatabaseCollation,
+                provisioningError,
+                serializedAdditionalRawData,
+                migrationStatusDetails,
+                backupConfiguration,
+                offlineConfiguration);
         }
 
         BinaryData IPersistableModel<DatabaseMigrationSqlMIProperties>.Write(ModelReaderWriterOptions options)

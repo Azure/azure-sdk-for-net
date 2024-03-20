@@ -90,11 +90,11 @@ namespace Azure.AI.AnomalyDetector
             {
                 return null;
             }
-            Optional<string> variable = default;
-            Optional<float> filledNARatio = default;
-            Optional<int> effectiveCount = default;
-            Optional<DateTimeOffset> firstTimestamp = default;
-            Optional<DateTimeOffset> lastTimestamp = default;
+            string variable = default;
+            float? filledNARatio = default;
+            int? effectiveCount = default;
+            DateTimeOffset? firstTimestamp = default;
+            DateTimeOffset? lastTimestamp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,7 +146,13 @@ namespace Azure.AI.AnomalyDetector
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VariableState(variable.Value, Optional.ToNullable(filledNARatio), Optional.ToNullable(effectiveCount), Optional.ToNullable(firstTimestamp), Optional.ToNullable(lastTimestamp), serializedAdditionalRawData);
+            return new VariableState(
+                variable,
+                filledNARatio,
+                effectiveCount,
+                firstTimestamp,
+                lastTimestamp,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VariableState>.Write(ModelReaderWriterOptions options)

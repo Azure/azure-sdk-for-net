@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -43,8 +44,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = "Unknown";
-            Optional<object> maxConcurrentConnections = default;
-            Optional<object> copyBehavior = default;
+            object maxConcurrentConnections = default;
+            object copyBehavior = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -75,7 +76,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new UnknownStoreWriteSettings(type, maxConcurrentConnections.Value, copyBehavior.Value, additionalProperties);
+            return new UnknownStoreWriteSettings(type, maxConcurrentConnections, copyBehavior, additionalProperties);
         }
     }
 }

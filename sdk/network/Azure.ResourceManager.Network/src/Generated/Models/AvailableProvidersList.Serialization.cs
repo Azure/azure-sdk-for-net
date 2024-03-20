@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<AvailableProvidersListCountry> array = new List<AvailableProvidersListCountry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailableProvidersListCountry.DeserializeAvailableProvidersListCountry(item));
+                        array.Add(AvailableProvidersListCountry.DeserializeAvailableProvidersListCountry(item, options));
                     }
                     countries = array;
                     continue;

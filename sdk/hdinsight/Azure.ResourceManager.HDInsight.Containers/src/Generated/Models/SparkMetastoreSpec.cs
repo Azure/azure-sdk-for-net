@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -54,26 +55,11 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="dbServerHost"/>, <paramref name="dbName"/>, <paramref name="dbUserName"/>, <paramref name="dbPasswordSecretName"/> or <paramref name="keyVaultId"/> is null. </exception>
         public SparkMetastoreSpec(string dbServerHost, string dbName, string dbUserName, string dbPasswordSecretName, string keyVaultId)
         {
-            if (dbServerHost == null)
-            {
-                throw new ArgumentNullException(nameof(dbServerHost));
-            }
-            if (dbName == null)
-            {
-                throw new ArgumentNullException(nameof(dbName));
-            }
-            if (dbUserName == null)
-            {
-                throw new ArgumentNullException(nameof(dbUserName));
-            }
-            if (dbPasswordSecretName == null)
-            {
-                throw new ArgumentNullException(nameof(dbPasswordSecretName));
-            }
-            if (keyVaultId == null)
-            {
-                throw new ArgumentNullException(nameof(keyVaultId));
-            }
+            Argument.AssertNotNull(dbServerHost, nameof(dbServerHost));
+            Argument.AssertNotNull(dbName, nameof(dbName));
+            Argument.AssertNotNull(dbUserName, nameof(dbUserName));
+            Argument.AssertNotNull(dbPasswordSecretName, nameof(dbPasswordSecretName));
+            Argument.AssertNotNull(keyVaultId, nameof(keyVaultId));
 
             DBServerHost = dbServerHost;
             DBName = dbName;

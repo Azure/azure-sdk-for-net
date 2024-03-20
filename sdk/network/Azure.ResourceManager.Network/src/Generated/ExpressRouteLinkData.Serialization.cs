@@ -134,19 +134,19 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<string> routerName = default;
-            Optional<string> interfaceName = default;
-            Optional<string> patchPanelId = default;
-            Optional<string> rackId = default;
-            Optional<string> coloLocation = default;
-            Optional<ExpressRouteLinkConnectorType> connectorType = default;
-            Optional<ExpressRouteLinkAdminState> adminState = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<ExpressRouteLinkMacSecConfig> macSecConfig = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            string routerName = default;
+            string interfaceName = default;
+            string patchPanelId = default;
+            string rackId = default;
+            string coloLocation = default;
+            ExpressRouteLinkConnectorType? connectorType = default;
+            ExpressRouteLinkAdminState? adminState = default;
+            NetworkProvisioningState? provisioningState = default;
+            ExpressRouteLinkMacSecConfig macSecConfig = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            macSecConfig = ExpressRouteLinkMacSecConfig.DeserializeExpressRouteLinkMacSecConfig(property0.Value);
+                            macSecConfig = ExpressRouteLinkMacSecConfig.DeserializeExpressRouteLinkMacSecConfig(property0.Value, options);
                             continue;
                         }
                     }
@@ -262,7 +262,21 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressRouteLinkData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), routerName.Value, interfaceName.Value, patchPanelId.Value, rackId.Value, coloLocation.Value, Optional.ToNullable(connectorType), Optional.ToNullable(adminState), Optional.ToNullable(provisioningState), macSecConfig.Value);
+            return new ExpressRouteLinkData(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                routerName,
+                interfaceName,
+                patchPanelId,
+                rackId,
+                coloLocation,
+                connectorType,
+                adminState,
+                provisioningState,
+                macSecConfig);
         }
 
         BinaryData IPersistableModel<ExpressRouteLinkData>.Write(ModelReaderWriterOptions options)

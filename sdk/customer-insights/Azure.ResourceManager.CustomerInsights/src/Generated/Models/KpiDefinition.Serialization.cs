@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CustomerInsights;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
@@ -183,23 +184,23 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
             EntityType entityType = default;
             string entityTypeName = default;
-            Optional<Guid> tenantId = default;
-            Optional<string> kpiName = default;
-            Optional<IReadOnlyDictionary<string, string>> displayName = default;
-            Optional<IReadOnlyDictionary<string, string>> description = default;
+            Guid? tenantId = default;
+            string kpiName = default;
+            IReadOnlyDictionary<string, string> displayName = default;
+            IReadOnlyDictionary<string, string> description = default;
             CalculationWindowType calculationWindow = default;
-            Optional<string> calculationWindowFieldName = default;
+            string calculationWindowFieldName = default;
             KpiFunction function = default;
             string expression = default;
-            Optional<string> unit = default;
-            Optional<string> filter = default;
-            Optional<IReadOnlyList<string>> groupBy = default;
-            Optional<IReadOnlyList<KpiGroupByMetadata>> groupByMetadata = default;
-            Optional<IReadOnlyList<KpiParticipantProfilesMetadata>> participantProfilesMetadata = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<KpiThresholds> thresHolds = default;
-            Optional<IReadOnlyList<KpiAlias>> aliases = default;
-            Optional<IReadOnlyList<KpiExtract>> extracts = default;
+            string unit = default;
+            string filter = default;
+            IReadOnlyList<string> groupBy = default;
+            IReadOnlyList<KpiGroupByMetadata> groupByMetadata = default;
+            IReadOnlyList<KpiParticipantProfilesMetadata> participantProfilesMetadata = default;
+            ProvisioningState? provisioningState = default;
+            KpiThresholds thresHolds = default;
+            IReadOnlyList<KpiAlias> aliases = default;
+            IReadOnlyList<KpiExtract> extracts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -309,7 +310,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<KpiGroupByMetadata> array = new List<KpiGroupByMetadata>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KpiGroupByMetadata.DeserializeKpiGroupByMetadata(item));
+                        array.Add(KpiGroupByMetadata.DeserializeKpiGroupByMetadata(item, options));
                     }
                     groupByMetadata = array;
                     continue;
@@ -323,7 +324,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<KpiParticipantProfilesMetadata> array = new List<KpiParticipantProfilesMetadata>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KpiParticipantProfilesMetadata.DeserializeKpiParticipantProfilesMetadata(item));
+                        array.Add(KpiParticipantProfilesMetadata.DeserializeKpiParticipantProfilesMetadata(item, options));
                     }
                     participantProfilesMetadata = array;
                     continue;
@@ -343,7 +344,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     {
                         continue;
                     }
-                    thresHolds = KpiThresholds.DeserializeKpiThresholds(property.Value);
+                    thresHolds = KpiThresholds.DeserializeKpiThresholds(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("aliases"u8))
@@ -355,7 +356,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<KpiAlias> array = new List<KpiAlias>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KpiAlias.DeserializeKpiAlias(item));
+                        array.Add(KpiAlias.DeserializeKpiAlias(item, options));
                     }
                     aliases = array;
                     continue;
@@ -369,7 +370,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<KpiExtract> array = new List<KpiExtract>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KpiExtract.DeserializeKpiExtract(item));
+                        array.Add(KpiExtract.DeserializeKpiExtract(item, options));
                     }
                     extracts = array;
                     continue;
@@ -380,7 +381,27 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KpiDefinition(entityType, entityTypeName, Optional.ToNullable(tenantId), kpiName.Value, Optional.ToDictionary(displayName), Optional.ToDictionary(description), calculationWindow, calculationWindowFieldName.Value, function, expression, unit.Value, filter.Value, Optional.ToList(groupBy), Optional.ToList(groupByMetadata), Optional.ToList(participantProfilesMetadata), Optional.ToNullable(provisioningState), thresHolds.Value, Optional.ToList(aliases), Optional.ToList(extracts), serializedAdditionalRawData);
+            return new KpiDefinition(
+                entityType,
+                entityTypeName,
+                tenantId,
+                kpiName,
+                displayName ?? new ChangeTrackingDictionary<string, string>(),
+                description ?? new ChangeTrackingDictionary<string, string>(),
+                calculationWindow,
+                calculationWindowFieldName,
+                function,
+                expression,
+                unit,
+                filter,
+                groupBy ?? new ChangeTrackingList<string>(),
+                groupByMetadata ?? new ChangeTrackingList<KpiGroupByMetadata>(),
+                participantProfilesMetadata ?? new ChangeTrackingList<KpiParticipantProfilesMetadata>(),
+                provisioningState,
+                thresHolds,
+                aliases ?? new ChangeTrackingList<KpiAlias>(),
+                extracts ?? new ChangeTrackingList<KpiExtract>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KpiDefinition>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SelfHelp;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
@@ -89,10 +90,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Optional<string> solutionId = default;
-            Optional<SolutionType> solutionType = default;
-            Optional<string> description = default;
-            Optional<IReadOnlyList<string>> requiredInputs = default;
+            string solutionId = default;
+            SolutionType? solutionType = default;
+            string description = default;
+            IReadOnlyList<string> requiredInputs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -136,7 +137,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SolutionMetadataProperties(solutionId.Value, Optional.ToNullable(solutionType), description.Value, Optional.ToList(requiredInputs), serializedAdditionalRawData);
+            return new SolutionMetadataProperties(solutionId, solutionType, description, requiredInputs ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SolutionMetadataProperties>.Write(ModelReaderWriterOptions options)

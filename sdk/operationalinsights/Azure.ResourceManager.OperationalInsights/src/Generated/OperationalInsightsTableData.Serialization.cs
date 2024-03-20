@@ -152,19 +152,19 @@ namespace Azure.ResourceManager.OperationalInsights
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> retentionInDays = default;
-            Optional<int> totalRetentionInDays = default;
-            Optional<int> archiveRetentionInDays = default;
-            Optional<OperationalInsightsTableSearchResults> searchResults = default;
-            Optional<OperationalInsightsTableRestoredLogs> restoredLogs = default;
-            Optional<OperationalInsightsTableResultStatistics> resultStatistics = default;
-            Optional<OperationalInsightsTablePlan> plan = default;
-            Optional<string> lastPlanModifiedDate = default;
-            Optional<OperationalInsightsSchema> schema = default;
-            Optional<OperationalInsightsTableProvisioningState> provisioningState = default;
-            Optional<bool> retentionInDaysAsDefault = default;
-            Optional<bool> totalRetentionInDaysAsDefault = default;
+            SystemData systemData = default;
+            int? retentionInDays = default;
+            int? totalRetentionInDays = default;
+            int? archiveRetentionInDays = default;
+            OperationalInsightsTableSearchResults searchResults = default;
+            OperationalInsightsTableRestoredLogs restoredLogs = default;
+            OperationalInsightsTableResultStatistics resultStatistics = default;
+            OperationalInsightsTablePlan? plan = default;
+            string lastPlanModifiedDate = default;
+            OperationalInsightsSchema schema = default;
+            OperationalInsightsTableProvisioningState? provisioningState = default;
+            bool? retentionInDaysAsDefault = default;
+            bool? totalRetentionInDaysAsDefault = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.OperationalInsights
                             {
                                 continue;
                             }
-                            searchResults = OperationalInsightsTableSearchResults.DeserializeOperationalInsightsTableSearchResults(property0.Value);
+                            searchResults = OperationalInsightsTableSearchResults.DeserializeOperationalInsightsTableSearchResults(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("restoredLogs"u8))
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.OperationalInsights
                             {
                                 continue;
                             }
-                            restoredLogs = OperationalInsightsTableRestoredLogs.DeserializeOperationalInsightsTableRestoredLogs(property0.Value);
+                            restoredLogs = OperationalInsightsTableRestoredLogs.DeserializeOperationalInsightsTableRestoredLogs(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("resultStatistics"u8))
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.OperationalInsights
                             {
                                 continue;
                             }
-                            resultStatistics = OperationalInsightsTableResultStatistics.DeserializeOperationalInsightsTableResultStatistics(property0.Value);
+                            resultStatistics = OperationalInsightsTableResultStatistics.DeserializeOperationalInsightsTableResultStatistics(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("plan"u8))
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.OperationalInsights
                             {
                                 continue;
                             }
-                            schema = OperationalInsightsSchema.DeserializeOperationalInsightsSchema(property0.Value);
+                            schema = OperationalInsightsSchema.DeserializeOperationalInsightsSchema(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -315,7 +315,24 @@ namespace Azure.ResourceManager.OperationalInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalInsightsTableData(id, name, type, systemData.Value, Optional.ToNullable(retentionInDays), Optional.ToNullable(totalRetentionInDays), Optional.ToNullable(archiveRetentionInDays), searchResults.Value, restoredLogs.Value, resultStatistics.Value, Optional.ToNullable(plan), lastPlanModifiedDate.Value, schema.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(retentionInDaysAsDefault), Optional.ToNullable(totalRetentionInDaysAsDefault), serializedAdditionalRawData);
+            return new OperationalInsightsTableData(
+                id,
+                name,
+                type,
+                systemData,
+                retentionInDays,
+                totalRetentionInDays,
+                archiveRetentionInDays,
+                searchResults,
+                restoredLogs,
+                resultStatistics,
+                plan,
+                lastPlanModifiedDate,
+                schema,
+                provisioningState,
+                retentionInDaysAsDefault,
+                totalRetentionInDaysAsDefault,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationalInsightsTableData>.Write(ModelReaderWriterOptions options)

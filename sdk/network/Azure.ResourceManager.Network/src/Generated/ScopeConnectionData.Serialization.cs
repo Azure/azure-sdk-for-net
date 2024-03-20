@@ -115,15 +115,15 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> tenantId = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<ScopeConnectionState> connectionState = default;
-            Optional<string> description = default;
+            SystemData systemData = default;
+            Guid? tenantId = default;
+            ResourceIdentifier resourceId = default;
+            ScopeConnectionState? connectionState = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -211,7 +211,17 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScopeConnectionData(id, name, type, systemData.Value, Optional.ToNullable(tenantId), resourceId.Value, Optional.ToNullable(connectionState), description.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new ScopeConnectionData(
+                id,
+                name,
+                type,
+                systemData,
+                tenantId,
+                resourceId,
+                connectionState,
+                description,
+                etag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScopeConnectionData>.Write(ModelReaderWriterOptions options)

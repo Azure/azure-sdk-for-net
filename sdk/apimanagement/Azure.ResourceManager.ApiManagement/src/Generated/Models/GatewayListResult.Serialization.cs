@@ -85,9 +85,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ApiManagementGatewayData>> value = default;
-            Optional<long> count = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ApiManagementGatewayData> value = default;
+            long? count = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ApiManagementGatewayData> array = new List<ApiManagementGatewayData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementGatewayData.DeserializeApiManagementGatewayData(item));
+                        array.Add(ApiManagementGatewayData.DeserializeApiManagementGatewayData(item, options));
                     }
                     value = array;
                     continue;
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GatewayListResult(Optional.ToList(value), Optional.ToNullable(count), nextLink.Value, serializedAdditionalRawData);
+            return new GatewayListResult(value ?? new ChangeTrackingList<ApiManagementGatewayData>(), count, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GatewayListResult>.Write(ModelReaderWriterOptions options)

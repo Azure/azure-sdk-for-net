@@ -152,17 +152,17 @@ namespace Azure.ResourceManager.Media
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> assetName = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<Guid> streamingLocatorId = default;
-            Optional<string> streamingPolicyName = default;
-            Optional<string> defaultContentKeyPolicyName = default;
-            Optional<IList<StreamingLocatorContentKey>> contentKeys = default;
-            Optional<string> alternativeMediaId = default;
-            Optional<IList<string>> filters = default;
+            SystemData systemData = default;
+            string assetName = default;
+            DateTimeOffset? created = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            Guid? streamingLocatorId = default;
+            string streamingPolicyName = default;
+            string defaultContentKeyPolicyName = default;
+            IList<StreamingLocatorContentKey> contentKeys = default;
+            string alternativeMediaId = default;
+            IList<string> filters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Media
                             List<StreamingLocatorContentKey> array = new List<StreamingLocatorContentKey>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StreamingLocatorContentKey.DeserializeStreamingLocatorContentKey(item));
+                                array.Add(StreamingLocatorContentKey.DeserializeStreamingLocatorContentKey(item, options));
                             }
                             contentKeys = array;
                             continue;
@@ -293,7 +293,22 @@ namespace Azure.ResourceManager.Media
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingLocatorData(id, name, type, systemData.Value, assetName.Value, Optional.ToNullable(created), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(streamingLocatorId), streamingPolicyName.Value, defaultContentKeyPolicyName.Value, Optional.ToList(contentKeys), alternativeMediaId.Value, Optional.ToList(filters), serializedAdditionalRawData);
+            return new StreamingLocatorData(
+                id,
+                name,
+                type,
+                systemData,
+                assetName,
+                created,
+                startTime,
+                endTime,
+                streamingLocatorId,
+                streamingPolicyName,
+                defaultContentKeyPolicyName,
+                contentKeys ?? new ChangeTrackingList<StreamingLocatorContentKey>(),
+                alternativeMediaId,
+                filters ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamingLocatorData>.Write(ModelReaderWriterOptions options)

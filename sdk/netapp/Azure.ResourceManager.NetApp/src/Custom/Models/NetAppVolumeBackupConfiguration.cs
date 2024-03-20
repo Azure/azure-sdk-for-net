@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ClientModel.Primitives;
 using System.ComponentModel;
 using System.Text;
 using Azure.Core;
@@ -13,6 +12,12 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Volume Backup Properties. </summary>
     public partial class NetAppVolumeBackupConfiguration
     {
+        /// <summary> Initializes a new instance of NetAppVolumeBackupConfiguration. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public NetAppVolumeBackupConfiguration()
+        {
+        }
+
         /// <summary>
         /// Keeps track of any properties unknown to the library.
         /// <para>
@@ -45,13 +50,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NetAppVolumeBackupConfiguration"/>. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public NetAppVolumeBackupConfiguration()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="NetAppVolumeBackupConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of NetAppVolumeBackupConfiguration. </summary>
         /// <param name="backupPolicyId"> Backup Policy Resource ID. </param>
         /// <param name="isPolicyEnforced"> Policy Enforced. </param>
         /// <param name="vaultId"> Vault Resource ID. </param>

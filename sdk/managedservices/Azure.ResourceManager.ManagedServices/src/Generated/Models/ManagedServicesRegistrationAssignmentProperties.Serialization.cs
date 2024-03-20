@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedServices;
 
 namespace Azure.ResourceManager.ManagedServices.Models
 {
@@ -77,8 +78,8 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 return null;
             }
             ResourceIdentifier registrationDefinitionId = default;
-            Optional<ManagedServicesProvisioningState> provisioningState = default;
-            Optional<ManagedServicesRegistrationAssignmentRegistrationData> registrationDefinition = default;
+            ManagedServicesProvisioningState? provisioningState = default;
+            ManagedServicesRegistrationAssignmentRegistrationData registrationDefinition = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                     {
                         continue;
                     }
-                    registrationDefinition = ManagedServicesRegistrationAssignmentRegistrationData.DeserializeManagedServicesRegistrationAssignmentRegistrationData(property.Value);
+                    registrationDefinition = ManagedServicesRegistrationAssignmentRegistrationData.DeserializeManagedServicesRegistrationAssignmentRegistrationData(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedServicesRegistrationAssignmentProperties(registrationDefinitionId, Optional.ToNullable(provisioningState), registrationDefinition.Value, serializedAdditionalRawData);
+            return new ManagedServicesRegistrationAssignmentProperties(registrationDefinitionId, provisioningState, registrationDefinition, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedServicesRegistrationAssignmentProperties>.Write(ModelReaderWriterOptions options)

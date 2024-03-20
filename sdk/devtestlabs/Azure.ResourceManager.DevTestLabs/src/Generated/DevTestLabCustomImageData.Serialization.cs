@@ -167,24 +167,24 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DevTestLabCustomImageVm> vm = default;
-            Optional<DevTestLabCustomImageVhd> vhd = default;
-            Optional<string> description = default;
-            Optional<string> author = default;
-            Optional<DateTimeOffset> creationDate = default;
-            Optional<string> managedImageId = default;
-            Optional<string> managedSnapshotId = default;
-            Optional<IList<DevTestLabDataDiskStorageTypeInfo>> dataDiskStorageInfo = default;
-            Optional<DevTestLabCustomImagePlan> customImagePlan = default;
-            Optional<bool> isPlanAuthorized = default;
-            Optional<string> provisioningState = default;
-            Optional<Guid> uniqueIdentifier = default;
+            SystemData systemData = default;
+            DevTestLabCustomImageVm vm = default;
+            DevTestLabCustomImageVhd vhd = default;
+            string description = default;
+            string author = default;
+            DateTimeOffset? creationDate = default;
+            string managedImageId = default;
+            string managedSnapshotId = default;
+            IList<DevTestLabDataDiskStorageTypeInfo> dataDiskStorageInfo = default;
+            DevTestLabCustomImagePlan customImagePlan = default;
+            bool? isPlanAuthorized = default;
+            string provisioningState = default;
+            Guid? uniqueIdentifier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             {
                                 continue;
                             }
-                            vm = DevTestLabCustomImageVm.DeserializeDevTestLabCustomImageVm(property0.Value);
+                            vm = DevTestLabCustomImageVm.DeserializeDevTestLabCustomImageVm(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("vhd"u8))
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             {
                                 continue;
                             }
-                            vhd = DevTestLabCustomImageVhd.DeserializeDevTestLabCustomImageVhd(property0.Value);
+                            vhd = DevTestLabCustomImageVhd.DeserializeDevTestLabCustomImageVhd(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("description"u8))
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             List<DevTestLabDataDiskStorageTypeInfo> array = new List<DevTestLabDataDiskStorageTypeInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DevTestLabDataDiskStorageTypeInfo.DeserializeDevTestLabDataDiskStorageTypeInfo(item));
+                                array.Add(DevTestLabDataDiskStorageTypeInfo.DeserializeDevTestLabDataDiskStorageTypeInfo(item, options));
                             }
                             dataDiskStorageInfo = array;
                             continue;
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             {
                                 continue;
                             }
-                            customImagePlan = DevTestLabCustomImagePlan.DeserializeDevTestLabCustomImagePlan(property0.Value);
+                            customImagePlan = DevTestLabCustomImagePlan.DeserializeDevTestLabCustomImagePlan(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("isPlanAuthorized"u8))
@@ -343,7 +343,26 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabCustomImageData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, vm.Value, vhd.Value, description.Value, author.Value, Optional.ToNullable(creationDate), managedImageId.Value, managedSnapshotId.Value, Optional.ToList(dataDiskStorageInfo), customImagePlan.Value, Optional.ToNullable(isPlanAuthorized), provisioningState.Value, Optional.ToNullable(uniqueIdentifier), serializedAdditionalRawData);
+            return new DevTestLabCustomImageData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                vm,
+                vhd,
+                description,
+                author,
+                creationDate,
+                managedImageId,
+                managedSnapshotId,
+                dataDiskStorageInfo ?? new ChangeTrackingList<DevTestLabDataDiskStorageTypeInfo>(),
+                customImagePlan,
+                isPlanAuthorized,
+                provisioningState,
+                uniqueIdentifier,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabCustomImageData>.Write(ModelReaderWriterOptions options)

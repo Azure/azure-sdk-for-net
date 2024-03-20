@@ -102,9 +102,9 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> digestStorageEndpoint = default;
-            Optional<ManagedLedgerDigestUploadsState> state = default;
+            SystemData systemData = default;
+            string digestStorageEndpoint = default;
+            ManagedLedgerDigestUploadsState? state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,7 +165,14 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedLedgerDigestUploadData(id, name, type, systemData.Value, digestStorageEndpoint.Value, Optional.ToNullable(state), serializedAdditionalRawData);
+            return new ManagedLedgerDigestUploadData(
+                id,
+                name,
+                type,
+                systemData,
+                digestStorageEndpoint,
+                state,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedLedgerDigestUploadData>.Write(ModelReaderWriterOptions options)

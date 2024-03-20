@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<HciClusterData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<HciClusterData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Hci.Models
                     List<HciClusterData> array = new List<HciClusterData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HciClusterData.DeserializeHciClusterData(item));
+                        array.Add(HciClusterData.DeserializeHciClusterData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HciClusterListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new HciClusterListResult(value ?? new ChangeTrackingList<HciClusterData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HciClusterListResult>.Write(ModelReaderWriterOptions options)

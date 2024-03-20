@@ -122,13 +122,13 @@ namespace Azure.ResourceManager.Media
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<string> defaultContentKeyPolicyName = default;
-            Optional<EnvelopeEncryption> envelopeEncryption = default;
-            Optional<CommonEncryptionCenc> commonEncryptionCenc = default;
-            Optional<CommonEncryptionCbcs> commonEncryptionCbcs = default;
-            Optional<NoEncryption> noEncryption = default;
+            SystemData systemData = default;
+            DateTimeOffset? created = default;
+            string defaultContentKeyPolicyName = default;
+            EnvelopeEncryption envelopeEncryption = default;
+            CommonEncryptionCenc commonEncryptionCenc = default;
+            CommonEncryptionCbcs commonEncryptionCbcs = default;
+            NoEncryption noEncryption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Media
                             {
                                 continue;
                             }
-                            envelopeEncryption = EnvelopeEncryption.DeserializeEnvelopeEncryption(property0.Value);
+                            envelopeEncryption = EnvelopeEncryption.DeserializeEnvelopeEncryption(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("commonEncryptionCenc"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Media
                             {
                                 continue;
                             }
-                            commonEncryptionCenc = CommonEncryptionCenc.DeserializeCommonEncryptionCenc(property0.Value);
+                            commonEncryptionCenc = CommonEncryptionCenc.DeserializeCommonEncryptionCenc(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("commonEncryptionCbcs"u8))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Media
                             {
                                 continue;
                             }
-                            commonEncryptionCbcs = CommonEncryptionCbcs.DeserializeCommonEncryptionCbcs(property0.Value);
+                            commonEncryptionCbcs = CommonEncryptionCbcs.DeserializeCommonEncryptionCbcs(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("noEncryption"u8))
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Media
                             {
                                 continue;
                             }
-                            noEncryption = NoEncryption.DeserializeNoEncryption(property0.Value);
+                            noEncryption = NoEncryption.DeserializeNoEncryption(property0.Value, options);
                             continue;
                         }
                     }
@@ -225,7 +225,18 @@ namespace Azure.ResourceManager.Media
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingPolicyData(id, name, type, systemData.Value, Optional.ToNullable(created), defaultContentKeyPolicyName.Value, envelopeEncryption.Value, commonEncryptionCenc.Value, commonEncryptionCbcs.Value, noEncryption.Value, serializedAdditionalRawData);
+            return new StreamingPolicyData(
+                id,
+                name,
+                type,
+                systemData,
+                created,
+                defaultContentKeyPolicyName,
+                envelopeEncryption,
+                commonEncryptionCenc,
+                commonEncryptionCbcs,
+                noEncryption,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamingPolicyData>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> displayName = default;
-            Optional<RoleManagementPrincipalType> type = default;
-            Optional<string> email = default;
+            string id = default;
+            string displayName = default;
+            RoleManagementPrincipalType? type = default;
+            string email = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleManagementPrincipal(id.Value, displayName.Value, Optional.ToNullable(type), email.Value, serializedAdditionalRawData);
+            return new RoleManagementPrincipal(id, displayName, type, email, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoleManagementPrincipal>.Write(ModelReaderWriterOptions options)

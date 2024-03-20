@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     List<AppSeenInfo> array = new List<AppSeenInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppSeenInfo.DeserializeAppSeenInfo(item));
+                        array.Add(AppSeenInfo.DeserializeAppSeenInfo(item, options));
                     }
                     appSeenList = array;
                     continue;

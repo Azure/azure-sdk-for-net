@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Chaos;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
@@ -98,7 +99,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     List<ChaosKeyValuePair> array = new List<ChaosKeyValuePair>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChaosKeyValuePair.DeserializeChaosKeyValuePair(item));
+                        array.Add(ChaosKeyValuePair.DeserializeChaosKeyValuePair(item, options));
                     }
                     parameters = array;
                     continue;
@@ -124,7 +125,13 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChaosContinuousAction(type, name, serializedAdditionalRawData, duration, parameters, selectorId);
+            return new ChaosContinuousAction(
+                type,
+                name,
+                serializedAdditionalRawData,
+                duration,
+                parameters,
+                selectorId);
         }
 
         BinaryData IPersistableModel<ChaosContinuousAction>.Write(ModelReaderWriterOptions options)

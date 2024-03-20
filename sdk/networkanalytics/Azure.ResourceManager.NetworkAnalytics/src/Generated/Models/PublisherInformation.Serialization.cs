@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkAnalytics;
 
 namespace Azure.ResourceManager.NetworkAnalytics.Models
 {
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                     List<DataProductInformation> array = new List<DataProductInformation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataProductInformation.DeserializeDataProductInformation(item));
+                        array.Add(DataProductInformation.DeserializeDataProductInformation(item, options));
                     }
                     dataProducts = array;
                     continue;

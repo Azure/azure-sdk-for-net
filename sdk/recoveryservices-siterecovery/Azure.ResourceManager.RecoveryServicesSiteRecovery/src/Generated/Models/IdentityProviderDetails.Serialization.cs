@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<Guid> tenantId = default;
-            Optional<string> applicationId = default;
-            Optional<string> objectId = default;
-            Optional<string> audience = default;
-            Optional<string> aadAuthority = default;
+            Guid? tenantId = default;
+            string applicationId = default;
+            string objectId = default;
+            string audience = default;
+            string aadAuthority = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +134,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IdentityProviderDetails(Optional.ToNullable(tenantId), applicationId.Value, objectId.Value, audience.Value, aadAuthority.Value, serializedAdditionalRawData);
+            return new IdentityProviderDetails(
+                tenantId,
+                applicationId,
+                objectId,
+                audience,
+                aadAuthority,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IdentityProviderDetails>.Write(ModelReaderWriterOptions options)

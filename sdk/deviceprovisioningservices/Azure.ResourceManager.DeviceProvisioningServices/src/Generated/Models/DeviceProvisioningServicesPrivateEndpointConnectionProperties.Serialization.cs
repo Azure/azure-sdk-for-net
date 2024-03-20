@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DeviceProvisioningServices;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             {
                 return null;
             }
-            Optional<SubResource> privateEndpoint = default;
+            SubResource privateEndpoint = default;
             DeviceProvisioningServicesPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 }
                 if (property.NameEquals("privateLinkServiceConnectionState"u8))
                 {
-                    privateLinkServiceConnectionState = DeviceProvisioningServicesPrivateLinkServiceConnectionState.DeserializeDeviceProvisioningServicesPrivateLinkServiceConnectionState(property.Value);
+                    privateLinkServiceConnectionState = DeviceProvisioningServicesPrivateLinkServiceConnectionState.DeserializeDeviceProvisioningServicesPrivateLinkServiceConnectionState(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

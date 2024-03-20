@@ -95,12 +95,12 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 switch (discriminator.GetString())
                 {
-                    case "Fusion": return SecurityInsightsFusionAlertRule.DeserializeSecurityInsightsFusionAlertRule(element);
-                    case "MicrosoftSecurityIncidentCreation": return MicrosoftSecurityIncidentCreationAlertRule.DeserializeMicrosoftSecurityIncidentCreationAlertRule(element);
-                    case "Scheduled": return SecurityInsightsScheduledAlertRule.DeserializeSecurityInsightsScheduledAlertRule(element);
+                    case "Fusion": return SecurityInsightsFusionAlertRule.DeserializeSecurityInsightsFusionAlertRule(element, options);
+                    case "MicrosoftSecurityIncidentCreation": return MicrosoftSecurityIncidentCreationAlertRule.DeserializeMicrosoftSecurityIncidentCreationAlertRule(element, options);
+                    case "Scheduled": return SecurityInsightsScheduledAlertRule.DeserializeSecurityInsightsScheduledAlertRule(element, options);
                 }
             }
-            return UnknownAlertRule.DeserializeUnknownAlertRule(element);
+            return UnknownAlertRule.DeserializeUnknownAlertRule(element, options);
         }
 
         BinaryData IPersistableModel<SecurityInsightsAlertRuleData>.Write(ModelReaderWriterOptions options)

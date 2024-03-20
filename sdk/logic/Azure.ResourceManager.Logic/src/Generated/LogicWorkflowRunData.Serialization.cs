@@ -165,19 +165,19 @@ namespace Azure.ResourceManager.Logic
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> waitEndTime = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<LogicWorkflowStatus> status = default;
-            Optional<string> code = default;
-            Optional<BinaryData> error = default;
-            Optional<string> correlationId = default;
-            Optional<Correlation> correlation = default;
-            Optional<LogicResourceReference> workflow = default;
-            Optional<LogicWorkflowRunTrigger> trigger = default;
-            Optional<IReadOnlyDictionary<string, LogicWorkflowOutputParameterInfo>> outputs = default;
-            Optional<LogicWorkflowRunTrigger> response = default;
+            SystemData systemData = default;
+            DateTimeOffset? waitEndTime = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            LogicWorkflowStatus? status = default;
+            string code = default;
+            BinaryData error = default;
+            string correlationId = default;
+            Correlation correlation = default;
+            LogicResourceReference workflow = default;
+            LogicWorkflowRunTrigger trigger = default;
+            IReadOnlyDictionary<string, LogicWorkflowOutputParameterInfo> outputs = default;
+            LogicWorkflowRunTrigger response = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            correlation = Correlation.DeserializeCorrelation(property0.Value);
+                            correlation = Correlation.DeserializeCorrelation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("workflow"u8))
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            workflow = LogicResourceReference.DeserializeLogicResourceReference(property0.Value);
+                            workflow = LogicResourceReference.DeserializeLogicResourceReference(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("trigger"u8))
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            trigger = LogicWorkflowRunTrigger.DeserializeLogicWorkflowRunTrigger(property0.Value);
+                            trigger = LogicWorkflowRunTrigger.DeserializeLogicWorkflowRunTrigger(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("outputs"u8))
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Logic
                             Dictionary<string, LogicWorkflowOutputParameterInfo> dictionary = new Dictionary<string, LogicWorkflowOutputParameterInfo>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, LogicWorkflowOutputParameterInfo.DeserializeLogicWorkflowOutputParameterInfo(property1.Value));
+                                dictionary.Add(property1.Name, LogicWorkflowOutputParameterInfo.DeserializeLogicWorkflowOutputParameterInfo(property1.Value, options));
                             }
                             outputs = dictionary;
                             continue;
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            response = LogicWorkflowRunTrigger.DeserializeLogicWorkflowRunTrigger(property0.Value);
+                            response = LogicWorkflowRunTrigger.DeserializeLogicWorkflowRunTrigger(property0.Value, options);
                             continue;
                         }
                     }
@@ -329,7 +329,24 @@ namespace Azure.ResourceManager.Logic
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicWorkflowRunData(id, name, type, systemData.Value, Optional.ToNullable(waitEndTime), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(status), code.Value, error.Value, correlationId.Value, correlation.Value, workflow.Value, trigger.Value, Optional.ToDictionary(outputs), response.Value, serializedAdditionalRawData);
+            return new LogicWorkflowRunData(
+                id,
+                name,
+                type,
+                systemData,
+                waitEndTime,
+                startTime,
+                endTime,
+                status,
+                code,
+                error,
+                correlationId,
+                correlation,
+                workflow,
+                trigger,
+                outputs ?? new ChangeTrackingDictionary<string, LogicWorkflowOutputParameterInfo>(),
+                response,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicWorkflowRunData>.Write(ModelReaderWriterOptions options)

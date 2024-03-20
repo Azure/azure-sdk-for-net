@@ -180,22 +180,22 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
-            Optional<IList<GatewayLoadBalancerTunnelInterface>> tunnelInterfaces = default;
-            Optional<IList<LoadBalancerBackendAddress>> loadBalancerBackendAddresses = default;
-            Optional<IReadOnlyList<NetworkInterfaceIPConfigurationData>> backendIPConfigurations = default;
-            Optional<IReadOnlyList<WritableSubResource>> loadBalancingRules = default;
-            Optional<WritableSubResource> outboundRule = default;
-            Optional<IReadOnlyList<WritableSubResource>> outboundRules = default;
-            Optional<IReadOnlyList<WritableSubResource>> inboundNatRules = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<int> drainPeriodInSeconds = default;
-            Optional<WritableSubResource> virtualNetwork = default;
-            Optional<BackendAddressSyncMode> syncMode = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
+            IList<GatewayLoadBalancerTunnelInterface> tunnelInterfaces = default;
+            IList<LoadBalancerBackendAddress> loadBalancerBackendAddresses = default;
+            IReadOnlyList<NetworkInterfaceIPConfigurationData> backendIPConfigurations = default;
+            IReadOnlyList<WritableSubResource> loadBalancingRules = default;
+            WritableSubResource outboundRule = default;
+            IReadOnlyList<WritableSubResource> outboundRules = default;
+            IReadOnlyList<WritableSubResource> inboundNatRules = default;
+            NetworkProvisioningState? provisioningState = default;
+            int? drainPeriodInSeconds = default;
+            WritableSubResource virtualNetwork = default;
+            BackendAddressSyncMode? syncMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Network
                             List<GatewayLoadBalancerTunnelInterface> array = new List<GatewayLoadBalancerTunnelInterface>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(GatewayLoadBalancerTunnelInterface.DeserializeGatewayLoadBalancerTunnelInterface(item));
+                                array.Add(GatewayLoadBalancerTunnelInterface.DeserializeGatewayLoadBalancerTunnelInterface(item, options));
                             }
                             tunnelInterfaces = array;
                             continue;
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Network
                             List<LoadBalancerBackendAddress> array = new List<LoadBalancerBackendAddress>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(LoadBalancerBackendAddress.DeserializeLoadBalancerBackendAddress(item));
+                                array.Add(LoadBalancerBackendAddress.DeserializeLoadBalancerBackendAddress(item, options));
                             }
                             loadBalancerBackendAddresses = array;
                             continue;
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Network
                             List<NetworkInterfaceIPConfigurationData> array = new List<NetworkInterfaceIPConfigurationData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkInterfaceIPConfigurationData.DeserializeNetworkInterfaceIPConfigurationData(item));
+                                array.Add(NetworkInterfaceIPConfigurationData.DeserializeNetworkInterfaceIPConfigurationData(item, options));
                             }
                             backendIPConfigurations = array;
                             continue;
@@ -388,7 +388,24 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackendAddressPoolData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(location), Optional.ToList(tunnelInterfaces), Optional.ToList(loadBalancerBackendAddresses), Optional.ToList(backendIPConfigurations), Optional.ToList(loadBalancingRules), outboundRule, Optional.ToList(outboundRules), Optional.ToList(inboundNatRules), Optional.ToNullable(provisioningState), Optional.ToNullable(drainPeriodInSeconds), virtualNetwork, Optional.ToNullable(syncMode));
+            return new BackendAddressPoolData(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                location,
+                tunnelInterfaces ?? new ChangeTrackingList<GatewayLoadBalancerTunnelInterface>(),
+                loadBalancerBackendAddresses ?? new ChangeTrackingList<LoadBalancerBackendAddress>(),
+                backendIPConfigurations ?? new ChangeTrackingList<NetworkInterfaceIPConfigurationData>(),
+                loadBalancingRules ?? new ChangeTrackingList<WritableSubResource>(),
+                outboundRule,
+                outboundRules ?? new ChangeTrackingList<WritableSubResource>(),
+                inboundNatRules ?? new ChangeTrackingList<WritableSubResource>(),
+                provisioningState,
+                drainPeriodInSeconds,
+                virtualNetwork,
+                syncMode);
         }
 
         BinaryData IPersistableModel<BackendAddressPoolData>.Write(ModelReaderWriterOptions options)

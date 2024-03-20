@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> query = default;
-            Optional<IList<QueryUtterancesResult>> results = default;
+            string query = default;
+            IList<QueryUtterancesResult> results = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<QueryUtterancesResult> array = new List<QueryUtterancesResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QueryUtterancesResult.DeserializeQueryUtterancesResult(item));
+                        array.Add(QueryUtterancesResult.DeserializeQueryUtterancesResult(item, options));
                     }
                     results = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QueryUtterancesResults(query.Value, Optional.ToList(results), serializedAdditionalRawData);
+            return new QueryUtterancesResults(query, results ?? new ChangeTrackingList<QueryUtterancesResult>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QueryUtterancesResults>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PostgreSqlFlexibleServerLogFile>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<PostgreSqlFlexibleServerLogFile> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     List<PostgreSqlFlexibleServerLogFile> array = new List<PostgreSqlFlexibleServerLogFile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PostgreSqlFlexibleServerLogFile.DeserializePostgreSqlFlexibleServerLogFile(item));
+                        array.Add(PostgreSqlFlexibleServerLogFile.DeserializePostgreSqlFlexibleServerLogFile(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlFlexibleServerLogFileListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new PostgreSqlFlexibleServerLogFileListResult(value ?? new ChangeTrackingList<PostgreSqlFlexibleServerLogFile>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlFlexibleServerLogFileListResult>.Write(ModelReaderWriterOptions options)

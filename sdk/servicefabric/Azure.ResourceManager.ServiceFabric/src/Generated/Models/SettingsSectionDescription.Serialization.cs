@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceFabric;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     List<SettingsParameterDescription> array = new List<SettingsParameterDescription>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SettingsParameterDescription.DeserializeSettingsParameterDescription(item));
+                        array.Add(SettingsParameterDescription.DeserializeSettingsParameterDescription(item, options));
                     }
                     parameters = array;
                     continue;

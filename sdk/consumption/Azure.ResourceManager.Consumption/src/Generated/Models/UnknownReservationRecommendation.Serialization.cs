@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Consumption;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.Consumption.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownReservationRecommendation(document.RootElement, options);
+            return DeserializeConsumptionReservationRecommendation(document.RootElement, options);
         }
 
         internal static UnknownReservationRecommendation DeserializeUnknownReservationRecommendation(JsonElement element, ModelReaderWriterOptions options = null)
@@ -115,14 +116,14 @@ namespace Azure.ResourceManager.Consumption.Models
                 return null;
             }
             ReservationRecommendationKind kind = "Unknown";
-            Optional<ETag> etag = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
-            Optional<AzureLocation> location = default;
-            Optional<string> sku = default;
+            ETag? etag = default;
+            IReadOnlyDictionary<string, string> tags = default;
+            AzureLocation? location = default;
+            string sku = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -199,7 +200,17 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownReservationRecommendation(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), Optional.ToDictionary(tags), Optional.ToNullable(location), sku.Value, serializedAdditionalRawData);
+            return new UnknownReservationRecommendation(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                etag,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionReservationRecommendation>.Write(ModelReaderWriterOptions options)
@@ -224,7 +235,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownReservationRecommendation(document.RootElement, options);
+                        return DeserializeConsumptionReservationRecommendation(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ConsumptionReservationRecommendation)} does not support '{options.Format}' format.");

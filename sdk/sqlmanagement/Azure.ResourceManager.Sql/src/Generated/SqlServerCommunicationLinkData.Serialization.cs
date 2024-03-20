@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.Sql
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<string> kind = default;
+            AzureLocation? location = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> state = default;
-            Optional<string> partnerServer = default;
+            SystemData systemData = default;
+            string state = default;
+            string partnerServer = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -186,7 +186,16 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlServerCommunicationLinkData(id, name, type, systemData.Value, Optional.ToNullable(location), kind.Value, state.Value, partnerServer.Value, serializedAdditionalRawData);
+            return new SqlServerCommunicationLinkData(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                kind,
+                state,
+                partnerServer,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlServerCommunicationLinkData>.Write(ModelReaderWriterOptions options)

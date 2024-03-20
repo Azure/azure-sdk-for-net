@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -41,7 +42,7 @@ namespace Azure.AI.TextAnalytics.Models
             }
             string text = default;
             string category = default;
-            Optional<string> subcategory = default;
+            string subcategory = default;
             int offset = default;
             int length = default;
             double confidenceScore = default;
@@ -78,7 +79,13 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new Entity(text, category, subcategory.Value, offset, length, confidenceScore);
+            return new Entity(
+                text,
+                category,
+                subcategory,
+                offset,
+                length,
+                confidenceScore);
         }
     }
 }

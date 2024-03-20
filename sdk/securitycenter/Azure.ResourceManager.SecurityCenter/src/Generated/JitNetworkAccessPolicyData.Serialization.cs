@@ -121,15 +121,15 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 return null;
             }
-            Optional<string> kind = default;
-            Optional<AzureLocation> location = default;
+            string kind = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IList<JitNetworkAccessPolicyVirtualMachine> virtualMachines = default;
-            Optional<IList<JitNetworkAccessRequestInfo>> requests = default;
-            Optional<string> provisioningState = default;
+            IList<JitNetworkAccessRequestInfo> requests = default;
+            string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<JitNetworkAccessPolicyVirtualMachine> array = new List<JitNetworkAccessPolicyVirtualMachine>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JitNetworkAccessPolicyVirtualMachine.DeserializeJitNetworkAccessPolicyVirtualMachine(item));
+                                array.Add(JitNetworkAccessPolicyVirtualMachine.DeserializeJitNetworkAccessPolicyVirtualMachine(item, options));
                             }
                             virtualMachines = array;
                             continue;
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<JitNetworkAccessRequestInfo> array = new List<JitNetworkAccessRequestInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JitNetworkAccessRequestInfo.DeserializeJitNetworkAccessRequestInfo(item));
+                                array.Add(JitNetworkAccessRequestInfo.DeserializeJitNetworkAccessRequestInfo(item, options));
                             }
                             requests = array;
                             continue;
@@ -219,7 +219,17 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JitNetworkAccessPolicyData(id, name, type, systemData.Value, virtualMachines, Optional.ToList(requests), provisioningState.Value, kind.Value, Optional.ToNullable(location), serializedAdditionalRawData);
+            return new JitNetworkAccessPolicyData(
+                id,
+                name,
+                type,
+                systemData,
+                virtualMachines,
+                requests ?? new ChangeTrackingList<JitNetworkAccessRequestInfo>(),
+                provisioningState,
+                kind,
+                location,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JitNetworkAccessPolicyData>.Write(ModelReaderWriterOptions options)

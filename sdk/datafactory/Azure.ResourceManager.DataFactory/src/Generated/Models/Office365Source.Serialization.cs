@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -114,17 +115,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<IList<string>>> allowedGroups = default;
-            Optional<DataFactoryElement<string>> userScopeFilterUri = default;
-            Optional<DataFactoryElement<string>> dateFilterColumn = default;
-            Optional<DataFactoryElement<string>> startTime = default;
-            Optional<DataFactoryElement<string>> endTime = default;
-            Optional<DataFactoryElement<IList<Office365TableOutputColumn>>> outputColumns = default;
+            DataFactoryElement<IList<string>> allowedGroups = default;
+            DataFactoryElement<string> userScopeFilterUri = default;
+            DataFactoryElement<string> dateFilterColumn = default;
+            DataFactoryElement<string> startTime = default;
+            DataFactoryElement<string> endTime = default;
+            DataFactoryElement<IList<Office365TableOutputColumn>> outputColumns = default;
             string type = default;
-            Optional<DataFactoryElement<int>> sourceRetryCount = default;
-            Optional<DataFactoryElement<string>> sourceRetryWait = default;
-            Optional<DataFactoryElement<int>> maxConcurrentConnections = default;
-            Optional<DataFactoryElement<bool>> disableMetricsCollection = default;
+            DataFactoryElement<int> sourceRetryCount = default;
+            DataFactoryElement<string> sourceRetryWait = default;
+            DataFactoryElement<int> maxConcurrentConnections = default;
+            DataFactoryElement<bool> disableMetricsCollection = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -227,7 +228,19 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new Office365Source(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, allowedGroups.Value, userScopeFilterUri.Value, dateFilterColumn.Value, startTime.Value, endTime.Value, outputColumns.Value);
+            return new Office365Source(
+                type,
+                sourceRetryCount,
+                sourceRetryWait,
+                maxConcurrentConnections,
+                disableMetricsCollection,
+                additionalProperties,
+                allowedGroups,
+                userScopeFilterUri,
+                dateFilterColumn,
+                startTime,
+                endTime,
+                outputColumns);
         }
 
         BinaryData IPersistableModel<Office365Source>.Write(ModelReaderWriterOptions options)

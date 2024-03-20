@@ -112,10 +112,10 @@ namespace Azure.ResourceManager.Media
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<PresentationTimeRange> presentationTimeRange = default;
-            Optional<FirstQuality> firstQuality = default;
-            Optional<IList<FilterTrackSelection>> tracks = default;
+            SystemData systemData = default;
+            PresentationTimeRange presentationTimeRange = default;
+            FirstQuality firstQuality = default;
+            IList<FilterTrackSelection> tracks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Media
                             {
                                 continue;
                             }
-                            presentationTimeRange = PresentationTimeRange.DeserializePresentationTimeRange(property0.Value);
+                            presentationTimeRange = PresentationTimeRange.DeserializePresentationTimeRange(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("firstQuality"u8))
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Media
                             {
                                 continue;
                             }
-                            firstQuality = FirstQuality.DeserializeFirstQuality(property0.Value);
+                            firstQuality = FirstQuality.DeserializeFirstQuality(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("tracks"u8))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Media
                             List<FilterTrackSelection> array = new List<FilterTrackSelection>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FilterTrackSelection.DeserializeFilterTrackSelection(item));
+                                array.Add(FilterTrackSelection.DeserializeFilterTrackSelection(item, options));
                             }
                             tracks = array;
                             continue;
@@ -194,7 +194,15 @@ namespace Azure.ResourceManager.Media
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaAssetFilterData(id, name, type, systemData.Value, presentationTimeRange.Value, firstQuality.Value, Optional.ToList(tracks), serializedAdditionalRawData);
+            return new MediaAssetFilterData(
+                id,
+                name,
+                type,
+                systemData,
+                presentationTimeRange,
+                firstQuality,
+                tracks ?? new ChangeTrackingList<FilterTrackSelection>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MediaAssetFilterData>.Write(ModelReaderWriterOptions options)

@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DatabaseColumnData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<DatabaseColumnData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<DatabaseColumnData> array = new List<DatabaseColumnData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DatabaseColumnData.DeserializeDatabaseColumnData(item));
+                        array.Add(DatabaseColumnData.DeserializeDatabaseColumnData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatabaseColumnListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DatabaseColumnListResult(value ?? new ChangeTrackingList<DatabaseColumnData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatabaseColumnListResult>.Write(ModelReaderWriterOptions options)

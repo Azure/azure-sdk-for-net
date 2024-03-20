@@ -150,22 +150,22 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<WritableSubResource> frontendIPConfiguration = default;
-            Optional<NetworkInterfaceIPConfigurationData> backendIPConfiguration = default;
-            Optional<LoadBalancingTransportProtocol> protocol = default;
-            Optional<int> frontendPort = default;
-            Optional<int> backendPort = default;
-            Optional<int> idleTimeoutInMinutes = default;
-            Optional<bool> enableFloatingIP = default;
-            Optional<bool> enableTcpReset = default;
-            Optional<int> frontendPortRangeStart = default;
-            Optional<int> frontendPortRangeEnd = default;
-            Optional<WritableSubResource> backendAddressPool = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            WritableSubResource frontendIPConfiguration = default;
+            NetworkInterfaceIPConfigurationData backendIPConfiguration = default;
+            LoadBalancingTransportProtocol? protocol = default;
+            int? frontendPort = default;
+            int? backendPort = default;
+            int? idleTimeoutInMinutes = default;
+            bool? enableFloatingIP = default;
+            bool? enableTcpReset = default;
+            int? frontendPortRangeStart = default;
+            int? frontendPortRangeEnd = default;
+            WritableSubResource backendAddressPool = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            backendIPConfiguration = NetworkInterfaceIPConfigurationData.DeserializeNetworkInterfaceIPConfigurationData(property0.Value);
+                            backendIPConfiguration = NetworkInterfaceIPConfigurationData.DeserializeNetworkInterfaceIPConfigurationData(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("protocol"u8))
@@ -328,7 +328,24 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InboundNatRuleData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), frontendIPConfiguration, backendIPConfiguration.Value, Optional.ToNullable(protocol), Optional.ToNullable(frontendPort), Optional.ToNullable(backendPort), Optional.ToNullable(idleTimeoutInMinutes), Optional.ToNullable(enableFloatingIP), Optional.ToNullable(enableTcpReset), Optional.ToNullable(frontendPortRangeStart), Optional.ToNullable(frontendPortRangeEnd), backendAddressPool, Optional.ToNullable(provisioningState));
+            return new InboundNatRuleData(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                frontendIPConfiguration,
+                backendIPConfiguration,
+                protocol,
+                frontendPort,
+                backendPort,
+                idleTimeoutInMinutes,
+                enableFloatingIP,
+                enableTcpReset,
+                frontendPortRangeStart,
+                frontendPortRangeEnd,
+                backendAddressPool,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<InboundNatRuleData>.Write(ModelReaderWriterOptions options)

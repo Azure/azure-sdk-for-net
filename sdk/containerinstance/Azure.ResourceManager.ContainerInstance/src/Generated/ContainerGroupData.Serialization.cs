@@ -226,31 +226,31 @@ namespace Azure.ResourceManager.ContainerInstance
             {
                 return null;
             }
-            Optional<IList<string>> zones = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IList<string> zones = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> provisioningState = default;
+            SystemData systemData = default;
+            string provisioningState = default;
             IList<ContainerInstanceContainer> containers = default;
-            Optional<IList<ContainerGroupImageRegistryCredential>> imageRegistryCredentials = default;
-            Optional<ContainerGroupRestartPolicy> restartPolicy = default;
-            Optional<ContainerGroupIPAddress> ipAddress = default;
+            IList<ContainerGroupImageRegistryCredential> imageRegistryCredentials = default;
+            ContainerGroupRestartPolicy? restartPolicy = default;
+            ContainerGroupIPAddress ipAddress = default;
             ContainerInstanceOperatingSystemType osType = default;
-            Optional<IList<ContainerVolume>> volumes = default;
-            Optional<ContainerGroupInstanceView> instanceView = default;
-            Optional<ContainerGroupDiagnostics> diagnostics = default;
-            Optional<IList<ContainerGroupSubnetId>> subnetIds = default;
-            Optional<ContainerGroupDnsConfiguration> dnsConfig = default;
-            Optional<ContainerGroupSku> sku = default;
-            Optional<ContainerGroupEncryptionProperties> encryptionProperties = default;
-            Optional<IList<InitContainerDefinitionContent>> initContainers = default;
-            Optional<IList<DeploymentExtensionSpec>> extensions = default;
-            Optional<ConfidentialComputeProperties> confidentialComputeProperties = default;
-            Optional<ContainerGroupPriority> priority = default;
+            IList<ContainerVolume> volumes = default;
+            ContainerGroupInstanceView instanceView = default;
+            ContainerGroupDiagnostics diagnostics = default;
+            IList<ContainerGroupSubnetId> subnetIds = default;
+            ContainerGroupDnsConfiguration dnsConfig = default;
+            ContainerGroupSku? sku = default;
+            ContainerGroupEncryptionProperties encryptionProperties = default;
+            IList<InitContainerDefinitionContent> initContainers = default;
+            IList<DeploymentExtensionSpec> extensions = default;
+            ConfidentialComputeProperties confidentialComputeProperties = default;
+            ContainerGroupPriority? priority = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.ContainerInstance
                             List<ContainerInstanceContainer> array = new List<ContainerInstanceContainer>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContainerInstanceContainer.DeserializeContainerInstanceContainer(item));
+                                array.Add(ContainerInstanceContainer.DeserializeContainerInstanceContainer(item, options));
                             }
                             containers = array;
                             continue;
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.ContainerInstance
                             List<ContainerGroupImageRegistryCredential> array = new List<ContainerGroupImageRegistryCredential>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContainerGroupImageRegistryCredential.DeserializeContainerGroupImageRegistryCredential(item));
+                                array.Add(ContainerGroupImageRegistryCredential.DeserializeContainerGroupImageRegistryCredential(item, options));
                             }
                             imageRegistryCredentials = array;
                             continue;
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.ContainerInstance
                             {
                                 continue;
                             }
-                            ipAddress = ContainerGroupIPAddress.DeserializeContainerGroupIPAddress(property0.Value);
+                            ipAddress = ContainerGroupIPAddress.DeserializeContainerGroupIPAddress(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("osType"u8))
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.ContainerInstance
                             List<ContainerVolume> array = new List<ContainerVolume>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContainerVolume.DeserializeContainerVolume(item));
+                                array.Add(ContainerVolume.DeserializeContainerVolume(item, options));
                             }
                             volumes = array;
                             continue;
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.ContainerInstance
                             {
                                 continue;
                             }
-                            instanceView = ContainerGroupInstanceView.DeserializeContainerGroupInstanceView(property0.Value);
+                            instanceView = ContainerGroupInstanceView.DeserializeContainerGroupInstanceView(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("diagnostics"u8))
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.ContainerInstance
                             {
                                 continue;
                             }
-                            diagnostics = ContainerGroupDiagnostics.DeserializeContainerGroupDiagnostics(property0.Value);
+                            diagnostics = ContainerGroupDiagnostics.DeserializeContainerGroupDiagnostics(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("subnetIds"u8))
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.ContainerInstance
                             List<ContainerGroupSubnetId> array = new List<ContainerGroupSubnetId>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContainerGroupSubnetId.DeserializeContainerGroupSubnetId(item));
+                                array.Add(ContainerGroupSubnetId.DeserializeContainerGroupSubnetId(item, options));
                             }
                             subnetIds = array;
                             continue;
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.ContainerInstance
                             {
                                 continue;
                             }
-                            dnsConfig = ContainerGroupDnsConfiguration.DeserializeContainerGroupDnsConfiguration(property0.Value);
+                            dnsConfig = ContainerGroupDnsConfiguration.DeserializeContainerGroupDnsConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("sku"u8))
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.ContainerInstance
                             {
                                 continue;
                             }
-                            encryptionProperties = ContainerGroupEncryptionProperties.DeserializeContainerGroupEncryptionProperties(property0.Value);
+                            encryptionProperties = ContainerGroupEncryptionProperties.DeserializeContainerGroupEncryptionProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("initContainers"u8))
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.ContainerInstance
                             List<InitContainerDefinitionContent> array = new List<InitContainerDefinitionContent>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(InitContainerDefinitionContent.DeserializeInitContainerDefinitionContent(item));
+                                array.Add(InitContainerDefinitionContent.DeserializeInitContainerDefinitionContent(item, options));
                             }
                             initContainers = array;
                             continue;
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.ContainerInstance
                             List<DeploymentExtensionSpec> array = new List<DeploymentExtensionSpec>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeploymentExtensionSpec.DeserializeDeploymentExtensionSpec(item));
+                                array.Add(DeploymentExtensionSpec.DeserializeDeploymentExtensionSpec(item, options));
                             }
                             extensions = array;
                             continue;
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.ContainerInstance
                             {
                                 continue;
                             }
-                            confidentialComputeProperties = ConfidentialComputeProperties.DeserializeConfidentialComputeProperties(property0.Value);
+                            confidentialComputeProperties = ConfidentialComputeProperties.DeserializeConfidentialComputeProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("priority"u8))
@@ -510,7 +510,33 @@ namespace Azure.ResourceManager.ContainerInstance
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(zones), identity, provisioningState.Value, containers, Optional.ToList(imageRegistryCredentials), Optional.ToNullable(restartPolicy), ipAddress.Value, osType, Optional.ToList(volumes), instanceView.Value, diagnostics.Value, Optional.ToList(subnetIds), dnsConfig.Value, Optional.ToNullable(sku), encryptionProperties.Value, Optional.ToList(initContainers), Optional.ToList(extensions), confidentialComputeProperties.Value, Optional.ToNullable(priority), serializedAdditionalRawData);
+            return new ContainerGroupData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                zones ?? new ChangeTrackingList<string>(),
+                identity,
+                provisioningState,
+                containers,
+                imageRegistryCredentials ?? new ChangeTrackingList<ContainerGroupImageRegistryCredential>(),
+                restartPolicy,
+                ipAddress,
+                osType,
+                volumes ?? new ChangeTrackingList<ContainerVolume>(),
+                instanceView,
+                diagnostics,
+                subnetIds ?? new ChangeTrackingList<ContainerGroupSubnetId>(),
+                dnsConfig,
+                sku,
+                encryptionProperties,
+                initContainers ?? new ChangeTrackingList<InitContainerDefinitionContent>(),
+                extensions ?? new ChangeTrackingList<DeploymentExtensionSpec>(),
+                confidentialComputeProperties,
+                priority,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerGroupData>.Write(ModelReaderWriterOptions options)

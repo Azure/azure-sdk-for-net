@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Hci;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Hci.Models
@@ -128,15 +129,15 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<string> cloudManagementEndpoint = default;
-            Optional<Guid> aadClientId = default;
-            Optional<Guid> aadTenantId = default;
-            Optional<HciClusterDesiredProperties> desiredProperties = default;
-            Optional<Guid> principalId = default;
-            Optional<Guid> tenantId = default;
-            Optional<HciManagedServiceIdentityType> type = default;
-            Optional<IDictionary<string, UserAssignedIdentity>> userAssignedIdentities = default;
+            IDictionary<string, string> tags = default;
+            string cloudManagementEndpoint = default;
+            Guid? aadClientId = default;
+            Guid? aadTenantId = default;
+            HciClusterDesiredProperties desiredProperties = default;
+            Guid? principalId = default;
+            Guid? tenantId = default;
+            HciManagedServiceIdentityType? type = default;
+            IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -193,7 +194,7 @@ namespace Azure.ResourceManager.Hci.Models
                             {
                                 continue;
                             }
-                            desiredProperties = HciClusterDesiredProperties.DeserializeHciClusterDesiredProperties(property0.Value);
+                            desiredProperties = HciClusterDesiredProperties.DeserializeHciClusterDesiredProperties(property0.Value, options);
                             continue;
                         }
                     }
@@ -258,7 +259,17 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HciClusterPatch(Optional.ToDictionary(tags), cloudManagementEndpoint.Value, Optional.ToNullable(aadClientId), Optional.ToNullable(aadTenantId), desiredProperties.Value, Optional.ToNullable(principalId), Optional.ToNullable(tenantId), Optional.ToNullable(type), Optional.ToDictionary(userAssignedIdentities), serializedAdditionalRawData);
+            return new HciClusterPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                cloudManagementEndpoint,
+                aadClientId,
+                aadTenantId,
+                desiredProperties,
+                principalId,
+                tenantId,
+                type,
+                userAssignedIdentities ?? new ChangeTrackingDictionary<string, UserAssignedIdentity>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HciClusterPatch>.Write(ModelReaderWriterOptions options)

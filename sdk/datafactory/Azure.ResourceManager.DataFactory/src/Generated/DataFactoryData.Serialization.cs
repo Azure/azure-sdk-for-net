@@ -157,22 +157,22 @@ namespace Azure.ResourceManager.DataFactory
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<ETag> eTag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ManagedServiceIdentity identity = default;
+            ETag? eTag = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> provisioningState = default;
-            Optional<DateTimeOffset> createTime = default;
-            Optional<string> version = default;
-            Optional<DataFactoryPurviewConfiguration> purviewConfiguration = default;
-            Optional<FactoryRepoConfiguration> repoConfiguration = default;
-            Optional<IDictionary<string, DataFactoryGlobalParameterProperties>> globalParameters = default;
-            Optional<DataFactoryEncryptionConfiguration> encryption = default;
-            Optional<DataFactoryPublicNetworkAccess> publicNetworkAccess = default;
+            SystemData systemData = default;
+            string provisioningState = default;
+            DateTimeOffset? createTime = default;
+            string version = default;
+            DataFactoryPurviewConfiguration purviewConfiguration = default;
+            FactoryRepoConfiguration repoConfiguration = default;
+            IDictionary<string, DataFactoryGlobalParameterProperties> globalParameters = default;
+            DataFactoryEncryptionConfiguration encryption = default;
+            DataFactoryPublicNetworkAccess? publicNetworkAccess = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.DataFactory
                             {
                                 continue;
                             }
-                            purviewConfiguration = DataFactoryPurviewConfiguration.DeserializeDataFactoryPurviewConfiguration(property0.Value);
+                            purviewConfiguration = DataFactoryPurviewConfiguration.DeserializeDataFactoryPurviewConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("repoConfiguration"u8))
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.DataFactory
                             {
                                 continue;
                             }
-                            repoConfiguration = FactoryRepoConfiguration.DeserializeFactoryRepoConfiguration(property0.Value);
+                            repoConfiguration = FactoryRepoConfiguration.DeserializeFactoryRepoConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("globalParameters"u8))
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.DataFactory
                             Dictionary<string, DataFactoryGlobalParameterProperties> dictionary = new Dictionary<string, DataFactoryGlobalParameterProperties>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, DataFactoryGlobalParameterProperties.DeserializeDataFactoryGlobalParameterProperties(property1.Value));
+                                dictionary.Add(property1.Name, DataFactoryGlobalParameterProperties.DeserializeDataFactoryGlobalParameterProperties(property1.Value, options));
                             }
                             globalParameters = dictionary;
                             continue;
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.DataFactory
                             {
                                 continue;
                             }
-                            encryption = DataFactoryEncryptionConfiguration.DeserializeDataFactoryEncryptionConfiguration(property0.Value);
+                            encryption = DataFactoryEncryptionConfiguration.DeserializeDataFactoryEncryptionConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("publicNetworkAccess"u8))
@@ -323,7 +323,24 @@ namespace Azure.ResourceManager.DataFactory
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFactoryData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, provisioningState.Value, Optional.ToNullable(createTime), version.Value, purviewConfiguration.Value, repoConfiguration.Value, Optional.ToDictionary(globalParameters), encryption.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(eTag), additionalProperties);
+            return new DataFactoryData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                provisioningState,
+                createTime,
+                version,
+                purviewConfiguration,
+                repoConfiguration,
+                globalParameters ?? new ChangeTrackingDictionary<string, DataFactoryGlobalParameterProperties>(),
+                encryption,
+                publicNetworkAccess,
+                eTag,
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<DataFactoryData>.Write(ModelReaderWriterOptions options)

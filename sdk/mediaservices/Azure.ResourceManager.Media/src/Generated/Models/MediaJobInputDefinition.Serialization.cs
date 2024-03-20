@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -80,12 +81,12 @@ namespace Azure.ResourceManager.Media.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "#Microsoft.Media.FromAllInputFile": return FromAllInputFile.DeserializeFromAllInputFile(element);
-                    case "#Microsoft.Media.FromEachInputFile": return FromEachInputFile.DeserializeFromEachInputFile(element);
-                    case "#Microsoft.Media.InputFile": return MediaJobInputFile.DeserializeMediaJobInputFile(element);
+                    case "#Microsoft.Media.FromAllInputFile": return FromAllInputFile.DeserializeFromAllInputFile(element, options);
+                    case "#Microsoft.Media.FromEachInputFile": return FromEachInputFile.DeserializeFromEachInputFile(element, options);
+                    case "#Microsoft.Media.InputFile": return MediaJobInputFile.DeserializeMediaJobInputFile(element, options);
                 }
             }
-            return UnknownInputDefinition.DeserializeUnknownInputDefinition(element);
+            return UnknownInputDefinition.DeserializeUnknownInputDefinition(element, options);
         }
 
         BinaryData IPersistableModel<MediaJobInputDefinition>.Write(ModelReaderWriterOptions options)

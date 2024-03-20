@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ConnectedVMwarevSphere;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
@@ -114,16 +115,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             {
                 return null;
             }
-            Optional<string> templateId = default;
-            Optional<string> vCenterId = default;
-            Optional<string> moRefId = default;
-            Optional<string> inventoryItemId = default;
-            Optional<string> moName = default;
-            Optional<string> folderPath = default;
-            Optional<string> instanceUuid = default;
-            Optional<string> smbiosUuid = default;
-            Optional<VMwareFirmwareType> firmwareType = default;
-            Optional<string> customResourceName = default;
+            string templateId = default;
+            string vCenterId = default;
+            string moRefId = default;
+            string inventoryItemId = default;
+            string moName = default;
+            string folderPath = default;
+            string instanceUuid = default;
+            string smbiosUuid = default;
+            VMwareFirmwareType? firmwareType = default;
+            string customResourceName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -188,7 +189,18 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VCenterInfrastructureProfile(templateId.Value, vCenterId.Value, moRefId.Value, inventoryItemId.Value, moName.Value, folderPath.Value, instanceUuid.Value, smbiosUuid.Value, Optional.ToNullable(firmwareType), customResourceName.Value, serializedAdditionalRawData);
+            return new VCenterInfrastructureProfile(
+                templateId,
+                vCenterId,
+                moRefId,
+                inventoryItemId,
+                moName,
+                folderPath,
+                instanceUuid,
+                smbiosUuid,
+                firmwareType,
+                customResourceName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VCenterInfrastructureProfile>.Write(ModelReaderWriterOptions options)

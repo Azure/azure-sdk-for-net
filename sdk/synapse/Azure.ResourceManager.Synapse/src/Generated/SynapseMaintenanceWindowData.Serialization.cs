@@ -102,8 +102,8 @@ namespace Azure.ResourceManager.Synapse
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IList<SynapseMaintenanceWindowTimeRange>> timeRanges = default;
+            SystemData systemData = default;
+            IList<SynapseMaintenanceWindowTimeRange> timeRanges = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Synapse
                             List<SynapseMaintenanceWindowTimeRange> array = new List<SynapseMaintenanceWindowTimeRange>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SynapseMaintenanceWindowTimeRange.DeserializeSynapseMaintenanceWindowTimeRange(item));
+                                array.Add(SynapseMaintenanceWindowTimeRange.DeserializeSynapseMaintenanceWindowTimeRange(item, options));
                             }
                             timeRanges = array;
                             continue;
@@ -164,7 +164,13 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseMaintenanceWindowData(id, name, type, systemData.Value, Optional.ToList(timeRanges), serializedAdditionalRawData);
+            return new SynapseMaintenanceWindowData(
+                id,
+                name,
+                type,
+                systemData,
+                timeRanges ?? new ChangeTrackingList<SynapseMaintenanceWindowTimeRange>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseMaintenanceWindowData>.Write(ModelReaderWriterOptions options)

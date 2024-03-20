@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -109,14 +110,14 @@ namespace Azure.ResourceManager.Resources
             {
                 return null;
             }
-            Optional<ResourceGroupProperties> properties = default;
-            Optional<string> managedBy = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ResourceGroupProperties properties = default;
+            string managedBy = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,7 +128,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         continue;
                     }
-                    properties = ResourceGroupProperties.DeserializeResourceGroupProperties(property.Value);
+                    properties = ResourceGroupProperties.DeserializeResourceGroupProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("managedBy"u8))
@@ -184,7 +185,16 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value, managedBy.Value, serializedAdditionalRawData);
+            return new ResourceGroupData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                managedBy,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceGroupData>.Write(ModelReaderWriterOptions options)

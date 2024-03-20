@@ -238,38 +238,38 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Optional<ComputeSku> sku = default;
-            Optional<ComputePlan> plan = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IList<string>> zones = default;
-            Optional<ExtendedLocation> extendedLocation = default;
-            Optional<string> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ComputeSku sku = default;
+            ComputePlan plan = default;
+            ManagedServiceIdentity identity = default;
+            IList<string> zones = default;
+            ExtendedLocation extendedLocation = default;
+            string etag = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<VirtualMachineScaleSetUpgradePolicy> upgradePolicy = default;
-            Optional<AutomaticRepairsPolicy> automaticRepairsPolicy = default;
-            Optional<VirtualMachineScaleSetVmProfile> virtualMachineProfile = default;
-            Optional<string> provisioningState = default;
-            Optional<bool> overprovision = default;
-            Optional<bool> doNotRunExtensionsOnOverprovisionedVms = default;
-            Optional<string> uniqueId = default;
-            Optional<bool> singlePlacementGroup = default;
-            Optional<bool> zoneBalance = default;
-            Optional<int> platformFaultDomainCount = default;
-            Optional<WritableSubResource> proximityPlacementGroup = default;
-            Optional<WritableSubResource> hostGroup = default;
-            Optional<AdditionalCapabilities> additionalCapabilities = default;
-            Optional<ScaleInPolicy> scaleInPolicy = default;
-            Optional<OrchestrationMode> orchestrationMode = default;
-            Optional<SpotRestorePolicy> spotRestorePolicy = default;
-            Optional<VirtualMachineScaleSetPriorityMixPolicy> priorityMixPolicy = default;
-            Optional<DateTimeOffset> timeCreated = default;
-            Optional<bool> constrainedMaximumCapacity = default;
-            Optional<ResiliencyPolicy> resiliencyPolicy = default;
+            SystemData systemData = default;
+            VirtualMachineScaleSetUpgradePolicy upgradePolicy = default;
+            AutomaticRepairsPolicy automaticRepairsPolicy = default;
+            VirtualMachineScaleSetVmProfile virtualMachineProfile = default;
+            string provisioningState = default;
+            bool? overprovision = default;
+            bool? doNotRunExtensionsOnOverprovisionedVms = default;
+            string uniqueId = default;
+            bool? singlePlacementGroup = default;
+            bool? zoneBalance = default;
+            int? platformFaultDomainCount = default;
+            WritableSubResource proximityPlacementGroup = default;
+            WritableSubResource hostGroup = default;
+            AdditionalCapabilities additionalCapabilities = default;
+            ScaleInPolicy scaleInPolicy = default;
+            OrchestrationMode? orchestrationMode = default;
+            SpotRestorePolicy spotRestorePolicy = default;
+            VirtualMachineScaleSetPriorityMixPolicy priorityMixPolicy = default;
+            DateTimeOffset? timeCreated = default;
+            bool? constrainedMaximumCapacity = default;
+            ResiliencyPolicy resiliencyPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         continue;
                     }
-                    sku = ComputeSku.DeserializeComputeSku(property.Value);
+                    sku = ComputeSku.DeserializeComputeSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("plan"u8))
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         continue;
                     }
-                    plan = ComputePlan.DeserializeComputePlan(property.Value);
+                    plan = ComputePlan.DeserializeComputePlan(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            upgradePolicy = VirtualMachineScaleSetUpgradePolicy.DeserializeVirtualMachineScaleSetUpgradePolicy(property0.Value);
+                            upgradePolicy = VirtualMachineScaleSetUpgradePolicy.DeserializeVirtualMachineScaleSetUpgradePolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("automaticRepairsPolicy"u8))
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            automaticRepairsPolicy = AutomaticRepairsPolicy.DeserializeAutomaticRepairsPolicy(property0.Value);
+                            automaticRepairsPolicy = AutomaticRepairsPolicy.DeserializeAutomaticRepairsPolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("virtualMachineProfile"u8))
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            virtualMachineProfile = VirtualMachineScaleSetVmProfile.DeserializeVirtualMachineScaleSetVmProfile(property0.Value);
+                            virtualMachineProfile = VirtualMachineScaleSetVmProfile.DeserializeVirtualMachineScaleSetVmProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            additionalCapabilities = AdditionalCapabilities.DeserializeAdditionalCapabilities(property0.Value);
+                            additionalCapabilities = AdditionalCapabilities.DeserializeAdditionalCapabilities(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("scaleInPolicy"u8))
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            scaleInPolicy = ScaleInPolicy.DeserializeScaleInPolicy(property0.Value);
+                            scaleInPolicy = ScaleInPolicy.DeserializeScaleInPolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("orchestrationMode"u8))
@@ -514,7 +514,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            spotRestorePolicy = SpotRestorePolicy.DeserializeSpotRestorePolicy(property0.Value);
+                            spotRestorePolicy = SpotRestorePolicy.DeserializeSpotRestorePolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("priorityMixPolicy"u8))
@@ -523,7 +523,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            priorityMixPolicy = VirtualMachineScaleSetPriorityMixPolicy.DeserializeVirtualMachineScaleSetPriorityMixPolicy(property0.Value);
+                            priorityMixPolicy = VirtualMachineScaleSetPriorityMixPolicy.DeserializeVirtualMachineScaleSetPriorityMixPolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("timeCreated"u8))
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            resiliencyPolicy = ResiliencyPolicy.DeserializeResiliencyPolicy(property0.Value);
+                            resiliencyPolicy = ResiliencyPolicy.DeserializeResiliencyPolicy(property0.Value, options);
                             continue;
                         }
                     }
@@ -562,7 +562,40 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineScaleSetData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, plan.Value, identity, Optional.ToList(zones), extendedLocation, etag.Value, upgradePolicy.Value, automaticRepairsPolicy.Value, virtualMachineProfile.Value, provisioningState.Value, Optional.ToNullable(overprovision), Optional.ToNullable(doNotRunExtensionsOnOverprovisionedVms), uniqueId.Value, Optional.ToNullable(singlePlacementGroup), Optional.ToNullable(zoneBalance), Optional.ToNullable(platformFaultDomainCount), proximityPlacementGroup, hostGroup, additionalCapabilities.Value, scaleInPolicy.Value, Optional.ToNullable(orchestrationMode), spotRestorePolicy.Value, priorityMixPolicy.Value, Optional.ToNullable(timeCreated), Optional.ToNullable(constrainedMaximumCapacity), resiliencyPolicy.Value, serializedAdditionalRawData);
+            return new VirtualMachineScaleSetData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                plan,
+                identity,
+                zones ?? new ChangeTrackingList<string>(),
+                extendedLocation,
+                etag,
+                upgradePolicy,
+                automaticRepairsPolicy,
+                virtualMachineProfile,
+                provisioningState,
+                overprovision,
+                doNotRunExtensionsOnOverprovisionedVms,
+                uniqueId,
+                singlePlacementGroup,
+                zoneBalance,
+                platformFaultDomainCount,
+                proximityPlacementGroup,
+                hostGroup,
+                additionalCapabilities,
+                scaleInPolicy,
+                orchestrationMode,
+                spotRestorePolicy,
+                priorityMixPolicy,
+                timeCreated,
+                constrainedMaximumCapacity,
+                resiliencyPolicy,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineScaleSetData>.Write(ModelReaderWriterOptions options)

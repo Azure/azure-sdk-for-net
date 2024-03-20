@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
@@ -18,8 +17,8 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
             {
                 return null;
             }
-            Optional<DocumentFilterConjunctionGroupInfoTelemetryType> telemetryType = default;
-            Optional<FilterConjunctionGroupInfo> filters = default;
+            DocumentFilterConjunctionGroupInfoTelemetryType? telemetryType = default;
+            FilterConjunctionGroupInfo filters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("TelemetryType"u8))
@@ -41,7 +40,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                     continue;
                 }
             }
-            return new DocumentFilterConjunctionGroupInfo(Optional.ToNullable(telemetryType), filters.Value);
+            return new DocumentFilterConjunctionGroupInfo(telemetryType, filters);
         }
     }
 }

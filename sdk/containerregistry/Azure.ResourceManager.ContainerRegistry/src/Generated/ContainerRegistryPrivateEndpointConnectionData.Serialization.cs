@@ -108,10 +108,10 @@ namespace Azure.ResourceManager.ContainerRegistry
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<WritableSubResource> privateEndpoint = default;
-            Optional<ContainerRegistryPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
-            Optional<ContainerRegistryProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            WritableSubResource privateEndpoint = default;
+            ContainerRegistryPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            ContainerRegistryProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = ContainerRegistryPrivateLinkServiceConnectionState.DeserializeContainerRegistryPrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = ContainerRegistryPrivateLinkServiceConnectionState.DeserializeContainerRegistryPrivateLinkServiceConnectionState(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -185,7 +185,15 @@ namespace Azure.ResourceManager.ContainerRegistry
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryPrivateEndpointConnectionData(id, name, type, systemData.Value, privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new ContainerRegistryPrivateEndpointConnectionData(
+                id,
+                name,
+                type,
+                systemData,
+                privateEndpoint,
+                privateLinkServiceConnectionState,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options)

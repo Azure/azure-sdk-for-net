@@ -12,6 +12,7 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.StoragePool;
 
 namespace Azure.ResourceManager.StoragePool.Models
 {
@@ -152,25 +153,25 @@ namespace Azure.ResourceManager.StoragePool.Models
                 return null;
             }
             StoragePoolSku sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
-            Optional<string> managedBy = default;
-            Optional<IList<string>> managedByExtended = default;
+            string managedBy = default;
+            IList<string> managedByExtended = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IList<string>> availabilityZones = default;
-            Optional<IList<WritableSubResource>> disks = default;
+            SystemData systemData = default;
+            IList<string> availabilityZones = default;
+            IList<WritableSubResource> disks = default;
             ResourceIdentifier subnetId = default;
-            Optional<IList<string>> additionalCapabilities = default;
+            IList<string> additionalCapabilities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = StoragePoolSku.DeserializeStoragePoolSku(property.Value);
+                    sku = StoragePoolSku.DeserializeStoragePoolSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -300,7 +301,21 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiskPoolCreateOrUpdateContent(id, name, type, systemData.Value, sku, Optional.ToDictionary(tags), location, managedBy.Value, Optional.ToList(managedByExtended), Optional.ToList(availabilityZones), Optional.ToList(disks), subnetId, Optional.ToList(additionalCapabilities), serializedAdditionalRawData);
+            return new DiskPoolCreateOrUpdateContent(
+                id,
+                name,
+                type,
+                systemData,
+                sku,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                managedBy,
+                managedByExtended ?? new ChangeTrackingList<string>(),
+                availabilityZones ?? new ChangeTrackingList<string>(),
+                disks ?? new ChangeTrackingList<WritableSubResource>(),
+                subnetId,
+                additionalCapabilities ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiskPoolCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

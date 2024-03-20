@@ -109,11 +109,11 @@ namespace Azure.ResourceManager.ElasticSan
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             SnapshotCreationInfo creationData = default;
-            Optional<ElasticSanProvisioningState> provisioningState = default;
-            Optional<long> sourceVolumeSizeGiB = default;
-            Optional<string> volumeName = default;
+            ElasticSanProvisioningState? provisioningState = default;
+            long? sourceVolumeSizeGiB = default;
+            string volumeName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ElasticSan
                     {
                         if (property0.NameEquals("creationData"u8))
                         {
-                            creationData = SnapshotCreationInfo.DeserializeSnapshotCreationInfo(property0.Value);
+                            creationData = SnapshotCreationInfo.DeserializeSnapshotCreationInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -188,7 +188,16 @@ namespace Azure.ResourceManager.ElasticSan
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticSanSnapshotData(id, name, type, systemData.Value, creationData, Optional.ToNullable(provisioningState), Optional.ToNullable(sourceVolumeSizeGiB), volumeName.Value, serializedAdditionalRawData);
+            return new ElasticSanSnapshotData(
+                id,
+                name,
+                type,
+                systemData,
+                creationData,
+                provisioningState,
+                sourceVolumeSizeGiB,
+                volumeName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticSanSnapshotData>.Write(ModelReaderWriterOptions options)

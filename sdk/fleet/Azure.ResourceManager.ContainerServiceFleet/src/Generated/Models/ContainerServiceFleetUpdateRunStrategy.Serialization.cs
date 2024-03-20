@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerServiceFleet;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     List<ContainerServiceFleetUpdateStage> array = new List<ContainerServiceFleetUpdateStage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerServiceFleetUpdateStage.DeserializeContainerServiceFleetUpdateStage(item));
+                        array.Add(ContainerServiceFleetUpdateStage.DeserializeContainerServiceFleetUpdateStage(item, options));
                     }
                     stages = array;
                     continue;

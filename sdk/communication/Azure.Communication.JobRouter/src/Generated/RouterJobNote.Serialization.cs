@@ -73,7 +73,7 @@ namespace Azure.Communication.JobRouter
                 return null;
             }
             string message = default;
-            Optional<DateTimeOffset> addedAt = default;
+            DateTimeOffset? addedAt = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -98,7 +98,7 @@ namespace Azure.Communication.JobRouter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RouterJobNote(message, Optional.ToNullable(addedAt), serializedAdditionalRawData);
+            return new RouterJobNote(message, addedAt, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RouterJobNote>.Write(ModelReaderWriterOptions options)

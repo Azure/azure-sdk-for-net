@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -104,13 +105,13 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<AttachedNetworkConfiguration> attachedNetworkConfiguration = default;
-            Optional<BgpServiceLoadBalancerConfiguration> bgpServiceLoadBalancerConfiguration = default;
+            AttachedNetworkConfiguration attachedNetworkConfiguration = default;
+            BgpServiceLoadBalancerConfiguration bgpServiceLoadBalancerConfiguration = default;
             ResourceIdentifier cloudServicesNetworkId = default;
             ResourceIdentifier cniNetworkId = default;
-            Optional<IPAddress> dnsServiceIP = default;
-            Optional<IList<string>> podCidrs = default;
-            Optional<IList<string>> serviceCidrs = default;
+            IPAddress dnsServiceIP = default;
+            IList<string> podCidrs = default;
+            IList<string> serviceCidrs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    attachedNetworkConfiguration = AttachedNetworkConfiguration.DeserializeAttachedNetworkConfiguration(property.Value);
+                    attachedNetworkConfiguration = AttachedNetworkConfiguration.DeserializeAttachedNetworkConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("bgpServiceLoadBalancerConfiguration"u8))
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    bgpServiceLoadBalancerConfiguration = BgpServiceLoadBalancerConfiguration.DeserializeBgpServiceLoadBalancerConfiguration(property.Value);
+                    bgpServiceLoadBalancerConfiguration = BgpServiceLoadBalancerConfiguration.DeserializeBgpServiceLoadBalancerConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("cloudServicesNetworkId"u8))
@@ -186,7 +187,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesClusterNetworkConfiguration(attachedNetworkConfiguration.Value, bgpServiceLoadBalancerConfiguration.Value, cloudServicesNetworkId, cniNetworkId, dnsServiceIP.Value, Optional.ToList(podCidrs), Optional.ToList(serviceCidrs), serializedAdditionalRawData);
+            return new KubernetesClusterNetworkConfiguration(
+                attachedNetworkConfiguration,
+                bgpServiceLoadBalancerConfiguration,
+                cloudServicesNetworkId,
+                cniNetworkId,
+                dnsServiceIP,
+                podCidrs ?? new ChangeTrackingList<string>(),
+                serviceCidrs ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesClusterNetworkConfiguration>.Write(ModelReaderWriterOptions options)

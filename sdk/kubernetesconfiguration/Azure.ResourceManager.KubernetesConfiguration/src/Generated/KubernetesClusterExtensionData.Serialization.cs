@@ -254,27 +254,27 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<ArmPlan> plan = default;
+            ManagedServiceIdentity identity = default;
+            ArmPlan plan = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> extensionType = default;
-            Optional<bool> autoUpgradeMinorVersion = default;
-            Optional<string> releaseTrain = default;
-            Optional<string> version = default;
-            Optional<KubernetesClusterExtensionScope> scope = default;
-            Optional<IDictionary<string, string>> configurationSettings = default;
-            Optional<IDictionary<string, string>> configurationProtectedSettings = default;
-            Optional<string> currentVersion = default;
-            Optional<KubernetesConfigurationProvisioningState> provisioningState = default;
-            Optional<IList<KubernetesClusterExtensionStatus>> statuses = default;
-            Optional<ResponseError> errorInfo = default;
-            Optional<IReadOnlyDictionary<string, string>> customLocationSettings = default;
-            Optional<Uri> packageUri = default;
-            Optional<ManagedServiceIdentity> aksAssignedIdentity = default;
-            Optional<bool> isSystemExtension = default;
+            SystemData systemData = default;
+            string extensionType = default;
+            bool? autoUpgradeMinorVersion = default;
+            string releaseTrain = default;
+            string version = default;
+            KubernetesClusterExtensionScope scope = default;
+            IDictionary<string, string> configurationSettings = default;
+            IDictionary<string, string> configurationProtectedSettings = default;
+            string currentVersion = default;
+            KubernetesConfigurationProvisioningState? provisioningState = default;
+            IList<KubernetesClusterExtensionStatus> statuses = default;
+            ResponseError errorInfo = default;
+            IReadOnlyDictionary<string, string> customLocationSettings = default;
+            Uri packageUri = default;
+            ManagedServiceIdentity aksAssignedIdentity = default;
+            bool? isSystemExtension = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                             {
                                 continue;
                             }
-                            scope = KubernetesClusterExtensionScope.DeserializeKubernetesClusterExtensionScope(property0.Value);
+                            scope = KubernetesClusterExtensionScope.DeserializeKubernetesClusterExtensionScope(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("configurationSettings"u8))
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                             List<KubernetesClusterExtensionStatus> array = new List<KubernetesClusterExtensionStatus>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(KubernetesClusterExtensionStatus.DeserializeKubernetesClusterExtensionStatus(item));
+                                array.Add(KubernetesClusterExtensionStatus.DeserializeKubernetesClusterExtensionStatus(item, options));
                             }
                             statuses = array;
                             continue;
@@ -494,7 +494,29 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesClusterExtensionData(id, name, type, systemData.Value, identity, plan, extensionType.Value, Optional.ToNullable(autoUpgradeMinorVersion), releaseTrain.Value, version.Value, scope.Value, Optional.ToDictionary(configurationSettings), Optional.ToDictionary(configurationProtectedSettings), currentVersion.Value, Optional.ToNullable(provisioningState), Optional.ToList(statuses), errorInfo.Value, Optional.ToDictionary(customLocationSettings), packageUri.Value, aksAssignedIdentity, Optional.ToNullable(isSystemExtension), serializedAdditionalRawData);
+            return new KubernetesClusterExtensionData(
+                id,
+                name,
+                type,
+                systemData,
+                identity,
+                plan,
+                extensionType,
+                autoUpgradeMinorVersion,
+                releaseTrain,
+                version,
+                scope,
+                configurationSettings ?? new ChangeTrackingDictionary<string, string>(),
+                configurationProtectedSettings ?? new ChangeTrackingDictionary<string, string>(),
+                currentVersion,
+                provisioningState,
+                statuses ?? new ChangeTrackingList<KubernetesClusterExtensionStatus>(),
+                errorInfo,
+                customLocationSettings ?? new ChangeTrackingDictionary<string, string>(),
+                packageUri,
+                aksAssignedIdentity,
+                isSystemExtension,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesClusterExtensionData>.Write(ModelReaderWriterOptions options)

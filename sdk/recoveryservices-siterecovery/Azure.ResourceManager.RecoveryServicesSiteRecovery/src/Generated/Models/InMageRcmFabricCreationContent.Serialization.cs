@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("sourceAgentIdentity"u8))
                 {
-                    sourceAgentIdentity = IdentityProviderContent.DeserializeIdentityProviderContent(property.Value);
+                    sourceAgentIdentity = IdentityProviderContent.DeserializeIdentityProviderContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("instanceType"u8))

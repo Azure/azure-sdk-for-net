@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -135,12 +136,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "SqlDb": return DatabaseMigrationSqlDBProperties.DeserializeDatabaseMigrationSqlDBProperties(element);
-                    case "SqlVm": return DatabaseMigrationSqlVmProperties.DeserializeDatabaseMigrationSqlVmProperties(element);
-                    case "SqlMi": return DatabaseMigrationSqlMIProperties.DeserializeDatabaseMigrationSqlMIProperties(element);
+                    case "SqlDb": return DatabaseMigrationSqlDBProperties.DeserializeDatabaseMigrationSqlDBProperties(element, options);
+                    case "SqlMi": return DatabaseMigrationSqlMIProperties.DeserializeDatabaseMigrationSqlMIProperties(element, options);
+                    case "SqlVm": return DatabaseMigrationSqlVmProperties.DeserializeDatabaseMigrationSqlVmProperties(element, options);
                 }
             }
-            return UnknownDatabaseMigrationProperties.DeserializeUnknownDatabaseMigrationProperties(element);
+            return UnknownDatabaseMigrationProperties.DeserializeUnknownDatabaseMigrationProperties(element, options);
         }
 
         BinaryData IPersistableModel<DatabaseMigrationProperties>.Write(ModelReaderWriterOptions options)

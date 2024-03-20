@@ -125,6 +125,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Authorized Party Application ID &apos;{0}&apos; from token does match Authentication Event Trigger configuration AuthorizedPartyAppId &apos;{1}&apos;..
+        /// </summary>
+        internal static string Ex_Invalid_AuthorizedPartyApplicationId {
+            get {
+                return ResourceManager.GetString("Ex_Invalid_AuthorizedPartyApplicationId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid event type..
         /// </summary>
         internal static string Ex_Invalid_Event {
@@ -188,6 +197,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Not able to retrive Open ID Configuration with configured Authority URL &apos;{0}&apos;. Please verify Authority URL..
+        /// </summary>
+        internal static string Ex_Invalid_OIDC {
+            get {
+                return ResourceManager.GetString("Ex_Invalid_OIDC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Response validation failed, see inner exceptions..
         /// </summary>
         internal static string Ex_Invalid_Response {
@@ -211,6 +229,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents {
         internal static string Ex_Invalid_SchemaVersion {
             get {
                 return ResourceManager.GetString("Ex_Invalid_SchemaVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No Access Token in request found..
+        /// </summary>
+        internal static string Ex_No_AccessToken {
+            get {
+                return ResourceManager.GetString("Ex_No_AccessToken", resourceCulture);
             }
         }
         
@@ -323,11 +350,29 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please supply both the TenantId and AudienceAppId in variables in your binding configuration. (Or app settings {0} and {1}).
+        ///   Looks up a localized string similar to Please supply the ApplicationId {0} in variables in your binding configuration..
         /// </summary>
-        internal static string Ex_Trigger_Required_Attrs {
+        internal static string Ex_Trigger_ApplicationId_Required {
             get {
-                return ResourceManager.GetString("Ex_Trigger_Required_Attrs", resourceCulture);
+                return ResourceManager.GetString("Ex_Trigger_ApplicationId_Required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please supply the Authority URL {0} in variables in your binding configuration..
+        /// </summary>
+        internal static string Ex_Trigger_AuthorityUrl_Required {
+            get {
+                return ResourceManager.GetString("Ex_Trigger_AuthorityUrl_Required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please supply the AuthorizedPartyApplicationId {0} in variables in your binding configuration..
+        /// </summary>
+        internal static string Ex_Trigger_AuthorizedPartyApplicationId_Required {
+            get {
+                return ResourceManager.GetString("Ex_Trigger_AuthorizedPartyApplicationId_Required", resourceCulture);
             }
         }
         

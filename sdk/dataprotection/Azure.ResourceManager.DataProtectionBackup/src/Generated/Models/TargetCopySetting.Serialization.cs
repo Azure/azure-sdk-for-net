@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -76,12 +77,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 if (property.NameEquals("copyAfter"u8))
                 {
-                    copyAfter = DataProtectionBackupCopySetting.DeserializeDataProtectionBackupCopySetting(property.Value);
+                    copyAfter = DataProtectionBackupCopySetting.DeserializeDataProtectionBackupCopySetting(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dataStore"u8))
                 {
-                    dataStore = DataStoreInfoBase.DeserializeDataStoreInfoBase(property.Value);
+                    dataStore = DataStoreInfoBase.DeserializeDataStoreInfoBase(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppPlatform;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> primaryKey = default;
-            Optional<string> secondaryKey = default;
-            Optional<string> primaryTestEndpoint = default;
-            Optional<string> secondaryTestEndpoint = default;
-            Optional<bool> enabled = default;
+            string primaryKey = default;
+            string secondaryKey = default;
+            string primaryTestEndpoint = default;
+            string secondaryTestEndpoint = default;
+            bool? enabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +134,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformServiceTestKeys(primaryKey.Value, secondaryKey.Value, primaryTestEndpoint.Value, secondaryTestEndpoint.Value, Optional.ToNullable(enabled), serializedAdditionalRawData);
+            return new AppPlatformServiceTestKeys(
+                primaryKey,
+                secondaryKey,
+                primaryTestEndpoint,
+                secondaryTestEndpoint,
+                enabled,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformServiceTestKeys>.Write(ModelReaderWriterOptions options)

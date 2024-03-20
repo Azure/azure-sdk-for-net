@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<ContainerServiceSshPublicKey> array = new List<ContainerServiceSshPublicKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerServiceSshPublicKey.DeserializeContainerServiceSshPublicKey(item));
+                        array.Add(ContainerServiceSshPublicKey.DeserializeContainerServiceSshPublicKey(item, options));
                     }
                     publicKeys = array;
                     continue;

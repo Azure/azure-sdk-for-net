@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -60,7 +61,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownCodec(document.RootElement, options);
+            return DeserializeMediaCodecBase(document.RootElement, options);
         }
 
         internal static UnknownCodec DeserializeUnknownCodec(JsonElement element, ModelReaderWriterOptions options = null)
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.Media.Models
                 return null;
             }
             string odataType = "Unknown";
-            Optional<string> label = default;
+            string label = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownCodec(odataType, label.Value, serializedAdditionalRawData);
+            return new UnknownCodec(odataType, label, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MediaCodecBase>.Write(ModelReaderWriterOptions options)
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownCodec(document.RootElement, options);
+                        return DeserializeMediaCodecBase(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(MediaCodecBase)} does not support '{options.Format}' format.");

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CostManagement;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CostManagement.Models
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownBenefitUtilizationSummary(document.RootElement, options);
+            return DeserializeBenefitUtilizationSummary(document.RootElement, options);
         }
 
         internal static UnknownBenefitUtilizationSummary DeserializeUnknownBenefitUtilizationSummary(JsonElement element, ModelReaderWriterOptions options = null)
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -131,7 +132,13 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownBenefitUtilizationSummary(id, name, type, systemData.Value, kind, serializedAdditionalRawData);
+            return new UnknownBenefitUtilizationSummary(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BenefitUtilizationSummary>.Write(ModelReaderWriterOptions options)
@@ -156,7 +163,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownBenefitUtilizationSummary(document.RootElement, options);
+                        return DeserializeBenefitUtilizationSummary(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(BenefitUtilizationSummary)} does not support '{options.Format}' format.");

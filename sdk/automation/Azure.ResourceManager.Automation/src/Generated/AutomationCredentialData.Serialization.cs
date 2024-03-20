@@ -111,11 +111,11 @@ namespace Azure.ResourceManager.Automation
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> userName = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<string> description = default;
+            SystemData systemData = default;
+            string userName = default;
+            DateTimeOffset? creationTime = default;
+            DateTimeOffset? lastModifiedTime = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -190,7 +190,16 @@ namespace Azure.ResourceManager.Automation
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationCredentialData(id, name, type, systemData.Value, userName.Value, Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), description.Value, serializedAdditionalRawData);
+            return new AutomationCredentialData(
+                id,
+                name,
+                type,
+                systemData,
+                userName,
+                creationTime,
+                lastModifiedTime,
+                description,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationCredentialData>.Write(ModelReaderWriterOptions options)

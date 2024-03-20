@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.HybridContainerService
             {
                 return null;
             }
-            Optional<HybridContainerServiceVirtualNetworkProperties> properties = default;
-            Optional<HybridContainerServiceExtendedLocation> extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            HybridContainerServiceVirtualNetworkProperties properties = default;
+            HybridContainerServiceExtendedLocation extendedLocation = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.HybridContainerService
                     {
                         continue;
                     }
-                    properties = HybridContainerServiceVirtualNetworkProperties.DeserializeHybridContainerServiceVirtualNetworkProperties(property.Value);
+                    properties = HybridContainerServiceVirtualNetworkProperties.DeserializeHybridContainerServiceVirtualNetworkProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("extendedLocation"u8))
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.HybridContainerService
                     {
                         continue;
                     }
-                    extendedLocation = HybridContainerServiceExtendedLocation.DeserializeHybridContainerServiceExtendedLocation(property.Value);
+                    extendedLocation = HybridContainerServiceExtendedLocation.DeserializeHybridContainerServiceExtendedLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -188,7 +188,16 @@ namespace Azure.ResourceManager.HybridContainerService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridContainerServiceVirtualNetworkData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value, extendedLocation.Value, serializedAdditionalRawData);
+            return new HybridContainerServiceVirtualNetworkData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                extendedLocation,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridContainerServiceVirtualNetworkData>.Write(ModelReaderWriterOptions options)

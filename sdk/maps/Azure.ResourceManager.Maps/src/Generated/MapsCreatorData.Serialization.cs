@@ -102,19 +102,19 @@ namespace Azure.ResourceManager.Maps
                 return null;
             }
             MapsCreatorProperties properties = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = MapsCreatorProperties.DeserializeMapsCreatorProperties(property.Value);
+                    properties = MapsCreatorProperties.DeserializeMapsCreatorProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -166,7 +166,15 @@ namespace Azure.ResourceManager.Maps
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MapsCreatorData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties, serializedAdditionalRawData);
+            return new MapsCreatorData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MapsCreatorData>.Write(ModelReaderWriterOptions options)

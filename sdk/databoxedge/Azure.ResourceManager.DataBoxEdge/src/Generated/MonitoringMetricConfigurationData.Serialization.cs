@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IList<DataBoxEdgeMetricConfiguration> metricConfigurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                             List<DataBoxEdgeMetricConfiguration> array = new List<DataBoxEdgeMetricConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataBoxEdgeMetricConfiguration.DeserializeDataBoxEdgeMetricConfiguration(item));
+                                array.Add(DataBoxEdgeMetricConfiguration.DeserializeDataBoxEdgeMetricConfiguration(item, options));
                             }
                             metricConfigurations = array;
                             continue;
@@ -157,7 +157,13 @@ namespace Azure.ResourceManager.DataBoxEdge
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitoringMetricConfigurationData(id, name, type, systemData.Value, metricConfigurations, serializedAdditionalRawData);
+            return new MonitoringMetricConfigurationData(
+                id,
+                name,
+                type,
+                systemData,
+                metricConfigurations,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitoringMetricConfigurationData>.Write(ModelReaderWriterOptions options)

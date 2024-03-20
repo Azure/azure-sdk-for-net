@@ -122,16 +122,16 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<RollingUpgradePolicy> policy = default;
-            Optional<RollingUpgradeRunningStatus> runningStatus = default;
-            Optional<RollingUpgradeProgressInfo> progress = default;
-            Optional<ComputeApiError> error = default;
+            SystemData systemData = default;
+            RollingUpgradePolicy policy = default;
+            RollingUpgradeRunningStatus runningStatus = default;
+            RollingUpgradeProgressInfo progress = default;
+            ComputeApiError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            policy = RollingUpgradePolicy.DeserializeRollingUpgradePolicy(property0.Value);
+                            policy = RollingUpgradePolicy.DeserializeRollingUpgradePolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("runningStatus"u8))
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            runningStatus = RollingUpgradeRunningStatus.DeserializeRollingUpgradeRunningStatus(property0.Value);
+                            runningStatus = RollingUpgradeRunningStatus.DeserializeRollingUpgradeRunningStatus(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("progress"u8))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            progress = RollingUpgradeProgressInfo.DeserializeRollingUpgradeProgressInfo(property0.Value);
+                            progress = RollingUpgradeProgressInfo.DeserializeRollingUpgradeProgressInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("error"u8))
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            error = ComputeApiError.DeserializeComputeApiError(property0.Value);
+                            error = ComputeApiError.DeserializeComputeApiError(property0.Value, options);
                             continue;
                         }
                     }
@@ -233,7 +233,18 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineScaleSetRollingUpgradeData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, policy.Value, runningStatus.Value, progress.Value, error.Value, serializedAdditionalRawData);
+            return new VirtualMachineScaleSetRollingUpgradeData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                policy,
+                runningStatus,
+                progress,
+                error,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineScaleSetRollingUpgradeData>.Write(ModelReaderWriterOptions options)

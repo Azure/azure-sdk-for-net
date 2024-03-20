@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Consumption;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.Consumption.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownUsageDetail(document.RootElement, options);
+            return DeserializeConsumptionUsageDetail(document.RootElement, options);
         }
 
         internal static UnknownUsageDetail DeserializeUnknownUsageDetail(JsonElement element, ModelReaderWriterOptions options = null)
@@ -105,12 +106,12 @@ namespace Azure.ResourceManager.Consumption.Models
                 return null;
             }
             UsageDetailsKind kind = "Unknown";
-            Optional<ETag> etag = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            ETag? etag = default;
+            IReadOnlyDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -173,7 +174,15 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownUsageDetail(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new UnknownUsageDetail(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                etag,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionUsageDetail>.Write(ModelReaderWriterOptions options)
@@ -198,7 +207,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownUsageDetail(document.RootElement, options);
+                        return DeserializeConsumptionUsageDetail(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ConsumptionUsageDetail)} does not support '{options.Format}' format.");

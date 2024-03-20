@@ -246,35 +246,35 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<string> kind = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<WritableSubResource> virtualWan = default;
-            Optional<WritableSubResource> vpnGateway = default;
-            Optional<WritableSubResource> p2sVpnGateway = default;
-            Optional<WritableSubResource> expressRouteGateway = default;
-            Optional<WritableSubResource> azureFirewall = default;
-            Optional<WritableSubResource> securityPartnerProvider = default;
-            Optional<string> addressPrefix = default;
-            Optional<VirtualHubRouteTable> routeTable = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<string> securityProviderName = default;
-            Optional<IList<VirtualHubRouteTableV2Data>> virtualHubRouteTableV2s = default;
-            Optional<string> sku = default;
-            Optional<RoutingState> routingState = default;
-            Optional<IReadOnlyList<WritableSubResource>> bgpConnections = default;
-            Optional<IReadOnlyList<WritableSubResource>> ipConfigurations = default;
-            Optional<IReadOnlyList<WritableSubResource>> routeMaps = default;
-            Optional<long> virtualRouterAsn = default;
-            Optional<IList<string>> virtualRouterIPs = default;
-            Optional<bool> allowBranchToBranchTraffic = default;
-            Optional<PreferredRoutingGateway> preferredRoutingGateway = default;
-            Optional<HubRoutingPreference> hubRoutingPreference = default;
-            Optional<VirtualRouterAutoScaleConfiguration> virtualRouterAutoScaleConfiguration = default;
+            ETag? etag = default;
+            string kind = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
+            IDictionary<string, string> tags = default;
+            WritableSubResource virtualWan = default;
+            WritableSubResource vpnGateway = default;
+            WritableSubResource p2sVpnGateway = default;
+            WritableSubResource expressRouteGateway = default;
+            WritableSubResource azureFirewall = default;
+            WritableSubResource securityPartnerProvider = default;
+            string addressPrefix = default;
+            VirtualHubRouteTable routeTable = default;
+            NetworkProvisioningState? provisioningState = default;
+            string securityProviderName = default;
+            IList<VirtualHubRouteTableV2Data> virtualHubRouteTableV2s = default;
+            string sku = default;
+            RoutingState? routingState = default;
+            IReadOnlyList<WritableSubResource> bgpConnections = default;
+            IReadOnlyList<WritableSubResource> ipConfigurations = default;
+            IReadOnlyList<WritableSubResource> routeMaps = default;
+            long? virtualRouterAsn = default;
+            IList<string> virtualRouterIPs = default;
+            bool? allowBranchToBranchTraffic = default;
+            PreferredRoutingGateway? preferredRoutingGateway = default;
+            HubRoutingPreference? hubRoutingPreference = default;
+            VirtualRouterAutoScaleConfiguration virtualRouterAutoScaleConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            routeTable = VirtualHubRouteTable.DeserializeVirtualHubRouteTable(property0.Value);
+                            routeTable = VirtualHubRouteTable.DeserializeVirtualHubRouteTable(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.Network
                             List<VirtualHubRouteTableV2Data> array = new List<VirtualHubRouteTableV2Data>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VirtualHubRouteTableV2Data.DeserializeVirtualHubRouteTableV2Data(item));
+                                array.Add(VirtualHubRouteTableV2Data.DeserializeVirtualHubRouteTableV2Data(item, options));
                             }
                             virtualHubRouteTableV2s = array;
                             continue;
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            virtualRouterAutoScaleConfiguration = VirtualRouterAutoScaleConfiguration.DeserializeVirtualRouterAutoScaleConfiguration(property0.Value);
+                            virtualRouterAutoScaleConfiguration = VirtualRouterAutoScaleConfiguration.DeserializeVirtualRouterAutoScaleConfiguration(property0.Value, options);
                             continue;
                         }
                     }
@@ -568,7 +568,37 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualHubData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(etag), kind.Value, virtualWan, vpnGateway, p2sVpnGateway, expressRouteGateway, azureFirewall, securityPartnerProvider, addressPrefix.Value, routeTable.Value, Optional.ToNullable(provisioningState), securityProviderName.Value, Optional.ToList(virtualHubRouteTableV2s), sku.Value, Optional.ToNullable(routingState), Optional.ToList(bgpConnections), Optional.ToList(ipConfigurations), Optional.ToList(routeMaps), Optional.ToNullable(virtualRouterAsn), Optional.ToList(virtualRouterIPs), Optional.ToNullable(allowBranchToBranchTraffic), Optional.ToNullable(preferredRoutingGateway), Optional.ToNullable(hubRoutingPreference), virtualRouterAutoScaleConfiguration.Value);
+            return new VirtualHubData(
+                id,
+                name,
+                type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                etag,
+                kind,
+                virtualWan,
+                vpnGateway,
+                p2sVpnGateway,
+                expressRouteGateway,
+                azureFirewall,
+                securityPartnerProvider,
+                addressPrefix,
+                routeTable,
+                provisioningState,
+                securityProviderName,
+                virtualHubRouteTableV2s ?? new ChangeTrackingList<VirtualHubRouteTableV2Data>(),
+                sku,
+                routingState,
+                bgpConnections ?? new ChangeTrackingList<WritableSubResource>(),
+                ipConfigurations ?? new ChangeTrackingList<WritableSubResource>(),
+                routeMaps ?? new ChangeTrackingList<WritableSubResource>(),
+                virtualRouterAsn,
+                virtualRouterIPs ?? new ChangeTrackingList<string>(),
+                allowBranchToBranchTraffic,
+                preferredRoutingGateway,
+                hubRoutingPreference,
+                virtualRouterAutoScaleConfiguration);
         }
 
         BinaryData IPersistableModel<VirtualHubData>.Write(ModelReaderWriterOptions options)

@@ -75,7 +75,7 @@ namespace Azure.AI.OpenAI
                 return null;
             }
             DateTimeOffset created = default;
-            IList<ImageGenerationData> data = default;
+            IReadOnlyList<ImageGenerationData> data = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -90,7 +90,7 @@ namespace Azure.AI.OpenAI
                     List<ImageGenerationData> array = new List<ImageGenerationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ImageGenerationData.DeserializeImageGenerationData(item));
+                        array.Add(ImageGenerationData.DeserializeImageGenerationData(item, options));
                     }
                     data = array;
                     continue;

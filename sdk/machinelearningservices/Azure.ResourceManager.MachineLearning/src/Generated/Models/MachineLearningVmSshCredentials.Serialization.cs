@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> username = default;
-            Optional<string> password = default;
-            Optional<string> publicKeyData = default;
-            Optional<string> privateKeyData = default;
+            string username = default;
+            string password = default;
+            string publicKeyData = default;
+            string privateKeyData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningVmSshCredentials(username.Value, password.Value, publicKeyData.Value, privateKeyData.Value, serializedAdditionalRawData);
+            return new MachineLearningVmSshCredentials(username, password, publicKeyData, privateKeyData, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningVmSshCredentials>.Write(ModelReaderWriterOptions options)

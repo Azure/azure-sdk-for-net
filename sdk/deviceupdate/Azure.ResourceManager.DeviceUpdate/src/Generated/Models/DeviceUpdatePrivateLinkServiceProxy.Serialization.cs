@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DeviceUpdate;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DeviceUpdate.Models
@@ -90,10 +91,10 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<DeviceUpdatePrivateLinkServiceConnectionState> remotePrivateLinkServiceConnectionState = default;
-            Optional<SubResource> remotePrivateEndpointConnection = default;
-            Optional<IList<GroupConnectivityInformation>> groupConnectivityInformation = default;
+            ResourceIdentifier id = default;
+            DeviceUpdatePrivateLinkServiceConnectionState remotePrivateLinkServiceConnectionState = default;
+            SubResource remotePrivateEndpointConnection = default;
+            IList<GroupConnectivityInformation> groupConnectivityInformation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                     {
                         continue;
                     }
-                    remotePrivateLinkServiceConnectionState = DeviceUpdatePrivateLinkServiceConnectionState.DeserializeDeviceUpdatePrivateLinkServiceConnectionState(property.Value);
+                    remotePrivateLinkServiceConnectionState = DeviceUpdatePrivateLinkServiceConnectionState.DeserializeDeviceUpdatePrivateLinkServiceConnectionState(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("remotePrivateEndpointConnection"u8))
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                     List<GroupConnectivityInformation> array = new List<GroupConnectivityInformation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.GroupConnectivityInformation.DeserializeGroupConnectivityInformation(item));
+                        array.Add(Models.GroupConnectivityInformation.DeserializeGroupConnectivityInformation(item, options));
                     }
                     groupConnectivityInformation = array;
                     continue;
@@ -145,7 +146,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeviceUpdatePrivateLinkServiceProxy(id.Value, remotePrivateLinkServiceConnectionState.Value, remotePrivateEndpointConnection, Optional.ToList(groupConnectivityInformation), serializedAdditionalRawData);
+            return new DeviceUpdatePrivateLinkServiceProxy(id, remotePrivateLinkServiceConnectionState, remotePrivateEndpointConnection, groupConnectivityInformation ?? new ChangeTrackingList<GroupConnectivityInformation>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeviceUpdatePrivateLinkServiceProxy>.Write(ModelReaderWriterOptions options)

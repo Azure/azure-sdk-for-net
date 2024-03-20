@@ -183,35 +183,35 @@ namespace Azure.ResourceManager.DataBox
                 return null;
             }
             DataBoxSku sku = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             DataBoxJobTransferType transferType = default;
-            Optional<bool> isCancellable = default;
-            Optional<bool> isDeletable = default;
-            Optional<bool> isShippingAddressEditable = default;
-            Optional<ReverseShippingDetailsEditStatus> reverseShippingDetailsUpdate = default;
-            Optional<ReverseTransportPreferenceEditStatus> reverseTransportPreferenceUpdate = default;
-            Optional<bool> isPrepareToShipEnabled = default;
-            Optional<DataBoxStageName> status = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<ResponseError> error = default;
-            Optional<DataBoxBasicJobDetails> details = default;
-            Optional<string> cancellationReason = default;
-            Optional<JobDeliveryType> deliveryType = default;
-            Optional<JobDeliveryInfo> deliveryInfo = default;
-            Optional<bool> isCancellableWithoutFee = default;
+            bool? isCancellable = default;
+            bool? isDeletable = default;
+            bool? isShippingAddressEditable = default;
+            ReverseShippingDetailsEditStatus? reverseShippingDetailsUpdate = default;
+            ReverseTransportPreferenceEditStatus? reverseTransportPreferenceUpdate = default;
+            bool? isPrepareToShipEnabled = default;
+            DataBoxStageName? status = default;
+            DateTimeOffset? startTime = default;
+            ResponseError error = default;
+            DataBoxBasicJobDetails details = default;
+            string cancellationReason = default;
+            JobDeliveryType? deliveryType = default;
+            JobDeliveryInfo deliveryInfo = default;
+            bool? isCancellableWithoutFee = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = DataBoxSku.DeserializeDataBoxSku(property.Value);
+                    sku = DataBoxSku.DeserializeDataBoxSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.DataBox
                             {
                                 continue;
                             }
-                            details = DataBoxBasicJobDetails.DeserializeDataBoxBasicJobDetails(property0.Value);
+                            details = DataBoxBasicJobDetails.DeserializeDataBoxBasicJobDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("cancellationReason"u8))
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.DataBox
                             {
                                 continue;
                             }
-                            deliveryInfo = JobDeliveryInfo.DeserializeJobDeliveryInfo(property0.Value);
+                            deliveryInfo = JobDeliveryInfo.DeserializeJobDeliveryInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("isCancellableWithoutFee"u8))
@@ -411,7 +411,31 @@ namespace Azure.ResourceManager.DataBox
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxJobData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, transferType, Optional.ToNullable(isCancellable), Optional.ToNullable(isDeletable), Optional.ToNullable(isShippingAddressEditable), Optional.ToNullable(reverseShippingDetailsUpdate), Optional.ToNullable(reverseTransportPreferenceUpdate), Optional.ToNullable(isPrepareToShipEnabled), Optional.ToNullable(status), Optional.ToNullable(startTime), error.Value, details.Value, cancellationReason.Value, Optional.ToNullable(deliveryType), deliveryInfo.Value, Optional.ToNullable(isCancellableWithoutFee), sku, identity, serializedAdditionalRawData);
+            return new DataBoxJobData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                transferType,
+                isCancellable,
+                isDeletable,
+                isShippingAddressEditable,
+                reverseShippingDetailsUpdate,
+                reverseTransportPreferenceUpdate,
+                isPrepareToShipEnabled,
+                status,
+                startTime,
+                error,
+                details,
+                cancellationReason,
+                deliveryType,
+                deliveryInfo,
+                isCancellableWithoutFee,
+                sku,
+                identity,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxJobData>.Write(ModelReaderWriterOptions options)

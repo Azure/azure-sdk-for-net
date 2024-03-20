@@ -149,16 +149,16 @@ namespace Azure.ResourceManager.Hci
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<HciProvisioningState> provisioningState = default;
-            Optional<string> arcInstanceResourceGroup = default;
-            Optional<Guid> arcApplicationClientId = default;
-            Optional<Guid> arcApplicationTenantId = default;
-            Optional<Guid> arcServicePrincipalObjectId = default;
-            Optional<Guid> arcApplicationObjectId = default;
-            Optional<ArcSettingAggregateState> aggregateState = default;
-            Optional<IReadOnlyList<PerNodeArcState>> perNodeDetails = default;
-            Optional<BinaryData> connectivityProperties = default;
+            SystemData systemData = default;
+            HciProvisioningState? provisioningState = default;
+            string arcInstanceResourceGroup = default;
+            Guid? arcApplicationClientId = default;
+            Guid? arcApplicationTenantId = default;
+            Guid? arcServicePrincipalObjectId = default;
+            Guid? arcApplicationObjectId = default;
+            ArcSettingAggregateState? aggregateState = default;
+            IReadOnlyList<PerNodeArcState> perNodeDetails = default;
+            BinaryData connectivityProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Hci
                             List<PerNodeArcState> array = new List<PerNodeArcState>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PerNodeArcState.DeserializePerNodeArcState(item));
+                                array.Add(PerNodeArcState.DeserializePerNodeArcState(item, options));
                             }
                             perNodeDetails = array;
                             continue;
@@ -287,7 +287,21 @@ namespace Azure.ResourceManager.Hci
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArcSettingData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), arcInstanceResourceGroup.Value, Optional.ToNullable(arcApplicationClientId), Optional.ToNullable(arcApplicationTenantId), Optional.ToNullable(arcServicePrincipalObjectId), Optional.ToNullable(arcApplicationObjectId), Optional.ToNullable(aggregateState), Optional.ToList(perNodeDetails), connectivityProperties.Value, serializedAdditionalRawData);
+            return new ArcSettingData(
+                id,
+                name,
+                type,
+                systemData,
+                provisioningState,
+                arcInstanceResourceGroup,
+                arcApplicationClientId,
+                arcApplicationTenantId,
+                arcServicePrincipalObjectId,
+                arcApplicationObjectId,
+                aggregateState,
+                perNodeDetails ?? new ChangeTrackingList<PerNodeArcState>(),
+                connectivityProperties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArcSettingData>.Write(ModelReaderWriterOptions options)

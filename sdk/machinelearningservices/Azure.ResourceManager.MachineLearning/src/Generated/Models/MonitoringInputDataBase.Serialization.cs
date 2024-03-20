@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -104,12 +105,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Fixed": return FixedInputData.DeserializeFixedInputData(element);
-                    case "Static": return StaticInputData.DeserializeStaticInputData(element);
-                    case "Trailing": return TrailingInputData.DeserializeTrailingInputData(element);
+                    case "Fixed": return FixedInputData.DeserializeFixedInputData(element, options);
+                    case "Static": return StaticInputData.DeserializeStaticInputData(element, options);
+                    case "Trailing": return TrailingInputData.DeserializeTrailingInputData(element, options);
                 }
             }
-            return UnknownMonitoringInputDataBase.DeserializeUnknownMonitoringInputDataBase(element);
+            return UnknownMonitoringInputDataBase.DeserializeUnknownMonitoringInputDataBase(element, options);
         }
 
         BinaryData IPersistableModel<MonitoringInputDataBase>.Write(ModelReaderWriterOptions options)

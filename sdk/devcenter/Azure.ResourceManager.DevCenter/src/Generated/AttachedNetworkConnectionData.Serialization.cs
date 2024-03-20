@@ -117,12 +117,12 @@ namespace Azure.ResourceManager.DevCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DevCenterProvisioningState> provisioningState = default;
-            Optional<ResourceIdentifier> networkConnectionId = default;
-            Optional<AzureLocation> networkConnectionLocation = default;
-            Optional<DevCenterHealthCheckStatus> healthCheckStatus = default;
-            Optional<DomainJoinType> domainJoinType = default;
+            SystemData systemData = default;
+            DevCenterProvisioningState? provisioningState = default;
+            ResourceIdentifier networkConnectionId = default;
+            AzureLocation? networkConnectionLocation = default;
+            DevCenterHealthCheckStatus? healthCheckStatus = default;
+            DomainJoinType? domainJoinType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -214,7 +214,17 @@ namespace Azure.ResourceManager.DevCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AttachedNetworkConnectionData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), networkConnectionId.Value, Optional.ToNullable(networkConnectionLocation), Optional.ToNullable(healthCheckStatus), Optional.ToNullable(domainJoinType), serializedAdditionalRawData);
+            return new AttachedNetworkConnectionData(
+                id,
+                name,
+                type,
+                systemData,
+                provisioningState,
+                networkConnectionId,
+                networkConnectionLocation,
+                healthCheckStatus,
+                domainJoinType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AttachedNetworkConnectionData>.Write(ModelReaderWriterOptions options)

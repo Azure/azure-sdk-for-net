@@ -92,14 +92,14 @@ namespace Azure.ResourceManager.DigitalTwins
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = DigitalTwinsEndpointResourceProperties.DeserializeDigitalTwinsEndpointResourceProperties(property.Value);
+                    properties = DigitalTwinsEndpointResourceProperties.DeserializeDigitalTwinsEndpointResourceProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -132,7 +132,13 @@ namespace Azure.ResourceManager.DigitalTwins
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DigitalTwinsEndpointResourceData(id, name, type, systemData.Value, properties, serializedAdditionalRawData);
+            return new DigitalTwinsEndpointResourceData(
+                id,
+                name,
+                type,
+                systemData,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DigitalTwinsEndpointResourceData>.Write(ModelReaderWriterOptions options)

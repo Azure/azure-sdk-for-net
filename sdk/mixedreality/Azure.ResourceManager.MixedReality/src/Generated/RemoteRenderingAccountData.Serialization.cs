@@ -137,19 +137,19 @@ namespace Azure.ResourceManager.MixedReality
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<ManagedServiceIdentity> plan = default;
-            Optional<MixedRealitySku> sku = default;
-            Optional<MixedRealitySku> kind = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ManagedServiceIdentity identity = default;
+            ManagedServiceIdentity plan = default;
+            MixedRealitySku sku = default;
+            MixedRealitySku kind = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> storageAccountName = default;
-            Optional<Guid> accountId = default;
-            Optional<string> accountDomain = default;
+            SystemData systemData = default;
+            string storageAccountName = default;
+            Guid? accountId = default;
+            string accountDomain = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.MixedReality
                     {
                         continue;
                     }
-                    sku = MixedRealitySku.DeserializeMixedRealitySku(property.Value);
+                    sku = MixedRealitySku.DeserializeMixedRealitySku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.MixedReality
                     {
                         continue;
                     }
-                    kind = MixedRealitySku.DeserializeMixedRealitySku(property.Value);
+                    kind = MixedRealitySku.DeserializeMixedRealitySku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -270,7 +270,21 @@ namespace Azure.ResourceManager.MixedReality
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RemoteRenderingAccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, plan, sku.Value, kind.Value, storageAccountName.Value, Optional.ToNullable(accountId), accountDomain.Value, serializedAdditionalRawData);
+            return new RemoteRenderingAccountData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                plan,
+                sku,
+                kind,
+                storageAccountName,
+                accountId,
+                accountDomain,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RemoteRenderingAccountData>.Write(ModelReaderWriterOptions options)

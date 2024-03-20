@@ -152,21 +152,21 @@ namespace Azure.ResourceManager.Relay
             {
                 return null;
             }
-            Optional<RelaySku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            RelaySku sku = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> provisioningState = default;
-            Optional<string> status = default;
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<DateTimeOffset> updatedAt = default;
-            Optional<string> serviceBusEndpoint = default;
-            Optional<string> metricId = default;
-            Optional<IList<RelayPrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Optional<RelayPublicNetworkAccess> publicNetworkAccess = default;
+            SystemData systemData = default;
+            string provisioningState = default;
+            string status = default;
+            DateTimeOffset? createdAt = default;
+            DateTimeOffset? updatedAt = default;
+            string serviceBusEndpoint = default;
+            string metricId = default;
+            IList<RelayPrivateEndpointConnectionData> privateEndpointConnections = default;
+            RelayPublicNetworkAccess? publicNetworkAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Relay
                     {
                         continue;
                     }
-                    sku = RelaySku.DeserializeRelaySku(property.Value);
+                    sku = RelaySku.DeserializeRelaySku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Relay
                             List<RelayPrivateEndpointConnectionData> array = new List<RelayPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RelayPrivateEndpointConnectionData.DeserializeRelayPrivateEndpointConnectionData(item));
+                                array.Add(RelayPrivateEndpointConnectionData.DeserializeRelayPrivateEndpointConnectionData(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -302,7 +302,23 @@ namespace Azure.ResourceManager.Relay
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RelayNamespaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, provisioningState.Value, status.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), serviceBusEndpoint.Value, metricId.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess), serializedAdditionalRawData);
+            return new RelayNamespaceData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                provisioningState,
+                status,
+                createdAt,
+                updatedAt,
+                serviceBusEndpoint,
+                metricId,
+                privateEndpointConnections ?? new ChangeTrackingList<RelayPrivateEndpointConnectionData>(),
+                publicNetworkAccess,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RelayNamespaceData>.Write(ModelReaderWriterOptions options)

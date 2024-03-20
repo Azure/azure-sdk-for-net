@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -100,13 +101,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> type = default;
-            Optional<DataFactorySecretBaseDefinition> pfx = default;
-            Optional<DataFactoryElement<string>> username = default;
-            Optional<DataFactorySecretBaseDefinition> password = default;
-            Optional<DataFactoryElement<string>> resource = default;
-            Optional<DataFactoryElement<string>> userTenant = default;
-            Optional<DataFactoryCredentialReference> credential = default;
+            string type = default;
+            DataFactorySecret pfx = default;
+            DataFactoryElement<string> username = default;
+            DataFactorySecret password = default;
+            DataFactoryElement<string> resource = default;
+            DataFactoryElement<string> userTenant = default;
+            DataFactoryCredentialReference credential = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    pfx = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property.Value.GetRawText());
+                    pfx = JsonSerializer.Deserialize<DataFactorySecret>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("username"u8))
@@ -140,7 +141,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    password = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property.Value.GetRawText());
+                    password = JsonSerializer.Deserialize<DataFactorySecret>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("resource"u8))
@@ -167,7 +168,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    credential = DataFactoryCredentialReference.DeserializeDataFactoryCredentialReference(property.Value);
+                    credential = DataFactoryCredentialReference.DeserializeDataFactoryCredentialReference(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -176,7 +177,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebActivityAuthentication(type.Value, pfx, username.Value, password, resource.Value, userTenant.Value, credential.Value, serializedAdditionalRawData);
+            return new WebActivityAuthentication(
+                type,
+                pfx,
+                username,
+                password,
+                resource,
+                userTenant,
+                credential,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebActivityAuthentication>.Write(ModelReaderWriterOptions options)

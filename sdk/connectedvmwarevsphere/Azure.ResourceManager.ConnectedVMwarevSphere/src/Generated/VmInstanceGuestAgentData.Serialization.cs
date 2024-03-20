@@ -142,16 +142,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> uuid = default;
-            Optional<VmInstanceGuestCredential> credentials = default;
-            Optional<ResourceIdentifier> privateLinkScopeResourceId = default;
-            Optional<HttpProxyConfiguration> httpProxyConfig = default;
-            Optional<GuestAgentProvisioningAction> provisioningAction = default;
-            Optional<string> status = default;
-            Optional<string> customResourceName = default;
-            Optional<IReadOnlyList<VMwareResourceStatus>> statuses = default;
-            Optional<VMwareResourceProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            string uuid = default;
+            VmInstanceGuestCredential credentials = default;
+            ResourceIdentifier privateLinkScopeResourceId = default;
+            HttpProxyConfiguration httpProxyConfig = default;
+            GuestAgentProvisioningAction? provisioningAction = default;
+            string status = default;
+            string customResourceName = default;
+            IReadOnlyList<VMwareResourceStatus> statuses = default;
+            VMwareResourceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                             {
                                 continue;
                             }
-                            credentials = VmInstanceGuestCredential.DeserializeVmInstanceGuestCredential(property0.Value);
+                            credentials = VmInstanceGuestCredential.DeserializeVmInstanceGuestCredential(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("privateLinkScopeResourceId"u8))
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                             {
                                 continue;
                             }
-                            httpProxyConfig = HttpProxyConfiguration.DeserializeHttpProxyConfiguration(property0.Value);
+                            httpProxyConfig = HttpProxyConfiguration.DeserializeHttpProxyConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningAction"u8))
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                             List<VMwareResourceStatus> array = new List<VMwareResourceStatus>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VMwareResourceStatus.DeserializeVMwareResourceStatus(item));
+                                array.Add(VMwareResourceStatus.DeserializeVMwareResourceStatus(item, options));
                             }
                             statuses = array;
                             continue;
@@ -272,7 +272,21 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VmInstanceGuestAgentData(id, name, type, systemData.Value, uuid.Value, credentials.Value, privateLinkScopeResourceId.Value, httpProxyConfig.Value, Optional.ToNullable(provisioningAction), status.Value, customResourceName.Value, Optional.ToList(statuses), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new VmInstanceGuestAgentData(
+                id,
+                name,
+                type,
+                systemData,
+                uuid,
+                credentials,
+                privateLinkScopeResourceId,
+                httpProxyConfig,
+                provisioningAction,
+                status,
+                customResourceName,
+                statuses ?? new ChangeTrackingList<VMwareResourceStatus>(),
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VmInstanceGuestAgentData>.Write(ModelReaderWriterOptions options)

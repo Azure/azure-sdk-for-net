@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
@@ -73,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = PlannedFailoverModelProperties.DeserializePlannedFailoverModelProperties(property.Value);
+                    properties = PlannedFailoverModelProperties.DeserializePlannedFailoverModelProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

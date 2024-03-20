@@ -113,13 +113,13 @@ namespace Azure.ResourceManager.TrafficManager
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<IList<TrafficManagerHeatMapEndpoint>> endpoints = default;
-            Optional<IList<TrafficManagerHeatMapTrafficFlow>> trafficFlows = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            IList<TrafficManagerHeatMapEndpoint> endpoints = default;
+            IList<TrafficManagerHeatMapTrafficFlow> trafficFlows = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.TrafficManager
                             List<TrafficManagerHeatMapEndpoint> array = new List<TrafficManagerHeatMapEndpoint>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(TrafficManagerHeatMapEndpoint.DeserializeTrafficManagerHeatMapEndpoint(item));
+                                array.Add(TrafficManagerHeatMapEndpoint.DeserializeTrafficManagerHeatMapEndpoint(item, options));
                             }
                             endpoints = array;
                             continue;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.TrafficManager
                             List<TrafficManagerHeatMapTrafficFlow> array = new List<TrafficManagerHeatMapTrafficFlow>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(TrafficManagerHeatMapTrafficFlow.DeserializeTrafficManagerHeatMapTrafficFlow(item));
+                                array.Add(TrafficManagerHeatMapTrafficFlow.DeserializeTrafficManagerHeatMapTrafficFlow(item, options));
                             }
                             trafficFlows = array;
                             continue;
@@ -211,7 +211,15 @@ namespace Azure.ResourceManager.TrafficManager
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrafficManagerHeatMapData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToList(endpoints), Optional.ToList(trafficFlows));
+            return new TrafficManagerHeatMapData(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                startTime,
+                endTime,
+                endpoints ?? new ChangeTrackingList<TrafficManagerHeatMapEndpoint>(),
+                trafficFlows ?? new ChangeTrackingList<TrafficManagerHeatMapTrafficFlow>());
         }
 
         BinaryData IPersistableModel<TrafficManagerHeatMapData>.Write(ModelReaderWriterOptions options)

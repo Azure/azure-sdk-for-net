@@ -102,19 +102,19 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 return null;
             }
             DataReplicationFabricProperties properties = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = DataReplicationFabricProperties.DeserializeDataReplicationFabricProperties(property.Value);
+                    properties = DataReplicationFabricProperties.DeserializeDataReplicationFabricProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -166,7 +166,15 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataReplicationFabricData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties, serializedAdditionalRawData);
+            return new DataReplicationFabricData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataReplicationFabricData>.Write(ModelReaderWriterOptions options)

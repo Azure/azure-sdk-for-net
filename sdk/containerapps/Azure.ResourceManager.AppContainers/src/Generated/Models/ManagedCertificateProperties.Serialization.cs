@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<ContainerAppCertificateProvisioningState> provisioningState = default;
-            Optional<string> subjectName = default;
-            Optional<string> error = default;
-            Optional<ManagedCertificateDomainControlValidation> domainControlValidation = default;
-            Optional<string> validationToken = default;
+            ContainerAppCertificateProvisioningState? provisioningState = default;
+            string subjectName = default;
+            string error = default;
+            ManagedCertificateDomainControlValidation? domainControlValidation = default;
+            string validationToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +138,13 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedCertificateProperties(Optional.ToNullable(provisioningState), subjectName.Value, error.Value, Optional.ToNullable(domainControlValidation), validationToken.Value, serializedAdditionalRawData);
+            return new ManagedCertificateProperties(
+                provisioningState,
+                subjectName,
+                error,
+                domainControlValidation,
+                validationToken,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedCertificateProperties>.Write(ModelReaderWriterOptions options)

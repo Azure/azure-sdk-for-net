@@ -160,21 +160,21 @@ namespace Azure.ResourceManager.StoragePool
             {
                 return null;
             }
-            Optional<string> managedBy = default;
-            Optional<IReadOnlyList<string>> managedByExtended = default;
+            string managedBy = default;
+            IReadOnlyList<string> managedByExtended = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             DiskPoolIscsiTargetAclMode aclMode = default;
-            Optional<IList<DiskPoolIscsiTargetPortalGroupAcl>> staticAcls = default;
-            Optional<IList<ManagedDiskIscsiLun>> luns = default;
+            IList<DiskPoolIscsiTargetPortalGroupAcl> staticAcls = default;
+            IList<ManagedDiskIscsiLun> luns = default;
             string targetIqn = default;
             DiskPoolIscsiTargetProvisioningState provisioningState = default;
             StoragePoolOperationalStatus status = default;
-            Optional<IList<string>> endpoints = default;
-            Optional<int> port = default;
-            Optional<IReadOnlyList<string>> sessions = default;
+            IList<string> endpoints = default;
+            int? port = default;
+            IReadOnlyList<string> sessions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.StoragePool
                             List<DiskPoolIscsiTargetPortalGroupAcl> array = new List<DiskPoolIscsiTargetPortalGroupAcl>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DiskPoolIscsiTargetPortalGroupAcl.DeserializeDiskPoolIscsiTargetPortalGroupAcl(item));
+                                array.Add(DiskPoolIscsiTargetPortalGroupAcl.DeserializeDiskPoolIscsiTargetPortalGroupAcl(item, options));
                             }
                             staticAcls = array;
                             continue;
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.StoragePool
                             List<ManagedDiskIscsiLun> array = new List<ManagedDiskIscsiLun>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagedDiskIscsiLun.DeserializeManagedDiskIscsiLun(item));
+                                array.Add(ManagedDiskIscsiLun.DeserializeManagedDiskIscsiLun(item, options));
                             }
                             luns = array;
                             continue;
@@ -325,7 +325,23 @@ namespace Azure.ResourceManager.StoragePool
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiskPoolIscsiTargetData(id, name, type, systemData.Value, managedBy.Value, Optional.ToList(managedByExtended), aclMode, Optional.ToList(staticAcls), Optional.ToList(luns), targetIqn, provisioningState, status, Optional.ToList(endpoints), Optional.ToNullable(port), Optional.ToList(sessions), serializedAdditionalRawData);
+            return new DiskPoolIscsiTargetData(
+                id,
+                name,
+                type,
+                systemData,
+                managedBy,
+                managedByExtended ?? new ChangeTrackingList<string>(),
+                aclMode,
+                staticAcls ?? new ChangeTrackingList<DiskPoolIscsiTargetPortalGroupAcl>(),
+                luns ?? new ChangeTrackingList<ManagedDiskIscsiLun>(),
+                targetIqn,
+                provisioningState,
+                status,
+                endpoints ?? new ChangeTrackingList<string>(),
+                port,
+                sessions ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiskPoolIscsiTargetData>.Write(ModelReaderWriterOptions options)

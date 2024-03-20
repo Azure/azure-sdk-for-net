@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<HybridRunbookWorkerGroupData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<HybridRunbookWorkerGroupData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<HybridRunbookWorkerGroupData> array = new List<HybridRunbookWorkerGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HybridRunbookWorkerGroupData.DeserializeHybridRunbookWorkerGroupData(item));
+                        array.Add(HybridRunbookWorkerGroupData.DeserializeHybridRunbookWorkerGroupData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridRunbookWorkerGroupsListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new HybridRunbookWorkerGroupsListResult(value ?? new ChangeTrackingList<HybridRunbookWorkerGroupData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridRunbookWorkerGroupsListResult>.Write(ModelReaderWriterOptions options)

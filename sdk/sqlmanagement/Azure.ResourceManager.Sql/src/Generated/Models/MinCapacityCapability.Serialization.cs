@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<double> value = default;
-            Optional<SqlCapabilityStatus> status = default;
-            Optional<string> reason = default;
+            double? value = default;
+            SqlCapabilityStatus? status = default;
+            string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MinCapacityCapability(Optional.ToNullable(value), Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
+            return new MinCapacityCapability(value, status, reason, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MinCapacityCapability>.Write(ModelReaderWriterOptions options)

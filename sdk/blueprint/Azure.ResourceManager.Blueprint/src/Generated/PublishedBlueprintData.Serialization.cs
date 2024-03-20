@@ -144,15 +144,15 @@ namespace Azure.ResourceManager.Blueprint
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<BlueprintStatus> status = default;
-            Optional<BlueprintTargetScope> targetScope = default;
-            Optional<IDictionary<string, ParameterDefinition>> parameters = default;
-            Optional<IDictionary<string, ResourceGroupDefinition>> resourceGroups = default;
-            Optional<string> blueprintName = default;
-            Optional<string> changeNotes = default;
+            SystemData systemData = default;
+            string displayName = default;
+            string description = default;
+            BlueprintStatus status = default;
+            BlueprintTargetScope? targetScope = default;
+            IDictionary<string, ParameterDefinition> parameters = default;
+            IDictionary<string, ResourceGroupDefinition> resourceGroups = default;
+            string blueprintName = default;
+            string changeNotes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Blueprint
                             {
                                 continue;
                             }
-                            status = BlueprintStatus.DeserializeBlueprintStatus(property0.Value);
+                            status = BlueprintStatus.DeserializeBlueprintStatus(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("targetScope"u8))
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Blueprint
                             Dictionary<string, ParameterDefinition> dictionary = new Dictionary<string, ParameterDefinition>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, ParameterDefinition.DeserializeParameterDefinition(property1.Value));
+                                dictionary.Add(property1.Name, ParameterDefinition.DeserializeParameterDefinition(property1.Value, options));
                             }
                             parameters = dictionary;
                             continue;
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Blueprint
                             Dictionary<string, ResourceGroupDefinition> dictionary = new Dictionary<string, ResourceGroupDefinition>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, ResourceGroupDefinition.DeserializeResourceGroupDefinition(property1.Value));
+                                dictionary.Add(property1.Name, ResourceGroupDefinition.DeserializeResourceGroupDefinition(property1.Value, options));
                             }
                             resourceGroups = dictionary;
                             continue;
@@ -265,7 +265,20 @@ namespace Azure.ResourceManager.Blueprint
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PublishedBlueprintData(id, name, type, systemData.Value, displayName.Value, description.Value, status.Value, Optional.ToNullable(targetScope), Optional.ToDictionary(parameters), Optional.ToDictionary(resourceGroups), blueprintName.Value, changeNotes.Value, serializedAdditionalRawData);
+            return new PublishedBlueprintData(
+                id,
+                name,
+                type,
+                systemData,
+                displayName,
+                description,
+                status,
+                targetScope,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterDefinition>(),
+                resourceGroups ?? new ChangeTrackingDictionary<string, ResourceGroupDefinition>(),
+                blueprintName,
+                changeNotes,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PublishedBlueprintData>.Write(ModelReaderWriterOptions options)

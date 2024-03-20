@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -79,18 +79,8 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="volumeGroupName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NetAppVolumeGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string volumeGroupName, NetAppVolumeGroupData data, CancellationToken cancellationToken = default)
         {
-            if (volumeGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeGroupName));
-            }
-            if (volumeGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeGroupName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(volumeGroupName, nameof(volumeGroupName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _netAppVolumeGroupVolumeGroupsClientDiagnostics.CreateScope("NetAppVolumeGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -122,7 +112,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -138,18 +128,8 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="volumeGroupName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NetAppVolumeGroupResource> CreateOrUpdate(WaitUntil waitUntil, string volumeGroupName, NetAppVolumeGroupData data, CancellationToken cancellationToken = default)
         {
-            if (volumeGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeGroupName));
-            }
-            if (volumeGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeGroupName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(volumeGroupName, nameof(volumeGroupName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _netAppVolumeGroupVolumeGroupsClientDiagnostics.CreateScope("NetAppVolumeGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -181,7 +161,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -195,14 +175,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="volumeGroupName"/> is null. </exception>
         public virtual async Task<Response<NetAppVolumeGroupResource>> GetAsync(string volumeGroupName, CancellationToken cancellationToken = default)
         {
-            if (volumeGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeGroupName));
-            }
-            if (volumeGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(volumeGroupName, nameof(volumeGroupName));
 
             using var scope = _netAppVolumeGroupVolumeGroupsClientDiagnostics.CreateScope("NetAppVolumeGroupCollection.Get");
             scope.Start();
@@ -233,7 +206,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -247,14 +220,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="volumeGroupName"/> is null. </exception>
         public virtual Response<NetAppVolumeGroupResource> Get(string volumeGroupName, CancellationToken cancellationToken = default)
         {
-            if (volumeGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeGroupName));
-            }
-            if (volumeGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(volumeGroupName, nameof(volumeGroupName));
 
             using var scope = _netAppVolumeGroupVolumeGroupsClientDiagnostics.CreateScope("NetAppVolumeGroupCollection.Get");
             scope.Start();
@@ -285,7 +251,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -299,14 +265,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="volumeGroupName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string volumeGroupName, CancellationToken cancellationToken = default)
         {
-            if (volumeGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeGroupName));
-            }
-            if (volumeGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(volumeGroupName, nameof(volumeGroupName));
 
             using var scope = _netAppVolumeGroupVolumeGroupsClientDiagnostics.CreateScope("NetAppVolumeGroupCollection.Exists");
             scope.Start();
@@ -335,7 +294,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -349,14 +308,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="volumeGroupName"/> is null. </exception>
         public virtual Response<bool> Exists(string volumeGroupName, CancellationToken cancellationToken = default)
         {
-            if (volumeGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeGroupName));
-            }
-            if (volumeGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(volumeGroupName, nameof(volumeGroupName));
 
             using var scope = _netAppVolumeGroupVolumeGroupsClientDiagnostics.CreateScope("NetAppVolumeGroupCollection.Exists");
             scope.Start();
@@ -385,7 +337,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -399,14 +351,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="volumeGroupName"/> is null. </exception>
         public virtual async Task<NullableResponse<NetAppVolumeGroupResource>> GetIfExistsAsync(string volumeGroupName, CancellationToken cancellationToken = default)
         {
-            if (volumeGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeGroupName));
-            }
-            if (volumeGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(volumeGroupName, nameof(volumeGroupName));
 
             using var scope = _netAppVolumeGroupVolumeGroupsClientDiagnostics.CreateScope("NetAppVolumeGroupCollection.GetIfExists");
             scope.Start();
@@ -437,7 +382,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -451,14 +396,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="volumeGroupName"/> is null. </exception>
         public virtual NullableResponse<NetAppVolumeGroupResource> GetIfExists(string volumeGroupName, CancellationToken cancellationToken = default)
         {
-            if (volumeGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeGroupName));
-            }
-            if (volumeGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(volumeGroupName, nameof(volumeGroupName));
 
             using var scope = _netAppVolumeGroupVolumeGroupsClientDiagnostics.CreateScope("NetAppVolumeGroupCollection.GetIfExists");
             scope.Start();

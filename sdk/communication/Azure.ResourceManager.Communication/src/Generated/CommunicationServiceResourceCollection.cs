@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -83,18 +83,8 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<CommunicationServiceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string communicationServiceName, CommunicationServiceResourceData data, CancellationToken cancellationToken = default)
         {
-            if (communicationServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationServiceName));
-            }
-            if (communicationServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(communicationServiceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(communicationServiceName, nameof(communicationServiceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _communicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("CommunicationServiceResourceCollection.CreateOrUpdate");
             scope.Start();
@@ -126,7 +116,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -142,18 +132,8 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<CommunicationServiceResource> CreateOrUpdate(WaitUntil waitUntil, string communicationServiceName, CommunicationServiceResourceData data, CancellationToken cancellationToken = default)
         {
-            if (communicationServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationServiceName));
-            }
-            if (communicationServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(communicationServiceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(communicationServiceName, nameof(communicationServiceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _communicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("CommunicationServiceResourceCollection.CreateOrUpdate");
             scope.Start();
@@ -185,7 +165,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -199,14 +179,7 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> is null. </exception>
         public virtual async Task<Response<CommunicationServiceResource>> GetAsync(string communicationServiceName, CancellationToken cancellationToken = default)
         {
-            if (communicationServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationServiceName));
-            }
-            if (communicationServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(communicationServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(communicationServiceName, nameof(communicationServiceName));
 
             using var scope = _communicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("CommunicationServiceResourceCollection.Get");
             scope.Start();
@@ -237,7 +210,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -251,14 +224,7 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> is null. </exception>
         public virtual Response<CommunicationServiceResource> Get(string communicationServiceName, CancellationToken cancellationToken = default)
         {
-            if (communicationServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationServiceName));
-            }
-            if (communicationServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(communicationServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(communicationServiceName, nameof(communicationServiceName));
 
             using var scope = _communicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("CommunicationServiceResourceCollection.Get");
             scope.Start();
@@ -289,7 +255,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -319,7 +285,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -349,7 +315,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -363,14 +329,7 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string communicationServiceName, CancellationToken cancellationToken = default)
         {
-            if (communicationServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationServiceName));
-            }
-            if (communicationServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(communicationServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(communicationServiceName, nameof(communicationServiceName));
 
             using var scope = _communicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("CommunicationServiceResourceCollection.Exists");
             scope.Start();
@@ -399,7 +358,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -413,14 +372,7 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> is null. </exception>
         public virtual Response<bool> Exists(string communicationServiceName, CancellationToken cancellationToken = default)
         {
-            if (communicationServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationServiceName));
-            }
-            if (communicationServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(communicationServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(communicationServiceName, nameof(communicationServiceName));
 
             using var scope = _communicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("CommunicationServiceResourceCollection.Exists");
             scope.Start();
@@ -449,7 +401,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -463,14 +415,7 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> is null. </exception>
         public virtual async Task<NullableResponse<CommunicationServiceResource>> GetIfExistsAsync(string communicationServiceName, CancellationToken cancellationToken = default)
         {
-            if (communicationServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationServiceName));
-            }
-            if (communicationServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(communicationServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(communicationServiceName, nameof(communicationServiceName));
 
             using var scope = _communicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("CommunicationServiceResourceCollection.GetIfExists");
             scope.Start();
@@ -501,7 +446,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -515,14 +460,7 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> is null. </exception>
         public virtual NullableResponse<CommunicationServiceResource> GetIfExists(string communicationServiceName, CancellationToken cancellationToken = default)
         {
-            if (communicationServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationServiceName));
-            }
-            if (communicationServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(communicationServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(communicationServiceName, nameof(communicationServiceName));
 
             using var scope = _communicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("CommunicationServiceResourceCollection.GetIfExists");
             scope.Start();

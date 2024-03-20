@@ -147,16 +147,16 @@ namespace Azure.ResourceManager.Authorization
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> scope = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<bool> isOrganizationDefault = default;
-            Optional<RoleManagementPrincipal> lastModifiedBy = default;
-            Optional<DateTimeOffset> lastModifiedDateTime = default;
-            Optional<IList<RoleManagementPolicyRule>> rules = default;
-            Optional<IReadOnlyList<RoleManagementPolicyRule>> effectiveRules = default;
-            Optional<RoleManagementPolicyProperties> policyProperties = default;
+            SystemData systemData = default;
+            string scope = default;
+            string displayName = default;
+            string description = default;
+            bool? isOrganizationDefault = default;
+            RoleManagementPrincipal lastModifiedBy = default;
+            DateTimeOffset? lastModifiedDateTime = default;
+            IList<RoleManagementPolicyRule> rules = default;
+            IReadOnlyList<RoleManagementPolicyRule> effectiveRules = default;
+            RoleManagementPolicyProperties policyProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Authorization
                             {
                                 continue;
                             }
-                            lastModifiedBy = RoleManagementPrincipal.DeserializeRoleManagementPrincipal(property0.Value);
+                            lastModifiedBy = RoleManagementPrincipal.DeserializeRoleManagementPrincipal(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("lastModifiedDateTime"u8))
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Authorization
                             List<RoleManagementPolicyRule> array = new List<RoleManagementPolicyRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RoleManagementPolicyRule.DeserializeRoleManagementPolicyRule(item));
+                                array.Add(RoleManagementPolicyRule.DeserializeRoleManagementPolicyRule(item, options));
                             }
                             rules = array;
                             continue;
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Authorization
                             List<RoleManagementPolicyRule> array = new List<RoleManagementPolicyRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RoleManagementPolicyRule.DeserializeRoleManagementPolicyRule(item));
+                                array.Add(RoleManagementPolicyRule.DeserializeRoleManagementPolicyRule(item, options));
                             }
                             effectiveRules = array;
                             continue;
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Authorization
                             {
                                 continue;
                             }
-                            policyProperties = RoleManagementPolicyProperties.DeserializeRoleManagementPolicyProperties(property0.Value);
+                            policyProperties = RoleManagementPolicyProperties.DeserializeRoleManagementPolicyProperties(property0.Value, options);
                             continue;
                         }
                     }
@@ -282,7 +282,21 @@ namespace Azure.ResourceManager.Authorization
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleManagementPolicyData(id, name, type, systemData.Value, scope.Value, displayName.Value, description.Value, Optional.ToNullable(isOrganizationDefault), lastModifiedBy.Value, Optional.ToNullable(lastModifiedDateTime), Optional.ToList(rules), Optional.ToList(effectiveRules), policyProperties.Value, serializedAdditionalRawData);
+            return new RoleManagementPolicyData(
+                id,
+                name,
+                type,
+                systemData,
+                scope,
+                displayName,
+                description,
+                isOrganizationDefault,
+                lastModifiedBy,
+                lastModifiedDateTime,
+                rules ?? new ChangeTrackingList<RoleManagementPolicyRule>(),
+                effectiveRules ?? new ChangeTrackingList<RoleManagementPolicyRule>(),
+                policyProperties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoleManagementPolicyData>.Write(ModelReaderWriterOptions options)

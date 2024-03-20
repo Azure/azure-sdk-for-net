@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 if (property.NameEquals("customProperties"u8))
                 {
-                    customProperties = RecoveryPointModelCustomProperties.DeserializeRecoveryPointModelCustomProperties(property.Value);
+                    customProperties = RecoveryPointModelCustomProperties.DeserializeRecoveryPointModelCustomProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<DataBoxEdgeNetworkGroup> networkGroup = default;
-            Optional<int> port = default;
+            DataBoxEdgeNetworkGroup? networkGroup = default;
+            int? port = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeNetworkAdapterPosition(Optional.ToNullable(networkGroup), Optional.ToNullable(port), serializedAdditionalRawData);
+            return new DataBoxEdgeNetworkAdapterPosition(networkGroup, port, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeNetworkAdapterPosition>.Write(ModelReaderWriterOptions options)

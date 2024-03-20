@@ -205,26 +205,26 @@ namespace Azure.ResourceManager.Logic
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> name0 = default;
-            Optional<IReadOnlyDictionary<string, BinaryData>> connectionParameters = default;
-            Optional<LogicApiResourceMetadata> metadata = default;
-            Optional<IReadOnlyList<Uri>> runtimeUrls = default;
-            Optional<LogicApiResourceGeneralInformation> generalInformation = default;
-            Optional<IReadOnlyList<string>> capabilities = default;
-            Optional<LogicApiResourceBackendService> backendService = default;
-            Optional<LogicApiResourcePolicies> policies = default;
-            Optional<Uri> apiDefinitionUrl = default;
-            Optional<LogicApiResourceDefinitions> apiDefinitions = default;
-            Optional<LogicResourceReference> integrationServiceEnvironment = default;
-            Optional<LogicWorkflowProvisioningState> provisioningState = default;
-            Optional<LogicApiTier> category = default;
-            Optional<IntegrationServiceEnvironmentManagedApiDeploymentParameters> deploymentParameters = default;
+            SystemData systemData = default;
+            string name0 = default;
+            IReadOnlyDictionary<string, BinaryData> connectionParameters = default;
+            LogicApiResourceMetadata metadata = default;
+            IReadOnlyList<Uri> runtimeUrls = default;
+            LogicApiResourceGeneralInformation generalInformation = default;
+            IReadOnlyList<string> capabilities = default;
+            LogicApiResourceBackendService backendService = default;
+            LogicApiResourcePolicies policies = default;
+            Uri apiDefinitionUrl = default;
+            LogicApiResourceDefinitions apiDefinitions = default;
+            LogicResourceReference integrationServiceEnvironment = default;
+            LogicWorkflowProvisioningState? provisioningState = default;
+            LogicApiTier? category = default;
+            IntegrationServiceEnvironmentManagedApiDeploymentParameters deploymentParameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            metadata = LogicApiResourceMetadata.DeserializeLogicApiResourceMetadata(property0.Value);
+                            metadata = LogicApiResourceMetadata.DeserializeLogicApiResourceMetadata(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("runtimeUrls"u8))
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            generalInformation = LogicApiResourceGeneralInformation.DeserializeLogicApiResourceGeneralInformation(property0.Value);
+                            generalInformation = LogicApiResourceGeneralInformation.DeserializeLogicApiResourceGeneralInformation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("capabilities"u8))
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            backendService = LogicApiResourceBackendService.DeserializeLogicApiResourceBackendService(property0.Value);
+                            backendService = LogicApiResourceBackendService.DeserializeLogicApiResourceBackendService(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("policies"u8))
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            policies = LogicApiResourcePolicies.DeserializeLogicApiResourcePolicies(property0.Value);
+                            policies = LogicApiResourcePolicies.DeserializeLogicApiResourcePolicies(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("apiDefinitionUrl"u8))
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            apiDefinitions = LogicApiResourceDefinitions.DeserializeLogicApiResourceDefinitions(property0.Value);
+                            apiDefinitions = LogicApiResourceDefinitions.DeserializeLogicApiResourceDefinitions(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("integrationServiceEnvironment"u8))
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            integrationServiceEnvironment = LogicResourceReference.DeserializeLogicResourceReference(property0.Value);
+                            integrationServiceEnvironment = LogicResourceReference.DeserializeLogicResourceReference(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            deploymentParameters = IntegrationServiceEnvironmentManagedApiDeploymentParameters.DeserializeIntegrationServiceEnvironmentManagedApiDeploymentParameters(property0.Value);
+                            deploymentParameters = IntegrationServiceEnvironmentManagedApiDeploymentParameters.DeserializeIntegrationServiceEnvironmentManagedApiDeploymentParameters(property0.Value, options);
                             continue;
                         }
                     }
@@ -441,7 +441,28 @@ namespace Azure.ResourceManager.Logic
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationServiceEnvironmentManagedApiData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, name0.Value, Optional.ToDictionary(connectionParameters), metadata.Value, Optional.ToList(runtimeUrls), generalInformation.Value, Optional.ToList(capabilities), backendService.Value, policies.Value, apiDefinitionUrl.Value, apiDefinitions.Value, integrationServiceEnvironment.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(category), deploymentParameters.Value, serializedAdditionalRawData);
+            return new IntegrationServiceEnvironmentManagedApiData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                name0,
+                connectionParameters ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                metadata,
+                runtimeUrls ?? new ChangeTrackingList<Uri>(),
+                generalInformation,
+                capabilities ?? new ChangeTrackingList<string>(),
+                backendService,
+                policies,
+                apiDefinitionUrl,
+                apiDefinitions,
+                integrationServiceEnvironment,
+                provisioningState,
+                category,
+                deploymentParameters,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationServiceEnvironmentManagedApiData>.Write(ModelReaderWriterOptions options)

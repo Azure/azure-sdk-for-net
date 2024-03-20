@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
-            Optional<IReadOnlyList<MachineLearningModelContainerData>> value = default;
+            string nextLink = default;
+            IReadOnlyList<MachineLearningModelContainerData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningModelContainerData> array = new List<MachineLearningModelContainerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningModelContainerData.DeserializeMachineLearningModelContainerData(item));
+                        array.Add(MachineLearningModelContainerData.DeserializeMachineLearningModelContainerData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ModelContainerResourceArmPaginatedResult(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new ModelContainerResourceArmPaginatedResult(nextLink, value ?? new ChangeTrackingList<MachineLearningModelContainerData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ModelContainerResourceArmPaginatedResult>.Write(ModelReaderWriterOptions options)

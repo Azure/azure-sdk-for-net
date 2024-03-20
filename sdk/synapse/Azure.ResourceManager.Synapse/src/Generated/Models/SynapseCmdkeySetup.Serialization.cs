@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -123,7 +124,7 @@ namespace Azure.ResourceManager.Synapse.Models
                         }
                         if (property0.NameEquals("password"u8))
                         {
-                            password = SynapseSecretBase.DeserializeSynapseSecretBase(property0.Value);
+                            password = SynapseSecretBase.DeserializeSynapseSecretBase(property0.Value, options);
                             continue;
                         }
                     }

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.KubernetesConfiguration;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
@@ -127,13 +128,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 return null;
             }
-            Optional<Uri> url = default;
-            Optional<string> bucketName = default;
-            Optional<bool> insecure = default;
-            Optional<long?> timeoutInSeconds = default;
-            Optional<long?> syncIntervalInSeconds = default;
-            Optional<string> accessKey = default;
-            Optional<string> localAuthRef = default;
+            Uri url = default;
+            string bucketName = default;
+            bool? insecure = default;
+            long? timeoutInSeconds = default;
+            long? syncIntervalInSeconds = default;
+            string accessKey = default;
+            string localAuthRef = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -207,7 +208,15 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesBucket(url.Value, bucketName.Value, Optional.ToNullable(insecure), Optional.ToNullable(timeoutInSeconds), Optional.ToNullable(syncIntervalInSeconds), accessKey.Value, localAuthRef.Value, serializedAdditionalRawData);
+            return new KubernetesBucket(
+                url,
+                bucketName,
+                insecure,
+                timeoutInSeconds,
+                syncIntervalInSeconds,
+                accessKey,
+                localAuthRef,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesBucket>.Write(ModelReaderWriterOptions options)

@@ -119,16 +119,16 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<AzureLocation> location = default;
+            ManagedServiceIdentity identity = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ContainerRegistryProvisioningState> provisioningState = default;
-            Optional<ContainerRegistryRunContent> runRequest = default;
-            Optional<ContainerRegistryRunData> runResult = default;
-            Optional<string> forceUpdateTag = default;
+            SystemData systemData = default;
+            ContainerRegistryProvisioningState? provisioningState = default;
+            ContainerRegistryRunContent runRequest = default;
+            ContainerRegistryRunData runResult = default;
+            string forceUpdateTag = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             {
                                 continue;
                             }
-                            runRequest = ContainerRegistryRunContent.DeserializeContainerRegistryRunContent(property0.Value);
+                            runRequest = ContainerRegistryRunContent.DeserializeContainerRegistryRunContent(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("runResult"u8))
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             {
                                 continue;
                             }
-                            runResult = ContainerRegistryRunData.DeserializeContainerRegistryRunData(property0.Value);
+                            runResult = ContainerRegistryRunData.DeserializeContainerRegistryRunData(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("forceUpdateTag"u8))
@@ -225,7 +225,18 @@ namespace Azure.ResourceManager.ContainerRegistry
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryTaskRunData(id, name, type, systemData.Value, identity, Optional.ToNullable(location), Optional.ToNullable(provisioningState), runRequest.Value, runResult.Value, forceUpdateTag.Value, serializedAdditionalRawData);
+            return new ContainerRegistryTaskRunData(
+                id,
+                name,
+                type,
+                systemData,
+                identity,
+                location,
+                provisioningState,
+                runRequest,
+                runResult,
+                forceUpdateTag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryTaskRunData>.Write(ModelReaderWriterOptions options)

@@ -104,13 +104,13 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 return null;
             }
-            Optional<DevTestLabManagedIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            DevTestLabManagedIdentity identity = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     {
                         continue;
                     }
-                    identity = DevTestLabManagedIdentity.DeserializeDevTestLabManagedIdentity(property.Value);
+                    identity = DevTestLabManagedIdentity.DeserializeDevTestLabManagedIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -173,7 +173,15 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabServiceRunnerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity.Value, serializedAdditionalRawData);
+            return new DevTestLabServiceRunnerData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabServiceRunnerData>.Write(ModelReaderWriterOptions options)

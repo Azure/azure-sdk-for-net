@@ -143,19 +143,19 @@ namespace Azure.ResourceManager.Monitor
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ETag? etag = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> accountId = default;
-            Optional<MonitorWorkspaceMetrics> metrics = default;
-            Optional<MonitorProvisioningState> provisioningState = default;
-            Optional<MonitorWorkspaceDefaultIngestionSettings> defaultIngestionSettings = default;
-            Optional<IReadOnlyList<MonitorWorkspacePrivateEndpointConnection>> privateEndpointConnections = default;
-            Optional<MonitorWorkspacePublicNetworkAccess> publicNetworkAccess = default;
+            SystemData systemData = default;
+            string accountId = default;
+            MonitorWorkspaceMetrics metrics = default;
+            MonitorProvisioningState? provisioningState = default;
+            MonitorWorkspaceDefaultIngestionSettings defaultIngestionSettings = default;
+            IReadOnlyList<MonitorWorkspacePrivateEndpointConnection> privateEndpointConnections = default;
+            MonitorWorkspacePublicNetworkAccess? publicNetworkAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Monitor
                             {
                                 continue;
                             }
-                            metrics = MonitorWorkspaceMetrics.DeserializeMonitorWorkspaceMetrics(property0.Value);
+                            metrics = MonitorWorkspaceMetrics.DeserializeMonitorWorkspaceMetrics(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Monitor
                             {
                                 continue;
                             }
-                            defaultIngestionSettings = MonitorWorkspaceDefaultIngestionSettings.DeserializeMonitorWorkspaceDefaultIngestionSettings(property0.Value);
+                            defaultIngestionSettings = MonitorWorkspaceDefaultIngestionSettings.DeserializeMonitorWorkspaceDefaultIngestionSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("privateEndpointConnections"u8))
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Monitor
                             List<MonitorWorkspacePrivateEndpointConnection> array = new List<MonitorWorkspacePrivateEndpointConnection>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MonitorWorkspacePrivateEndpointConnection.DeserializeMonitorWorkspacePrivateEndpointConnection(item));
+                                array.Add(MonitorWorkspacePrivateEndpointConnection.DeserializeMonitorWorkspacePrivateEndpointConnection(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -285,7 +285,21 @@ namespace Azure.ResourceManager.Monitor
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorWorkspaceResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), accountId.Value, metrics.Value, Optional.ToNullable(provisioningState), defaultIngestionSettings.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess), serializedAdditionalRawData);
+            return new MonitorWorkspaceResourceData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                etag,
+                accountId,
+                metrics,
+                provisioningState,
+                defaultIngestionSettings,
+                privateEndpointConnections ?? new ChangeTrackingList<MonitorWorkspacePrivateEndpointConnection>(),
+                publicNetworkAccess,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorWorkspaceResourceData>.Write(ModelReaderWriterOptions options)

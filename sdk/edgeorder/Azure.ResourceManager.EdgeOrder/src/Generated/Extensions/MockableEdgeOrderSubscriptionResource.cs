@@ -141,10 +141,7 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <returns> An async collection of <see cref="ProductFamily"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ProductFamily> GetProductFamiliesAsync(ProductFamiliesContent content, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateListProductFamiliesRequest(Id.SubscriptionId, content, expand, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateListProductFamiliesNextPageRequest(nextLink, Id.SubscriptionId, content, expand, skipToken);
@@ -176,10 +173,7 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <returns> A collection of <see cref="ProductFamily"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ProductFamily> GetProductFamilies(ProductFamiliesContent content, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateListProductFamiliesRequest(Id.SubscriptionId, content, expand, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateListProductFamiliesNextPageRequest(nextLink, Id.SubscriptionId, content, expand, skipToken);
@@ -210,10 +204,7 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <returns> An async collection of <see cref="ProductConfiguration"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ProductConfiguration> GetConfigurationsAsync(ConfigurationsContent content, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateListConfigurationsRequest(Id.SubscriptionId, content, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateListConfigurationsNextPageRequest(nextLink, Id.SubscriptionId, content, skipToken);
@@ -244,10 +235,7 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <returns> A collection of <see cref="ProductConfiguration"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ProductConfiguration> GetConfigurations(ConfigurationsContent content, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateListConfigurationsRequest(Id.SubscriptionId, content, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateListConfigurationsNextPageRequest(nextLink, Id.SubscriptionId, content, skipToken);

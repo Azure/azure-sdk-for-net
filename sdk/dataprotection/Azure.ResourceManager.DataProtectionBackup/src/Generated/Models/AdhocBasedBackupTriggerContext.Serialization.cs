@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 if (property.NameEquals("taggingCriteria"u8))
                 {
-                    taggingCriteria = AdhocBasedBackupTaggingCriteria.DeserializeAdhocBasedBackupTaggingCriteria(property.Value);
+                    taggingCriteria = AdhocBasedBackupTaggingCriteria.DeserializeAdhocBasedBackupTaggingCriteria(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("objectType"u8))

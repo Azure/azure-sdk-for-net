@@ -164,24 +164,24 @@ namespace Azure.ResourceManager.Reservations
             {
                 return null;
             }
-            Optional<int> etag = default;
+            int? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<DateTimeOffset> requestDateTime = default;
-            Optional<DateTimeOffset> createdDateTime = default;
-            Optional<DateTimeOffset> expiryDate = default;
-            Optional<DateTimeOffset> expiryDateTime = default;
-            Optional<DateTimeOffset> benefitStartTime = default;
-            Optional<int> originalQuantity = default;
-            Optional<ReservationTerm> term = default;
-            Optional<ReservationProvisioningState> provisioningState = default;
-            Optional<ReservationBillingPlan> billingPlan = default;
-            Optional<ReservationOrderBillingPlanInformation> planInformation = default;
-            Optional<IReadOnlyList<ReservationDetailData>> reservations = default;
-            Optional<DateTimeOffset> reviewDateTime = default;
+            SystemData systemData = default;
+            string displayName = default;
+            DateTimeOffset? requestDateTime = default;
+            DateTimeOffset? createdDateTime = default;
+            DateTimeOffset? expiryDate = default;
+            DateTimeOffset? expiryDateTime = default;
+            DateTimeOffset? benefitStartTime = default;
+            int? originalQuantity = default;
+            ReservationTerm? term = default;
+            ReservationProvisioningState? provisioningState = default;
+            ReservationBillingPlan? billingPlan = default;
+            ReservationOrderBillingPlanInformation planInformation = default;
+            IReadOnlyList<ReservationDetailData> reservations = default;
+            DateTimeOffset? reviewDateTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Reservations
                             {
                                 continue;
                             }
-                            planInformation = ReservationOrderBillingPlanInformation.DeserializeReservationOrderBillingPlanInformation(property0.Value);
+                            planInformation = ReservationOrderBillingPlanInformation.DeserializeReservationOrderBillingPlanInformation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("reservations"u8))
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.Reservations
                             List<ReservationDetailData> array = new List<ReservationDetailData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ReservationDetailData.DeserializeReservationDetailData(item));
+                                array.Add(ReservationDetailData.DeserializeReservationDetailData(item, options));
                             }
                             reservations = array;
                             continue;
@@ -355,7 +355,26 @@ namespace Azure.ResourceManager.Reservations
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReservationOrderData(id, name, type, systemData.Value, Optional.ToNullable(etag), displayName.Value, Optional.ToNullable(requestDateTime), Optional.ToNullable(createdDateTime), Optional.ToNullable(expiryDate), Optional.ToNullable(expiryDateTime), Optional.ToNullable(benefitStartTime), Optional.ToNullable(originalQuantity), Optional.ToNullable(term), Optional.ToNullable(provisioningState), Optional.ToNullable(billingPlan), planInformation.Value, Optional.ToList(reservations), Optional.ToNullable(reviewDateTime), serializedAdditionalRawData);
+            return new ReservationOrderData(
+                id,
+                name,
+                type,
+                systemData,
+                etag,
+                displayName,
+                requestDateTime,
+                createdDateTime,
+                expiryDate,
+                expiryDateTime,
+                benefitStartTime,
+                originalQuantity,
+                term,
+                provisioningState,
+                billingPlan,
+                planInformation,
+                reservations ?? new ChangeTrackingList<ReservationDetailData>(),
+                reviewDateTime,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationOrderData>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -73,7 +74,7 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 if (property.NameEquals("deliverToDcPackageDetails"u8))
                 {
-                    deliverToDcPackageDetails = PackageCarrierInfo.DeserializePackageCarrierInfo(property.Value);
+                    deliverToDcPackageDetails = PackageCarrierInfo.DeserializePackageCarrierInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

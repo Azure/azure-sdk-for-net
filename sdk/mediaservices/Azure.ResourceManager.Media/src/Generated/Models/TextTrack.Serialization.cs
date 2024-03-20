@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -91,11 +92,11 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<string> fileName = default;
-            Optional<string> displayName = default;
-            Optional<string> languageCode = default;
-            Optional<PlayerVisibility> playerVisibility = default;
-            Optional<HlsSettings> hlsSettings = default;
+            string fileName = default;
+            string displayName = default;
+            string languageCode = default;
+            PlayerVisibility? playerVisibility = default;
+            HlsSettings hlsSettings = default;
             string odataType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -131,7 +132,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    hlsSettings = HlsSettings.DeserializeHlsSettings(property.Value);
+                    hlsSettings = HlsSettings.DeserializeHlsSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("@odata.type"u8))
@@ -145,7 +146,14 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TextTrack(odataType, serializedAdditionalRawData, fileName.Value, displayName.Value, languageCode.Value, Optional.ToNullable(playerVisibility), hlsSettings.Value);
+            return new TextTrack(
+                odataType,
+                serializedAdditionalRawData,
+                fileName,
+                displayName,
+                languageCode,
+                playerVisibility,
+                hlsSettings);
         }
 
         BinaryData IPersistableModel<TextTrack>.Write(ModelReaderWriterOptions options)

@@ -137,16 +137,16 @@ namespace Azure.ResourceManager.CosmosDB
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> jobName = default;
-            Optional<DataTransferDataSourceSink> source = default;
-            Optional<DataTransferDataSourceSink> destination = default;
-            Optional<string> status = default;
-            Optional<long> processedCount = default;
-            Optional<long> totalCount = default;
-            Optional<DateTimeOffset> lastUpdatedUtcTime = default;
-            Optional<int> workerCount = default;
-            Optional<ErrorResponse> error = default;
+            SystemData systemData = default;
+            string jobName = default;
+            DataTransferDataSourceSink source = default;
+            DataTransferDataSourceSink destination = default;
+            string status = default;
+            long? processedCount = default;
+            long? totalCount = default;
+            DateTimeOffset? lastUpdatedUtcTime = default;
+            int? workerCount = default;
+            ErrorResponse error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.CosmosDB
                             {
                                 continue;
                             }
-                            source = DataTransferDataSourceSink.DeserializeDataTransferDataSourceSink(property0.Value);
+                            source = DataTransferDataSourceSink.DeserializeDataTransferDataSourceSink(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("destination"u8))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.CosmosDB
                             {
                                 continue;
                             }
-                            destination = DataTransferDataSourceSink.DeserializeDataTransferDataSourceSink(property0.Value);
+                            destination = DataTransferDataSourceSink.DeserializeDataTransferDataSourceSink(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("status"u8))
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.CosmosDB
                             {
                                 continue;
                             }
-                            error = ErrorResponse.DeserializeErrorResponse(property0.Value);
+                            error = ErrorResponse.DeserializeErrorResponse(property0.Value, options);
                             continue;
                         }
                     }
@@ -266,7 +266,21 @@ namespace Azure.ResourceManager.CosmosDB
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataTransferJobGetResultData(id, name, type, systemData.Value, jobName.Value, source.Value, destination.Value, status.Value, Optional.ToNullable(processedCount), Optional.ToNullable(totalCount), Optional.ToNullable(lastUpdatedUtcTime), Optional.ToNullable(workerCount), error.Value, serializedAdditionalRawData);
+            return new DataTransferJobGetResultData(
+                id,
+                name,
+                type,
+                systemData,
+                jobName,
+                source,
+                destination,
+                status,
+                processedCount,
+                totalCount,
+                lastUpdatedUtcTime,
+                workerCount,
+                error,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataTransferJobGetResultData>.Write(ModelReaderWriterOptions options)

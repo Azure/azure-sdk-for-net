@@ -120,16 +120,16 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<WritableSubResource> remoteVirtualNetwork = default;
-            Optional<bool> allowHubToRemoteVnetTransit = default;
-            Optional<bool> allowRemoteVnetToUseHubVnetGateways = default;
-            Optional<bool> enableInternetSecurity = default;
-            Optional<RoutingConfiguration> routingConfiguration = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            WritableSubResource remoteVirtualNetwork = default;
+            bool? allowHubToRemoteVnetTransit = default;
+            bool? allowRemoteVnetToUseHubVnetGateways = default;
+            bool? enableInternetSecurity = default;
+            RoutingConfiguration routingConfiguration = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            routingConfiguration = RoutingConfiguration.DeserializeRoutingConfiguration(property0.Value);
+                            routingConfiguration = RoutingConfiguration.DeserializeRoutingConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -238,7 +238,18 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HubVirtualNetworkConnectionData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), remoteVirtualNetwork, Optional.ToNullable(allowHubToRemoteVnetTransit), Optional.ToNullable(allowRemoteVnetToUseHubVnetGateways), Optional.ToNullable(enableInternetSecurity), routingConfiguration.Value, Optional.ToNullable(provisioningState));
+            return new HubVirtualNetworkConnectionData(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                remoteVirtualNetwork,
+                allowHubToRemoteVnetTransit,
+                allowRemoteVnetToUseHubVnetGateways,
+                enableInternetSecurity,
+                routingConfiguration,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<HubVirtualNetworkConnectionData>.Write(ModelReaderWriterOptions options)

@@ -179,24 +179,24 @@ namespace Azure.ResourceManager.ServiceFabric
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ManagedServiceIdentity identity = default;
+            ETag? etag = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> typeVersion = default;
-            Optional<IDictionary<string, string>> parameters = default;
-            Optional<ApplicationUpgradePolicy> upgradePolicy = default;
-            Optional<long> minimumNodes = default;
-            Optional<long> maximumNodes = default;
-            Optional<bool> removeApplicationCapacity = default;
-            Optional<IList<ApplicationMetricDescription>> metrics = default;
-            Optional<IList<ApplicationUserAssignedIdentity>> managedIdentities = default;
-            Optional<string> provisioningState = default;
-            Optional<string> typeName = default;
+            SystemData systemData = default;
+            string typeVersion = default;
+            IDictionary<string, string> parameters = default;
+            ApplicationUpgradePolicy upgradePolicy = default;
+            long? minimumNodes = default;
+            long? maximumNodes = default;
+            bool? removeApplicationCapacity = default;
+            IList<ApplicationMetricDescription> metrics = default;
+            IList<ApplicationUserAssignedIdentity> managedIdentities = default;
+            string provisioningState = default;
+            string typeName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.ServiceFabric
                             {
                                 continue;
                             }
-                            upgradePolicy = ApplicationUpgradePolicy.DeserializeApplicationUpgradePolicy(property0.Value);
+                            upgradePolicy = ApplicationUpgradePolicy.DeserializeApplicationUpgradePolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("minimumNodes"u8))
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.ServiceFabric
                             List<ApplicationMetricDescription> array = new List<ApplicationMetricDescription>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationMetricDescription.DeserializeApplicationMetricDescription(item));
+                                array.Add(ApplicationMetricDescription.DeserializeApplicationMetricDescription(item, options));
                             }
                             metrics = array;
                             continue;
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.ServiceFabric
                             List<ApplicationUserAssignedIdentity> array = new List<ApplicationUserAssignedIdentity>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationUserAssignedIdentity.DeserializeApplicationUserAssignedIdentity(item));
+                                array.Add(ApplicationUserAssignedIdentity.DeserializeApplicationUserAssignedIdentity(item, options));
                             }
                             managedIdentities = array;
                             continue;
@@ -373,7 +373,26 @@ namespace Azure.ResourceManager.ServiceFabric
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceFabricApplicationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, typeVersion.Value, Optional.ToDictionary(parameters), upgradePolicy.Value, Optional.ToNullable(minimumNodes), Optional.ToNullable(maximumNodes), Optional.ToNullable(removeApplicationCapacity), Optional.ToList(metrics), Optional.ToList(managedIdentities), provisioningState.Value, typeName.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new ServiceFabricApplicationData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                typeVersion,
+                parameters ?? new ChangeTrackingDictionary<string, string>(),
+                upgradePolicy,
+                minimumNodes,
+                maximumNodes,
+                removeApplicationCapacity,
+                metrics ?? new ChangeTrackingList<ApplicationMetricDescription>(),
+                managedIdentities ?? new ChangeTrackingList<ApplicationUserAssignedIdentity>(),
+                provisioningState,
+                typeName,
+                etag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceFabricApplicationData>.Write(ModelReaderWriterOptions options)

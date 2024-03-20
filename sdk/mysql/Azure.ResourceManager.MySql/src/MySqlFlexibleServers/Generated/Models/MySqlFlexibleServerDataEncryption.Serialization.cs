@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MySql;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> primaryUserAssignedIdentityId = default;
-            Optional<Uri> primaryKeyUri = default;
-            Optional<ResourceIdentifier> geoBackupUserAssignedIdentityId = default;
-            Optional<Uri> geoBackupKeyUri = default;
-            Optional<MySqlFlexibleServerDataEncryptionType> type = default;
+            ResourceIdentifier primaryUserAssignedIdentityId = default;
+            Uri primaryKeyUri = default;
+            ResourceIdentifier geoBackupUserAssignedIdentityId = default;
+            Uri geoBackupKeyUri = default;
+            MySqlFlexibleServerDataEncryptionType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +150,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlFlexibleServerDataEncryption(primaryUserAssignedIdentityId.Value, primaryKeyUri.Value, geoBackupUserAssignedIdentityId.Value, geoBackupKeyUri.Value, Optional.ToNullable(type), serializedAdditionalRawData);
+            return new MySqlFlexibleServerDataEncryption(
+                primaryUserAssignedIdentityId,
+                primaryKeyUri,
+                geoBackupUserAssignedIdentityId,
+                geoBackupKeyUri,
+                type,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFlexibleServerDataEncryption>.Write(ModelReaderWriterOptions options)

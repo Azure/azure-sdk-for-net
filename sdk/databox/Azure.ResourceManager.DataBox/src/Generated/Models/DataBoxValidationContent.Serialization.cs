@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -77,10 +78,10 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "JobCreationValidation": return CreateJobValidationContent.DeserializeCreateJobValidationContent(element);
+                    case "JobCreationValidation": return CreateJobValidationContent.DeserializeCreateJobValidationContent(element, options);
                 }
             }
-            return UnknownValidationRequest.DeserializeUnknownValidationRequest(element);
+            return UnknownValidationRequest.DeserializeUnknownValidationRequest(element, options);
         }
 
         BinaryData IPersistableModel<DataBoxValidationContent>.Write(ModelReaderWriterOptions options)

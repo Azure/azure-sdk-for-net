@@ -162,22 +162,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> annotation = default;
-            Optional<NetworkFabricConfigurationType> configurationType = default;
-            Optional<Uri> aclsUrl = default;
-            Optional<CommunityActionType> defaultAction = default;
-            Optional<IList<AccessControlListMatchConfiguration>> matchConfigurations = default;
-            Optional<IList<CommonDynamicMatchConfiguration>> dynamicMatchConfigurations = default;
-            Optional<DateTimeOffset> lastSyncedTime = default;
-            Optional<NetworkFabricConfigurationState> configurationState = default;
-            Optional<NetworkFabricProvisioningState> provisioningState = default;
-            Optional<NetworkFabricAdministrativeState> administrativeState = default;
+            SystemData systemData = default;
+            string annotation = default;
+            NetworkFabricConfigurationType? configurationType = default;
+            Uri aclsUrl = default;
+            CommunityActionType? defaultAction = default;
+            IList<AccessControlListMatchConfiguration> matchConfigurations = default;
+            IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations = default;
+            DateTimeOffset? lastSyncedTime = default;
+            NetworkFabricConfigurationState? configurationState = default;
+            NetworkFabricProvisioningState? provisioningState = default;
+            NetworkFabricAdministrativeState? administrativeState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             List<AccessControlListMatchConfiguration> array = new List<AccessControlListMatchConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AccessControlListMatchConfiguration.DeserializeAccessControlListMatchConfiguration(item));
+                                array.Add(AccessControlListMatchConfiguration.DeserializeAccessControlListMatchConfiguration(item, options));
                             }
                             matchConfigurations = array;
                             continue;
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             List<CommonDynamicMatchConfiguration> array = new List<CommonDynamicMatchConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(CommonDynamicMatchConfiguration.DeserializeCommonDynamicMatchConfiguration(item));
+                                array.Add(CommonDynamicMatchConfiguration.DeserializeCommonDynamicMatchConfiguration(item, options));
                             }
                             dynamicMatchConfigurations = array;
                             continue;
@@ -339,7 +339,24 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFabricAccessControlListData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, annotation.Value, Optional.ToNullable(configurationType), aclsUrl.Value, Optional.ToNullable(defaultAction), Optional.ToList(matchConfigurations), Optional.ToList(dynamicMatchConfigurations), Optional.ToNullable(lastSyncedTime), Optional.ToNullable(configurationState), Optional.ToNullable(provisioningState), Optional.ToNullable(administrativeState), serializedAdditionalRawData);
+            return new NetworkFabricAccessControlListData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                annotation,
+                configurationType,
+                aclsUrl,
+                defaultAction,
+                matchConfigurations ?? new ChangeTrackingList<AccessControlListMatchConfiguration>(),
+                dynamicMatchConfigurations ?? new ChangeTrackingList<CommonDynamicMatchConfiguration>(),
+                lastSyncedTime,
+                configurationState,
+                provisioningState,
+                administrativeState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkFabricAccessControlListData>.Write(ModelReaderWriterOptions options)

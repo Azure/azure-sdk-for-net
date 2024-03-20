@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -58,12 +59,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<IntegrationRuntimeState> state = default;
-            Optional<ManagedVirtualNetworkReference> managedVirtualNetwork = default;
+            IntegrationRuntimeState? state = default;
+            ManagedVirtualNetworkReference managedVirtualNetwork = default;
             IntegrationRuntimeType type = default;
-            Optional<string> description = default;
-            Optional<IntegrationRuntimeComputeProperties> computeProperties = default;
-            Optional<IntegrationRuntimeSsisProperties> ssisProperties = default;
+            string description = default;
+            IntegrationRuntimeComputeProperties computeProperties = default;
+            IntegrationRuntimeSsisProperties ssisProperties = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +130,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ManagedIntegrationRuntime(type, description.Value, additionalProperties, Optional.ToNullable(state), managedVirtualNetwork.Value, computeProperties.Value, ssisProperties.Value);
+            return new ManagedIntegrationRuntime(
+                type,
+                description,
+                additionalProperties,
+                state,
+                managedVirtualNetwork,
+                computeProperties,
+                ssisProperties);
         }
 
         internal partial class ManagedIntegrationRuntimeConverter : JsonConverter<ManagedIntegrationRuntime>

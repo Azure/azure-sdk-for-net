@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppComplianceAutomation;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
@@ -104,13 +105,13 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<AssessmentSeverity> severity = default;
-            Optional<string> description = default;
-            Optional<string> remediation = default;
-            Optional<IsPass> isPass = default;
-            Optional<string> policyId = default;
-            Optional<IReadOnlyList<AssessmentResourceContent>> resourceList = default;
+            string name = default;
+            AssessmentSeverity? severity = default;
+            string description = default;
+            string remediation = default;
+            IsPass? isPass = default;
+            string policyId = default;
+            IReadOnlyList<AssessmentResourceContent> resourceList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -162,7 +163,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     List<AssessmentResourceContent> array = new List<AssessmentResourceContent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AssessmentResourceContent.DeserializeAssessmentResourceContent(item));
+                        array.Add(AssessmentResourceContent.DeserializeAssessmentResourceContent(item, options));
                     }
                     resourceList = array;
                     continue;
@@ -173,7 +174,15 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Assessment(name.Value, Optional.ToNullable(severity), description.Value, remediation.Value, Optional.ToNullable(isPass), policyId.Value, Optional.ToList(resourceList), serializedAdditionalRawData);
+            return new Assessment(
+                name,
+                severity,
+                description,
+                remediation,
+                isPass,
+                policyId,
+                resourceList ?? new ChangeTrackingList<AssessmentResourceContent>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Assessment>.Write(ModelReaderWriterOptions options)

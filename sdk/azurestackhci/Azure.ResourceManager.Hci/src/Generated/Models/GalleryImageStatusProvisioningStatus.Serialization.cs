@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> operationId = default;
-            Optional<HciClusterStatus> status = default;
+            string operationId = default;
+            HciClusterStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GalleryImageStatusProvisioningStatus(operationId.Value, Optional.ToNullable(status), serializedAdditionalRawData);
+            return new GalleryImageStatusProvisioningStatus(operationId, status, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GalleryImageStatusProvisioningStatus>.Write(ModelReaderWriterOptions options)

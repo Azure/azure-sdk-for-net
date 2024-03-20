@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -145,18 +146,18 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<string> address = default;
-            Optional<string> privateLinkAlias = default;
-            Optional<ResourceIdentifier> privateLinkResourceId = default;
-            Optional<AzureLocation?> privateLinkLocation = default;
-            Optional<BackendPrivateEndpointStatus?> privateEndpointStatus = default;
-            Optional<string> privateLinkApprovalMessage = default;
-            Optional<int> httpPort = default;
-            Optional<int> httpsPort = default;
-            Optional<BackendEnabledState> enabledState = default;
-            Optional<int> priority = default;
-            Optional<int> weight = default;
-            Optional<string> backendHostHeader = default;
+            string address = default;
+            string privateLinkAlias = default;
+            ResourceIdentifier privateLinkResourceId = default;
+            AzureLocation? privateLinkLocation = default;
+            BackendPrivateEndpointStatus? privateEndpointStatus = default;
+            string privateLinkApprovalMessage = default;
+            int? httpPort = default;
+            int? httpsPort = default;
+            BackendEnabledState? enabledState = default;
+            int? priority = default;
+            int? weight = default;
+            string backendHostHeader = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -262,7 +263,20 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorBackend(address.Value, privateLinkAlias.Value, privateLinkResourceId.Value, Optional.ToNullable(privateLinkLocation), Optional.ToNullable(privateEndpointStatus), privateLinkApprovalMessage.Value, Optional.ToNullable(httpPort), Optional.ToNullable(httpsPort), Optional.ToNullable(enabledState), Optional.ToNullable(priority), Optional.ToNullable(weight), backendHostHeader.Value, serializedAdditionalRawData);
+            return new FrontDoorBackend(
+                address,
+                privateLinkAlias,
+                privateLinkResourceId,
+                privateLinkLocation,
+                privateEndpointStatus,
+                privateLinkApprovalMessage,
+                httpPort,
+                httpsPort,
+                enabledState,
+                priority,
+                weight,
+                backendHostHeader,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorBackend>.Write(ModelReaderWriterOptions options)

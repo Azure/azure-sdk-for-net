@@ -167,23 +167,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> annotation = default;
-            Optional<NetworkFabricConfigurationType> configurationType = default;
-            Optional<Uri> tapRulesUrl = default;
-            Optional<IList<NetworkTapRuleMatchConfiguration>> matchConfigurations = default;
-            Optional<IList<CommonDynamicMatchConfiguration>> dynamicMatchConfigurations = default;
-            Optional<ResourceIdentifier> networkTapId = default;
-            Optional<PollingIntervalInSecond> pollingIntervalInSeconds = default;
-            Optional<DateTimeOffset> lastSyncedTime = default;
-            Optional<NetworkFabricConfigurationState> configurationState = default;
-            Optional<NetworkFabricProvisioningState> provisioningState = default;
-            Optional<NetworkFabricAdministrativeState> administrativeState = default;
+            SystemData systemData = default;
+            string annotation = default;
+            NetworkFabricConfigurationType? configurationType = default;
+            Uri tapRulesUrl = default;
+            IList<NetworkTapRuleMatchConfiguration> matchConfigurations = default;
+            IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations = default;
+            ResourceIdentifier networkTapId = default;
+            PollingIntervalInSecond? pollingIntervalInSeconds = default;
+            DateTimeOffset? lastSyncedTime = default;
+            NetworkFabricConfigurationState? configurationState = default;
+            NetworkFabricProvisioningState? provisioningState = default;
+            NetworkFabricAdministrativeState? administrativeState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             List<NetworkTapRuleMatchConfiguration> array = new List<NetworkTapRuleMatchConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkTapRuleMatchConfiguration.DeserializeNetworkTapRuleMatchConfiguration(item));
+                                array.Add(NetworkTapRuleMatchConfiguration.DeserializeNetworkTapRuleMatchConfiguration(item, options));
                             }
                             matchConfigurations = array;
                             continue;
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             List<CommonDynamicMatchConfiguration> array = new List<CommonDynamicMatchConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(CommonDynamicMatchConfiguration.DeserializeCommonDynamicMatchConfiguration(item));
+                                array.Add(CommonDynamicMatchConfiguration.DeserializeCommonDynamicMatchConfiguration(item, options));
                             }
                             dynamicMatchConfigurations = array;
                             continue;
@@ -354,7 +354,25 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkTapRuleData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, annotation.Value, Optional.ToNullable(configurationType), tapRulesUrl.Value, Optional.ToList(matchConfigurations), Optional.ToList(dynamicMatchConfigurations), networkTapId.Value, Optional.ToNullable(pollingIntervalInSeconds), Optional.ToNullable(lastSyncedTime), Optional.ToNullable(configurationState), Optional.ToNullable(provisioningState), Optional.ToNullable(administrativeState), serializedAdditionalRawData);
+            return new NetworkTapRuleData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                annotation,
+                configurationType,
+                tapRulesUrl,
+                matchConfigurations ?? new ChangeTrackingList<NetworkTapRuleMatchConfiguration>(),
+                dynamicMatchConfigurations ?? new ChangeTrackingList<CommonDynamicMatchConfiguration>(),
+                networkTapId,
+                pollingIntervalInSeconds,
+                lastSyncedTime,
+                configurationState,
+                provisioningState,
+                administrativeState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkTapRuleData>.Write(ModelReaderWriterOptions options)

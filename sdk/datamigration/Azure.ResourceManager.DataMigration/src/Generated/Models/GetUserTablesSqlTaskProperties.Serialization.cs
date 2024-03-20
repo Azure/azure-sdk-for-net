@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -122,14 +123,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<GetUserTablesSqlTaskInput> input = default;
-            Optional<IReadOnlyList<GetUserTablesSqlTaskOutput>> output = default;
-            Optional<string> taskId = default;
+            GetUserTablesSqlTaskInput input = default;
+            IReadOnlyList<GetUserTablesSqlTaskOutput> output = default;
+            string taskId = default;
             TaskType taskType = default;
-            Optional<IReadOnlyList<ODataError>> errors = default;
-            Optional<TaskState> state = default;
-            Optional<IReadOnlyList<CommandProperties>> commands = default;
-            Optional<IDictionary<string, string>> clientData = default;
+            IReadOnlyList<ODataError> errors = default;
+            TaskState? state = default;
+            IReadOnlyList<CommandProperties> commands = default;
+            IDictionary<string, string> clientData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -140,7 +141,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    input = GetUserTablesSqlTaskInput.DeserializeGetUserTablesSqlTaskInput(property.Value);
+                    input = GetUserTablesSqlTaskInput.DeserializeGetUserTablesSqlTaskInput(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("output"u8))
@@ -152,7 +153,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<GetUserTablesSqlTaskOutput> array = new List<GetUserTablesSqlTaskOutput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GetUserTablesSqlTaskOutput.DeserializeGetUserTablesSqlTaskOutput(item));
+                        array.Add(GetUserTablesSqlTaskOutput.DeserializeGetUserTablesSqlTaskOutput(item, options));
                     }
                     output = array;
                     continue;
@@ -176,7 +177,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ODataError> array = new List<ODataError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ODataError.DeserializeODataError(item));
+                        array.Add(ODataError.DeserializeODataError(item, options));
                     }
                     errors = array;
                     continue;
@@ -199,7 +200,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<CommandProperties> array = new List<CommandProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CommandProperties.DeserializeCommandProperties(item));
+                        array.Add(CommandProperties.DeserializeCommandProperties(item, options));
                     }
                     commands = array;
                     continue;
@@ -224,7 +225,16 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GetUserTablesSqlTaskProperties(taskType, Optional.ToList(errors), Optional.ToNullable(state), Optional.ToList(commands), Optional.ToDictionary(clientData), serializedAdditionalRawData, input.Value, Optional.ToList(output), taskId.Value);
+            return new GetUserTablesSqlTaskProperties(
+                taskType,
+                errors ?? new ChangeTrackingList<ODataError>(),
+                state,
+                commands ?? new ChangeTrackingList<CommandProperties>(),
+                clientData ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                input,
+                output ?? new ChangeTrackingList<GetUserTablesSqlTaskOutput>(),
+                taskId);
         }
 
         BinaryData IPersistableModel<GetUserTablesSqlTaskProperties>.Write(ModelReaderWriterOptions options)

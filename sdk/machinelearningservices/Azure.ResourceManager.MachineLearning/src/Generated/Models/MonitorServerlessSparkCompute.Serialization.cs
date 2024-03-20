@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -82,7 +83,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (property.NameEquals("computeIdentity"u8))
                 {
-                    computeIdentity = MonitorComputeIdentityBase.DeserializeMonitorComputeIdentityBase(property.Value);
+                    computeIdentity = MonitorComputeIdentityBase.DeserializeMonitorComputeIdentityBase(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("instanceType"u8))

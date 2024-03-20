@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -91,11 +92,11 @@ namespace Azure.ResourceManager.Resources
             {
                 return null;
             }
-            Optional<FeatureProperties> properties = default;
+            FeatureProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,7 +107,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         continue;
                     }
-                    properties = FeatureProperties.DeserializeFeatureProperties(property.Value);
+                    properties = FeatureProperties.DeserializeFeatureProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -139,7 +140,13 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FeatureData(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new FeatureData(
+                id,
+                name,
+                type,
+                systemData,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FeatureData>.Write(ModelReaderWriterOptions options)

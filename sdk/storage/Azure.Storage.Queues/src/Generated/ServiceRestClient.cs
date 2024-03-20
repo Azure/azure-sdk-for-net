@@ -13,6 +13,7 @@ using System.Xml.Linq;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Storage.Common;
 using Azure.Storage.Queues.Models;
 
 namespace Azure.Storage.Queues
@@ -273,7 +274,7 @@ namespace Azure.Storage.Queues
             {
                 uri.AppendQuery("maxresults", maxresults.Value, true);
             }
-            if (include != null && Optional.IsCollectionDefined(include))
+            if (include != null && !(include is Common.ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("include", include, ",", true);
             }

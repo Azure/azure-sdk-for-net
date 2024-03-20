@@ -164,23 +164,23 @@ namespace Azure.ResourceManager.Automation
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ETag? etag = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DscConfigurationProvisioningState> provisioningState = default;
-            Optional<int> jobCount = default;
-            Optional<IDictionary<string, DscConfigurationParameterDefinition>> parameters = default;
-            Optional<AutomationContentSource> source = default;
-            Optional<DscConfigurationState> state = default;
-            Optional<bool> logVerbose = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<int> nodeConfigurationCount = default;
-            Optional<string> description = default;
+            SystemData systemData = default;
+            DscConfigurationProvisioningState? provisioningState = default;
+            int? jobCount = default;
+            IDictionary<string, DscConfigurationParameterDefinition> parameters = default;
+            AutomationContentSource source = default;
+            DscConfigurationState? state = default;
+            bool? logVerbose = default;
+            DateTimeOffset? creationTime = default;
+            DateTimeOffset? lastModifiedTime = default;
+            int? nodeConfigurationCount = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Automation
                             Dictionary<string, DscConfigurationParameterDefinition> dictionary = new Dictionary<string, DscConfigurationParameterDefinition>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, DscConfigurationParameterDefinition.DeserializeDscConfigurationParameterDefinition(property1.Value));
+                                dictionary.Add(property1.Name, DscConfigurationParameterDefinition.DeserializeDscConfigurationParameterDefinition(property1.Value, options));
                             }
                             parameters = dictionary;
                             continue;
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Automation
                             {
                                 continue;
                             }
-                            source = AutomationContentSource.DeserializeAutomationContentSource(property0.Value);
+                            source = AutomationContentSource.DeserializeAutomationContentSource(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("state"u8))
@@ -346,7 +346,25 @@ namespace Azure.ResourceManager.Automation
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DscConfigurationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToNullable(provisioningState), Optional.ToNullable(jobCount), Optional.ToDictionary(parameters), source.Value, Optional.ToNullable(state), Optional.ToNullable(logVerbose), Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), Optional.ToNullable(nodeConfigurationCount), description.Value, serializedAdditionalRawData);
+            return new DscConfigurationData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                etag,
+                provisioningState,
+                jobCount,
+                parameters ?? new ChangeTrackingDictionary<string, DscConfigurationParameterDefinition>(),
+                source,
+                state,
+                logVerbose,
+                creationTime,
+                lastModifiedTime,
+                nodeConfigurationCount,
+                description,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DscConfigurationData>.Write(ModelReaderWriterOptions options)

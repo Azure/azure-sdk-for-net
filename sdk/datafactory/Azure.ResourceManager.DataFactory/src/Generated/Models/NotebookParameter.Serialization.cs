@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -82,8 +83,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<string>> value = default;
-            Optional<NotebookParameterType> type = default;
+            DataFactoryElement<string> value = default;
+            NotebookParameterType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NotebookParameter(value.Value, Optional.ToNullable(type), serializedAdditionalRawData);
+            return new NotebookParameter(value, type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NotebookParameter>.Write(ModelReaderWriterOptions options)

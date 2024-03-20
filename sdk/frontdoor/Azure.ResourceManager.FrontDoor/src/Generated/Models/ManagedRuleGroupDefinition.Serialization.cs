@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -84,9 +85,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<string> ruleGroupName = default;
-            Optional<string> description = default;
-            Optional<IReadOnlyList<ManagedRuleDefinition>> rules = default;
+            string ruleGroupName = default;
+            string description = default;
+            IReadOnlyList<ManagedRuleDefinition> rules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     List<ManagedRuleDefinition> array = new List<ManagedRuleDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedRuleDefinition.DeserializeManagedRuleDefinition(item));
+                        array.Add(ManagedRuleDefinition.DeserializeManagedRuleDefinition(item, options));
                     }
                     rules = array;
                     continue;
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedRuleGroupDefinition(ruleGroupName.Value, description.Value, Optional.ToList(rules), serializedAdditionalRawData);
+            return new ManagedRuleGroupDefinition(ruleGroupName, description, rules ?? new ChangeTrackingList<ManagedRuleDefinition>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedRuleGroupDefinition>.Write(ModelReaderWriterOptions options)

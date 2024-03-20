@@ -160,30 +160,30 @@ namespace Azure.ResourceManager.Analysis
                 return null;
             }
             AnalysisResourceSku sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ServerAdministrators> asAdministrators = default;
-            Optional<Uri> backupBlobContainerUri = default;
-            Optional<AnalysisGatewayDetails> gatewayDetails = default;
-            Optional<AnalysisIPv4FirewallSettings> ipV4FirewallSettings = default;
-            Optional<AnalysisConnectionMode> querypoolConnectionMode = default;
-            Optional<AnalysisManagedMode> managedMode = default;
-            Optional<ServerMonitorMode> serverMonitorMode = default;
-            Optional<AnalysisState> state = default;
-            Optional<AnalysisProvisioningState> provisioningState = default;
-            Optional<string> serverFullName = default;
-            Optional<AnalysisResourceSku> sku0 = default;
+            SystemData systemData = default;
+            ServerAdministrators asAdministrators = default;
+            Uri backupBlobContainerUri = default;
+            AnalysisGatewayDetails gatewayDetails = default;
+            AnalysisIPv4FirewallSettings ipV4FirewallSettings = default;
+            AnalysisConnectionMode? querypoolConnectionMode = default;
+            AnalysisManagedMode? managedMode = default;
+            ServerMonitorMode? serverMonitorMode = default;
+            AnalysisState? state = default;
+            AnalysisProvisioningState? provisioningState = default;
+            string serverFullName = default;
+            AnalysisResourceSku sku0 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = AnalysisResourceSku.DeserializeAnalysisResourceSku(property.Value);
+                    sku = AnalysisResourceSku.DeserializeAnalysisResourceSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Analysis
                             {
                                 continue;
                             }
-                            asAdministrators = ServerAdministrators.DeserializeServerAdministrators(property0.Value);
+                            asAdministrators = ServerAdministrators.DeserializeServerAdministrators(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("backupBlobContainerUri"u8))
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Analysis
                             {
                                 continue;
                             }
-                            gatewayDetails = AnalysisGatewayDetails.DeserializeAnalysisGatewayDetails(property0.Value);
+                            gatewayDetails = AnalysisGatewayDetails.DeserializeAnalysisGatewayDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("ipV4FirewallSettings"u8))
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Analysis
                             {
                                 continue;
                             }
-                            ipV4FirewallSettings = AnalysisIPv4FirewallSettings.DeserializeAnalysisIPv4FirewallSettings(property0.Value);
+                            ipV4FirewallSettings = AnalysisIPv4FirewallSettings.DeserializeAnalysisIPv4FirewallSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("querypoolConnectionMode"u8))
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Analysis
                             {
                                 continue;
                             }
-                            sku0 = AnalysisResourceSku.DeserializeAnalysisResourceSku(property0.Value);
+                            sku0 = AnalysisResourceSku.DeserializeAnalysisResourceSku(property0.Value, options);
                             continue;
                         }
                     }
@@ -342,7 +342,26 @@ namespace Azure.ResourceManager.Analysis
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AnalysisServerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, asAdministrators.Value, backupBlobContainerUri.Value, gatewayDetails.Value, ipV4FirewallSettings.Value, Optional.ToNullable(querypoolConnectionMode), Optional.ToNullable(managedMode), Optional.ToNullable(serverMonitorMode), Optional.ToNullable(state), Optional.ToNullable(provisioningState), serverFullName.Value, sku0.Value, sku, serializedAdditionalRawData);
+            return new AnalysisServerData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                asAdministrators,
+                backupBlobContainerUri,
+                gatewayDetails,
+                ipV4FirewallSettings,
+                querypoolConnectionMode,
+                managedMode,
+                serverMonitorMode,
+                state,
+                provisioningState,
+                serverFullName,
+                sku0,
+                sku,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AnalysisServerData>.Write(ModelReaderWriterOptions options)

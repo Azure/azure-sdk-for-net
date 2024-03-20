@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -73,7 +74,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<string> timeZone = default;
+            string timeZone = default;
             DateTimeOffset start = default;
             DateTimeOffset end = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorTimeWindow(timeZone.Value, start, end, serializedAdditionalRawData);
+            return new MonitorTimeWindow(timeZone, start, end, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorTimeWindow>.Write(ModelReaderWriterOptions options)

@@ -136,17 +136,17 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<ExpressRouteGatewayPropertiesAutoScaleConfiguration> autoScaleConfiguration = default;
-            Optional<IList<ExpressRouteConnectionData>> expressRouteConnections = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<WritableSubResource> virtualHub = default;
-            Optional<bool> allowNonVirtualWanTraffic = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
+            IDictionary<string, string> tags = default;
+            ExpressRouteGatewayPropertiesAutoScaleConfiguration autoScaleConfiguration = default;
+            IList<ExpressRouteConnectionData> expressRouteConnections = default;
+            NetworkProvisioningState? provisioningState = default;
+            WritableSubResource virtualHub = default;
+            bool? allowNonVirtualWanTraffic = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            autoScaleConfiguration = ExpressRouteGatewayPropertiesAutoScaleConfiguration.DeserializeExpressRouteGatewayPropertiesAutoScaleConfiguration(property0.Value);
+                            autoScaleConfiguration = ExpressRouteGatewayPropertiesAutoScaleConfiguration.DeserializeExpressRouteGatewayPropertiesAutoScaleConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("expressRouteConnections"u8))
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Network
                             List<ExpressRouteConnectionData> array = new List<ExpressRouteConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ExpressRouteConnectionData.DeserializeExpressRouteConnectionData(item));
+                                array.Add(ExpressRouteConnectionData.DeserializeExpressRouteConnectionData(item, options));
                             }
                             expressRouteConnections = array;
                             continue;
@@ -274,7 +274,19 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressRouteGatewayData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(etag), autoScaleConfiguration.Value, Optional.ToList(expressRouteConnections), Optional.ToNullable(provisioningState), virtualHub, Optional.ToNullable(allowNonVirtualWanTraffic));
+            return new ExpressRouteGatewayData(
+                id,
+                name,
+                type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                etag,
+                autoScaleConfiguration,
+                expressRouteConnections ?? new ChangeTrackingList<ExpressRouteConnectionData>(),
+                provisioningState,
+                virtualHub,
+                allowNonVirtualWanTraffic);
         }
 
         BinaryData IPersistableModel<ExpressRouteGatewayData>.Write(ModelReaderWriterOptions options)

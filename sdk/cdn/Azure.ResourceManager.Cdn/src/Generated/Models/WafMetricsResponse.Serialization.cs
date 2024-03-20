@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -89,10 +90,10 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> dateTimeBegin = default;
-            Optional<DateTimeOffset> dateTimeEnd = default;
-            Optional<WafMetricsResponseGranularity> granularity = default;
-            Optional<IReadOnlyList<WafMetricsResponseSeriesItem>> series = default;
+            DateTimeOffset? dateTimeBegin = default;
+            DateTimeOffset? dateTimeEnd = default;
+            WafMetricsResponseGranularity? granularity = default;
+            IReadOnlyList<WafMetricsResponseSeriesItem> series = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +134,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<WafMetricsResponseSeriesItem> array = new List<WafMetricsResponseSeriesItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WafMetricsResponseSeriesItem.DeserializeWafMetricsResponseSeriesItem(item));
+                        array.Add(WafMetricsResponseSeriesItem.DeserializeWafMetricsResponseSeriesItem(item, options));
                     }
                     series = array;
                     continue;
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WafMetricsResponse(Optional.ToNullable(dateTimeBegin), Optional.ToNullable(dateTimeEnd), Optional.ToNullable(granularity), Optional.ToList(series), serializedAdditionalRawData);
+            return new WafMetricsResponse(dateTimeBegin, dateTimeEnd, granularity, series ?? new ChangeTrackingList<WafMetricsResponseSeriesItem>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WafMetricsResponse>.Write(ModelReaderWriterOptions options)

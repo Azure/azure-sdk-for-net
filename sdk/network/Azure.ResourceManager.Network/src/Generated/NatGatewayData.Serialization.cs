@@ -166,20 +166,20 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<NatGatewaySku> sku = default;
-            Optional<IList<string>> zones = default;
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<int> idleTimeoutInMinutes = default;
-            Optional<IList<WritableSubResource>> publicIPAddresses = default;
-            Optional<IList<WritableSubResource>> publicIPPrefixes = default;
-            Optional<IReadOnlyList<WritableSubResource>> subnets = default;
-            Optional<Guid> resourceGuid = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            NatGatewaySku sku = default;
+            IList<string> zones = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
+            IDictionary<string, string> tags = default;
+            int? idleTimeoutInMinutes = default;
+            IList<WritableSubResource> publicIPAddresses = default;
+            IList<WritableSubResource> publicIPPrefixes = default;
+            IReadOnlyList<WritableSubResource> subnets = default;
+            Guid? resourceGuid = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Network
                     {
                         continue;
                     }
-                    sku = NatGatewaySku.DeserializeNatGatewaySku(property.Value);
+                    sku = NatGatewaySku.DeserializeNatGatewaySku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("zones"u8))
@@ -349,7 +349,22 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NatGatewayData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, sku.Value, Optional.ToList(zones), Optional.ToNullable(etag), Optional.ToNullable(idleTimeoutInMinutes), Optional.ToList(publicIPAddresses), Optional.ToList(publicIPPrefixes), Optional.ToList(subnets), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState));
+            return new NatGatewayData(
+                id,
+                name,
+                type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                sku,
+                zones ?? new ChangeTrackingList<string>(),
+                etag,
+                idleTimeoutInMinutes,
+                publicIPAddresses ?? new ChangeTrackingList<WritableSubResource>(),
+                publicIPPrefixes ?? new ChangeTrackingList<WritableSubResource>(),
+                subnets ?? new ChangeTrackingList<WritableSubResource>(),
+                resourceGuid,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<NatGatewayData>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -117,7 +118,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("customDetails"u8))
                 {
-                    customDetails = RecoveryPlanActionDetails.DeserializeRecoveryPlanActionDetails(property.Value);
+                    customDetails = RecoveryPlanActionDetails.DeserializeRecoveryPlanActionDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

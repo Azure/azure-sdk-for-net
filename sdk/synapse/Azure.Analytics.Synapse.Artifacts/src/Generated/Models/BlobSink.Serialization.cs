@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -80,16 +81,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> blobWriterOverwriteFiles = default;
-            Optional<object> blobWriterDateTimeFormat = default;
-            Optional<object> blobWriterAddHeader = default;
-            Optional<object> copyBehavior = default;
+            object blobWriterOverwriteFiles = default;
+            object blobWriterDateTimeFormat = default;
+            object blobWriterAddHeader = default;
+            object copyBehavior = default;
             string type = default;
-            Optional<object> writeBatchSize = default;
-            Optional<object> writeBatchTimeout = default;
-            Optional<object> sinkRetryCount = default;
-            Optional<object> sinkRetryWait = default;
-            Optional<object> maxConcurrentConnections = default;
+            object writeBatchSize = default;
+            object writeBatchTimeout = default;
+            object sinkRetryCount = default;
+            object sinkRetryWait = default;
+            object maxConcurrentConnections = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -183,7 +184,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new BlobSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, blobWriterOverwriteFiles.Value, blobWriterDateTimeFormat.Value, blobWriterAddHeader.Value, copyBehavior.Value);
+            return new BlobSink(
+                type,
+                writeBatchSize,
+                writeBatchTimeout,
+                sinkRetryCount,
+                sinkRetryWait,
+                maxConcurrentConnections,
+                additionalProperties,
+                blobWriterOverwriteFiles,
+                blobWriterDateTimeFormat,
+                blobWriterAddHeader,
+                copyBehavior);
         }
 
         internal partial class BlobSinkConverter : JsonConverter<BlobSink>

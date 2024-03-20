@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Dynatrace;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 return null;
             }
-            Optional<string> environmentId = default;
-            Optional<string> ingestionKey = default;
-            Optional<Uri> logsIngestionEndpoint = default;
-            Optional<Uri> landingUri = default;
+            string environmentId = default;
+            string ingestionKey = default;
+            Uri logsIngestionEndpoint = default;
+            Uri landingUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DynatraceEnvironmentInfo(environmentId.Value, ingestionKey.Value, logsIngestionEndpoint.Value, landingUri.Value, serializedAdditionalRawData);
+            return new DynatraceEnvironmentInfo(environmentId, ingestionKey, logsIngestionEndpoint, landingUri, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DynatraceEnvironmentInfo>.Write(ModelReaderWriterOptions options)

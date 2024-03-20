@@ -142,15 +142,15 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ApiManagementUserState> state = default;
-            Optional<string> note = default;
-            Optional<IList<UserIdentityContract>> identities = default;
-            Optional<string> firstName = default;
-            Optional<string> lastName = default;
-            Optional<string> email = default;
-            Optional<DateTimeOffset> registrationDate = default;
-            Optional<IReadOnlyList<GroupContractProperties>> groups = default;
+            SystemData systemData = default;
+            ApiManagementUserState? state = default;
+            string note = default;
+            IList<UserIdentityContract> identities = default;
+            string firstName = default;
+            string lastName = default;
+            string email = default;
+            DateTimeOffset? registrationDate = default;
+            IReadOnlyList<GroupContractProperties> groups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.ApiManagement
                             List<UserIdentityContract> array = new List<UserIdentityContract>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(UserIdentityContract.DeserializeUserIdentityContract(item));
+                                array.Add(UserIdentityContract.DeserializeUserIdentityContract(item, options));
                             }
                             identities = array;
                             continue;
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ApiManagement
                             List<GroupContractProperties> array = new List<GroupContractProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(GroupContractProperties.DeserializeGroupContractProperties(item));
+                                array.Add(GroupContractProperties.DeserializeGroupContractProperties(item, options));
                             }
                             groups = array;
                             continue;
@@ -263,7 +263,20 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UserContractData(id, name, type, systemData.Value, Optional.ToNullable(state), note.Value, Optional.ToList(identities), firstName.Value, lastName.Value, email.Value, Optional.ToNullable(registrationDate), Optional.ToList(groups), serializedAdditionalRawData);
+            return new UserContractData(
+                id,
+                name,
+                type,
+                systemData,
+                state,
+                note,
+                identities ?? new ChangeTrackingList<UserIdentityContract>(),
+                firstName,
+                lastName,
+                email,
+                registrationDate,
+                groups ?? new ChangeTrackingList<GroupContractProperties>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UserContractData>.Write(ModelReaderWriterOptions options)

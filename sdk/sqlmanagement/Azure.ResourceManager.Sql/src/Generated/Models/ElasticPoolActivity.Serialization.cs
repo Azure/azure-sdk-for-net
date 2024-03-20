@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -193,31 +194,31 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<int> errorCode = default;
-            Optional<string> errorMessage = default;
-            Optional<int> errorSeverity = default;
-            Optional<string> operation = default;
-            Optional<Guid> operationId = default;
-            Optional<int> percentComplete = default;
-            Optional<int> requestedDatabaseDtuMax = default;
-            Optional<int> requestedDatabaseDtuMin = default;
-            Optional<int> requestedDtu = default;
-            Optional<string> requestedElasticPoolName = default;
-            Optional<long> requestedStorageLimitInGB = default;
-            Optional<string> elasticPoolName = default;
-            Optional<string> serverName = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<string> state = default;
-            Optional<int> requestedStorageLimitInMB = default;
-            Optional<int> requestedDatabaseDtuGuarantee = default;
-            Optional<int> requestedDatabaseDtuCap = default;
-            Optional<int> requestedDtuGuarantee = default;
+            SystemData systemData = default;
+            DateTimeOffset? endTime = default;
+            int? errorCode = default;
+            string errorMessage = default;
+            int? errorSeverity = default;
+            string operation = default;
+            Guid? operationId = default;
+            int? percentComplete = default;
+            int? requestedDatabaseDtuMax = default;
+            int? requestedDatabaseDtuMin = default;
+            int? requestedDtu = default;
+            string requestedElasticPoolName = default;
+            long? requestedStorageLimitInGB = default;
+            string elasticPoolName = default;
+            string serverName = default;
+            DateTimeOffset? startTime = default;
+            string state = default;
+            int? requestedStorageLimitInMB = default;
+            int? requestedDatabaseDtuGuarantee = default;
+            int? requestedDatabaseDtuCap = default;
+            int? requestedDtuGuarantee = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -429,7 +430,33 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticPoolActivity(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(endTime), Optional.ToNullable(errorCode), errorMessage.Value, Optional.ToNullable(errorSeverity), operation.Value, Optional.ToNullable(operationId), Optional.ToNullable(percentComplete), Optional.ToNullable(requestedDatabaseDtuMax), Optional.ToNullable(requestedDatabaseDtuMin), Optional.ToNullable(requestedDtu), requestedElasticPoolName.Value, Optional.ToNullable(requestedStorageLimitInGB), elasticPoolName.Value, serverName.Value, Optional.ToNullable(startTime), state.Value, Optional.ToNullable(requestedStorageLimitInMB), Optional.ToNullable(requestedDatabaseDtuGuarantee), Optional.ToNullable(requestedDatabaseDtuCap), Optional.ToNullable(requestedDtuGuarantee), serializedAdditionalRawData);
+            return new ElasticPoolActivity(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                endTime,
+                errorCode,
+                errorMessage,
+                errorSeverity,
+                operation,
+                operationId,
+                percentComplete,
+                requestedDatabaseDtuMax,
+                requestedDatabaseDtuMin,
+                requestedDtu,
+                requestedElasticPoolName,
+                requestedStorageLimitInGB,
+                elasticPoolName,
+                serverName,
+                startTime,
+                state,
+                requestedStorageLimitInMB,
+                requestedDatabaseDtuGuarantee,
+                requestedDatabaseDtuCap,
+                requestedDtuGuarantee,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticPoolActivity>.Write(ModelReaderWriterOptions options)

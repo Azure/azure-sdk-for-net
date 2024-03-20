@@ -127,17 +127,17 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DevTestLabUserIdentity> identity = default;
-            Optional<DevTestLabUserSecretStore> secretStore = default;
-            Optional<DateTimeOffset> createdDate = default;
-            Optional<string> provisioningState = default;
-            Optional<Guid> uniqueIdentifier = default;
+            SystemData systemData = default;
+            DevTestLabUserIdentity identity = default;
+            DevTestLabUserSecretStore secretStore = default;
+            DateTimeOffset? createdDate = default;
+            string provisioningState = default;
+            Guid? uniqueIdentifier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             {
                                 continue;
                             }
-                            identity = DevTestLabUserIdentity.DeserializeDevTestLabUserIdentity(property0.Value);
+                            identity = DevTestLabUserIdentity.DeserializeDevTestLabUserIdentity(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("secretStore"u8))
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             {
                                 continue;
                             }
-                            secretStore = DevTestLabUserSecretStore.DeserializeDevTestLabUserSecretStore(property0.Value);
+                            secretStore = DevTestLabUserSecretStore.DeserializeDevTestLabUserSecretStore(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("createdDate"u8))
@@ -244,7 +244,19 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabUserData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity.Value, secretStore.Value, Optional.ToNullable(createdDate), provisioningState.Value, Optional.ToNullable(uniqueIdentifier), serializedAdditionalRawData);
+            return new DevTestLabUserData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                secretStore,
+                createdDate,
+                provisioningState,
+                uniqueIdentifier,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabUserData>.Write(ModelReaderWriterOptions options)

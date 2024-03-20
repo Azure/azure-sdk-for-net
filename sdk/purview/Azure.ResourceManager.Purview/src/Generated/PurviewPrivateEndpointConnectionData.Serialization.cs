@@ -108,10 +108,10 @@ namespace Azure.ResourceManager.Purview
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<WritableSubResource> privateEndpoint = default;
-            Optional<PurviewPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
-            Optional<string> provisioningState = default;
+            SystemData systemData = default;
+            WritableSubResource privateEndpoint = default;
+            PurviewPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Purview
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = PurviewPrivateLinkServiceConnectionState.DeserializePurviewPrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = PurviewPrivateLinkServiceConnectionState.DeserializePurviewPrivateLinkServiceConnectionState(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -181,7 +181,15 @@ namespace Azure.ResourceManager.Purview
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PurviewPrivateEndpointConnectionData(id, name, type, systemData.Value, privateEndpoint, privateLinkServiceConnectionState.Value, provisioningState.Value, serializedAdditionalRawData);
+            return new PurviewPrivateEndpointConnectionData(
+                id,
+                name,
+                type,
+                systemData,
+                privateEndpoint,
+                privateLinkServiceConnectionState,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PurviewPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options)

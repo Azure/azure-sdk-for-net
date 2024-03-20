@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -75,11 +76,11 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "ManagedDisk": return ManagedDiskDetails.DeserializeManagedDiskDetails(element);
-                    case "StorageAccount": return DataBoxStorageAccountDetails.DeserializeDataBoxStorageAccountDetails(element);
+                    case "ManagedDisk": return ManagedDiskDetails.DeserializeManagedDiskDetails(element, options);
+                    case "StorageAccount": return DataBoxStorageAccountDetails.DeserializeDataBoxStorageAccountDetails(element, options);
                 }
             }
-            return UnknownDataAccountDetails.DeserializeUnknownDataAccountDetails(element);
+            return UnknownDataAccountDetails.DeserializeUnknownDataAccountDetails(element, options);
         }
 
         BinaryData IPersistableModel<DataAccountDetails>.Write(ModelReaderWriterOptions options)

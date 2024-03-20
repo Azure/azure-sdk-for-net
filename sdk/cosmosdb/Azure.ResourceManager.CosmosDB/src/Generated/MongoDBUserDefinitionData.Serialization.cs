@@ -127,13 +127,13 @@ namespace Azure.ResourceManager.CosmosDB
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> userName = default;
-            Optional<string> password = default;
-            Optional<string> databaseName = default;
-            Optional<string> customData = default;
-            Optional<IList<MongoDBRole>> roles = default;
-            Optional<string> mechanisms = default;
+            SystemData systemData = default;
+            string userName = default;
+            string password = default;
+            string databaseName = default;
+            string customData = default;
+            IList<MongoDBRole> roles = default;
+            string mechanisms = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.CosmosDB
                             List<MongoDBRole> array = new List<MongoDBRole>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MongoDBRole.DeserializeMongoDBRole(item));
+                                array.Add(MongoDBRole.DeserializeMongoDBRole(item, options));
                             }
                             roles = array;
                             continue;
@@ -219,7 +219,18 @@ namespace Azure.ResourceManager.CosmosDB
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MongoDBUserDefinitionData(id, name, type, systemData.Value, userName.Value, password.Value, databaseName.Value, customData.Value, Optional.ToList(roles), mechanisms.Value, serializedAdditionalRawData);
+            return new MongoDBUserDefinitionData(
+                id,
+                name,
+                type,
+                systemData,
+                userName,
+                password,
+                databaseName,
+                customData,
+                roles ?? new ChangeTrackingList<MongoDBRole>(),
+                mechanisms,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MongoDBUserDefinitionData>.Write(ModelReaderWriterOptions options)

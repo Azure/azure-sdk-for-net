@@ -194,28 +194,28 @@ namespace Azure.ResourceManager.Automation
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ETag? etag = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<AutomationRunbookType> runbookType = default;
-            Optional<AutomationContentLink> publishContentLink = default;
-            Optional<RunbookState> state = default;
-            Optional<bool> logVerbose = default;
-            Optional<bool> logProgress = default;
-            Optional<int> logActivityTrace = default;
-            Optional<int> jobCount = default;
-            Optional<IDictionary<string, RunbookParameterDefinition>> parameters = default;
-            Optional<IList<string>> outputTypes = default;
-            Optional<AutomationRunbookDraft> draft = default;
-            Optional<RunbookProvisioningState> provisioningState = default;
-            Optional<string> lastModifiedBy = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<string> description = default;
+            SystemData systemData = default;
+            AutomationRunbookType? runbookType = default;
+            AutomationContentLink publishContentLink = default;
+            RunbookState? state = default;
+            bool? logVerbose = default;
+            bool? logProgress = default;
+            int? logActivityTrace = default;
+            int? jobCount = default;
+            IDictionary<string, RunbookParameterDefinition> parameters = default;
+            IList<string> outputTypes = default;
+            AutomationRunbookDraft draft = default;
+            RunbookProvisioningState? provisioningState = default;
+            string lastModifiedBy = default;
+            DateTimeOffset? creationTime = default;
+            DateTimeOffset? lastModifiedTime = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Automation
                             {
                                 continue;
                             }
-                            publishContentLink = AutomationContentLink.DeserializeAutomationContentLink(property0.Value);
+                            publishContentLink = AutomationContentLink.DeserializeAutomationContentLink(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("state"u8))
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.Automation
                             Dictionary<string, RunbookParameterDefinition> dictionary = new Dictionary<string, RunbookParameterDefinition>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, RunbookParameterDefinition.DeserializeRunbookParameterDefinition(property1.Value));
+                                dictionary.Add(property1.Name, RunbookParameterDefinition.DeserializeRunbookParameterDefinition(property1.Value, options));
                             }
                             parameters = dictionary;
                             continue;
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.Automation
                             {
                                 continue;
                             }
-                            draft = AutomationRunbookDraft.DeserializeAutomationRunbookDraft(property0.Value);
+                            draft = AutomationRunbookDraft.DeserializeAutomationRunbookDraft(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -427,7 +427,30 @@ namespace Azure.ResourceManager.Automation
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationRunbookData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToNullable(runbookType), publishContentLink.Value, Optional.ToNullable(state), Optional.ToNullable(logVerbose), Optional.ToNullable(logProgress), Optional.ToNullable(logActivityTrace), Optional.ToNullable(jobCount), Optional.ToDictionary(parameters), Optional.ToList(outputTypes), draft.Value, Optional.ToNullable(provisioningState), lastModifiedBy.Value, Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), description.Value, serializedAdditionalRawData);
+            return new AutomationRunbookData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                etag,
+                runbookType,
+                publishContentLink,
+                state,
+                logVerbose,
+                logProgress,
+                logActivityTrace,
+                jobCount,
+                parameters ?? new ChangeTrackingDictionary<string, RunbookParameterDefinition>(),
+                outputTypes ?? new ChangeTrackingList<string>(),
+                draft,
+                provisioningState,
+                lastModifiedBy,
+                creationTime,
+                lastModifiedTime,
+                description,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationRunbookData>.Write(ModelReaderWriterOptions options)

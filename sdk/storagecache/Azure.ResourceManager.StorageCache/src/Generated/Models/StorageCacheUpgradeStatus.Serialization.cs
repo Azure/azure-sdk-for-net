@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<string> currentFirmwareVersion = default;
-            Optional<StorageCacheFirmwareStatusType> firmwareUpdateStatus = default;
-            Optional<DateTimeOffset> firmwareUpdateDeadline = default;
-            Optional<DateTimeOffset> lastFirmwareUpdate = default;
-            Optional<string> pendingFirmwareVersion = default;
+            string currentFirmwareVersion = default;
+            StorageCacheFirmwareStatusType? firmwareUpdateStatus = default;
+            DateTimeOffset? firmwareUpdateDeadline = default;
+            DateTimeOffset? lastFirmwareUpdate = default;
+            string pendingFirmwareVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +142,13 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageCacheUpgradeStatus(currentFirmwareVersion.Value, Optional.ToNullable(firmwareUpdateStatus), Optional.ToNullable(firmwareUpdateDeadline), Optional.ToNullable(lastFirmwareUpdate), pendingFirmwareVersion.Value, serializedAdditionalRawData);
+            return new StorageCacheUpgradeStatus(
+                currentFirmwareVersion,
+                firmwareUpdateStatus,
+                firmwareUpdateDeadline,
+                lastFirmwareUpdate,
+                pendingFirmwareVersion,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageCacheUpgradeStatus>.Write(ModelReaderWriterOptions options)

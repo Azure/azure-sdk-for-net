@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetApp
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-05-01";
+            _apiVersion = apiVersion ?? "2023-07-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> List all volumes within the capacity pool. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="poolName"> The name of the capacity pool. </param>
@@ -70,38 +70,10 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<VolumeList>> ListAsync(string subscriptionId, string resourceGroupName, string accountName, string poolName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, accountName, poolName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -120,7 +92,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> List all volumes within the capacity pool. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="poolName"> The name of the capacity pool. </param>
@@ -129,38 +101,10 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<VolumeList> List(string subscriptionId, string resourceGroupName, string accountName, string poolName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, accountName, poolName);
             _pipeline.Send(message, cancellationToken);
@@ -203,7 +147,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Get the details of the specified volume. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="poolName"> The name of the capacity pool. </param>
@@ -213,46 +157,11 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<NetAppVolumeData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
-            if (volumeName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeName));
-            }
-            if (volumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -273,7 +182,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Get the details of the specified volume. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="poolName"> The name of the capacity pool. </param>
@@ -283,46 +192,11 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<NetAppVolumeData> Get(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
-            if (volumeName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeName));
-            }
-            if (volumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
             _pipeline.Send(message, cancellationToken);
@@ -371,7 +245,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Create or update the specified volume within the capacity pool. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="poolName"> The name of the capacity pool. </param>
@@ -382,50 +256,12 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, NetAppVolumeData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
-            if (volumeName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeName));
-            }
-            if (volumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -441,7 +277,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Create or update the specified volume within the capacity pool. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="poolName"> The name of the capacity pool. </param>
@@ -452,50 +288,12 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, NetAppVolumeData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
-            if (volumeName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeName));
-            }
-            if (volumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName, data);
             _pipeline.Send(message, cancellationToken);
@@ -539,7 +337,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Patch the specified volume. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="poolName"> The name of the capacity pool. </param>
@@ -550,50 +348,12 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, NetAppVolumePatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
-            if (volumeName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeName));
-            }
-            if (volumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -608,7 +368,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Patch the specified volume. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="poolName"> The name of the capacity pool. </param>
@@ -619,50 +379,12 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Update(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, NetAppVolumePatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
-            if (volumeName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeName));
-            }
-            if (volumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName, patch);
             _pipeline.Send(message, cancellationToken);
@@ -699,12 +421,13 @@ namespace Azure.ResourceManager.NetApp
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Delete the specified volume. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="poolName"> The name of the capacity pool. </param>
@@ -715,46 +438,11 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, bool? forceDelete = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
-            if (volumeName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeName));
-            }
-            if (volumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName, forceDelete);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -769,7 +457,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Delete the specified volume. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="poolName"> The name of the capacity pool. </param>
@@ -780,46 +468,11 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, bool? forceDelete = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
-            if (volumeName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeName));
-            }
-            if (volumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName, forceDelete);
             _pipeline.Send(message, cancellationToken);
@@ -859,7 +512,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> This operation will populate availability zone information for a volume. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="poolName"> The name of the capacity pool. </param>
@@ -869,46 +522,11 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> PopulateAvailabilityZoneAsync(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
-            if (volumeName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeName));
-            }
-            if (volumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
 
             using var message = CreatePopulateAvailabilityZoneRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -923,7 +541,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> This operation will populate availability zone information for a volume. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="poolName"> The name of the capacity pool. </param>
@@ -933,46 +551,11 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response PopulateAvailabilityZone(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
-            if (volumeName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeName));
-            }
-            if (volumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
 
             using var message = CreatePopulateAvailabilityZoneRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
             _pipeline.Send(message, cancellationToken);
@@ -1006,6 +589,7 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/revert", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
             content0.JsonWriter.WriteObjectValue(content);
@@ -1015,7 +599,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Revert a volume to the snapshot specified in the body. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="poolName"> The name of the capacity pool. </param>
@@ -1026,50 +610,12 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> RevertAsync(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, NetAppVolumeRevertContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
-            if (volumeName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeName));
-            }
-            if (volumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateRevertRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1084,7 +630,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Revert a volume to the snapshot specified in the body. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="poolName"> The name of the capacity pool. </param>
@@ -1095,50 +641,12 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Revert(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, NetAppVolumeRevertContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
-            if (volumeName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeName));
-            }
-            if (volumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateRevertRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName, content);
             _pipeline.Send(message, cancellationToken);
@@ -1172,12 +680,13 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/resetCifsPassword", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Reset cifs password from volume. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="poolName"> The name of the capacity pool. </param>
@@ -1187,52 +696,16 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> ResetCifsPasswordAsync(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
-            if (volumeName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeName));
-            }
-            if (volumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
 
             using var message = CreateResetCifsPasswordRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 200:
                 case 202:
                     return message.Response;
                 default:
@@ -1241,7 +714,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Reset cifs password from volume. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="poolName"> The name of the capacity pool. </param>
@@ -1251,52 +724,16 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response ResetCifsPassword(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
-            if (volumeName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeName));
-            }
-            if (volumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
 
             using var message = CreateResetCifsPasswordRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 200:
                 case 202:
                     return message.Response;
                 default:
@@ -1324,6 +761,7 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/breakFileLocks", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             if (content != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
@@ -1336,7 +774,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Break all the file locks on a volume. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="poolName"> The name of the capacity pool. </param>
@@ -1347,46 +785,11 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> BreakFileLocksAsync(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, NetAppVolumeBreakFileLocksContent content = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
-            if (volumeName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeName));
-            }
-            if (volumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
 
             using var message = CreateBreakFileLocksRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1401,7 +804,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Break all the file locks on a volume. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="poolName"> The name of the capacity pool. </param>
@@ -1412,46 +815,11 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response BreakFileLocks(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, NetAppVolumeBreakFileLocksContent content = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
-            if (volumeName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeName));
-            }
-            if (volumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
 
             using var message = CreateBreakFileLocksRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName, content);
             _pipeline.Send(message, cancellationToken);
@@ -1495,7 +863,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Returns the list of group Ids for a specific LDAP User. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="poolName"> The name of the capacity pool. </param>
@@ -1506,50 +874,12 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> ListGetGroupIdListForLdapUserAsync(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, GetGroupIdListForLdapUserContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
-            if (volumeName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeName));
-            }
-            if (volumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateListGetGroupIdListForLdapUserRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1564,7 +894,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Returns the list of group Ids for a specific LDAP User. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="poolName"> The name of the capacity pool. </param>
@@ -1575,50 +905,12 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response ListGetGroupIdListForLdapUser(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, GetGroupIdListForLdapUserContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
-            if (volumeName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeName));
-            }
-            if (volumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateListGetGroupIdListForLdapUserRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName, content);
             _pipeline.Send(message, cancellationToken);
@@ -1652,6 +944,7 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/breakReplication", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             if (content != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
@@ -1664,7 +957,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Break the replication connection on the destination volume. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="poolName"> The name of the capacity pool. </param>
@@ -1675,46 +968,11 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> BreakReplicationAsync(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, NetAppVolumeBreakReplicationContent content = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
-            if (volumeName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeName));
-            }
-            if (volumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
 
             using var message = CreateBreakReplicationRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1729,7 +987,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Break the replication connection on the destination volume. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="poolName"> The name of the capacity pool. </param>
@@ -1740,46 +998,11 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response BreakReplication(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, NetAppVolumeBreakReplicationContent content = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
-            if (volumeName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeName));
-            }
-            if (volumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
 
             using var message = CreateBreakReplicationRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName, content);
             _pipeline.Send(message, cancellationToken);
@@ -1813,6 +1036,7 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/reestablishReplication", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
             content0.JsonWriter.WriteObjectValue(content);
@@ -1822,7 +1046,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Re-establish a previously deleted replication between 2 volumes that have a common ad-hoc or policy-based snapshots. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="poolName"> The name of the capacity pool. </param>
@@ -1833,50 +1057,12 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> ReestablishReplicationAsync(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, NetAppVolumeReestablishReplicationContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
-            if (volumeName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeName));
-            }
-            if (volumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateReestablishReplicationRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1890,7 +1076,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Re-establish a previously deleted replication between 2 volumes that have a common ad-hoc or policy-based snapshots. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="poolName"> The name of the capacity pool. </param>
@@ -1901,50 +1087,12 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response ReestablishReplication(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, NetAppVolumeReestablishReplicationContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
-            if (volumeName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeName));
-            }
-            if (volumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateReestablishReplicationRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName, content);
             _pipeline.Send(message, cancellationToken);
@@ -1983,7 +1131,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Get the status of the replication. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="poolName"> The name of the capacity pool. </param>
@@ -1993,46 +1141,11 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<NetAppVolumeReplicationStatus>> ReplicationStatusAsync(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
-            if (volumeName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeName));
-            }
-            if (volumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
 
             using var message = CreateReplicationStatusRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2051,7 +1164,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Get the status of the replication. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="poolName"> The name of the capacity pool. </param>
@@ -2061,46 +1174,11 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<NetAppVolumeReplicationStatus> ReplicationStatus(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
-            if (volumeName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeName));
-            }
-            if (volumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
 
             using var message = CreateReplicationStatusRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
             _pipeline.Send(message, cancellationToken);
@@ -2144,7 +1222,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> List all replications for a specified volume. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="poolName"> The name of the capacity pool. </param>
@@ -2154,46 +1232,11 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ListReplications>> ListReplicationsAsync(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
-            if (volumeName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeName));
-            }
-            if (volumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
 
             using var message = CreateListReplicationsRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2212,7 +1255,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> List all replications for a specified volume. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="poolName"> The name of the capacity pool. </param>
@@ -2222,46 +1265,11 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ListReplications> ListReplications(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
-            if (volumeName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeName));
-            }
-            if (volumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
 
             using var message = CreateListReplicationsRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
             _pipeline.Send(message, cancellationToken);
@@ -2299,12 +1307,13 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/resyncReplication", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Resync the connection on the destination volume. If the operation is ran on the source volume it will reverse-resync the connection and sync from destination to source. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="poolName"> The name of the capacity pool. </param>
@@ -2314,46 +1323,11 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> ResyncReplicationAsync(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
-            if (volumeName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeName));
-            }
-            if (volumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
 
             using var message = CreateResyncReplicationRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2368,7 +1342,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Resync the connection on the destination volume. If the operation is ran on the source volume it will reverse-resync the connection and sync from destination to source. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="poolName"> The name of the capacity pool. </param>
@@ -2378,46 +1352,11 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response ResyncReplication(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
-            if (volumeName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeName));
-            }
-            if (volumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
 
             using var message = CreateResyncReplicationRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
             _pipeline.Send(message, cancellationToken);
@@ -2451,12 +1390,13 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/deleteReplication", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Delete the replication connection on the destination volume, and send release to the source replication. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="poolName"> The name of the capacity pool. </param>
@@ -2466,46 +1406,11 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteReplicationAsync(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
-            if (volumeName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeName));
-            }
-            if (volumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
 
             using var message = CreateDeleteReplicationRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2520,7 +1425,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Delete the replication connection on the destination volume, and send release to the source replication. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="poolName"> The name of the capacity pool. </param>
@@ -2530,46 +1435,11 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response DeleteReplication(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
-            if (volumeName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeName));
-            }
-            if (volumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
 
             using var message = CreateDeleteReplicationRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
             _pipeline.Send(message, cancellationToken);
@@ -2603,6 +1473,7 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/authorizeReplication", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
             content0.JsonWriter.WriteObjectValue(content);
@@ -2612,7 +1483,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Authorize the replication connection on the source volume. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="poolName"> The name of the capacity pool. </param>
@@ -2623,50 +1494,12 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> AuthorizeReplicationAsync(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, NetAppVolumeAuthorizeReplicationContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
-            if (volumeName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeName));
-            }
-            if (volumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateAuthorizeReplicationRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2681,7 +1514,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Authorize the replication connection on the source volume. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="poolName"> The name of the capacity pool. </param>
@@ -2692,50 +1525,12 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response AuthorizeReplication(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, NetAppVolumeAuthorizeReplicationContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
-            if (volumeName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeName));
-            }
-            if (volumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateAuthorizeReplicationRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName, content);
             _pipeline.Send(message, cancellationToken);
@@ -2769,12 +1564,13 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/reinitializeReplication", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Re-Initializes the replication connection on the destination volume. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="poolName"> The name of the capacity pool. </param>
@@ -2784,46 +1580,11 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> ReInitializeReplicationAsync(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
-            if (volumeName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeName));
-            }
-            if (volumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
 
             using var message = CreateReInitializeReplicationRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2838,7 +1599,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Re-Initializes the replication connection on the destination volume. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="poolName"> The name of the capacity pool. </param>
@@ -2848,46 +1609,11 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response ReInitializeReplication(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
-            if (volumeName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeName));
-            }
-            if (volumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
 
             using var message = CreateReInitializeReplicationRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
             _pipeline.Send(message, cancellationToken);
@@ -2921,6 +1647,7 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/poolChange", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
             content0.JsonWriter.WriteObjectValue(content);
@@ -2930,7 +1657,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Moves volume to another pool. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="poolName"> The name of the capacity pool. </param>
@@ -2941,50 +1668,12 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> PoolChangeAsync(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, NetAppVolumePoolChangeContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
-            if (volumeName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeName));
-            }
-            if (volumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreatePoolChangeRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2999,7 +1688,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Moves volume to another pool. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="poolName"> The name of the capacity pool. </param>
@@ -3010,50 +1699,12 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response PoolChange(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, NetAppVolumePoolChangeContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
-            if (volumeName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeName));
-            }
-            if (volumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreatePoolChangeRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName, content);
             _pipeline.Send(message, cancellationToken);
@@ -3087,6 +1738,7 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/relocate", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             if (content != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
@@ -3099,7 +1751,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Relocates volume to a new stamp. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="poolName"> The name of the capacity pool. </param>
@@ -3110,46 +1762,11 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> RelocateAsync(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, RelocateVolumeContent content = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
-            if (volumeName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeName));
-            }
-            if (volumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
 
             using var message = CreateRelocateRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -3164,7 +1781,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Relocates volume to a new stamp. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="poolName"> The name of the capacity pool. </param>
@@ -3175,46 +1792,11 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Relocate(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, RelocateVolumeContent content = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
-            if (volumeName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeName));
-            }
-            if (volumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
 
             using var message = CreateRelocateRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName, content);
             _pipeline.Send(message, cancellationToken);
@@ -3248,12 +1830,13 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/finalizeRelocation", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Finalizes the relocation of the volume and cleans up the old volume. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="poolName"> The name of the capacity pool. </param>
@@ -3263,46 +1846,11 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> FinalizeRelocationAsync(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
-            if (volumeName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeName));
-            }
-            if (volumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
 
             using var message = CreateFinalizeRelocationRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -3317,7 +1865,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Finalizes the relocation of the volume and cleans up the old volume. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="poolName"> The name of the capacity pool. </param>
@@ -3327,46 +1875,11 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response FinalizeRelocation(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
-            if (volumeName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeName));
-            }
-            if (volumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
 
             using var message = CreateFinalizeRelocationRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
             _pipeline.Send(message, cancellationToken);
@@ -3400,12 +1913,13 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/revertRelocation", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Reverts the volume relocation process, cleans up the new volume and starts using the former-existing volume. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="poolName"> The name of the capacity pool. </param>
@@ -3415,46 +1929,11 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> RevertRelocationAsync(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
-            if (volumeName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeName));
-            }
-            if (volumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
 
             using var message = CreateRevertRelocationRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -3469,7 +1948,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Reverts the volume relocation process, cleans up the new volume and starts using the former-existing volume. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="poolName"> The name of the capacity pool. </param>
@@ -3479,46 +1958,11 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response RevertRelocation(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
-            if (volumeName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeName));
-            }
-            if (volumeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(volumeName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
 
             using var message = CreateRevertRelocationRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
             _pipeline.Send(message, cancellationToken);
@@ -3548,7 +1992,7 @@ namespace Azure.ResourceManager.NetApp
 
         /// <summary> List all volumes within the capacity pool. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="poolName"> The name of the capacity pool. </param>
@@ -3557,42 +2001,11 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<VolumeList>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string poolName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, accountName, poolName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -3612,7 +2025,7 @@ namespace Azure.ResourceManager.NetApp
 
         /// <summary> List all volumes within the capacity pool. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="poolName"> The name of the capacity pool. </param>
@@ -3621,42 +2034,11 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<VolumeList> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string poolName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, accountName, poolName);
             _pipeline.Send(message, cancellationToken);

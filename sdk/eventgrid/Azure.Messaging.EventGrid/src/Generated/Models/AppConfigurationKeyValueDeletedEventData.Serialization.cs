@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -21,10 +20,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> key = default;
-            Optional<string> label = default;
-            Optional<string> etag = default;
-            Optional<string> syncToken = default;
+            string key = default;
+            string label = default;
+            string etag = default;
+            string syncToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("key"u8))
@@ -48,7 +47,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AppConfigurationKeyValueDeletedEventData(key.Value, label.Value, etag.Value, syncToken.Value);
+            return new AppConfigurationKeyValueDeletedEventData(key, label, etag, syncToken);
         }
 
         internal partial class AppConfigurationKeyValueDeletedEventDataConverter : JsonConverter<AppConfigurationKeyValueDeletedEventData>

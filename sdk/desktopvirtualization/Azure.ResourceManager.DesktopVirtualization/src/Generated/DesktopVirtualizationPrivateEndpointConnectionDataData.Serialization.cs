@@ -108,10 +108,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SubResource> privateEndpoint = default;
-            Optional<DesktopVirtualizationPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
-            Optional<DesktopVirtualizationPrivateEndpointConnectionProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            SubResource privateEndpoint = default;
+            DesktopVirtualizationPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            DesktopVirtualizationPrivateEndpointConnectionProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = DesktopVirtualizationPrivateLinkServiceConnectionState.DeserializeDesktopVirtualizationPrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = DesktopVirtualizationPrivateLinkServiceConnectionState.DeserializeDesktopVirtualizationPrivateLinkServiceConnectionState(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -185,7 +185,15 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DesktopVirtualizationPrivateEndpointConnectionDataData(id, name, type, systemData.Value, privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new DesktopVirtualizationPrivateEndpointConnectionDataData(
+                id,
+                name,
+                type,
+                systemData,
+                privateEndpoint,
+                privateLinkServiceConnectionState,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DesktopVirtualizationPrivateEndpointConnectionDataData>.Write(ModelReaderWriterOptions options)

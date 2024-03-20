@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -84,8 +85,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MonitorMetadataValue>> metadatavalues = default;
-            Optional<IReadOnlyList<MonitorMetricValue>> data = default;
+            IReadOnlyList<MonitorMetadataValue> metadatavalues = default;
+            IReadOnlyList<MonitorMetricValue> data = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitorMetadataValue> array = new List<MonitorMetadataValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorMetadataValue.DeserializeMonitorMetadataValue(item));
+                        array.Add(MonitorMetadataValue.DeserializeMonitorMetadataValue(item, options));
                     }
                     metadatavalues = array;
                     continue;
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitorMetricValue> array = new List<MonitorMetricValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorMetricValue.DeserializeMonitorMetricValue(item));
+                        array.Add(MonitorMetricValue.DeserializeMonitorMetricValue(item, options));
                     }
                     data = array;
                     continue;
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorTimeSeriesElement(Optional.ToList(metadatavalues), Optional.ToList(data), serializedAdditionalRawData);
+            return new MonitorTimeSeriesElement(metadatavalues ?? new ChangeTrackingList<MonitorMetadataValue>(), data ?? new ChangeTrackingList<MonitorMetricValue>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorTimeSeriesElement>.Write(ModelReaderWriterOptions options)

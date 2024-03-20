@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Purview;
 
 namespace Azure.ResourceManager.Purview.Models
 {
@@ -89,9 +90,9 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 return null;
             }
-            Optional<string> groupId = default;
-            Optional<IReadOnlyList<string>> requiredMembers = default;
-            Optional<IReadOnlyList<string>> requiredZoneNames = default;
+            string groupId = default;
+            IReadOnlyList<string> requiredMembers = default;
+            IReadOnlyList<string> requiredZoneNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -135,7 +136,7 @@ namespace Azure.ResourceManager.Purview.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PurviewPrivateLinkResourceProperties(groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames), serializedAdditionalRawData);
+            return new PurviewPrivateLinkResourceProperties(groupId, requiredMembers ?? new ChangeTrackingList<string>(), requiredZoneNames ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PurviewPrivateLinkResourceProperties>.Write(ModelReaderWriterOptions options)

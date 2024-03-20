@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -114,16 +115,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> vhdType = default;
-            Optional<string> vhdId = default;
-            Optional<string> diskId = default;
-            Optional<string> vhdName = default;
-            Optional<string> maxSizeMB = default;
-            Optional<string> targetDiskLocation = default;
-            Optional<string> targetDiskName = default;
-            Optional<string> lunId = default;
-            Optional<ResourceIdentifier> diskEncryptionSetId = default;
-            Optional<string> customTargetDiskName = default;
+            string vhdType = default;
+            string vhdId = default;
+            string diskId = default;
+            string vhdName = default;
+            string maxSizeMB = default;
+            string targetDiskLocation = default;
+            string targetDiskName = default;
+            string lunId = default;
+            ResourceIdentifier diskEncryptionSetId = default;
+            string customTargetDiskName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -188,7 +189,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryVmDiskDetails(vhdType.Value, vhdId.Value, diskId.Value, vhdName.Value, maxSizeMB.Value, targetDiskLocation.Value, targetDiskName.Value, lunId.Value, diskEncryptionSetId.Value, customTargetDiskName.Value, serializedAdditionalRawData);
+            return new SiteRecoveryVmDiskDetails(
+                vhdType,
+                vhdId,
+                diskId,
+                vhdName,
+                maxSizeMB,
+                targetDiskLocation,
+                targetDiskName,
+                lunId,
+                diskEncryptionSetId,
+                customTargetDiskName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryVmDiskDetails>.Write(ModelReaderWriterOptions options)

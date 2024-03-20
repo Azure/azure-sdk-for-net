@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -73,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
+            ManagedServiceIdentity identity = default;
             MonitorComputeIdentityType computeIdentityType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();

@@ -102,13 +102,13 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 return null;
             }
-            Optional<CognitiveServicesSku> sku = default;
-            Optional<ETag> etag = default;
-            Optional<CognitiveServicesAccountDeploymentProperties> properties = default;
+            CognitiveServicesSku sku = default;
+            ETag? etag = default;
+            CognitiveServicesAccountDeploymentProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.CognitiveServices
                     {
                         continue;
                     }
-                    sku = CognitiveServicesSku.DeserializeCognitiveServicesSku(property.Value);
+                    sku = CognitiveServicesSku.DeserializeCognitiveServicesSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.CognitiveServices
                     {
                         continue;
                     }
-                    properties = CognitiveServicesAccountDeploymentProperties.DeserializeCognitiveServicesAccountDeploymentProperties(property.Value);
+                    properties = CognitiveServicesAccountDeploymentProperties.DeserializeCognitiveServicesAccountDeploymentProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -170,7 +170,15 @@ namespace Azure.ResourceManager.CognitiveServices
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CognitiveServicesAccountDeploymentData(id, name, type, systemData.Value, sku.Value, Optional.ToNullable(etag), properties.Value, serializedAdditionalRawData);
+            return new CognitiveServicesAccountDeploymentData(
+                id,
+                name,
+                type,
+                systemData,
+                sku,
+                etag,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CognitiveServicesAccountDeploymentData>.Write(ModelReaderWriterOptions options)

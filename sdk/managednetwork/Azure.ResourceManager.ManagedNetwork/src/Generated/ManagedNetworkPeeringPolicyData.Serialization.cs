@@ -96,12 +96,12 @@ namespace Azure.ResourceManager.ManagedNetwork
             {
                 return null;
             }
-            Optional<ManagedNetworkPeeringPolicyProperties> properties = default;
-            Optional<AzureLocation> location = default;
+            ManagedNetworkPeeringPolicyProperties properties = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ManagedNetwork
                     {
                         continue;
                     }
-                    properties = ManagedNetworkPeeringPolicyProperties.DeserializeManagedNetworkPeeringPolicyProperties(property.Value);
+                    properties = ManagedNetworkPeeringPolicyProperties.DeserializeManagedNetworkPeeringPolicyProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("location"u8))
@@ -154,7 +154,14 @@ namespace Azure.ResourceManager.ManagedNetwork
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedNetworkPeeringPolicyData(id, name, type, systemData.Value, properties.Value, Optional.ToNullable(location), serializedAdditionalRawData);
+            return new ManagedNetworkPeeringPolicyData(
+                id,
+                name,
+                type,
+                systemData,
+                properties,
+                location,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedNetworkPeeringPolicyData>.Write(ModelReaderWriterOptions options)

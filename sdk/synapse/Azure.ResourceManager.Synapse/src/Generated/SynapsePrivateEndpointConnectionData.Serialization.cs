@@ -108,10 +108,10 @@ namespace Azure.ResourceManager.Synapse
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SubResource> privateEndpoint = default;
-            Optional<SynapsePrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
-            Optional<string> provisioningState = default;
+            SystemData systemData = default;
+            SubResource privateEndpoint = default;
+            SynapsePrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Synapse
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = SynapsePrivateLinkServiceConnectionState.DeserializeSynapsePrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = SynapsePrivateLinkServiceConnectionState.DeserializeSynapsePrivateLinkServiceConnectionState(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -181,7 +181,15 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapsePrivateEndpointConnectionData(id, name, type, systemData.Value, privateEndpoint, privateLinkServiceConnectionState.Value, provisioningState.Value, serializedAdditionalRawData);
+            return new SynapsePrivateEndpointConnectionData(
+                id,
+                name,
+                type,
+                systemData,
+                privateEndpoint,
+                privateLinkServiceConnectionState,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapsePrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options)

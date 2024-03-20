@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -72,10 +73,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AbsoluteDeleteOption": return DataProtectionBackupAbsoluteDeleteSetting.DeserializeDataProtectionBackupAbsoluteDeleteSetting(element);
+                    case "AbsoluteDeleteOption": return DataProtectionBackupAbsoluteDeleteSetting.DeserializeDataProtectionBackupAbsoluteDeleteSetting(element, options);
                 }
             }
-            return UnknownDeleteOption.DeserializeUnknownDeleteOption(element);
+            return UnknownDeleteOption.DeserializeUnknownDeleteOption(element, options);
         }
 
         BinaryData IPersistableModel<DataProtectionBackupDeleteSetting>.Write(ModelReaderWriterOptions options)

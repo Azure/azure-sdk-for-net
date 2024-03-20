@@ -171,24 +171,24 @@ namespace Azure.ResourceManager.AppConfiguration
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
+            ManagedServiceIdentity identity = default;
             AppConfigurationSku sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<AppConfigurationProvisioningState> provisioningState = default;
-            Optional<DateTimeOffset> creationDate = default;
-            Optional<string> endpoint = default;
-            Optional<AppConfigurationStoreEncryptionProperties> encryption = default;
-            Optional<IReadOnlyList<AppConfigurationPrivateEndpointConnectionReference>> privateEndpointConnections = default;
-            Optional<AppConfigurationPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<bool> disableLocalAuth = default;
-            Optional<int> softDeleteRetentionInDays = default;
-            Optional<bool> enablePurgeProtection = default;
-            Optional<AppConfigurationCreateMode> createMode = default;
+            SystemData systemData = default;
+            AppConfigurationProvisioningState? provisioningState = default;
+            DateTimeOffset? creationDate = default;
+            string endpoint = default;
+            AppConfigurationStoreEncryptionProperties encryption = default;
+            IReadOnlyList<AppConfigurationPrivateEndpointConnectionReference> privateEndpointConnections = default;
+            AppConfigurationPublicNetworkAccess? publicNetworkAccess = default;
+            bool? disableLocalAuth = default;
+            int? softDeleteRetentionInDays = default;
+            bool? enablePurgeProtection = default;
+            AppConfigurationCreateMode? createMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 }
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = AppConfigurationSku.DeserializeAppConfigurationSku(property.Value);
+                    sku = AppConfigurationSku.DeserializeAppConfigurationSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.AppConfiguration
                             {
                                 continue;
                             }
-                            encryption = AppConfigurationStoreEncryptionProperties.DeserializeAppConfigurationStoreEncryptionProperties(property0.Value);
+                            encryption = AppConfigurationStoreEncryptionProperties.DeserializeAppConfigurationStoreEncryptionProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("privateEndpointConnections"u8))
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.AppConfiguration
                             List<AppConfigurationPrivateEndpointConnectionReference> array = new List<AppConfigurationPrivateEndpointConnectionReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AppConfigurationPrivateEndpointConnectionReference.DeserializeAppConfigurationPrivateEndpointConnectionReference(item));
+                                array.Add(AppConfigurationPrivateEndpointConnectionReference.DeserializeAppConfigurationPrivateEndpointConnectionReference(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -360,7 +360,26 @@ namespace Azure.ResourceManager.AppConfiguration
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppConfigurationStoreData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, sku, Optional.ToNullable(provisioningState), Optional.ToNullable(creationDate), endpoint.Value, encryption.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(disableLocalAuth), Optional.ToNullable(softDeleteRetentionInDays), Optional.ToNullable(enablePurgeProtection), Optional.ToNullable(createMode), serializedAdditionalRawData);
+            return new AppConfigurationStoreData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                sku,
+                provisioningState,
+                creationDate,
+                endpoint,
+                encryption,
+                privateEndpointConnections ?? new ChangeTrackingList<AppConfigurationPrivateEndpointConnectionReference>(),
+                publicNetworkAccess,
+                disableLocalAuth,
+                softDeleteRetentionInDays,
+                enablePurgeProtection,
+                createMode,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppConfigurationStoreData>.Write(ModelReaderWriterOptions options)

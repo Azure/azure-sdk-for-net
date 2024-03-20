@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<int> receiveLockDurationInSeconds = default;
-            Optional<int> maxDeliveryCount = default;
-            Optional<DeadLetterWithResourceIdentity> deadLetterDestinationWithResourceIdentity = default;
-            Optional<TimeSpan> eventTimeToLive = default;
+            int? receiveLockDurationInSeconds = default;
+            int? maxDeliveryCount = default;
+            DeadLetterWithResourceIdentity deadLetterDestinationWithResourceIdentity = default;
+            TimeSpan? eventTimeToLive = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,7 +117,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    deadLetterDestinationWithResourceIdentity = DeadLetterWithResourceIdentity.DeserializeDeadLetterWithResourceIdentity(property.Value);
+                    deadLetterDestinationWithResourceIdentity = DeadLetterWithResourceIdentity.DeserializeDeadLetterWithResourceIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("eventTimeToLive"u8))
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QueueInfo(Optional.ToNullable(receiveLockDurationInSeconds), Optional.ToNullable(maxDeliveryCount), deadLetterDestinationWithResourceIdentity.Value, Optional.ToNullable(eventTimeToLive), serializedAdditionalRawData);
+            return new QueueInfo(receiveLockDurationInSeconds, maxDeliveryCount, deadLetterDestinationWithResourceIdentity, eventTimeToLive, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QueueInfo>.Write(ModelReaderWriterOptions options)

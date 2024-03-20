@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -99,11 +100,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<IReadOnlyList<ManagedInstanceEditionCapability>> supportedEditions = default;
-            Optional<IReadOnlyList<InstancePoolEditionCapability>> supportedInstancePoolEditions = default;
-            Optional<SqlCapabilityStatus> status = default;
-            Optional<string> reason = default;
+            string name = default;
+            IReadOnlyList<ManagedInstanceEditionCapability> supportedEditions = default;
+            IReadOnlyList<InstancePoolEditionCapability> supportedInstancePoolEditions = default;
+            SqlCapabilityStatus? status = default;
+            string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ManagedInstanceEditionCapability> array = new List<ManagedInstanceEditionCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedInstanceEditionCapability.DeserializeManagedInstanceEditionCapability(item));
+                        array.Add(ManagedInstanceEditionCapability.DeserializeManagedInstanceEditionCapability(item, options));
                     }
                     supportedEditions = array;
                     continue;
@@ -136,7 +137,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<InstancePoolEditionCapability> array = new List<InstancePoolEditionCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InstancePoolEditionCapability.DeserializeInstancePoolEditionCapability(item));
+                        array.Add(InstancePoolEditionCapability.DeserializeInstancePoolEditionCapability(item, options));
                     }
                     supportedInstancePoolEditions = array;
                     continue;
@@ -161,7 +162,13 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedInstanceVersionCapability(name.Value, Optional.ToList(supportedEditions), Optional.ToList(supportedInstancePoolEditions), Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
+            return new ManagedInstanceVersionCapability(
+                name,
+                supportedEditions ?? new ChangeTrackingList<ManagedInstanceEditionCapability>(),
+                supportedInstancePoolEditions ?? new ChangeTrackingList<InstancePoolEditionCapability>(),
+                status,
+                reason,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedInstanceVersionCapability>.Write(ModelReaderWriterOptions options)

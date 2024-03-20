@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.DnsResolver.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DnsResolverInboundEndpointData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<DnsResolverInboundEndpointData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                     List<DnsResolverInboundEndpointData> array = new List<DnsResolverInboundEndpointData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DnsResolverInboundEndpointData.DeserializeDnsResolverInboundEndpointData(item));
+                        array.Add(DnsResolverInboundEndpointData.DeserializeDnsResolverInboundEndpointData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InboundEndpointListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new InboundEndpointListResult(value ?? new ChangeTrackingList<DnsResolverInboundEndpointData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InboundEndpointListResult>.Write(ModelReaderWriterOptions options)

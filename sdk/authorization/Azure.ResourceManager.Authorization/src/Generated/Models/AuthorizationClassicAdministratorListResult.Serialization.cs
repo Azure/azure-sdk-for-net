@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AuthorizationClassicAdministrator>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<AuthorizationClassicAdministrator> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     List<AuthorizationClassicAdministrator> array = new List<AuthorizationClassicAdministrator>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AuthorizationClassicAdministrator.DeserializeAuthorizationClassicAdministrator(item));
+                        array.Add(AuthorizationClassicAdministrator.DeserializeAuthorizationClassicAdministrator(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AuthorizationClassicAdministratorListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AuthorizationClassicAdministratorListResult(value ?? new ChangeTrackingList<AuthorizationClassicAdministrator>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AuthorizationClassicAdministratorListResult>.Write(ModelReaderWriterOptions options)

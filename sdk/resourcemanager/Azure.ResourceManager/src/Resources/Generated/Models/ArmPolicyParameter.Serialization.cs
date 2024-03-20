@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -108,10 +109,10 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<ArmPolicyParameterType> type = default;
-            Optional<IList<BinaryData>> allowedValues = default;
-            Optional<BinaryData> defaultValue = default;
-            Optional<ParameterDefinitionsValueMetadata> metadata = default;
+            ArmPolicyParameterType? type = default;
+            IList<BinaryData> allowedValues = default;
+            BinaryData defaultValue = default;
+            ParameterDefinitionsValueMetadata metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -161,7 +162,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    metadata = ParameterDefinitionsValueMetadata.DeserializeParameterDefinitionsValueMetadata(property.Value);
+                    metadata = ParameterDefinitionsValueMetadata.DeserializeParameterDefinitionsValueMetadata(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -170,7 +171,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmPolicyParameter(Optional.ToNullable(type), Optional.ToList(allowedValues), defaultValue.Value, metadata.Value, serializedAdditionalRawData);
+            return new ArmPolicyParameter(type, allowedValues ?? new ChangeTrackingList<BinaryData>(), defaultValue, metadata, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmPolicyParameter>.Write(ModelReaderWriterOptions options)

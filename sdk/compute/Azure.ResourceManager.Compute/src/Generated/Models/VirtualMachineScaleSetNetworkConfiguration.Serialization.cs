@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -136,18 +137,18 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             string name = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<bool> primary = default;
-            Optional<bool> enableAcceleratedNetworking = default;
-            Optional<bool> disableTcpStateTracking = default;
-            Optional<bool> enableFpga = default;
-            Optional<WritableSubResource> networkSecurityGroup = default;
-            Optional<VirtualMachineScaleSetNetworkConfigurationDnsSettings> dnsSettings = default;
-            Optional<IList<VirtualMachineScaleSetIPConfiguration>> ipConfigurations = default;
-            Optional<bool> enableIPForwarding = default;
-            Optional<ComputeDeleteOption> deleteOption = default;
-            Optional<ComputeNetworkInterfaceAuxiliaryMode> auxiliaryMode = default;
-            Optional<ComputeNetworkInterfaceAuxiliarySku> auxiliarySku = default;
+            ResourceIdentifier id = default;
+            bool? primary = default;
+            bool? enableAcceleratedNetworking = default;
+            bool? disableTcpStateTracking = default;
+            bool? enableFpga = default;
+            WritableSubResource networkSecurityGroup = default;
+            VirtualMachineScaleSetNetworkConfigurationDnsSettings dnsSettings = default;
+            IList<VirtualMachineScaleSetIPConfiguration> ipConfigurations = default;
+            bool? enableIPForwarding = default;
+            ComputeDeleteOption? deleteOption = default;
+            ComputeNetworkInterfaceAuxiliaryMode? auxiliaryMode = default;
+            ComputeNetworkInterfaceAuxiliarySku? auxiliarySku = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -226,7 +227,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            dnsSettings = VirtualMachineScaleSetNetworkConfigurationDnsSettings.DeserializeVirtualMachineScaleSetNetworkConfigurationDnsSettings(property0.Value);
+                            dnsSettings = VirtualMachineScaleSetNetworkConfigurationDnsSettings.DeserializeVirtualMachineScaleSetNetworkConfigurationDnsSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("ipConfigurations"u8))
@@ -238,7 +239,7 @@ namespace Azure.ResourceManager.Compute.Models
                             List<VirtualMachineScaleSetIPConfiguration> array = new List<VirtualMachineScaleSetIPConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VirtualMachineScaleSetIPConfiguration.DeserializeVirtualMachineScaleSetIPConfiguration(item));
+                                array.Add(VirtualMachineScaleSetIPConfiguration.DeserializeVirtualMachineScaleSetIPConfiguration(item, options));
                             }
                             ipConfigurations = array;
                             continue;
@@ -288,7 +289,21 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineScaleSetNetworkConfiguration(id.Value, serializedAdditionalRawData, name, Optional.ToNullable(primary), Optional.ToNullable(enableAcceleratedNetworking), Optional.ToNullable(disableTcpStateTracking), Optional.ToNullable(enableFpga), networkSecurityGroup, dnsSettings.Value, Optional.ToList(ipConfigurations), Optional.ToNullable(enableIPForwarding), Optional.ToNullable(deleteOption), Optional.ToNullable(auxiliaryMode), Optional.ToNullable(auxiliarySku));
+            return new VirtualMachineScaleSetNetworkConfiguration(
+                id,
+                serializedAdditionalRawData,
+                name,
+                primary,
+                enableAcceleratedNetworking,
+                disableTcpStateTracking,
+                enableFpga,
+                networkSecurityGroup,
+                dnsSettings,
+                ipConfigurations ?? new ChangeTrackingList<VirtualMachineScaleSetIPConfiguration>(),
+                enableIPForwarding,
+                deleteOption,
+                auxiliaryMode,
+                auxiliarySku);
         }
 
         BinaryData IPersistableModel<VirtualMachineScaleSetNetworkConfiguration>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -84,12 +85,12 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 if (property.NameEquals("imageReference"u8))
                 {
-                    imageReference = SapImageReference.DeserializeSapImageReference(property.Value);
+                    imageReference = SapImageReference.DeserializeSapImageReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("osProfile"u8))
                 {
-                    osProfile = SapOSProfile.DeserializeSapOSProfile(property.Value);
+                    osProfile = SapOSProfile.DeserializeSapOSProfile(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

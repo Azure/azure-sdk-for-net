@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Simple": return ChaosTargetSimpleFilter.DeserializeChaosTargetSimpleFilter(element);
+                    case "Simple": return ChaosTargetSimpleFilter.DeserializeChaosTargetSimpleFilter(element, options);
                 }
             }
-            return UnknownChaosTargetFilter.DeserializeUnknownChaosTargetFilter(element);
+            return UnknownChaosTargetFilter.DeserializeUnknownChaosTargetFilter(element, options);
         }
 
         BinaryData IPersistableModel<ChaosTargetFilter>.Write(ModelReaderWriterOptions options)

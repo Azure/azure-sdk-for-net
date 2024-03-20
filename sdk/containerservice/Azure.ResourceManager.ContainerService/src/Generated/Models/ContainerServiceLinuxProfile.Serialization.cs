@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (property.NameEquals("ssh"u8))
                 {
-                    ssh = ContainerServiceSshConfiguration.DeserializeContainerServiceSshConfiguration(property.Value);
+                    ssh = ContainerServiceSshConfiguration.DeserializeContainerServiceSshConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

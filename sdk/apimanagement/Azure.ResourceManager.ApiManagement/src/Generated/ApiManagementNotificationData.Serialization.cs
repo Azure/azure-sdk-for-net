@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> title = default;
-            Optional<string> description = default;
-            Optional<RecipientsContractProperties> recipients = default;
+            SystemData systemData = default;
+            string title = default;
+            string description = default;
+            RecipientsContractProperties recipients = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.ApiManagement
                             {
                                 continue;
                             }
-                            recipients = RecipientsContractProperties.DeserializeRecipientsContractProperties(property0.Value);
+                            recipients = RecipientsContractProperties.DeserializeRecipientsContractProperties(property0.Value, options);
                             continue;
                         }
                     }
@@ -176,7 +176,15 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementNotificationData(id, name, type, systemData.Value, title.Value, description.Value, recipients.Value, serializedAdditionalRawData);
+            return new ApiManagementNotificationData(
+                id,
+                name,
+                type,
+                systemData,
+                title,
+                description,
+                recipients,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementNotificationData>.Write(ModelReaderWriterOptions options)

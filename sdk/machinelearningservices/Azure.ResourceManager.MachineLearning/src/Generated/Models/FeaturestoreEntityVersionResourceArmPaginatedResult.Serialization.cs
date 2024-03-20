@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
-            Optional<IReadOnlyList<MachineLearningFeaturestoreEntityVersionData>> value = default;
+            string nextLink = default;
+            IReadOnlyList<MachineLearningFeaturestoreEntityVersionData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningFeaturestoreEntityVersionData> array = new List<MachineLearningFeaturestoreEntityVersionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningFeaturestoreEntityVersionData.DeserializeMachineLearningFeaturestoreEntityVersionData(item));
+                        array.Add(MachineLearningFeaturestoreEntityVersionData.DeserializeMachineLearningFeaturestoreEntityVersionData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FeaturestoreEntityVersionResourceArmPaginatedResult(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new FeaturestoreEntityVersionResourceArmPaginatedResult(nextLink, value ?? new ChangeTrackingList<MachineLearningFeaturestoreEntityVersionData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FeaturestoreEntityVersionResourceArmPaginatedResult>.Write(ModelReaderWriterOptions options)

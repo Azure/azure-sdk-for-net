@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> sqlDedicatedGatewayEndpoint = default;
-            Optional<string> name = default;
-            Optional<AzureLocation> location = default;
-            Optional<CosmosDBServiceStatus> status = default;
+            string sqlDedicatedGatewayEndpoint = default;
+            string name = default;
+            AzureLocation? location = default;
+            CosmosDBServiceStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlDedicatedGatewayRegionalService(name.Value, Optional.ToNullable(location), Optional.ToNullable(status), serializedAdditionalRawData, sqlDedicatedGatewayEndpoint.Value);
+            return new SqlDedicatedGatewayRegionalService(name, location, status, serializedAdditionalRawData, sqlDedicatedGatewayEndpoint);
         }
 
         BinaryData IPersistableModel<SqlDedicatedGatewayRegionalService>.Write(ModelReaderWriterOptions options)

@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-03</description>
+        /// <description>2023-07-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<GalleryImageResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string galleryImageName, GalleryImageData data, CancellationToken cancellationToken = default)
         {
-            if (galleryImageName == null)
-            {
-                throw new ArgumentNullException(nameof(galleryImageName));
-            }
-            if (galleryImageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(galleryImageName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _galleryImageClientDiagnostics.CreateScope("GalleryImageCollection.CreateOrUpdate");
             scope.Start();
@@ -125,7 +115,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-03</description>
+        /// <description>2023-07-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<GalleryImageResource> CreateOrUpdate(WaitUntil waitUntil, string galleryImageName, GalleryImageData data, CancellationToken cancellationToken = default)
         {
-            if (galleryImageName == null)
-            {
-                throw new ArgumentNullException(nameof(galleryImageName));
-            }
-            if (galleryImageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(galleryImageName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _galleryImageClientDiagnostics.CreateScope("GalleryImageCollection.CreateOrUpdate");
             scope.Start();
@@ -184,7 +164,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-03</description>
+        /// <description>2023-07-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageName"/> is null. </exception>
         public virtual async Task<Response<GalleryImageResource>> GetAsync(string galleryImageName, CancellationToken cancellationToken = default)
         {
-            if (galleryImageName == null)
-            {
-                throw new ArgumentNullException(nameof(galleryImageName));
-            }
-            if (galleryImageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(galleryImageName));
-            }
+            Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
 
             using var scope = _galleryImageClientDiagnostics.CreateScope("GalleryImageCollection.Get");
             scope.Start();
@@ -236,7 +209,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-03</description>
+        /// <description>2023-07-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageName"/> is null. </exception>
         public virtual Response<GalleryImageResource> Get(string galleryImageName, CancellationToken cancellationToken = default)
         {
-            if (galleryImageName == null)
-            {
-                throw new ArgumentNullException(nameof(galleryImageName));
-            }
-            if (galleryImageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(galleryImageName));
-            }
+            Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
 
             using var scope = _galleryImageClientDiagnostics.CreateScope("GalleryImageCollection.Get");
             scope.Start();
@@ -288,7 +254,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-03</description>
+        /// <description>2023-07-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -318,7 +284,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-03</description>
+        /// <description>2023-07-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -348,7 +314,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-03</description>
+        /// <description>2023-07-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -362,14 +328,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string galleryImageName, CancellationToken cancellationToken = default)
         {
-            if (galleryImageName == null)
-            {
-                throw new ArgumentNullException(nameof(galleryImageName));
-            }
-            if (galleryImageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(galleryImageName));
-            }
+            Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
 
             using var scope = _galleryImageClientDiagnostics.CreateScope("GalleryImageCollection.Exists");
             scope.Start();
@@ -398,7 +357,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-03</description>
+        /// <description>2023-07-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -412,14 +371,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageName"/> is null. </exception>
         public virtual Response<bool> Exists(string galleryImageName, CancellationToken cancellationToken = default)
         {
-            if (galleryImageName == null)
-            {
-                throw new ArgumentNullException(nameof(galleryImageName));
-            }
-            if (galleryImageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(galleryImageName));
-            }
+            Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
 
             using var scope = _galleryImageClientDiagnostics.CreateScope("GalleryImageCollection.Exists");
             scope.Start();
@@ -448,7 +400,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-03</description>
+        /// <description>2023-07-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -462,14 +414,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageName"/> is null. </exception>
         public virtual async Task<NullableResponse<GalleryImageResource>> GetIfExistsAsync(string galleryImageName, CancellationToken cancellationToken = default)
         {
-            if (galleryImageName == null)
-            {
-                throw new ArgumentNullException(nameof(galleryImageName));
-            }
-            if (galleryImageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(galleryImageName));
-            }
+            Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
 
             using var scope = _galleryImageClientDiagnostics.CreateScope("GalleryImageCollection.GetIfExists");
             scope.Start();
@@ -500,7 +445,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-03</description>
+        /// <description>2023-07-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -514,14 +459,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageName"/> is null. </exception>
         public virtual NullableResponse<GalleryImageResource> GetIfExists(string galleryImageName, CancellationToken cancellationToken = default)
         {
-            if (galleryImageName == null)
-            {
-                throw new ArgumentNullException(nameof(galleryImageName));
-            }
-            if (galleryImageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(galleryImageName));
-            }
+            Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
 
             using var scope = _galleryImageClientDiagnostics.CreateScope("GalleryImageCollection.GetIfExists");
             scope.Start();

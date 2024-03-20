@@ -236,35 +236,35 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ExtendedLocation> extendedLocation = default;
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<WritableSubResource> virtualMachine = default;
-            Optional<NetworkSecurityGroupData> networkSecurityGroup = default;
-            Optional<PrivateEndpointData> privateEndpoint = default;
-            Optional<IList<NetworkInterfaceIPConfigurationData>> ipConfigurations = default;
-            Optional<IReadOnlyList<NetworkInterfaceTapConfigurationData>> tapConfigurations = default;
-            Optional<NetworkInterfaceDnsSettings> dnsSettings = default;
-            Optional<string> macAddress = default;
-            Optional<bool> primary = default;
-            Optional<bool> vnetEncryptionSupported = default;
-            Optional<bool> enableAcceleratedNetworking = default;
-            Optional<bool> disableTcpStateTracking = default;
-            Optional<bool> enableIPForwarding = default;
-            Optional<IReadOnlyList<string>> hostedWorkloads = default;
-            Optional<WritableSubResource> dscpConfiguration = default;
-            Optional<Guid> resourceGuid = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<string> workloadType = default;
-            Optional<NetworkInterfaceNicType> nicType = default;
-            Optional<PrivateLinkServiceData> privateLinkService = default;
-            Optional<NetworkInterfaceMigrationPhase> migrationPhase = default;
-            Optional<NetworkInterfaceAuxiliaryMode> auxiliaryMode = default;
-            Optional<NetworkInterfaceAuxiliarySku> auxiliarySku = default;
+            ExtendedLocation extendedLocation = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
+            IDictionary<string, string> tags = default;
+            WritableSubResource virtualMachine = default;
+            NetworkSecurityGroupData networkSecurityGroup = default;
+            PrivateEndpointData privateEndpoint = default;
+            IList<NetworkInterfaceIPConfigurationData> ipConfigurations = default;
+            IReadOnlyList<NetworkInterfaceTapConfigurationData> tapConfigurations = default;
+            NetworkInterfaceDnsSettings dnsSettings = default;
+            string macAddress = default;
+            bool? primary = default;
+            bool? vnetEncryptionSupported = default;
+            bool? enableAcceleratedNetworking = default;
+            bool? disableTcpStateTracking = default;
+            bool? enableIPForwarding = default;
+            IReadOnlyList<string> hostedWorkloads = default;
+            WritableSubResource dscpConfiguration = default;
+            Guid? resourceGuid = default;
+            NetworkProvisioningState? provisioningState = default;
+            string workloadType = default;
+            NetworkInterfaceNicType? nicType = default;
+            PrivateLinkServiceData privateLinkService = default;
+            NetworkInterfaceMigrationPhase? migrationPhase = default;
+            NetworkInterfaceAuxiliaryMode? auxiliaryMode = default;
+            NetworkInterfaceAuxiliarySku? auxiliarySku = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            networkSecurityGroup = NetworkSecurityGroupData.DeserializeNetworkSecurityGroupData(property0.Value);
+                            networkSecurityGroup = NetworkSecurityGroupData.DeserializeNetworkSecurityGroupData(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("privateEndpoint"u8))
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            privateEndpoint = PrivateEndpointData.DeserializePrivateEndpointData(property0.Value);
+                            privateEndpoint = PrivateEndpointData.DeserializePrivateEndpointData(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("ipConfigurations"u8))
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.Network
                             List<NetworkInterfaceIPConfigurationData> array = new List<NetworkInterfaceIPConfigurationData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkInterfaceIPConfigurationData.DeserializeNetworkInterfaceIPConfigurationData(item));
+                                array.Add(NetworkInterfaceIPConfigurationData.DeserializeNetworkInterfaceIPConfigurationData(item, options));
                             }
                             ipConfigurations = array;
                             continue;
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.Network
                             List<NetworkInterfaceTapConfigurationData> array = new List<NetworkInterfaceTapConfigurationData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkInterfaceTapConfigurationData.DeserializeNetworkInterfaceTapConfigurationData(item));
+                                array.Add(NetworkInterfaceTapConfigurationData.DeserializeNetworkInterfaceTapConfigurationData(item, options));
                             }
                             tapConfigurations = array;
                             continue;
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            dnsSettings = NetworkInterfaceDnsSettings.DeserializeNetworkInterfaceDnsSettings(property0.Value);
+                            dnsSettings = NetworkInterfaceDnsSettings.DeserializeNetworkInterfaceDnsSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("macAddress"u8))
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            privateLinkService = PrivateLinkServiceData.DeserializePrivateLinkServiceData(property0.Value);
+                            privateLinkService = PrivateLinkServiceData.DeserializePrivateLinkServiceData(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("migrationPhase"u8))
@@ -556,7 +556,37 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkInterfaceData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, extendedLocation, Optional.ToNullable(etag), virtualMachine, networkSecurityGroup.Value, privateEndpoint.Value, Optional.ToList(ipConfigurations), Optional.ToList(tapConfigurations), dnsSettings.Value, macAddress.Value, Optional.ToNullable(primary), Optional.ToNullable(vnetEncryptionSupported), Optional.ToNullable(enableAcceleratedNetworking), Optional.ToNullable(disableTcpStateTracking), Optional.ToNullable(enableIPForwarding), Optional.ToList(hostedWorkloads), dscpConfiguration, Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), workloadType.Value, Optional.ToNullable(nicType), privateLinkService.Value, Optional.ToNullable(migrationPhase), Optional.ToNullable(auxiliaryMode), Optional.ToNullable(auxiliarySku));
+            return new NetworkInterfaceData(
+                id,
+                name,
+                type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                extendedLocation,
+                etag,
+                virtualMachine,
+                networkSecurityGroup,
+                privateEndpoint,
+                ipConfigurations ?? new ChangeTrackingList<NetworkInterfaceIPConfigurationData>(),
+                tapConfigurations ?? new ChangeTrackingList<NetworkInterfaceTapConfigurationData>(),
+                dnsSettings,
+                macAddress,
+                primary,
+                vnetEncryptionSupported,
+                enableAcceleratedNetworking,
+                disableTcpStateTracking,
+                enableIPForwarding,
+                hostedWorkloads ?? new ChangeTrackingList<string>(),
+                dscpConfiguration,
+                resourceGuid,
+                provisioningState,
+                workloadType,
+                nicType,
+                privateLinkService,
+                migrationPhase,
+                auxiliaryMode,
+                auxiliarySku);
         }
 
         BinaryData IPersistableModel<NetworkInterfaceData>.Write(ModelReaderWriterOptions options)

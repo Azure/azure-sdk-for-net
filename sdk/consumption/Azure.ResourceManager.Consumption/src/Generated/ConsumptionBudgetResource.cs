@@ -279,10 +279,7 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ConsumptionBudgetResource>> UpdateAsync(WaitUntil waitUntil, ConsumptionBudgetData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _consumptionBudgetBudgetsClientDiagnostics.CreateScope("ConsumptionBudgetResource.Update");
             scope.Start();
@@ -328,10 +325,7 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ConsumptionBudgetResource> Update(WaitUntil waitUntil, ConsumptionBudgetData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _consumptionBudgetBudgetsClientDiagnostics.CreateScope("ConsumptionBudgetResource.Update");
             scope.Start();

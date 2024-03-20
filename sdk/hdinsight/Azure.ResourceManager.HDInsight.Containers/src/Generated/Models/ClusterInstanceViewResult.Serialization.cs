@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         if (property0.NameEquals("status"u8))
                         {
-                            status = ClusterInstanceViewStatus.DeserializeClusterInstanceViewStatus(property0.Value);
+                            status = ClusterInstanceViewStatus.DeserializeClusterInstanceViewStatus(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("serviceStatuses"u8))
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                             List<HDInsightServiceStatus> array = new List<HDInsightServiceStatus>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(HDInsightServiceStatus.DeserializeHDInsightServiceStatus(item));
+                                array.Add(HDInsightServiceStatus.DeserializeHDInsightServiceStatus(item, options));
                             }
                             serviceStatuses = array;
                             continue;

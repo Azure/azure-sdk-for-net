@@ -233,6 +233,11 @@ namespace Azure.ResourceManager.Batch
                     writer.WriteNull("currentNodeCommunicationMode");
                 }
             }
+            if (Optional.IsDefined(UpgradePolicy))
+            {
+                writer.WritePropertyName("upgradePolicy"u8);
+                writer.WriteObjectValue(UpgradePolicy);
+            }
             if (Optional.IsCollectionDefined(ResourceTags))
             {
                 writer.WritePropertyName("resourceTags"u8);
@@ -283,40 +288,41 @@ namespace Azure.ResourceManager.Batch
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<ETag> etag = default;
+            ManagedServiceIdentity identity = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<DateTimeOffset> lastModified = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<BatchAccountPoolProvisioningState> provisioningState = default;
-            Optional<DateTimeOffset> provisioningStateTransitionTime = default;
-            Optional<BatchAccountPoolAllocationState> allocationState = default;
-            Optional<DateTimeOffset> allocationStateTransitionTime = default;
-            Optional<string> vmSize = default;
-            Optional<BatchDeploymentConfiguration> deploymentConfiguration = default;
-            Optional<int> currentDedicatedNodes = default;
-            Optional<int> currentLowPriorityNodes = default;
-            Optional<BatchAccountPoolScaleSettings> scaleSettings = default;
-            Optional<BatchAccountPoolAutoScaleRun> autoScaleRun = default;
-            Optional<InterNodeCommunicationState> interNodeCommunication = default;
-            Optional<BatchNetworkConfiguration> networkConfiguration = default;
-            Optional<int> taskSlotsPerNode = default;
-            Optional<TaskSchedulingPolicy> taskSchedulingPolicy = default;
-            Optional<IList<BatchUserAccount>> userAccounts = default;
-            Optional<IList<BatchAccountPoolMetadataItem>> metadata = default;
-            Optional<BatchAccountPoolStartTask> startTask = default;
-            Optional<IList<BatchCertificateReference>> certificates = default;
-            Optional<IList<BatchApplicationPackageReference>> applicationPackages = default;
-            Optional<IList<string>> applicationLicenses = default;
-            Optional<BatchResizeOperationStatus> resizeOperationStatus = default;
-            Optional<IList<BatchMountConfiguration>> mountConfiguration = default;
-            Optional<NodeCommunicationMode> targetNodeCommunicationMode = default;
-            Optional<NodeCommunicationMode?> currentNodeCommunicationMode = default;
-            Optional<IDictionary<string, string>> resourceTags = default;
+            SystemData systemData = default;
+            string displayName = default;
+            DateTimeOffset? lastModified = default;
+            DateTimeOffset? creationTime = default;
+            BatchAccountPoolProvisioningState? provisioningState = default;
+            DateTimeOffset? provisioningStateTransitionTime = default;
+            BatchAccountPoolAllocationState? allocationState = default;
+            DateTimeOffset? allocationStateTransitionTime = default;
+            string vmSize = default;
+            BatchDeploymentConfiguration deploymentConfiguration = default;
+            int? currentDedicatedNodes = default;
+            int? currentLowPriorityNodes = default;
+            BatchAccountPoolScaleSettings scaleSettings = default;
+            BatchAccountPoolAutoScaleRun autoScaleRun = default;
+            InterNodeCommunicationState? interNodeCommunication = default;
+            BatchNetworkConfiguration networkConfiguration = default;
+            int? taskSlotsPerNode = default;
+            TaskSchedulingPolicy taskSchedulingPolicy = default;
+            IList<BatchUserAccount> userAccounts = default;
+            IList<BatchAccountPoolMetadataItem> metadata = default;
+            BatchAccountPoolStartTask startTask = default;
+            IList<BatchCertificateReference> certificates = default;
+            IList<BatchApplicationPackageReference> applicationPackages = default;
+            IList<string> applicationLicenses = default;
+            BatchResizeOperationStatus resizeOperationStatus = default;
+            IList<BatchMountConfiguration> mountConfiguration = default;
+            NodeCommunicationMode? targetNodeCommunicationMode = default;
+            NodeCommunicationMode? currentNodeCommunicationMode = default;
+            UpgradePolicy upgradePolicy = default;
+            IDictionary<string, string> resourceTags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -442,7 +448,7 @@ namespace Azure.ResourceManager.Batch
                             {
                                 continue;
                             }
-                            deploymentConfiguration = BatchDeploymentConfiguration.DeserializeBatchDeploymentConfiguration(property0.Value);
+                            deploymentConfiguration = BatchDeploymentConfiguration.DeserializeBatchDeploymentConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("currentDedicatedNodes"u8))
@@ -469,7 +475,7 @@ namespace Azure.ResourceManager.Batch
                             {
                                 continue;
                             }
-                            scaleSettings = BatchAccountPoolScaleSettings.DeserializeBatchAccountPoolScaleSettings(property0.Value);
+                            scaleSettings = BatchAccountPoolScaleSettings.DeserializeBatchAccountPoolScaleSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("autoScaleRun"u8))
@@ -478,7 +484,7 @@ namespace Azure.ResourceManager.Batch
                             {
                                 continue;
                             }
-                            autoScaleRun = BatchAccountPoolAutoScaleRun.DeserializeBatchAccountPoolAutoScaleRun(property0.Value);
+                            autoScaleRun = BatchAccountPoolAutoScaleRun.DeserializeBatchAccountPoolAutoScaleRun(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("interNodeCommunication"u8))
@@ -496,7 +502,7 @@ namespace Azure.ResourceManager.Batch
                             {
                                 continue;
                             }
-                            networkConfiguration = BatchNetworkConfiguration.DeserializeBatchNetworkConfiguration(property0.Value);
+                            networkConfiguration = BatchNetworkConfiguration.DeserializeBatchNetworkConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("taskSlotsPerNode"u8))
@@ -514,7 +520,7 @@ namespace Azure.ResourceManager.Batch
                             {
                                 continue;
                             }
-                            taskSchedulingPolicy = TaskSchedulingPolicy.DeserializeTaskSchedulingPolicy(property0.Value);
+                            taskSchedulingPolicy = TaskSchedulingPolicy.DeserializeTaskSchedulingPolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("userAccounts"u8))
@@ -526,7 +532,7 @@ namespace Azure.ResourceManager.Batch
                             List<BatchUserAccount> array = new List<BatchUserAccount>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(BatchUserAccount.DeserializeBatchUserAccount(item));
+                                array.Add(BatchUserAccount.DeserializeBatchUserAccount(item, options));
                             }
                             userAccounts = array;
                             continue;
@@ -540,7 +546,7 @@ namespace Azure.ResourceManager.Batch
                             List<BatchAccountPoolMetadataItem> array = new List<BatchAccountPoolMetadataItem>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(BatchAccountPoolMetadataItem.DeserializeBatchAccountPoolMetadataItem(item));
+                                array.Add(BatchAccountPoolMetadataItem.DeserializeBatchAccountPoolMetadataItem(item, options));
                             }
                             metadata = array;
                             continue;
@@ -551,7 +557,7 @@ namespace Azure.ResourceManager.Batch
                             {
                                 continue;
                             }
-                            startTask = BatchAccountPoolStartTask.DeserializeBatchAccountPoolStartTask(property0.Value);
+                            startTask = BatchAccountPoolStartTask.DeserializeBatchAccountPoolStartTask(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("certificates"u8))
@@ -563,7 +569,7 @@ namespace Azure.ResourceManager.Batch
                             List<BatchCertificateReference> array = new List<BatchCertificateReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(BatchCertificateReference.DeserializeBatchCertificateReference(item));
+                                array.Add(BatchCertificateReference.DeserializeBatchCertificateReference(item, options));
                             }
                             certificates = array;
                             continue;
@@ -577,7 +583,7 @@ namespace Azure.ResourceManager.Batch
                             List<BatchApplicationPackageReference> array = new List<BatchApplicationPackageReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(BatchApplicationPackageReference.DeserializeBatchApplicationPackageReference(item));
+                                array.Add(BatchApplicationPackageReference.DeserializeBatchApplicationPackageReference(item, options));
                             }
                             applicationPackages = array;
                             continue;
@@ -602,7 +608,7 @@ namespace Azure.ResourceManager.Batch
                             {
                                 continue;
                             }
-                            resizeOperationStatus = BatchResizeOperationStatus.DeserializeBatchResizeOperationStatus(property0.Value);
+                            resizeOperationStatus = BatchResizeOperationStatus.DeserializeBatchResizeOperationStatus(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("mountConfiguration"u8))
@@ -614,7 +620,7 @@ namespace Azure.ResourceManager.Batch
                             List<BatchMountConfiguration> array = new List<BatchMountConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(BatchMountConfiguration.DeserializeBatchMountConfiguration(item));
+                                array.Add(BatchMountConfiguration.DeserializeBatchMountConfiguration(item, options));
                             }
                             mountConfiguration = array;
                             continue;
@@ -636,6 +642,15 @@ namespace Azure.ResourceManager.Batch
                                 continue;
                             }
                             currentNodeCommunicationMode = property0.Value.GetString().ToNodeCommunicationMode();
+                            continue;
+                        }
+                        if (property0.NameEquals("upgradePolicy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            upgradePolicy = UpgradePolicy.DeserializeUpgradePolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("resourceTags"u8))
@@ -661,7 +676,43 @@ namespace Azure.ResourceManager.Batch
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchAccountPoolData(id, name, type, systemData.Value, identity, displayName.Value, Optional.ToNullable(lastModified), Optional.ToNullable(creationTime), Optional.ToNullable(provisioningState), Optional.ToNullable(provisioningStateTransitionTime), Optional.ToNullable(allocationState), Optional.ToNullable(allocationStateTransitionTime), vmSize.Value, deploymentConfiguration.Value, Optional.ToNullable(currentDedicatedNodes), Optional.ToNullable(currentLowPriorityNodes), scaleSettings.Value, autoScaleRun.Value, Optional.ToNullable(interNodeCommunication), networkConfiguration.Value, Optional.ToNullable(taskSlotsPerNode), taskSchedulingPolicy.Value, Optional.ToList(userAccounts), Optional.ToList(metadata), startTask.Value, Optional.ToList(certificates), Optional.ToList(applicationPackages), Optional.ToList(applicationLicenses), resizeOperationStatus.Value, Optional.ToList(mountConfiguration), Optional.ToNullable(targetNodeCommunicationMode), Optional.ToNullable(currentNodeCommunicationMode), Optional.ToDictionary(resourceTags), Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new BatchAccountPoolData(
+                id,
+                name,
+                type,
+                systemData,
+                identity,
+                displayName,
+                lastModified,
+                creationTime,
+                provisioningState,
+                provisioningStateTransitionTime,
+                allocationState,
+                allocationStateTransitionTime,
+                vmSize,
+                deploymentConfiguration,
+                currentDedicatedNodes,
+                currentLowPriorityNodes,
+                scaleSettings,
+                autoScaleRun,
+                interNodeCommunication,
+                networkConfiguration,
+                taskSlotsPerNode,
+                taskSchedulingPolicy,
+                userAccounts ?? new ChangeTrackingList<BatchUserAccount>(),
+                metadata ?? new ChangeTrackingList<BatchAccountPoolMetadataItem>(),
+                startTask,
+                certificates ?? new ChangeTrackingList<BatchCertificateReference>(),
+                applicationPackages ?? new ChangeTrackingList<BatchApplicationPackageReference>(),
+                applicationLicenses ?? new ChangeTrackingList<string>(),
+                resizeOperationStatus,
+                mountConfiguration ?? new ChangeTrackingList<BatchMountConfiguration>(),
+                targetNodeCommunicationMode,
+                currentNodeCommunicationMode,
+                upgradePolicy,
+                resourceTags ?? new ChangeTrackingDictionary<string, string>(),
+                etag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchAccountPoolData>.Write(ModelReaderWriterOptions options)

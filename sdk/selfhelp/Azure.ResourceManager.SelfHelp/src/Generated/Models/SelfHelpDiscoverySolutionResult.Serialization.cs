@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SelfHelp;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SelfHelpSolutionMetadata>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<SelfHelpSolutionMetadata> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<SelfHelpSolutionMetadata> array = new List<SelfHelpSolutionMetadata>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SelfHelpSolutionMetadata.DeserializeSelfHelpSolutionMetadata(item));
+                        array.Add(SelfHelpSolutionMetadata.DeserializeSelfHelpSolutionMetadata(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SelfHelpDiscoverySolutionResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SelfHelpDiscoverySolutionResult(value ?? new ChangeTrackingList<SelfHelpSolutionMetadata>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SelfHelpDiscoverySolutionResult>.Write(ModelReaderWriterOptions options)

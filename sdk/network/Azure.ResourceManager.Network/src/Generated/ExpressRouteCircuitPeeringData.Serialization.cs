@@ -200,30 +200,30 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<ExpressRoutePeeringType> peeringType = default;
-            Optional<ExpressRoutePeeringState> state = default;
-            Optional<int> azureASN = default;
-            Optional<long> peerASN = default;
-            Optional<string> primaryPeerAddressPrefix = default;
-            Optional<string> secondaryPeerAddressPrefix = default;
-            Optional<string> primaryAzurePort = default;
-            Optional<string> secondaryAzurePort = default;
-            Optional<string> sharedKey = default;
-            Optional<int> vlanId = default;
-            Optional<ExpressRouteCircuitPeeringConfig> microsoftPeeringConfig = default;
-            Optional<ExpressRouteCircuitStats> stats = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<string> gatewayManagerETag = default;
-            Optional<string> lastModifiedBy = default;
-            Optional<WritableSubResource> routeFilter = default;
-            Optional<IPv6ExpressRouteCircuitPeeringConfig> ipv6PeeringConfig = default;
-            Optional<SubResource> expressRouteConnection = default;
-            Optional<IList<ExpressRouteCircuitConnectionData>> connections = default;
-            Optional<IReadOnlyList<PeerExpressRouteCircuitConnectionData>> peeredConnections = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            ExpressRoutePeeringType? peeringType = default;
+            ExpressRoutePeeringState? state = default;
+            int? azureASN = default;
+            long? peerASN = default;
+            string primaryPeerAddressPrefix = default;
+            string secondaryPeerAddressPrefix = default;
+            string primaryAzurePort = default;
+            string secondaryAzurePort = default;
+            string sharedKey = default;
+            int? vlanId = default;
+            ExpressRouteCircuitPeeringConfig microsoftPeeringConfig = default;
+            ExpressRouteCircuitStats stats = default;
+            NetworkProvisioningState? provisioningState = default;
+            string gatewayManagerETag = default;
+            string lastModifiedBy = default;
+            WritableSubResource routeFilter = default;
+            IPv6ExpressRouteCircuitPeeringConfig ipv6PeeringConfig = default;
+            SubResource expressRouteConnection = default;
+            IList<ExpressRouteCircuitConnectionData> connections = default;
+            IReadOnlyList<PeerExpressRouteCircuitConnectionData> peeredConnections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            microsoftPeeringConfig = ExpressRouteCircuitPeeringConfig.DeserializeExpressRouteCircuitPeeringConfig(property0.Value);
+                            microsoftPeeringConfig = ExpressRouteCircuitPeeringConfig.DeserializeExpressRouteCircuitPeeringConfig(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("stats"u8))
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            stats = ExpressRouteCircuitStats.DeserializeExpressRouteCircuitStats(property0.Value);
+                            stats = ExpressRouteCircuitStats.DeserializeExpressRouteCircuitStats(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            ipv6PeeringConfig = IPv6ExpressRouteCircuitPeeringConfig.DeserializeIPv6ExpressRouteCircuitPeeringConfig(property0.Value);
+                            ipv6PeeringConfig = IPv6ExpressRouteCircuitPeeringConfig.DeserializeIPv6ExpressRouteCircuitPeeringConfig(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("expressRouteConnection"u8))
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.Network
                             List<ExpressRouteCircuitConnectionData> array = new List<ExpressRouteCircuitConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ExpressRouteCircuitConnectionData.DeserializeExpressRouteCircuitConnectionData(item));
+                                array.Add(ExpressRouteCircuitConnectionData.DeserializeExpressRouteCircuitConnectionData(item, options));
                             }
                             connections = array;
                             continue;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.Network
                             List<PeerExpressRouteCircuitConnectionData> array = new List<PeerExpressRouteCircuitConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PeerExpressRouteCircuitConnectionData.DeserializePeerExpressRouteCircuitConnectionData(item));
+                                array.Add(PeerExpressRouteCircuitConnectionData.DeserializePeerExpressRouteCircuitConnectionData(item, options));
                             }
                             peeredConnections = array;
                             continue;
@@ -440,7 +440,32 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressRouteCircuitPeeringData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(peeringType), Optional.ToNullable(state), Optional.ToNullable(azureASN), Optional.ToNullable(peerASN), primaryPeerAddressPrefix.Value, secondaryPeerAddressPrefix.Value, primaryAzurePort.Value, secondaryAzurePort.Value, sharedKey.Value, Optional.ToNullable(vlanId), microsoftPeeringConfig.Value, stats.Value, Optional.ToNullable(provisioningState), gatewayManagerETag.Value, lastModifiedBy.Value, routeFilter, ipv6PeeringConfig.Value, expressRouteConnection, Optional.ToList(connections), Optional.ToList(peeredConnections));
+            return new ExpressRouteCircuitPeeringData(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                peeringType,
+                state,
+                azureASN,
+                peerASN,
+                primaryPeerAddressPrefix,
+                secondaryPeerAddressPrefix,
+                primaryAzurePort,
+                secondaryAzurePort,
+                sharedKey,
+                vlanId,
+                microsoftPeeringConfig,
+                stats,
+                provisioningState,
+                gatewayManagerETag,
+                lastModifiedBy,
+                routeFilter,
+                ipv6PeeringConfig,
+                expressRouteConnection,
+                connections ?? new ChangeTrackingList<ExpressRouteCircuitConnectionData>(),
+                peeredConnections ?? new ChangeTrackingList<PeerExpressRouteCircuitConnectionData>());
         }
 
         BinaryData IPersistableModel<ExpressRouteCircuitPeeringData>.Write(ModelReaderWriterOptions options)

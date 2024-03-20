@@ -103,8 +103,8 @@ namespace Azure.ResourceManager.Automanage
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<BinaryData> configuration = default;
+            SystemData systemData = default;
+            BinaryData configuration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +160,13 @@ namespace Azure.ResourceManager.Automanage
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomanageBestPracticeData(id, name, type, systemData.Value, configuration.Value, serializedAdditionalRawData);
+            return new AutomanageBestPracticeData(
+                id,
+                name,
+                type,
+                systemData,
+                configuration,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomanageBestPracticeData>.Write(ModelReaderWriterOptions options)

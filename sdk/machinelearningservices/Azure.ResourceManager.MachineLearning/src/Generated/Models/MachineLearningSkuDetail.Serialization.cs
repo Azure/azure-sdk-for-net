@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -100,9 +101,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<MachineLearningSkuCapacity> capacity = default;
-            Optional<string> resourceType = default;
-            Optional<MachineLearningSkuSetting> sku = default;
+            MachineLearningSkuCapacity capacity = default;
+            string resourceType = default;
+            MachineLearningSkuSetting sku = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         capacity = null;
                         continue;
                     }
-                    capacity = MachineLearningSkuCapacity.DeserializeMachineLearningSkuCapacity(property.Value);
+                    capacity = MachineLearningSkuCapacity.DeserializeMachineLearningSkuCapacity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("resourceType"u8))
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         sku = null;
                         continue;
                     }
-                    sku = MachineLearningSkuSetting.DeserializeMachineLearningSkuSetting(property.Value);
+                    sku = MachineLearningSkuSetting.DeserializeMachineLearningSkuSetting(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -143,7 +144,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningSkuDetail(capacity.Value, resourceType.Value, sku.Value, serializedAdditionalRawData);
+            return new MachineLearningSkuDetail(capacity, resourceType, sku, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningSkuDetail>.Write(ModelReaderWriterOptions options)

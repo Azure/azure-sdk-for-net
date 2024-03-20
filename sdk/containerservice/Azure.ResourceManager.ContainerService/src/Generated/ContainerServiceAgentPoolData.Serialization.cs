@@ -329,50 +329,50 @@ namespace Azure.ResourceManager.ContainerService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> count = default;
-            Optional<string> vmSize = default;
-            Optional<int> osDiskSizeGB = default;
-            Optional<ContainerServiceOSDiskType> osDiskType = default;
-            Optional<KubeletDiskType> kubeletDiskType = default;
-            Optional<WorkloadRuntime> workloadRuntime = default;
-            Optional<ResourceIdentifier> vnetSubnetId = default;
-            Optional<ResourceIdentifier> podSubnetId = default;
-            Optional<int> maxPods = default;
-            Optional<ContainerServiceOSType> osType = default;
-            Optional<ContainerServiceOSSku> osSku = default;
-            Optional<int> maxCount = default;
-            Optional<int> minCount = default;
-            Optional<bool> enableAutoScaling = default;
-            Optional<ScaleDownMode> scaleDownMode = default;
-            Optional<AgentPoolType> type0 = default;
-            Optional<AgentPoolMode> mode = default;
-            Optional<string> orchestratorVersion = default;
-            Optional<string> currentOrchestratorVersion = default;
-            Optional<string> nodeImageVersion = default;
-            Optional<AgentPoolUpgradeSettings> upgradeSettings = default;
-            Optional<string> provisioningState = default;
-            Optional<ContainerServicePowerState> powerState = default;
-            Optional<IList<string>> availabilityZones = default;
-            Optional<bool> enableNodePublicIP = default;
-            Optional<ResourceIdentifier> nodePublicIPPrefixId = default;
-            Optional<ScaleSetPriority> scaleSetPriority = default;
-            Optional<ScaleSetEvictionPolicy> scaleSetEvictionPolicy = default;
-            Optional<float> spotMaxPrice = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<IDictionary<string, string>> nodeLabels = default;
-            Optional<IList<string>> nodeTaints = default;
-            Optional<ResourceIdentifier> proximityPlacementGroupId = default;
-            Optional<KubeletConfig> kubeletConfig = default;
-            Optional<LinuxOSConfig> linuxOSConfig = default;
-            Optional<bool> enableEncryptionAtHost = default;
-            Optional<bool> enableUltraSsd = default;
-            Optional<bool> enableFIPS = default;
-            Optional<GpuInstanceProfile> gpuInstanceProfile = default;
-            Optional<ContainerServiceCreationData> creationData = default;
-            Optional<ResourceIdentifier> capacityReservationGroupId = default;
-            Optional<ResourceIdentifier> hostGroupId = default;
-            Optional<AgentPoolNetworkProfile> networkProfile = default;
+            SystemData systemData = default;
+            int? count = default;
+            string vmSize = default;
+            int? osDiskSizeGB = default;
+            ContainerServiceOSDiskType? osDiskType = default;
+            KubeletDiskType? kubeletDiskType = default;
+            WorkloadRuntime? workloadRuntime = default;
+            ResourceIdentifier vnetSubnetId = default;
+            ResourceIdentifier podSubnetId = default;
+            int? maxPods = default;
+            ContainerServiceOSType? osType = default;
+            ContainerServiceOSSku? osSku = default;
+            int? maxCount = default;
+            int? minCount = default;
+            bool? enableAutoScaling = default;
+            ScaleDownMode? scaleDownMode = default;
+            AgentPoolType? type0 = default;
+            AgentPoolMode? mode = default;
+            string orchestratorVersion = default;
+            string currentOrchestratorVersion = default;
+            string nodeImageVersion = default;
+            AgentPoolUpgradeSettings upgradeSettings = default;
+            string provisioningState = default;
+            ContainerServicePowerState powerState = default;
+            IList<string> availabilityZones = default;
+            bool? enableNodePublicIP = default;
+            ResourceIdentifier nodePublicIPPrefixId = default;
+            ScaleSetPriority? scaleSetPriority = default;
+            ScaleSetEvictionPolicy? scaleSetEvictionPolicy = default;
+            float? spotMaxPrice = default;
+            IDictionary<string, string> tags = default;
+            IDictionary<string, string> nodeLabels = default;
+            IList<string> nodeTaints = default;
+            ResourceIdentifier proximityPlacementGroupId = default;
+            KubeletConfig kubeletConfig = default;
+            LinuxOSConfig linuxOSConfig = default;
+            bool? enableEncryptionAtHost = default;
+            bool? enableUltraSsd = default;
+            bool? enableFIPS = default;
+            GpuInstanceProfile? gpuInstanceProfile = default;
+            ContainerServiceCreationData creationData = default;
+            ResourceIdentifier capacityReservationGroupId = default;
+            ResourceIdentifier hostGroupId = default;
+            AgentPoolNetworkProfile networkProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.ContainerService
                             {
                                 continue;
                             }
-                            upgradeSettings = AgentPoolUpgradeSettings.DeserializeAgentPoolUpgradeSettings(property0.Value);
+                            upgradeSettings = AgentPoolUpgradeSettings.DeserializeAgentPoolUpgradeSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -594,7 +594,7 @@ namespace Azure.ResourceManager.ContainerService
                             {
                                 continue;
                             }
-                            powerState = ContainerServicePowerState.DeserializeContainerServicePowerState(property0.Value);
+                            powerState = ContainerServicePowerState.DeserializeContainerServicePowerState(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("availabilityZones"u8))
@@ -713,7 +713,7 @@ namespace Azure.ResourceManager.ContainerService
                             {
                                 continue;
                             }
-                            kubeletConfig = KubeletConfig.DeserializeKubeletConfig(property0.Value);
+                            kubeletConfig = KubeletConfig.DeserializeKubeletConfig(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("linuxOSConfig"u8))
@@ -722,7 +722,7 @@ namespace Azure.ResourceManager.ContainerService
                             {
                                 continue;
                             }
-                            linuxOSConfig = LinuxOSConfig.DeserializeLinuxOSConfig(property0.Value);
+                            linuxOSConfig = LinuxOSConfig.DeserializeLinuxOSConfig(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("enableEncryptionAtHost"u8))
@@ -767,7 +767,7 @@ namespace Azure.ResourceManager.ContainerService
                             {
                                 continue;
                             }
-                            creationData = ContainerServiceCreationData.DeserializeContainerServiceCreationData(property0.Value);
+                            creationData = ContainerServiceCreationData.DeserializeContainerServiceCreationData(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("capacityReservationGroupID"u8))
@@ -794,7 +794,7 @@ namespace Azure.ResourceManager.ContainerService
                             {
                                 continue;
                             }
-                            networkProfile = AgentPoolNetworkProfile.DeserializeAgentPoolNetworkProfile(property0.Value);
+                            networkProfile = AgentPoolNetworkProfile.DeserializeAgentPoolNetworkProfile(property0.Value, options);
                             continue;
                         }
                     }
@@ -806,7 +806,55 @@ namespace Azure.ResourceManager.ContainerService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServiceAgentPoolData(id, name, type, systemData.Value, Optional.ToNullable(count), vmSize.Value, Optional.ToNullable(osDiskSizeGB), Optional.ToNullable(osDiskType), Optional.ToNullable(kubeletDiskType), Optional.ToNullable(workloadRuntime), vnetSubnetId.Value, podSubnetId.Value, Optional.ToNullable(maxPods), Optional.ToNullable(osType), Optional.ToNullable(osSku), Optional.ToNullable(maxCount), Optional.ToNullable(minCount), Optional.ToNullable(enableAutoScaling), Optional.ToNullable(scaleDownMode), Optional.ToNullable(type0), Optional.ToNullable(mode), orchestratorVersion.Value, currentOrchestratorVersion.Value, nodeImageVersion.Value, upgradeSettings.Value, provisioningState.Value, powerState.Value, Optional.ToList(availabilityZones), Optional.ToNullable(enableNodePublicIP), nodePublicIPPrefixId.Value, Optional.ToNullable(scaleSetPriority), Optional.ToNullable(scaleSetEvictionPolicy), Optional.ToNullable(spotMaxPrice), Optional.ToDictionary(tags), Optional.ToDictionary(nodeLabels), Optional.ToList(nodeTaints), proximityPlacementGroupId.Value, kubeletConfig.Value, linuxOSConfig.Value, Optional.ToNullable(enableEncryptionAtHost), Optional.ToNullable(enableUltraSsd), Optional.ToNullable(enableFIPS), Optional.ToNullable(gpuInstanceProfile), creationData.Value, capacityReservationGroupId.Value, hostGroupId.Value, networkProfile.Value, serializedAdditionalRawData);
+            return new ContainerServiceAgentPoolData(
+                id,
+                name,
+                type,
+                systemData,
+                count,
+                vmSize,
+                osDiskSizeGB,
+                osDiskType,
+                kubeletDiskType,
+                workloadRuntime,
+                vnetSubnetId,
+                podSubnetId,
+                maxPods,
+                osType,
+                osSku,
+                maxCount,
+                minCount,
+                enableAutoScaling,
+                scaleDownMode,
+                type0,
+                mode,
+                orchestratorVersion,
+                currentOrchestratorVersion,
+                nodeImageVersion,
+                upgradeSettings,
+                provisioningState,
+                powerState,
+                availabilityZones ?? new ChangeTrackingList<string>(),
+                enableNodePublicIP,
+                nodePublicIPPrefixId,
+                scaleSetPriority,
+                scaleSetEvictionPolicy,
+                spotMaxPrice,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                nodeLabels ?? new ChangeTrackingDictionary<string, string>(),
+                nodeTaints ?? new ChangeTrackingList<string>(),
+                proximityPlacementGroupId,
+                kubeletConfig,
+                linuxOSConfig,
+                enableEncryptionAtHost,
+                enableUltraSsd,
+                enableFIPS,
+                gpuInstanceProfile,
+                creationData,
+                capacityReservationGroupId,
+                hostGroupId,
+                networkProfile,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServiceAgentPoolData>.Write(ModelReaderWriterOptions options)

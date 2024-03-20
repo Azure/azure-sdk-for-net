@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -109,13 +110,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             RedistributeThroughputPropertiesResource resource = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -185,7 +186,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         if (property0.NameEquals("resource"u8))
                         {
-                            resource = RedistributeThroughputPropertiesResource.DeserializeRedistributeThroughputPropertiesResource(property0.Value);
+                            resource = RedistributeThroughputPropertiesResource.DeserializeRedistributeThroughputPropertiesResource(property0.Value, options);
                             continue;
                         }
                     }
@@ -197,7 +198,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedistributeThroughputParameters(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, resource, identity, serializedAdditionalRawData);
+            return new RedistributeThroughputParameters(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                resource,
+                identity,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedistributeThroughputParameters>.Write(ModelReaderWriterOptions options)

@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -273,10 +273,7 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<ProofOfPossessionNonceResponse>> RetrieveProofOfPossessionNonceAsync(ProofOfPossessionNonceContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _sphereCertificateCertificatesClientDiagnostics.CreateScope("SphereCertificateResource.RetrieveProofOfPossessionNonce");
             scope.Start();
@@ -305,7 +302,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -318,10 +315,7 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<ProofOfPossessionNonceResponse> RetrieveProofOfPossessionNonce(ProofOfPossessionNonceContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _sphereCertificateCertificatesClientDiagnostics.CreateScope("SphereCertificateResource.RetrieveProofOfPossessionNonce");
             scope.Start();

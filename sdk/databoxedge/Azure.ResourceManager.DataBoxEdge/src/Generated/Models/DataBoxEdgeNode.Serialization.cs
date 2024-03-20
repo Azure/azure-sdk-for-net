@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
@@ -126,14 +127,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DataBoxEdgeNodeStatus> nodeStatus = default;
-            Optional<string> nodeChassisSerialNumber = default;
-            Optional<string> nodeSerialNumber = default;
-            Optional<string> nodeDisplayName = default;
-            Optional<string> nodeFriendlySoftwareVersion = default;
-            Optional<string> nodeHcsVersion = default;
-            Optional<Guid> nodeInstanceId = default;
+            SystemData systemData = default;
+            DataBoxEdgeNodeStatus? nodeStatus = default;
+            string nodeChassisSerialNumber = default;
+            string nodeSerialNumber = default;
+            string nodeDisplayName = default;
+            string nodeFriendlySoftwareVersion = default;
+            string nodeHcsVersion = default;
+            Guid? nodeInstanceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -223,7 +224,19 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeNode(id, name, type, systemData.Value, Optional.ToNullable(nodeStatus), nodeChassisSerialNumber.Value, nodeSerialNumber.Value, nodeDisplayName.Value, nodeFriendlySoftwareVersion.Value, nodeHcsVersion.Value, Optional.ToNullable(nodeInstanceId), serializedAdditionalRawData);
+            return new DataBoxEdgeNode(
+                id,
+                name,
+                type,
+                systemData,
+                nodeStatus,
+                nodeChassisSerialNumber,
+                nodeSerialNumber,
+                nodeDisplayName,
+                nodeFriendlySoftwareVersion,
+                nodeHcsVersion,
+                nodeInstanceId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeNode>.Write(ModelReaderWriterOptions options)

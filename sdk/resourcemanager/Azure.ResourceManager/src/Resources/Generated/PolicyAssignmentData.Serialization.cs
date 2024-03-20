@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -187,23 +188,23 @@ namespace Azure.ResourceManager.Resources
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<ManagedServiceIdentity> identity = default;
+            AzureLocation? location = default;
+            ManagedServiceIdentity identity = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<string> policyDefinitionId = default;
-            Optional<string> scope = default;
-            Optional<IList<string>> notScopes = default;
-            Optional<IDictionary<string, ArmPolicyParameterValue>> parameters = default;
-            Optional<string> description = default;
-            Optional<BinaryData> metadata = default;
-            Optional<EnforcementMode> enforcementMode = default;
-            Optional<IList<NonComplianceMessage>> nonComplianceMessages = default;
-            Optional<IList<ResourceSelector>> resourceSelectors = default;
-            Optional<IList<PolicyOverride>> overrides = default;
+            SystemData systemData = default;
+            string displayName = default;
+            string policyDefinitionId = default;
+            string scope = default;
+            IList<string> notScopes = default;
+            IDictionary<string, ArmPolicyParameterValue> parameters = default;
+            string description = default;
+            BinaryData metadata = default;
+            EnforcementMode? enforcementMode = default;
+            IList<NonComplianceMessage> nonComplianceMessages = default;
+            IList<ResourceSelector> resourceSelectors = default;
+            IList<PolicyOverride> overrides = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -297,7 +298,7 @@ namespace Azure.ResourceManager.Resources
                             Dictionary<string, ArmPolicyParameterValue> dictionary = new Dictionary<string, ArmPolicyParameterValue>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, ArmPolicyParameterValue.DeserializeArmPolicyParameterValue(property1.Value));
+                                dictionary.Add(property1.Name, ArmPolicyParameterValue.DeserializeArmPolicyParameterValue(property1.Value, options));
                             }
                             parameters = dictionary;
                             continue;
@@ -334,7 +335,7 @@ namespace Azure.ResourceManager.Resources
                             List<NonComplianceMessage> array = new List<NonComplianceMessage>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NonComplianceMessage.DeserializeNonComplianceMessage(item));
+                                array.Add(NonComplianceMessage.DeserializeNonComplianceMessage(item, options));
                             }
                             nonComplianceMessages = array;
                             continue;
@@ -348,7 +349,7 @@ namespace Azure.ResourceManager.Resources
                             List<ResourceSelector> array = new List<ResourceSelector>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ResourceSelector.DeserializeResourceSelector(item));
+                                array.Add(ResourceSelector.DeserializeResourceSelector(item, options));
                             }
                             resourceSelectors = array;
                             continue;
@@ -362,7 +363,7 @@ namespace Azure.ResourceManager.Resources
                             List<PolicyOverride> array = new List<PolicyOverride>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PolicyOverride.DeserializePolicyOverride(item));
+                                array.Add(PolicyOverride.DeserializePolicyOverride(item, options));
                             }
                             overrides = array;
                             continue;
@@ -376,7 +377,25 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyAssignmentData(id, name, type, systemData.Value, Optional.ToNullable(location), identity, displayName.Value, policyDefinitionId.Value, scope.Value, Optional.ToList(notScopes), Optional.ToDictionary(parameters), description.Value, metadata.Value, Optional.ToNullable(enforcementMode), Optional.ToList(nonComplianceMessages), Optional.ToList(resourceSelectors), Optional.ToList(overrides), serializedAdditionalRawData);
+            return new PolicyAssignmentData(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                identity,
+                displayName,
+                policyDefinitionId,
+                scope,
+                notScopes ?? new ChangeTrackingList<string>(),
+                parameters ?? new ChangeTrackingDictionary<string, ArmPolicyParameterValue>(),
+                description,
+                metadata,
+                enforcementMode,
+                nonComplianceMessages ?? new ChangeTrackingList<NonComplianceMessage>(),
+                resourceSelectors ?? new ChangeTrackingList<ResourceSelector>(),
+                overrides ?? new ChangeTrackingList<PolicyOverride>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicyAssignmentData>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
@@ -77,8 +78,8 @@ namespace Azure.ResourceManager.IotHub.Models
                 return null;
             }
             IotHubSku name = default;
-            Optional<IotHubSkuTier> tier = default;
-            Optional<long> capacity = default;
+            IotHubSkuTier? tier = default;
+            long? capacity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotHubSkuInfo(name, Optional.ToNullable(tier), Optional.ToNullable(capacity), serializedAdditionalRawData);
+            return new IotHubSkuInfo(name, tier, capacity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotHubSkuInfo>.Write(ModelReaderWriterOptions options)

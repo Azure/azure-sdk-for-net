@@ -114,14 +114,14 @@ namespace Azure.ResourceManager.NetApp
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> provisioningState = default;
-            Optional<NetAppVolumeGroupMetadata> groupMetaData = default;
-            Optional<IList<NetAppVolumeGroupVolume>> volumes = default;
+            SystemData systemData = default;
+            string provisioningState = default;
+            NetAppVolumeGroupMetadata groupMetaData = default;
+            IList<NetAppVolumeGroupVolume> volumes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.NetApp
                             {
                                 continue;
                             }
-                            groupMetaData = NetAppVolumeGroupMetadata.DeserializeNetAppVolumeGroupMetadata(property0.Value);
+                            groupMetaData = NetAppVolumeGroupMetadata.DeserializeNetAppVolumeGroupMetadata(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("volumes"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.NetApp
                             List<NetAppVolumeGroupVolume> array = new List<NetAppVolumeGroupVolume>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetAppVolumeGroupVolume.DeserializeNetAppVolumeGroupVolume(item));
+                                array.Add(NetAppVolumeGroupVolume.DeserializeNetAppVolumeGroupVolume(item, options));
                             }
                             volumes = array;
                             continue;
@@ -205,7 +205,16 @@ namespace Azure.ResourceManager.NetApp
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppVolumeGroupData(id, name, type, systemData.Value, Optional.ToNullable(location), provisioningState.Value, groupMetaData.Value, Optional.ToList(volumes), serializedAdditionalRawData);
+            return new NetAppVolumeGroupData(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                provisioningState,
+                groupMetaData,
+                volumes ?? new ChangeTrackingList<NetAppVolumeGroupVolume>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppVolumeGroupData>.Write(ModelReaderWriterOptions options)

@@ -122,12 +122,12 @@ namespace Azure.ResourceManager.Quota
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<QuotaRequestState> provisioningState = default;
-            Optional<string> message = default;
-            Optional<ServiceErrorDetail> error = default;
-            Optional<DateTimeOffset> requestSubmitTime = default;
-            Optional<IReadOnlyList<QuotaSubRequestDetail>> value = default;
+            SystemData systemData = default;
+            QuotaRequestState? provisioningState = default;
+            string message = default;
+            ServiceErrorDetail error = default;
+            DateTimeOffset? requestSubmitTime = default;
+            IReadOnlyList<QuotaSubRequestDetail> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Quota
                             {
                                 continue;
                             }
-                            error = ServiceErrorDetail.DeserializeServiceErrorDetail(property0.Value);
+                            error = ServiceErrorDetail.DeserializeServiceErrorDetail(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("requestSubmitTime"u8))
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Quota
                             List<QuotaSubRequestDetail> array = new List<QuotaSubRequestDetail>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(QuotaSubRequestDetail.DeserializeQuotaSubRequestDetail(item));
+                                array.Add(QuotaSubRequestDetail.DeserializeQuotaSubRequestDetail(item, options));
                             }
                             value = array;
                             continue;
@@ -220,7 +220,17 @@ namespace Azure.ResourceManager.Quota
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QuotaRequestDetailData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), message.Value, error.Value, Optional.ToNullable(requestSubmitTime), Optional.ToList(value), serializedAdditionalRawData);
+            return new QuotaRequestDetailData(
+                id,
+                name,
+                type,
+                systemData,
+                provisioningState,
+                message,
+                error,
+                requestSubmitTime,
+                value ?? new ChangeTrackingList<QuotaSubRequestDetail>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QuotaRequestDetailData>.Write(ModelReaderWriterOptions options)

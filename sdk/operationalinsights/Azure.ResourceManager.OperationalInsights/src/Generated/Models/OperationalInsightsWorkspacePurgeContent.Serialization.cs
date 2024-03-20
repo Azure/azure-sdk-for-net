@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     List<OperationalInsightsWorkspacePurgeFilter> array = new List<OperationalInsightsWorkspacePurgeFilter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OperationalInsightsWorkspacePurgeFilter.DeserializeOperationalInsightsWorkspacePurgeFilter(item));
+                        array.Add(OperationalInsightsWorkspacePurgeFilter.DeserializeOperationalInsightsWorkspacePurgeFilter(item, options));
                     }
                     filters = array;
                     continue;

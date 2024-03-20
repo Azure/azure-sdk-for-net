@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Maps;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Maps.Models
@@ -124,15 +125,15 @@ namespace Azure.ResourceManager.Maps.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<MapsAccountKind> kind = default;
-            Optional<MapsSku> sku = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<Guid> uniqueId = default;
-            Optional<bool> disableLocalAuth = default;
-            Optional<string> provisioningState = default;
-            Optional<IList<MapsLinkedResource>> linkedResources = default;
-            Optional<CorsRules> cors = default;
+            IDictionary<string, string> tags = default;
+            MapsAccountKind? kind = default;
+            MapsSku sku = default;
+            ManagedServiceIdentity identity = default;
+            Guid? uniqueId = default;
+            bool? disableLocalAuth = default;
+            string provisioningState = default;
+            IList<MapsLinkedResource> linkedResources = default;
+            CorsRules cors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -166,7 +167,7 @@ namespace Azure.ResourceManager.Maps.Models
                     {
                         continue;
                     }
-                    sku = MapsSku.DeserializeMapsSku(property.Value);
+                    sku = MapsSku.DeserializeMapsSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -219,7 +220,7 @@ namespace Azure.ResourceManager.Maps.Models
                             List<MapsLinkedResource> array = new List<MapsLinkedResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MapsLinkedResource.DeserializeMapsLinkedResource(item));
+                                array.Add(MapsLinkedResource.DeserializeMapsLinkedResource(item, options));
                             }
                             linkedResources = array;
                             continue;
@@ -230,7 +231,7 @@ namespace Azure.ResourceManager.Maps.Models
                             {
                                 continue;
                             }
-                            cors = CorsRules.DeserializeCorsRules(property0.Value);
+                            cors = CorsRules.DeserializeCorsRules(property0.Value, options);
                             continue;
                         }
                     }
@@ -242,7 +243,17 @@ namespace Azure.ResourceManager.Maps.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MapsAccountPatch(Optional.ToDictionary(tags), Optional.ToNullable(kind), sku.Value, identity, Optional.ToNullable(uniqueId), Optional.ToNullable(disableLocalAuth), provisioningState.Value, Optional.ToList(linkedResources), cors.Value, serializedAdditionalRawData);
+            return new MapsAccountPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                kind,
+                sku,
+                identity,
+                uniqueId,
+                disableLocalAuth,
+                provisioningState,
+                linkedResources ?? new ChangeTrackingList<MapsLinkedResource>(),
+                cors,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MapsAccountPatch>.Write(ModelReaderWriterOptions options)

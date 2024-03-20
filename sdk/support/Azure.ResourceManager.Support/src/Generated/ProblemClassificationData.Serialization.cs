@@ -65,6 +65,22 @@ namespace Azure.ResourceManager.Support
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Metadata))
+            {
+                writer.WritePropertyName("metadata"u8);
+                writer.WriteStartObject();
+                foreach (var item in Metadata)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(ParentProblemClassification))
+            {
+                writer.WritePropertyName("parentProblemClassification"u8);
+                writer.WriteObjectValue(ParentProblemClassification);
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -107,9 +123,11 @@ namespace Azure.ResourceManager.Support
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<IReadOnlyList<SecondaryConsentEnabled>> secondaryConsentEnabled = default;
+            SystemData systemData = default;
+            string displayName = default;
+            IReadOnlyList<SecondaryConsentEnabled> secondaryConsentEnabled = default;
+            IReadOnlyDictionary<string, string> metadata = default;
+            ProblemClassificationData parentProblemClassification = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -161,9 +179,32 @@ namespace Azure.ResourceManager.Support
                             List<SecondaryConsentEnabled> array = new List<SecondaryConsentEnabled>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Models.SecondaryConsentEnabled.DeserializeSecondaryConsentEnabled(item));
+                                array.Add(Models.SecondaryConsentEnabled.DeserializeSecondaryConsentEnabled(item, options));
                             }
                             secondaryConsentEnabled = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("metadata"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                dictionary.Add(property1.Name, property1.Value.GetString());
+                            }
+                            metadata = dictionary;
+                            continue;
+                        }
+                        if (property0.NameEquals("parentProblemClassification"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            parentProblemClassification = DeserializeProblemClassificationData(property0.Value, options);
                             continue;
                         }
                     }
@@ -175,7 +216,16 @@ namespace Azure.ResourceManager.Support
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProblemClassificationData(id, name, type, systemData.Value, displayName.Value, Optional.ToList(secondaryConsentEnabled), serializedAdditionalRawData);
+            return new ProblemClassificationData(
+                id,
+                name,
+                type,
+                systemData,
+                displayName,
+                secondaryConsentEnabled ?? new ChangeTrackingList<SecondaryConsentEnabled>(),
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                parentProblemClassification,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProblemClassificationData>.Write(ModelReaderWriterOptions options)

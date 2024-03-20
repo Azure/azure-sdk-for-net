@@ -122,16 +122,16 @@ namespace Azure.ResourceManager.Hci
             {
                 return null;
             }
-            Optional<ArcVmExtendedLocation> extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ArcVmExtendedLocation extendedLocation = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> path = default;
-            Optional<ProvisioningStateEnum> provisioningState = default;
-            Optional<StorageContainerStatus> status = default;
+            SystemData systemData = default;
+            string path = default;
+            ProvisioningStateEnum? provisioningState = default;
+            StorageContainerStatus status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Hci
                     {
                         continue;
                     }
-                    extendedLocation = ArcVmExtendedLocation.DeserializeArcVmExtendedLocation(property.Value);
+                    extendedLocation = ArcVmExtendedLocation.DeserializeArcVmExtendedLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Hci
                             {
                                 continue;
                             }
-                            status = StorageContainerStatus.DeserializeStorageContainerStatus(property0.Value);
+                            status = StorageContainerStatus.DeserializeStorageContainerStatus(property0.Value, options);
                             continue;
                         }
                     }
@@ -229,7 +229,18 @@ namespace Azure.ResourceManager.Hci
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageContainerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation.Value, path.Value, Optional.ToNullable(provisioningState), status.Value, serializedAdditionalRawData);
+            return new StorageContainerData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation,
+                path,
+                provisioningState,
+                status,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageContainerData>.Write(ModelReaderWriterOptions options)

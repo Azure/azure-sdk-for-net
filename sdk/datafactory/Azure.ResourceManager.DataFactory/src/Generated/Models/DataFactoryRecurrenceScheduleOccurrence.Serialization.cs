@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -71,8 +72,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryDayOfWeek> day = default;
-            Optional<int> occurrence = default;
+            DataFactoryDayOfWeek? day = default;
+            int? occurrence = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -98,7 +99,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFactoryRecurrenceScheduleOccurrence(Optional.ToNullable(day), Optional.ToNullable(occurrence), additionalProperties);
+            return new DataFactoryRecurrenceScheduleOccurrence(day, occurrence, additionalProperties);
         }
 
         BinaryData IPersistableModel<DataFactoryRecurrenceScheduleOccurrence>.Write(ModelReaderWriterOptions options)

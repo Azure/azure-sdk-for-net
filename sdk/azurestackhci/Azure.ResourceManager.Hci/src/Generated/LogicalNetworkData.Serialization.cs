@@ -137,18 +137,18 @@ namespace Azure.ResourceManager.Hci
             {
                 return null;
             }
-            Optional<ArcVmExtendedLocation> extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ArcVmExtendedLocation extendedLocation = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<LogicalNetworkPropertiesDhcpOptions> dhcpOptions = default;
-            Optional<IList<Subnet>> subnets = default;
-            Optional<ProvisioningStateEnum> provisioningState = default;
-            Optional<string> vmSwitchName = default;
-            Optional<LogicalNetworkStatus> status = default;
+            SystemData systemData = default;
+            LogicalNetworkPropertiesDhcpOptions dhcpOptions = default;
+            IList<Subnet> subnets = default;
+            ProvisioningStateEnum? provisioningState = default;
+            string vmSwitchName = default;
+            LogicalNetworkStatus status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Hci
                     {
                         continue;
                     }
-                    extendedLocation = ArcVmExtendedLocation.DeserializeArcVmExtendedLocation(property.Value);
+                    extendedLocation = ArcVmExtendedLocation.DeserializeArcVmExtendedLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Hci
                             {
                                 continue;
                             }
-                            dhcpOptions = LogicalNetworkPropertiesDhcpOptions.DeserializeLogicalNetworkPropertiesDhcpOptions(property0.Value);
+                            dhcpOptions = LogicalNetworkPropertiesDhcpOptions.DeserializeLogicalNetworkPropertiesDhcpOptions(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("subnets"u8))
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Hci
                             List<Subnet> array = new List<Subnet>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Subnet.DeserializeSubnet(item));
+                                array.Add(Subnet.DeserializeSubnet(item, options));
                             }
                             subnets = array;
                             continue;
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Hci
                             {
                                 continue;
                             }
-                            status = LogicalNetworkStatus.DeserializeLogicalNetworkStatus(property0.Value);
+                            status = LogicalNetworkStatus.DeserializeLogicalNetworkStatus(property0.Value, options);
                             continue;
                         }
                     }
@@ -269,7 +269,20 @@ namespace Azure.ResourceManager.Hci
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicalNetworkData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation.Value, dhcpOptions.Value, Optional.ToList(subnets), Optional.ToNullable(provisioningState), vmSwitchName.Value, status.Value, serializedAdditionalRawData);
+            return new LogicalNetworkData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation,
+                dhcpOptions,
+                subnets ?? new ChangeTrackingList<Subnet>(),
+                provisioningState,
+                vmSwitchName,
+                status,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicalNetworkData>.Write(ModelReaderWriterOptions options)

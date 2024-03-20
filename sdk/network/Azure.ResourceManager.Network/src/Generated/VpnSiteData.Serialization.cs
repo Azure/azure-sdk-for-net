@@ -161,22 +161,22 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<WritableSubResource> virtualWan = default;
-            Optional<DeviceProperties> deviceProperties = default;
-            Optional<string> ipAddress = default;
-            Optional<string> siteKey = default;
-            Optional<AddressSpace> addressSpace = default;
-            Optional<BgpSettings> bgpProperties = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<bool> isSecuritySite = default;
-            Optional<IList<VpnSiteLinkData>> vpnSiteLinks = default;
-            Optional<O365PolicyProperties> o365Policy = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
+            IDictionary<string, string> tags = default;
+            WritableSubResource virtualWan = default;
+            DeviceProperties deviceProperties = default;
+            string ipAddress = default;
+            string siteKey = default;
+            AddressSpace addressSpace = default;
+            BgpSettings bgpProperties = default;
+            NetworkProvisioningState? provisioningState = default;
+            bool? isSecuritySite = default;
+            IList<VpnSiteLinkData> vpnSiteLinks = default;
+            O365PolicyProperties o365Policy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            deviceProperties = DeviceProperties.DeserializeDeviceProperties(property0.Value);
+                            deviceProperties = DeviceProperties.DeserializeDeviceProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("ipAddress"u8))
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            addressSpace = AddressSpace.DeserializeAddressSpace(property0.Value);
+                            addressSpace = AddressSpace.DeserializeAddressSpace(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("bgpProperties"u8))
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            bgpProperties = BgpSettings.DeserializeBgpSettings(property0.Value);
+                            bgpProperties = BgpSettings.DeserializeBgpSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Network
                             List<VpnSiteLinkData> array = new List<VpnSiteLinkData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VpnSiteLinkData.DeserializeVpnSiteLinkData(item));
+                                array.Add(VpnSiteLinkData.DeserializeVpnSiteLinkData(item, options));
                             }
                             vpnSiteLinks = array;
                             continue;
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            o365Policy = O365PolicyProperties.DeserializeO365PolicyProperties(property0.Value);
+                            o365Policy = O365PolicyProperties.DeserializeO365PolicyProperties(property0.Value, options);
                             continue;
                         }
                     }
@@ -341,7 +341,24 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VpnSiteData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(etag), virtualWan, deviceProperties.Value, ipAddress.Value, siteKey.Value, addressSpace.Value, bgpProperties.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(isSecuritySite), Optional.ToList(vpnSiteLinks), o365Policy.Value);
+            return new VpnSiteData(
+                id,
+                name,
+                type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                etag,
+                virtualWan,
+                deviceProperties,
+                ipAddress,
+                siteKey,
+                addressSpace,
+                bgpProperties,
+                provisioningState,
+                isSecuritySite,
+                vpnSiteLinks ?? new ChangeTrackingList<VpnSiteLinkData>(),
+                o365Policy);
         }
 
         BinaryData IPersistableModel<VpnSiteData>.Write(ModelReaderWriterOptions options)

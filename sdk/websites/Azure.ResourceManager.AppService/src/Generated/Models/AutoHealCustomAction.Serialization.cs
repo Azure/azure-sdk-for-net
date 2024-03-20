@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> exe = default;
-            Optional<string> parameters = default;
+            string exe = default;
+            string parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutoHealCustomAction(exe.Value, parameters.Value, serializedAdditionalRawData);
+            return new AutoHealCustomAction(exe, parameters, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutoHealCustomAction>.Write(ModelReaderWriterOptions options)

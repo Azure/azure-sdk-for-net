@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.LoadTesting
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> limit = default;
-            Optional<int> usage = default;
-            Optional<LoadTestingProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            int? limit = default;
+            int? usage = default;
+            LoadTestingProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -184,7 +184,15 @@ namespace Azure.ResourceManager.LoadTesting
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LoadTestingQuotaData(id, name, type, systemData.Value, Optional.ToNullable(limit), Optional.ToNullable(usage), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new LoadTestingQuotaData(
+                id,
+                name,
+                type,
+                systemData,
+                limit,
+                usage,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LoadTestingQuotaData>.Write(ModelReaderWriterOptions options)

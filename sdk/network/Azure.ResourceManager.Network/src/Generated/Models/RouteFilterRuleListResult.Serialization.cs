@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RouteFilterRuleData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<RouteFilterRuleData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<RouteFilterRuleData> array = new List<RouteFilterRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RouteFilterRuleData.DeserializeRouteFilterRuleData(item));
+                        array.Add(RouteFilterRuleData.DeserializeRouteFilterRuleData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RouteFilterRuleListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new RouteFilterRuleListResult(value ?? new ChangeTrackingList<RouteFilterRuleData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RouteFilterRuleListResult>.Write(ModelReaderWriterOptions options)

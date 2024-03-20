@@ -200,29 +200,29 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<WritableSubResource> remoteVpnSite = default;
-            Optional<int> routingWeight = default;
-            Optional<int> dpdTimeoutSeconds = default;
-            Optional<VpnConnectionStatus> connectionStatus = default;
-            Optional<VirtualNetworkGatewayConnectionProtocol> vpnConnectionProtocolType = default;
-            Optional<long> ingressBytesTransferred = default;
-            Optional<long> egressBytesTransferred = default;
-            Optional<int> connectionBandwidth = default;
-            Optional<string> sharedKey = default;
-            Optional<bool> enableBgp = default;
-            Optional<bool> usePolicyBasedTrafficSelectors = default;
-            Optional<IList<IPsecPolicy>> ipsecPolicies = default;
-            Optional<IList<TrafficSelectorPolicy>> trafficSelectorPolicies = default;
-            Optional<bool> enableRateLimiting = default;
-            Optional<bool> enableInternetSecurity = default;
-            Optional<bool> useLocalAzureIPAddress = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<IList<VpnSiteLinkConnectionData>> vpnLinkConnections = default;
-            Optional<RoutingConfiguration> routingConfiguration = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            WritableSubResource remoteVpnSite = default;
+            int? routingWeight = default;
+            int? dpdTimeoutSeconds = default;
+            VpnConnectionStatus? connectionStatus = default;
+            VirtualNetworkGatewayConnectionProtocol? vpnConnectionProtocolType = default;
+            long? ingressBytesTransferred = default;
+            long? egressBytesTransferred = default;
+            int? connectionBandwidth = default;
+            string sharedKey = default;
+            bool? enableBgp = default;
+            bool? usePolicyBasedTrafficSelectors = default;
+            IList<IPsecPolicy> ipsecPolicies = default;
+            IList<TrafficSelectorPolicy> trafficSelectorPolicies = default;
+            bool? enableRateLimiting = default;
+            bool? enableInternetSecurity = default;
+            bool? useLocalAzureIPAddress = default;
+            NetworkProvisioningState? provisioningState = default;
+            IList<VpnSiteLinkConnectionData> vpnLinkConnections = default;
+            RoutingConfiguration routingConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.Network
                             List<IPsecPolicy> array = new List<IPsecPolicy>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IPsecPolicy.DeserializeIPsecPolicy(item));
+                                array.Add(IPsecPolicy.DeserializeIPsecPolicy(item, options));
                             }
                             ipsecPolicies = array;
                             continue;
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.Network
                             List<TrafficSelectorPolicy> array = new List<TrafficSelectorPolicy>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(TrafficSelectorPolicy.DeserializeTrafficSelectorPolicy(item));
+                                array.Add(TrafficSelectorPolicy.DeserializeTrafficSelectorPolicy(item, options));
                             }
                             trafficSelectorPolicies = array;
                             continue;
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.Network
                             List<VpnSiteLinkConnectionData> array = new List<VpnSiteLinkConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VpnSiteLinkConnectionData.DeserializeVpnSiteLinkConnectionData(item));
+                                array.Add(VpnSiteLinkConnectionData.DeserializeVpnSiteLinkConnectionData(item, options));
                             }
                             vpnLinkConnections = array;
                             continue;
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            routingConfiguration = RoutingConfiguration.DeserializeRoutingConfiguration(property0.Value);
+                            routingConfiguration = RoutingConfiguration.DeserializeRoutingConfiguration(property0.Value, options);
                             continue;
                         }
                     }
@@ -459,7 +459,31 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VpnConnectionData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), remoteVpnSite, Optional.ToNullable(routingWeight), Optional.ToNullable(dpdTimeoutSeconds), Optional.ToNullable(connectionStatus), Optional.ToNullable(vpnConnectionProtocolType), Optional.ToNullable(ingressBytesTransferred), Optional.ToNullable(egressBytesTransferred), Optional.ToNullable(connectionBandwidth), sharedKey.Value, Optional.ToNullable(enableBgp), Optional.ToNullable(usePolicyBasedTrafficSelectors), Optional.ToList(ipsecPolicies), Optional.ToList(trafficSelectorPolicies), Optional.ToNullable(enableRateLimiting), Optional.ToNullable(enableInternetSecurity), Optional.ToNullable(useLocalAzureIPAddress), Optional.ToNullable(provisioningState), Optional.ToList(vpnLinkConnections), routingConfiguration.Value);
+            return new VpnConnectionData(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                remoteVpnSite,
+                routingWeight,
+                dpdTimeoutSeconds,
+                connectionStatus,
+                vpnConnectionProtocolType,
+                ingressBytesTransferred,
+                egressBytesTransferred,
+                connectionBandwidth,
+                sharedKey,
+                enableBgp,
+                usePolicyBasedTrafficSelectors,
+                ipsecPolicies ?? new ChangeTrackingList<IPsecPolicy>(),
+                trafficSelectorPolicies ?? new ChangeTrackingList<TrafficSelectorPolicy>(),
+                enableRateLimiting,
+                enableInternetSecurity,
+                useLocalAzureIPAddress,
+                provisioningState,
+                vpnLinkConnections ?? new ChangeTrackingList<VpnSiteLinkConnectionData>(),
+                routingConfiguration);
         }
 
         BinaryData IPersistableModel<VpnConnectionData>.Write(ModelReaderWriterOptions options)

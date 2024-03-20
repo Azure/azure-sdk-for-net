@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    /// <summary> The UnknownJobOutput. </summary>
+    /// <summary> Unknown version of JobOutput. </summary>
     internal partial class UnknownJobOutput : MediaJobOutput
     {
         /// <summary> Initializes a new instance of <see cref="UnknownJobOutput"/>. </summary>

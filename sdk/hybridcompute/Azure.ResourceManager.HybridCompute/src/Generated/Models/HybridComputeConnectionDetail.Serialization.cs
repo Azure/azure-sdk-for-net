@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> privateIPAddress = default;
-            Optional<string> linkIdentifier = default;
-            Optional<string> groupId = default;
-            Optional<string> memberName = default;
+            ResourceIdentifier id = default;
+            string privateIPAddress = default;
+            string linkIdentifier = default;
+            string groupId = default;
+            string memberName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +134,13 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridComputeConnectionDetail(id.Value, privateIPAddress.Value, linkIdentifier.Value, groupId.Value, memberName.Value, serializedAdditionalRawData);
+            return new HybridComputeConnectionDetail(
+                id,
+                privateIPAddress,
+                linkIdentifier,
+                groupId,
+                memberName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridComputeConnectionDetail>.Write(ModelReaderWriterOptions options)

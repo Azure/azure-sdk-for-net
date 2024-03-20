@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CustomerInsights;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<RelationshipTypeFieldMapping> array = new List<RelationshipTypeFieldMapping>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RelationshipTypeFieldMapping.DeserializeRelationshipTypeFieldMapping(item));
+                        array.Add(RelationshipTypeFieldMapping.DeserializeRelationshipTypeFieldMapping(item, options));
                     }
                     fieldMappings = array;
                     continue;

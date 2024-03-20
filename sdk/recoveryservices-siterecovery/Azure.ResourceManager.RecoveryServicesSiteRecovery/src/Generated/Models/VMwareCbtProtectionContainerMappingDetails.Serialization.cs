@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -117,14 +118,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> keyVaultId = default;
-            Optional<Uri> keyVaultUri = default;
-            Optional<ResourceIdentifier> storageAccountId = default;
-            Optional<string> storageAccountSasSecretName = default;
-            Optional<string> serviceBusConnectionStringSecretName = default;
-            Optional<string> targetLocation = default;
-            Optional<IReadOnlyDictionary<string, int>> roleSizeToNicCountMap = default;
-            Optional<IReadOnlyList<string>> excludedSkus = default;
+            ResourceIdentifier keyVaultId = default;
+            Uri keyVaultUri = default;
+            ResourceIdentifier storageAccountId = default;
+            string storageAccountSasSecretName = default;
+            string serviceBusConnectionStringSecretName = default;
+            string targetLocation = default;
+            IReadOnlyDictionary<string, int> roleSizeToNicCountMap = default;
+            IReadOnlyList<string> excludedSkus = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -211,7 +212,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareCbtProtectionContainerMappingDetails(instanceType, serializedAdditionalRawData, keyVaultId.Value, keyVaultUri.Value, storageAccountId.Value, storageAccountSasSecretName.Value, serviceBusConnectionStringSecretName.Value, targetLocation.Value, Optional.ToDictionary(roleSizeToNicCountMap), Optional.ToList(excludedSkus));
+            return new VMwareCbtProtectionContainerMappingDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                keyVaultId,
+                keyVaultUri,
+                storageAccountId,
+                storageAccountSasSecretName,
+                serviceBusConnectionStringSecretName,
+                targetLocation,
+                roleSizeToNicCountMap ?? new ChangeTrackingDictionary<string, int>(),
+                excludedSkus ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<VMwareCbtProtectionContainerMappingDetails>.Write(ModelReaderWriterOptions options)

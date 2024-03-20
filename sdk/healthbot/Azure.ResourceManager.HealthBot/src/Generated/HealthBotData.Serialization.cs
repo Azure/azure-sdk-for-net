@@ -112,21 +112,21 @@ namespace Azure.ResourceManager.HealthBot
                 return null;
             }
             HealthBotSku sku = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<HealthBotProperties> properties = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ManagedServiceIdentity identity = default;
+            HealthBotProperties properties = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = HealthBotSku.DeserializeHealthBotSku(property.Value);
+                    sku = HealthBotSku.DeserializeHealthBotSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.HealthBot
                     {
                         continue;
                     }
-                    properties = HealthBotProperties.DeserializeHealthBotProperties(property.Value);
+                    properties = HealthBotProperties.DeserializeHealthBotProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -196,7 +196,17 @@ namespace Azure.ResourceManager.HealthBot
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HealthBotData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, identity, properties.Value, serializedAdditionalRawData);
+            return new HealthBotData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                identity,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HealthBotData>.Write(ModelReaderWriterOptions options)

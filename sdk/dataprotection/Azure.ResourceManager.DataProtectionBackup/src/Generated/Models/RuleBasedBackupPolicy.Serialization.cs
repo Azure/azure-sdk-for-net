@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<DataProtectionBasePolicyRule> array = new List<DataProtectionBasePolicyRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataProtectionBasePolicyRule.DeserializeDataProtectionBasePolicyRule(item));
+                        array.Add(DataProtectionBasePolicyRule.DeserializeDataProtectionBasePolicyRule(item, options));
                     }
                     policyRules = array;
                     continue;

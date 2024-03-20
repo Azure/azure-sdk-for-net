@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<DataProtectionBackupSettingsBase> backupParameters = default;
+            DataProtectionBackupSettingsBase backupParameters = default;
             DataStoreInfoBase dataStore = default;
             DataProtectionBackupTriggerContext trigger = default;
             string name = default;
@@ -92,17 +93,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    backupParameters = DataProtectionBackupSettingsBase.DeserializeDataProtectionBackupSettingsBase(property.Value);
+                    backupParameters = DataProtectionBackupSettingsBase.DeserializeDataProtectionBackupSettingsBase(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dataStore"u8))
                 {
-                    dataStore = DataStoreInfoBase.DeserializeDataStoreInfoBase(property.Value);
+                    dataStore = DataStoreInfoBase.DeserializeDataStoreInfoBase(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("trigger"u8))
                 {
-                    trigger = DataProtectionBackupTriggerContext.DeserializeDataProtectionBackupTriggerContext(property.Value);
+                    trigger = DataProtectionBackupTriggerContext.DeserializeDataProtectionBackupTriggerContext(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -121,7 +122,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataProtectionBackupRule(name, objectType, serializedAdditionalRawData, backupParameters.Value, dataStore, trigger);
+            return new DataProtectionBackupRule(
+                name,
+                objectType,
+                serializedAdditionalRawData,
+                backupParameters,
+                dataStore,
+                trigger);
         }
 
         BinaryData IPersistableModel<DataProtectionBackupRule>.Write(ModelReaderWriterOptions options)

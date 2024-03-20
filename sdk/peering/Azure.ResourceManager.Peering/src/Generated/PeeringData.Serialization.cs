@@ -128,23 +128,23 @@ namespace Azure.ResourceManager.Peering
             }
             PeeringSku sku = default;
             PeeringKind kind = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DirectPeeringProperties> direct = default;
-            Optional<ExchangePeeringProperties> exchange = default;
-            Optional<string> peeringLocation = default;
-            Optional<PeeringProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            DirectPeeringProperties direct = default;
+            ExchangePeeringProperties exchange = default;
+            string peeringLocation = default;
+            PeeringProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = PeeringSku.DeserializePeeringSku(property.Value);
+                    sku = PeeringSku.DeserializePeeringSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Peering
                             {
                                 continue;
                             }
-                            direct = DirectPeeringProperties.DeserializeDirectPeeringProperties(property0.Value);
+                            direct = DirectPeeringProperties.DeserializeDirectPeeringProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("exchange"u8))
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Peering
                             {
                                 continue;
                             }
-                            exchange = ExchangePeeringProperties.DeserializeExchangePeeringProperties(property0.Value);
+                            exchange = ExchangePeeringProperties.DeserializeExchangePeeringProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("peeringLocation"u8))
@@ -245,7 +245,20 @@ namespace Azure.ResourceManager.Peering
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PeeringData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, kind, direct.Value, exchange.Value, peeringLocation.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new PeeringData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                kind,
+                direct,
+                exchange,
+                peeringLocation,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PeeringData>.Write(ModelReaderWriterOptions options)

@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.MySql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MySqlServerSecurityAlertPolicyData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<MySqlServerSecurityAlertPolicyData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MySql.Models
                     List<MySqlServerSecurityAlertPolicyData> array = new List<MySqlServerSecurityAlertPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MySqlServerSecurityAlertPolicyData.DeserializeMySqlServerSecurityAlertPolicyData(item));
+                        array.Add(MySqlServerSecurityAlertPolicyData.DeserializeMySqlServerSecurityAlertPolicyData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MySql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlServerSecurityAlertPolicyListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new MySqlServerSecurityAlertPolicyListResult(value ?? new ChangeTrackingList<MySqlServerSecurityAlertPolicyData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlServerSecurityAlertPolicyListResult>.Write(ModelReaderWriterOptions options)

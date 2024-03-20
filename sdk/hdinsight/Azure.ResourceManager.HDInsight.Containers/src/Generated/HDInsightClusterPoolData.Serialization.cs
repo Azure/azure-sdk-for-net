@@ -152,22 +152,22 @@ namespace Azure.ResourceManager.HDInsight.Containers
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<HDInsightProvisioningStatus> provisioningState = default;
-            Optional<string> deploymentId = default;
-            Optional<string> managedResourceGroupName = default;
-            Optional<string> aksManagedResourceGroupName = default;
-            Optional<ClusterPoolProfile> clusterPoolProfile = default;
-            Optional<ClusterPoolComputeProfile> computeProfile = default;
-            Optional<AksClusterProfile> aksClusterProfile = default;
-            Optional<ClusterPoolNetworkProfile> networkProfile = default;
-            Optional<ClusterPoolLogAnalyticsProfile> logAnalyticsProfile = default;
-            Optional<string> status = default;
+            SystemData systemData = default;
+            HDInsightProvisioningStatus? provisioningState = default;
+            string deploymentId = default;
+            string managedResourceGroupName = default;
+            string aksManagedResourceGroupName = default;
+            ClusterPoolProfile clusterPoolProfile = default;
+            ClusterPoolComputeProfile computeProfile = default;
+            AksClusterProfile aksClusterProfile = default;
+            ClusterPoolNetworkProfile networkProfile = default;
+            ClusterPoolLogAnalyticsProfile logAnalyticsProfile = default;
+            string status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
                             {
                                 continue;
                             }
-                            clusterPoolProfile = ClusterPoolProfile.DeserializeClusterPoolProfile(property0.Value);
+                            clusterPoolProfile = ClusterPoolProfile.DeserializeClusterPoolProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("computeProfile"u8))
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
                             {
                                 continue;
                             }
-                            computeProfile = ClusterPoolComputeProfile.DeserializeClusterPoolComputeProfile(property0.Value);
+                            computeProfile = ClusterPoolComputeProfile.DeserializeClusterPoolComputeProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("aksClusterProfile"u8))
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
                             {
                                 continue;
                             }
-                            aksClusterProfile = AksClusterProfile.DeserializeAksClusterProfile(property0.Value);
+                            aksClusterProfile = AksClusterProfile.DeserializeAksClusterProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("networkProfile"u8))
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
                             {
                                 continue;
                             }
-                            networkProfile = ClusterPoolNetworkProfile.DeserializeClusterPoolNetworkProfile(property0.Value);
+                            networkProfile = ClusterPoolNetworkProfile.DeserializeClusterPoolNetworkProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("logAnalyticsProfile"u8))
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
                             {
                                 continue;
                             }
-                            logAnalyticsProfile = ClusterPoolLogAnalyticsProfile.DeserializeClusterPoolLogAnalyticsProfile(property0.Value);
+                            logAnalyticsProfile = ClusterPoolLogAnalyticsProfile.DeserializeClusterPoolLogAnalyticsProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("status"u8))
@@ -307,7 +307,24 @@ namespace Azure.ResourceManager.HDInsight.Containers
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightClusterPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), deploymentId.Value, managedResourceGroupName.Value, aksManagedResourceGroupName.Value, clusterPoolProfile.Value, computeProfile.Value, aksClusterProfile.Value, networkProfile.Value, logAnalyticsProfile.Value, status.Value, serializedAdditionalRawData);
+            return new HDInsightClusterPoolData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState,
+                deploymentId,
+                managedResourceGroupName,
+                aksManagedResourceGroupName,
+                clusterPoolProfile,
+                computeProfile,
+                aksClusterProfile,
+                networkProfile,
+                logAnalyticsProfile,
+                status,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightClusterPoolData>.Write(ModelReaderWriterOptions options)

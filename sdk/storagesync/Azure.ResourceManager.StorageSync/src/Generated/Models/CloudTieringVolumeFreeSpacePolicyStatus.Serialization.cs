@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageSync;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> lastUpdatedTimestamp = default;
-            Optional<int> effectiveVolumeFreeSpacePolicy = default;
-            Optional<int> currentVolumeFreeSpacePercent = default;
+            DateTimeOffset? lastUpdatedTimestamp = default;
+            int? effectiveVolumeFreeSpacePolicy = default;
+            int? currentVolumeFreeSpacePercent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudTieringVolumeFreeSpacePolicyStatus(Optional.ToNullable(lastUpdatedTimestamp), Optional.ToNullable(effectiveVolumeFreeSpacePolicy), Optional.ToNullable(currentVolumeFreeSpacePercent), serializedAdditionalRawData);
+            return new CloudTieringVolumeFreeSpacePolicyStatus(lastUpdatedTimestamp, effectiveVolumeFreeSpacePolicy, currentVolumeFreeSpacePercent, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudTieringVolumeFreeSpacePolicyStatus>.Write(ModelReaderWriterOptions options)

@@ -122,13 +122,13 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> stepId = default;
-            Optional<string> targetGroup = default;
-            Optional<string> credential = default;
-            Optional<JobStepAction> action = default;
-            Optional<JobStepOutput> output = default;
-            Optional<JobStepExecutionOptions> executionOptions = default;
+            SystemData systemData = default;
+            int? stepId = default;
+            string targetGroup = default;
+            string credential = default;
+            JobStepAction action = default;
+            JobStepOutput output = default;
+            JobStepExecutionOptions executionOptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            action = JobStepAction.DeserializeJobStepAction(property0.Value);
+                            action = JobStepAction.DeserializeJobStepAction(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("output"u8))
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            output = JobStepOutput.DeserializeJobStepOutput(property0.Value);
+                            output = JobStepOutput.DeserializeJobStepOutput(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("executionOptions"u8))
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            executionOptions = JobStepExecutionOptions.DeserializeJobStepExecutionOptions(property0.Value);
+                            executionOptions = JobStepExecutionOptions.DeserializeJobStepExecutionOptions(property0.Value, options);
                             continue;
                         }
                     }
@@ -221,7 +221,18 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlServerJobStepData(id, name, type, systemData.Value, Optional.ToNullable(stepId), targetGroup.Value, credential.Value, action.Value, output.Value, executionOptions.Value, serializedAdditionalRawData);
+            return new SqlServerJobStepData(
+                id,
+                name,
+                type,
+                systemData,
+                stepId,
+                targetGroup,
+                credential,
+                action,
+                output,
+                executionOptions,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlServerJobStepData>.Write(ModelReaderWriterOptions options)

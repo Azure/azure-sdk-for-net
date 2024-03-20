@@ -129,17 +129,17 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ManagedServiceIdentity identity = default;
+            ETag? etag = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<HealthcareApisProvisioningState> provisioningState = default;
-            Optional<HealthcareApisIotConnectorEventHubIngestionConfiguration> ingestionEndpointConfiguration = default;
-            Optional<HealthcareApisIotMappingProperties> deviceMapping = default;
+            SystemData systemData = default;
+            HealthcareApisProvisioningState? provisioningState = default;
+            HealthcareApisIotConnectorEventHubIngestionConfiguration ingestionEndpointConfiguration = default;
+            HealthcareApisIotMappingProperties deviceMapping = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.HealthcareApis
                             {
                                 continue;
                             }
-                            ingestionEndpointConfiguration = HealthcareApisIotConnectorEventHubIngestionConfiguration.DeserializeHealthcareApisIotConnectorEventHubIngestionConfiguration(property0.Value);
+                            ingestionEndpointConfiguration = HealthcareApisIotConnectorEventHubIngestionConfiguration.DeserializeHealthcareApisIotConnectorEventHubIngestionConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("deviceMapping"u8))
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.HealthcareApis
                             {
                                 continue;
                             }
-                            deviceMapping = HealthcareApisIotMappingProperties.DeserializeHealthcareApisIotMappingProperties(property0.Value);
+                            deviceMapping = HealthcareApisIotMappingProperties.DeserializeHealthcareApisIotMappingProperties(property0.Value, options);
                             continue;
                         }
                     }
@@ -251,7 +251,19 @@ namespace Azure.ResourceManager.HealthcareApis
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HealthcareApisIotConnectorData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), ingestionEndpointConfiguration.Value, deviceMapping.Value, identity, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new HealthcareApisIotConnectorData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState,
+                ingestionEndpointConfiguration,
+                deviceMapping,
+                identity,
+                etag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HealthcareApisIotConnectorData>.Write(ModelReaderWriterOptions options)

@@ -197,23 +197,23 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<IList<AuthorizationMethod>> authorizationMethods = default;
-            Optional<IList<ClientAuthenticationMethod>> clientAuthenticationMethod = default;
-            Optional<IList<TokenBodyParameterContract>> tokenBodyParameters = default;
-            Optional<string> tokenEndpoint = default;
-            Optional<bool> supportState = default;
-            Optional<string> defaultScope = default;
-            Optional<IList<BearerTokenSendingMethod>> bearerTokenSendingMethods = default;
-            Optional<string> resourceOwnerUsername = default;
-            Optional<string> resourceOwnerPassword = default;
-            Optional<string> displayName = default;
-            Optional<string> clientRegistrationEndpoint = default;
-            Optional<string> authorizationEndpoint = default;
-            Optional<IList<GrantType>> grantTypes = default;
-            Optional<string> clientId = default;
-            Optional<string> clientSecret = default;
+            SystemData systemData = default;
+            string description = default;
+            IList<AuthorizationMethod> authorizationMethods = default;
+            IList<ClientAuthenticationMethod> clientAuthenticationMethod = default;
+            IList<TokenBodyParameterContract> tokenBodyParameters = default;
+            string tokenEndpoint = default;
+            bool? supportState = default;
+            string defaultScope = default;
+            IList<BearerTokenSendingMethod> bearerTokenSendingMethods = default;
+            string resourceOwnerUsername = default;
+            string resourceOwnerPassword = default;
+            string displayName = default;
+            string clientRegistrationEndpoint = default;
+            string authorizationEndpoint = default;
+            IList<GrantType> grantTypes = default;
+            string clientId = default;
+            string clientSecret = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.ApiManagement
                             List<TokenBodyParameterContract> array = new List<TokenBodyParameterContract>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(TokenBodyParameterContract.DeserializeTokenBodyParameterContract(item));
+                                array.Add(TokenBodyParameterContract.DeserializeTokenBodyParameterContract(item, options));
                             }
                             tokenBodyParameters = array;
                             continue;
@@ -389,7 +389,28 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementAuthorizationServerData(id, name, type, systemData.Value, description.Value, Optional.ToList(authorizationMethods), Optional.ToList(clientAuthenticationMethod), Optional.ToList(tokenBodyParameters), tokenEndpoint.Value, Optional.ToNullable(supportState), defaultScope.Value, Optional.ToList(bearerTokenSendingMethods), resourceOwnerUsername.Value, resourceOwnerPassword.Value, displayName.Value, clientRegistrationEndpoint.Value, authorizationEndpoint.Value, Optional.ToList(grantTypes), clientId.Value, clientSecret.Value, serializedAdditionalRawData);
+            return new ApiManagementAuthorizationServerData(
+                id,
+                name,
+                type,
+                systemData,
+                description,
+                authorizationMethods ?? new ChangeTrackingList<AuthorizationMethod>(),
+                clientAuthenticationMethod ?? new ChangeTrackingList<ClientAuthenticationMethod>(),
+                tokenBodyParameters ?? new ChangeTrackingList<TokenBodyParameterContract>(),
+                tokenEndpoint,
+                supportState,
+                defaultScope,
+                bearerTokenSendingMethods ?? new ChangeTrackingList<BearerTokenSendingMethod>(),
+                resourceOwnerUsername,
+                resourceOwnerPassword,
+                displayName,
+                clientRegistrationEndpoint,
+                authorizationEndpoint,
+                grantTypes ?? new ChangeTrackingList<GrantType>(),
+                clientId,
+                clientSecret,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementAuthorizationServerData>.Write(ModelReaderWriterOptions options)

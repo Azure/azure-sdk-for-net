@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.Dynatrace
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DynatraceMonitorResourceLogRules> logRules = default;
-            Optional<DynatraceMonitorResourceMetricRules> metricRules = default;
-            Optional<DynatraceProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            DynatraceMonitorResourceLogRules logRules = default;
+            DynatraceMonitorResourceMetricRules metricRules = default;
+            DynatraceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Dynatrace
                             {
                                 continue;
                             }
-                            logRules = DynatraceMonitorResourceLogRules.DeserializeDynatraceMonitorResourceLogRules(property0.Value);
+                            logRules = DynatraceMonitorResourceLogRules.DeserializeDynatraceMonitorResourceLogRules(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("metricRules"u8))
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Dynatrace
                             {
                                 continue;
                             }
-                            metricRules = DynatraceMonitorResourceMetricRules.DeserializeDynatraceMonitorResourceMetricRules(property0.Value);
+                            metricRules = DynatraceMonitorResourceMetricRules.DeserializeDynatraceMonitorResourceMetricRules(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -184,7 +184,15 @@ namespace Azure.ResourceManager.Dynatrace
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DynatraceTagRuleData(id, name, type, systemData.Value, logRules.Value, metricRules.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new DynatraceTagRuleData(
+                id,
+                name,
+                type,
+                systemData,
+                logRules,
+                metricRules,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DynatraceTagRuleData>.Write(ModelReaderWriterOptions options)

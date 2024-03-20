@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CustomerInsights;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
@@ -86,10 +87,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<string> policyName = default;
+            string policyName = default;
             IReadOnlyList<PermissionType> permissions = default;
-            Optional<string> primaryKey = default;
-            Optional<string> secondaryKey = default;
+            string primaryKey = default;
+            string secondaryKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AuthorizationPolicy(policyName.Value, permissions, primaryKey.Value, secondaryKey.Value, serializedAdditionalRawData);
+            return new AuthorizationPolicy(policyName, permissions, primaryKey, secondaryKey, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AuthorizationPolicy>.Write(ModelReaderWriterOptions options)

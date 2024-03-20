@@ -133,17 +133,17 @@ namespace Azure.ResourceManager.NetworkCloud
                 return null;
             }
             ExtendedLocation extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             string availabilityZone = default;
-            Optional<ResourceIdentifier> clusterId = default;
-            Optional<RackDetailedStatus> detailedStatus = default;
-            Optional<string> detailedStatusMessage = default;
-            Optional<RackProvisioningState> provisioningState = default;
+            ResourceIdentifier clusterId = default;
+            RackDetailedStatus? detailedStatus = default;
+            string detailedStatusMessage = default;
+            RackProvisioningState? provisioningState = default;
             string rackLocation = default;
             string rackSerialNumber = default;
             ResourceIdentifier rackSkuId = default;
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 if (property.NameEquals("extendedLocation"u8))
                 {
-                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -269,7 +269,23 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudRackData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, availabilityZone, clusterId.Value, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, Optional.ToNullable(provisioningState), rackLocation, rackSerialNumber, rackSkuId, serializedAdditionalRawData);
+            return new NetworkCloudRackData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation,
+                availabilityZone,
+                clusterId,
+                detailedStatus,
+                detailedStatusMessage,
+                provisioningState,
+                rackLocation,
+                rackSerialNumber,
+                rackSkuId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudRackData>.Write(ModelReaderWriterOptions options)

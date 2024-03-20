@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ConnectivityStatusContract> array = new List<ConnectivityStatusContract>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectivityStatusContract.DeserializeConnectivityStatusContract(item));
+                        array.Add(ConnectivityStatusContract.DeserializeConnectivityStatusContract(item, options));
                     }
                     connectivityStatus = array;
                     continue;

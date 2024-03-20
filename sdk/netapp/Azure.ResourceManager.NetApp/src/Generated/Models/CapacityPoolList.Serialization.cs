@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CapacityPoolData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<CapacityPoolData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     List<CapacityPoolData> array = new List<CapacityPoolData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CapacityPoolData.DeserializeCapacityPoolData(item));
+                        array.Add(CapacityPoolData.DeserializeCapacityPoolData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CapacityPoolList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new CapacityPoolList(value ?? new ChangeTrackingList<CapacityPoolData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CapacityPoolList>.Write(ModelReaderWriterOptions options)

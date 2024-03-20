@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -121,11 +122,11 @@ namespace Azure.ResourceManager.Synapse.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> groupId = default;
-            Optional<IReadOnlyList<string>> requiredMembers = default;
-            Optional<IReadOnlyList<string>> requiredZoneNames = default;
-            Optional<ResourceProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            string groupId = default;
+            IReadOnlyList<string> requiredMembers = default;
+            IReadOnlyList<string> requiredZoneNames = default;
+            ResourceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -214,7 +215,16 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseKustoPoolPrivateLinkData(id, name, type, systemData.Value, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new SynapseKustoPoolPrivateLinkData(
+                id,
+                name,
+                type,
+                systemData,
+                groupId,
+                requiredMembers ?? new ChangeTrackingList<string>(),
+                requiredZoneNames ?? new ChangeTrackingList<string>(),
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseKustoPoolPrivateLinkData>.Write(ModelReaderWriterOptions options)

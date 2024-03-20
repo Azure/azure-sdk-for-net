@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridNetwork;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
@@ -90,9 +91,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<IList<NFVIs>> nfvis = default;
-            Optional<IReadOnlyList<WritableSubResource>> siteNetworkServiceReferences = default;
+            ProvisioningState? provisioningState = default;
+            IList<NFVIs> nfvis = default;
+            IReadOnlyList<WritableSubResource> siteNetworkServiceReferences = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<NFVIs> array = new List<NFVIs>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NFVIs.DeserializeNFVIs(item));
+                        array.Add(NFVIs.DeserializeNFVIs(item, options));
                     }
                     nfvis = array;
                     continue;
@@ -140,7 +141,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SitePropertiesFormat(Optional.ToNullable(provisioningState), Optional.ToList(nfvis), Optional.ToList(siteNetworkServiceReferences), serializedAdditionalRawData);
+            return new SitePropertiesFormat(provisioningState, nfvis ?? new ChangeTrackingList<NFVIs>(), siteNetworkServiceReferences ?? new ChangeTrackingList<WritableSubResource>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SitePropertiesFormat>.Write(ModelReaderWriterOptions options)

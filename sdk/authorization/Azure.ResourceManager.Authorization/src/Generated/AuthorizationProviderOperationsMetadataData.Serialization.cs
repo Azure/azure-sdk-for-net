@@ -111,13 +111,13 @@ namespace Azure.ResourceManager.Authorization
             {
                 return null;
             }
-            Optional<string> displayName = default;
-            Optional<IReadOnlyList<AuthorizationProviderResourceType>> resourceTypes = default;
-            Optional<IReadOnlyList<AuthorizationProviderOperationInfo>> operations = default;
+            string displayName = default;
+            IReadOnlyList<AuthorizationProviderResourceType> resourceTypes = default;
+            IReadOnlyList<AuthorizationProviderOperationInfo> operations = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Authorization
                     List<AuthorizationProviderResourceType> array = new List<AuthorizationProviderResourceType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AuthorizationProviderResourceType.DeserializeAuthorizationProviderResourceType(item));
+                        array.Add(AuthorizationProviderResourceType.DeserializeAuthorizationProviderResourceType(item, options));
                     }
                     resourceTypes = array;
                     continue;
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Authorization
                     List<AuthorizationProviderOperationInfo> array = new List<AuthorizationProviderOperationInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AuthorizationProviderOperationInfo.DeserializeAuthorizationProviderOperationInfo(item));
+                        array.Add(AuthorizationProviderOperationInfo.DeserializeAuthorizationProviderOperationInfo(item, options));
                     }
                     operations = array;
                     continue;
@@ -185,7 +185,15 @@ namespace Azure.ResourceManager.Authorization
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AuthorizationProviderOperationsMetadataData(id, name, type, systemData.Value, displayName.Value, Optional.ToList(resourceTypes), Optional.ToList(operations), serializedAdditionalRawData);
+            return new AuthorizationProviderOperationsMetadataData(
+                id,
+                name,
+                type,
+                systemData,
+                displayName,
+                resourceTypes ?? new ChangeTrackingList<AuthorizationProviderResourceType>(),
+                operations ?? new ChangeTrackingList<AuthorizationProviderOperationInfo>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AuthorizationProviderOperationsMetadataData>.Write(ModelReaderWriterOptions options)

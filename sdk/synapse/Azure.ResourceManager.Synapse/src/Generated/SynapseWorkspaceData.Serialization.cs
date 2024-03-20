@@ -260,34 +260,34 @@ namespace Azure.ResourceManager.Synapse
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SynapseDataLakeStorageAccountDetails> defaultDataLakeStorage = default;
-            Optional<string> sqlAdministratorLoginPassword = default;
-            Optional<string> managedResourceGroupName = default;
-            Optional<string> provisioningState = default;
-            Optional<string> sqlAdministratorLogin = default;
-            Optional<VirtualNetworkProfile> virtualNetworkProfile = default;
-            Optional<IDictionary<string, string>> connectivityEndpoints = default;
-            Optional<string> managedVirtualNetwork = default;
-            Optional<IList<SynapsePrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Optional<SynapseEncryptionDetails> encryption = default;
-            Optional<Guid> workspaceUID = default;
-            Optional<IReadOnlyDictionary<string, BinaryData>> extraProperties = default;
-            Optional<SynapseManagedVirtualNetworkSettings> managedVirtualNetworkSettings = default;
-            Optional<SynapseWorkspaceRepositoryConfiguration> workspaceRepositoryConfiguration = default;
-            Optional<PurviewConfiguration> purviewConfiguration = default;
-            Optional<ResourceIdentifier> adlaResourceId = default;
-            Optional<WorkspacePublicNetworkAccess> publicNetworkAccess = default;
-            Optional<CspWorkspaceAdminProperties> cspWorkspaceAdminProperties = default;
-            Optional<IReadOnlyDictionary<string, BinaryData>> settings = default;
-            Optional<bool> azureADOnlyAuthentication = default;
-            Optional<bool> trustedServiceBypassEnabled = default;
+            SystemData systemData = default;
+            SynapseDataLakeStorageAccountDetails defaultDataLakeStorage = default;
+            string sqlAdministratorLoginPassword = default;
+            string managedResourceGroupName = default;
+            string provisioningState = default;
+            string sqlAdministratorLogin = default;
+            VirtualNetworkProfile virtualNetworkProfile = default;
+            IDictionary<string, string> connectivityEndpoints = default;
+            string managedVirtualNetwork = default;
+            IList<SynapsePrivateEndpointConnectionData> privateEndpointConnections = default;
+            SynapseEncryptionDetails encryption = default;
+            Guid? workspaceUID = default;
+            IReadOnlyDictionary<string, BinaryData> extraProperties = default;
+            SynapseManagedVirtualNetworkSettings managedVirtualNetworkSettings = default;
+            SynapseWorkspaceRepositoryConfiguration workspaceRepositoryConfiguration = default;
+            PurviewConfiguration purviewConfiguration = default;
+            ResourceIdentifier adlaResourceId = default;
+            WorkspacePublicNetworkAccess? publicNetworkAccess = default;
+            CspWorkspaceAdminProperties cspWorkspaceAdminProperties = default;
+            IReadOnlyDictionary<string, BinaryData> settings = default;
+            bool? azureADOnlyAuthentication = default;
+            bool? trustedServiceBypassEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Synapse
                             {
                                 continue;
                             }
-                            defaultDataLakeStorage = SynapseDataLakeStorageAccountDetails.DeserializeSynapseDataLakeStorageAccountDetails(property0.Value);
+                            defaultDataLakeStorage = SynapseDataLakeStorageAccountDetails.DeserializeSynapseDataLakeStorageAccountDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("sqlAdministratorLoginPassword"u8))
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.Synapse
                             {
                                 continue;
                             }
-                            virtualNetworkProfile = VirtualNetworkProfile.DeserializeVirtualNetworkProfile(property0.Value);
+                            virtualNetworkProfile = VirtualNetworkProfile.DeserializeVirtualNetworkProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("connectivityEndpoints"u8))
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.Synapse
                             List<SynapsePrivateEndpointConnectionData> array = new List<SynapsePrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SynapsePrivateEndpointConnectionData.DeserializeSynapsePrivateEndpointConnectionData(item));
+                                array.Add(SynapsePrivateEndpointConnectionData.DeserializeSynapsePrivateEndpointConnectionData(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.Synapse
                             {
                                 continue;
                             }
-                            encryption = SynapseEncryptionDetails.DeserializeSynapseEncryptionDetails(property0.Value);
+                            encryption = SynapseEncryptionDetails.DeserializeSynapseEncryptionDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("workspaceUID"u8))
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.Synapse
                             {
                                 continue;
                             }
-                            managedVirtualNetworkSettings = SynapseManagedVirtualNetworkSettings.DeserializeSynapseManagedVirtualNetworkSettings(property0.Value);
+                            managedVirtualNetworkSettings = SynapseManagedVirtualNetworkSettings.DeserializeSynapseManagedVirtualNetworkSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("workspaceRepositoryConfiguration"u8))
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.Synapse
                             {
                                 continue;
                             }
-                            workspaceRepositoryConfiguration = SynapseWorkspaceRepositoryConfiguration.DeserializeSynapseWorkspaceRepositoryConfiguration(property0.Value);
+                            workspaceRepositoryConfiguration = SynapseWorkspaceRepositoryConfiguration.DeserializeSynapseWorkspaceRepositoryConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("purviewConfiguration"u8))
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.Synapse
                             {
                                 continue;
                             }
-                            purviewConfiguration = PurviewConfiguration.DeserializePurviewConfiguration(property0.Value);
+                            purviewConfiguration = PurviewConfiguration.DeserializePurviewConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("adlaResourceId"u8))
@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.Synapse
                             {
                                 continue;
                             }
-                            cspWorkspaceAdminProperties = CspWorkspaceAdminProperties.DeserializeCspWorkspaceAdminProperties(property0.Value);
+                            cspWorkspaceAdminProperties = CspWorkspaceAdminProperties.DeserializeCspWorkspaceAdminProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("settings"u8))
@@ -566,7 +566,36 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseWorkspaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, defaultDataLakeStorage.Value, sqlAdministratorLoginPassword.Value, managedResourceGroupName.Value, provisioningState.Value, sqlAdministratorLogin.Value, virtualNetworkProfile.Value, Optional.ToDictionary(connectivityEndpoints), managedVirtualNetwork.Value, Optional.ToList(privateEndpointConnections), encryption.Value, Optional.ToNullable(workspaceUID), Optional.ToDictionary(extraProperties), managedVirtualNetworkSettings.Value, workspaceRepositoryConfiguration.Value, purviewConfiguration.Value, adlaResourceId.Value, Optional.ToNullable(publicNetworkAccess), cspWorkspaceAdminProperties.Value, Optional.ToDictionary(settings), Optional.ToNullable(azureADOnlyAuthentication), Optional.ToNullable(trustedServiceBypassEnabled), serializedAdditionalRawData);
+            return new SynapseWorkspaceData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                defaultDataLakeStorage,
+                sqlAdministratorLoginPassword,
+                managedResourceGroupName,
+                provisioningState,
+                sqlAdministratorLogin,
+                virtualNetworkProfile,
+                connectivityEndpoints ?? new ChangeTrackingDictionary<string, string>(),
+                managedVirtualNetwork,
+                privateEndpointConnections ?? new ChangeTrackingList<SynapsePrivateEndpointConnectionData>(),
+                encryption,
+                workspaceUID,
+                extraProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                managedVirtualNetworkSettings,
+                workspaceRepositoryConfiguration,
+                purviewConfiguration,
+                adlaResourceId,
+                publicNetworkAccess,
+                cspWorkspaceAdminProperties,
+                settings ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                azureADOnlyAuthentication,
+                trustedServiceBypassEnabled,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseWorkspaceData>.Write(ModelReaderWriterOptions options)

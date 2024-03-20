@@ -126,15 +126,15 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> provisioningState = default;
-            Optional<SubResource> privateEndpoint = default;
-            Optional<PrivateLinkConnectionState> privateLinkServiceConnectionState = default;
-            Optional<IList<IPAddress>> ipAddresses = default;
+            SystemData systemData = default;
+            string provisioningState = default;
+            SubResource privateEndpoint = default;
+            PrivateLinkConnectionState privateLinkServiceConnectionState = default;
+            IList<IPAddress> ipAddresses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = PrivateLinkConnectionState.DeserializePrivateLinkConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = PrivateLinkConnectionState.DeserializePrivateLinkConnectionState(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("ipAddresses"u8))
@@ -230,7 +230,17 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RemotePrivateEndpointConnectionARMResourceData(id, name, type, systemData.Value, provisioningState.Value, privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToList(ipAddresses), kind.Value, serializedAdditionalRawData);
+            return new RemotePrivateEndpointConnectionARMResourceData(
+                id,
+                name,
+                type,
+                systemData,
+                provisioningState,
+                privateEndpoint,
+                privateLinkServiceConnectionState,
+                ipAddresses ?? new ChangeTrackingList<IPAddress>(),
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RemotePrivateEndpointConnectionARMResourceData>.Write(ModelReaderWriterOptions options)

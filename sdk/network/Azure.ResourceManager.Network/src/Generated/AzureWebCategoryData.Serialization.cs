@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> group = default;
+            SystemData systemData = default;
+            string group = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,7 +165,14 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureWebCategoryData(id, name, type, systemData.Value, Optional.ToNullable(etag), group.Value, serializedAdditionalRawData);
+            return new AzureWebCategoryData(
+                id,
+                name,
+                type,
+                systemData,
+                etag,
+                group,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureWebCategoryData>.Write(ModelReaderWriterOptions options)

@@ -138,16 +138,16 @@ namespace Azure.ResourceManager.ServiceNetworking
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IReadOnlyList<string>> configurationEndpoints = default;
-            Optional<IReadOnlyList<SubResource>> frontends = default;
-            Optional<IReadOnlyList<SubResource>> associations = default;
-            Optional<ProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            IReadOnlyList<string> configurationEndpoints = default;
+            IReadOnlyList<SubResource> frontends = default;
+            IReadOnlyList<SubResource> associations = default;
+            ProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -264,7 +264,18 @@ namespace Azure.ResourceManager.ServiceNetworking
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrafficControllerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(configurationEndpoints), Optional.ToList(frontends), Optional.ToList(associations), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new TrafficControllerData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                configurationEndpoints ?? new ChangeTrackingList<string>(),
+                frontends ?? new ChangeTrackingList<SubResource>(),
+                associations ?? new ChangeTrackingList<SubResource>(),
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrafficControllerData>.Write(ModelReaderWriterOptions options)

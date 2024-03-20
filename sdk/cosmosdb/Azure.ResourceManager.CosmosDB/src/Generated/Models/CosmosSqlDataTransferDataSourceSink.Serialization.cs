@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             string databaseName = default;
             string containerName = default;
-            Optional<string> remoteAccountName = default;
+            string remoteAccountName = default;
             DataTransferComponent component = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosSqlDataTransferDataSourceSink(component, serializedAdditionalRawData, databaseName, containerName, remoteAccountName.Value);
+            return new CosmosSqlDataTransferDataSourceSink(component, serializedAdditionalRawData, databaseName, containerName, remoteAccountName);
         }
 
         BinaryData IPersistableModel<CosmosSqlDataTransferDataSourceSink>.Write(ModelReaderWriterOptions options)

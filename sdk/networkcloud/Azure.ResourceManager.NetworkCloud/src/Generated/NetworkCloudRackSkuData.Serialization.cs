@@ -152,15 +152,15 @@ namespace Azure.ResourceManager.NetworkCloud
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IReadOnlyList<MachineSkuSlot>> computeMachines = default;
-            Optional<IReadOnlyList<MachineSkuSlot>> controllerMachines = default;
-            Optional<string> description = default;
-            Optional<long> maxClusterSlots = default;
-            Optional<RackSkuProvisioningState> provisioningState = default;
-            Optional<RackSkuType> rackType = default;
-            Optional<IReadOnlyList<StorageApplianceSkuSlot>> storageAppliances = default;
-            Optional<IReadOnlyList<string>> supportedRackSkuIds = default;
+            SystemData systemData = default;
+            IReadOnlyList<MachineSkuSlot> computeMachines = default;
+            IReadOnlyList<MachineSkuSlot> controllerMachines = default;
+            string description = default;
+            long? maxClusterSlots = default;
+            RackSkuProvisioningState? provisioningState = default;
+            RackSkuType? rackType = default;
+            IReadOnlyList<StorageApplianceSkuSlot> storageAppliances = default;
+            IReadOnlyList<string> supportedRackSkuIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             List<MachineSkuSlot> array = new List<MachineSkuSlot>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MachineSkuSlot.DeserializeMachineSkuSlot(item));
+                                array.Add(MachineSkuSlot.DeserializeMachineSkuSlot(item, options));
                             }
                             computeMachines = array;
                             continue;
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             List<MachineSkuSlot> array = new List<MachineSkuSlot>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MachineSkuSlot.DeserializeMachineSkuSlot(item));
+                                array.Add(MachineSkuSlot.DeserializeMachineSkuSlot(item, options));
                             }
                             controllerMachines = array;
                             continue;
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             List<StorageApplianceSkuSlot> array = new List<StorageApplianceSkuSlot>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StorageApplianceSkuSlot.DeserializeStorageApplianceSkuSlot(item));
+                                array.Add(StorageApplianceSkuSlot.DeserializeStorageApplianceSkuSlot(item, options));
                             }
                             storageAppliances = array;
                             continue;
@@ -295,7 +295,20 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudRackSkuData(id, name, type, systemData.Value, Optional.ToList(computeMachines), Optional.ToList(controllerMachines), description.Value, Optional.ToNullable(maxClusterSlots), Optional.ToNullable(provisioningState), Optional.ToNullable(rackType), Optional.ToList(storageAppliances), Optional.ToList(supportedRackSkuIds), serializedAdditionalRawData);
+            return new NetworkCloudRackSkuData(
+                id,
+                name,
+                type,
+                systemData,
+                computeMachines ?? new ChangeTrackingList<MachineSkuSlot>(),
+                controllerMachines ?? new ChangeTrackingList<MachineSkuSlot>(),
+                description,
+                maxClusterSlots,
+                provisioningState,
+                rackType,
+                storageAppliances ?? new ChangeTrackingList<StorageApplianceSkuSlot>(),
+                supportedRackSkuIds ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudRackSkuData>.Write(ModelReaderWriterOptions options)

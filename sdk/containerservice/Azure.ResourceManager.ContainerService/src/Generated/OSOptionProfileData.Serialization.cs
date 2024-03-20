@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ContainerService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IReadOnlyList<ContainerServiceOSOptionProperty> osOptionPropertyList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ContainerService
                             List<ContainerServiceOSOptionProperty> array = new List<ContainerServiceOSOptionProperty>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContainerServiceOSOptionProperty.DeserializeContainerServiceOSOptionProperty(item));
+                                array.Add(ContainerServiceOSOptionProperty.DeserializeContainerServiceOSOptionProperty(item, options));
                             }
                             osOptionPropertyList = array;
                             continue;
@@ -157,7 +157,13 @@ namespace Azure.ResourceManager.ContainerService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OSOptionProfileData(id, name, type, systemData.Value, osOptionPropertyList, serializedAdditionalRawData);
+            return new OSOptionProfileData(
+                id,
+                name,
+                type,
+                systemData,
+                osOptionPropertyList,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OSOptionProfileData>.Write(ModelReaderWriterOptions options)

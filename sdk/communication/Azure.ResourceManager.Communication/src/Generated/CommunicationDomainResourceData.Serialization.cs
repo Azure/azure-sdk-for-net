@@ -142,20 +142,20 @@ namespace Azure.ResourceManager.Communication
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DomainProvisioningState> provisioningState = default;
-            Optional<string> dataLocation = default;
-            Optional<string> fromSenderDomain = default;
-            Optional<string> mailFromSenderDomain = default;
-            Optional<DomainManagement> domainManagement = default;
-            Optional<DomainPropertiesVerificationStates> verificationStates = default;
-            Optional<DomainPropertiesVerificationRecords> verificationRecords = default;
-            Optional<UserEngagementTracking> userEngagementTracking = default;
+            SystemData systemData = default;
+            DomainProvisioningState? provisioningState = default;
+            string dataLocation = default;
+            string fromSenderDomain = default;
+            string mailFromSenderDomain = default;
+            DomainManagement? domainManagement = default;
+            DomainPropertiesVerificationStates verificationStates = default;
+            DomainPropertiesVerificationRecords verificationRecords = default;
+            UserEngagementTracking? userEngagementTracking = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Communication
                             {
                                 continue;
                             }
-                            verificationStates = DomainPropertiesVerificationStates.DeserializeDomainPropertiesVerificationStates(property0.Value);
+                            verificationStates = DomainPropertiesVerificationStates.DeserializeDomainPropertiesVerificationStates(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("verificationRecords"u8))
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Communication
                             {
                                 continue;
                             }
-                            verificationRecords = DomainPropertiesVerificationRecords.DeserializeDomainPropertiesVerificationRecords(property0.Value);
+                            verificationRecords = DomainPropertiesVerificationRecords.DeserializeDomainPropertiesVerificationRecords(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("userEngagementTracking"u8))
@@ -281,7 +281,22 @@ namespace Azure.ResourceManager.Communication
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CommunicationDomainResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), dataLocation.Value, fromSenderDomain.Value, mailFromSenderDomain.Value, Optional.ToNullable(domainManagement), verificationStates.Value, verificationRecords.Value, Optional.ToNullable(userEngagementTracking), serializedAdditionalRawData);
+            return new CommunicationDomainResourceData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState,
+                dataLocation,
+                fromSenderDomain,
+                mailFromSenderDomain,
+                domainManagement,
+                verificationStates,
+                verificationRecords,
+                userEngagementTracking,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CommunicationDomainResourceData>.Write(ModelReaderWriterOptions options)

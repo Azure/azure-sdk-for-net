@@ -193,29 +193,29 @@ namespace Azure.ResourceManager.AppContainers
             {
                 return null;
             }
-            Optional<string> kind = default;
-            Optional<IDictionary<string, string>> tags = default;
+            string kind = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ContainerAppEnvironmentProvisioningState> provisioningState = default;
-            Optional<string> daprAIInstrumentationKey = default;
-            Optional<string> daprAIConnectionString = default;
-            Optional<ContainerAppVnetConfiguration> vnetConfiguration = default;
-            Optional<string> deploymentErrors = default;
-            Optional<string> defaultDomain = default;
-            Optional<IPAddress> staticIP = default;
-            Optional<ContainerAppLogsConfiguration> appLogsConfiguration = default;
-            Optional<bool> zoneRedundant = default;
-            Optional<ContainerAppCustomDomainConfiguration> customDomainConfiguration = default;
-            Optional<string> eventStreamEndpoint = default;
-            Optional<IList<ContainerAppWorkloadProfile>> workloadProfiles = default;
-            Optional<KedaConfiguration> kedaConfiguration = default;
-            Optional<DaprConfiguration> daprConfiguration = default;
-            Optional<string> infrastructureResourceGroup = default;
-            Optional<ManagedEnvironmentPropertiesPeerAuthentication> peerAuthentication = default;
+            SystemData systemData = default;
+            ContainerAppEnvironmentProvisioningState? provisioningState = default;
+            string daprAIInstrumentationKey = default;
+            string daprAIConnectionString = default;
+            ContainerAppVnetConfiguration vnetConfiguration = default;
+            string deploymentErrors = default;
+            string defaultDomain = default;
+            IPAddress staticIP = default;
+            ContainerAppLogsConfiguration appLogsConfiguration = default;
+            bool? zoneRedundant = default;
+            ContainerAppCustomDomainConfiguration customDomainConfiguration = default;
+            string eventStreamEndpoint = default;
+            IList<ContainerAppWorkloadProfile> workloadProfiles = default;
+            KedaConfiguration kedaConfiguration = default;
+            DaprConfiguration daprConfiguration = default;
+            string infrastructureResourceGroup = default;
+            ManagedEnvironmentPropertiesPeerAuthentication peerAuthentication = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            vnetConfiguration = ContainerAppVnetConfiguration.DeserializeContainerAppVnetConfiguration(property0.Value);
+                            vnetConfiguration = ContainerAppVnetConfiguration.DeserializeContainerAppVnetConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("deploymentErrors"u8))
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            appLogsConfiguration = ContainerAppLogsConfiguration.DeserializeContainerAppLogsConfiguration(property0.Value);
+                            appLogsConfiguration = ContainerAppLogsConfiguration.DeserializeContainerAppLogsConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("zoneRedundant"u8))
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            customDomainConfiguration = ContainerAppCustomDomainConfiguration.DeserializeContainerAppCustomDomainConfiguration(property0.Value);
+                            customDomainConfiguration = ContainerAppCustomDomainConfiguration.DeserializeContainerAppCustomDomainConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("eventStreamEndpoint"u8))
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.AppContainers
                             List<ContainerAppWorkloadProfile> array = new List<ContainerAppWorkloadProfile>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContainerAppWorkloadProfile.DeserializeContainerAppWorkloadProfile(item));
+                                array.Add(ContainerAppWorkloadProfile.DeserializeContainerAppWorkloadProfile(item, options));
                             }
                             workloadProfiles = array;
                             continue;
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            kedaConfiguration = KedaConfiguration.DeserializeKedaConfiguration(property0.Value);
+                            kedaConfiguration = KedaConfiguration.DeserializeKedaConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("daprConfiguration"u8))
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            daprConfiguration = DaprConfiguration.DeserializeDaprConfiguration(property0.Value);
+                            daprConfiguration = DaprConfiguration.DeserializeDaprConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("infrastructureResourceGroup"u8))
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            peerAuthentication = ManagedEnvironmentPropertiesPeerAuthentication.DeserializeManagedEnvironmentPropertiesPeerAuthentication(property0.Value);
+                            peerAuthentication = ManagedEnvironmentPropertiesPeerAuthentication.DeserializeManagedEnvironmentPropertiesPeerAuthentication(property0.Value, options);
                             continue;
                         }
                     }
@@ -411,7 +411,31 @@ namespace Azure.ResourceManager.AppContainers
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppManagedEnvironmentData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, kind.Value, Optional.ToNullable(provisioningState), daprAIInstrumentationKey.Value, daprAIConnectionString.Value, vnetConfiguration.Value, deploymentErrors.Value, defaultDomain.Value, staticIP.Value, appLogsConfiguration.Value, Optional.ToNullable(zoneRedundant), customDomainConfiguration.Value, eventStreamEndpoint.Value, Optional.ToList(workloadProfiles), kedaConfiguration.Value, daprConfiguration.Value, infrastructureResourceGroup.Value, peerAuthentication.Value, serializedAdditionalRawData);
+            return new ContainerAppManagedEnvironmentData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                kind,
+                provisioningState,
+                daprAIInstrumentationKey,
+                daprAIConnectionString,
+                vnetConfiguration,
+                deploymentErrors,
+                defaultDomain,
+                staticIP,
+                appLogsConfiguration,
+                zoneRedundant,
+                customDomainConfiguration,
+                eventStreamEndpoint,
+                workloadProfiles ?? new ChangeTrackingList<ContainerAppWorkloadProfile>(),
+                kedaConfiguration,
+                daprConfiguration,
+                infrastructureResourceGroup,
+                peerAuthentication,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppManagedEnvironmentData>.Write(ModelReaderWriterOptions options)

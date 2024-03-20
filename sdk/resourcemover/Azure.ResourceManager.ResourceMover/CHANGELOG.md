@@ -1,16 +1,26 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.1.2-beta.2 (Unreleased)
 
 ### Features Added
-
-- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
+- [Issue#30952](https://github.com/Azure/azure-sdk-for-net/issues/30952) fixed, add operation: `MoveCollections_Delete` back.
+
 ### Other Changes
+
+## 1.1.2-beta.1 (2024-02-22)
+
+### Features Added
+
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+
+### Bugs Fixed
+
+- Fixed serialization issues.
 
 ## 1.1.1 (2023-11-30)
 

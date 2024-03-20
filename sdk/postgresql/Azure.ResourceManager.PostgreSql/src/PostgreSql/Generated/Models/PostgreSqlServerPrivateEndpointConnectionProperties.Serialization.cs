@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PostgreSql;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.PostgreSql.Models
@@ -80,9 +81,9 @@ namespace Azure.ResourceManager.PostgreSql.Models
             {
                 return null;
             }
-            Optional<WritableSubResource> privateEndpoint = default;
-            Optional<PostgreSqlServerPrivateLinkServiceConnectionStateProperty> privateLinkServiceConnectionState = default;
-            Optional<PostgreSqlPrivateEndpointProvisioningState> provisioningState = default;
+            WritableSubResource privateEndpoint = default;
+            PostgreSqlServerPrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState = default;
+            PostgreSqlPrivateEndpointProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -102,7 +103,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                     {
                         continue;
                     }
-                    privateLinkServiceConnectionState = PostgreSqlServerPrivateLinkServiceConnectionStateProperty.DeserializePostgreSqlServerPrivateLinkServiceConnectionStateProperty(property.Value);
+                    privateLinkServiceConnectionState = PostgreSqlServerPrivateLinkServiceConnectionStateProperty.DeserializePostgreSqlServerPrivateLinkServiceConnectionStateProperty(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -120,7 +121,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlServerPrivateEndpointConnectionProperties(privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new PostgreSqlServerPrivateEndpointConnectionProperties(privateEndpoint, privateLinkServiceConnectionState, provisioningState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlServerPrivateEndpointConnectionProperties>.Write(ModelReaderWriterOptions options)

@@ -129,17 +129,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> annotation = default;
+            SystemData systemData = default;
+            string annotation = default;
             IList<IPExtendedCommunityRule> ipExtendedCommunityRules = default;
-            Optional<NetworkFabricConfigurationState> configurationState = default;
-            Optional<NetworkFabricProvisioningState> provisioningState = default;
-            Optional<NetworkFabricAdministrativeState> administrativeState = default;
+            NetworkFabricConfigurationState? configurationState = default;
+            NetworkFabricProvisioningState? provisioningState = default;
+            NetworkFabricAdministrativeState? administrativeState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             List<IPExtendedCommunityRule> array = new List<IPExtendedCommunityRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IPExtendedCommunityRule.DeserializeIPExtendedCommunityRule(item));
+                                array.Add(IPExtendedCommunityRule.DeserializeIPExtendedCommunityRule(item, options));
                             }
                             ipExtendedCommunityRules = array;
                             continue;
@@ -247,7 +247,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFabricIPExtendedCommunityData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, annotation.Value, ipExtendedCommunityRules, Optional.ToNullable(configurationState), Optional.ToNullable(provisioningState), Optional.ToNullable(administrativeState), serializedAdditionalRawData);
+            return new NetworkFabricIPExtendedCommunityData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                annotation,
+                ipExtendedCommunityRules,
+                configurationState,
+                provisioningState,
+                administrativeState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkFabricIPExtendedCommunityData>.Write(ModelReaderWriterOptions options)

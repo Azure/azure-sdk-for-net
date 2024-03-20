@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Security.KeyVault.Storage;
 
 namespace Azure.Security.KeyVault.Storage.Models
 {
@@ -19,10 +19,10 @@ namespace Azure.Security.KeyVault.Storage.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> resourceId = default;
-            Optional<StorageAccountAttributes> attributes = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            string id = default;
+            string resourceId = default;
+            StorageAccountAttributes attributes = default;
+            IReadOnlyDictionary<string, string> tags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -59,7 +59,7 @@ namespace Azure.Security.KeyVault.Storage.Models
                     continue;
                 }
             }
-            return new StorageAccountItem(id.Value, resourceId.Value, attributes.Value, Optional.ToDictionary(tags));
+            return new StorageAccountItem(id, resourceId, attributes, tags ?? new ChangeTrackingDictionary<string, string>());
         }
     }
 }

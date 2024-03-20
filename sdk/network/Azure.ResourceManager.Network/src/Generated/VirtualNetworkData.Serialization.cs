@@ -201,27 +201,27 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ExtendedLocation> extendedLocation = default;
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<AddressSpace> addressSpace = default;
-            Optional<DhcpOptions> dhcpOptions = default;
-            Optional<int> flowTimeoutInMinutes = default;
-            Optional<IList<SubnetData>> subnets = default;
-            Optional<IList<VirtualNetworkPeeringData>> virtualNetworkPeerings = default;
-            Optional<Guid> resourceGuid = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<bool> enableDdosProtection = default;
-            Optional<bool> enableVmProtection = default;
-            Optional<WritableSubResource> ddosProtectionPlan = default;
-            Optional<VirtualNetworkBgpCommunities> bgpCommunities = default;
-            Optional<VirtualNetworkEncryption> encryption = default;
-            Optional<IList<WritableSubResource>> ipAllocations = default;
-            Optional<IReadOnlyList<FlowLogData>> flowLogs = default;
+            ExtendedLocation extendedLocation = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
+            IDictionary<string, string> tags = default;
+            AddressSpace addressSpace = default;
+            DhcpOptions dhcpOptions = default;
+            int? flowTimeoutInMinutes = default;
+            IList<SubnetData> subnets = default;
+            IList<VirtualNetworkPeeringData> virtualNetworkPeerings = default;
+            Guid? resourceGuid = default;
+            NetworkProvisioningState? provisioningState = default;
+            bool? enableDdosProtection = default;
+            bool? enableVmProtection = default;
+            WritableSubResource ddosProtectionPlan = default;
+            VirtualNetworkBgpCommunities bgpCommunities = default;
+            VirtualNetworkEncryption encryption = default;
+            IList<WritableSubResource> ipAllocations = default;
+            IReadOnlyList<FlowLogData> flowLogs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            addressSpace = AddressSpace.DeserializeAddressSpace(property0.Value);
+                            addressSpace = AddressSpace.DeserializeAddressSpace(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("dhcpOptions"u8))
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            dhcpOptions = DhcpOptions.DeserializeDhcpOptions(property0.Value);
+                            dhcpOptions = DhcpOptions.DeserializeDhcpOptions(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("flowTimeoutInMinutes"u8))
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Network
                             List<SubnetData> array = new List<SubnetData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SubnetData.DeserializeSubnetData(item));
+                                array.Add(SubnetData.DeserializeSubnetData(item, options));
                             }
                             subnets = array;
                             continue;
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Network
                             List<VirtualNetworkPeeringData> array = new List<VirtualNetworkPeeringData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VirtualNetworkPeeringData.DeserializeVirtualNetworkPeeringData(item));
+                                array.Add(VirtualNetworkPeeringData.DeserializeVirtualNetworkPeeringData(item, options));
                             }
                             virtualNetworkPeerings = array;
                             continue;
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            bgpCommunities = VirtualNetworkBgpCommunities.DeserializeVirtualNetworkBgpCommunities(property0.Value);
+                            bgpCommunities = VirtualNetworkBgpCommunities.DeserializeVirtualNetworkBgpCommunities(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("encryption"u8))
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            encryption = VirtualNetworkEncryption.DeserializeVirtualNetworkEncryption(property0.Value);
+                            encryption = VirtualNetworkEncryption.DeserializeVirtualNetworkEncryption(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("ipAllocations"u8))
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.Network
                             List<FlowLogData> array = new List<FlowLogData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FlowLogData.DeserializeFlowLogData(item));
+                                array.Add(FlowLogData.DeserializeFlowLogData(item, options));
                             }
                             flowLogs = array;
                             continue;
@@ -454,7 +454,29 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualNetworkData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, extendedLocation, Optional.ToNullable(etag), addressSpace.Value, dhcpOptions.Value, Optional.ToNullable(flowTimeoutInMinutes), Optional.ToList(subnets), Optional.ToList(virtualNetworkPeerings), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), Optional.ToNullable(enableDdosProtection), Optional.ToNullable(enableVmProtection), ddosProtectionPlan, bgpCommunities.Value, encryption.Value, Optional.ToList(ipAllocations), Optional.ToList(flowLogs));
+            return new VirtualNetworkData(
+                id,
+                name,
+                type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                extendedLocation,
+                etag,
+                addressSpace,
+                dhcpOptions,
+                flowTimeoutInMinutes,
+                subnets ?? new ChangeTrackingList<SubnetData>(),
+                virtualNetworkPeerings ?? new ChangeTrackingList<VirtualNetworkPeeringData>(),
+                resourceGuid,
+                provisioningState,
+                enableDdosProtection,
+                enableVmProtection,
+                ddosProtectionPlan,
+                bgpCommunities,
+                encryption,
+                ipAllocations ?? new ChangeTrackingList<WritableSubResource>(),
+                flowLogs ?? new ChangeTrackingList<FlowLogData>());
         }
 
         BinaryData IPersistableModel<VirtualNetworkData>.Write(ModelReaderWriterOptions options)

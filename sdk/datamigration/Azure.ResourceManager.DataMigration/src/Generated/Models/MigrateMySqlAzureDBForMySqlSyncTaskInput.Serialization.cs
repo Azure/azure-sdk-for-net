@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -84,12 +85,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 if (property.NameEquals("sourceConnectionInfo"u8))
                 {
-                    sourceConnectionInfo = MySqlConnectionInfo.DeserializeMySqlConnectionInfo(property.Value);
+                    sourceConnectionInfo = MySqlConnectionInfo.DeserializeMySqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetConnectionInfo"u8))
                 {
-                    targetConnectionInfo = MySqlConnectionInfo.DeserializeMySqlConnectionInfo(property.Value);
+                    targetConnectionInfo = MySqlConnectionInfo.DeserializeMySqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("selectedDatabases"u8))
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<MigrateMySqlAzureDBForMySqlSyncDatabaseInput> array = new List<MigrateMySqlAzureDBForMySqlSyncDatabaseInput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MigrateMySqlAzureDBForMySqlSyncDatabaseInput.DeserializeMigrateMySqlAzureDBForMySqlSyncDatabaseInput(item));
+                        array.Add(MigrateMySqlAzureDBForMySqlSyncDatabaseInput.DeserializeMigrateMySqlAzureDBForMySqlSyncDatabaseInput(item, options));
                     }
                     selectedDatabases = array;
                     continue;

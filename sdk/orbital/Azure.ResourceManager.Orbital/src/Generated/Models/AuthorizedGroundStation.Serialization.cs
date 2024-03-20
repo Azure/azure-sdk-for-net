@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Orbital;
 
 namespace Azure.ResourceManager.Orbital.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Orbital.Models
             {
                 return null;
             }
-            Optional<string> groundStation = default;
-            Optional<DateTimeOffset> expirationDate = default;
+            string groundStation = default;
+            DateTimeOffset? expirationDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.Orbital.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AuthorizedGroundStation(groundStation.Value, Optional.ToNullable(expirationDate), serializedAdditionalRawData);
+            return new AuthorizedGroundStation(groundStation, expirationDate, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AuthorizedGroundStation>.Write(ModelReaderWriterOptions options)

@@ -285,10 +285,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<ApiManagementCertificateResource>> UpdateAsync(WaitUntil waitUntil, ApiManagementCertificateCreateOrUpdateContent content, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _apiManagementCertificateCertificateClientDiagnostics.CreateScope("ApiManagementCertificateResource.Update");
             scope.Start();
@@ -335,10 +332,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<ApiManagementCertificateResource> Update(WaitUntil waitUntil, ApiManagementCertificateCreateOrUpdateContent content, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _apiManagementCertificateCertificateClientDiagnostics.CreateScope("ApiManagementCertificateResource.Update");
             scope.Start();

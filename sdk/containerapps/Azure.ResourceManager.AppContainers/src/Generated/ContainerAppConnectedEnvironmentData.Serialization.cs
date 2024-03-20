@@ -138,19 +138,19 @@ namespace Azure.ResourceManager.AppContainers
             {
                 return null;
             }
-            Optional<ContainerAppExtendedLocation> extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ContainerAppExtendedLocation extendedLocation = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ContainerAppConnectedEnvironmentProvisioningState> provisioningState = default;
-            Optional<string> deploymentErrors = default;
-            Optional<string> defaultDomain = default;
-            Optional<IPAddress> staticIP = default;
-            Optional<string> daprAIConnectionString = default;
-            Optional<ContainerAppCustomDomainConfiguration> customDomainConfiguration = default;
+            SystemData systemData = default;
+            ContainerAppConnectedEnvironmentProvisioningState? provisioningState = default;
+            string deploymentErrors = default;
+            string defaultDomain = default;
+            IPAddress staticIP = default;
+            string daprAIConnectionString = default;
+            ContainerAppCustomDomainConfiguration customDomainConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.AppContainers
                     {
                         continue;
                     }
-                    extendedLocation = ContainerAppExtendedLocation.DeserializeContainerAppExtendedLocation(property.Value);
+                    extendedLocation = ContainerAppExtendedLocation.DeserializeContainerAppExtendedLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            customDomainConfiguration = ContainerAppCustomDomainConfiguration.DeserializeContainerAppCustomDomainConfiguration(property0.Value);
+                            customDomainConfiguration = ContainerAppCustomDomainConfiguration.DeserializeContainerAppCustomDomainConfiguration(property0.Value, options);
                             continue;
                         }
                     }
@@ -267,7 +267,21 @@ namespace Azure.ResourceManager.AppContainers
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppConnectedEnvironmentData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation.Value, Optional.ToNullable(provisioningState), deploymentErrors.Value, defaultDomain.Value, staticIP.Value, daprAIConnectionString.Value, customDomainConfiguration.Value, serializedAdditionalRawData);
+            return new ContainerAppConnectedEnvironmentData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation,
+                provisioningState,
+                deploymentErrors,
+                defaultDomain,
+                staticIP,
+                daprAIConnectionString,
+                customDomainConfiguration,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppConnectedEnvironmentData>.Write(ModelReaderWriterOptions options)

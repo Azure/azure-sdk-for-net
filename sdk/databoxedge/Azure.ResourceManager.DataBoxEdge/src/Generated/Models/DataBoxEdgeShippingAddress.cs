@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -50,10 +51,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="country"/> is null. </exception>
         public DataBoxEdgeShippingAddress(string country)
         {
-            if (country == null)
-            {
-                throw new ArgumentNullException(nameof(country));
-            }
+            Argument.AssertNotNull(country, nameof(country));
 
             Country = country;
         }

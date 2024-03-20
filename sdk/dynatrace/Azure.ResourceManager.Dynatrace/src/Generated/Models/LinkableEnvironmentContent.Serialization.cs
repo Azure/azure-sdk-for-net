@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Dynatrace;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 return null;
             }
-            Optional<Guid> tenantId = default;
-            Optional<string> userPrincipal = default;
-            Optional<AzureLocation> region = default;
+            Guid? tenantId = default;
+            string userPrincipal = default;
+            AzureLocation? region = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LinkableEnvironmentContent(Optional.ToNullable(tenantId), userPrincipal.Value, Optional.ToNullable(region), serializedAdditionalRawData);
+            return new LinkableEnvironmentContent(tenantId, userPrincipal, region, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LinkableEnvironmentContent>.Write(ModelReaderWriterOptions options)

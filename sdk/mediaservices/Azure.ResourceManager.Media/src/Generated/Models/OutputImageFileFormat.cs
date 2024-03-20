@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -22,10 +23,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <exception cref="ArgumentNullException"> <paramref name="filenamePattern"/> is null. </exception>
         public OutputImageFileFormat(string filenamePattern) : base(filenamePattern)
         {
-            if (filenamePattern == null)
-            {
-                throw new ArgumentNullException(nameof(filenamePattern));
-            }
+            Argument.AssertNotNull(filenamePattern, nameof(filenamePattern));
 
             OdataType = "#Microsoft.Media.ImageFormat";
         }

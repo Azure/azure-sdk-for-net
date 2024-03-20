@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Purview;
 
 namespace Azure.ResourceManager.Purview.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 return null;
             }
-            Optional<string> localizedValue = default;
-            Optional<string> value = default;
+            string localizedValue = default;
+            string value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.Purview.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PurviewUsageName(localizedValue.Value, value.Value, serializedAdditionalRawData);
+            return new PurviewUsageName(localizedValue, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PurviewUsageName>.Write(ModelReaderWriterOptions options)

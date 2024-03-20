@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     List<ClusterConfigFile> array = new List<ClusterConfigFile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClusterConfigFile.DeserializeClusterConfigFile(item));
+                        array.Add(ClusterConfigFile.DeserializeClusterConfigFile(item, options));
                     }
                     files = array;
                     continue;

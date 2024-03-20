@@ -159,22 +159,22 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> analyticsWorkspaceId = default;
-            Optional<IList<string>> availabilityZones = default;
-            Optional<IReadOnlyList<ClusterAvailableVersion>> clusterVersions = default;
-            Optional<ClusterManagerDetailedStatus> detailedStatus = default;
-            Optional<string> detailedStatusMessage = default;
+            SystemData systemData = default;
+            ResourceIdentifier analyticsWorkspaceId = default;
+            IList<string> availabilityZones = default;
+            IReadOnlyList<ClusterAvailableVersion> clusterVersions = default;
+            ClusterManagerDetailedStatus? detailedStatus = default;
+            string detailedStatusMessage = default;
             ResourceIdentifier fabricControllerId = default;
-            Optional<ManagedResourceGroupConfiguration> managedResourceGroupConfiguration = default;
-            Optional<ExtendedLocation> managerExtendedLocation = default;
-            Optional<ClusterManagerProvisioningState> provisioningState = default;
-            Optional<string> vmSize = default;
+            ManagedResourceGroupConfiguration managedResourceGroupConfiguration = default;
+            ExtendedLocation managerExtendedLocation = default;
+            ClusterManagerProvisioningState? provisioningState = default;
+            string vmSize = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             List<ClusterAvailableVersion> array = new List<ClusterAvailableVersion>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ClusterAvailableVersion.DeserializeClusterAvailableVersion(item));
+                                array.Add(ClusterAvailableVersion.DeserializeClusterAvailableVersion(item, options));
                             }
                             clusterVersions = array;
                             continue;
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            managedResourceGroupConfiguration = ManagedResourceGroupConfiguration.DeserializeManagedResourceGroupConfiguration(property0.Value);
+                            managedResourceGroupConfiguration = ManagedResourceGroupConfiguration.DeserializeManagedResourceGroupConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("managerExtendedLocation"u8))
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            managerExtendedLocation = ExtendedLocation.DeserializeExtendedLocation(property0.Value);
+                            managerExtendedLocation = ExtendedLocation.DeserializeExtendedLocation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -328,7 +328,24 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudClusterManagerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, analyticsWorkspaceId.Value, Optional.ToList(availabilityZones), Optional.ToList(clusterVersions), Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, fabricControllerId, managedResourceGroupConfiguration.Value, managerExtendedLocation.Value, Optional.ToNullable(provisioningState), vmSize.Value, serializedAdditionalRawData);
+            return new NetworkCloudClusterManagerData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                analyticsWorkspaceId,
+                availabilityZones ?? new ChangeTrackingList<string>(),
+                clusterVersions ?? new ChangeTrackingList<ClusterAvailableVersion>(),
+                detailedStatus,
+                detailedStatusMessage,
+                fabricControllerId,
+                managedResourceGroupConfiguration,
+                managerExtendedLocation,
+                provisioningState,
+                vmSize,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudClusterManagerData>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -82,7 +83,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             CacheKeyQueryStringActionType typeName = default;
             QueryStringBehavior queryStringBehavior = default;
-            Optional<string> queryParameters = default;
+            string queryParameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CacheKeyQueryStringActionProperties(typeName, queryStringBehavior, queryParameters.Value, serializedAdditionalRawData);
+            return new CacheKeyQueryStringActionProperties(typeName, queryStringBehavior, queryParameters, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CacheKeyQueryStringActionProperties>.Write(ModelReaderWriterOptions options)

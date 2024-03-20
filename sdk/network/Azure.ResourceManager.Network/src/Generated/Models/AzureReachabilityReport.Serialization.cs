@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("providerLocation"u8))
                 {
-                    providerLocation = AzureReachabilityReportLocation.DeserializeAzureReachabilityReportLocation(property.Value);
+                    providerLocation = AzureReachabilityReportLocation.DeserializeAzureReachabilityReportLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("reachabilityReport"u8))
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<AzureReachabilityReportItem> array = new List<AzureReachabilityReportItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureReachabilityReportItem.DeserializeAzureReachabilityReportItem(item));
+                        array.Add(AzureReachabilityReportItem.DeserializeAzureReachabilityReportItem(item, options));
                     }
                     reachabilityReport = array;
                     continue;

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CustomerInsights;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
@@ -51,14 +52,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <exception cref="ArgumentNullException"> <paramref name="interactionPropertyName"/> or <paramref name="profilePropertyName"/> is null. </exception>
         public ParticipantProfilePropertyReference(string interactionPropertyName, string profilePropertyName)
         {
-            if (interactionPropertyName == null)
-            {
-                throw new ArgumentNullException(nameof(interactionPropertyName));
-            }
-            if (profilePropertyName == null)
-            {
-                throw new ArgumentNullException(nameof(profilePropertyName));
-            }
+            Argument.AssertNotNull(interactionPropertyName, nameof(interactionPropertyName));
+            Argument.AssertNotNull(profilePropertyName, nameof(profilePropertyName));
 
             InteractionPropertyName = interactionPropertyName;
             ProfilePropertyName = profilePropertyName;

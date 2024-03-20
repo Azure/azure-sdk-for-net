@@ -27,16 +27,10 @@ namespace Azure.Communication.JobRouter
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MinConcurrentOffers))
-            {
-                writer.WritePropertyName("minConcurrentOffers"u8);
-                writer.WriteNumberValue(MinConcurrentOffers);
-            }
-            if (Optional.IsDefined(MaxConcurrentOffers))
-            {
-                writer.WritePropertyName("maxConcurrentOffers"u8);
-                writer.WriteNumberValue(MaxConcurrentOffers);
-            }
+            writer.WritePropertyName("minConcurrentOffers"u8);
+            writer.WriteNumberValue(MinConcurrentOffers);
+            writer.WritePropertyName("maxConcurrentOffers"u8);
+            writer.WriteNumberValue(MaxConcurrentOffers);
             if (Optional.IsDefined(BypassSelectors))
             {
                 writer.WritePropertyName("bypassSelectors"u8);
@@ -71,7 +65,7 @@ namespace Azure.Communication.JobRouter
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownDistributionMode(document.RootElement, options);
+            return DeserializeDistributionMode(document.RootElement, options);
         }
 
         internal static UnknownDistributionMode DeserializeUnknownDistributionMode(JsonElement element, ModelReaderWriterOptions options = null)
@@ -82,9 +76,9 @@ namespace Azure.Communication.JobRouter
             {
                 return null;
             }
-            Optional<int> minConcurrentOffers = default;
-            Optional<int> maxConcurrentOffers = default;
-            Optional<bool> bypassSelectors = default;
+            int minConcurrentOffers = default;
+            int maxConcurrentOffers = default;
+            bool? bypassSelectors = default;
             DistributionModeKind kind = "Unknown";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -128,7 +122,7 @@ namespace Azure.Communication.JobRouter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownDistributionMode(minConcurrentOffers, maxConcurrentOffers, Optional.ToNullable(bypassSelectors), kind, serializedAdditionalRawData);
+            return new UnknownDistributionMode(minConcurrentOffers, maxConcurrentOffers, bypassSelectors, kind, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DistributionMode>.Write(ModelReaderWriterOptions options)
@@ -153,7 +147,7 @@ namespace Azure.Communication.JobRouter
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownDistributionMode(document.RootElement, options);
+                        return DeserializeDistributionMode(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(DistributionMode)} does not support '{options.Format}' format.");

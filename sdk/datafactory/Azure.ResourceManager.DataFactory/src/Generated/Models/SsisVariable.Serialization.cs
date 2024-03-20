@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -99,13 +100,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<long> id = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<string> dataType = default;
-            Optional<bool> sensitive = default;
-            Optional<string> value = default;
-            Optional<string> sensitiveValue = default;
+            long? id = default;
+            string name = default;
+            string description = default;
+            string dataType = default;
+            bool? sensitive = default;
+            string value = default;
+            string sensitiveValue = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -159,7 +160,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SsisVariable(Optional.ToNullable(id), name.Value, description.Value, dataType.Value, Optional.ToNullable(sensitive), value.Value, sensitiveValue.Value, serializedAdditionalRawData);
+            return new SsisVariable(
+                id,
+                name,
+                description,
+                dataType,
+                sensitive,
+                value,
+                sensitiveValue,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SsisVariable>.Write(ModelReaderWriterOptions options)

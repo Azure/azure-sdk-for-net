@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -81,9 +82,9 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<AzureLocation> appLocation = default;
-            Optional<InfrastructureConfiguration> infrastructureConfiguration = default;
-            Optional<SapSoftwareConfiguration> softwareConfiguration = default;
+            AzureLocation? appLocation = default;
+            InfrastructureConfiguration infrastructureConfiguration = default;
+            SapSoftwareConfiguration softwareConfiguration = default;
             SapConfigurationType configurationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    infrastructureConfiguration = InfrastructureConfiguration.DeserializeInfrastructureConfiguration(property.Value);
+                    infrastructureConfiguration = InfrastructureConfiguration.DeserializeInfrastructureConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("softwareConfiguration"u8))
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    softwareConfiguration = SapSoftwareConfiguration.DeserializeSapSoftwareConfiguration(property.Value);
+                    softwareConfiguration = SapSoftwareConfiguration.DeserializeSapSoftwareConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("configurationType"u8))
@@ -127,7 +128,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeploymentConfiguration(configurationType, serializedAdditionalRawData, Optional.ToNullable(appLocation), infrastructureConfiguration.Value, softwareConfiguration.Value);
+            return new DeploymentConfiguration(configurationType, serializedAdditionalRawData, appLocation, infrastructureConfiguration, softwareConfiguration);
         }
 
         BinaryData IPersistableModel<DeploymentConfiguration>.Write(ModelReaderWriterOptions options)

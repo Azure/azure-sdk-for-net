@@ -109,13 +109,13 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> enabled = default;
-            Optional<IList<PrivateAccessVirtualNetwork>> virtualNetworks = default;
+            SystemData systemData = default;
+            bool? enabled = default;
+            IList<PrivateAccessVirtualNetwork> virtualNetworks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.AppService
                             List<PrivateAccessVirtualNetwork> array = new List<PrivateAccessVirtualNetwork>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PrivateAccessVirtualNetwork.DeserializePrivateAccessVirtualNetwork(item));
+                                array.Add(PrivateAccessVirtualNetwork.DeserializePrivateAccessVirtualNetwork(item, options));
                             }
                             virtualNetworks = array;
                             continue;
@@ -190,7 +190,15 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateAccessData(id, name, type, systemData.Value, Optional.ToNullable(enabled), Optional.ToList(virtualNetworks), kind.Value, serializedAdditionalRawData);
+            return new PrivateAccessData(
+                id,
+                name,
+                type,
+                systemData,
+                enabled,
+                virtualNetworks ?? new ChangeTrackingList<PrivateAccessVirtualNetwork>(),
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateAccessData>.Write(ModelReaderWriterOptions options)

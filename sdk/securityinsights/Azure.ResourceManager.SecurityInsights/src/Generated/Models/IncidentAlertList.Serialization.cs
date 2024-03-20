@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     List<SecurityInsightsAlert> array = new List<SecurityInsightsAlert>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityInsightsAlert.DeserializeSecurityInsightsAlert(item));
+                        array.Add(SecurityInsightsAlert.DeserializeSecurityInsightsAlert(item, options));
                     }
                     value = array;
                     continue;

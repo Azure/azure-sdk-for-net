@@ -121,7 +121,13 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FacetResult(expression, resultType, serializedAdditionalRawData, totalRecords, count, data);
+            return new FacetResult(
+                expression,
+                resultType,
+                serializedAdditionalRawData,
+                totalRecords,
+                count,
+                data);
         }
 
         BinaryData IPersistableModel<FacetResult>.Write(ModelReaderWriterOptions options)

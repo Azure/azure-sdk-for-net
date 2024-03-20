@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             IReadOnlyList<SiteConfigData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<SiteConfigData> array = new List<SiteConfigData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteConfigData.DeserializeSiteConfigData(item));
+                        array.Add(SiteConfigData.DeserializeSiteConfigData(item, options));
                     }
                     value = array;
                     continue;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteConfigListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new SiteConfigListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteConfigListResult>.Write(ModelReaderWriterOptions options)

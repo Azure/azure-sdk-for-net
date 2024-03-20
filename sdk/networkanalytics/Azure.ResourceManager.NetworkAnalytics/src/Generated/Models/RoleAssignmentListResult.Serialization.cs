@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkAnalytics;
 
 namespace Azure.ResourceManager.NetworkAnalytics.Models
 {
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                     List<RoleAssignmentDetail> array = new List<RoleAssignmentDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RoleAssignmentDetail.DeserializeRoleAssignmentDetail(item));
+                        array.Add(RoleAssignmentDetail.DeserializeRoleAssignmentDetail(item, options));
                     }
                     roleAssignmentResponse = array;
                     continue;

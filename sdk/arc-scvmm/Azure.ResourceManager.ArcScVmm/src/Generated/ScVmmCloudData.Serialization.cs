@@ -146,19 +146,19 @@ namespace Azure.ResourceManager.ArcScVmm
                 return null;
             }
             ExtendedLocation extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> inventoryItemId = default;
-            Optional<string> uuid = default;
-            Optional<string> vmmServerId = default;
-            Optional<string> cloudName = default;
-            Optional<CloudCapacity> cloudCapacity = default;
-            Optional<IReadOnlyList<StorageQoSPolicy>> storageQoSPolicies = default;
-            Optional<string> provisioningState = default;
+            SystemData systemData = default;
+            string inventoryItemId = default;
+            string uuid = default;
+            string vmmServerId = default;
+            string cloudName = default;
+            CloudCapacity cloudCapacity = default;
+            IReadOnlyList<StorageQoSPolicy> storageQoSPolicies = default;
+            string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.ArcScVmm
                             {
                                 continue;
                             }
-                            cloudCapacity = CloudCapacity.DeserializeCloudCapacity(property0.Value);
+                            cloudCapacity = CloudCapacity.DeserializeCloudCapacity(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("storageQoSPolicies"u8))
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.ArcScVmm
                             List<StorageQoSPolicy> array = new List<StorageQoSPolicy>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StorageQoSPolicy.DeserializeStorageQoSPolicy(item));
+                                array.Add(StorageQoSPolicy.DeserializeStorageQoSPolicy(item, options));
                             }
                             storageQoSPolicies = array;
                             continue;
@@ -277,7 +277,22 @@ namespace Azure.ResourceManager.ArcScVmm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScVmmCloudData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, inventoryItemId.Value, uuid.Value, vmmServerId.Value, cloudName.Value, cloudCapacity.Value, Optional.ToList(storageQoSPolicies), provisioningState.Value, serializedAdditionalRawData);
+            return new ScVmmCloudData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation,
+                inventoryItemId,
+                uuid,
+                vmmServerId,
+                cloudName,
+                cloudCapacity,
+                storageQoSPolicies ?? new ChangeTrackingList<StorageQoSPolicy>(),
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScVmmCloudData>.Write(ModelReaderWriterOptions options)

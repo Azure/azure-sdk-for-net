@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -80,8 +81,8 @@ namespace Azure.ResourceManager.Avs.Models
             }
             ResourceIdentifier targetId = default;
             string lunName = default;
-            Optional<LunMountMode> mountOption = default;
-            Optional<string> path = default;
+            LunMountMode? mountOption = default;
+            string path = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,7 +117,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiskPoolVolume(targetId, lunName, Optional.ToNullable(mountOption), path.Value, serializedAdditionalRawData);
+            return new DiskPoolVolume(targetId, lunName, mountOption, path, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiskPoolVolume>.Write(ModelReaderWriterOptions options)

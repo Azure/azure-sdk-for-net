@@ -169,22 +169,22 @@ namespace Azure.ResourceManager.FrontDoor
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<FrontDoorSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ETag? etag = default;
+            FrontDoorSku sku = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<FrontDoorWebApplicationFirewallPolicySettings> policySettings = default;
-            Optional<CustomRuleList> customRules = default;
-            Optional<ManagedRuleSetList> managedRules = default;
-            Optional<IReadOnlyList<SubResource>> frontendEndpointLinks = default;
-            Optional<IReadOnlyList<SubResource>> routingRuleLinks = default;
-            Optional<IReadOnlyList<SubResource>> securityPolicyLinks = default;
-            Optional<string> provisioningState = default;
-            Optional<FrontDoorWebApplicationFirewallPolicyResourceState> resourceState = default;
+            SystemData systemData = default;
+            FrontDoorWebApplicationFirewallPolicySettings policySettings = default;
+            CustomRuleList customRules = default;
+            ManagedRuleSetList managedRules = default;
+            IReadOnlyList<SubResource> frontendEndpointLinks = default;
+            IReadOnlyList<SubResource> routingRuleLinks = default;
+            IReadOnlyList<SubResource> securityPolicyLinks = default;
+            string provisioningState = default;
+            FrontDoorWebApplicationFirewallPolicyResourceState? resourceState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.FrontDoor
                     {
                         continue;
                     }
-                    sku = FrontDoorSku.DeserializeFrontDoorSku(property.Value);
+                    sku = FrontDoorSku.DeserializeFrontDoorSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.FrontDoor
                             {
                                 continue;
                             }
-                            policySettings = FrontDoorWebApplicationFirewallPolicySettings.DeserializeFrontDoorWebApplicationFirewallPolicySettings(property0.Value);
+                            policySettings = FrontDoorWebApplicationFirewallPolicySettings.DeserializeFrontDoorWebApplicationFirewallPolicySettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("customRules"u8))
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.FrontDoor
                             {
                                 continue;
                             }
-                            customRules = CustomRuleList.DeserializeCustomRuleList(property0.Value);
+                            customRules = CustomRuleList.DeserializeCustomRuleList(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("managedRules"u8))
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.FrontDoor
                             {
                                 continue;
                             }
-                            managedRules = ManagedRuleSetList.DeserializeManagedRuleSetList(property0.Value);
+                            managedRules = ManagedRuleSetList.DeserializeManagedRuleSetList(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("frontendEndpointLinks"u8))
@@ -351,7 +351,24 @@ namespace Azure.ResourceManager.FrontDoor
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorWebApplicationFirewallPolicyData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), sku.Value, policySettings.Value, customRules.Value, managedRules.Value, Optional.ToList(frontendEndpointLinks), Optional.ToList(routingRuleLinks), Optional.ToList(securityPolicyLinks), provisioningState.Value, Optional.ToNullable(resourceState), serializedAdditionalRawData);
+            return new FrontDoorWebApplicationFirewallPolicyData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                etag,
+                sku,
+                policySettings,
+                customRules,
+                managedRules,
+                frontendEndpointLinks ?? new ChangeTrackingList<SubResource>(),
+                routingRuleLinks ?? new ChangeTrackingList<SubResource>(),
+                securityPolicyLinks ?? new ChangeTrackingList<SubResource>(),
+                provisioningState,
+                resourceState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorWebApplicationFirewallPolicyData>.Write(ModelReaderWriterOptions options)

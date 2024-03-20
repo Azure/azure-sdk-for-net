@@ -102,9 +102,9 @@ namespace Azure.ResourceManager.PlaywrightTesting
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<FreeTrialProperties> freeTrial = default;
-            Optional<PlaywrightTestingProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            FreeTrialProperties freeTrial = default;
+            PlaywrightTestingProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
                             {
                                 continue;
                             }
-                            freeTrial = FreeTrialProperties.DeserializeFreeTrialProperties(property0.Value);
+                            freeTrial = FreeTrialProperties.DeserializeFreeTrialProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -169,7 +169,14 @@ namespace Azure.ResourceManager.PlaywrightTesting
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PlaywrightTestingQuotaData(id, name, type, systemData.Value, freeTrial.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new PlaywrightTestingQuotaData(
+                id,
+                name,
+                type,
+                systemData,
+                freeTrial,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PlaywrightTestingQuotaData>.Write(ModelReaderWriterOptions options)

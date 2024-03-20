@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServices;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Optional<RecoveryServicesAlertsState> alertsForCriticalOperations = default;
+            RecoveryServicesAlertsState? alertsForCriticalOperations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClassicAlertSettings(Optional.ToNullable(alertsForCriticalOperations), serializedAdditionalRawData);
+            return new ClassicAlertSettings(alertsForCriticalOperations, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClassicAlertSettings>.Write(ModelReaderWriterOptions options)

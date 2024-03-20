@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.BillingBenefits;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             {
                 return null;
             }
-            Optional<string> currencyCode = default;
-            Optional<double> amount = default;
+            string currencyCode = default;
+            double? amount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BillingBenefitsPrice(currencyCode.Value, Optional.ToNullable(amount), serializedAdditionalRawData);
+            return new BillingBenefitsPrice(currencyCode, amount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BillingBenefitsPrice>.Write(ModelReaderWriterOptions options)

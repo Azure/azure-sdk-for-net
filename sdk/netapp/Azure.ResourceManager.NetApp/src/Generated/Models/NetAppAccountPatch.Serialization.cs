@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -139,17 +140,17 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> provisioningState = default;
-            Optional<IList<NetAppAccountActiveDirectory>> activeDirectories = default;
-            Optional<NetAppAccountEncryption> encryption = default;
-            Optional<bool?> disableShowmount = default;
+            SystemData systemData = default;
+            string provisioningState = default;
+            IList<NetAppAccountActiveDirectory> activeDirectories = default;
+            NetAppAccountEncryption encryption = default;
+            bool? disableShowmount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -230,7 +231,7 @@ namespace Azure.ResourceManager.NetApp.Models
                             List<NetAppAccountActiveDirectory> array = new List<NetAppAccountActiveDirectory>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetAppAccountActiveDirectory.DeserializeNetAppAccountActiveDirectory(item));
+                                array.Add(NetAppAccountActiveDirectory.DeserializeNetAppAccountActiveDirectory(item, options));
                             }
                             activeDirectories = array;
                             continue;
@@ -241,7 +242,7 @@ namespace Azure.ResourceManager.NetApp.Models
                             {
                                 continue;
                             }
-                            encryption = NetAppAccountEncryption.DeserializeNetAppAccountEncryption(property0.Value);
+                            encryption = NetAppAccountEncryption.DeserializeNetAppAccountEncryption(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("disableShowmount"u8))
@@ -263,7 +264,19 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppAccountPatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, provisioningState.Value, Optional.ToList(activeDirectories), encryption.Value, Optional.ToNullable(disableShowmount), serializedAdditionalRawData);
+            return new NetAppAccountPatch(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                provisioningState,
+                activeDirectories ?? new ChangeTrackingList<NetAppAccountActiveDirectory>(),
+                encryption,
+                disableShowmount,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppAccountPatch>.Write(ModelReaderWriterOptions options)

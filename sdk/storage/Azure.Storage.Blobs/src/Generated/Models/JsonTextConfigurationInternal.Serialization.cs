@@ -7,6 +7,7 @@
 
 using System.Xml;
 using Azure.Core;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.Storage.Blobs.Models
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "JsonTextConfiguration");
-            if (Optional.IsDefined(RecordSeparator))
+            if (Common.Optional.IsDefined(RecordSeparator))
             {
                 writer.WriteStartElement("RecordSeparator");
                 writer.WriteValue(RecordSeparator);

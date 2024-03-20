@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
@@ -18,9 +17,9 @@ namespace Azure.Maps.Search.Models
             {
                 return null;
             }
-            Optional<string> northEast = default;
-            Optional<string> southWest = default;
-            Optional<MapsEntityType> entity = default;
+            string northEast = default;
+            string southWest = default;
+            MapsEntityType? entity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("northEast"u8))
@@ -43,7 +42,7 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new BoundingBoxCompassNotation(northEast.Value, southWest.Value, Optional.ToNullable(entity));
+            return new BoundingBoxCompassNotation(northEast, southWest, entity);
         }
     }
 }

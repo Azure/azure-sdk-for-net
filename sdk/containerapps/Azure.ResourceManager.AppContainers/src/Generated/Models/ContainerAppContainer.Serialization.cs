@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -129,14 +130,14 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<IList<ContainerAppProbe>> probes = default;
-            Optional<string> image = default;
-            Optional<string> name = default;
-            Optional<IList<string>> command = default;
-            Optional<IList<string>> args = default;
-            Optional<IList<ContainerAppEnvironmentVariable>> env = default;
-            Optional<AppContainerResources> resources = default;
-            Optional<IList<ContainerAppVolumeMount>> volumeMounts = default;
+            IList<ContainerAppProbe> probes = default;
+            string image = default;
+            string name = default;
+            IList<string> command = default;
+            IList<string> args = default;
+            IList<ContainerAppEnvironmentVariable> env = default;
+            AppContainerResources resources = default;
+            IList<ContainerAppVolumeMount> volumeMounts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,7 +151,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppProbe> array = new List<ContainerAppProbe>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppProbe.DeserializeContainerAppProbe(item));
+                        array.Add(ContainerAppProbe.DeserializeContainerAppProbe(item, options));
                     }
                     probes = array;
                     continue;
@@ -202,7 +203,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppEnvironmentVariable> array = new List<ContainerAppEnvironmentVariable>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppEnvironmentVariable.DeserializeContainerAppEnvironmentVariable(item));
+                        array.Add(ContainerAppEnvironmentVariable.DeserializeContainerAppEnvironmentVariable(item, options));
                     }
                     env = array;
                     continue;
@@ -213,7 +214,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    resources = AppContainerResources.DeserializeAppContainerResources(property.Value);
+                    resources = AppContainerResources.DeserializeAppContainerResources(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("volumeMounts"u8))
@@ -225,7 +226,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppVolumeMount> array = new List<ContainerAppVolumeMount>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppVolumeMount.DeserializeContainerAppVolumeMount(item));
+                        array.Add(ContainerAppVolumeMount.DeserializeContainerAppVolumeMount(item, options));
                     }
                     volumeMounts = array;
                     continue;
@@ -236,7 +237,16 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppContainer(image.Value, name.Value, Optional.ToList(command), Optional.ToList(args), Optional.ToList(env), resources.Value, Optional.ToList(volumeMounts), serializedAdditionalRawData, Optional.ToList(probes));
+            return new ContainerAppContainer(
+                image,
+                name,
+                command ?? new ChangeTrackingList<string>(),
+                args ?? new ChangeTrackingList<string>(),
+                env ?? new ChangeTrackingList<ContainerAppEnvironmentVariable>(),
+                resources,
+                volumeMounts ?? new ChangeTrackingList<ContainerAppVolumeMount>(),
+                serializedAdditionalRawData,
+                probes ?? new ChangeTrackingList<ContainerAppProbe>());
         }
 
         BinaryData IPersistableModel<ContainerAppContainer>.Write(ModelReaderWriterOptions options)

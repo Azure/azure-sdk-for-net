@@ -142,19 +142,19 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<string> eula = default;
-            Optional<Uri> privacyStatementUri = default;
-            Optional<Uri> releaseNoteUri = default;
-            Optional<DateTimeOffset> endOfLifeDate = default;
-            Optional<SupportedOperatingSystemType> supportedOSType = default;
-            Optional<IList<GalleryApplicationCustomAction>> customActions = default;
+            SystemData systemData = default;
+            string description = default;
+            string eula = default;
+            Uri privacyStatementUri = default;
+            Uri releaseNoteUri = default;
+            DateTimeOffset? endOfLifeDate = default;
+            SupportedOperatingSystemType? supportedOSType = default;
+            IList<GalleryApplicationCustomAction> customActions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Compute
                             List<GalleryApplicationCustomAction> array = new List<GalleryApplicationCustomAction>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(GalleryApplicationCustomAction.DeserializeGalleryApplicationCustomAction(item));
+                                array.Add(GalleryApplicationCustomAction.DeserializeGalleryApplicationCustomAction(item, options));
                             }
                             customActions = array;
                             continue;
@@ -280,7 +280,21 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GalleryApplicationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, description.Value, eula.Value, privacyStatementUri.Value, releaseNoteUri.Value, Optional.ToNullable(endOfLifeDate), Optional.ToNullable(supportedOSType), Optional.ToList(customActions), serializedAdditionalRawData);
+            return new GalleryApplicationData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                description,
+                eula,
+                privacyStatementUri,
+                releaseNoteUri,
+                endOfLifeDate,
+                supportedOSType,
+                customActions ?? new ChangeTrackingList<GalleryApplicationCustomAction>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GalleryApplicationData>.Write(ModelReaderWriterOptions options)

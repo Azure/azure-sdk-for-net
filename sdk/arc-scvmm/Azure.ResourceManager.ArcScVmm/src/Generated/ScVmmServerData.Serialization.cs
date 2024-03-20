@@ -143,20 +143,20 @@ namespace Azure.ResourceManager.ArcScVmm
                 return null;
             }
             ExtendedLocation extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<VmmServerPropertiesCredentials> credentials = default;
+            SystemData systemData = default;
+            VmmServerPropertiesCredentials credentials = default;
             string fqdn = default;
-            Optional<int> port = default;
-            Optional<string> connectionStatus = default;
-            Optional<string> errorMessage = default;
-            Optional<string> uuid = default;
-            Optional<string> version = default;
-            Optional<string> provisioningState = default;
+            int? port = default;
+            string connectionStatus = default;
+            string errorMessage = default;
+            string uuid = default;
+            string version = default;
+            string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.ArcScVmm
                             {
                                 continue;
                             }
-                            credentials = VmmServerPropertiesCredentials.DeserializeVmmServerPropertiesCredentials(property0.Value);
+                            credentials = VmmServerPropertiesCredentials.DeserializeVmmServerPropertiesCredentials(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("fqdn"u8))
@@ -275,7 +275,23 @@ namespace Azure.ResourceManager.ArcScVmm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScVmmServerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, credentials.Value, fqdn, Optional.ToNullable(port), connectionStatus.Value, errorMessage.Value, uuid.Value, version.Value, provisioningState.Value, serializedAdditionalRawData);
+            return new ScVmmServerData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation,
+                credentials,
+                fqdn,
+                port,
+                connectionStatus,
+                errorMessage,
+                uuid,
+                version,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScVmmServerData>.Write(ModelReaderWriterOptions options)

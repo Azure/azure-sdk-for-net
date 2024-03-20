@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IList<string>> additionalWorkspaceStorageAccounts = default;
-            Optional<string> defaultWorkspaceResourceGroup = default;
+            IList<string> additionalWorkspaceStorageAccounts = default;
+            string defaultWorkspaceResourceGroup = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkspaceHubConfig(Optional.ToList(additionalWorkspaceStorageAccounts), defaultWorkspaceResourceGroup.Value, serializedAdditionalRawData);
+            return new WorkspaceHubConfig(additionalWorkspaceStorageAccounts ?? new ChangeTrackingList<string>(), defaultWorkspaceResourceGroup, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkspaceHubConfig>.Write(ModelReaderWriterOptions options)

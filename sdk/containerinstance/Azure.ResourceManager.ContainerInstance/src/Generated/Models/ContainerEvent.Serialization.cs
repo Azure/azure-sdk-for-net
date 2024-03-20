@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            Optional<int> count = default;
-            Optional<DateTimeOffset> firstTimestamp = default;
-            Optional<DateTimeOffset> lastTimestamp = default;
-            Optional<string> name = default;
-            Optional<string> message = default;
-            Optional<string> type = default;
+            int? count = default;
+            DateTimeOffset? firstTimestamp = default;
+            DateTimeOffset? lastTimestamp = default;
+            string name = default;
+            string message = default;
+            string type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,7 +153,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerEvent(Optional.ToNullable(count), Optional.ToNullable(firstTimestamp), Optional.ToNullable(lastTimestamp), name.Value, message.Value, type.Value, serializedAdditionalRawData);
+            return new ContainerEvent(
+                count,
+                firstTimestamp,
+                lastTimestamp,
+                name,
+                message,
+                type,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerEvent>.Write(ModelReaderWriterOptions options)

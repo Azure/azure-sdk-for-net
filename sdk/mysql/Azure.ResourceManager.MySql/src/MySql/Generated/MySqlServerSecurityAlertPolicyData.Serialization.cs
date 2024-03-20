@@ -137,14 +137,14 @@ namespace Azure.ResourceManager.MySql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<MySqlServerSecurityAlertPolicyState> state = default;
-            Optional<IList<string>> disabledAlerts = default;
-            Optional<IList<string>> emailAddresses = default;
-            Optional<bool> emailAccountAdmins = default;
-            Optional<string> storageEndpoint = default;
-            Optional<string> storageAccountAccessKey = default;
-            Optional<int> retentionDays = default;
+            SystemData systemData = default;
+            MySqlServerSecurityAlertPolicyState? state = default;
+            IList<string> disabledAlerts = default;
+            IList<string> emailAddresses = default;
+            bool? emailAccountAdmins = default;
+            string storageEndpoint = default;
+            string storageAccountAccessKey = default;
+            int? retentionDays = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -256,7 +256,19 @@ namespace Azure.ResourceManager.MySql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlServerSecurityAlertPolicyData(id, name, type, systemData.Value, Optional.ToNullable(state), Optional.ToList(disabledAlerts), Optional.ToList(emailAddresses), Optional.ToNullable(emailAccountAdmins), storageEndpoint.Value, storageAccountAccessKey.Value, Optional.ToNullable(retentionDays), serializedAdditionalRawData);
+            return new MySqlServerSecurityAlertPolicyData(
+                id,
+                name,
+                type,
+                systemData,
+                state,
+                disabledAlerts ?? new ChangeTrackingList<string>(),
+                emailAddresses ?? new ChangeTrackingList<string>(),
+                emailAccountAdmins,
+                storageEndpoint,
+                storageAccountAccessKey,
+                retentionDays,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlServerSecurityAlertPolicyData>.Write(ModelReaderWriterOptions options)

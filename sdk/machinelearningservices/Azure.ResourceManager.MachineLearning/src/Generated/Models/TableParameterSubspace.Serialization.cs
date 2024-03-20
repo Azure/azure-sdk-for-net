@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -304,26 +305,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> booster = default;
-            Optional<string> boostingType = default;
-            Optional<string> growPolicy = default;
-            Optional<string> learningRate = default;
-            Optional<string> maxBin = default;
-            Optional<string> maxDepth = default;
-            Optional<string> maxLeaves = default;
-            Optional<string> minDataInLeaf = default;
-            Optional<string> minSplitGain = default;
-            Optional<string> modelName = default;
-            Optional<string> nEstimators = default;
-            Optional<string> numLeaves = default;
-            Optional<string> preprocessorName = default;
-            Optional<string> regAlpha = default;
-            Optional<string> regLambda = default;
-            Optional<string> subsample = default;
-            Optional<string> subsampleFreq = default;
-            Optional<string> treeMethod = default;
-            Optional<string> withMean = default;
-            Optional<string> withStd = default;
+            string booster = default;
+            string boostingType = default;
+            string growPolicy = default;
+            string learningRate = default;
+            string maxBin = default;
+            string maxDepth = default;
+            string maxLeaves = default;
+            string minDataInLeaf = default;
+            string minSplitGain = default;
+            string modelName = default;
+            string nEstimators = default;
+            string numLeaves = default;
+            string preprocessorName = default;
+            string regAlpha = default;
+            string regLambda = default;
+            string subsample = default;
+            string subsampleFreq = default;
+            string treeMethod = default;
+            string withMean = default;
+            string withStd = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -534,7 +535,28 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TableParameterSubspace(booster.Value, boostingType.Value, growPolicy.Value, learningRate.Value, maxBin.Value, maxDepth.Value, maxLeaves.Value, minDataInLeaf.Value, minSplitGain.Value, modelName.Value, nEstimators.Value, numLeaves.Value, preprocessorName.Value, regAlpha.Value, regLambda.Value, subsample.Value, subsampleFreq.Value, treeMethod.Value, withMean.Value, withStd.Value, serializedAdditionalRawData);
+            return new TableParameterSubspace(
+                booster,
+                boostingType,
+                growPolicy,
+                learningRate,
+                maxBin,
+                maxDepth,
+                maxLeaves,
+                minDataInLeaf,
+                minSplitGain,
+                modelName,
+                nEstimators,
+                numLeaves,
+                preprocessorName,
+                regAlpha,
+                regLambda,
+                subsample,
+                subsampleFreq,
+                treeMethod,
+                withMean,
+                withStd,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TableParameterSubspace>.Write(ModelReaderWriterOptions options)

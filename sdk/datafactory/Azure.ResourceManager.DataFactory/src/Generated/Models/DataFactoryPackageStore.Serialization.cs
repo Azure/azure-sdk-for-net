@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("packageStoreLinkedService"u8))
                 {
-                    packageStoreLinkedService = EntityReference.DeserializeEntityReference(property.Value);
+                    packageStoreLinkedService = EntityReference.DeserializeEntityReference(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

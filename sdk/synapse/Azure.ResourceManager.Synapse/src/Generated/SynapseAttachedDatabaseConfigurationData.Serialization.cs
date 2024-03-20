@@ -129,17 +129,17 @@ namespace Azure.ResourceManager.Synapse
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceProvisioningState> provisioningState = default;
-            Optional<string> databaseName = default;
-            Optional<ResourceIdentifier> clusterResourceId = default;
-            Optional<IReadOnlyList<string>> attachedDatabaseNames = default;
-            Optional<SynapseDefaultPrincipalsModificationKind> defaultPrincipalsModificationKind = default;
-            Optional<SynapseTableLevelSharingProperties> tableLevelSharingProperties = default;
+            SystemData systemData = default;
+            ResourceProvisioningState? provisioningState = default;
+            string databaseName = default;
+            ResourceIdentifier clusterResourceId = default;
+            IReadOnlyList<string> attachedDatabaseNames = default;
+            SynapseDefaultPrincipalsModificationKind? defaultPrincipalsModificationKind = default;
+            SynapseTableLevelSharingProperties tableLevelSharingProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Synapse
                             {
                                 continue;
                             }
-                            tableLevelSharingProperties = SynapseTableLevelSharingProperties.DeserializeSynapseTableLevelSharingProperties(property0.Value);
+                            tableLevelSharingProperties = SynapseTableLevelSharingProperties.DeserializeSynapseTableLevelSharingProperties(property0.Value, options);
                             continue;
                         }
                     }
@@ -250,7 +250,19 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseAttachedDatabaseConfigurationData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(provisioningState), databaseName.Value, clusterResourceId.Value, Optional.ToList(attachedDatabaseNames), Optional.ToNullable(defaultPrincipalsModificationKind), tableLevelSharingProperties.Value, serializedAdditionalRawData);
+            return new SynapseAttachedDatabaseConfigurationData(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                provisioningState,
+                databaseName,
+                clusterResourceId,
+                attachedDatabaseNames ?? new ChangeTrackingList<string>(),
+                defaultPrincipalsModificationKind,
+                tableLevelSharingProperties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseAttachedDatabaseConfigurationData>.Write(ModelReaderWriterOptions options)

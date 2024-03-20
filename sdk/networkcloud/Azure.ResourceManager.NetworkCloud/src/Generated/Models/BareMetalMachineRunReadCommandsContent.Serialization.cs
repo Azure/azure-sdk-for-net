@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -84,7 +85,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<BareMetalMachineCommandSpecification> array = new List<BareMetalMachineCommandSpecification>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BareMetalMachineCommandSpecification.DeserializeBareMetalMachineCommandSpecification(item));
+                        array.Add(BareMetalMachineCommandSpecification.DeserializeBareMetalMachineCommandSpecification(item, options));
                     }
                     commands = array;
                     continue;

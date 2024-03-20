@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -78,7 +79,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             string action = default;
             LoggingDirection direction = default;
             LoggingDetail detailLevel = default;
-            Optional<LoggingHiddenPropertyPaths> hiddenPropertyPaths = default;
+            LoggingHiddenPropertyPaths hiddenPropertyPaths = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    hiddenPropertyPaths = LoggingHiddenPropertyPaths.DeserializeLoggingHiddenPropertyPaths(property.Value);
+                    hiddenPropertyPaths = LoggingHiddenPropertyPaths.DeserializeLoggingHiddenPropertyPaths(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LoggingRule(action, direction, detailLevel, hiddenPropertyPaths.Value, serializedAdditionalRawData);
+            return new LoggingRule(action, direction, detailLevel, hiddenPropertyPaths, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LoggingRule>.Write(ModelReaderWriterOptions options)

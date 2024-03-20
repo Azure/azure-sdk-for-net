@@ -102,9 +102,9 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<AdvancedThreatProtectionState> state = default;
-            Optional<DateTimeOffset> creationTime = default;
+            SystemData systemData = default;
+            AdvancedThreatProtectionState? state = default;
+            DateTimeOffset? creationTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -169,7 +169,14 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedDatabaseAdvancedThreatProtectionData(id, name, type, systemData.Value, Optional.ToNullable(state), Optional.ToNullable(creationTime), serializedAdditionalRawData);
+            return new ManagedDatabaseAdvancedThreatProtectionData(
+                id,
+                name,
+                type,
+                systemData,
+                state,
+                creationTime,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedDatabaseAdvancedThreatProtectionData>.Write(ModelReaderWriterOptions options)

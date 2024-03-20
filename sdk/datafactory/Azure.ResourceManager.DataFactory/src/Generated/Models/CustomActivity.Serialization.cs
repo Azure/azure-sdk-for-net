@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -171,22 +172,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryLinkedServiceReference> linkedServiceName = default;
-            Optional<PipelineActivityPolicy> policy = default;
+            DataFactoryLinkedServiceReference linkedServiceName = default;
+            PipelineActivityPolicy policy = default;
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<PipelineActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
-            Optional<IList<PipelineActivityDependency>> dependsOn = default;
-            Optional<IList<PipelineActivityUserProperty>> userProperties = default;
+            string description = default;
+            PipelineActivityState? state = default;
+            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
+            IList<PipelineActivityDependency> dependsOn = default;
+            IList<PipelineActivityUserProperty> userProperties = default;
             DataFactoryElement<string> command = default;
-            Optional<DataFactoryLinkedServiceReference> resourceLinkedService = default;
-            Optional<DataFactoryElement<string>> folderPath = default;
-            Optional<CustomActivityReferenceObject> referenceObjects = default;
-            Optional<IDictionary<string, BinaryData>> extendedProperties = default;
-            Optional<BinaryData> retentionTimeInDays = default;
-            Optional<DataFactoryElement<string>> autoUserSpecification = default;
+            DataFactoryLinkedServiceReference resourceLinkedService = default;
+            DataFactoryElement<string> folderPath = default;
+            CustomActivityReferenceObject referenceObjects = default;
+            IDictionary<string, BinaryData> extendedProperties = default;
+            BinaryData retentionTimeInDays = default;
+            DataFactoryElement<string> autoUserSpecification = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -206,7 +207,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    policy = PipelineActivityPolicy.DeserializePipelineActivityPolicy(property.Value);
+                    policy = PipelineActivityPolicy.DeserializePipelineActivityPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -251,7 +252,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<PipelineActivityDependency> array = new List<PipelineActivityDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item));
+                        array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item, options));
                     }
                     dependsOn = array;
                     continue;
@@ -265,7 +266,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<PipelineActivityUserProperty> array = new List<PipelineActivityUserProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item));
+                        array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item, options));
                     }
                     userProperties = array;
                     continue;
@@ -308,7 +309,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            referenceObjects = CustomActivityReferenceObject.DeserializeCustomActivityReferenceObject(property0.Value);
+                            referenceObjects = CustomActivityReferenceObject.DeserializeCustomActivityReferenceObject(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("extendedProperties"u8))
@@ -356,7 +357,24 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new CustomActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName, policy.Value, command, resourceLinkedService, folderPath.Value, referenceObjects.Value, Optional.ToDictionary(extendedProperties), retentionTimeInDays.Value, autoUserSpecification.Value);
+            return new CustomActivity(
+                name,
+                type,
+                description,
+                state,
+                onInactiveMarkAs,
+                dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
+                additionalProperties,
+                linkedServiceName,
+                policy,
+                command,
+                resourceLinkedService,
+                folderPath,
+                referenceObjects,
+                extendedProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                retentionTimeInDays,
+                autoUserSpecification);
         }
 
         BinaryData IPersistableModel<CustomActivity>.Write(ModelReaderWriterOptions options)

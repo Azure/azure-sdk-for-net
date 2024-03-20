@@ -114,15 +114,15 @@ namespace Azure.ResourceManager.Logic
             {
                 return null;
             }
-            Optional<IntegrationServiceEnvironmentProperties> properties = default;
-            Optional<IntegrationServiceEnvironmentSku> sku = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IntegrationServiceEnvironmentProperties properties = default;
+            IntegrationServiceEnvironmentSku sku = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Logic
                     {
                         continue;
                     }
-                    properties = IntegrationServiceEnvironmentProperties.DeserializeIntegrationServiceEnvironmentProperties(property.Value);
+                    properties = IntegrationServiceEnvironmentProperties.DeserializeIntegrationServiceEnvironmentProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Logic
                     {
                         continue;
                     }
-                    sku = IntegrationServiceEnvironmentSku.DeserializeIntegrationServiceEnvironmentSku(property.Value);
+                    sku = IntegrationServiceEnvironmentSku.DeserializeIntegrationServiceEnvironmentSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -203,7 +203,17 @@ namespace Azure.ResourceManager.Logic
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationServiceEnvironmentData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value, sku.Value, identity, serializedAdditionalRawData);
+            return new IntegrationServiceEnvironmentData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                sku,
+                identity,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationServiceEnvironmentData>.Write(ModelReaderWriterOptions options)

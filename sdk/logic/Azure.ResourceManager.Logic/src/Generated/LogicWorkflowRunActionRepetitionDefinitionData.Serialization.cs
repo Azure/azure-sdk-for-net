@@ -215,27 +215,27 @@ namespace Azure.ResourceManager.Logic
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<LogicWorkflowRunActionCorrelation> correlation = default;
-            Optional<LogicWorkflowStatus> status = default;
-            Optional<string> code = default;
-            Optional<BinaryData> error = default;
-            Optional<Guid> trackingId = default;
-            Optional<BinaryData> inputs = default;
-            Optional<LogicContentLink> inputsLink = default;
-            Optional<BinaryData> outputs = default;
-            Optional<LogicContentLink> outputsLink = default;
-            Optional<BinaryData> trackedProperties = default;
-            Optional<IList<LogicWorkRetryHistory>> retryHistory = default;
-            Optional<int> iterationCount = default;
-            Optional<IList<LogicWorkflowRepetitionIndex>> repetitionIndexes = default;
+            SystemData systemData = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            LogicWorkflowRunActionCorrelation correlation = default;
+            LogicWorkflowStatus? status = default;
+            string code = default;
+            BinaryData error = default;
+            Guid? trackingId = default;
+            BinaryData inputs = default;
+            LogicContentLink inputsLink = default;
+            BinaryData outputs = default;
+            LogicContentLink outputsLink = default;
+            BinaryData trackedProperties = default;
+            IList<LogicWorkRetryHistory> retryHistory = default;
+            int? iterationCount = default;
+            IList<LogicWorkflowRepetitionIndex> repetitionIndexes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            correlation = LogicWorkflowRunActionCorrelation.DeserializeLogicWorkflowRunActionCorrelation(property0.Value);
+                            correlation = LogicWorkflowRunActionCorrelation.DeserializeLogicWorkflowRunActionCorrelation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("status"u8))
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            inputsLink = LogicContentLink.DeserializeLogicContentLink(property0.Value);
+                            inputsLink = LogicContentLink.DeserializeLogicContentLink(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("outputs"u8))
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            outputsLink = LogicContentLink.DeserializeLogicContentLink(property0.Value);
+                            outputsLink = LogicContentLink.DeserializeLogicContentLink(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("trackedProperties"u8))
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.Logic
                             List<LogicWorkRetryHistory> array = new List<LogicWorkRetryHistory>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(LogicWorkRetryHistory.DeserializeLogicWorkRetryHistory(item));
+                                array.Add(LogicWorkRetryHistory.DeserializeLogicWorkRetryHistory(item, options));
                             }
                             retryHistory = array;
                             continue;
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Logic
                             List<LogicWorkflowRepetitionIndex> array = new List<LogicWorkflowRepetitionIndex>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(LogicWorkflowRepetitionIndex.DeserializeLogicWorkflowRepetitionIndex(item));
+                                array.Add(LogicWorkflowRepetitionIndex.DeserializeLogicWorkflowRepetitionIndex(item, options));
                             }
                             repetitionIndexes = array;
                             continue;
@@ -442,7 +442,29 @@ namespace Azure.ResourceManager.Logic
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicWorkflowRunActionRepetitionDefinitionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(startTime), Optional.ToNullable(endTime), correlation.Value, Optional.ToNullable(status), code.Value, error.Value, Optional.ToNullable(trackingId), inputs.Value, inputsLink.Value, outputs.Value, outputsLink.Value, trackedProperties.Value, Optional.ToList(retryHistory), Optional.ToNullable(iterationCount), Optional.ToList(repetitionIndexes), serializedAdditionalRawData);
+            return new LogicWorkflowRunActionRepetitionDefinitionData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                startTime,
+                endTime,
+                correlation,
+                status,
+                code,
+                error,
+                trackingId,
+                inputs,
+                inputsLink,
+                outputs,
+                outputsLink,
+                trackedProperties,
+                retryHistory ?? new ChangeTrackingList<LogicWorkRetryHistory>(),
+                iterationCount,
+                repetitionIndexes ?? new ChangeTrackingList<LogicWorkflowRepetitionIndex>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicWorkflowRunActionRepetitionDefinitionData>.Write(ModelReaderWriterOptions options)

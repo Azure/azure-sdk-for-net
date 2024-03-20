@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<ExposureControlResult> array = new List<ExposureControlResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExposureControlResult.DeserializeExposureControlResult(item));
+                        array.Add(ExposureControlResult.DeserializeExposureControlResult(item, options));
                     }
                     exposureControlResponses = array;
                     continue;

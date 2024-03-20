@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -89,10 +90,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<ActionableRemediationState> state = default;
-            Optional<IList<CategoryConfiguration>> categoryConfigurations = default;
-            Optional<TargetBranchConfiguration> branchConfiguration = default;
-            Optional<InheritFromParentState> inheritFromParentState = default;
+            ActionableRemediationState? state = default;
+            IList<CategoryConfiguration> categoryConfigurations = default;
+            TargetBranchConfiguration branchConfiguration = default;
+            InheritFromParentState? inheritFromParentState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<CategoryConfiguration> array = new List<CategoryConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CategoryConfiguration.DeserializeCategoryConfiguration(item));
+                        array.Add(CategoryConfiguration.DeserializeCategoryConfiguration(item, options));
                     }
                     categoryConfigurations = array;
                     continue;
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    branchConfiguration = TargetBranchConfiguration.DeserializeTargetBranchConfiguration(property.Value);
+                    branchConfiguration = TargetBranchConfiguration.DeserializeTargetBranchConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("inheritFromParentState"u8))
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ActionableRemediation(Optional.ToNullable(state), Optional.ToList(categoryConfigurations), branchConfiguration.Value, Optional.ToNullable(inheritFromParentState), serializedAdditionalRawData);
+            return new ActionableRemediation(state, categoryConfigurations ?? new ChangeTrackingList<CategoryConfiguration>(), branchConfiguration, inheritFromParentState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ActionableRemediation>.Write(ModelReaderWriterOptions options)

@@ -140,18 +140,18 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<IReadOnlyList<NetworkInterfaceTapConfigurationData>> networkInterfaceTapConfigurations = default;
-            Optional<Guid> resourceGuid = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<NetworkInterfaceIPConfigurationData> destinationNetworkInterfaceIPConfiguration = default;
-            Optional<FrontendIPConfigurationData> destinationLoadBalancerFrontEndIPConfiguration = default;
-            Optional<int> destinationPort = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
+            IDictionary<string, string> tags = default;
+            IReadOnlyList<NetworkInterfaceTapConfigurationData> networkInterfaceTapConfigurations = default;
+            Guid? resourceGuid = default;
+            NetworkProvisioningState? provisioningState = default;
+            NetworkInterfaceIPConfigurationData destinationNetworkInterfaceIPConfiguration = default;
+            FrontendIPConfigurationData destinationLoadBalancerFrontEndIPConfiguration = default;
+            int? destinationPort = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Network
                             List<NetworkInterfaceTapConfigurationData> array = new List<NetworkInterfaceTapConfigurationData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkInterfaceTapConfigurationData.DeserializeNetworkInterfaceTapConfigurationData(item));
+                                array.Add(NetworkInterfaceTapConfigurationData.DeserializeNetworkInterfaceTapConfigurationData(item, options));
                             }
                             networkInterfaceTapConfigurations = array;
                             continue;
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            destinationNetworkInterfaceIPConfiguration = NetworkInterfaceIPConfigurationData.DeserializeNetworkInterfaceIPConfigurationData(property0.Value);
+                            destinationNetworkInterfaceIPConfiguration = NetworkInterfaceIPConfigurationData.DeserializeNetworkInterfaceIPConfigurationData(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("destinationLoadBalancerFrontEndIPConfiguration"u8))
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            destinationLoadBalancerFrontEndIPConfiguration = FrontendIPConfigurationData.DeserializeFrontendIPConfigurationData(property0.Value);
+                            destinationLoadBalancerFrontEndIPConfiguration = FrontendIPConfigurationData.DeserializeFrontendIPConfigurationData(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("destinationPort"u8))
@@ -288,7 +288,20 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualNetworkTapData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToList(networkInterfaceTapConfigurations), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), destinationNetworkInterfaceIPConfiguration.Value, destinationLoadBalancerFrontEndIPConfiguration.Value, Optional.ToNullable(destinationPort));
+            return new VirtualNetworkTapData(
+                id,
+                name,
+                type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                etag,
+                networkInterfaceTapConfigurations ?? new ChangeTrackingList<NetworkInterfaceTapConfigurationData>(),
+                resourceGuid,
+                provisioningState,
+                destinationNetworkInterfaceIPConfiguration,
+                destinationLoadBalancerFrontEndIPConfiguration,
+                destinationPort);
         }
 
         BinaryData IPersistableModel<VirtualNetworkTapData>.Write(ModelReaderWriterOptions options)

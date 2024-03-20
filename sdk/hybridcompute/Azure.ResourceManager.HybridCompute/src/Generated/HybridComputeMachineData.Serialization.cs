@@ -294,46 +294,46 @@ namespace Azure.ResourceManager.HybridCompute
             {
                 return null;
             }
-            Optional<IReadOnlyList<HybridComputeMachineExtensionData>> resources = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<ArcKindEnum> kind = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IReadOnlyList<HybridComputeMachineExtensionData> resources = default;
+            ManagedServiceIdentity identity = default;
+            ArcKindEnum? kind = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<HybridComputeLocation> locationData = default;
-            Optional<AgentConfiguration> agentConfiguration = default;
-            Optional<HybridComputeServiceStatuses> serviceStatuses = default;
-            Optional<HybridComputeCloudMetadata> cloudMetadata = default;
-            Optional<AgentUpgrade> agentUpgrade = default;
-            Optional<HybridComputeOSProfile> osProfile = default;
-            Optional<LicenseProfileMachineInstanceView> licenseProfile = default;
-            Optional<string> provisioningState = default;
-            Optional<HybridComputeStatusType> status = default;
-            Optional<DateTimeOffset> lastStatusChange = default;
-            Optional<IReadOnlyList<ResponseError>> errorDetails = default;
-            Optional<string> agentVersion = default;
-            Optional<Guid> vmId = default;
-            Optional<string> displayName = default;
-            Optional<string> machineFqdn = default;
-            Optional<string> clientPublicKey = default;
-            Optional<string> osName = default;
-            Optional<string> osVersion = default;
-            Optional<string> osType = default;
-            Optional<Guid> vmUuid = default;
-            Optional<IList<MachineExtensionInstanceView>> extensions = default;
-            Optional<string> osSku = default;
-            Optional<string> osEdition = default;
-            Optional<string> domainName = default;
-            Optional<string> adFqdn = default;
-            Optional<string> dnsFqdn = default;
-            Optional<ResourceIdentifier> privateLinkScopeResourceId = default;
-            Optional<ResourceIdentifier> parentClusterResourceId = default;
-            Optional<string> mssqlDiscovered = default;
-            Optional<IReadOnlyDictionary<string, string>> detectedProperties = default;
-            Optional<HybridComputeNetworkProfile> networkProfile = default;
+            SystemData systemData = default;
+            HybridComputeLocation locationData = default;
+            AgentConfiguration agentConfiguration = default;
+            HybridComputeServiceStatuses serviceStatuses = default;
+            HybridComputeCloudMetadata cloudMetadata = default;
+            AgentUpgrade agentUpgrade = default;
+            HybridComputeOSProfile osProfile = default;
+            LicenseProfileMachineInstanceView licenseProfile = default;
+            string provisioningState = default;
+            HybridComputeStatusType? status = default;
+            DateTimeOffset? lastStatusChange = default;
+            IReadOnlyList<ResponseError> errorDetails = default;
+            string agentVersion = default;
+            Guid? vmId = default;
+            string displayName = default;
+            string machineFqdn = default;
+            string clientPublicKey = default;
+            string osName = default;
+            string osVersion = default;
+            string osType = default;
+            Guid? vmUuid = default;
+            IList<MachineExtensionInstanceView> extensions = default;
+            string osSku = default;
+            string osEdition = default;
+            string domainName = default;
+            string adFqdn = default;
+            string dnsFqdn = default;
+            ResourceIdentifier privateLinkScopeResourceId = default;
+            ResourceIdentifier parentClusterResourceId = default;
+            string mssqlDiscovered = default;
+            IReadOnlyDictionary<string, string> detectedProperties = default;
+            HybridComputeNetworkProfile networkProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.HybridCompute
                     List<HybridComputeMachineExtensionData> array = new List<HybridComputeMachineExtensionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HybridComputeMachineExtensionData.DeserializeHybridComputeMachineExtensionData(item));
+                        array.Add(HybridComputeMachineExtensionData.DeserializeHybridComputeMachineExtensionData(item, options));
                     }
                     resources = array;
                     continue;
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.HybridCompute
                             {
                                 continue;
                             }
-                            locationData = HybridComputeLocation.DeserializeHybridComputeLocation(property0.Value);
+                            locationData = HybridComputeLocation.DeserializeHybridComputeLocation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("agentConfiguration"u8))
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.HybridCompute
                             {
                                 continue;
                             }
-                            agentConfiguration = AgentConfiguration.DeserializeAgentConfiguration(property0.Value);
+                            agentConfiguration = AgentConfiguration.DeserializeAgentConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("serviceStatuses"u8))
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.HybridCompute
                             {
                                 continue;
                             }
-                            serviceStatuses = HybridComputeServiceStatuses.DeserializeHybridComputeServiceStatuses(property0.Value);
+                            serviceStatuses = HybridComputeServiceStatuses.DeserializeHybridComputeServiceStatuses(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("cloudMetadata"u8))
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.HybridCompute
                             {
                                 continue;
                             }
-                            cloudMetadata = HybridComputeCloudMetadata.DeserializeHybridComputeCloudMetadata(property0.Value);
+                            cloudMetadata = HybridComputeCloudMetadata.DeserializeHybridComputeCloudMetadata(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("agentUpgrade"u8))
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.HybridCompute
                             {
                                 continue;
                             }
-                            agentUpgrade = AgentUpgrade.DeserializeAgentUpgrade(property0.Value);
+                            agentUpgrade = AgentUpgrade.DeserializeAgentUpgrade(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("osProfile"u8))
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.HybridCompute
                             {
                                 continue;
                             }
-                            osProfile = HybridComputeOSProfile.DeserializeHybridComputeOSProfile(property0.Value);
+                            osProfile = HybridComputeOSProfile.DeserializeHybridComputeOSProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("licenseProfile"u8))
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.HybridCompute
                             {
                                 continue;
                             }
-                            licenseProfile = LicenseProfileMachineInstanceView.DeserializeLicenseProfileMachineInstanceView(property0.Value);
+                            licenseProfile = LicenseProfileMachineInstanceView.DeserializeLicenseProfileMachineInstanceView(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -584,7 +584,7 @@ namespace Azure.ResourceManager.HybridCompute
                             List<MachineExtensionInstanceView> array = new List<MachineExtensionInstanceView>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MachineExtensionInstanceView.DeserializeMachineExtensionInstanceView(item));
+                                array.Add(MachineExtensionInstanceView.DeserializeMachineExtensionInstanceView(item, options));
                             }
                             extensions = array;
                             continue;
@@ -657,7 +657,7 @@ namespace Azure.ResourceManager.HybridCompute
                             {
                                 continue;
                             }
-                            networkProfile = HybridComputeNetworkProfile.DeserializeHybridComputeNetworkProfile(property0.Value);
+                            networkProfile = HybridComputeNetworkProfile.DeserializeHybridComputeNetworkProfile(property0.Value, options);
                             continue;
                         }
                     }
@@ -669,7 +669,48 @@ namespace Azure.ResourceManager.HybridCompute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridComputeMachineData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(resources), identity, Optional.ToNullable(kind), locationData.Value, agentConfiguration.Value, serviceStatuses.Value, cloudMetadata.Value, agentUpgrade.Value, osProfile.Value, licenseProfile.Value, provisioningState.Value, Optional.ToNullable(status), Optional.ToNullable(lastStatusChange), Optional.ToList(errorDetails), agentVersion.Value, Optional.ToNullable(vmId), displayName.Value, machineFqdn.Value, clientPublicKey.Value, osName.Value, osVersion.Value, osType.Value, Optional.ToNullable(vmUuid), Optional.ToList(extensions), osSku.Value, osEdition.Value, domainName.Value, adFqdn.Value, dnsFqdn.Value, privateLinkScopeResourceId.Value, parentClusterResourceId.Value, mssqlDiscovered.Value, Optional.ToDictionary(detectedProperties), networkProfile.Value, serializedAdditionalRawData);
+            return new HybridComputeMachineData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                resources ?? new ChangeTrackingList<HybridComputeMachineExtensionData>(),
+                identity,
+                kind,
+                locationData,
+                agentConfiguration,
+                serviceStatuses,
+                cloudMetadata,
+                agentUpgrade,
+                osProfile,
+                licenseProfile,
+                provisioningState,
+                status,
+                lastStatusChange,
+                errorDetails ?? new ChangeTrackingList<ResponseError>(),
+                agentVersion,
+                vmId,
+                displayName,
+                machineFqdn,
+                clientPublicKey,
+                osName,
+                osVersion,
+                osType,
+                vmUuid,
+                extensions ?? new ChangeTrackingList<MachineExtensionInstanceView>(),
+                osSku,
+                osEdition,
+                domainName,
+                adFqdn,
+                dnsFqdn,
+                privateLinkScopeResourceId,
+                parentClusterResourceId,
+                mssqlDiscovered,
+                detectedProperties ?? new ChangeTrackingDictionary<string, string>(),
+                networkProfile,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridComputeMachineData>.Write(ModelReaderWriterOptions options)

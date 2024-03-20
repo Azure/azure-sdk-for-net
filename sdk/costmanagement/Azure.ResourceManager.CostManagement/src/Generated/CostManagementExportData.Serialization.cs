@@ -130,18 +130,18 @@ namespace Azure.ResourceManager.CostManagement
             {
                 return null;
             }
-            Optional<ETag> eTag = default;
+            ETag? eTag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ExportFormatType> format = default;
-            Optional<ExportDeliveryInfo> deliveryInfo = default;
-            Optional<ExportDefinition> definition = default;
-            Optional<ExportExecutionListResult> runHistory = default;
-            Optional<bool> partitionData = default;
-            Optional<DateTimeOffset> nextRunTimeEstimate = default;
-            Optional<ExportSchedule> schedule = default;
+            SystemData systemData = default;
+            ExportFormatType? format = default;
+            ExportDeliveryInfo deliveryInfo = default;
+            ExportDefinition definition = default;
+            ExportExecutionListResult runHistory = default;
+            bool? partitionData = default;
+            DateTimeOffset? nextRunTimeEstimate = default;
+            ExportSchedule schedule = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.CostManagement
                             {
                                 continue;
                             }
-                            deliveryInfo = ExportDeliveryInfo.DeserializeExportDeliveryInfo(property0.Value);
+                            deliveryInfo = ExportDeliveryInfo.DeserializeExportDeliveryInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("definition"u8))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.CostManagement
                             {
                                 continue;
                             }
-                            definition = ExportDefinition.DeserializeExportDefinition(property0.Value);
+                            definition = ExportDefinition.DeserializeExportDefinition(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("runHistory"u8))
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.CostManagement
                             {
                                 continue;
                             }
-                            runHistory = ExportExecutionListResult.DeserializeExportExecutionListResult(property0.Value);
+                            runHistory = ExportExecutionListResult.DeserializeExportExecutionListResult(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("partitionData"u8))
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.CostManagement
                             {
                                 continue;
                             }
-                            schedule = ExportSchedule.DeserializeExportSchedule(property0.Value);
+                            schedule = ExportSchedule.DeserializeExportSchedule(property0.Value, options);
                             continue;
                         }
                     }
@@ -260,7 +260,20 @@ namespace Azure.ResourceManager.CostManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CostManagementExportData(id, name, type, systemData.Value, Optional.ToNullable(format), deliveryInfo.Value, definition.Value, runHistory.Value, Optional.ToNullable(partitionData), Optional.ToNullable(nextRunTimeEstimate), schedule.Value, Optional.ToNullable(eTag), serializedAdditionalRawData);
+            return new CostManagementExportData(
+                id,
+                name,
+                type,
+                systemData,
+                format,
+                deliveryInfo,
+                definition,
+                runHistory,
+                partitionData,
+                nextRunTimeEstimate,
+                schedule,
+                eTag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CostManagementExportData>.Write(ModelReaderWriterOptions options)

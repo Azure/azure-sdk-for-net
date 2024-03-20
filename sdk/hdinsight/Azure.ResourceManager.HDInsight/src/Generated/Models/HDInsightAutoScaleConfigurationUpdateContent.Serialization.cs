@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<HDInsightAutoScaleConfiguration> autoScale = default;
+            HDInsightAutoScaleConfiguration autoScale = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    autoScale = HDInsightAutoScaleConfiguration.DeserializeHDInsightAutoScaleConfiguration(property.Value);
+                    autoScale = HDInsightAutoScaleConfiguration.DeserializeHDInsightAutoScaleConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightAutoScaleConfigurationUpdateContent(autoScale.Value, serializedAdditionalRawData);
+            return new HDInsightAutoScaleConfigurationUpdateContent(autoScale, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightAutoScaleConfigurationUpdateContent>.Write(ModelReaderWriterOptions options)

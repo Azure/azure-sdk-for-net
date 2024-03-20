@@ -91,11 +91,11 @@ namespace Azure.ResourceManager.ServiceFabric
             {
                 return null;
             }
-            Optional<VmSize> properties = default;
+            VmSize properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ServiceFabric
                     {
                         continue;
                     }
-                    properties = Models.VmSize.DeserializeVmSize(property.Value);
+                    properties = Models.VmSize.DeserializeVmSize(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -139,7 +139,13 @@ namespace Azure.ResourceManager.ServiceFabric
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceFabricVmSizeResourceData(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new ServiceFabricVmSizeResourceData(
+                id,
+                name,
+                type,
+                systemData,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceFabricVmSizeResourceData>.Write(ModelReaderWriterOptions options)

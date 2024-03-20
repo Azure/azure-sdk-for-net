@@ -134,15 +134,15 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<IList<HubRoute>> routes = default;
-            Optional<IList<string>> labels = default;
-            Optional<IReadOnlyList<string>> associatedConnections = default;
-            Optional<IReadOnlyList<string>> propagatingConnections = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            IList<HubRoute> routes = default;
+            IList<string> labels = default;
+            IReadOnlyList<string> associatedConnections = default;
+            IReadOnlyList<string> propagatingConnections = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Network
                             List<HubRoute> array = new List<HubRoute>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(HubRoute.DeserializeHubRoute(item));
+                                array.Add(HubRoute.DeserializeHubRoute(item, options));
                             }
                             routes = array;
                             continue;
@@ -262,7 +262,17 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HubRouteTableData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToList(routes), Optional.ToList(labels), Optional.ToList(associatedConnections), Optional.ToList(propagatingConnections), Optional.ToNullable(provisioningState));
+            return new HubRouteTableData(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                routes ?? new ChangeTrackingList<HubRoute>(),
+                labels ?? new ChangeTrackingList<string>(),
+                associatedConnections ?? new ChangeTrackingList<string>(),
+                propagatingConnections ?? new ChangeTrackingList<string>(),
+                provisioningState);
         }
 
         BinaryData IPersistableModel<HubRouteTableData>.Write(ModelReaderWriterOptions options)

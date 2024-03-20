@@ -157,19 +157,19 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Optional<IList<string>> zones = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IList<string> zones = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ProximityPlacementGroupType> proximityPlacementGroupType = default;
-            Optional<IReadOnlyList<ComputeSubResourceDataWithColocationStatus>> virtualMachines = default;
-            Optional<IReadOnlyList<ComputeSubResourceDataWithColocationStatus>> virtualMachineScaleSets = default;
-            Optional<IReadOnlyList<ComputeSubResourceDataWithColocationStatus>> availabilitySets = default;
-            Optional<InstanceViewStatus> colocationStatus = default;
-            Optional<ProximityPlacementGroupPropertiesIntent> intent = default;
+            SystemData systemData = default;
+            ProximityPlacementGroupType? proximityPlacementGroupType = default;
+            IReadOnlyList<ComputeSubResourceDataWithColocationStatus> virtualMachines = default;
+            IReadOnlyList<ComputeSubResourceDataWithColocationStatus> virtualMachineScaleSets = default;
+            IReadOnlyList<ComputeSubResourceDataWithColocationStatus> availabilitySets = default;
+            InstanceViewStatus colocationStatus = default;
+            ProximityPlacementGroupPropertiesIntent intent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Compute
                             List<ComputeSubResourceDataWithColocationStatus> array = new List<ComputeSubResourceDataWithColocationStatus>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ComputeSubResourceDataWithColocationStatus.DeserializeComputeSubResourceDataWithColocationStatus(item));
+                                array.Add(ComputeSubResourceDataWithColocationStatus.DeserializeComputeSubResourceDataWithColocationStatus(item, options));
                             }
                             virtualMachines = array;
                             continue;
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Compute
                             List<ComputeSubResourceDataWithColocationStatus> array = new List<ComputeSubResourceDataWithColocationStatus>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ComputeSubResourceDataWithColocationStatus.DeserializeComputeSubResourceDataWithColocationStatus(item));
+                                array.Add(ComputeSubResourceDataWithColocationStatus.DeserializeComputeSubResourceDataWithColocationStatus(item, options));
                             }
                             virtualMachineScaleSets = array;
                             continue;
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Compute
                             List<ComputeSubResourceDataWithColocationStatus> array = new List<ComputeSubResourceDataWithColocationStatus>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ComputeSubResourceDataWithColocationStatus.DeserializeComputeSubResourceDataWithColocationStatus(item));
+                                array.Add(ComputeSubResourceDataWithColocationStatus.DeserializeComputeSubResourceDataWithColocationStatus(item, options));
                             }
                             availabilitySets = array;
                             continue;
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            colocationStatus = InstanceViewStatus.DeserializeInstanceViewStatus(property0.Value);
+                            colocationStatus = InstanceViewStatus.DeserializeInstanceViewStatus(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("intent"u8))
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            intent = ProximityPlacementGroupPropertiesIntent.DeserializeProximityPlacementGroupPropertiesIntent(property0.Value);
+                            intent = ProximityPlacementGroupPropertiesIntent.DeserializeProximityPlacementGroupPropertiesIntent(property0.Value, options);
                             continue;
                         }
                     }
@@ -318,7 +318,21 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProximityPlacementGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(zones), Optional.ToNullable(proximityPlacementGroupType), Optional.ToList(virtualMachines), Optional.ToList(virtualMachineScaleSets), Optional.ToList(availabilitySets), colocationStatus.Value, intent.Value, serializedAdditionalRawData);
+            return new ProximityPlacementGroupData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                zones ?? new ChangeTrackingList<string>(),
+                proximityPlacementGroupType,
+                virtualMachines ?? new ChangeTrackingList<ComputeSubResourceDataWithColocationStatus>(),
+                virtualMachineScaleSets ?? new ChangeTrackingList<ComputeSubResourceDataWithColocationStatus>(),
+                availabilitySets ?? new ChangeTrackingList<ComputeSubResourceDataWithColocationStatus>(),
+                colocationStatus,
+                intent,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProximityPlacementGroupData>.Write(ModelReaderWriterOptions options)

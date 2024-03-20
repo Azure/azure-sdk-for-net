@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using Azure.AI.TextAnalytics.Legacy;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy.Models
 {
@@ -20,9 +19,9 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
             {
                 return null;
             }
-            Optional<EntitiesResult> results = default;
+            EntitiesResult results = default;
             DateTimeOffset lastUpdateDateTime = default;
-            Optional<string> taskName = default;
+            string taskName = default;
             State status = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -51,7 +50,7 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
                     continue;
                 }
             }
-            return new TasksStateTasksEntityRecognitionTasksItem(lastUpdateDateTime, taskName.Value, status, results.Value);
+            return new TasksStateTasksEntityRecognitionTasksItem(lastUpdateDateTime, taskName, status, results);
         }
     }
 }

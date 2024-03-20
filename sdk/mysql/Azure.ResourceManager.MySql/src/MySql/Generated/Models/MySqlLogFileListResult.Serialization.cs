@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MySql;
 
 namespace Azure.ResourceManager.MySql.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.MySql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MySqlLogFile>> value = default;
+            IReadOnlyList<MySqlLogFile> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.MySql.Models
                     List<MySqlLogFile> array = new List<MySqlLogFile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MySqlLogFile.DeserializeMySqlLogFile(item));
+                        array.Add(MySqlLogFile.DeserializeMySqlLogFile(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.MySql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlLogFileListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new MySqlLogFileListResult(value ?? new ChangeTrackingList<MySqlLogFile>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlLogFileListResult>.Write(ModelReaderWriterOptions options)

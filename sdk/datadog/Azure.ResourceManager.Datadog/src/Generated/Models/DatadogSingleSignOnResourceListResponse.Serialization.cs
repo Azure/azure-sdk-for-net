@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DatadogSingleSignOnResourceData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<DatadogSingleSignOnResourceData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     List<DatadogSingleSignOnResourceData> array = new List<DatadogSingleSignOnResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DatadogSingleSignOnResourceData.DeserializeDatadogSingleSignOnResourceData(item));
+                        array.Add(DatadogSingleSignOnResourceData.DeserializeDatadogSingleSignOnResourceData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatadogSingleSignOnResourceListResponse(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DatadogSingleSignOnResourceListResponse(value ?? new ChangeTrackingList<DatadogSingleSignOnResourceData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatadogSingleSignOnResourceListResponse>.Write(ModelReaderWriterOptions options)

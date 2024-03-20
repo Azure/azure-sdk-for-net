@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DigitalTwins;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
@@ -97,10 +98,10 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             {
                 return null;
             }
-            Optional<DigitalTwinsPrivateLinkResourceProvisioningState?> provisioningState = default;
-            Optional<SubResource> privateEndpoint = default;
-            Optional<IList<string>> groupIds = default;
-            Optional<DigitalTwinsPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
+            DigitalTwinsPrivateLinkResourceProvisioningState? provisioningState = default;
+            SubResource privateEndpoint = default;
+            IList<string> groupIds = default;
+            DigitalTwinsPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     {
                         continue;
                     }
-                    privateLinkServiceConnectionState = DigitalTwinsPrivateLinkServiceConnectionState.DeserializeDigitalTwinsPrivateLinkServiceConnectionState(property.Value);
+                    privateLinkServiceConnectionState = DigitalTwinsPrivateLinkServiceConnectionState.DeserializeDigitalTwinsPrivateLinkServiceConnectionState(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -153,7 +154,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DigitalTwinsPrivateEndpointConnectionProperties(Optional.ToNullable(provisioningState), privateEndpoint, Optional.ToList(groupIds), privateLinkServiceConnectionState.Value, serializedAdditionalRawData);
+            return new DigitalTwinsPrivateEndpointConnectionProperties(provisioningState, privateEndpoint, groupIds ?? new ChangeTrackingList<string>(), privateLinkServiceConnectionState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DigitalTwinsPrivateEndpointConnectionProperties>.Write(ModelReaderWriterOptions options)

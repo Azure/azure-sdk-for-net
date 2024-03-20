@@ -112,14 +112,14 @@ namespace Azure.ResourceManager.ServiceFabric
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ETag? etag = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> provisioningState = default;
+            SystemData systemData = default;
+            string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -199,7 +199,16 @@ namespace Azure.ResourceManager.ServiceFabric
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceFabricApplicationTypeData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, provisioningState.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new ServiceFabricApplicationTypeData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState,
+                etag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceFabricApplicationTypeData>.Write(ModelReaderWriterOptions options)

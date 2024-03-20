@@ -147,15 +147,15 @@ namespace Azure.ResourceManager.Authorization
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> denyAssignmentName = default;
-            Optional<string> description = default;
-            Optional<IReadOnlyList<DenyAssignmentPermission>> permissions = default;
-            Optional<string> scope = default;
-            Optional<bool> doNotApplyToChildScopes = default;
-            Optional<IReadOnlyList<RoleManagementPrincipal>> principals = default;
-            Optional<IReadOnlyList<RoleManagementPrincipal>> excludePrincipals = default;
-            Optional<bool> isSystemProtected = default;
+            SystemData systemData = default;
+            string denyAssignmentName = default;
+            string description = default;
+            IReadOnlyList<DenyAssignmentPermission> permissions = default;
+            string scope = default;
+            bool? doNotApplyToChildScopes = default;
+            IReadOnlyList<RoleManagementPrincipal> principals = default;
+            IReadOnlyList<RoleManagementPrincipal> excludePrincipals = default;
+            bool? isSystemProtected = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Authorization
                             List<DenyAssignmentPermission> array = new List<DenyAssignmentPermission>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DenyAssignmentPermission.DeserializeDenyAssignmentPermission(item));
+                                array.Add(DenyAssignmentPermission.DeserializeDenyAssignmentPermission(item, options));
                             }
                             permissions = array;
                             continue;
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Authorization
                             List<RoleManagementPrincipal> array = new List<RoleManagementPrincipal>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RoleManagementPrincipal.DeserializeRoleManagementPrincipal(item));
+                                array.Add(RoleManagementPrincipal.DeserializeRoleManagementPrincipal(item, options));
                             }
                             principals = array;
                             continue;
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Authorization
                             List<RoleManagementPrincipal> array = new List<RoleManagementPrincipal>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RoleManagementPrincipal.DeserializeRoleManagementPrincipal(item));
+                                array.Add(RoleManagementPrincipal.DeserializeRoleManagementPrincipal(item, options));
                             }
                             excludePrincipals = array;
                             continue;
@@ -277,7 +277,20 @@ namespace Azure.ResourceManager.Authorization
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DenyAssignmentData(id, name, type, systemData.Value, denyAssignmentName.Value, description.Value, Optional.ToList(permissions), scope.Value, Optional.ToNullable(doNotApplyToChildScopes), Optional.ToList(principals), Optional.ToList(excludePrincipals), Optional.ToNullable(isSystemProtected), serializedAdditionalRawData);
+            return new DenyAssignmentData(
+                id,
+                name,
+                type,
+                systemData,
+                denyAssignmentName,
+                description,
+                permissions ?? new ChangeTrackingList<DenyAssignmentPermission>(),
+                scope,
+                doNotApplyToChildScopes,
+                principals ?? new ChangeTrackingList<RoleManagementPrincipal>(),
+                excludePrincipals ?? new ChangeTrackingList<RoleManagementPrincipal>(),
+                isSystemProtected,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DenyAssignmentData>.Write(ModelReaderWriterOptions options)

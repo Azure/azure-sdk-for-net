@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MySql;
 
 namespace Azure.ResourceManager.MySql.Models
 {
@@ -137,7 +138,14 @@ namespace Azure.ResourceManager.MySql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlTopQueryStatisticsInput(numberOfTopQueries, aggregationFunction, observedMetric, observationStartTime, observationEndTime, aggregationWindow, serializedAdditionalRawData);
+            return new MySqlTopQueryStatisticsInput(
+                numberOfTopQueries,
+                aggregationFunction,
+                observedMetric,
+                observationStartTime,
+                observationEndTime,
+                aggregationWindow,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlTopQueryStatisticsInput>.Write(ModelReaderWriterOptions options)

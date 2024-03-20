@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
+using Azure.Messaging.EventGrid;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -22,9 +22,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<object> body = default;
-            Optional<IReadOnlyDictionary<string, string>> properties = default;
-            Optional<IReadOnlyDictionary<string, string>> systemProperties = default;
+            object body = default;
+            IReadOnlyDictionary<string, string> properties = default;
+            IReadOnlyDictionary<string, string> systemProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("body"u8))
@@ -65,7 +65,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new IotHubDeviceTelemetryEventData(body.Value, Optional.ToDictionary(properties), Optional.ToDictionary(systemProperties));
+            return new IotHubDeviceTelemetryEventData(body, properties ?? new ChangeTrackingDictionary<string, string>(), systemProperties ?? new ChangeTrackingDictionary<string, string>());
         }
 
         internal partial class IotHubDeviceTelemetryEventDataConverter : JsonConverter<IotHubDeviceTelemetryEventData>

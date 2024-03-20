@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -116,16 +117,16 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> objectName = default;
-            Optional<DateTimeOffset> startedOn = default;
-            Optional<DateTimeOffset> endedOn = default;
-            Optional<MigrationState> state = default;
-            Optional<string> statusMessage = default;
-            Optional<long> itemsCount = default;
-            Optional<long> itemsCompletedCount = default;
-            Optional<string> errorPrefix = default;
-            Optional<string> resultPrefix = default;
-            Optional<string> id = default;
+            string objectName = default;
+            DateTimeOffset? startedOn = default;
+            DateTimeOffset? endedOn = default;
+            MigrationState? state = default;
+            string statusMessage = default;
+            long? itemsCount = default;
+            long? itemsCompletedCount = default;
+            string errorPrefix = default;
+            string resultPrefix = default;
+            string id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -212,7 +213,19 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateSqlServerSqlDBTaskOutputTableLevel(id.Value, resultType, serializedAdditionalRawData, objectName.Value, Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), Optional.ToNullable(state), statusMessage.Value, Optional.ToNullable(itemsCount), Optional.ToNullable(itemsCompletedCount), errorPrefix.Value, resultPrefix.Value);
+            return new MigrateSqlServerSqlDBTaskOutputTableLevel(
+                id,
+                resultType,
+                serializedAdditionalRawData,
+                objectName,
+                startedOn,
+                endedOn,
+                state,
+                statusMessage,
+                itemsCount,
+                itemsCompletedCount,
+                errorPrefix,
+                resultPrefix);
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlDBTaskOutputTableLevel>.Write(ModelReaderWriterOptions options)

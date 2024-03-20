@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitorMetricNamespace> array = new List<MonitorMetricNamespace>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorMetricNamespace.DeserializeMonitorMetricNamespace(item));
+                        array.Add(MonitorMetricNamespace.DeserializeMonitorMetricNamespace(item, options));
                     }
                     value = array;
                     continue;

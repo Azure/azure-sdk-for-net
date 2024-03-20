@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -100,11 +101,11 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<GranularityType> granularity = default;
-            Optional<QueryDatasetConfiguration> configuration = default;
-            Optional<IDictionary<string, QueryAggregation>> aggregation = default;
-            Optional<IList<QueryGrouping>> grouping = default;
-            Optional<QueryFilter> filter = default;
+            GranularityType? granularity = default;
+            QueryDatasetConfiguration configuration = default;
+            IDictionary<string, QueryAggregation> aggregation = default;
+            IList<QueryGrouping> grouping = default;
+            QueryFilter filter = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    configuration = QueryDatasetConfiguration.DeserializeQueryDatasetConfiguration(property.Value);
+                    configuration = QueryDatasetConfiguration.DeserializeQueryDatasetConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("aggregation"u8))
@@ -136,7 +137,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     Dictionary<string, QueryAggregation> dictionary = new Dictionary<string, QueryAggregation>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, QueryAggregation.DeserializeQueryAggregation(property0.Value));
+                        dictionary.Add(property0.Name, QueryAggregation.DeserializeQueryAggregation(property0.Value, options));
                     }
                     aggregation = dictionary;
                     continue;
@@ -150,7 +151,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     List<QueryGrouping> array = new List<QueryGrouping>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QueryGrouping.DeserializeQueryGrouping(item));
+                        array.Add(QueryGrouping.DeserializeQueryGrouping(item, options));
                     }
                     grouping = array;
                     continue;
@@ -161,7 +162,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    filter = QueryFilter.DeserializeQueryFilter(property.Value);
+                    filter = QueryFilter.DeserializeQueryFilter(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -170,7 +171,13 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QueryDataset(Optional.ToNullable(granularity), configuration.Value, Optional.ToDictionary(aggregation), Optional.ToList(grouping), filter.Value, serializedAdditionalRawData);
+            return new QueryDataset(
+                granularity,
+                configuration,
+                aggregation ?? new ChangeTrackingDictionary<string, QueryAggregation>(),
+                grouping ?? new ChangeTrackingList<QueryGrouping>(),
+                filter,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QueryDataset>.Write(ModelReaderWriterOptions options)

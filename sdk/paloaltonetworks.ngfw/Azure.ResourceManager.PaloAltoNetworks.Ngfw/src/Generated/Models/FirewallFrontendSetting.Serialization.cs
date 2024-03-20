@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
@@ -92,12 +93,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
                 if (property.NameEquals("frontendConfiguration"u8))
                 {
-                    frontendConfiguration = FirewallEndpointConfiguration.DeserializeFirewallEndpointConfiguration(property.Value);
+                    frontendConfiguration = FirewallEndpointConfiguration.DeserializeFirewallEndpointConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("backendConfiguration"u8))
                 {
-                    backendConfiguration = FirewallEndpointConfiguration.DeserializeFirewallEndpointConfiguration(property.Value);
+                    backendConfiguration = FirewallEndpointConfiguration.DeserializeFirewallEndpointConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

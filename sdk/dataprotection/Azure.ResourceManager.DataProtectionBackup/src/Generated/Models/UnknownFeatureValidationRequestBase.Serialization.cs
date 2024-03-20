@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownFeatureValidationRequestBase(document.RootElement, options);
+            return DeserializeBackupFeatureValidationContentBase(document.RootElement, options);
         }
 
         internal static UnknownFeatureValidationRequestBase DeserializeUnknownFeatureValidationRequestBase(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownFeatureValidationRequestBase(document.RootElement, options);
+                        return DeserializeBackupFeatureValidationContentBase(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(BackupFeatureValidationContentBase)} does not support '{options.Format}' format.");

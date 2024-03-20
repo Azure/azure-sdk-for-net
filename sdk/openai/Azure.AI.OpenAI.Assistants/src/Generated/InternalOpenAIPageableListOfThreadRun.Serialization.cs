@@ -99,7 +99,7 @@ namespace Azure.AI.OpenAI.Assistants
                     List<ThreadRun> array = new List<ThreadRun>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ThreadRun.DeserializeThreadRun(item));
+                        array.Add(ThreadRun.DeserializeThreadRun(item, options));
                     }
                     data = array;
                     continue;
@@ -125,7 +125,13 @@ namespace Azure.AI.OpenAI.Assistants
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InternalOpenAIPageableListOfThreadRun(@object, data, firstId, lastId, hasMore, serializedAdditionalRawData);
+            return new InternalOpenAIPageableListOfThreadRun(
+                @object,
+                data,
+                firstId,
+                lastId,
+                hasMore,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InternalOpenAIPageableListOfThreadRun>.Write(ModelReaderWriterOptions options)

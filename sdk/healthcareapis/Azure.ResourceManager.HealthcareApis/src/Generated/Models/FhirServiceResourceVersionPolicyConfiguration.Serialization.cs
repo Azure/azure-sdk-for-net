@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HealthcareApis;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
@@ -80,8 +81,8 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             {
                 return null;
             }
-            Optional<FhirResourceVersionPolicy> @default = default;
-            Optional<IDictionary<string, FhirResourceVersionPolicy>> resourceTypeOverrides = default;
+            FhirResourceVersionPolicy? @default = default;
+            IDictionary<string, FhirResourceVersionPolicy> resourceTypeOverrides = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FhirServiceResourceVersionPolicyConfiguration(Optional.ToNullable(@default), Optional.ToDictionary(resourceTypeOverrides), serializedAdditionalRawData);
+            return new FhirServiceResourceVersionPolicyConfiguration(@default, resourceTypeOverrides ?? new ChangeTrackingDictionary<string, FhirResourceVersionPolicy>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FhirServiceResourceVersionPolicyConfiguration>.Write(ModelReaderWriterOptions options)

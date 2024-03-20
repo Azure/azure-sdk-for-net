@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -76,12 +77,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 if (property.NameEquals("infrastructureVpnConfiguration"u8))
                 {
-                    infrastructureVpnConfiguration = VpnConfigurationProperties.DeserializeVpnConfigurationProperties(property.Value);
+                    infrastructureVpnConfiguration = VpnConfigurationProperties.DeserializeVpnConfigurationProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("workloadVpnConfiguration"u8))
                 {
-                    workloadVpnConfiguration = VpnConfigurationProperties.DeserializeVpnConfigurationProperties(property.Value);
+                    workloadVpnConfiguration = VpnConfigurationProperties.DeserializeVpnConfigurationProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

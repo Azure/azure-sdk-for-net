@@ -97,12 +97,12 @@ namespace Azure.ResourceManager.DataFactory
             {
                 return null;
             }
-            Optional<DataFactoryPrivateEndpointConnectionProperties> properties = default;
-            Optional<ETag> etag = default;
+            DataFactoryPrivateEndpointConnectionProperties properties = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataFactory
                     {
                         continue;
                     }
-                    properties = DataFactoryPrivateEndpointConnectionProperties.DeserializeDataFactoryPrivateEndpointConnectionProperties(property.Value);
+                    properties = DataFactoryPrivateEndpointConnectionProperties.DeserializeDataFactoryPrivateEndpointConnectionProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -155,7 +155,14 @@ namespace Azure.ResourceManager.DataFactory
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataFactoryPrivateEndpointConnectionData(id, name, type, systemData.Value, properties.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new DataFactoryPrivateEndpointConnectionData(
+                id,
+                name,
+                type,
+                systemData,
+                properties,
+                etag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataFactoryPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options)

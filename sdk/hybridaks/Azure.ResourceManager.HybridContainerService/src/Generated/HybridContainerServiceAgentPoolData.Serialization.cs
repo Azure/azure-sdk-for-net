@@ -181,25 +181,25 @@ namespace Azure.ResourceManager.HybridContainerService
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<HybridContainerServiceExtendedLocation> extendedLocation = default;
+            IDictionary<string, string> tags = default;
+            HybridContainerServiceExtendedLocation extendedLocation = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<HybridContainerServiceOSType> osType = default;
-            Optional<HybridContainerServiceOSSku> ossku = default;
-            Optional<IDictionary<string, string>> nodeLabels = default;
-            Optional<IList<string>> nodeTaints = default;
-            Optional<int> maxCount = default;
-            Optional<int> minCount = default;
-            Optional<bool> enableAutoScaling = default;
-            Optional<int> maxPods = default;
-            Optional<int> count = default;
-            Optional<string> vmSize = default;
-            Optional<string> kubernetesVersion = default;
-            Optional<HybridContainerServiceResourceProvisioningState> provisioningState = default;
-            Optional<AgentPoolProvisioningStatus> status = default;
+            SystemData systemData = default;
+            HybridContainerServiceOSType? osType = default;
+            HybridContainerServiceOSSku? ossku = default;
+            IDictionary<string, string> nodeLabels = default;
+            IList<string> nodeTaints = default;
+            int? maxCount = default;
+            int? minCount = default;
+            bool? enableAutoScaling = default;
+            int? maxPods = default;
+            int? count = default;
+            string vmSize = default;
+            string kubernetesVersion = default;
+            HybridContainerServiceResourceProvisioningState? provisioningState = default;
+            AgentPoolProvisioningStatus status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.HybridContainerService
                     {
                         continue;
                     }
-                    extendedLocation = HybridContainerServiceExtendedLocation.DeserializeHybridContainerServiceExtendedLocation(property.Value);
+                    extendedLocation = HybridContainerServiceExtendedLocation.DeserializeHybridContainerServiceExtendedLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.HybridContainerService
                             {
                                 continue;
                             }
-                            status = AgentPoolProvisioningStatus.DeserializeAgentPoolProvisioningStatus(property0.Value);
+                            status = AgentPoolProvisioningStatus.DeserializeAgentPoolProvisioningStatus(property0.Value, options);
                             continue;
                         }
                     }
@@ -388,7 +388,27 @@ namespace Azure.ResourceManager.HybridContainerService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridContainerServiceAgentPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), extendedLocation.Value, Optional.ToNullable(osType), Optional.ToNullable(ossku), Optional.ToDictionary(nodeLabels), Optional.ToList(nodeTaints), Optional.ToNullable(maxCount), Optional.ToNullable(minCount), Optional.ToNullable(enableAutoScaling), Optional.ToNullable(maxPods), Optional.ToNullable(count), vmSize.Value, kubernetesVersion.Value, Optional.ToNullable(provisioningState), status.Value, serializedAdditionalRawData);
+            return new HybridContainerServiceAgentPoolData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                extendedLocation,
+                osType,
+                ossku,
+                nodeLabels ?? new ChangeTrackingDictionary<string, string>(),
+                nodeTaints ?? new ChangeTrackingList<string>(),
+                maxCount,
+                minCount,
+                enableAutoScaling,
+                maxPods,
+                count,
+                vmSize,
+                kubernetesVersion,
+                provisioningState,
+                status,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridContainerServiceAgentPoolData>.Write(ModelReaderWriterOptions options)

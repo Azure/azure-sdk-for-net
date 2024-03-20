@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -87,9 +88,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string streamName = default;
-            Optional<int> rowLimits = default;
-            Optional<IList<string>> columns = default;
-            Optional<string> expression = default;
+            int? rowLimits = default;
+            IList<string> columns = default;
+            string expression = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +134,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataFlowDebugCommandPayload(streamName, Optional.ToNullable(rowLimits), Optional.ToList(columns), expression.Value, serializedAdditionalRawData);
+            return new DataFlowDebugCommandPayload(streamName, rowLimits, columns ?? new ChangeTrackingList<string>(), expression, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataFlowDebugCommandPayload>.Write(ModelReaderWriterOptions options)

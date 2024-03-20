@@ -208,28 +208,28 @@ namespace Azure.ResourceManager.StorageCache
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<StorageCacheSkuInfo> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ManagedServiceIdentity identity = default;
+            StorageCacheSkuInfo sku = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> cacheSizeGB = default;
-            Optional<StorageCacheHealth> health = default;
-            Optional<IReadOnlyList<IPAddress>> mountAddresses = default;
-            Optional<StorageCacheProvisioningStateType> provisioningState = default;
-            Optional<ResourceIdentifier> subnet = default;
-            Optional<StorageCacheUpgradeStatus> upgradeStatus = default;
-            Optional<StorageCacheUpgradeSettings> upgradeSettings = default;
-            Optional<StorageCacheNetworkSettings> networkSettings = default;
-            Optional<StorageCacheEncryptionSettings> encryptionSettings = default;
-            Optional<StorageCacheSecuritySettings> securitySettings = default;
-            Optional<StorageCacheDirectorySettings> directoryServicesSettings = default;
-            Optional<IList<string>> zones = default;
-            Optional<IReadOnlyList<PrimingJob>> primingJobs = default;
-            Optional<IReadOnlyList<StorageTargetSpaceAllocation>> spaceAllocation = default;
+            SystemData systemData = default;
+            int? cacheSizeGB = default;
+            StorageCacheHealth health = default;
+            IReadOnlyList<IPAddress> mountAddresses = default;
+            StorageCacheProvisioningStateType? provisioningState = default;
+            ResourceIdentifier subnet = default;
+            StorageCacheUpgradeStatus upgradeStatus = default;
+            StorageCacheUpgradeSettings upgradeSettings = default;
+            StorageCacheNetworkSettings networkSettings = default;
+            StorageCacheEncryptionSettings encryptionSettings = default;
+            StorageCacheSecuritySettings securitySettings = default;
+            StorageCacheDirectorySettings directoryServicesSettings = default;
+            IList<string> zones = default;
+            IReadOnlyList<PrimingJob> primingJobs = default;
+            IReadOnlyList<StorageTargetSpaceAllocation> spaceAllocation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.StorageCache
                     {
                         continue;
                     }
-                    sku = StorageCacheSkuInfo.DeserializeStorageCacheSkuInfo(property.Value);
+                    sku = StorageCacheSkuInfo.DeserializeStorageCacheSkuInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.StorageCache
                             {
                                 continue;
                             }
-                            health = StorageCacheHealth.DeserializeStorageCacheHealth(property0.Value);
+                            health = StorageCacheHealth.DeserializeStorageCacheHealth(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("mountAddresses"u8))
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.StorageCache
                             {
                                 continue;
                             }
-                            upgradeStatus = StorageCacheUpgradeStatus.DeserializeStorageCacheUpgradeStatus(property0.Value);
+                            upgradeStatus = StorageCacheUpgradeStatus.DeserializeStorageCacheUpgradeStatus(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("upgradeSettings"u8))
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.StorageCache
                             {
                                 continue;
                             }
-                            upgradeSettings = StorageCacheUpgradeSettings.DeserializeStorageCacheUpgradeSettings(property0.Value);
+                            upgradeSettings = StorageCacheUpgradeSettings.DeserializeStorageCacheUpgradeSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("networkSettings"u8))
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.StorageCache
                             {
                                 continue;
                             }
-                            networkSettings = StorageCacheNetworkSettings.DeserializeStorageCacheNetworkSettings(property0.Value);
+                            networkSettings = StorageCacheNetworkSettings.DeserializeStorageCacheNetworkSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("encryptionSettings"u8))
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.StorageCache
                             {
                                 continue;
                             }
-                            encryptionSettings = StorageCacheEncryptionSettings.DeserializeStorageCacheEncryptionSettings(property0.Value);
+                            encryptionSettings = StorageCacheEncryptionSettings.DeserializeStorageCacheEncryptionSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("securitySettings"u8))
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.StorageCache
                             {
                                 continue;
                             }
-                            securitySettings = StorageCacheSecuritySettings.DeserializeStorageCacheSecuritySettings(property0.Value);
+                            securitySettings = StorageCacheSecuritySettings.DeserializeStorageCacheSecuritySettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("directoryServicesSettings"u8))
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.StorageCache
                             {
                                 continue;
                             }
-                            directoryServicesSettings = StorageCacheDirectorySettings.DeserializeStorageCacheDirectorySettings(property0.Value);
+                            directoryServicesSettings = StorageCacheDirectorySettings.DeserializeStorageCacheDirectorySettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("zones"u8))
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.StorageCache
                             List<PrimingJob> array = new List<PrimingJob>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PrimingJob.DeserializePrimingJob(item));
+                                array.Add(PrimingJob.DeserializePrimingJob(item, options));
                             }
                             primingJobs = array;
                             continue;
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.StorageCache
                             List<StorageTargetSpaceAllocation> array = new List<StorageTargetSpaceAllocation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StorageTargetSpaceAllocation.DeserializeStorageTargetSpaceAllocation(item));
+                                array.Add(StorageTargetSpaceAllocation.DeserializeStorageTargetSpaceAllocation(item, options));
                             }
                             spaceAllocation = array;
                             continue;
@@ -466,7 +466,30 @@ namespace Azure.ResourceManager.StorageCache
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageCacheData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, sku.Value, Optional.ToNullable(cacheSizeGB), health.Value, Optional.ToList(mountAddresses), Optional.ToNullable(provisioningState), subnet.Value, upgradeStatus.Value, upgradeSettings.Value, networkSettings.Value, encryptionSettings.Value, securitySettings.Value, directoryServicesSettings.Value, Optional.ToList(zones), Optional.ToList(primingJobs), Optional.ToList(spaceAllocation), serializedAdditionalRawData);
+            return new StorageCacheData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                sku,
+                cacheSizeGB,
+                health,
+                mountAddresses ?? new ChangeTrackingList<IPAddress>(),
+                provisioningState,
+                subnet,
+                upgradeStatus,
+                upgradeSettings,
+                networkSettings,
+                encryptionSettings,
+                securitySettings,
+                directoryServicesSettings,
+                zones ?? new ChangeTrackingList<string>(),
+                primingJobs ?? new ChangeTrackingList<PrimingJob>(),
+                spaceAllocation ?? new ChangeTrackingList<StorageTargetSpaceAllocation>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageCacheData>.Write(ModelReaderWriterOptions options)

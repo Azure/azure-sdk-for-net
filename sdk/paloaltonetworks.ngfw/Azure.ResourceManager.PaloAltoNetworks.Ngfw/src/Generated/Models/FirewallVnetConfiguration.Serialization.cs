@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
@@ -78,24 +79,24 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             IPAddressSpaceInfo vnet = default;
             IPAddressSpaceInfo trustSubnet = default;
             IPAddressSpaceInfo unTrustSubnet = default;
-            Optional<IPAddressInfo> ipOfTrustSubnetForUdr = default;
+            IPAddressInfo ipOfTrustSubnetForUdr = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vnet"u8))
                 {
-                    vnet = IPAddressSpaceInfo.DeserializeIPAddressSpaceInfo(property.Value);
+                    vnet = IPAddressSpaceInfo.DeserializeIPAddressSpaceInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("trustSubnet"u8))
                 {
-                    trustSubnet = IPAddressSpaceInfo.DeserializeIPAddressSpaceInfo(property.Value);
+                    trustSubnet = IPAddressSpaceInfo.DeserializeIPAddressSpaceInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("unTrustSubnet"u8))
                 {
-                    unTrustSubnet = IPAddressSpaceInfo.DeserializeIPAddressSpaceInfo(property.Value);
+                    unTrustSubnet = IPAddressSpaceInfo.DeserializeIPAddressSpaceInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("ipOfTrustSubnetForUdr"u8))
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     {
                         continue;
                     }
-                    ipOfTrustSubnetForUdr = IPAddressInfo.DeserializeIPAddressInfo(property.Value);
+                    ipOfTrustSubnetForUdr = IPAddressInfo.DeserializeIPAddressInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallVnetConfiguration(vnet, trustSubnet, unTrustSubnet, ipOfTrustSubnetForUdr.Value, serializedAdditionalRawData);
+            return new FirewallVnetConfiguration(vnet, trustSubnet, unTrustSubnet, ipOfTrustSubnetForUdr, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirewallVnetConfiguration>.Write(ModelReaderWriterOptions options)

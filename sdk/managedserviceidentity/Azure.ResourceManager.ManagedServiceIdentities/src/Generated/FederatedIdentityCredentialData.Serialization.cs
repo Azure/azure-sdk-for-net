@@ -111,10 +111,10 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Uri> issuer = default;
-            Optional<string> subject = default;
-            Optional<IList<string>> audiences = default;
+            SystemData systemData = default;
+            Uri issuer = default;
+            string subject = default;
+            IList<string> audiences = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -189,7 +189,15 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FederatedIdentityCredentialData(id, name, type, systemData.Value, issuer.Value, subject.Value, Optional.ToList(audiences), serializedAdditionalRawData);
+            return new FederatedIdentityCredentialData(
+                id,
+                name,
+                type,
+                systemData,
+                issuer,
+                subject,
+                audiences ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FederatedIdentityCredentialData>.Write(ModelReaderWriterOptions options)

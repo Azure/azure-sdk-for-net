@@ -274,34 +274,34 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> version = default;
-            Optional<string> alertType = default;
-            Optional<string> systemAlertId = default;
-            Optional<string> productComponentName = default;
-            Optional<string> alertDisplayName = default;
-            Optional<string> description = default;
-            Optional<SecurityAlertSeverity> severity = default;
-            Optional<KillChainIntent> intent = default;
-            Optional<DateTimeOffset> startTimeUtc = default;
-            Optional<DateTimeOffset> endTimeUtc = default;
-            Optional<IReadOnlyList<SecurityAlertResourceIdentifier>> resourceIdentifiers = default;
-            Optional<IReadOnlyList<string>> remediationSteps = default;
-            Optional<string> vendorName = default;
-            Optional<SecurityAlertStatus> status = default;
-            Optional<IReadOnlyList<IDictionary<string, string>>> extendedLinks = default;
-            Optional<Uri> alertUri = default;
-            Optional<DateTimeOffset> timeGeneratedUtc = default;
-            Optional<string> productName = default;
-            Optional<DateTimeOffset> processingEndTimeUtc = default;
-            Optional<IReadOnlyList<SecurityAlertEntity>> entities = default;
-            Optional<bool> isIncident = default;
-            Optional<string> correlationKey = default;
-            Optional<IDictionary<string, string>> extendedProperties = default;
-            Optional<string> compromisedEntity = default;
-            Optional<IReadOnlyList<string>> techniques = default;
-            Optional<IReadOnlyList<string>> subTechniques = default;
-            Optional<SecurityAlertSupportingEvidence> supportingEvidence = default;
+            SystemData systemData = default;
+            string version = default;
+            string alertType = default;
+            string systemAlertId = default;
+            string productComponentName = default;
+            string alertDisplayName = default;
+            string description = default;
+            SecurityAlertSeverity? severity = default;
+            KillChainIntent? intent = default;
+            DateTimeOffset? startTimeUtc = default;
+            DateTimeOffset? endTimeUtc = default;
+            IReadOnlyList<SecurityAlertResourceIdentifier> resourceIdentifiers = default;
+            IReadOnlyList<string> remediationSteps = default;
+            string vendorName = default;
+            SecurityAlertStatus? status = default;
+            IReadOnlyList<IDictionary<string, string>> extendedLinks = default;
+            Uri alertUri = default;
+            DateTimeOffset? timeGeneratedUtc = default;
+            string productName = default;
+            DateTimeOffset? processingEndTimeUtc = default;
+            IReadOnlyList<SecurityAlertEntity> entities = default;
+            bool? isIncident = default;
+            string correlationKey = default;
+            IDictionary<string, string> extendedProperties = default;
+            string compromisedEntity = default;
+            IReadOnlyList<string> techniques = default;
+            IReadOnlyList<string> subTechniques = default;
+            SecurityAlertSupportingEvidence supportingEvidence = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<SecurityAlertResourceIdentifier> array = new List<SecurityAlertResourceIdentifier>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SecurityAlertResourceIdentifier.DeserializeSecurityAlertResourceIdentifier(item));
+                                array.Add(SecurityAlertResourceIdentifier.DeserializeSecurityAlertResourceIdentifier(item, options));
                             }
                             resourceIdentifiers = array;
                             continue;
@@ -514,7 +514,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<SecurityAlertEntity> array = new List<SecurityAlertEntity>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SecurityAlertEntity.DeserializeSecurityAlertEntity(item));
+                                array.Add(SecurityAlertEntity.DeserializeSecurityAlertEntity(item, options));
                             }
                             entities = array;
                             continue;
@@ -586,7 +586,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            supportingEvidence = SecurityAlertSupportingEvidence.DeserializeSecurityAlertSupportingEvidence(property0.Value);
+                            supportingEvidence = SecurityAlertSupportingEvidence.DeserializeSecurityAlertSupportingEvidence(property0.Value, options);
                             continue;
                         }
                     }
@@ -598,7 +598,39 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityAlertData(id, name, type, systemData.Value, version.Value, alertType.Value, systemAlertId.Value, productComponentName.Value, alertDisplayName.Value, description.Value, Optional.ToNullable(severity), Optional.ToNullable(intent), Optional.ToNullable(startTimeUtc), Optional.ToNullable(endTimeUtc), Optional.ToList(resourceIdentifiers), Optional.ToList(remediationSteps), vendorName.Value, Optional.ToNullable(status), Optional.ToList(extendedLinks), alertUri.Value, Optional.ToNullable(timeGeneratedUtc), productName.Value, Optional.ToNullable(processingEndTimeUtc), Optional.ToList(entities), Optional.ToNullable(isIncident), correlationKey.Value, Optional.ToDictionary(extendedProperties), compromisedEntity.Value, Optional.ToList(techniques), Optional.ToList(subTechniques), supportingEvidence.Value, serializedAdditionalRawData);
+            return new SecurityAlertData(
+                id,
+                name,
+                type,
+                systemData,
+                version,
+                alertType,
+                systemAlertId,
+                productComponentName,
+                alertDisplayName,
+                description,
+                severity,
+                intent,
+                startTimeUtc,
+                endTimeUtc,
+                resourceIdentifiers ?? new ChangeTrackingList<SecurityAlertResourceIdentifier>(),
+                remediationSteps ?? new ChangeTrackingList<string>(),
+                vendorName,
+                status,
+                extendedLinks ?? new ChangeTrackingList<IDictionary<string, string>>(),
+                alertUri,
+                timeGeneratedUtc,
+                productName,
+                processingEndTimeUtc,
+                entities ?? new ChangeTrackingList<SecurityAlertEntity>(),
+                isIncident,
+                correlationKey,
+                extendedProperties ?? new ChangeTrackingDictionary<string, string>(),
+                compromisedEntity,
+                techniques ?? new ChangeTrackingList<string>(),
+                subTechniques ?? new ChangeTrackingList<string>(),
+                supportingEvidence,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityAlertData>.Write(ModelReaderWriterOptions options)

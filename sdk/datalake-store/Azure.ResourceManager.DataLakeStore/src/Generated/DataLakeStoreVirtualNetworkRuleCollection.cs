@@ -83,18 +83,8 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<DataLakeStoreVirtualNetworkRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string virtualNetworkRuleName, DataLakeStoreVirtualNetworkRuleCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkRuleName));
-            }
-            if (virtualNetworkRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkRuleName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkRuleName, nameof(virtualNetworkRuleName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _dataLakeStoreVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics.CreateScope("DataLakeStoreVirtualNetworkRuleCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +132,8 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<DataLakeStoreVirtualNetworkRuleResource> CreateOrUpdate(WaitUntil waitUntil, string virtualNetworkRuleName, DataLakeStoreVirtualNetworkRuleCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkRuleName));
-            }
-            if (virtualNetworkRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkRuleName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkRuleName, nameof(virtualNetworkRuleName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _dataLakeStoreVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics.CreateScope("DataLakeStoreVirtualNetworkRuleCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +179,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> is null. </exception>
         public virtual async Task<Response<DataLakeStoreVirtualNetworkRuleResource>> GetAsync(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkRuleName));
-            }
-            if (virtualNetworkRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkRuleName, nameof(virtualNetworkRuleName));
 
             using var scope = _dataLakeStoreVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics.CreateScope("DataLakeStoreVirtualNetworkRuleCollection.Get");
             scope.Start();
@@ -251,14 +224,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> is null. </exception>
         public virtual Response<DataLakeStoreVirtualNetworkRuleResource> Get(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkRuleName));
-            }
-            if (virtualNetworkRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkRuleName, nameof(virtualNetworkRuleName));
 
             using var scope = _dataLakeStoreVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics.CreateScope("DataLakeStoreVirtualNetworkRuleCollection.Get");
             scope.Start();
@@ -363,14 +329,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkRuleName));
-            }
-            if (virtualNetworkRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkRuleName, nameof(virtualNetworkRuleName));
 
             using var scope = _dataLakeStoreVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics.CreateScope("DataLakeStoreVirtualNetworkRuleCollection.Exists");
             scope.Start();
@@ -413,14 +372,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> is null. </exception>
         public virtual Response<bool> Exists(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkRuleName));
-            }
-            if (virtualNetworkRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkRuleName, nameof(virtualNetworkRuleName));
 
             using var scope = _dataLakeStoreVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics.CreateScope("DataLakeStoreVirtualNetworkRuleCollection.Exists");
             scope.Start();
@@ -463,14 +415,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> is null. </exception>
         public virtual async Task<NullableResponse<DataLakeStoreVirtualNetworkRuleResource>> GetIfExistsAsync(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkRuleName));
-            }
-            if (virtualNetworkRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkRuleName, nameof(virtualNetworkRuleName));
 
             using var scope = _dataLakeStoreVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics.CreateScope("DataLakeStoreVirtualNetworkRuleCollection.GetIfExists");
             scope.Start();
@@ -515,14 +460,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> is null. </exception>
         public virtual NullableResponse<DataLakeStoreVirtualNetworkRuleResource> GetIfExists(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkRuleName));
-            }
-            if (virtualNetworkRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkRuleName, nameof(virtualNetworkRuleName));
 
             using var scope = _dataLakeStoreVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics.CreateScope("DataLakeStoreVirtualNetworkRuleCollection.GetIfExists");
             scope.Start();

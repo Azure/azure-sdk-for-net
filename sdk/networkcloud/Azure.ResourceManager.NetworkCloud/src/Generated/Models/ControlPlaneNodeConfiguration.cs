@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -52,10 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <exception cref="ArgumentNullException"> <paramref name="vmSkuName"/> is null. </exception>
         public ControlPlaneNodeConfiguration(long count, string vmSkuName)
         {
-            if (vmSkuName == null)
-            {
-                throw new ArgumentNullException(nameof(vmSkuName));
-            }
+            Argument.AssertNotNull(vmSkuName, nameof(vmSkuName));
 
             AvailabilityZones = new ChangeTrackingList<string>();
             Count = count;

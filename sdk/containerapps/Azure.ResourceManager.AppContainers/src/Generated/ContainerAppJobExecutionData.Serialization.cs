@@ -112,11 +112,11 @@ namespace Azure.ResourceManager.AppContainers
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<JobExecutionRunningState> status = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<ContainerAppJobExecutionTemplate> template = default;
+            SystemData systemData = default;
+            JobExecutionRunningState? status = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            ContainerAppJobExecutionTemplate template = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            template = ContainerAppJobExecutionTemplate.DeserializeContainerAppJobExecutionTemplate(property0.Value);
+                            template = ContainerAppJobExecutionTemplate.DeserializeContainerAppJobExecutionTemplate(property0.Value, options);
                             continue;
                         }
                     }
@@ -199,7 +199,16 @@ namespace Azure.ResourceManager.AppContainers
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppJobExecutionData(id, name, type, systemData.Value, Optional.ToNullable(status), Optional.ToNullable(startTime), Optional.ToNullable(endTime), template.Value, serializedAdditionalRawData);
+            return new ContainerAppJobExecutionData(
+                id,
+                name,
+                type,
+                systemData,
+                status,
+                startTime,
+                endTime,
+                template,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppJobExecutionData>.Write(ModelReaderWriterOptions options)

@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<AzureLocation> location = default;
-            Optional<IReadOnlyDictionary<string, string>> artifactTags = default;
-            Optional<string> uniqueId = default;
+            string name = default;
+            AzureLocation? location = default;
+            IReadOnlyDictionary<string, string> artifactTags = default;
+            string uniqueId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SharedGalleryData(name.Value, Optional.ToNullable(location), serializedAdditionalRawData, uniqueId.Value, Optional.ToDictionary(artifactTags));
+            return new SharedGalleryData(name, location, serializedAdditionalRawData, uniqueId, artifactTags ?? new ChangeTrackingDictionary<string, string>());
         }
 
         BinaryData IPersistableModel<SharedGalleryData>.Write(ModelReaderWriterOptions options)

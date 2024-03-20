@@ -129,17 +129,17 @@ namespace Azure.ResourceManager.StreamAnalytics
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<StreamingJobOutputDataSource> datasource = default;
-            Optional<TimeSpan> timeWindow = default;
-            Optional<float> sizeWindow = default;
-            Optional<StreamAnalyticsDataSerialization> serialization = default;
-            Optional<StreamingJobDiagnostics> diagnostics = default;
-            Optional<ETag> etag = default;
-            Optional<IReadOnlyList<LastOutputEventTimestamp>> lastOutputEventTimestamps = default;
-            Optional<StreamingJobOutputWatermarkProperties> watermarkSettings = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            StreamingJobOutputDataSource datasource = default;
+            TimeSpan? timeWindow = default;
+            float? sizeWindow = default;
+            StreamAnalyticsDataSerialization serialization = default;
+            StreamingJobDiagnostics diagnostics = default;
+            ETag? etag = default;
+            IReadOnlyList<LastOutputEventTimestamp> lastOutputEventTimestamps = default;
+            StreamingJobOutputWatermarkProperties watermarkSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                             {
                                 continue;
                             }
-                            datasource = StreamingJobOutputDataSource.DeserializeStreamingJobOutputDataSource(property0.Value);
+                            datasource = StreamingJobOutputDataSource.DeserializeStreamingJobOutputDataSource(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("timeWindow"u8))
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                             {
                                 continue;
                             }
-                            serialization = StreamAnalyticsDataSerialization.DeserializeStreamAnalyticsDataSerialization(property0.Value);
+                            serialization = StreamAnalyticsDataSerialization.DeserializeStreamAnalyticsDataSerialization(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("diagnostics"u8))
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                             {
                                 continue;
                             }
-                            diagnostics = StreamingJobDiagnostics.DeserializeStreamingJobDiagnostics(property0.Value);
+                            diagnostics = StreamingJobDiagnostics.DeserializeStreamingJobDiagnostics(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("etag"u8))
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                             List<LastOutputEventTimestamp> array = new List<LastOutputEventTimestamp>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(LastOutputEventTimestamp.DeserializeLastOutputEventTimestamp(item));
+                                array.Add(LastOutputEventTimestamp.DeserializeLastOutputEventTimestamp(item, options));
                             }
                             lastOutputEventTimestamps = array;
                             continue;
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                             {
                                 continue;
                             }
-                            watermarkSettings = StreamingJobOutputWatermarkProperties.DeserializeStreamingJobOutputWatermarkProperties(property0.Value);
+                            watermarkSettings = StreamingJobOutputWatermarkProperties.DeserializeStreamingJobOutputWatermarkProperties(property0.Value, options);
                             continue;
                         }
                     }
@@ -262,7 +262,19 @@ namespace Azure.ResourceManager.StreamAnalytics
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingJobOutputData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, datasource.Value, Optional.ToNullable(timeWindow), Optional.ToNullable(sizeWindow), serialization.Value, diagnostics.Value, Optional.ToNullable(etag), Optional.ToList(lastOutputEventTimestamps), watermarkSettings.Value);
+            return new StreamingJobOutputData(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                datasource,
+                timeWindow,
+                sizeWindow,
+                serialization,
+                diagnostics,
+                etag,
+                lastOutputEventTimestamps ?? new ChangeTrackingList<LastOutputEventTimestamp>(),
+                watermarkSettings);
         }
 
         BinaryData IPersistableModel<StreamingJobOutputData>.Write(ModelReaderWriterOptions options)

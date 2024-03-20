@@ -108,10 +108,10 @@ namespace Azure.ResourceManager.Storage
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SubResource> privateEndpoint = default;
-            Optional<StoragePrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
-            Optional<StoragePrivateEndpointConnectionProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            SubResource privateEndpoint = default;
+            StoragePrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            StoragePrivateEndpointConnectionProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Storage
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = StoragePrivateLinkServiceConnectionState.DeserializeStoragePrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = StoragePrivateLinkServiceConnectionState.DeserializeStoragePrivateLinkServiceConnectionState(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -185,7 +185,15 @@ namespace Azure.ResourceManager.Storage
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StoragePrivateEndpointConnectionData(id, name, type, systemData.Value, privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new StoragePrivateEndpointConnectionData(
+                id,
+                name,
+                type,
+                systemData,
+                privateEndpoint,
+                privateLinkServiceConnectionState,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StoragePrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options)

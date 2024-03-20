@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
@@ -121,15 +122,15 @@ namespace Azure.ResourceManager.Resources
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> subscriptionId = default;
-            Optional<string> displayName = default;
-            Optional<Guid> tenantId = default;
-            Optional<SubscriptionState> state = default;
-            Optional<SubscriptionPolicies> subscriptionPolicies = default;
-            Optional<string> authorizationSource = default;
-            Optional<IReadOnlyList<ManagedByTenant>> managedByTenants = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            ResourceIdentifier id = default;
+            string subscriptionId = default;
+            string displayName = default;
+            Guid? tenantId = default;
+            SubscriptionState? state = default;
+            SubscriptionPolicies subscriptionPolicies = default;
+            string authorizationSource = default;
+            IReadOnlyList<ManagedByTenant> managedByTenants = default;
+            IReadOnlyDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -177,7 +178,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         continue;
                     }
-                    subscriptionPolicies = SubscriptionPolicies.DeserializeSubscriptionPolicies(property.Value);
+                    subscriptionPolicies = SubscriptionPolicies.DeserializeSubscriptionPolicies(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("authorizationSource"u8))
@@ -194,7 +195,7 @@ namespace Azure.ResourceManager.Resources
                     List<ManagedByTenant> array = new List<ManagedByTenant>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedByTenant.DeserializeManagedByTenant(item));
+                        array.Add(ManagedByTenant.DeserializeManagedByTenant(item, options));
                     }
                     managedByTenants = array;
                     continue;
@@ -219,7 +220,17 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubscriptionData(id.Value, subscriptionId.Value, displayName.Value, Optional.ToNullable(tenantId), Optional.ToNullable(state), subscriptionPolicies.Value, authorizationSource.Value, Optional.ToList(managedByTenants), Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new SubscriptionData(
+                id,
+                subscriptionId,
+                displayName,
+                tenantId,
+                state,
+                subscriptionPolicies,
+                authorizationSource,
+                managedByTenants ?? new ChangeTrackingList<ManagedByTenant>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubscriptionData>.Write(ModelReaderWriterOptions options)

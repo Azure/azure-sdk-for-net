@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             IReadOnlyList<RunCommandDocumentBase> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<RunCommandDocumentBase> array = new List<RunCommandDocumentBase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RunCommandDocumentBase.DeserializeRunCommandDocumentBase(item));
+                        array.Add(RunCommandDocumentBase.DeserializeRunCommandDocumentBase(item, options));
                     }
                     value = array;
                     continue;
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RunCommandListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new RunCommandListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RunCommandListResult>.Write(ModelReaderWriterOptions options)

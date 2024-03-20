@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -108,14 +109,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Uri> repositoryUrl = default;
-            Optional<string> branch = default;
-            Optional<StaticSiteBuildProperties> buildProperties = default;
+            SystemData systemData = default;
+            Uri repositoryUrl = default;
+            string branch = default;
+            StaticSiteBuildProperties buildProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -178,7 +179,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            buildProperties = StaticSiteBuildProperties.DeserializeStaticSiteBuildProperties(property0.Value);
+                            buildProperties = StaticSiteBuildProperties.DeserializeStaticSiteBuildProperties(property0.Value, options);
                             continue;
                         }
                     }
@@ -190,7 +191,16 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StaticSitesWorkflowPreviewContent(id, name, type, systemData.Value, repositoryUrl.Value, branch.Value, buildProperties.Value, kind.Value, serializedAdditionalRawData);
+            return new StaticSitesWorkflowPreviewContent(
+                id,
+                name,
+                type,
+                systemData,
+                repositoryUrl,
+                branch,
+                buildProperties,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StaticSitesWorkflowPreviewContent>.Write(ModelReaderWriterOptions options)

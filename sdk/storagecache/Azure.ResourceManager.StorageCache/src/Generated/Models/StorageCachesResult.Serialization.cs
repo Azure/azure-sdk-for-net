@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
-            Optional<IReadOnlyList<StorageCacheData>> value = default;
+            string nextLink = default;
+            IReadOnlyList<StorageCacheData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     List<StorageCacheData> array = new List<StorageCacheData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageCacheData.DeserializeStorageCacheData(item));
+                        array.Add(StorageCacheData.DeserializeStorageCacheData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageCachesResult(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new StorageCachesResult(nextLink, value ?? new ChangeTrackingList<StorageCacheData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageCachesResult>.Write(ModelReaderWriterOptions options)

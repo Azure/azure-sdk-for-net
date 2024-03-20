@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<ContainerServicePrivateLinkServiceConnectionStatus> status = default;
-            Optional<string> description = default;
+            ContainerServicePrivateLinkServiceConnectionStatus? status = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServicePrivateLinkServiceConnectionState(Optional.ToNullable(status), description.Value, serializedAdditionalRawData);
+            return new ContainerServicePrivateLinkServiceConnectionState(status, description, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServicePrivateLinkServiceConnectionState>.Write(ModelReaderWriterOptions options)

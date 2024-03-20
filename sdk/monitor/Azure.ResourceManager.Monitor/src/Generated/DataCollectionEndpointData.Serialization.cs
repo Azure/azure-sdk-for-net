@@ -173,25 +173,25 @@ namespace Azure.ResourceManager.Monitor
             {
                 return null;
             }
-            Optional<DataCollectionEndpointResourceKind> kind = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            DataCollectionEndpointResourceKind? kind = default;
+            ManagedServiceIdentity identity = default;
+            ETag? etag = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<string> immutableId = default;
-            Optional<DataCollectionEndpointConfigurationAccess> configurationAccess = default;
-            Optional<DataCollectionEndpointLogsIngestion> logsIngestion = default;
-            Optional<DataCollectionEndpointMetricsIngestion> metricsIngestion = default;
-            Optional<DataCollectionEndpointNetworkAcls> networkAcls = default;
-            Optional<DataCollectionEndpointProvisioningState> provisioningState = default;
-            Optional<IReadOnlyList<DataCollectionRulePrivateLinkScopedResourceInfo>> privateLinkScopedResources = default;
-            Optional<DataCollectionEndpointFailoverConfiguration> failoverConfiguration = default;
-            Optional<DataCollectionEndpointMetadata> metadata = default;
+            SystemData systemData = default;
+            string description = default;
+            string immutableId = default;
+            DataCollectionEndpointConfigurationAccess configurationAccess = default;
+            DataCollectionEndpointLogsIngestion logsIngestion = default;
+            DataCollectionEndpointMetricsIngestion metricsIngestion = default;
+            DataCollectionEndpointNetworkAcls networkAcls = default;
+            DataCollectionEndpointProvisioningState? provisioningState = default;
+            IReadOnlyList<DataCollectionRulePrivateLinkScopedResourceInfo> privateLinkScopedResources = default;
+            DataCollectionEndpointFailoverConfiguration failoverConfiguration = default;
+            DataCollectionEndpointMetadata metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Monitor
                             {
                                 continue;
                             }
-                            configurationAccess = DataCollectionEndpointConfigurationAccess.DeserializeDataCollectionEndpointConfigurationAccess(property0.Value);
+                            configurationAccess = DataCollectionEndpointConfigurationAccess.DeserializeDataCollectionEndpointConfigurationAccess(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("logsIngestion"u8))
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Monitor
                             {
                                 continue;
                             }
-                            logsIngestion = DataCollectionEndpointLogsIngestion.DeserializeDataCollectionEndpointLogsIngestion(property0.Value);
+                            logsIngestion = DataCollectionEndpointLogsIngestion.DeserializeDataCollectionEndpointLogsIngestion(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("metricsIngestion"u8))
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Monitor
                             {
                                 continue;
                             }
-                            metricsIngestion = DataCollectionEndpointMetricsIngestion.DeserializeDataCollectionEndpointMetricsIngestion(property0.Value);
+                            metricsIngestion = DataCollectionEndpointMetricsIngestion.DeserializeDataCollectionEndpointMetricsIngestion(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("networkAcls"u8))
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Monitor
                             {
                                 continue;
                             }
-                            networkAcls = DataCollectionEndpointNetworkAcls.DeserializeDataCollectionEndpointNetworkAcls(property0.Value);
+                            networkAcls = DataCollectionEndpointNetworkAcls.DeserializeDataCollectionEndpointNetworkAcls(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.Monitor
                             List<DataCollectionRulePrivateLinkScopedResourceInfo> array = new List<DataCollectionRulePrivateLinkScopedResourceInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataCollectionRulePrivateLinkScopedResourceInfo.DeserializeDataCollectionRulePrivateLinkScopedResourceInfo(item));
+                                array.Add(DataCollectionRulePrivateLinkScopedResourceInfo.DeserializeDataCollectionRulePrivateLinkScopedResourceInfo(item, options));
                             }
                             privateLinkScopedResources = array;
                             continue;
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.Monitor
                             {
                                 continue;
                             }
-                            failoverConfiguration = DataCollectionEndpointFailoverConfiguration.DeserializeDataCollectionEndpointFailoverConfiguration(property0.Value);
+                            failoverConfiguration = DataCollectionEndpointFailoverConfiguration.DeserializeDataCollectionEndpointFailoverConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("metadata"u8))
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.Monitor
                             {
                                 continue;
                             }
-                            metadata = DataCollectionEndpointMetadata.DeserializeDataCollectionEndpointMetadata(property0.Value);
+                            metadata = DataCollectionEndpointMetadata.DeserializeDataCollectionEndpointMetadata(property0.Value, options);
                             continue;
                         }
                     }
@@ -371,7 +371,27 @@ namespace Azure.ResourceManager.Monitor
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataCollectionEndpointData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(kind), identity, Optional.ToNullable(etag), description.Value, immutableId.Value, configurationAccess.Value, logsIngestion.Value, metricsIngestion.Value, networkAcls.Value, Optional.ToNullable(provisioningState), Optional.ToList(privateLinkScopedResources), failoverConfiguration.Value, metadata.Value, serializedAdditionalRawData);
+            return new DataCollectionEndpointData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                kind,
+                identity,
+                etag,
+                description,
+                immutableId,
+                configurationAccess,
+                logsIngestion,
+                metricsIngestion,
+                networkAcls,
+                provisioningState,
+                privateLinkScopedResources ?? new ChangeTrackingList<DataCollectionRulePrivateLinkScopedResourceInfo>(),
+                failoverConfiguration,
+                metadata,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataCollectionEndpointData>.Write(ModelReaderWriterOptions options)

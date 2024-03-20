@@ -137,14 +137,14 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<GeoSecondaryInstanceType> secondaryType = default;
-            Optional<InstanceFailoverGroupReadWriteEndpoint> readWriteEndpoint = default;
-            Optional<InstanceFailoverGroupReadOnlyEndpoint> readOnlyEndpoint = default;
-            Optional<InstanceFailoverGroupReplicationRole> replicationRole = default;
-            Optional<string> replicationState = default;
-            Optional<IList<PartnerRegionInfo>> partnerRegions = default;
-            Optional<IList<ManagedInstancePairInfo>> managedInstancePairs = default;
+            SystemData systemData = default;
+            GeoSecondaryInstanceType? secondaryType = default;
+            InstanceFailoverGroupReadWriteEndpoint readWriteEndpoint = default;
+            InstanceFailoverGroupReadOnlyEndpoint readOnlyEndpoint = default;
+            InstanceFailoverGroupReplicationRole? replicationRole = default;
+            string replicationState = default;
+            IList<PartnerRegionInfo> partnerRegions = default;
+            IList<ManagedInstancePairInfo> managedInstancePairs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            readWriteEndpoint = InstanceFailoverGroupReadWriteEndpoint.DeserializeInstanceFailoverGroupReadWriteEndpoint(property0.Value);
+                            readWriteEndpoint = InstanceFailoverGroupReadWriteEndpoint.DeserializeInstanceFailoverGroupReadWriteEndpoint(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("readOnlyEndpoint"u8))
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            readOnlyEndpoint = InstanceFailoverGroupReadOnlyEndpoint.DeserializeInstanceFailoverGroupReadOnlyEndpoint(property0.Value);
+                            readOnlyEndpoint = InstanceFailoverGroupReadOnlyEndpoint.DeserializeInstanceFailoverGroupReadOnlyEndpoint(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("replicationRole"u8))
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Sql
                             List<PartnerRegionInfo> array = new List<PartnerRegionInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PartnerRegionInfo.DeserializePartnerRegionInfo(item));
+                                array.Add(PartnerRegionInfo.DeserializePartnerRegionInfo(item, options));
                             }
                             partnerRegions = array;
                             continue;
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Sql
                             List<ManagedInstancePairInfo> array = new List<ManagedInstancePairInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagedInstancePairInfo.DeserializeManagedInstancePairInfo(item));
+                                array.Add(ManagedInstancePairInfo.DeserializeManagedInstancePairInfo(item, options));
                             }
                             managedInstancePairs = array;
                             continue;
@@ -260,7 +260,19 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InstanceFailoverGroupData(id, name, type, systemData.Value, Optional.ToNullable(secondaryType), readWriteEndpoint.Value, readOnlyEndpoint.Value, Optional.ToNullable(replicationRole), replicationState.Value, Optional.ToList(partnerRegions), Optional.ToList(managedInstancePairs), serializedAdditionalRawData);
+            return new InstanceFailoverGroupData(
+                id,
+                name,
+                type,
+                systemData,
+                secondaryType,
+                readWriteEndpoint,
+                readOnlyEndpoint,
+                replicationRole,
+                replicationState,
+                partnerRegions ?? new ChangeTrackingList<PartnerRegionInfo>(),
+                managedInstancePairs ?? new ChangeTrackingList<ManagedInstancePairInfo>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InstanceFailoverGroupData>.Write(ModelReaderWriterOptions options)

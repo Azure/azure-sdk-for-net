@@ -153,15 +153,15 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<HealthReportResourceDetails> resourceDetails = default;
-            Optional<EnvironmentDetails> environmentDetails = default;
-            Optional<HealthDataClassification> healthDataClassification = default;
-            Optional<HealthReportStatus> status = default;
-            Optional<IList<string>> affectedDefendersPlans = default;
-            Optional<IList<string>> affectedDefendersSubPlans = default;
-            Optional<IReadOnlyDictionary<string, string>> reportAdditionalData = default;
-            Optional<IList<SecurityHealthReportIssue>> issues = default;
+            SystemData systemData = default;
+            HealthReportResourceDetails resourceDetails = default;
+            EnvironmentDetails environmentDetails = default;
+            HealthDataClassification healthDataClassification = default;
+            HealthReportStatus status = default;
+            IList<string> affectedDefendersPlans = default;
+            IList<string> affectedDefendersSubPlans = default;
+            IReadOnlyDictionary<string, string> reportAdditionalData = default;
+            IList<SecurityHealthReportIssue> issues = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            resourceDetails = HealthReportResourceDetails.DeserializeHealthReportResourceDetails(property0.Value);
+                            resourceDetails = HealthReportResourceDetails.DeserializeHealthReportResourceDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("environmentDetails"u8))
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            environmentDetails = EnvironmentDetails.DeserializeEnvironmentDetails(property0.Value);
+                            environmentDetails = EnvironmentDetails.DeserializeEnvironmentDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("healthDataClassification"u8))
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            healthDataClassification = HealthDataClassification.DeserializeHealthDataClassification(property0.Value);
+                            healthDataClassification = HealthDataClassification.DeserializeHealthDataClassification(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("status"u8))
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            status = HealthReportStatus.DeserializeHealthReportStatus(property0.Value);
+                            status = HealthReportStatus.DeserializeHealthReportStatus(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("affectedDefendersPlans"u8))
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<SecurityHealthReportIssue> array = new List<SecurityHealthReportIssue>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SecurityHealthReportIssue.DeserializeSecurityHealthReportIssue(item));
+                                array.Add(SecurityHealthReportIssue.DeserializeSecurityHealthReportIssue(item, options));
                             }
                             issues = array;
                             continue;
@@ -300,7 +300,20 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityHealthReportData(id, name, type, systemData.Value, resourceDetails.Value, environmentDetails.Value, healthDataClassification.Value, status.Value, Optional.ToList(affectedDefendersPlans), Optional.ToList(affectedDefendersSubPlans), Optional.ToDictionary(reportAdditionalData), Optional.ToList(issues), serializedAdditionalRawData);
+            return new SecurityHealthReportData(
+                id,
+                name,
+                type,
+                systemData,
+                resourceDetails,
+                environmentDetails,
+                healthDataClassification,
+                status,
+                affectedDefendersPlans ?? new ChangeTrackingList<string>(),
+                affectedDefendersSubPlans ?? new ChangeTrackingList<string>(),
+                reportAdditionalData ?? new ChangeTrackingDictionary<string, string>(),
+                issues ?? new ChangeTrackingList<SecurityHealthReportIssue>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityHealthReportData>.Write(ModelReaderWriterOptions options)

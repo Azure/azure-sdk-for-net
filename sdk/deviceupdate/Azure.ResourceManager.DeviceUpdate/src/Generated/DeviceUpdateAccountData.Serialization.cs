@@ -153,20 +153,20 @@ namespace Azure.ResourceManager.DeviceUpdate
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DeviceUpdateProvisioningState> provisioningState = default;
-            Optional<string> hostName = default;
-            Optional<DeviceUpdatePublicNetworkAccess> publicNetworkAccess = default;
-            Optional<IList<DeviceUpdatePrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Optional<DeviceUpdateSku> sku = default;
-            Optional<DeviceUpdateEncryption> encryption = default;
-            Optional<IReadOnlyList<DeviceUpdateAccountLocationDetail>> locations = default;
+            SystemData systemData = default;
+            DeviceUpdateProvisioningState? provisioningState = default;
+            string hostName = default;
+            DeviceUpdatePublicNetworkAccess? publicNetworkAccess = default;
+            IList<DeviceUpdatePrivateEndpointConnectionData> privateEndpointConnections = default;
+            DeviceUpdateSku? sku = default;
+            DeviceUpdateEncryption encryption = default;
+            IReadOnlyList<DeviceUpdateAccountLocationDetail> locations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                             List<DeviceUpdatePrivateEndpointConnectionData> array = new List<DeviceUpdatePrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeviceUpdatePrivateEndpointConnectionData.DeserializeDeviceUpdatePrivateEndpointConnectionData(item));
+                                array.Add(DeviceUpdatePrivateEndpointConnectionData.DeserializeDeviceUpdatePrivateEndpointConnectionData(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                             {
                                 continue;
                             }
-                            encryption = DeviceUpdateEncryption.DeserializeDeviceUpdateEncryption(property0.Value);
+                            encryption = DeviceUpdateEncryption.DeserializeDeviceUpdateEncryption(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("locations"u8))
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                             List<DeviceUpdateAccountLocationDetail> array = new List<DeviceUpdateAccountLocationDetail>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeviceUpdateAccountLocationDetail.DeserializeDeviceUpdateAccountLocationDetail(item));
+                                array.Add(DeviceUpdateAccountLocationDetail.DeserializeDeviceUpdateAccountLocationDetail(item, options));
                             }
                             locations = array;
                             continue;
@@ -311,7 +311,22 @@ namespace Azure.ResourceManager.DeviceUpdate
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeviceUpdateAccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(provisioningState), hostName.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToList(privateEndpointConnections), Optional.ToNullable(sku), encryption.Value, Optional.ToList(locations), serializedAdditionalRawData);
+            return new DeviceUpdateAccountData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                provisioningState,
+                hostName,
+                publicNetworkAccess,
+                privateEndpointConnections ?? new ChangeTrackingList<DeviceUpdatePrivateEndpointConnectionData>(),
+                sku,
+                encryption,
+                locations ?? new ChangeTrackingList<DeviceUpdateAccountLocationDetail>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeviceUpdateAccountData>.Write(ModelReaderWriterOptions options)

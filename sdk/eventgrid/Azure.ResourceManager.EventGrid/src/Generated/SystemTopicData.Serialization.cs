@@ -127,17 +127,17 @@ namespace Azure.ResourceManager.EventGrid
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<EventGridResourceProvisioningState> provisioningState = default;
-            Optional<ResourceIdentifier> source = default;
-            Optional<string> topicType = default;
-            Optional<Guid> metricResourceId = default;
+            SystemData systemData = default;
+            EventGridResourceProvisioningState? provisioningState = default;
+            ResourceIdentifier source = default;
+            string topicType = default;
+            Guid? metricResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -244,7 +244,19 @@ namespace Azure.ResourceManager.EventGrid
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SystemTopicData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(provisioningState), source.Value, topicType.Value, Optional.ToNullable(metricResourceId), serializedAdditionalRawData);
+            return new SystemTopicData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                provisioningState,
+                source,
+                topicType,
+                metricResourceId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SystemTopicData>.Write(ModelReaderWriterOptions options)

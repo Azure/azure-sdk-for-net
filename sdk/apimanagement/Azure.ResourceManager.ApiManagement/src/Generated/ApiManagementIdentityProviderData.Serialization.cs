@@ -147,17 +147,17 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IdentityProviderType> type0 = default;
-            Optional<string> signinTenant = default;
-            Optional<IList<string>> allowedTenants = default;
-            Optional<string> authority = default;
-            Optional<string> signupPolicyName = default;
-            Optional<string> signinPolicyName = default;
-            Optional<string> profileEditingPolicyName = default;
-            Optional<string> passwordResetPolicyName = default;
-            Optional<string> clientId = default;
-            Optional<string> clientSecret = default;
+            SystemData systemData = default;
+            IdentityProviderType? type0 = default;
+            string signinTenant = default;
+            IList<string> allowedTenants = default;
+            string authority = default;
+            string signupPolicyName = default;
+            string signinPolicyName = default;
+            string profileEditingPolicyName = default;
+            string passwordResetPolicyName = default;
+            string clientId = default;
+            string clientSecret = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -267,7 +267,22 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementIdentityProviderData(id, name, type, systemData.Value, Optional.ToNullable(type0), signinTenant.Value, Optional.ToList(allowedTenants), authority.Value, signupPolicyName.Value, signinPolicyName.Value, profileEditingPolicyName.Value, passwordResetPolicyName.Value, clientId.Value, clientSecret.Value, serializedAdditionalRawData);
+            return new ApiManagementIdentityProviderData(
+                id,
+                name,
+                type,
+                systemData,
+                type0,
+                signinTenant,
+                allowedTenants ?? new ChangeTrackingList<string>(),
+                authority,
+                signupPolicyName,
+                signinPolicyName,
+                profileEditingPolicyName,
+                passwordResetPolicyName,
+                clientId,
+                clientSecret,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementIdentityProviderData>.Write(ModelReaderWriterOptions options)

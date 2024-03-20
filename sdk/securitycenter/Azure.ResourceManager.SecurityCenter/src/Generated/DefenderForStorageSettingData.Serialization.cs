@@ -141,15 +141,15 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> isEnabled = default;
-            Optional<bool> overrideSubscriptionLevelSettings = default;
-            Optional<bool> isEnabled0 = default;
-            Optional<ExtensionOperationStatus> operationStatus = default;
-            Optional<ResourceIdentifier> scanResultsEventGridTopicResourceId = default;
-            Optional<ExtensionOperationStatus> operationStatus0 = default;
-            Optional<bool> isEnabled1 = default;
-            Optional<int> capGBPerMonth = default;
+            SystemData systemData = default;
+            bool? isEnabled = default;
+            bool? overrideSubscriptionLevelSettings = default;
+            bool? isEnabled0 = default;
+            ExtensionOperationStatus operationStatus = default;
+            ResourceIdentifier scanResultsEventGridTopicResourceId = default;
+            ExtensionOperationStatus operationStatus0 = default;
+            bool? isEnabled1 = default;
+            int? capGBPerMonth = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.SecurityCenter
                                     {
                                         continue;
                                     }
-                                    operationStatus = ExtensionOperationStatus.DeserializeExtensionOperationStatus(property1.Value);
+                                    operationStatus = ExtensionOperationStatus.DeserializeExtensionOperationStatus(property1.Value, options);
                                     continue;
                                 }
                             }
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.SecurityCenter
                                     {
                                         continue;
                                     }
-                                    operationStatus0 = ExtensionOperationStatus.DeserializeExtensionOperationStatus(property1.Value);
+                                    operationStatus0 = ExtensionOperationStatus.DeserializeExtensionOperationStatus(property1.Value, options);
                                     continue;
                                 }
                                 if (property1.NameEquals("onUpload"u8))
@@ -304,7 +304,20 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DefenderForStorageSettingData(id, name, type, systemData.Value, Optional.ToNullable(isEnabled), Optional.ToNullable(overrideSubscriptionLevelSettings), Optional.ToNullable(isEnabled0), operationStatus.Value, scanResultsEventGridTopicResourceId.Value, operationStatus0.Value, Optional.ToNullable(isEnabled1), Optional.ToNullable(capGBPerMonth), serializedAdditionalRawData);
+            return new DefenderForStorageSettingData(
+                id,
+                name,
+                type,
+                systemData,
+                isEnabled,
+                overrideSubscriptionLevelSettings,
+                isEnabled0,
+                operationStatus,
+                scanResultsEventGridTopicResourceId,
+                operationStatus0,
+                isEnabled1,
+                capGBPerMonth,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DefenderForStorageSettingData>.Write(ModelReaderWriterOptions options)

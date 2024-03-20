@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ContainerService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             ManagedClusterPoolUpgradeProfile controlPlaneProfile = default;
             IReadOnlyList<ManagedClusterPoolUpgradeProfile> agentPoolProfiles = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ContainerService
                     {
                         if (property0.NameEquals("controlPlaneProfile"u8))
                         {
-                            controlPlaneProfile = ManagedClusterPoolUpgradeProfile.DeserializeManagedClusterPoolUpgradeProfile(property0.Value);
+                            controlPlaneProfile = ManagedClusterPoolUpgradeProfile.DeserializeManagedClusterPoolUpgradeProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("agentPoolProfiles"u8))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ContainerService
                             List<ManagedClusterPoolUpgradeProfile> array = new List<ManagedClusterPoolUpgradeProfile>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagedClusterPoolUpgradeProfile.DeserializeManagedClusterPoolUpgradeProfile(item));
+                                array.Add(ManagedClusterPoolUpgradeProfile.DeserializeManagedClusterPoolUpgradeProfile(item, options));
                             }
                             agentPoolProfiles = array;
                             continue;
@@ -165,7 +165,14 @@ namespace Azure.ResourceManager.ContainerService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterUpgradeProfileData(id, name, type, systemData.Value, controlPlaneProfile, agentPoolProfiles, serializedAdditionalRawData);
+            return new ManagedClusterUpgradeProfileData(
+                id,
+                name,
+                type,
+                systemData,
+                controlPlaneProfile,
+                agentPoolProfiles,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterUpgradeProfileData>.Write(ModelReaderWriterOptions options)

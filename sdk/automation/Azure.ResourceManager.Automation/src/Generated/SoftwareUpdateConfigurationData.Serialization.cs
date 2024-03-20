@@ -131,16 +131,16 @@ namespace Azure.ResourceManager.Automation
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             SoftwareUpdateConfigurationSpecificProperties updateConfiguration = default;
             SoftwareUpdateConfigurationScheduleProperties scheduleInfo = default;
-            Optional<string> provisioningState = default;
-            Optional<AutomationResponseError> error = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<string> createdBy = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<string> lastModifiedBy = default;
-            Optional<SoftwareUpdateConfigurationTasks> tasks = default;
+            string provisioningState = default;
+            AutomationResponseError error = default;
+            DateTimeOffset? creationTime = default;
+            string createdBy = default;
+            DateTimeOffset? lastModifiedTime = default;
+            string lastModifiedBy = default;
+            SoftwareUpdateConfigurationTasks tasks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -180,12 +180,12 @@ namespace Azure.ResourceManager.Automation
                     {
                         if (property0.NameEquals("updateConfiguration"u8))
                         {
-                            updateConfiguration = SoftwareUpdateConfigurationSpecificProperties.DeserializeSoftwareUpdateConfigurationSpecificProperties(property0.Value);
+                            updateConfiguration = SoftwareUpdateConfigurationSpecificProperties.DeserializeSoftwareUpdateConfigurationSpecificProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("scheduleInfo"u8))
                         {
-                            scheduleInfo = SoftwareUpdateConfigurationScheduleProperties.DeserializeSoftwareUpdateConfigurationScheduleProperties(property0.Value);
+                            scheduleInfo = SoftwareUpdateConfigurationScheduleProperties.DeserializeSoftwareUpdateConfigurationScheduleProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Automation
                             {
                                 continue;
                             }
-                            error = AutomationResponseError.DeserializeAutomationResponseError(property0.Value);
+                            error = AutomationResponseError.DeserializeAutomationResponseError(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("creationTime"u8))
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Automation
                             {
                                 continue;
                             }
-                            tasks = SoftwareUpdateConfigurationTasks.DeserializeSoftwareUpdateConfigurationTasks(property0.Value);
+                            tasks = SoftwareUpdateConfigurationTasks.DeserializeSoftwareUpdateConfigurationTasks(property0.Value, options);
                             continue;
                         }
                     }
@@ -248,7 +248,21 @@ namespace Azure.ResourceManager.Automation
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SoftwareUpdateConfigurationData(id, name, type, systemData.Value, updateConfiguration, scheduleInfo, provisioningState.Value, error.Value, Optional.ToNullable(creationTime), createdBy.Value, Optional.ToNullable(lastModifiedTime), lastModifiedBy.Value, tasks.Value, serializedAdditionalRawData);
+            return new SoftwareUpdateConfigurationData(
+                id,
+                name,
+                type,
+                systemData,
+                updateConfiguration,
+                scheduleInfo,
+                provisioningState,
+                error,
+                creationTime,
+                createdBy,
+                lastModifiedTime,
+                lastModifiedBy,
+                tasks,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SoftwareUpdateConfigurationData>.Write(ModelReaderWriterOptions options)

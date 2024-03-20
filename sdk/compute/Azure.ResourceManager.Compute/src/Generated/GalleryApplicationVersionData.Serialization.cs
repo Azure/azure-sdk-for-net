@@ -122,16 +122,16 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<GalleryApplicationVersionPublishingProfile> publishingProfile = default;
-            Optional<GalleryApplicationVersionSafetyProfile> safetyProfile = default;
-            Optional<GalleryProvisioningState> provisioningState = default;
-            Optional<ReplicationStatus> replicationStatus = default;
+            SystemData systemData = default;
+            GalleryApplicationVersionPublishingProfile publishingProfile = default;
+            GalleryApplicationVersionSafetyProfile safetyProfile = default;
+            GalleryProvisioningState? provisioningState = default;
+            ReplicationStatus replicationStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            publishingProfile = GalleryApplicationVersionPublishingProfile.DeserializeGalleryApplicationVersionPublishingProfile(property0.Value);
+                            publishingProfile = GalleryApplicationVersionPublishingProfile.DeserializeGalleryApplicationVersionPublishingProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("safetyProfile"u8))
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            safetyProfile = GalleryApplicationVersionSafetyProfile.DeserializeGalleryApplicationVersionSafetyProfile(property0.Value);
+                            safetyProfile = GalleryApplicationVersionSafetyProfile.DeserializeGalleryApplicationVersionSafetyProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            replicationStatus = ReplicationStatus.DeserializeReplicationStatus(property0.Value);
+                            replicationStatus = ReplicationStatus.DeserializeReplicationStatus(property0.Value, options);
                             continue;
                         }
                     }
@@ -233,7 +233,18 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GalleryApplicationVersionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, publishingProfile.Value, safetyProfile.Value, Optional.ToNullable(provisioningState), replicationStatus.Value, serializedAdditionalRawData);
+            return new GalleryApplicationVersionData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                publishingProfile,
+                safetyProfile,
+                provisioningState,
+                replicationStatus,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GalleryApplicationVersionData>.Write(ModelReaderWriterOptions options)

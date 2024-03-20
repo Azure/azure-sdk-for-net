@@ -195,28 +195,28 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SecurityInsightsIncidentAdditionalInfo> additionalData = default;
-            Optional<SecurityInsightsIncidentClassification> classification = default;
-            Optional<string> classificationComment = default;
-            Optional<SecurityInsightsIncidentClassificationReason> classificationReason = default;
-            Optional<DateTimeOffset> createdTimeUtc = default;
-            Optional<string> description = default;
-            Optional<DateTimeOffset> firstActivityTimeUtc = default;
-            Optional<Uri> incidentUrl = default;
-            Optional<int> incidentNumber = default;
-            Optional<IList<SecurityInsightsIncidentLabel>> labels = default;
-            Optional<DateTimeOffset> lastActivityTimeUtc = default;
-            Optional<DateTimeOffset> lastModifiedTimeUtc = default;
-            Optional<SecurityInsightsIncidentOwnerInfo> owner = default;
-            Optional<IReadOnlyList<ResourceIdentifier>> relatedAnalyticRuleIds = default;
-            Optional<SecurityInsightsIncidentSeverity> severity = default;
-            Optional<SecurityInsightsIncidentStatus> status = default;
-            Optional<string> title = default;
+            SystemData systemData = default;
+            SecurityInsightsIncidentAdditionalInfo additionalData = default;
+            SecurityInsightsIncidentClassification? classification = default;
+            string classificationComment = default;
+            SecurityInsightsIncidentClassificationReason? classificationReason = default;
+            DateTimeOffset? createdTimeUtc = default;
+            string description = default;
+            DateTimeOffset? firstActivityTimeUtc = default;
+            Uri incidentUrl = default;
+            int? incidentNumber = default;
+            IList<SecurityInsightsIncidentLabel> labels = default;
+            DateTimeOffset? lastActivityTimeUtc = default;
+            DateTimeOffset? lastModifiedTimeUtc = default;
+            SecurityInsightsIncidentOwnerInfo owner = default;
+            IReadOnlyList<ResourceIdentifier> relatedAnalyticRuleIds = default;
+            SecurityInsightsIncidentSeverity? severity = default;
+            SecurityInsightsIncidentStatus? status = default;
+            string title = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            additionalData = SecurityInsightsIncidentAdditionalInfo.DeserializeSecurityInsightsIncidentAdditionalInfo(property0.Value);
+                            additionalData = SecurityInsightsIncidentAdditionalInfo.DeserializeSecurityInsightsIncidentAdditionalInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("classification"u8))
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             List<SecurityInsightsIncidentLabel> array = new List<SecurityInsightsIncidentLabel>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SecurityInsightsIncidentLabel.DeserializeSecurityInsightsIncidentLabel(item));
+                                array.Add(SecurityInsightsIncidentLabel.DeserializeSecurityInsightsIncidentLabel(item, options));
                             }
                             labels = array;
                             continue;
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            owner = SecurityInsightsIncidentOwnerInfo.DeserializeSecurityInsightsIncidentOwnerInfo(property0.Value);
+                            owner = SecurityInsightsIncidentOwnerInfo.DeserializeSecurityInsightsIncidentOwnerInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("relatedAnalyticRuleIds"u8))
@@ -430,7 +430,30 @@ namespace Azure.ResourceManager.SecurityInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsIncidentData(id, name, type, systemData.Value, additionalData.Value, Optional.ToNullable(classification), classificationComment.Value, Optional.ToNullable(classificationReason), Optional.ToNullable(createdTimeUtc), description.Value, Optional.ToNullable(firstActivityTimeUtc), incidentUrl.Value, Optional.ToNullable(incidentNumber), Optional.ToList(labels), Optional.ToNullable(lastActivityTimeUtc), Optional.ToNullable(lastModifiedTimeUtc), owner.Value, Optional.ToList(relatedAnalyticRuleIds), Optional.ToNullable(severity), Optional.ToNullable(status), title.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new SecurityInsightsIncidentData(
+                id,
+                name,
+                type,
+                systemData,
+                additionalData,
+                classification,
+                classificationComment,
+                classificationReason,
+                createdTimeUtc,
+                description,
+                firstActivityTimeUtc,
+                incidentUrl,
+                incidentNumber,
+                labels ?? new ChangeTrackingList<SecurityInsightsIncidentLabel>(),
+                lastActivityTimeUtc,
+                lastModifiedTimeUtc,
+                owner,
+                relatedAnalyticRuleIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                severity,
+                status,
+                title,
+                etag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityInsightsIncidentData>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Consumption;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
@@ -84,9 +85,9 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ConsumptionReservationRecommendation>> value = default;
-            Optional<string> nextLink = default;
-            Optional<string> previousLink = default;
+            IReadOnlyList<ConsumptionReservationRecommendation> value = default;
+            string nextLink = default;
+            string previousLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     List<ConsumptionReservationRecommendation> array = new List<ConsumptionReservationRecommendation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConsumptionReservationRecommendation.DeserializeConsumptionReservationRecommendation(item));
+                        array.Add(ConsumptionReservationRecommendation.DeserializeConsumptionReservationRecommendation(item, options));
                     }
                     value = array;
                     continue;
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReservationRecommendationsListResult(Optional.ToList(value), nextLink.Value, previousLink.Value, serializedAdditionalRawData);
+            return new ReservationRecommendationsListResult(value ?? new ChangeTrackingList<ConsumptionReservationRecommendation>(), nextLink, previousLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationRecommendationsListResult>.Write(ModelReaderWriterOptions options)

@@ -142,20 +142,20 @@ namespace Azure.ResourceManager.DevCenter
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DevCenterImageReference> imageReference = default;
-            Optional<DevCenterSku> sku = default;
-            Optional<string> osStorageType = default;
-            Optional<DevCenterHibernateSupport> hibernateSupport = default;
-            Optional<DevCenterProvisioningState> provisioningState = default;
-            Optional<ImageValidationStatus> imageValidationStatus = default;
-            Optional<ImageValidationErrorDetails> imageValidationErrorDetails = default;
-            Optional<DevCenterImageReference> activeImageReference = default;
+            SystemData systemData = default;
+            DevCenterImageReference imageReference = default;
+            DevCenterSku sku = default;
+            string osStorageType = default;
+            DevCenterHibernateSupport? hibernateSupport = default;
+            DevCenterProvisioningState? provisioningState = default;
+            ImageValidationStatus? imageValidationStatus = default;
+            ImageValidationErrorDetails imageValidationErrorDetails = default;
+            DevCenterImageReference activeImageReference = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.DevCenter
                             {
                                 continue;
                             }
-                            imageReference = DevCenterImageReference.DeserializeDevCenterImageReference(property0.Value);
+                            imageReference = DevCenterImageReference.DeserializeDevCenterImageReference(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("sku"u8))
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.DevCenter
                             {
                                 continue;
                             }
-                            sku = DevCenterSku.DeserializeDevCenterSku(property0.Value);
+                            sku = DevCenterSku.DeserializeDevCenterSku(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("osStorageType"u8))
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.DevCenter
                             {
                                 continue;
                             }
-                            imageValidationErrorDetails = ImageValidationErrorDetails.DeserializeImageValidationErrorDetails(property0.Value);
+                            imageValidationErrorDetails = ImageValidationErrorDetails.DeserializeImageValidationErrorDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("activeImageReference"u8))
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.DevCenter
                             {
                                 continue;
                             }
-                            activeImageReference = DevCenterImageReference.DeserializeDevCenterImageReference(property0.Value);
+                            activeImageReference = DevCenterImageReference.DeserializeDevCenterImageReference(property0.Value, options);
                             continue;
                         }
                     }
@@ -289,7 +289,22 @@ namespace Azure.ResourceManager.DevCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevBoxDefinitionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, imageReference.Value, sku.Value, osStorageType.Value, Optional.ToNullable(hibernateSupport), Optional.ToNullable(provisioningState), Optional.ToNullable(imageValidationStatus), imageValidationErrorDetails.Value, activeImageReference.Value, serializedAdditionalRawData);
+            return new DevBoxDefinitionData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                imageReference,
+                sku,
+                osStorageType,
+                hibernateSupport,
+                provisioningState,
+                imageValidationStatus,
+                imageValidationErrorDetails,
+                activeImageReference,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevBoxDefinitionData>.Write(ModelReaderWriterOptions options)

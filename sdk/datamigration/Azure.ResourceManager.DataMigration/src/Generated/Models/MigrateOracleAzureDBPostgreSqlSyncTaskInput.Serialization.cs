@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -87,19 +88,19 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<MigrateOracleAzureDBPostgreSqlSyncDatabaseInput> array = new List<MigrateOracleAzureDBPostgreSqlSyncDatabaseInput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MigrateOracleAzureDBPostgreSqlSyncDatabaseInput.DeserializeMigrateOracleAzureDBPostgreSqlSyncDatabaseInput(item));
+                        array.Add(MigrateOracleAzureDBPostgreSqlSyncDatabaseInput.DeserializeMigrateOracleAzureDBPostgreSqlSyncDatabaseInput(item, options));
                     }
                     selectedDatabases = array;
                     continue;
                 }
                 if (property.NameEquals("targetConnectionInfo"u8))
                 {
-                    targetConnectionInfo = PostgreSqlConnectionInfo.DeserializePostgreSqlConnectionInfo(property.Value);
+                    targetConnectionInfo = PostgreSqlConnectionInfo.DeserializePostgreSqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sourceConnectionInfo"u8))
                 {
-                    sourceConnectionInfo = OracleConnectionInfo.DeserializeOracleConnectionInfo(property.Value);
+                    sourceConnectionInfo = OracleConnectionInfo.DeserializeOracleConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -283,10 +283,7 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SphereDeploymentResource>> UpdateAsync(WaitUntil waitUntil, SphereDeploymentData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sphereDeploymentDeploymentsClientDiagnostics.CreateScope("SphereDeploymentResource.Update");
             scope.Start();
@@ -318,7 +315,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -332,10 +329,7 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SphereDeploymentResource> Update(WaitUntil waitUntil, SphereDeploymentData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sphereDeploymentDeploymentsClientDiagnostics.CreateScope("SphereDeploymentResource.Update");
             scope.Start();

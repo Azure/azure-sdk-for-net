@@ -193,28 +193,28 @@ namespace Azure.ResourceManager.EventGrid
             {
                 return null;
             }
-            Optional<ResourceSku> sku = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<ResourceKind> kind = default;
-            Optional<ExtendedLocation> extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ResourceSku sku = default;
+            ManagedServiceIdentity identity = default;
+            ResourceKind? kind = default;
+            ExtendedLocation extendedLocation = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IReadOnlyList<EventGridPrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Optional<EventGridTopicProvisioningState> provisioningState = default;
-            Optional<Uri> endpoint = default;
-            Optional<PartnerTopicEventTypeInfo> eventTypeInfo = default;
-            Optional<TlsVersion> minimumTlsVersionAllowed = default;
-            Optional<EventGridInputSchema> inputSchema = default;
-            Optional<EventGridInputSchemaMapping> inputSchemaMapping = default;
-            Optional<string> metricResourceId = default;
-            Optional<EventGridPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<IList<EventGridInboundIPRule>> inboundIPRules = default;
-            Optional<bool> disableLocalAuth = default;
-            Optional<DataResidencyBoundary> dataResidencyBoundary = default;
+            SystemData systemData = default;
+            IReadOnlyList<EventGridPrivateEndpointConnectionData> privateEndpointConnections = default;
+            EventGridTopicProvisioningState? provisioningState = default;
+            Uri endpoint = default;
+            PartnerTopicEventTypeInfo eventTypeInfo = default;
+            TlsVersion? minimumTlsVersionAllowed = default;
+            EventGridInputSchema? inputSchema = default;
+            EventGridInputSchemaMapping inputSchemaMapping = default;
+            string metricResourceId = default;
+            EventGridPublicNetworkAccess? publicNetworkAccess = default;
+            IList<EventGridInboundIPRule> inboundIPRules = default;
+            bool? disableLocalAuth = default;
+            DataResidencyBoundary? dataResidencyBoundary = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.EventGrid
                     {
                         continue;
                     }
-                    sku = ResourceSku.DeserializeResourceSku(property.Value);
+                    sku = ResourceSku.DeserializeResourceSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.EventGrid
                             List<EventGridPrivateEndpointConnectionData> array = new List<EventGridPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EventGridPrivateEndpointConnectionData.DeserializeEventGridPrivateEndpointConnectionData(item));
+                                array.Add(EventGridPrivateEndpointConnectionData.DeserializeEventGridPrivateEndpointConnectionData(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.EventGrid
                             {
                                 continue;
                             }
-                            eventTypeInfo = PartnerTopicEventTypeInfo.DeserializePartnerTopicEventTypeInfo(property0.Value);
+                            eventTypeInfo = PartnerTopicEventTypeInfo.DeserializePartnerTopicEventTypeInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("minimumTlsVersionAllowed"u8))
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.EventGrid
                             {
                                 continue;
                             }
-                            inputSchemaMapping = EventGridInputSchemaMapping.DeserializeEventGridInputSchemaMapping(property0.Value);
+                            inputSchemaMapping = EventGridInputSchemaMapping.DeserializeEventGridInputSchemaMapping(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("metricResourceId"u8))
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.EventGrid
                             List<EventGridInboundIPRule> array = new List<EventGridInboundIPRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EventGridInboundIPRule.DeserializeEventGridInboundIPRule(item));
+                                array.Add(EventGridInboundIPRule.DeserializeEventGridInboundIPRule(item, options));
                             }
                             inboundIPRules = array;
                             continue;
@@ -430,7 +430,30 @@ namespace Azure.ResourceManager.EventGrid
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventGridTopicData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, identity, Optional.ToNullable(kind), extendedLocation, Optional.ToList(privateEndpointConnections), Optional.ToNullable(provisioningState), endpoint.Value, eventTypeInfo.Value, Optional.ToNullable(minimumTlsVersionAllowed), Optional.ToNullable(inputSchema), inputSchemaMapping.Value, metricResourceId.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToList(inboundIPRules), Optional.ToNullable(disableLocalAuth), Optional.ToNullable(dataResidencyBoundary), serializedAdditionalRawData);
+            return new EventGridTopicData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                identity,
+                kind,
+                extendedLocation,
+                privateEndpointConnections ?? new ChangeTrackingList<EventGridPrivateEndpointConnectionData>(),
+                provisioningState,
+                endpoint,
+                eventTypeInfo,
+                minimumTlsVersionAllowed,
+                inputSchema,
+                inputSchemaMapping,
+                metricResourceId,
+                publicNetworkAccess,
+                inboundIPRules ?? new ChangeTrackingList<EventGridInboundIPRule>(),
+                disableLocalAuth,
+                dataResidencyBoundary,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventGridTopicData>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -111,14 +112,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<IntegrationRuntimeSsisCatalogInfo> catalogInfo = default;
-            Optional<IntegrationRuntimeLicenseType> licenseType = default;
-            Optional<IntegrationRuntimeCustomSetupScriptProperties> customSetupScriptProperties = default;
-            Optional<IntegrationRuntimeDataProxyProperties> dataProxyProperties = default;
-            Optional<IntegrationRuntimeEdition> edition = default;
-            Optional<IList<CustomSetupBase>> expressCustomSetupProperties = default;
-            Optional<IList<DataFactoryPackageStore>> packageStores = default;
-            Optional<DataFactoryCredentialReference> credential = default;
+            IntegrationRuntimeSsisCatalogInfo catalogInfo = default;
+            IntegrationRuntimeLicenseType? licenseType = default;
+            IntegrationRuntimeCustomSetupScriptProperties customSetupScriptProperties = default;
+            IntegrationRuntimeDataProxyProperties dataProxyProperties = default;
+            IntegrationRuntimeEdition? edition = default;
+            IList<CustomSetupBase> expressCustomSetupProperties = default;
+            IList<DataFactoryPackageStore> packageStores = default;
+            DataFactoryCredentialReference credential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    catalogInfo = IntegrationRuntimeSsisCatalogInfo.DeserializeIntegrationRuntimeSsisCatalogInfo(property.Value);
+                    catalogInfo = IntegrationRuntimeSsisCatalogInfo.DeserializeIntegrationRuntimeSsisCatalogInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("licenseType"u8))
@@ -147,7 +148,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    customSetupScriptProperties = IntegrationRuntimeCustomSetupScriptProperties.DeserializeIntegrationRuntimeCustomSetupScriptProperties(property.Value);
+                    customSetupScriptProperties = IntegrationRuntimeCustomSetupScriptProperties.DeserializeIntegrationRuntimeCustomSetupScriptProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dataProxyProperties"u8))
@@ -156,7 +157,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    dataProxyProperties = IntegrationRuntimeDataProxyProperties.DeserializeIntegrationRuntimeDataProxyProperties(property.Value);
+                    dataProxyProperties = IntegrationRuntimeDataProxyProperties.DeserializeIntegrationRuntimeDataProxyProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("edition"u8))
@@ -177,7 +178,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<CustomSetupBase> array = new List<CustomSetupBase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CustomSetupBase.DeserializeCustomSetupBase(item));
+                        array.Add(CustomSetupBase.DeserializeCustomSetupBase(item, options));
                     }
                     expressCustomSetupProperties = array;
                     continue;
@@ -191,7 +192,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<DataFactoryPackageStore> array = new List<DataFactoryPackageStore>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataFactoryPackageStore.DeserializeDataFactoryPackageStore(item));
+                        array.Add(DataFactoryPackageStore.DeserializeDataFactoryPackageStore(item, options));
                     }
                     packageStores = array;
                     continue;
@@ -202,13 +203,22 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    credential = DataFactoryCredentialReference.DeserializeDataFactoryCredentialReference(property.Value);
+                    credential = DataFactoryCredentialReference.DeserializeDataFactoryCredentialReference(property.Value, options);
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new IntegrationRuntimeSsisProperties(catalogInfo.Value, Optional.ToNullable(licenseType), customSetupScriptProperties.Value, dataProxyProperties.Value, Optional.ToNullable(edition), Optional.ToList(expressCustomSetupProperties), Optional.ToList(packageStores), credential.Value, additionalProperties);
+            return new IntegrationRuntimeSsisProperties(
+                catalogInfo,
+                licenseType,
+                customSetupScriptProperties,
+                dataProxyProperties,
+                edition,
+                expressCustomSetupProperties ?? new ChangeTrackingList<CustomSetupBase>(),
+                packageStores ?? new ChangeTrackingList<DataFactoryPackageStore>(),
+                credential,
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<IntegrationRuntimeSsisProperties>.Write(ModelReaderWriterOptions options)

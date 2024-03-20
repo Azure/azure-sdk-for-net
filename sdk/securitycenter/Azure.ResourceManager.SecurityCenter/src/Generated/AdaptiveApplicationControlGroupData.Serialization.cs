@@ -149,19 +149,19 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<AdaptiveApplicationControlEnforcementMode> enforcementMode = default;
-            Optional<SecurityCenterFileProtectionMode> protectionMode = default;
-            Optional<SecurityCenterConfigurationStatus> configurationStatus = default;
-            Optional<RecommendationStatus> recommendationStatus = default;
-            Optional<IReadOnlyList<AdaptiveApplicationControlIssueSummary>> issues = default;
-            Optional<AdaptiveApplicationControlGroupSourceSystem> sourceSystem = default;
-            Optional<IList<VmRecommendation>> vmRecommendations = default;
-            Optional<IList<PathRecommendation>> pathRecommendations = default;
+            SystemData systemData = default;
+            AdaptiveApplicationControlEnforcementMode? enforcementMode = default;
+            SecurityCenterFileProtectionMode protectionMode = default;
+            SecurityCenterConfigurationStatus? configurationStatus = default;
+            RecommendationStatus? recommendationStatus = default;
+            IReadOnlyList<AdaptiveApplicationControlIssueSummary> issues = default;
+            AdaptiveApplicationControlGroupSourceSystem? sourceSystem = default;
+            IList<VmRecommendation> vmRecommendations = default;
+            IList<PathRecommendation> pathRecommendations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            protectionMode = SecurityCenterFileProtectionMode.DeserializeSecurityCenterFileProtectionMode(property0.Value);
+                            protectionMode = SecurityCenterFileProtectionMode.DeserializeSecurityCenterFileProtectionMode(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("configurationStatus"u8))
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<AdaptiveApplicationControlIssueSummary> array = new List<AdaptiveApplicationControlIssueSummary>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AdaptiveApplicationControlIssueSummary.DeserializeAdaptiveApplicationControlIssueSummary(item));
+                                array.Add(AdaptiveApplicationControlIssueSummary.DeserializeAdaptiveApplicationControlIssueSummary(item, options));
                             }
                             issues = array;
                             continue;
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<VmRecommendation> array = new List<VmRecommendation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VmRecommendation.DeserializeVmRecommendation(item));
+                                array.Add(VmRecommendation.DeserializeVmRecommendation(item, options));
                             }
                             vmRecommendations = array;
                             continue;
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<PathRecommendation> array = new List<PathRecommendation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PathRecommendation.DeserializePathRecommendation(item));
+                                array.Add(PathRecommendation.DeserializePathRecommendation(item, options));
                             }
                             pathRecommendations = array;
                             continue;
@@ -304,7 +304,21 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AdaptiveApplicationControlGroupData(id, name, type, systemData.Value, Optional.ToNullable(enforcementMode), protectionMode.Value, Optional.ToNullable(configurationStatus), Optional.ToNullable(recommendationStatus), Optional.ToList(issues), Optional.ToNullable(sourceSystem), Optional.ToList(vmRecommendations), Optional.ToList(pathRecommendations), Optional.ToNullable(location), serializedAdditionalRawData);
+            return new AdaptiveApplicationControlGroupData(
+                id,
+                name,
+                type,
+                systemData,
+                enforcementMode,
+                protectionMode,
+                configurationStatus,
+                recommendationStatus,
+                issues ?? new ChangeTrackingList<AdaptiveApplicationControlIssueSummary>(),
+                sourceSystem,
+                vmRecommendations ?? new ChangeTrackingList<VmRecommendation>(),
+                pathRecommendations ?? new ChangeTrackingList<PathRecommendation>(),
+                location,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AdaptiveApplicationControlGroupData>.Write(ModelReaderWriterOptions options)

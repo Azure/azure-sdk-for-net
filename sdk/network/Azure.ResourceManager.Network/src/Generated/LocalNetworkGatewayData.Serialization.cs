@@ -135,18 +135,18 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<AddressSpace> localNetworkAddressSpace = default;
-            Optional<string> gatewayIPAddress = default;
-            Optional<string> fqdn = default;
-            Optional<BgpSettings> bgpSettings = default;
-            Optional<Guid> resourceGuid = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
+            IDictionary<string, string> tags = default;
+            AddressSpace localNetworkAddressSpace = default;
+            string gatewayIPAddress = default;
+            string fqdn = default;
+            BgpSettings bgpSettings = default;
+            Guid? resourceGuid = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            localNetworkAddressSpace = AddressSpace.DeserializeAddressSpace(property0.Value);
+                            localNetworkAddressSpace = AddressSpace.DeserializeAddressSpace(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("gatewayIpAddress"u8))
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            bgpSettings = BgpSettings.DeserializeBgpSettings(property0.Value);
+                            bgpSettings = BgpSettings.DeserializeBgpSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("resourceGuid"u8))
@@ -270,7 +270,20 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LocalNetworkGatewayData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(etag), localNetworkAddressSpace.Value, gatewayIPAddress.Value, fqdn.Value, bgpSettings.Value, Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState));
+            return new LocalNetworkGatewayData(
+                id,
+                name,
+                type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                etag,
+                localNetworkAddressSpace,
+                gatewayIPAddress,
+                fqdn,
+                bgpSettings,
+                resourceGuid,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<LocalNetworkGatewayData>.Write(ModelReaderWriterOptions options)

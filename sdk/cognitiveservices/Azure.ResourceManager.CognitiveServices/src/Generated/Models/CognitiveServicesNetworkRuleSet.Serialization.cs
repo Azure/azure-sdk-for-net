@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -89,9 +90,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<CognitiveServicesNetworkRuleAction> defaultAction = default;
-            Optional<IList<CognitiveServicesIPRule>> ipRules = default;
-            Optional<IList<CognitiveServicesVirtualNetworkRule>> virtualNetworkRules = default;
+            CognitiveServicesNetworkRuleAction? defaultAction = default;
+            IList<CognitiveServicesIPRule> ipRules = default;
+            IList<CognitiveServicesVirtualNetworkRule> virtualNetworkRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     List<CognitiveServicesIPRule> array = new List<CognitiveServicesIPRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CognitiveServicesIPRule.DeserializeCognitiveServicesIPRule(item));
+                        array.Add(CognitiveServicesIPRule.DeserializeCognitiveServicesIPRule(item, options));
                     }
                     ipRules = array;
                     continue;
@@ -128,7 +129,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     List<CognitiveServicesVirtualNetworkRule> array = new List<CognitiveServicesVirtualNetworkRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CognitiveServicesVirtualNetworkRule.DeserializeCognitiveServicesVirtualNetworkRule(item));
+                        array.Add(CognitiveServicesVirtualNetworkRule.DeserializeCognitiveServicesVirtualNetworkRule(item, options));
                     }
                     virtualNetworkRules = array;
                     continue;
@@ -139,7 +140,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CognitiveServicesNetworkRuleSet(Optional.ToNullable(defaultAction), Optional.ToList(ipRules), Optional.ToList(virtualNetworkRules), serializedAdditionalRawData);
+            return new CognitiveServicesNetworkRuleSet(defaultAction, ipRules ?? new ChangeTrackingList<CognitiveServicesIPRule>(), virtualNetworkRules ?? new ChangeTrackingList<CognitiveServicesVirtualNetworkRule>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CognitiveServicesNetworkRuleSet>.Write(ModelReaderWriterOptions options)

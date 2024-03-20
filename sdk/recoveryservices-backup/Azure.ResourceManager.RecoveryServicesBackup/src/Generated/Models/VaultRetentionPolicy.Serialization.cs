@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 if (property.NameEquals("vaultRetention"u8))
                 {
-                    vaultRetention = BackupRetentionPolicy.DeserializeBackupRetentionPolicy(property.Value);
+                    vaultRetention = BackupRetentionPolicy.DeserializeBackupRetentionPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("snapshotRetentionInDays"u8))

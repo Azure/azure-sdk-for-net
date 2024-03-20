@@ -132,15 +132,15 @@ namespace Azure.ResourceManager.Synapse
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> principalId = default;
-            Optional<SynapseClusterPrincipalRole> role = default;
-            Optional<Guid> tenantId = default;
-            Optional<SynapsePrincipalType> principalType = default;
-            Optional<string> tenantName = default;
-            Optional<string> principalName = default;
-            Optional<ResourceProvisioningState> provisioningState = default;
-            Optional<Guid> aadObjectId = default;
+            SystemData systemData = default;
+            string principalId = default;
+            SynapseClusterPrincipalRole? role = default;
+            Guid? tenantId = default;
+            SynapsePrincipalType? principalType = default;
+            string tenantName = default;
+            string principalName = default;
+            ResourceProvisioningState? provisioningState = default;
+            Guid? aadObjectId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -247,7 +247,20 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseClusterPrincipalAssignmentData(id, name, type, systemData.Value, principalId.Value, Optional.ToNullable(role), Optional.ToNullable(tenantId), Optional.ToNullable(principalType), tenantName.Value, principalName.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(aadObjectId), serializedAdditionalRawData);
+            return new SynapseClusterPrincipalAssignmentData(
+                id,
+                name,
+                type,
+                systemData,
+                principalId,
+                role,
+                tenantId,
+                principalType,
+                tenantName,
+                principalName,
+                provisioningState,
+                aadObjectId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseClusterPrincipalAssignmentData>.Write(ModelReaderWriterOptions options)

@@ -205,27 +205,27 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ETag> etag = default;
+            SystemData systemData = default;
+            ETag? etag = default;
             string ruleName = default;
-            Optional<int> priority = default;
-            Optional<string> description = default;
-            Optional<RulestackStateType> ruleState = default;
-            Optional<SourceAddressInfo> source = default;
-            Optional<FirewallBooleanType> negateSource = default;
-            Optional<DestinationAddressInfo> destination = default;
-            Optional<FirewallBooleanType> negateDestination = default;
-            Optional<IList<string>> applications = default;
-            Optional<EdlMatchCategory> category = default;
-            Optional<string> protocol = default;
-            Optional<IList<string>> protocolPortList = default;
-            Optional<string> inboundInspectionCertificate = default;
-            Optional<string> auditComment = default;
-            Optional<RulestackActionType> actionType = default;
-            Optional<RulestackStateType> enableLogging = default;
-            Optional<DecryptionRuleType> decryptionRuleType = default;
-            Optional<IList<RulestackTagInfo>> tags = default;
-            Optional<FirewallProvisioningState> provisioningState = default;
+            int? priority = default;
+            string description = default;
+            RulestackStateType? ruleState = default;
+            SourceAddressInfo source = default;
+            FirewallBooleanType? negateSource = default;
+            DestinationAddressInfo destination = default;
+            FirewallBooleanType? negateDestination = default;
+            IList<string> applications = default;
+            EdlMatchCategory category = default;
+            string protocol = default;
+            IList<string> protocolPortList = default;
+            string inboundInspectionCertificate = default;
+            string auditComment = default;
+            RulestackActionType? actionType = default;
+            RulestackStateType? enableLogging = default;
+            DecryptionRuleType? decryptionRuleType = default;
+            IList<RulestackTagInfo> tags = default;
+            FirewallProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                             {
                                 continue;
                             }
-                            source = SourceAddressInfo.DeserializeSourceAddressInfo(property0.Value);
+                            source = SourceAddressInfo.DeserializeSourceAddressInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("negateSource"u8))
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                             {
                                 continue;
                             }
-                            destination = DestinationAddressInfo.DeserializeDestinationAddressInfo(property0.Value);
+                            destination = DestinationAddressInfo.DeserializeDestinationAddressInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("negateDestination"u8))
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                             {
                                 continue;
                             }
-                            category = EdlMatchCategory.DeserializeEdlMatchCategory(property0.Value);
+                            category = EdlMatchCategory.DeserializeEdlMatchCategory(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("protocol"u8))
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                             List<RulestackTagInfo> array = new List<RulestackTagInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RulestackTagInfo.DeserializeRulestackTagInfo(item));
+                                array.Add(RulestackTagInfo.DeserializeRulestackTagInfo(item, options));
                             }
                             tags = array;
                             continue;
@@ -447,7 +447,32 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostRulestackRuleData(id, name, type, systemData.Value, Optional.ToNullable(etag), ruleName, Optional.ToNullable(priority), description.Value, Optional.ToNullable(ruleState), source.Value, Optional.ToNullable(negateSource), destination.Value, Optional.ToNullable(negateDestination), Optional.ToList(applications), category.Value, protocol.Value, Optional.ToList(protocolPortList), inboundInspectionCertificate.Value, auditComment.Value, Optional.ToNullable(actionType), Optional.ToNullable(enableLogging), Optional.ToNullable(decryptionRuleType), Optional.ToList(tags), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new PostRulestackRuleData(
+                id,
+                name,
+                type,
+                systemData,
+                etag,
+                ruleName,
+                priority,
+                description,
+                ruleState,
+                source,
+                negateSource,
+                destination,
+                negateDestination,
+                applications ?? new ChangeTrackingList<string>(),
+                category,
+                protocol,
+                protocolPortList ?? new ChangeTrackingList<string>(),
+                inboundInspectionCertificate,
+                auditComment,
+                actionType,
+                enableLogging,
+                decryptionRuleType,
+                tags ?? new ChangeTrackingList<RulestackTagInfo>(),
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostRulestackRuleData>.Write(ModelReaderWriterOptions options)

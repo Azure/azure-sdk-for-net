@@ -119,14 +119,14 @@ namespace Azure.ResourceManager.Batch
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> groupId = default;
-            Optional<IReadOnlyList<string>> requiredMembers = default;
-            Optional<IReadOnlyList<string>> requiredZoneNames = default;
+            SystemData systemData = default;
+            string groupId = default;
+            IReadOnlyList<string> requiredMembers = default;
+            IReadOnlyList<string> requiredZoneNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -215,7 +215,16 @@ namespace Azure.ResourceManager.Batch
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchPrivateLinkResourceData(id, name, type, systemData.Value, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames), Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new BatchPrivateLinkResourceData(
+                id,
+                name,
+                type,
+                systemData,
+                groupId,
+                requiredMembers ?? new ChangeTrackingList<string>(),
+                requiredZoneNames ?? new ChangeTrackingList<string>(),
+                etag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchPrivateLinkResourceData>.Write(ModelReaderWriterOptions options)

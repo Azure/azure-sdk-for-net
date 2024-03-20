@@ -21,10 +21,7 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
         public OnYourDataModelIdVectorizationSource(string modelId)
         {
-            if (modelId == null)
-            {
-                throw new ArgumentNullException(nameof(modelId));
-            }
+            Argument.AssertNotNull(modelId, nameof(modelId));
 
             Type = OnYourDataVectorizationSourceType.ModelId;
             ModelId = modelId;

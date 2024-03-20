@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<NetAppReplicationObject> replication = default;
-            Optional<VolumeSnapshotProperties> snapshot = default;
-            Optional<NetAppVolumeRelocationProperties> volumeRelocation = default;
+            NetAppReplicationObject replication = default;
+            VolumeSnapshotProperties snapshot = default;
+            NetAppVolumeRelocationProperties volumeRelocation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    replication = NetAppReplicationObject.DeserializeNetAppReplicationObject(property.Value);
+                    replication = NetAppReplicationObject.DeserializeNetAppReplicationObject(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("snapshot"u8))
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    snapshot = VolumeSnapshotProperties.DeserializeVolumeSnapshotProperties(property.Value);
+                    snapshot = VolumeSnapshotProperties.DeserializeVolumeSnapshotProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("volumeRelocation"u8))
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    volumeRelocation = NetAppVolumeRelocationProperties.DeserializeNetAppVolumeRelocationProperties(property.Value);
+                    volumeRelocation = NetAppVolumeRelocationProperties.DeserializeNetAppVolumeRelocationProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppVolumeDataProtection(replication.Value, snapshot.Value, volumeRelocation.Value, serializedAdditionalRawData);
+            return new NetAppVolumeDataProtection(replication, snapshot, volumeRelocation, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppVolumeDataProtection>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -154,21 +155,21 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return null;
             }
-            Optional<Guid> tenantId = default;
-            Optional<IList<string>> initialAdminObjectIds = default;
-            Optional<Uri> hsmUri = default;
-            Optional<bool> enableSoftDelete = default;
-            Optional<int> softDeleteRetentionInDays = default;
-            Optional<bool> enablePurgeProtection = default;
-            Optional<ManagedHsmCreateMode> createMode = default;
-            Optional<string> statusMessage = default;
-            Optional<ManagedHsmProvisioningState> provisioningState = default;
-            Optional<ManagedHsmNetworkRuleSet> networkAcls = default;
-            Optional<IList<ManagedHsmGeoReplicatedRegion>> regions = default;
-            Optional<IReadOnlyList<ManagedHsmPrivateEndpointConnectionItemData>> privateEndpointConnections = default;
-            Optional<ManagedHsmPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<DateTimeOffset> scheduledPurgeDate = default;
-            Optional<ManagedHSMSecurityDomainProperties> securityDomainProperties = default;
+            Guid? tenantId = default;
+            IList<string> initialAdminObjectIds = default;
+            Uri hsmUri = default;
+            bool? enableSoftDelete = default;
+            int? softDeleteRetentionInDays = default;
+            bool? enablePurgeProtection = default;
+            ManagedHsmCreateMode? createMode = default;
+            string statusMessage = default;
+            ManagedHsmProvisioningState? provisioningState = default;
+            ManagedHsmNetworkRuleSet networkAcls = default;
+            IList<ManagedHsmGeoReplicatedRegion> regions = default;
+            IReadOnlyList<ManagedHsmPrivateEndpointConnectionItemData> privateEndpointConnections = default;
+            ManagedHsmPublicNetworkAccess? publicNetworkAccess = default;
+            DateTimeOffset? scheduledPurgeDate = default;
+            ManagedHSMSecurityDomainProperties securityDomainProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -261,7 +262,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     {
                         continue;
                     }
-                    networkAcls = ManagedHsmNetworkRuleSet.DeserializeManagedHsmNetworkRuleSet(property.Value);
+                    networkAcls = ManagedHsmNetworkRuleSet.DeserializeManagedHsmNetworkRuleSet(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("regions"u8))
@@ -273,7 +274,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     List<ManagedHsmGeoReplicatedRegion> array = new List<ManagedHsmGeoReplicatedRegion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedHsmGeoReplicatedRegion.DeserializeManagedHsmGeoReplicatedRegion(item));
+                        array.Add(ManagedHsmGeoReplicatedRegion.DeserializeManagedHsmGeoReplicatedRegion(item, options));
                     }
                     regions = array;
                     continue;
@@ -287,7 +288,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     List<ManagedHsmPrivateEndpointConnectionItemData> array = new List<ManagedHsmPrivateEndpointConnectionItemData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedHsmPrivateEndpointConnectionItemData.DeserializeManagedHsmPrivateEndpointConnectionItemData(item));
+                        array.Add(ManagedHsmPrivateEndpointConnectionItemData.DeserializeManagedHsmPrivateEndpointConnectionItemData(item, options));
                     }
                     privateEndpointConnections = array;
                     continue;
@@ -316,7 +317,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     {
                         continue;
                     }
-                    securityDomainProperties = ManagedHSMSecurityDomainProperties.DeserializeManagedHSMSecurityDomainProperties(property.Value);
+                    securityDomainProperties = ManagedHSMSecurityDomainProperties.DeserializeManagedHSMSecurityDomainProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -325,7 +326,23 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedHsmProperties(Optional.ToNullable(tenantId), Optional.ToList(initialAdminObjectIds), hsmUri.Value, Optional.ToNullable(enableSoftDelete), Optional.ToNullable(softDeleteRetentionInDays), Optional.ToNullable(enablePurgeProtection), Optional.ToNullable(createMode), statusMessage.Value, Optional.ToNullable(provisioningState), networkAcls.Value, Optional.ToList(regions), Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(scheduledPurgeDate), securityDomainProperties.Value, serializedAdditionalRawData);
+            return new ManagedHsmProperties(
+                tenantId,
+                initialAdminObjectIds ?? new ChangeTrackingList<string>(),
+                hsmUri,
+                enableSoftDelete,
+                softDeleteRetentionInDays,
+                enablePurgeProtection,
+                createMode,
+                statusMessage,
+                provisioningState,
+                networkAcls,
+                regions ?? new ChangeTrackingList<ManagedHsmGeoReplicatedRegion>(),
+                privateEndpointConnections ?? new ChangeTrackingList<ManagedHsmPrivateEndpointConnectionItemData>(),
+                publicNetworkAccess,
+                scheduledPurgeDate,
+                securityDomainProperties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedHsmProperties>.Write(ModelReaderWriterOptions options)

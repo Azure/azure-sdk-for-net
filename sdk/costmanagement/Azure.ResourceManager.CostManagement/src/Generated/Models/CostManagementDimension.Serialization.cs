@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.CostManagement;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CostManagement.Models
@@ -165,23 +166,23 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<string> sku = default;
-            Optional<ETag> eTag = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            AzureLocation? location = default;
+            string sku = default;
+            ETag? eTag = default;
+            IReadOnlyDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<bool> filterEnabled = default;
-            Optional<bool> groupingEnabled = default;
-            Optional<IReadOnlyList<string>> data = default;
-            Optional<int> total = default;
-            Optional<string> category = default;
-            Optional<DateTimeOffset> usageStart = default;
-            Optional<DateTimeOffset> usageEnd = default;
-            Optional<string> nextLink = default;
+            SystemData systemData = default;
+            string description = default;
+            bool? filterEnabled = default;
+            bool? groupingEnabled = default;
+            IReadOnlyList<string> data = default;
+            int? total = default;
+            string category = default;
+            DateTimeOffset? usageStart = default;
+            DateTimeOffset? usageEnd = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -339,7 +340,25 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CostManagementDimension(id, name, type, systemData.Value, description.Value, Optional.ToNullable(filterEnabled), Optional.ToNullable(groupingEnabled), Optional.ToList(data), Optional.ToNullable(total), category.Value, Optional.ToNullable(usageStart), Optional.ToNullable(usageEnd), nextLink.Value, Optional.ToNullable(location), sku.Value, Optional.ToNullable(eTag), Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new CostManagementDimension(
+                id,
+                name,
+                type,
+                systemData,
+                description,
+                filterEnabled,
+                groupingEnabled,
+                data ?? new ChangeTrackingList<string>(),
+                total,
+                category,
+                usageStart,
+                usageEnd,
+                nextLink,
+                location,
+                sku,
+                eTag,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CostManagementDimension>.Write(ModelReaderWriterOptions options)

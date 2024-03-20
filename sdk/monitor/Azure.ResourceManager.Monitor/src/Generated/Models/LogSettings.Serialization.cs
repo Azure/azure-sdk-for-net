@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -81,10 +82,10 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<string> category = default;
-            Optional<string> categoryGroup = default;
+            string category = default;
+            string categoryGroup = default;
             bool enabled = default;
-            Optional<RetentionPolicy> retentionPolicy = default;
+            RetentionPolicy retentionPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    retentionPolicy = RetentionPolicy.DeserializeRetentionPolicy(property.Value);
+                    retentionPolicy = RetentionPolicy.DeserializeRetentionPolicy(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogSettings(category.Value, categoryGroup.Value, enabled, retentionPolicy.Value, serializedAdditionalRawData);
+            return new LogSettings(category, categoryGroup, enabled, retentionPolicy, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogSettings>.Write(ModelReaderWriterOptions options)

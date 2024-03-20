@@ -177,26 +177,26 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 return null;
             }
-            Optional<WebTestKind> kind = default;
-            Optional<IDictionary<string, string>> tags = default;
+            WebTestKind? kind = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> syntheticMonitorId = default;
-            Optional<string> name0 = default;
-            Optional<string> description = default;
-            Optional<bool> enabled = default;
-            Optional<int> frequency = default;
-            Optional<int> timeout = default;
-            Optional<WebTestKind> kind0 = default;
-            Optional<bool> retryEnabled = default;
-            Optional<IList<WebTestGeolocation>> locations = default;
-            Optional<WebTestPropertiesConfiguration> configuration = default;
-            Optional<string> provisioningState = default;
-            Optional<WebTestPropertiesRequest> request = default;
-            Optional<WebTestPropertiesValidationRules> validationRules = default;
+            SystemData systemData = default;
+            string syntheticMonitorId = default;
+            string name0 = default;
+            string description = default;
+            bool? enabled = default;
+            int? frequency = default;
+            int? timeout = default;
+            WebTestKind? kind0 = default;
+            bool? retryEnabled = default;
+            IList<WebTestGeolocation> locations = default;
+            WebTestPropertiesConfiguration configuration = default;
+            string provisioningState = default;
+            WebTestPropertiesRequest request = default;
+            WebTestPropertiesValidationRules validationRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                             List<WebTestGeolocation> array = new List<WebTestGeolocation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(WebTestGeolocation.DeserializeWebTestGeolocation(item));
+                                array.Add(WebTestGeolocation.DeserializeWebTestGeolocation(item, options));
                             }
                             locations = array;
                             continue;
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                             {
                                 continue;
                             }
-                            configuration = WebTestPropertiesConfiguration.DeserializeWebTestPropertiesConfiguration(property0.Value);
+                            configuration = WebTestPropertiesConfiguration.DeserializeWebTestPropertiesConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                             {
                                 continue;
                             }
-                            request = WebTestPropertiesRequest.DeserializeWebTestPropertiesRequest(property0.Value);
+                            request = WebTestPropertiesRequest.DeserializeWebTestPropertiesRequest(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("ValidationRules"u8))
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                             {
                                 continue;
                             }
-                            validationRules = WebTestPropertiesValidationRules.DeserializeWebTestPropertiesValidationRules(property0.Value);
+                            validationRules = WebTestPropertiesValidationRules.DeserializeWebTestPropertiesValidationRules(property0.Value, options);
                             continue;
                         }
                     }
@@ -377,7 +377,28 @@ namespace Azure.ResourceManager.ApplicationInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebTestData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(kind), syntheticMonitorId.Value, name0.Value, description.Value, Optional.ToNullable(enabled), Optional.ToNullable(frequency), Optional.ToNullable(timeout), Optional.ToNullable(kind0), Optional.ToNullable(retryEnabled), Optional.ToList(locations), configuration.Value, provisioningState.Value, request.Value, validationRules.Value, serializedAdditionalRawData);
+            return new WebTestData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                kind,
+                syntheticMonitorId,
+                name0,
+                description,
+                enabled,
+                frequency,
+                timeout,
+                kind0,
+                retryEnabled,
+                locations ?? new ChangeTrackingList<WebTestGeolocation>(),
+                configuration,
+                provisioningState,
+                request,
+                validationRules,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebTestData>.Write(ModelReaderWriterOptions options)

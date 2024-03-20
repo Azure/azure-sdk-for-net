@@ -318,7 +318,7 @@ namespace Azure.Core
                             case HeaderSource.None when root.TryGetProperty("properties", out var properties) && properties.TryGetProperty("provisioningState", out JsonElement property):
                             case HeaderSource.OperationLocation when root.TryGetProperty("status", out property):
                             case HeaderSource.AzureAsyncOperation when root.TryGetProperty("status", out property):
-                                var state = property.GetRequiredString().ToLowerInvariant();
+                                var state = GetRequiredString(property).ToLowerInvariant();
                                 if (FailureStates.Contains(state))
                                 {
                                     failureState = OperationState.Failure(response);
@@ -354,6 +354,15 @@ namespace Azure.Core
 
             failureState = OperationState.Failure(response);
             return true;
+        }
+
+        private static string GetRequiredString(in JsonElement element)
+        {
+            var value = element.GetString();
+            if (value == null)
+                throw new InvalidOperationException($"The requested operation requires an element of type 'String', but the target element has type '{element.ValueKind}'.");
+
+            return value;
         }
 
         private static bool ShouldIgnoreHeader(RequestMethod method, Response response)

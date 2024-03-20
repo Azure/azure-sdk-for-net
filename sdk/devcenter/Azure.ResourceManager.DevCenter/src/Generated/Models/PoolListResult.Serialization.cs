@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DevCenterPoolData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<DevCenterPoolData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     List<DevCenterPoolData> array = new List<DevCenterPoolData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DevCenterPoolData.DeserializeDevCenterPoolData(item));
+                        array.Add(DevCenterPoolData.DeserializeDevCenterPoolData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PoolListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new PoolListResult(value ?? new ChangeTrackingList<DevCenterPoolData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PoolListResult>.Write(ModelReaderWriterOptions options)

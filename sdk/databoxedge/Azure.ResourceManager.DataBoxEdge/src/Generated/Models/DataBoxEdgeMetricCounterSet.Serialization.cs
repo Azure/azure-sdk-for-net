@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     List<DataBoxEdgeMetricCounter> array = new List<DataBoxEdgeMetricCounter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxEdgeMetricCounter.DeserializeDataBoxEdgeMetricCounter(item));
+                        array.Add(DataBoxEdgeMetricCounter.DeserializeDataBoxEdgeMetricCounter(item, options));
                     }
                     counters = array;
                     continue;

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Support;
 
 namespace Azure.ResourceManager.Support.Models
 {
@@ -86,11 +87,11 @@ namespace Azure.ResourceManager.Support.Models
             {
                 return null;
             }
-            Optional<TranscriptContentType> contentType = default;
-            Optional<SupportTicketCommunicationDirection> communicationDirection = default;
-            Optional<string> sender = default;
+            TranscriptContentType? contentType = default;
+            SupportTicketCommunicationDirection? communicationDirection = default;
+            string sender = default;
             string body = default;
-            Optional<DateTimeOffset> createdDate = default;
+            DateTimeOffset? createdDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,7 +139,13 @@ namespace Azure.ResourceManager.Support.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChatTranscriptMessageProperties(Optional.ToNullable(contentType), Optional.ToNullable(communicationDirection), sender.Value, body, Optional.ToNullable(createdDate), serializedAdditionalRawData);
+            return new ChatTranscriptMessageProperties(
+                contentType,
+                communicationDirection,
+                sender,
+                body,
+                createdDate,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChatTranscriptMessageProperties>.Write(ModelReaderWriterOptions options)

@@ -249,41 +249,41 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 return null;
             }
-            Optional<ResourceIdentifier> managedBy = default;
-            Optional<string> kind = default;
-            Optional<ETag> etag = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<DesktopVirtualizationSku> sku = default;
-            Optional<ArmPlan> plan = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ResourceIdentifier managedBy = default;
+            string kind = default;
+            ETag? etag = default;
+            ManagedServiceIdentity identity = default;
+            DesktopVirtualizationSku sku = default;
+            ArmPlan plan = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> objectId = default;
-            Optional<string> friendlyName = default;
-            Optional<string> description = default;
+            SystemData systemData = default;
+            string objectId = default;
+            string friendlyName = default;
+            string description = default;
             HostPoolType hostPoolType = default;
-            Optional<PersonalDesktopAssignmentType> personalDesktopAssignmentType = default;
-            Optional<string> customRdpProperty = default;
-            Optional<int> maxSessionLimit = default;
+            PersonalDesktopAssignmentType? personalDesktopAssignmentType = default;
+            string customRdpProperty = default;
+            int? maxSessionLimit = default;
             HostPoolLoadBalancerType loadBalancerType = default;
-            Optional<int> ring = default;
-            Optional<bool> validationEnvironment = default;
-            Optional<HostPoolRegistrationInfo> registrationInfo = default;
-            Optional<string> vmTemplate = default;
-            Optional<IReadOnlyList<string>> applicationGroupReferences = default;
-            Optional<string> ssoadfsAuthority = default;
-            Optional<string> ssoClientId = default;
-            Optional<string> ssoClientSecretKeyVaultPath = default;
-            Optional<HostPoolSsoSecretType> ssoSecretType = default;
+            int? ring = default;
+            bool? validationEnvironment = default;
+            HostPoolRegistrationInfo registrationInfo = default;
+            string vmTemplate = default;
+            IReadOnlyList<string> applicationGroupReferences = default;
+            string ssoadfsAuthority = default;
+            string ssoClientId = default;
+            string ssoClientSecretKeyVaultPath = default;
+            HostPoolSsoSecretType? ssoSecretType = default;
             PreferredAppGroupType preferredAppGroupType = default;
-            Optional<bool> startVmOnConnect = default;
-            Optional<bool> cloudPCResource = default;
-            Optional<HostPoolPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<SessionHostAgentUpdateProperties> agentUpdate = default;
-            Optional<IReadOnlyList<DesktopVirtualizationPrivateEndpointConnection>> privateEndpointConnections = default;
+            bool? startVmOnConnect = default;
+            bool? cloudPCResource = default;
+            HostPoolPublicNetworkAccess? publicNetworkAccess = default;
+            SessionHostAgentUpdateProperties agentUpdate = default;
+            IReadOnlyList<DesktopVirtualizationPrivateEndpointConnection> privateEndpointConnections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     {
                         continue;
                     }
-                    sku = DesktopVirtualizationSku.DeserializeDesktopVirtualizationSku(property.Value);
+                    sku = DesktopVirtualizationSku.DeserializeDesktopVirtualizationSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("plan"u8))
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                             {
                                 continue;
                             }
-                            registrationInfo = HostPoolRegistrationInfo.DeserializeHostPoolRegistrationInfo(property0.Value);
+                            registrationInfo = HostPoolRegistrationInfo.DeserializeHostPoolRegistrationInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("vmTemplate"u8))
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                             {
                                 continue;
                             }
-                            agentUpdate = SessionHostAgentUpdateProperties.DeserializeSessionHostAgentUpdateProperties(property0.Value);
+                            agentUpdate = SessionHostAgentUpdateProperties.DeserializeSessionHostAgentUpdateProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("privateEndpointConnections"u8))
@@ -558,7 +558,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                             List<DesktopVirtualizationPrivateEndpointConnection> array = new List<DesktopVirtualizationPrivateEndpointConnection>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DesktopVirtualizationPrivateEndpointConnection.DeserializeDesktopVirtualizationPrivateEndpointConnection(item));
+                                array.Add(DesktopVirtualizationPrivateEndpointConnection.DeserializeDesktopVirtualizationPrivateEndpointConnection(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -572,7 +572,43 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HostPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, objectId.Value, friendlyName.Value, description.Value, hostPoolType, Optional.ToNullable(personalDesktopAssignmentType), customRdpProperty.Value, Optional.ToNullable(maxSessionLimit), loadBalancerType, Optional.ToNullable(ring), Optional.ToNullable(validationEnvironment), registrationInfo.Value, vmTemplate.Value, Optional.ToList(applicationGroupReferences), ssoadfsAuthority.Value, ssoClientId.Value, ssoClientSecretKeyVaultPath.Value, Optional.ToNullable(ssoSecretType), preferredAppGroupType, Optional.ToNullable(startVmOnConnect), Optional.ToNullable(cloudPCResource), Optional.ToNullable(publicNetworkAccess), agentUpdate.Value, Optional.ToList(privateEndpointConnections), managedBy.Value, kind.Value, Optional.ToNullable(etag), identity, sku.Value, plan, serializedAdditionalRawData);
+            return new HostPoolData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                objectId,
+                friendlyName,
+                description,
+                hostPoolType,
+                personalDesktopAssignmentType,
+                customRdpProperty,
+                maxSessionLimit,
+                loadBalancerType,
+                ring,
+                validationEnvironment,
+                registrationInfo,
+                vmTemplate,
+                applicationGroupReferences ?? new ChangeTrackingList<string>(),
+                ssoadfsAuthority,
+                ssoClientId,
+                ssoClientSecretKeyVaultPath,
+                ssoSecretType,
+                preferredAppGroupType,
+                startVmOnConnect,
+                cloudPCResource,
+                publicNetworkAccess,
+                agentUpdate,
+                privateEndpointConnections ?? new ChangeTrackingList<DesktopVirtualizationPrivateEndpointConnection>(),
+                managedBy,
+                kind,
+                etag,
+                identity,
+                sku,
+                plan,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HostPoolData>.Write(ModelReaderWriterOptions options)

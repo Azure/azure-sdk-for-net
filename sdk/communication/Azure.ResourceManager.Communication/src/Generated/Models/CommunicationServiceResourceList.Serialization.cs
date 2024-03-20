@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Communication.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CommunicationServiceResourceData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<CommunicationServiceResourceData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Communication.Models
                     List<CommunicationServiceResourceData> array = new List<CommunicationServiceResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CommunicationServiceResourceData.DeserializeCommunicationServiceResourceData(item));
+                        array.Add(CommunicationServiceResourceData.DeserializeCommunicationServiceResourceData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Communication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CommunicationServiceResourceList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new CommunicationServiceResourceList(value ?? new ChangeTrackingList<CommunicationServiceResourceData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CommunicationServiceResourceList>.Write(ModelReaderWriterOptions options)

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -124,19 +125,19 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<bool>> recursive = default;
-            Optional<DataFactoryElement<string>> wildcardFolderPath = default;
-            Optional<DataFactoryElement<string>> wildcardFileName = default;
-            Optional<DataFactoryElement<string>> fileListPath = default;
-            Optional<DataFactoryElement<bool>> enablePartitionDiscovery = default;
-            Optional<DataFactoryElement<string>> partitionRootPath = default;
-            Optional<DataFactoryElement<string>> modifiedDatetimeStart = default;
-            Optional<DataFactoryElement<string>> modifiedDatetimeEnd = default;
-            Optional<DistcpSettings> distcpSettings = default;
-            Optional<DataFactoryElement<bool>> deleteFilesAfterCompletion = default;
+            DataFactoryElement<bool> recursive = default;
+            DataFactoryElement<string> wildcardFolderPath = default;
+            DataFactoryElement<string> wildcardFileName = default;
+            DataFactoryElement<string> fileListPath = default;
+            DataFactoryElement<bool> enablePartitionDiscovery = default;
+            DataFactoryElement<string> partitionRootPath = default;
+            DataFactoryElement<string> modifiedDatetimeStart = default;
+            DataFactoryElement<string> modifiedDatetimeEnd = default;
+            DistcpSettings distcpSettings = default;
+            DataFactoryElement<bool> deleteFilesAfterCompletion = default;
             string type = default;
-            Optional<DataFactoryElement<int>> maxConcurrentConnections = default;
-            Optional<DataFactoryElement<bool>> disableMetricsCollection = default;
+            DataFactoryElement<int> maxConcurrentConnections = default;
+            DataFactoryElement<bool> disableMetricsCollection = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -219,7 +220,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    distcpSettings = DistcpSettings.DeserializeDistcpSettings(property.Value);
+                    distcpSettings = DistcpSettings.DeserializeDistcpSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("deleteFilesAfterCompletion"u8))
@@ -257,7 +258,21 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new HdfsReadSettings(type, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, recursive.Value, wildcardFolderPath.Value, wildcardFileName.Value, fileListPath.Value, enablePartitionDiscovery.Value, partitionRootPath.Value, modifiedDatetimeStart.Value, modifiedDatetimeEnd.Value, distcpSettings.Value, deleteFilesAfterCompletion.Value);
+            return new HdfsReadSettings(
+                type,
+                maxConcurrentConnections,
+                disableMetricsCollection,
+                additionalProperties,
+                recursive,
+                wildcardFolderPath,
+                wildcardFileName,
+                fileListPath,
+                enablePartitionDiscovery,
+                partitionRootPath,
+                modifiedDatetimeStart,
+                modifiedDatetimeEnd,
+                distcpSettings,
+                deleteFilesAfterCompletion);
         }
 
         BinaryData IPersistableModel<HdfsReadSettings>.Write(ModelReaderWriterOptions options)

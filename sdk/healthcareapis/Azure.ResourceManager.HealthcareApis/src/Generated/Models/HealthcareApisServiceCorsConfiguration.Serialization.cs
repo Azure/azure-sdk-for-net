@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HealthcareApis;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
@@ -104,11 +105,11 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             {
                 return null;
             }
-            Optional<IList<string>> origins = default;
-            Optional<IList<string>> headers = default;
-            Optional<IList<string>> methods = default;
-            Optional<int> maxAge = default;
-            Optional<bool> allowCredentials = default;
+            IList<string> origins = default;
+            IList<string> headers = default;
+            IList<string> methods = default;
+            int? maxAge = default;
+            bool? allowCredentials = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,7 +180,13 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HealthcareApisServiceCorsConfiguration(Optional.ToList(origins), Optional.ToList(headers), Optional.ToList(methods), Optional.ToNullable(maxAge), Optional.ToNullable(allowCredentials), serializedAdditionalRawData);
+            return new HealthcareApisServiceCorsConfiguration(
+                origins ?? new ChangeTrackingList<string>(),
+                headers ?? new ChangeTrackingList<string>(),
+                methods ?? new ChangeTrackingList<string>(),
+                maxAge,
+                allowCredentials,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HealthcareApisServiceCorsConfiguration>.Write(ModelReaderWriterOptions options)

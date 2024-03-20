@@ -183,26 +183,26 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 return null;
             }
-            Optional<ExtendedLocation> extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ExtendedLocation extendedLocation = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<AdministratorConfiguration> administratorConfiguration = default;
-            Optional<NetworkCloudAgentConfiguration> agentOptions = default;
-            Optional<AttachedNetworkConfiguration> attachedNetworkConfiguration = default;
-            Optional<IList<string>> availabilityZones = default;
+            SystemData systemData = default;
+            AdministratorConfiguration administratorConfiguration = default;
+            NetworkCloudAgentConfiguration agentOptions = default;
+            AttachedNetworkConfiguration attachedNetworkConfiguration = default;
+            IList<string> availabilityZones = default;
             long count = default;
-            Optional<AgentPoolDetailedStatus> detailedStatus = default;
-            Optional<string> detailedStatusMessage = default;
-            Optional<string> kubernetesVersion = default;
-            Optional<IList<KubernetesLabel>> labels = default;
+            AgentPoolDetailedStatus? detailedStatus = default;
+            string detailedStatusMessage = default;
+            string kubernetesVersion = default;
+            IList<KubernetesLabel> labels = default;
             NetworkCloudAgentPoolMode mode = default;
-            Optional<AgentPoolProvisioningState> provisioningState = default;
-            Optional<IList<KubernetesLabel>> taints = default;
-            Optional<AgentPoolUpgradeSettings> upgradeSettings = default;
+            AgentPoolProvisioningState? provisioningState = default;
+            IList<KubernetesLabel> taints = default;
+            AgentPoolUpgradeSettings upgradeSettings = default;
             string vmSkuName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     {
                         continue;
                     }
-                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            administratorConfiguration = AdministratorConfiguration.DeserializeAdministratorConfiguration(property0.Value);
+                            administratorConfiguration = AdministratorConfiguration.DeserializeAdministratorConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("agentOptions"u8))
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            agentOptions = NetworkCloudAgentConfiguration.DeserializeNetworkCloudAgentConfiguration(property0.Value);
+                            agentOptions = NetworkCloudAgentConfiguration.DeserializeNetworkCloudAgentConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("attachedNetworkConfiguration"u8))
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            attachedNetworkConfiguration = AttachedNetworkConfiguration.DeserializeAttachedNetworkConfiguration(property0.Value);
+                            attachedNetworkConfiguration = AttachedNetworkConfiguration.DeserializeAttachedNetworkConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("availabilityZones"u8))
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             List<KubernetesLabel> array = new List<KubernetesLabel>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(KubernetesLabel.DeserializeKubernetesLabel(item));
+                                array.Add(KubernetesLabel.DeserializeKubernetesLabel(item, options));
                             }
                             labels = array;
                             continue;
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             List<KubernetesLabel> array = new List<KubernetesLabel>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(KubernetesLabel.DeserializeKubernetesLabel(item));
+                                array.Add(KubernetesLabel.DeserializeKubernetesLabel(item, options));
                             }
                             taints = array;
                             continue;
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            upgradeSettings = AgentPoolUpgradeSettings.DeserializeAgentPoolUpgradeSettings(property0.Value);
+                            upgradeSettings = AgentPoolUpgradeSettings.DeserializeAgentPoolUpgradeSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("vmSkuName"u8))
@@ -399,7 +399,29 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudAgentPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation.Value, administratorConfiguration.Value, agentOptions.Value, attachedNetworkConfiguration.Value, Optional.ToList(availabilityZones), count, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, kubernetesVersion.Value, Optional.ToList(labels), mode, Optional.ToNullable(provisioningState), Optional.ToList(taints), upgradeSettings.Value, vmSkuName, serializedAdditionalRawData);
+            return new NetworkCloudAgentPoolData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation,
+                administratorConfiguration,
+                agentOptions,
+                attachedNetworkConfiguration,
+                availabilityZones ?? new ChangeTrackingList<string>(),
+                count,
+                detailedStatus,
+                detailedStatusMessage,
+                kubernetesVersion,
+                labels ?? new ChangeTrackingList<KubernetesLabel>(),
+                mode,
+                provisioningState,
+                taints ?? new ChangeTrackingList<KubernetesLabel>(),
+                upgradeSettings,
+                vmSkuName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudAgentPoolData>.Write(ModelReaderWriterOptions options)

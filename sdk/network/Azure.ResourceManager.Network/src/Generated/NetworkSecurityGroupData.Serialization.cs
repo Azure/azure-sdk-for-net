@@ -170,20 +170,20 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<bool> flushConnection = default;
-            Optional<IList<SecurityRuleData>> securityRules = default;
-            Optional<IReadOnlyList<SecurityRuleData>> defaultSecurityRules = default;
-            Optional<IReadOnlyList<NetworkInterfaceData>> networkInterfaces = default;
-            Optional<IReadOnlyList<SubnetData>> subnets = default;
-            Optional<IReadOnlyList<FlowLogData>> flowLogs = default;
-            Optional<Guid> resourceGuid = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
+            IDictionary<string, string> tags = default;
+            bool? flushConnection = default;
+            IList<SecurityRuleData> securityRules = default;
+            IReadOnlyList<SecurityRuleData> defaultSecurityRules = default;
+            IReadOnlyList<NetworkInterfaceData> networkInterfaces = default;
+            IReadOnlyList<SubnetData> subnets = default;
+            IReadOnlyList<FlowLogData> flowLogs = default;
+            Guid? resourceGuid = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Network
                             List<SecurityRuleData> array = new List<SecurityRuleData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SecurityRuleData.DeserializeSecurityRuleData(item));
+                                array.Add(SecurityRuleData.DeserializeSecurityRuleData(item, options));
                             }
                             securityRules = array;
                             continue;
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Network
                             List<SecurityRuleData> array = new List<SecurityRuleData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SecurityRuleData.DeserializeSecurityRuleData(item));
+                                array.Add(SecurityRuleData.DeserializeSecurityRuleData(item, options));
                             }
                             defaultSecurityRules = array;
                             continue;
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Network
                             List<NetworkInterfaceData> array = new List<NetworkInterfaceData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkInterfaceData.DeserializeNetworkInterfaceData(item));
+                                array.Add(NetworkInterfaceData.DeserializeNetworkInterfaceData(item, options));
                             }
                             networkInterfaces = array;
                             continue;
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Network
                             List<SubnetData> array = new List<SubnetData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SubnetData.DeserializeSubnetData(item));
+                                array.Add(SubnetData.DeserializeSubnetData(item, options));
                             }
                             subnets = array;
                             continue;
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Network
                             List<FlowLogData> array = new List<FlowLogData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FlowLogData.DeserializeFlowLogData(item));
+                                array.Add(FlowLogData.DeserializeFlowLogData(item, options));
                             }
                             flowLogs = array;
                             continue;
@@ -358,7 +358,22 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkSecurityGroupData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(flushConnection), Optional.ToList(securityRules), Optional.ToList(defaultSecurityRules), Optional.ToList(networkInterfaces), Optional.ToList(subnets), Optional.ToList(flowLogs), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState));
+            return new NetworkSecurityGroupData(
+                id,
+                name,
+                type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                etag,
+                flushConnection,
+                securityRules ?? new ChangeTrackingList<SecurityRuleData>(),
+                defaultSecurityRules ?? new ChangeTrackingList<SecurityRuleData>(),
+                networkInterfaces ?? new ChangeTrackingList<NetworkInterfaceData>(),
+                subnets ?? new ChangeTrackingList<SubnetData>(),
+                flowLogs ?? new ChangeTrackingList<FlowLogData>(),
+                resourceGuid,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<NetworkSecurityGroupData>.Write(ModelReaderWriterOptions options)

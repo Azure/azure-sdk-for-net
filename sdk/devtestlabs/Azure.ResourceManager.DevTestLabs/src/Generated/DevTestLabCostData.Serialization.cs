@@ -162,22 +162,22 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DevTestLabTargetCost> targetCost = default;
-            Optional<LabCostSummaryProperties> labCostSummary = default;
-            Optional<IReadOnlyList<DevTestLabCostDetails>> labCostDetails = default;
-            Optional<IReadOnlyList<DevTestLabResourceCost>> resourceCosts = default;
-            Optional<string> currencyCode = default;
-            Optional<DateTimeOffset> startDateTime = default;
-            Optional<DateTimeOffset> endDateTime = default;
-            Optional<DateTimeOffset> createdDate = default;
-            Optional<string> provisioningState = default;
-            Optional<Guid> uniqueIdentifier = default;
+            SystemData systemData = default;
+            DevTestLabTargetCost targetCost = default;
+            LabCostSummaryProperties labCostSummary = default;
+            IReadOnlyList<DevTestLabCostDetails> labCostDetails = default;
+            IReadOnlyList<DevTestLabResourceCost> resourceCosts = default;
+            string currencyCode = default;
+            DateTimeOffset? startDateTime = default;
+            DateTimeOffset? endDateTime = default;
+            DateTimeOffset? createdDate = default;
+            string provisioningState = default;
+            Guid? uniqueIdentifier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             {
                                 continue;
                             }
-                            targetCost = DevTestLabTargetCost.DeserializeDevTestLabTargetCost(property0.Value);
+                            targetCost = DevTestLabTargetCost.DeserializeDevTestLabTargetCost(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("labCostSummary"u8))
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             {
                                 continue;
                             }
-                            labCostSummary = LabCostSummaryProperties.DeserializeLabCostSummaryProperties(property0.Value);
+                            labCostSummary = LabCostSummaryProperties.DeserializeLabCostSummaryProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("labCostDetails"u8))
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             List<DevTestLabCostDetails> array = new List<DevTestLabCostDetails>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DevTestLabCostDetails.DeserializeDevTestLabCostDetails(item));
+                                array.Add(DevTestLabCostDetails.DeserializeDevTestLabCostDetails(item, options));
                             }
                             labCostDetails = array;
                             continue;
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             List<DevTestLabResourceCost> array = new List<DevTestLabResourceCost>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DevTestLabResourceCost.DeserializeDevTestLabResourceCost(item));
+                                array.Add(DevTestLabResourceCost.DeserializeDevTestLabResourceCost(item, options));
                             }
                             resourceCosts = array;
                             continue;
@@ -335,7 +335,24 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabCostData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, targetCost.Value, labCostSummary.Value, Optional.ToList(labCostDetails), Optional.ToList(resourceCosts), currencyCode.Value, Optional.ToNullable(startDateTime), Optional.ToNullable(endDateTime), Optional.ToNullable(createdDate), provisioningState.Value, Optional.ToNullable(uniqueIdentifier), serializedAdditionalRawData);
+            return new DevTestLabCostData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                targetCost,
+                labCostSummary,
+                labCostDetails ?? new ChangeTrackingList<DevTestLabCostDetails>(),
+                resourceCosts ?? new ChangeTrackingList<DevTestLabResourceCost>(),
+                currencyCode,
+                startDateTime,
+                endDateTime,
+                createdDate,
+                provisioningState,
+                uniqueIdentifier,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabCostData>.Write(ModelReaderWriterOptions options)

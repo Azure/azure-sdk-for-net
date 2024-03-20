@@ -222,29 +222,29 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> type0 = default;
-            Optional<string> status = default;
-            Optional<string> blockReason = default;
-            Optional<string> lastUploadedFileName = default;
-            Optional<DateTimeOffset> lastUploadedFileTime = default;
-            Optional<string> lastRestoredFileName = default;
-            Optional<DateTimeOffset> lastRestoredFileTime = default;
-            Optional<int> percentCompleted = default;
-            Optional<int> currentRestoredSizeMB = default;
-            Optional<int> currentRestorePlanSizeMB = default;
-            Optional<string> currentBackupType = default;
-            Optional<string> currentRestoringFileName = default;
-            Optional<int> numberOfFilesDetected = default;
-            Optional<int> numberOfFilesQueued = default;
-            Optional<int> numberOfFilesSkipped = default;
-            Optional<int> numberOfFilesRestoring = default;
-            Optional<int> numberOfFilesRestored = default;
-            Optional<int> numberOfFilesUnrestorable = default;
-            Optional<IReadOnlyList<ManagedDatabaseRestoreDetailBackupSetProperties>> fullBackupSets = default;
-            Optional<IReadOnlyList<ManagedDatabaseRestoreDetailBackupSetProperties>> diffBackupSets = default;
-            Optional<IReadOnlyList<ManagedDatabaseRestoreDetailBackupSetProperties>> logBackupSets = default;
-            Optional<IReadOnlyList<ManagedDatabaseRestoreDetailUnrestorableFileProperties>> unrestorableFiles = default;
+            SystemData systemData = default;
+            string type0 = default;
+            string status = default;
+            string blockReason = default;
+            string lastUploadedFileName = default;
+            DateTimeOffset? lastUploadedFileTime = default;
+            string lastRestoredFileName = default;
+            DateTimeOffset? lastRestoredFileTime = default;
+            int? percentCompleted = default;
+            int? currentRestoredSizeMB = default;
+            int? currentRestorePlanSizeMB = default;
+            string currentBackupType = default;
+            string currentRestoringFileName = default;
+            int? numberOfFilesDetected = default;
+            int? numberOfFilesQueued = default;
+            int? numberOfFilesSkipped = default;
+            int? numberOfFilesRestoring = default;
+            int? numberOfFilesRestored = default;
+            int? numberOfFilesUnrestorable = default;
+            IReadOnlyList<ManagedDatabaseRestoreDetailBackupSetProperties> fullBackupSets = default;
+            IReadOnlyList<ManagedDatabaseRestoreDetailBackupSetProperties> diffBackupSets = default;
+            IReadOnlyList<ManagedDatabaseRestoreDetailBackupSetProperties> logBackupSets = default;
+            IReadOnlyList<ManagedDatabaseRestoreDetailUnrestorableFileProperties> unrestorableFiles = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.Sql
                             List<ManagedDatabaseRestoreDetailBackupSetProperties> array = new List<ManagedDatabaseRestoreDetailBackupSetProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagedDatabaseRestoreDetailBackupSetProperties.DeserializeManagedDatabaseRestoreDetailBackupSetProperties(item));
+                                array.Add(ManagedDatabaseRestoreDetailBackupSetProperties.DeserializeManagedDatabaseRestoreDetailBackupSetProperties(item, options));
                             }
                             fullBackupSets = array;
                             continue;
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.Sql
                             List<ManagedDatabaseRestoreDetailBackupSetProperties> array = new List<ManagedDatabaseRestoreDetailBackupSetProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagedDatabaseRestoreDetailBackupSetProperties.DeserializeManagedDatabaseRestoreDetailBackupSetProperties(item));
+                                array.Add(ManagedDatabaseRestoreDetailBackupSetProperties.DeserializeManagedDatabaseRestoreDetailBackupSetProperties(item, options));
                             }
                             diffBackupSets = array;
                             continue;
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.Sql
                             List<ManagedDatabaseRestoreDetailBackupSetProperties> array = new List<ManagedDatabaseRestoreDetailBackupSetProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagedDatabaseRestoreDetailBackupSetProperties.DeserializeManagedDatabaseRestoreDetailBackupSetProperties(item));
+                                array.Add(ManagedDatabaseRestoreDetailBackupSetProperties.DeserializeManagedDatabaseRestoreDetailBackupSetProperties(item, options));
                             }
                             logBackupSets = array;
                             continue;
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.Sql
                             List<ManagedDatabaseRestoreDetailUnrestorableFileProperties> array = new List<ManagedDatabaseRestoreDetailUnrestorableFileProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagedDatabaseRestoreDetailUnrestorableFileProperties.DeserializeManagedDatabaseRestoreDetailUnrestorableFileProperties(item));
+                                array.Add(ManagedDatabaseRestoreDetailUnrestorableFileProperties.DeserializeManagedDatabaseRestoreDetailUnrestorableFileProperties(item, options));
                             }
                             unrestorableFiles = array;
                             continue;
@@ -481,7 +481,34 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedDatabaseRestoreDetailData(id, name, type, systemData.Value, type0.Value, status.Value, blockReason.Value, lastUploadedFileName.Value, Optional.ToNullable(lastUploadedFileTime), lastRestoredFileName.Value, Optional.ToNullable(lastRestoredFileTime), Optional.ToNullable(percentCompleted), Optional.ToNullable(currentRestoredSizeMB), Optional.ToNullable(currentRestorePlanSizeMB), currentBackupType.Value, currentRestoringFileName.Value, Optional.ToNullable(numberOfFilesDetected), Optional.ToNullable(numberOfFilesQueued), Optional.ToNullable(numberOfFilesSkipped), Optional.ToNullable(numberOfFilesRestoring), Optional.ToNullable(numberOfFilesRestored), Optional.ToNullable(numberOfFilesUnrestorable), Optional.ToList(fullBackupSets), Optional.ToList(diffBackupSets), Optional.ToList(logBackupSets), Optional.ToList(unrestorableFiles), serializedAdditionalRawData);
+            return new ManagedDatabaseRestoreDetailData(
+                id,
+                name,
+                type,
+                systemData,
+                type0,
+                status,
+                blockReason,
+                lastUploadedFileName,
+                lastUploadedFileTime,
+                lastRestoredFileName,
+                lastRestoredFileTime,
+                percentCompleted,
+                currentRestoredSizeMB,
+                currentRestorePlanSizeMB,
+                currentBackupType,
+                currentRestoringFileName,
+                numberOfFilesDetected,
+                numberOfFilesQueued,
+                numberOfFilesSkipped,
+                numberOfFilesRestoring,
+                numberOfFilesRestored,
+                numberOfFilesUnrestorable,
+                fullBackupSets ?? new ChangeTrackingList<ManagedDatabaseRestoreDetailBackupSetProperties>(),
+                diffBackupSets ?? new ChangeTrackingList<ManagedDatabaseRestoreDetailBackupSetProperties>(),
+                logBackupSets ?? new ChangeTrackingList<ManagedDatabaseRestoreDetailBackupSetProperties>(),
+                unrestorableFiles ?? new ChangeTrackingList<ManagedDatabaseRestoreDetailUnrestorableFileProperties>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedDatabaseRestoreDetailData>.Write(ModelReaderWriterOptions options)

@@ -70,14 +70,8 @@ namespace Azure.AI.Translation.Text
         /// <exception cref="ArgumentNullException"> <paramref name="normalizedText"/> or <paramref name="displayText"/> is null. </exception>
         internal BackTranslation(string normalizedText, string displayText, int numExamples, int frequencyCount)
         {
-            if (normalizedText == null)
-            {
-                throw new ArgumentNullException(nameof(normalizedText));
-            }
-            if (displayText == null)
-            {
-                throw new ArgumentNullException(nameof(displayText));
-            }
+            Argument.AssertNotNull(normalizedText, nameof(normalizedText));
+            Argument.AssertNotNull(displayText, nameof(displayText));
 
             NormalizedText = normalizedText;
             DisplayText = displayText;

@@ -192,26 +192,26 @@ namespace Azure.ResourceManager.Workloads
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> instanceNo = default;
-            Optional<ResourceIdentifier> subnet = default;
-            Optional<MessageServerProperties> messageServerProperties = default;
-            Optional<EnqueueServerProperties> enqueueServerProperties = default;
-            Optional<GatewayServerProperties> gatewayServerProperties = default;
-            Optional<EnqueueReplicationServerProperties> enqueueReplicationServerProperties = default;
-            Optional<string> kernelVersion = default;
-            Optional<string> kernelPatch = default;
-            Optional<SubResource> loadBalancerDetails = default;
-            Optional<IReadOnlyList<CentralServerVmDetails>> vmDetails = default;
-            Optional<SapVirtualInstanceStatus> status = default;
-            Optional<SapHealthState> health = default;
-            Optional<SapVirtualInstanceProvisioningState> provisioningState = default;
-            Optional<SapVirtualInstanceError> errors = default;
+            SystemData systemData = default;
+            string instanceNo = default;
+            ResourceIdentifier subnet = default;
+            MessageServerProperties messageServerProperties = default;
+            EnqueueServerProperties enqueueServerProperties = default;
+            GatewayServerProperties gatewayServerProperties = default;
+            EnqueueReplicationServerProperties enqueueReplicationServerProperties = default;
+            string kernelVersion = default;
+            string kernelPatch = default;
+            SubResource loadBalancerDetails = default;
+            IReadOnlyList<CentralServerVmDetails> vmDetails = default;
+            SapVirtualInstanceStatus? status = default;
+            SapHealthState? health = default;
+            SapVirtualInstanceProvisioningState? provisioningState = default;
+            SapVirtualInstanceError errors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Workloads
                             {
                                 continue;
                             }
-                            messageServerProperties = MessageServerProperties.DeserializeMessageServerProperties(property0.Value);
+                            messageServerProperties = MessageServerProperties.DeserializeMessageServerProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("enqueueServerProperties"u8))
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Workloads
                             {
                                 continue;
                             }
-                            enqueueServerProperties = EnqueueServerProperties.DeserializeEnqueueServerProperties(property0.Value);
+                            enqueueServerProperties = EnqueueServerProperties.DeserializeEnqueueServerProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("gatewayServerProperties"u8))
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Workloads
                             {
                                 continue;
                             }
-                            gatewayServerProperties = GatewayServerProperties.DeserializeGatewayServerProperties(property0.Value);
+                            gatewayServerProperties = GatewayServerProperties.DeserializeGatewayServerProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("enqueueReplicationServerProperties"u8))
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Workloads
                             {
                                 continue;
                             }
-                            enqueueReplicationServerProperties = EnqueueReplicationServerProperties.DeserializeEnqueueReplicationServerProperties(property0.Value);
+                            enqueueReplicationServerProperties = EnqueueReplicationServerProperties.DeserializeEnqueueReplicationServerProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("kernelVersion"u8))
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Workloads
                             List<CentralServerVmDetails> array = new List<CentralServerVmDetails>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(CentralServerVmDetails.DeserializeCentralServerVmDetails(item));
+                                array.Add(CentralServerVmDetails.DeserializeCentralServerVmDetails(item, options));
                             }
                             vmDetails = array;
                             continue;
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.Workloads
                             {
                                 continue;
                             }
-                            errors = SapVirtualInstanceError.DeserializeSapVirtualInstanceError(property0.Value);
+                            errors = SapVirtualInstanceError.DeserializeSapVirtualInstanceError(property0.Value, options);
                             continue;
                         }
                     }
@@ -406,7 +406,28 @@ namespace Azure.ResourceManager.Workloads
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SapCentralServerInstanceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, instanceNo.Value, subnet.Value, messageServerProperties.Value, enqueueServerProperties.Value, gatewayServerProperties.Value, enqueueReplicationServerProperties.Value, kernelVersion.Value, kernelPatch.Value, loadBalancerDetails, Optional.ToList(vmDetails), Optional.ToNullable(status), Optional.ToNullable(health), Optional.ToNullable(provisioningState), errors.Value, serializedAdditionalRawData);
+            return new SapCentralServerInstanceData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                instanceNo,
+                subnet,
+                messageServerProperties,
+                enqueueServerProperties,
+                gatewayServerProperties,
+                enqueueReplicationServerProperties,
+                kernelVersion,
+                kernelPatch,
+                loadBalancerDetails,
+                vmDetails ?? new ChangeTrackingList<CentralServerVmDetails>(),
+                status,
+                health,
+                provisioningState,
+                errors,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SapCentralServerInstanceData>.Write(ModelReaderWriterOptions options)

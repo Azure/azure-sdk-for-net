@@ -149,13 +149,13 @@ namespace Azure.ResourceManager.Cdn
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<HealthProbeSettings> healthProbeSettings = default;
-            Optional<IList<WritableSubResource>> origins = default;
-            Optional<int?> trafficRestorationTimeToHealedOrNewEndpointsInMinutes = default;
-            Optional<ResponseBasedOriginErrorDetectionSettings> responseBasedOriginErrorDetectionSettings = default;
-            Optional<OriginGroupResourceState> resourceState = default;
-            Optional<OriginGroupProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            HealthProbeSettings healthProbeSettings = default;
+            IList<WritableSubResource> origins = default;
+            int? trafficRestorationTimeToHealedOrNewEndpointsInMinutes = default;
+            ResponseBasedOriginErrorDetectionSettings responseBasedOriginErrorDetectionSettings = default;
+            OriginGroupResourceState? resourceState = default;
+            OriginGroupProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Cdn
                                 healthProbeSettings = null;
                                 continue;
                             }
-                            healthProbeSettings = HealthProbeSettings.DeserializeHealthProbeSettings(property0.Value);
+                            healthProbeSettings = HealthProbeSettings.DeserializeHealthProbeSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("origins"u8))
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Cdn
                                 responseBasedOriginErrorDetectionSettings = null;
                                 continue;
                             }
-                            responseBasedOriginErrorDetectionSettings = ResponseBasedOriginErrorDetectionSettings.DeserializeResponseBasedOriginErrorDetectionSettings(property0.Value);
+                            responseBasedOriginErrorDetectionSettings = ResponseBasedOriginErrorDetectionSettings.DeserializeResponseBasedOriginErrorDetectionSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("resourceState"u8))
@@ -264,7 +264,18 @@ namespace Azure.ResourceManager.Cdn
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CdnOriginGroupData(id, name, type, systemData.Value, healthProbeSettings.Value, Optional.ToList(origins), Optional.ToNullable(trafficRestorationTimeToHealedOrNewEndpointsInMinutes), responseBasedOriginErrorDetectionSettings.Value, Optional.ToNullable(resourceState), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new CdnOriginGroupData(
+                id,
+                name,
+                type,
+                systemData,
+                healthProbeSettings,
+                origins ?? new ChangeTrackingList<WritableSubResource>(),
+                trafficRestorationTimeToHealedOrNewEndpointsInMinutes,
+                responseBasedOriginErrorDetectionSettings,
+                resourceState,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CdnOriginGroupData>.Write(ModelReaderWriterOptions options)

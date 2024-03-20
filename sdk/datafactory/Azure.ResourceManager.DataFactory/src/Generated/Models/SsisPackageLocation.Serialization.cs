@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -123,16 +124,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<string>> packagePath = default;
-            Optional<SsisPackageLocationType> type = default;
-            Optional<DataFactorySecretBaseDefinition> packagePassword = default;
-            Optional<SsisAccessCredential> accessCredential = default;
-            Optional<DataFactoryElement<string>> configurationPath = default;
-            Optional<SsisAccessCredential> configurationAccessCredential = default;
-            Optional<string> packageName = default;
-            Optional<DataFactoryElement<string>> packageContent = default;
-            Optional<string> packageLastModifiedDate = default;
-            Optional<IList<SsisChildPackage>> childPackages = default;
+            DataFactoryElement<string> packagePath = default;
+            SsisPackageLocationType? type = default;
+            DataFactorySecret packagePassword = default;
+            SsisAccessCredential accessCredential = default;
+            DataFactoryElement<string> configurationPath = default;
+            SsisAccessCredential configurationAccessCredential = default;
+            string packageName = default;
+            DataFactoryElement<string> packageContent = default;
+            string packageLastModifiedDate = default;
+            IList<SsisChildPackage> childPackages = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -170,7 +171,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            packagePassword = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
+                            packagePassword = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("accessCredential"u8))
@@ -179,7 +180,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            accessCredential = SsisAccessCredential.DeserializeSsisAccessCredential(property0.Value);
+                            accessCredential = SsisAccessCredential.DeserializeSsisAccessCredential(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("configurationPath"u8))
@@ -197,7 +198,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            configurationAccessCredential = SsisAccessCredential.DeserializeSsisAccessCredential(property0.Value);
+                            configurationAccessCredential = SsisAccessCredential.DeserializeSsisAccessCredential(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("packageName"u8))
@@ -228,7 +229,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<SsisChildPackage> array = new List<SsisChildPackage>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SsisChildPackage.DeserializeSsisChildPackage(item));
+                                array.Add(SsisChildPackage.DeserializeSsisChildPackage(item, options));
                             }
                             childPackages = array;
                             continue;
@@ -242,7 +243,18 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SsisPackageLocation(packagePath.Value, Optional.ToNullable(type), packagePassword, accessCredential.Value, configurationPath.Value, configurationAccessCredential.Value, packageName.Value, packageContent.Value, packageLastModifiedDate.Value, Optional.ToList(childPackages), serializedAdditionalRawData);
+            return new SsisPackageLocation(
+                packagePath,
+                type,
+                packagePassword,
+                accessCredential,
+                configurationPath,
+                configurationAccessCredential,
+                packageName,
+                packageContent,
+                packageLastModifiedDate,
+                childPackages ?? new ChangeTrackingList<SsisChildPackage>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SsisPackageLocation>.Write(ModelReaderWriterOptions options)

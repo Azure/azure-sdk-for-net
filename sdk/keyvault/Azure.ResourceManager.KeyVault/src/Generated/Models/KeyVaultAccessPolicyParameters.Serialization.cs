@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.KeyVault;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.KeyVault.Models
@@ -92,12 +93,12 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             KeyVaultAccessPolicyProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = KeyVaultAccessPolicyProperties.DeserializeKeyVaultAccessPolicyProperties(property.Value);
+                    properties = KeyVaultAccessPolicyProperties.DeserializeKeyVaultAccessPolicyProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -146,7 +147,14 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KeyVaultAccessPolicyParameters(id, name, type, systemData.Value, Optional.ToNullable(location), properties, serializedAdditionalRawData);
+            return new KeyVaultAccessPolicyParameters(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KeyVaultAccessPolicyParameters>.Write(ModelReaderWriterOptions options)

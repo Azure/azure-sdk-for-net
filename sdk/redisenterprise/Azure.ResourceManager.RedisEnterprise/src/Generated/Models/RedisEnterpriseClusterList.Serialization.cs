@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RedisEnterpriseClusterData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<RedisEnterpriseClusterData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     List<RedisEnterpriseClusterData> array = new List<RedisEnterpriseClusterData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RedisEnterpriseClusterData.DeserializeRedisEnterpriseClusterData(item));
+                        array.Add(RedisEnterpriseClusterData.DeserializeRedisEnterpriseClusterData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisEnterpriseClusterList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new RedisEnterpriseClusterList(value ?? new ChangeTrackingList<RedisEnterpriseClusterData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisEnterpriseClusterList>.Write(ModelReaderWriterOptions options)

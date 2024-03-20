@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageMover;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
@@ -75,13 +76,13 @@ namespace Azure.ResourceManager.StorageMover.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureStorageBlobContainer": return AzureStorageBlobContainerEndpointUpdateProperties.DeserializeAzureStorageBlobContainerEndpointUpdateProperties(element);
-                    case "AzureStorageSmbFileShare": return AzureStorageSmbFileShareEndpointUpdateProperties.DeserializeAzureStorageSmbFileShareEndpointUpdateProperties(element);
-                    case "NfsMount": return NfsMountEndpointUpdateProperties.DeserializeNfsMountEndpointUpdateProperties(element);
-                    case "SmbMount": return SmbMountEndpointUpdateProperties.DeserializeSmbMountEndpointUpdateProperties(element);
+                    case "AzureStorageBlobContainer": return AzureStorageBlobContainerEndpointUpdateProperties.DeserializeAzureStorageBlobContainerEndpointUpdateProperties(element, options);
+                    case "AzureStorageSmbFileShare": return AzureStorageSmbFileShareEndpointUpdateProperties.DeserializeAzureStorageSmbFileShareEndpointUpdateProperties(element, options);
+                    case "NfsMount": return NfsMountEndpointUpdateProperties.DeserializeNfsMountEndpointUpdateProperties(element, options);
+                    case "SmbMount": return SmbMountEndpointUpdateProperties.DeserializeSmbMountEndpointUpdateProperties(element, options);
                 }
             }
-            return UnknownEndpointBaseUpdateProperties.DeserializeUnknownEndpointBaseUpdateProperties(element);
+            return UnknownEndpointBaseUpdateProperties.DeserializeUnknownEndpointBaseUpdateProperties(element, options);
         }
 
         BinaryData IPersistableModel<EndpointBaseUpdateProperties>.Write(ModelReaderWriterOptions options)

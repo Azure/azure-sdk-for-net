@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -133,19 +134,19 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<string> resourceName = default;
-            Optional<string> unit = default;
-            Optional<long> currentValue = default;
-            Optional<long> limit = default;
-            Optional<DateTimeOffset> nextResetTime = default;
-            Optional<ComputeModeOption> computeMode = default;
-            Optional<string> siteMode = default;
+            SystemData systemData = default;
+            string displayName = default;
+            string resourceName = default;
+            string unit = default;
+            long? currentValue = default;
+            long? limit = default;
+            DateTimeOffset? nextResetTime = default;
+            ComputeModeOption? computeMode = default;
+            string siteMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -253,7 +254,21 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceUsage(id, name, type, systemData.Value, displayName.Value, resourceName.Value, unit.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), Optional.ToNullable(nextResetTime), Optional.ToNullable(computeMode), siteMode.Value, kind.Value, serializedAdditionalRawData);
+            return new AppServiceUsage(
+                id,
+                name,
+                type,
+                systemData,
+                displayName,
+                resourceName,
+                unit,
+                currentValue,
+                limit,
+                nextResetTime,
+                computeMode,
+                siteMode,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceUsage>.Write(ModelReaderWriterOptions options)

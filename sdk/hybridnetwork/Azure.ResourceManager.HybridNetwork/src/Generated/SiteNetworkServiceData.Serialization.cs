@@ -115,15 +115,15 @@ namespace Azure.ResourceManager.HybridNetwork
             {
                 return null;
             }
-            Optional<SiteNetworkServicePropertiesFormat> properties = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<HybridNetworkSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            SiteNetworkServicePropertiesFormat properties = default;
+            ManagedServiceIdentity identity = default;
+            HybridNetworkSku sku = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.HybridNetwork
                     {
                         continue;
                     }
-                    properties = SiteNetworkServicePropertiesFormat.DeserializeSiteNetworkServicePropertiesFormat(property.Value);
+                    properties = SiteNetworkServicePropertiesFormat.DeserializeSiteNetworkServicePropertiesFormat(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.HybridNetwork
                     {
                         continue;
                     }
-                    sku = HybridNetworkSku.DeserializeHybridNetworkSku(property.Value);
+                    sku = HybridNetworkSku.DeserializeHybridNetworkSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -205,7 +205,17 @@ namespace Azure.ResourceManager.HybridNetwork
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteNetworkServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value, identity, sku.Value, serializedAdditionalRawData);
+            return new SiteNetworkServiceData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                identity,
+                sku,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteNetworkServiceData>.Write(ModelReaderWriterOptions options)

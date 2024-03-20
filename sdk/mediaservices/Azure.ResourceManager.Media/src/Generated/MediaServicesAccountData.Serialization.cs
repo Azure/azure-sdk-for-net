@@ -176,22 +176,22 @@ namespace Azure.ResourceManager.Media
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> mediaServiceId = default;
-            Optional<IList<MediaServicesStorageAccount>> storageAccounts = default;
-            Optional<MediaStorageAuthentication?> storageAuthentication = default;
-            Optional<AccountEncryption> encryption = default;
-            Optional<MediaKeyDelivery> keyDelivery = default;
-            Optional<MediaServicesPublicNetworkAccess?> publicNetworkAccess = default;
-            Optional<MediaServicesProvisioningState> provisioningState = default;
-            Optional<IReadOnlyList<MediaServicesPrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Optional<MediaServicesMinimumTlsVersion> minimumTlsVersion = default;
+            SystemData systemData = default;
+            Guid? mediaServiceId = default;
+            IList<MediaServicesStorageAccount> storageAccounts = default;
+            MediaStorageAuthentication? storageAuthentication = default;
+            AccountEncryption encryption = default;
+            MediaKeyDelivery keyDelivery = default;
+            MediaServicesPublicNetworkAccess? publicNetworkAccess = default;
+            MediaServicesProvisioningState? provisioningState = default;
+            IReadOnlyList<MediaServicesPrivateEndpointConnectionData> privateEndpointConnections = default;
+            MediaServicesMinimumTlsVersion? minimumTlsVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Media
                             List<MediaServicesStorageAccount> array = new List<MediaServicesStorageAccount>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MediaServicesStorageAccount.DeserializeMediaServicesStorageAccount(item));
+                                array.Add(MediaServicesStorageAccount.DeserializeMediaServicesStorageAccount(item, options));
                             }
                             storageAccounts = array;
                             continue;
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Media
                             {
                                 continue;
                             }
-                            encryption = AccountEncryption.DeserializeAccountEncryption(property0.Value);
+                            encryption = AccountEncryption.DeserializeAccountEncryption(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("keyDelivery"u8))
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Media
                             {
                                 continue;
                             }
-                            keyDelivery = MediaKeyDelivery.DeserializeMediaKeyDelivery(property0.Value);
+                            keyDelivery = MediaKeyDelivery.DeserializeMediaKeyDelivery(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("publicNetworkAccess"u8))
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Media
                             List<MediaServicesPrivateEndpointConnectionData> array = new List<MediaServicesPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MediaServicesPrivateEndpointConnectionData.DeserializeMediaServicesPrivateEndpointConnectionData(item));
+                                array.Add(MediaServicesPrivateEndpointConnectionData.DeserializeMediaServicesPrivateEndpointConnectionData(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -359,7 +359,24 @@ namespace Azure.ResourceManager.Media
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaServicesAccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(mediaServiceId), Optional.ToList(storageAccounts), Optional.ToNullable(storageAuthentication), encryption.Value, keyDelivery.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(provisioningState), Optional.ToList(privateEndpointConnections), Optional.ToNullable(minimumTlsVersion), serializedAdditionalRawData);
+            return new MediaServicesAccountData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                mediaServiceId,
+                storageAccounts ?? new ChangeTrackingList<MediaServicesStorageAccount>(),
+                storageAuthentication,
+                encryption,
+                keyDelivery,
+                publicNetworkAccess,
+                provisioningState,
+                privateEndpointConnections ?? new ChangeTrackingList<MediaServicesPrivateEndpointConnectionData>(),
+                minimumTlsVersion,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MediaServicesAccountData>.Write(ModelReaderWriterOptions options)

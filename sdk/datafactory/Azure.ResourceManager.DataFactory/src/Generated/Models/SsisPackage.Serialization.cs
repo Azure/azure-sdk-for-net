@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -106,14 +107,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<long> folderId = default;
-            Optional<long> projectVersion = default;
-            Optional<long> projectId = default;
-            Optional<IReadOnlyList<SsisParameterInfo>> parameters = default;
+            long? folderId = default;
+            long? projectVersion = default;
+            long? projectId = default;
+            IReadOnlyList<SsisParameterInfo> parameters = default;
             SsisObjectMetadataType type = default;
-            Optional<long> id = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
+            long? id = default;
+            string name = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -154,7 +155,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<SsisParameterInfo> array = new List<SsisParameterInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SsisParameterInfo.DeserializeSsisParameterInfo(item));
+                        array.Add(SsisParameterInfo.DeserializeSsisParameterInfo(item, options));
                     }
                     parameters = array;
                     continue;
@@ -189,7 +190,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SsisPackage(type, Optional.ToNullable(id), name.Value, description.Value, serializedAdditionalRawData, Optional.ToNullable(folderId), Optional.ToNullable(projectVersion), Optional.ToNullable(projectId), Optional.ToList(parameters));
+            return new SsisPackage(
+                type,
+                id,
+                name,
+                description,
+                serializedAdditionalRawData,
+                folderId,
+                projectVersion,
+                projectId,
+                parameters ?? new ChangeTrackingList<SsisParameterInfo>());
         }
 
         BinaryData IPersistableModel<SsisPackage>.Write(ModelReaderWriterOptions options)

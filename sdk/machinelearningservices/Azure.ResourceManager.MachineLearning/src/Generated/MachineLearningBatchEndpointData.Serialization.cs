@@ -117,16 +117,16 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<string> kind = default;
+            ManagedServiceIdentity identity = default;
+            string kind = default;
             MachineLearningBatchEndpointProperties properties = default;
-            Optional<MachineLearningSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            MachineLearningSku sku = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.MachineLearning
                 }
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = MachineLearningBatchEndpointProperties.DeserializeMachineLearningBatchEndpointProperties(property.Value);
+                    properties = MachineLearningBatchEndpointProperties.DeserializeMachineLearningBatchEndpointProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.MachineLearning
                     {
                         continue;
                     }
-                    sku = MachineLearningSku.DeserializeMachineLearningSku(property.Value);
+                    sku = MachineLearningSku.DeserializeMachineLearningSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -209,7 +209,18 @@ namespace Azure.ResourceManager.MachineLearning
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningBatchEndpointData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, kind.Value, properties, sku.Value, serializedAdditionalRawData);
+            return new MachineLearningBatchEndpointData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                kind,
+                properties,
+                sku,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningBatchEndpointData>.Write(ModelReaderWriterOptions options)

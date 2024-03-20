@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -55,10 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <exception cref="ArgumentNullException"> <paramref name="vaultRetention"/> is null. </exception>
         public VaultRetentionPolicy(BackupRetentionPolicy vaultRetention, int snapshotRetentionInDays)
         {
-            if (vaultRetention == null)
-            {
-                throw new ArgumentNullException(nameof(vaultRetention));
-            }
+            Argument.AssertNotNull(vaultRetention, nameof(vaultRetention));
 
             VaultRetention = vaultRetention;
             SnapshotRetentionInDays = snapshotRetentionInDays;

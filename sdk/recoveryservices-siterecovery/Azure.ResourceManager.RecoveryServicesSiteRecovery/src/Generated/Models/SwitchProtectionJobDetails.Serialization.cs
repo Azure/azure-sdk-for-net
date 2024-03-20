@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -82,9 +83,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> newReplicationProtectedItemId = default;
+            ResourceIdentifier newReplicationProtectedItemId = default;
             string instanceType = default;
-            Optional<IReadOnlyDictionary<string, string>> affectedObjectDetails = default;
+            IReadOnlyDictionary<string, string> affectedObjectDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,7 +124,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SwitchProtectionJobDetails(instanceType, Optional.ToDictionary(affectedObjectDetails), serializedAdditionalRawData, newReplicationProtectedItemId.Value);
+            return new SwitchProtectionJobDetails(instanceType, affectedObjectDetails ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, newReplicationProtectedItemId);
         }
 
         BinaryData IPersistableModel<SwitchProtectionJobDetails>.Write(ModelReaderWriterOptions options)

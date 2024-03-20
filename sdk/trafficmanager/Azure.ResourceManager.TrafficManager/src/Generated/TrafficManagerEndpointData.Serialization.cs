@@ -189,23 +189,23 @@ namespace Azure.ResourceManager.TrafficManager
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<ResourceIdentifier> targetResourceId = default;
-            Optional<string> target = default;
-            Optional<TrafficManagerEndpointStatus> endpointStatus = default;
-            Optional<long> weight = default;
-            Optional<long> priority = default;
-            Optional<string> endpointLocation = default;
-            Optional<TrafficManagerEndpointMonitorStatus> endpointMonitorStatus = default;
-            Optional<long?> minChildEndpoints = default;
-            Optional<long?> minChildEndpointsIPv4 = default;
-            Optional<long?> minChildEndpointsIPv6 = default;
-            Optional<IList<string>> geoMapping = default;
-            Optional<IList<TrafficManagerEndpointSubnetInfo>> subnets = default;
-            Optional<IList<TrafficManagerEndpointCustomHeaderInfo>> customHeaders = default;
-            Optional<TrafficManagerEndpointAlwaysServeStatus> alwaysServe = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            ResourceIdentifier targetResourceId = default;
+            string target = default;
+            TrafficManagerEndpointStatus? endpointStatus = default;
+            long? weight = default;
+            long? priority = default;
+            string endpointLocation = default;
+            TrafficManagerEndpointMonitorStatus? endpointMonitorStatus = default;
+            long? minChildEndpoints = default;
+            long? minChildEndpointsIPv4 = default;
+            long? minChildEndpointsIPv6 = default;
+            IList<string> geoMapping = default;
+            IList<TrafficManagerEndpointSubnetInfo> subnets = default;
+            IList<TrafficManagerEndpointCustomHeaderInfo> customHeaders = default;
+            TrafficManagerEndpointAlwaysServeStatus? alwaysServe = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.TrafficManager
                             List<TrafficManagerEndpointSubnetInfo> array = new List<TrafficManagerEndpointSubnetInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(TrafficManagerEndpointSubnetInfo.DeserializeTrafficManagerEndpointSubnetInfo(item));
+                                array.Add(TrafficManagerEndpointSubnetInfo.DeserializeTrafficManagerEndpointSubnetInfo(item, options));
                             }
                             subnets = array;
                             continue;
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.TrafficManager
                             List<TrafficManagerEndpointCustomHeaderInfo> array = new List<TrafficManagerEndpointCustomHeaderInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(TrafficManagerEndpointCustomHeaderInfo.DeserializeTrafficManagerEndpointCustomHeaderInfo(item));
+                                array.Add(TrafficManagerEndpointCustomHeaderInfo.DeserializeTrafficManagerEndpointCustomHeaderInfo(item, options));
                             }
                             customHeaders = array;
                             continue;
@@ -387,7 +387,25 @@ namespace Azure.ResourceManager.TrafficManager
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrafficManagerEndpointData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, targetResourceId.Value, target.Value, Optional.ToNullable(endpointStatus), Optional.ToNullable(weight), Optional.ToNullable(priority), endpointLocation.Value, Optional.ToNullable(endpointMonitorStatus), Optional.ToNullable(minChildEndpoints), Optional.ToNullable(minChildEndpointsIPv4), Optional.ToNullable(minChildEndpointsIPv6), Optional.ToList(geoMapping), Optional.ToList(subnets), Optional.ToList(customHeaders), Optional.ToNullable(alwaysServe));
+            return new TrafficManagerEndpointData(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                targetResourceId,
+                target,
+                endpointStatus,
+                weight,
+                priority,
+                endpointLocation,
+                endpointMonitorStatus,
+                minChildEndpoints,
+                minChildEndpointsIPv4,
+                minChildEndpointsIPv6,
+                geoMapping ?? new ChangeTrackingList<string>(),
+                subnets ?? new ChangeTrackingList<TrafficManagerEndpointSubnetInfo>(),
+                customHeaders ?? new ChangeTrackingList<TrafficManagerEndpointCustomHeaderInfo>(),
+                alwaysServe);
         }
 
         BinaryData IPersistableModel<TrafficManagerEndpointData>.Write(ModelReaderWriterOptions options)

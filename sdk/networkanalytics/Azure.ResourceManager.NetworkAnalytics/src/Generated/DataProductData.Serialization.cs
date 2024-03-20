@@ -217,33 +217,33 @@ namespace Azure.ResourceManager.NetworkAnalytics
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> resourceGuid = default;
-            Optional<NetworkAnalyticsProvisioningState> provisioningState = default;
-            Optional<string> publisher = default;
-            Optional<string> product = default;
-            Optional<string> majorVersion = default;
-            Optional<IList<string>> owners = default;
-            Optional<DataProductControlState> redundancy = default;
-            Optional<string> purviewAccount = default;
-            Optional<string> purviewCollection = default;
-            Optional<DataProductControlState> privateLinksEnabled = default;
-            Optional<DataProductControlState> publicNetworkAccess = default;
-            Optional<DataProductControlState> customerManagedKeyEncryptionEnabled = default;
-            Optional<EncryptionKeyDetails> customerEncryptionKey = default;
-            Optional<DataProductNetworkAcls> networkacls = default;
-            Optional<NetworkAnalyticsManagedResourceGroupConfiguration> managedResourceGroupConfiguration = default;
-            Optional<IReadOnlyList<string>> availableMinorVersions = default;
-            Optional<string> currentMinorVersion = default;
-            Optional<string> documentation = default;
-            Optional<ConsumptionEndpointsProperties> consumptionEndpoints = default;
-            Optional<Uri> keyVaultUrl = default;
+            SystemData systemData = default;
+            string resourceGuid = default;
+            NetworkAnalyticsProvisioningState? provisioningState = default;
+            string publisher = default;
+            string product = default;
+            string majorVersion = default;
+            IList<string> owners = default;
+            DataProductControlState? redundancy = default;
+            string purviewAccount = default;
+            string purviewCollection = default;
+            DataProductControlState? privateLinksEnabled = default;
+            DataProductControlState? publicNetworkAccess = default;
+            DataProductControlState? customerManagedKeyEncryptionEnabled = default;
+            EncryptionKeyDetails customerEncryptionKey = default;
+            DataProductNetworkAcls networkacls = default;
+            NetworkAnalyticsManagedResourceGroupConfiguration managedResourceGroupConfiguration = default;
+            IReadOnlyList<string> availableMinorVersions = default;
+            string currentMinorVersion = default;
+            string documentation = default;
+            ConsumptionEndpointsProperties consumptionEndpoints = default;
+            Uri keyVaultUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                             {
                                 continue;
                             }
-                            customerEncryptionKey = EncryptionKeyDetails.DeserializeEncryptionKeyDetails(property0.Value);
+                            customerEncryptionKey = EncryptionKeyDetails.DeserializeEncryptionKeyDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("networkacls"u8))
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                             {
                                 continue;
                             }
-                            networkacls = DataProductNetworkAcls.DeserializeDataProductNetworkAcls(property0.Value);
+                            networkacls = DataProductNetworkAcls.DeserializeDataProductNetworkAcls(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("managedResourceGroupConfiguration"u8))
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                             {
                                 continue;
                             }
-                            managedResourceGroupConfiguration = NetworkAnalyticsManagedResourceGroupConfiguration.DeserializeNetworkAnalyticsManagedResourceGroupConfiguration(property0.Value);
+                            managedResourceGroupConfiguration = NetworkAnalyticsManagedResourceGroupConfiguration.DeserializeNetworkAnalyticsManagedResourceGroupConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("availableMinorVersions"u8))
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                             {
                                 continue;
                             }
-                            consumptionEndpoints = ConsumptionEndpointsProperties.DeserializeConsumptionEndpointsProperties(property0.Value);
+                            consumptionEndpoints = ConsumptionEndpointsProperties.DeserializeConsumptionEndpointsProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("keyVaultUrl"u8))
@@ -476,7 +476,35 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataProductData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, resourceGuid.Value, Optional.ToNullable(provisioningState), publisher.Value, product.Value, majorVersion.Value, Optional.ToList(owners), Optional.ToNullable(redundancy), purviewAccount.Value, purviewCollection.Value, Optional.ToNullable(privateLinksEnabled), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(customerManagedKeyEncryptionEnabled), customerEncryptionKey.Value, networkacls.Value, managedResourceGroupConfiguration.Value, Optional.ToList(availableMinorVersions), currentMinorVersion.Value, documentation.Value, consumptionEndpoints.Value, keyVaultUrl.Value, serializedAdditionalRawData);
+            return new DataProductData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                resourceGuid,
+                provisioningState,
+                publisher,
+                product,
+                majorVersion,
+                owners ?? new ChangeTrackingList<string>(),
+                redundancy,
+                purviewAccount,
+                purviewCollection,
+                privateLinksEnabled,
+                publicNetworkAccess,
+                customerManagedKeyEncryptionEnabled,
+                customerEncryptionKey,
+                networkacls,
+                managedResourceGroupConfiguration,
+                availableMinorVersions ?? new ChangeTrackingList<string>(),
+                currentMinorVersion,
+                documentation,
+                consumptionEndpoints,
+                keyVaultUrl,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataProductData>.Write(ModelReaderWriterOptions options)

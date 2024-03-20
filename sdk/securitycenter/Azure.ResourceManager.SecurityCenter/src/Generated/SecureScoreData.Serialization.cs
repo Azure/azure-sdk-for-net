@@ -119,12 +119,12 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<long> weight = default;
-            Optional<int> max = default;
-            Optional<double> current = default;
-            Optional<double> percentage = default;
+            SystemData systemData = default;
+            string displayName = default;
+            long? weight = default;
+            int? max = default;
+            double? current = default;
+            double? percentage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -224,7 +224,17 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecureScoreData(id, name, type, systemData.Value, displayName.Value, Optional.ToNullable(weight), Optional.ToNullable(max), Optional.ToNullable(current), Optional.ToNullable(percentage), serializedAdditionalRawData);
+            return new SecureScoreData(
+                id,
+                name,
+                type,
+                systemData,
+                displayName,
+                weight,
+                max,
+                current,
+                percentage,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecureScoreData>.Write(ModelReaderWriterOptions options)

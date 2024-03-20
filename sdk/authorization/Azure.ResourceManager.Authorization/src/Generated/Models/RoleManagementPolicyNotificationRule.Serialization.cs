@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
@@ -106,14 +107,14 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            Optional<NotificationDeliveryType> notificationType = default;
-            Optional<RoleManagementPolicyNotificationLevel> notificationLevel = default;
-            Optional<RoleManagementPolicyRecipientType> recipientType = default;
-            Optional<IList<string>> notificationRecipients = default;
-            Optional<bool> isDefaultRecipientsEnabled = default;
-            Optional<string> id = default;
+            NotificationDeliveryType? notificationType = default;
+            RoleManagementPolicyNotificationLevel? notificationLevel = default;
+            RoleManagementPolicyRecipientType? recipientType = default;
+            IList<string> notificationRecipients = default;
+            bool? isDefaultRecipientsEnabled = default;
+            string id = default;
             RoleManagementPolicyRuleType ruleType = default;
-            Optional<RoleManagementPolicyRuleTarget> target = default;
+            RoleManagementPolicyRuleTarget target = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -184,7 +185,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     {
                         continue;
                     }
-                    target = RoleManagementPolicyRuleTarget.DeserializeRoleManagementPolicyRuleTarget(property.Value);
+                    target = RoleManagementPolicyRuleTarget.DeserializeRoleManagementPolicyRuleTarget(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -193,7 +194,16 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleManagementPolicyNotificationRule(id.Value, ruleType, target.Value, serializedAdditionalRawData, Optional.ToNullable(notificationType), Optional.ToNullable(notificationLevel), Optional.ToNullable(recipientType), Optional.ToList(notificationRecipients), Optional.ToNullable(isDefaultRecipientsEnabled));
+            return new RoleManagementPolicyNotificationRule(
+                id,
+                ruleType,
+                target,
+                serializedAdditionalRawData,
+                notificationType,
+                notificationLevel,
+                recipientType,
+                notificationRecipients ?? new ChangeTrackingList<string>(),
+                isDefaultRecipientsEnabled);
         }
 
         BinaryData IPersistableModel<RoleManagementPolicyNotificationRule>.Write(ModelReaderWriterOptions options)

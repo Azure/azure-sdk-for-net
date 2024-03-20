@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SqlVirtualMachine;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 return null;
             }
-            Optional<bool> enable = default;
-            Optional<SqlVmAutoPatchingDayOfWeek> dayOfWeek = default;
-            Optional<int> maintenanceWindowStartingHour = default;
-            Optional<int> maintenanceWindowDuration = default;
+            bool? enable = default;
+            SqlVmAutoPatchingDayOfWeek? dayOfWeek = default;
+            int? maintenanceWindowStartingHour = default;
+            int? maintenanceWindowDuration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlVmAutoPatchingSettings(Optional.ToNullable(enable), Optional.ToNullable(dayOfWeek), Optional.ToNullable(maintenanceWindowStartingHour), Optional.ToNullable(maintenanceWindowDuration), serializedAdditionalRawData);
+            return new SqlVmAutoPatchingSettings(enable, dayOfWeek, maintenanceWindowStartingHour, maintenanceWindowDuration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlVmAutoPatchingSettings>.Write(ModelReaderWriterOptions options)

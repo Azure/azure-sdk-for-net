@@ -204,27 +204,27 @@ namespace Azure.ResourceManager.Workloads
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> instanceNo = default;
-            Optional<ResourceIdentifier> subnet = default;
-            Optional<string> hostname = default;
-            Optional<string> kernelVersion = default;
-            Optional<string> kernelPatch = default;
-            Optional<string> ipAddress = default;
-            Optional<long?> gatewayPort = default;
-            Optional<long?> icmHttpPort = default;
-            Optional<long?> icmHttpsPort = default;
-            Optional<SubResource> loadBalancerDetails = default;
-            Optional<IReadOnlyList<ApplicationServerVmDetails>> vmDetails = default;
-            Optional<SapVirtualInstanceStatus> status = default;
-            Optional<SapHealthState> health = default;
-            Optional<SapVirtualInstanceProvisioningState> provisioningState = default;
-            Optional<SapVirtualInstanceError> errors = default;
+            SystemData systemData = default;
+            string instanceNo = default;
+            ResourceIdentifier subnet = default;
+            string hostname = default;
+            string kernelVersion = default;
+            string kernelPatch = default;
+            string ipAddress = default;
+            long? gatewayPort = default;
+            long? icmHttpPort = default;
+            long? icmHttpsPort = default;
+            SubResource loadBalancerDetails = default;
+            IReadOnlyList<ApplicationServerVmDetails> vmDetails = default;
+            SapVirtualInstanceStatus? status = default;
+            SapHealthState? health = default;
+            SapVirtualInstanceProvisioningState? provisioningState = default;
+            SapVirtualInstanceError errors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.Workloads
                             List<ApplicationServerVmDetails> array = new List<ApplicationServerVmDetails>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationServerVmDetails.DeserializeApplicationServerVmDetails(item));
+                                array.Add(ApplicationServerVmDetails.DeserializeApplicationServerVmDetails(item, options));
                             }
                             vmDetails = array;
                             continue;
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.Workloads
                             {
                                 continue;
                             }
-                            errors = SapVirtualInstanceError.DeserializeSapVirtualInstanceError(property0.Value);
+                            errors = SapVirtualInstanceError.DeserializeSapVirtualInstanceError(property0.Value, options);
                             continue;
                         }
                     }
@@ -413,7 +413,29 @@ namespace Azure.ResourceManager.Workloads
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SapApplicationServerInstanceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, instanceNo.Value, subnet.Value, hostname.Value, kernelVersion.Value, kernelPatch.Value, ipAddress.Value, Optional.ToNullable(gatewayPort), Optional.ToNullable(icmHttpPort), Optional.ToNullable(icmHttpsPort), loadBalancerDetails, Optional.ToList(vmDetails), Optional.ToNullable(status), Optional.ToNullable(health), Optional.ToNullable(provisioningState), errors.Value, serializedAdditionalRawData);
+            return new SapApplicationServerInstanceData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                instanceNo,
+                subnet,
+                hostname,
+                kernelVersion,
+                kernelPatch,
+                ipAddress,
+                gatewayPort,
+                icmHttpPort,
+                icmHttpsPort,
+                loadBalancerDetails,
+                vmDetails ?? new ChangeTrackingList<ApplicationServerVmDetails>(),
+                status,
+                health,
+                provisioningState,
+                errors,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SapApplicationServerInstanceData>.Write(ModelReaderWriterOptions options)

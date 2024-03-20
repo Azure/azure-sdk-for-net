@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -89,9 +90,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> databaseName = default;
-            Optional<IReadOnlyList<DatabaseTable>> tables = default;
-            Optional<IReadOnlyList<ReportableException>> validationErrors = default;
+            string databaseName = default;
+            IReadOnlyList<DatabaseTable> tables = default;
+            IReadOnlyList<ReportableException> validationErrors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<DatabaseTable> array = new List<DatabaseTable>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DatabaseTable.DeserializeDatabaseTable(item));
+                        array.Add(DatabaseTable.DeserializeDatabaseTable(item, options));
                     }
                     tables = array;
                     continue;
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ReportableException> array = new List<ReportableException>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReportableException.DeserializeReportableException(item));
+                        array.Add(ReportableException.DeserializeReportableException(item, options));
                     }
                     validationErrors = array;
                     continue;
@@ -135,7 +136,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GetUserTablesPostgreSqlTaskOutput(databaseName.Value, Optional.ToList(tables), Optional.ToList(validationErrors), serializedAdditionalRawData);
+            return new GetUserTablesPostgreSqlTaskOutput(databaseName, tables ?? new ChangeTrackingList<DatabaseTable>(), validationErrors ?? new ChangeTrackingList<ReportableException>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GetUserTablesPostgreSqlTaskOutput>.Write(ModelReaderWriterOptions options)

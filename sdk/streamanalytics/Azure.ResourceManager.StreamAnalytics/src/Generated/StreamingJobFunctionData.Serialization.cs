@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.StreamAnalytics
             {
                 return null;
             }
-            Optional<StreamingJobFunctionProperties> properties = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
+            StreamingJobFunctionProperties properties = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                     {
                         continue;
                     }
-                    properties = StreamingJobFunctionProperties.DeserializeStreamingJobFunctionProperties(property.Value);
+                    properties = StreamingJobFunctionProperties.DeserializeStreamingJobFunctionProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingJobFunctionData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, properties.Value);
+            return new StreamingJobFunctionData(id, name, type, serializedAdditionalRawData, properties);
         }
 
         BinaryData IPersistableModel<StreamingJobFunctionData>.Write(ModelReaderWriterOptions options)

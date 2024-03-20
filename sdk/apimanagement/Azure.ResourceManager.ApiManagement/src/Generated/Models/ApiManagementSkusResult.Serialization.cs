@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 return null;
             }
             IReadOnlyList<ApiManagementSku> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ApiManagementSku> array = new List<ApiManagementSku>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementSku.DeserializeApiManagementSku(item));
+                        array.Add(ApiManagementSku.DeserializeApiManagementSku(item, options));
                     }
                     value = array;
                     continue;
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementSkusResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new ApiManagementSkusResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementSkusResult>.Write(ModelReaderWriterOptions options)

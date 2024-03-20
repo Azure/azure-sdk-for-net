@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The UnknownModelPerformanceMetricThresholdBase. </summary>
+    /// <summary> Unknown version of ModelPerformanceMetricThresholdBase. </summary>
     internal partial class UnknownModelPerformanceMetricThresholdBase : ModelPerformanceMetricThresholdBase
     {
         /// <summary> Initializes a new instance of <see cref="UnknownModelPerformanceMetricThresholdBase"/>. </summary>

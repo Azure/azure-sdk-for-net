@@ -151,21 +151,21 @@ namespace Azure.ResourceManager.Cdn
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             CdnSku sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<WafPolicySettings> policySettings = default;
-            Optional<RateLimitRuleList> rateLimitRules = default;
-            Optional<CustomRuleList> customRules = default;
-            Optional<ManagedRuleSetList> managedRules = default;
-            Optional<IReadOnlyList<SubResource>> endpointLinks = default;
-            Optional<WebApplicationFirewallPolicyProvisioningState> provisioningState = default;
-            Optional<PolicyResourceState> resourceState = default;
+            SystemData systemData = default;
+            WafPolicySettings policySettings = default;
+            RateLimitRuleList rateLimitRules = default;
+            CustomRuleList customRules = default;
+            ManagedRuleSetList managedRules = default;
+            IReadOnlyList<SubResource> endpointLinks = default;
+            WebApplicationFirewallPolicyProvisioningState? provisioningState = default;
+            PolicyResourceState? resourceState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Cdn
                 }
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = CdnSku.DeserializeCdnSku(property.Value);
+                    sku = CdnSku.DeserializeCdnSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Cdn
                             {
                                 continue;
                             }
-                            policySettings = WafPolicySettings.DeserializeWafPolicySettings(property0.Value);
+                            policySettings = WafPolicySettings.DeserializeWafPolicySettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("rateLimitRules"u8))
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Cdn
                             {
                                 continue;
                             }
-                            rateLimitRules = RateLimitRuleList.DeserializeRateLimitRuleList(property0.Value);
+                            rateLimitRules = RateLimitRuleList.DeserializeRateLimitRuleList(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("customRules"u8))
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Cdn
                             {
                                 continue;
                             }
-                            customRules = CustomRuleList.DeserializeCustomRuleList(property0.Value);
+                            customRules = CustomRuleList.DeserializeCustomRuleList(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("managedRules"u8))
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Cdn
                             {
                                 continue;
                             }
-                            managedRules = ManagedRuleSetList.DeserializeManagedRuleSetList(property0.Value);
+                            managedRules = ManagedRuleSetList.DeserializeManagedRuleSetList(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("endpointLinks"u8))
@@ -313,7 +313,23 @@ namespace Azure.ResourceManager.Cdn
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CdnWebApplicationFirewallPolicyData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), sku, policySettings.Value, rateLimitRules.Value, customRules.Value, managedRules.Value, Optional.ToList(endpointLinks), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceState), serializedAdditionalRawData);
+            return new CdnWebApplicationFirewallPolicyData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                etag,
+                sku,
+                policySettings,
+                rateLimitRules,
+                customRules,
+                managedRules,
+                endpointLinks ?? new ChangeTrackingList<SubResource>(),
+                provisioningState,
+                resourceState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CdnWebApplicationFirewallPolicyData>.Write(ModelReaderWriterOptions options)

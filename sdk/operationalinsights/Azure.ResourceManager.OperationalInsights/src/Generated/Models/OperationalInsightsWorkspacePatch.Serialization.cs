@@ -12,6 +12,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
@@ -187,26 +188,26 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<ETag> etag = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<OperationalInsightsWorkspaceEntityStatus> provisioningState = default;
-            Optional<Guid> customerId = default;
-            Optional<OperationalInsightsWorkspaceSku> sku = default;
-            Optional<int?> retentionInDays = default;
-            Optional<OperationalInsightsWorkspaceCapping> workspaceCapping = default;
-            Optional<DateTimeOffset> createdDate = default;
-            Optional<DateTimeOffset> modifiedDate = default;
-            Optional<OperationalInsightsPublicNetworkAccessType> publicNetworkAccessForIngestion = default;
-            Optional<OperationalInsightsPublicNetworkAccessType> publicNetworkAccessForQuery = default;
-            Optional<bool> forceCmkForQuery = default;
-            Optional<IReadOnlyList<OperationalInsightsPrivateLinkScopedResourceInfo>> privateLinkScopedResources = default;
-            Optional<OperationalInsightsWorkspaceFeatures> features = default;
-            Optional<ResourceIdentifier> defaultDataCollectionRuleResourceId = default;
+            SystemData systemData = default;
+            OperationalInsightsWorkspaceEntityStatus? provisioningState = default;
+            Guid? customerId = default;
+            OperationalInsightsWorkspaceSku sku = default;
+            int? retentionInDays = default;
+            OperationalInsightsWorkspaceCapping workspaceCapping = default;
+            DateTimeOffset? createdDate = default;
+            DateTimeOffset? modifiedDate = default;
+            OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion = default;
+            OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForQuery = default;
+            bool? forceCmkForQuery = default;
+            IReadOnlyList<OperationalInsightsPrivateLinkScopedResourceInfo> privateLinkScopedResources = default;
+            OperationalInsightsWorkspaceFeatures features = default;
+            ResourceIdentifier defaultDataCollectionRuleResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -300,7 +301,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                             {
                                 continue;
                             }
-                            sku = OperationalInsightsWorkspaceSku.DeserializeOperationalInsightsWorkspaceSku(property0.Value);
+                            sku = OperationalInsightsWorkspaceSku.DeserializeOperationalInsightsWorkspaceSku(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("retentionInDays"u8))
@@ -319,7 +320,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                             {
                                 continue;
                             }
-                            workspaceCapping = OperationalInsightsWorkspaceCapping.DeserializeOperationalInsightsWorkspaceCapping(property0.Value);
+                            workspaceCapping = OperationalInsightsWorkspaceCapping.DeserializeOperationalInsightsWorkspaceCapping(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("createdDate"u8))
@@ -376,7 +377,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                             List<OperationalInsightsPrivateLinkScopedResourceInfo> array = new List<OperationalInsightsPrivateLinkScopedResourceInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(OperationalInsightsPrivateLinkScopedResourceInfo.DeserializeOperationalInsightsPrivateLinkScopedResourceInfo(item));
+                                array.Add(OperationalInsightsPrivateLinkScopedResourceInfo.DeserializeOperationalInsightsPrivateLinkScopedResourceInfo(item, options));
                             }
                             privateLinkScopedResources = array;
                             continue;
@@ -387,7 +388,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                             {
                                 continue;
                             }
-                            features = OperationalInsightsWorkspaceFeatures.DeserializeOperationalInsightsWorkspaceFeatures(property0.Value);
+                            features = OperationalInsightsWorkspaceFeatures.DeserializeOperationalInsightsWorkspaceFeatures(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("defaultDataCollectionRuleResourceId"u8))
@@ -408,7 +409,28 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalInsightsWorkspacePatch(id, name, type, systemData.Value, identity, Optional.ToDictionary(tags), Optional.ToNullable(provisioningState), Optional.ToNullable(customerId), sku.Value, Optional.ToNullable(retentionInDays), workspaceCapping.Value, Optional.ToNullable(createdDate), Optional.ToNullable(modifiedDate), Optional.ToNullable(publicNetworkAccessForIngestion), Optional.ToNullable(publicNetworkAccessForQuery), Optional.ToNullable(forceCmkForQuery), Optional.ToList(privateLinkScopedResources), features.Value, defaultDataCollectionRuleResourceId.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new OperationalInsightsWorkspacePatch(
+                id,
+                name,
+                type,
+                systemData,
+                identity,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                provisioningState,
+                customerId,
+                sku,
+                retentionInDays,
+                workspaceCapping,
+                createdDate,
+                modifiedDate,
+                publicNetworkAccessForIngestion,
+                publicNetworkAccessForQuery,
+                forceCmkForQuery,
+                privateLinkScopedResources ?? new ChangeTrackingList<OperationalInsightsPrivateLinkScopedResourceInfo>(),
+                features,
+                defaultDataCollectionRuleResourceId,
+                etag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationalInsightsWorkspacePatch>.Write(ModelReaderWriterOptions options)

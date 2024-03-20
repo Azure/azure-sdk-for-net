@@ -196,23 +196,23 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ExtendedLocation> extendedLocation = default;
-            Optional<LoadBalancerSku> sku = default;
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<IList<FrontendIPConfigurationData>> frontendIPConfigurations = default;
-            Optional<IList<BackendAddressPoolData>> backendAddressPools = default;
-            Optional<IList<LoadBalancingRuleData>> loadBalancingRules = default;
-            Optional<IList<ProbeData>> probes = default;
-            Optional<IList<InboundNatRuleData>> inboundNatRules = default;
-            Optional<IList<LoadBalancerInboundNatPool>> inboundNatPools = default;
-            Optional<IList<OutboundRuleData>> outboundRules = default;
-            Optional<Guid> resourceGuid = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            ExtendedLocation extendedLocation = default;
+            LoadBalancerSku sku = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
+            IDictionary<string, string> tags = default;
+            IList<FrontendIPConfigurationData> frontendIPConfigurations = default;
+            IList<BackendAddressPoolData> backendAddressPools = default;
+            IList<LoadBalancingRuleData> loadBalancingRules = default;
+            IList<ProbeData> probes = default;
+            IList<InboundNatRuleData> inboundNatRules = default;
+            IList<LoadBalancerInboundNatPool> inboundNatPools = default;
+            IList<OutboundRuleData> outboundRules = default;
+            Guid? resourceGuid = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Network
                     {
                         continue;
                     }
-                    sku = LoadBalancerSku.DeserializeLoadBalancerSku(property.Value);
+                    sku = LoadBalancerSku.DeserializeLoadBalancerSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Network
                             List<FrontendIPConfigurationData> array = new List<FrontendIPConfigurationData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FrontendIPConfigurationData.DeserializeFrontendIPConfigurationData(item));
+                                array.Add(FrontendIPConfigurationData.DeserializeFrontendIPConfigurationData(item, options));
                             }
                             frontendIPConfigurations = array;
                             continue;
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Network
                             List<BackendAddressPoolData> array = new List<BackendAddressPoolData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(BackendAddressPoolData.DeserializeBackendAddressPoolData(item));
+                                array.Add(BackendAddressPoolData.DeserializeBackendAddressPoolData(item, options));
                             }
                             backendAddressPools = array;
                             continue;
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Network
                             List<LoadBalancingRuleData> array = new List<LoadBalancingRuleData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(LoadBalancingRuleData.DeserializeLoadBalancingRuleData(item));
+                                array.Add(LoadBalancingRuleData.DeserializeLoadBalancingRuleData(item, options));
                             }
                             loadBalancingRules = array;
                             continue;
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.Network
                             List<ProbeData> array = new List<ProbeData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ProbeData.DeserializeProbeData(item));
+                                array.Add(ProbeData.DeserializeProbeData(item, options));
                             }
                             probes = array;
                             continue;
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.Network
                             List<InboundNatRuleData> array = new List<InboundNatRuleData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(InboundNatRuleData.DeserializeInboundNatRuleData(item));
+                                array.Add(InboundNatRuleData.DeserializeInboundNatRuleData(item, options));
                             }
                             inboundNatRules = array;
                             continue;
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.Network
                             List<LoadBalancerInboundNatPool> array = new List<LoadBalancerInboundNatPool>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(LoadBalancerInboundNatPool.DeserializeLoadBalancerInboundNatPool(item));
+                                array.Add(LoadBalancerInboundNatPool.DeserializeLoadBalancerInboundNatPool(item, options));
                             }
                             inboundNatPools = array;
                             continue;
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.Network
                             List<OutboundRuleData> array = new List<OutboundRuleData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(OutboundRuleData.DeserializeOutboundRuleData(item));
+                                array.Add(OutboundRuleData.DeserializeOutboundRuleData(item, options));
                             }
                             outboundRules = array;
                             continue;
@@ -424,7 +424,25 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LoadBalancerData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, extendedLocation, sku.Value, Optional.ToNullable(etag), Optional.ToList(frontendIPConfigurations), Optional.ToList(backendAddressPools), Optional.ToList(loadBalancingRules), Optional.ToList(probes), Optional.ToList(inboundNatRules), Optional.ToList(inboundNatPools), Optional.ToList(outboundRules), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState));
+            return new LoadBalancerData(
+                id,
+                name,
+                type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                extendedLocation,
+                sku,
+                etag,
+                frontendIPConfigurations ?? new ChangeTrackingList<FrontendIPConfigurationData>(),
+                backendAddressPools ?? new ChangeTrackingList<BackendAddressPoolData>(),
+                loadBalancingRules ?? new ChangeTrackingList<LoadBalancingRuleData>(),
+                probes ?? new ChangeTrackingList<ProbeData>(),
+                inboundNatRules ?? new ChangeTrackingList<InboundNatRuleData>(),
+                inboundNatPools ?? new ChangeTrackingList<LoadBalancerInboundNatPool>(),
+                outboundRules ?? new ChangeTrackingList<OutboundRuleData>(),
+                resourceGuid,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<LoadBalancerData>.Write(ModelReaderWriterOptions options)

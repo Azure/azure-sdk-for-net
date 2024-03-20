@@ -154,20 +154,20 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> orderId = default;
-            Optional<DataBoxEdgeContactDetails> contactInformation = default;
-            Optional<DataBoxEdgeShippingAddress> shippingAddress = default;
-            Optional<DataBoxEdgeOrderStatus> currentStatus = default;
-            Optional<IReadOnlyList<DataBoxEdgeOrderStatus>> orderHistory = default;
-            Optional<string> serialNumber = default;
-            Optional<IReadOnlyList<DataBoxEdgeTrackingInfo>> deliveryTrackingInfo = default;
-            Optional<IReadOnlyList<DataBoxEdgeTrackingInfo>> returnTrackingInfo = default;
-            Optional<DataBoxEdgeShipmentType> shipmentType = default;
+            SystemData systemData = default;
+            string orderId = default;
+            DataBoxEdgeContactDetails contactInformation = default;
+            DataBoxEdgeShippingAddress shippingAddress = default;
+            DataBoxEdgeOrderStatus currentStatus = default;
+            IReadOnlyList<DataBoxEdgeOrderStatus> orderHistory = default;
+            string serialNumber = default;
+            IReadOnlyList<DataBoxEdgeTrackingInfo> deliveryTrackingInfo = default;
+            IReadOnlyList<DataBoxEdgeTrackingInfo> returnTrackingInfo = default;
+            DataBoxEdgeShipmentType? shipmentType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                             {
                                 continue;
                             }
-                            contactInformation = DataBoxEdgeContactDetails.DeserializeDataBoxEdgeContactDetails(property0.Value);
+                            contactInformation = DataBoxEdgeContactDetails.DeserializeDataBoxEdgeContactDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("shippingAddress"u8))
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                             {
                                 continue;
                             }
-                            shippingAddress = DataBoxEdgeShippingAddress.DeserializeDataBoxEdgeShippingAddress(property0.Value);
+                            shippingAddress = DataBoxEdgeShippingAddress.DeserializeDataBoxEdgeShippingAddress(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("currentStatus"u8))
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                             {
                                 continue;
                             }
-                            currentStatus = DataBoxEdgeOrderStatus.DeserializeDataBoxEdgeOrderStatus(property0.Value);
+                            currentStatus = DataBoxEdgeOrderStatus.DeserializeDataBoxEdgeOrderStatus(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("orderHistory"u8))
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                             List<DataBoxEdgeOrderStatus> array = new List<DataBoxEdgeOrderStatus>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataBoxEdgeOrderStatus.DeserializeDataBoxEdgeOrderStatus(item));
+                                array.Add(DataBoxEdgeOrderStatus.DeserializeDataBoxEdgeOrderStatus(item, options));
                             }
                             orderHistory = array;
                             continue;
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                             List<DataBoxEdgeTrackingInfo> array = new List<DataBoxEdgeTrackingInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataBoxEdgeTrackingInfo.DeserializeDataBoxEdgeTrackingInfo(item));
+                                array.Add(DataBoxEdgeTrackingInfo.DeserializeDataBoxEdgeTrackingInfo(item, options));
                             }
                             deliveryTrackingInfo = array;
                             continue;
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                             List<DataBoxEdgeTrackingInfo> array = new List<DataBoxEdgeTrackingInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataBoxEdgeTrackingInfo.DeserializeDataBoxEdgeTrackingInfo(item));
+                                array.Add(DataBoxEdgeTrackingInfo.DeserializeDataBoxEdgeTrackingInfo(item, options));
                             }
                             returnTrackingInfo = array;
                             continue;
@@ -307,7 +307,22 @@ namespace Azure.ResourceManager.DataBoxEdge
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeOrderData(id, name, type, systemData.Value, kind.Value, orderId.Value, contactInformation.Value, shippingAddress.Value, currentStatus.Value, Optional.ToList(orderHistory), serialNumber.Value, Optional.ToList(deliveryTrackingInfo), Optional.ToList(returnTrackingInfo), Optional.ToNullable(shipmentType), serializedAdditionalRawData);
+            return new DataBoxEdgeOrderData(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                orderId,
+                contactInformation,
+                shippingAddress,
+                currentStatus,
+                orderHistory ?? new ChangeTrackingList<DataBoxEdgeOrderStatus>(),
+                serialNumber,
+                deliveryTrackingInfo ?? new ChangeTrackingList<DataBoxEdgeTrackingInfo>(),
+                returnTrackingInfo ?? new ChangeTrackingList<DataBoxEdgeTrackingInfo>(),
+                shipmentType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeOrderData>.Write(ModelReaderWriterOptions options)

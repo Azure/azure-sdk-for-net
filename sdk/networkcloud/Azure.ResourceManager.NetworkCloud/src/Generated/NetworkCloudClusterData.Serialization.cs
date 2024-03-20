@@ -228,42 +228,42 @@ namespace Azure.ResourceManager.NetworkCloud
                 return null;
             }
             ExtendedLocation extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             NetworkCloudRackDefinition aggregatorOrSingleRackDefinition = default;
-            Optional<ResourceIdentifier> analyticsWorkspaceId = default;
-            Optional<IReadOnlyList<ClusterAvailableUpgradeVersion>> availableUpgradeVersions = default;
-            Optional<ClusterCapacity> clusterCapacity = default;
-            Optional<ClusterConnectionStatus> clusterConnectionStatus = default;
-            Optional<ExtendedLocation> clusterExtendedLocation = default;
-            Optional<string> clusterLocation = default;
-            Optional<ClusterManagerConnectionStatus> clusterManagerConnectionStatus = default;
-            Optional<ResourceIdentifier> clusterManagerId = default;
-            Optional<ServicePrincipalInformation> clusterServicePrincipal = default;
+            ResourceIdentifier analyticsWorkspaceId = default;
+            IReadOnlyList<ClusterAvailableUpgradeVersion> availableUpgradeVersions = default;
+            ClusterCapacity clusterCapacity = default;
+            ClusterConnectionStatus? clusterConnectionStatus = default;
+            ExtendedLocation clusterExtendedLocation = default;
+            string clusterLocation = default;
+            ClusterManagerConnectionStatus? clusterManagerConnectionStatus = default;
+            ResourceIdentifier clusterManagerId = default;
+            ServicePrincipalInformation clusterServicePrincipal = default;
             ClusterType clusterType = default;
             string clusterVersion = default;
-            Optional<ValidationThreshold> computeDeploymentThreshold = default;
-            Optional<IList<NetworkCloudRackDefinition>> computeRackDefinitions = default;
-            Optional<ClusterDetailedStatus> detailedStatus = default;
-            Optional<string> detailedStatusMessage = default;
-            Optional<ExtendedLocation> hybridAksExtendedLocation = default;
-            Optional<ManagedResourceGroupConfiguration> managedResourceGroupConfiguration = default;
-            Optional<long> manualActionCount = default;
+            ValidationThreshold computeDeploymentThreshold = default;
+            IList<NetworkCloudRackDefinition> computeRackDefinitions = default;
+            ClusterDetailedStatus? detailedStatus = default;
+            string detailedStatusMessage = default;
+            ExtendedLocation hybridAksExtendedLocation = default;
+            ManagedResourceGroupConfiguration managedResourceGroupConfiguration = default;
+            long? manualActionCount = default;
             ResourceIdentifier networkFabricId = default;
-            Optional<ClusterProvisioningState> provisioningState = default;
-            Optional<DateTimeOffset> supportExpiryDate = default;
-            Optional<IReadOnlyList<ResourceIdentifier>> workloadResourceIds = default;
+            ClusterProvisioningState? provisioningState = default;
+            DateTimeOffset? supportExpiryDate = default;
+            IReadOnlyList<ResourceIdentifier> workloadResourceIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
                 {
-                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     {
                         if (property0.NameEquals("aggregatorOrSingleRackDefinition"u8))
                         {
-                            aggregatorOrSingleRackDefinition = NetworkCloudRackDefinition.DeserializeNetworkCloudRackDefinition(property0.Value);
+                            aggregatorOrSingleRackDefinition = NetworkCloudRackDefinition.DeserializeNetworkCloudRackDefinition(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("analyticsWorkspaceId"u8))
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             List<ClusterAvailableUpgradeVersion> array = new List<ClusterAvailableUpgradeVersion>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ClusterAvailableUpgradeVersion.DeserializeClusterAvailableUpgradeVersion(item));
+                                array.Add(ClusterAvailableUpgradeVersion.DeserializeClusterAvailableUpgradeVersion(item, options));
                             }
                             availableUpgradeVersions = array;
                             continue;
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            clusterCapacity = ClusterCapacity.DeserializeClusterCapacity(property0.Value);
+                            clusterCapacity = ClusterCapacity.DeserializeClusterCapacity(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("clusterConnectionStatus"u8))
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            clusterExtendedLocation = ExtendedLocation.DeserializeExtendedLocation(property0.Value);
+                            clusterExtendedLocation = ExtendedLocation.DeserializeExtendedLocation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("clusterLocation"u8))
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            clusterServicePrincipal = ServicePrincipalInformation.DeserializeServicePrincipalInformation(property0.Value);
+                            clusterServicePrincipal = ServicePrincipalInformation.DeserializeServicePrincipalInformation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("clusterType"u8))
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            computeDeploymentThreshold = ValidationThreshold.DeserializeValidationThreshold(property0.Value);
+                            computeDeploymentThreshold = ValidationThreshold.DeserializeValidationThreshold(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("computeRackDefinitions"u8))
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             List<NetworkCloudRackDefinition> array = new List<NetworkCloudRackDefinition>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkCloudRackDefinition.DeserializeNetworkCloudRackDefinition(item));
+                                array.Add(NetworkCloudRackDefinition.DeserializeNetworkCloudRackDefinition(item, options));
                             }
                             computeRackDefinitions = array;
                             continue;
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            hybridAksExtendedLocation = ExtendedLocation.DeserializeExtendedLocation(property0.Value);
+                            hybridAksExtendedLocation = ExtendedLocation.DeserializeExtendedLocation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("managedResourceGroupConfiguration"u8))
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            managedResourceGroupConfiguration = ManagedResourceGroupConfiguration.DeserializeManagedResourceGroupConfiguration(property0.Value);
+                            managedResourceGroupConfiguration = ManagedResourceGroupConfiguration.DeserializeManagedResourceGroupConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("manualActionCount"u8))
@@ -532,7 +532,38 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, aggregatorOrSingleRackDefinition, analyticsWorkspaceId.Value, Optional.ToList(availableUpgradeVersions), clusterCapacity.Value, Optional.ToNullable(clusterConnectionStatus), clusterExtendedLocation.Value, clusterLocation.Value, Optional.ToNullable(clusterManagerConnectionStatus), clusterManagerId.Value, clusterServicePrincipal.Value, clusterType, clusterVersion, computeDeploymentThreshold.Value, Optional.ToList(computeRackDefinitions), Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, hybridAksExtendedLocation.Value, managedResourceGroupConfiguration.Value, Optional.ToNullable(manualActionCount), networkFabricId, Optional.ToNullable(provisioningState), Optional.ToNullable(supportExpiryDate), Optional.ToList(workloadResourceIds), serializedAdditionalRawData);
+            return new NetworkCloudClusterData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation,
+                aggregatorOrSingleRackDefinition,
+                analyticsWorkspaceId,
+                availableUpgradeVersions ?? new ChangeTrackingList<ClusterAvailableUpgradeVersion>(),
+                clusterCapacity,
+                clusterConnectionStatus,
+                clusterExtendedLocation,
+                clusterLocation,
+                clusterManagerConnectionStatus,
+                clusterManagerId,
+                clusterServicePrincipal,
+                clusterType,
+                clusterVersion,
+                computeDeploymentThreshold,
+                computeRackDefinitions ?? new ChangeTrackingList<NetworkCloudRackDefinition>(),
+                detailedStatus,
+                detailedStatusMessage,
+                hybridAksExtendedLocation,
+                managedResourceGroupConfiguration,
+                manualActionCount,
+                networkFabricId,
+                provisioningState,
+                supportExpiryDate,
+                workloadResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudClusterData>.Write(ModelReaderWriterOptions options)

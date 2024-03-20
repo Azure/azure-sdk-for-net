@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PolicyInsights;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
@@ -94,11 +95,11 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> policyDefinitionId = default;
-            Optional<string> policyDefinitionReferenceId = default;
-            Optional<IReadOnlyList<string>> policyDefinitionGroupNames = default;
-            Optional<string> effect = default;
-            Optional<PolicySummaryResults> results = default;
+            ResourceIdentifier policyDefinitionId = default;
+            string policyDefinitionReferenceId = default;
+            IReadOnlyList<string> policyDefinitionGroupNames = default;
+            string effect = default;
+            PolicySummaryResults results = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     {
                         continue;
                     }
-                    results = PolicySummaryResults.DeserializePolicySummaryResults(property.Value);
+                    results = PolicySummaryResults.DeserializePolicySummaryResults(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -151,7 +152,13 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyDefinitionSummary(policyDefinitionId.Value, policyDefinitionReferenceId.Value, Optional.ToList(policyDefinitionGroupNames), effect.Value, results.Value, serializedAdditionalRawData);
+            return new PolicyDefinitionSummary(
+                policyDefinitionId,
+                policyDefinitionReferenceId,
+                policyDefinitionGroupNames ?? new ChangeTrackingList<string>(),
+                effect,
+                results,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicyDefinitionSummary>.Write(ModelReaderWriterOptions options)

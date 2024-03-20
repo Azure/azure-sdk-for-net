@@ -159,22 +159,22 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ManagedServiceIdentity identity = default;
+            ETag? etag = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<HealthcareApisProvisioningState> provisioningState = default;
-            Optional<DicomServiceAuthenticationConfiguration> authenticationConfiguration = default;
-            Optional<DicomServiceCorsConfiguration> corsConfiguration = default;
-            Optional<Uri> serviceUrl = default;
-            Optional<IReadOnlyList<HealthcareApisPrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Optional<HealthcareApisPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<FhirServiceEventState> eventState = default;
-            Optional<Encryption> encryption = default;
+            SystemData systemData = default;
+            HealthcareApisProvisioningState? provisioningState = default;
+            DicomServiceAuthenticationConfiguration authenticationConfiguration = default;
+            DicomServiceCorsConfiguration corsConfiguration = default;
+            Uri serviceUrl = default;
+            IReadOnlyList<HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections = default;
+            HealthcareApisPublicNetworkAccess? publicNetworkAccess = default;
+            FhirServiceEventState? eventState = default;
+            Encryption encryption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.HealthcareApis
                             {
                                 continue;
                             }
-                            authenticationConfiguration = DicomServiceAuthenticationConfiguration.DeserializeDicomServiceAuthenticationConfiguration(property0.Value);
+                            authenticationConfiguration = DicomServiceAuthenticationConfiguration.DeserializeDicomServiceAuthenticationConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("corsConfiguration"u8))
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.HealthcareApis
                             {
                                 continue;
                             }
-                            corsConfiguration = DicomServiceCorsConfiguration.DeserializeDicomServiceCorsConfiguration(property0.Value);
+                            corsConfiguration = DicomServiceCorsConfiguration.DeserializeDicomServiceCorsConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("serviceUrl"u8))
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.HealthcareApis
                             List<HealthcareApisPrivateEndpointConnectionData> array = new List<HealthcareApisPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(HealthcareApisPrivateEndpointConnectionData.DeserializeHealthcareApisPrivateEndpointConnectionData(item));
+                                array.Add(HealthcareApisPrivateEndpointConnectionData.DeserializeHealthcareApisPrivateEndpointConnectionData(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.HealthcareApis
                             {
                                 continue;
                             }
-                            encryption = Encryption.DeserializeEncryption(property0.Value);
+                            encryption = Encryption.DeserializeEncryption(property0.Value, options);
                             continue;
                         }
                     }
@@ -336,7 +336,24 @@ namespace Azure.ResourceManager.HealthcareApis
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DicomServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), authenticationConfiguration.Value, corsConfiguration.Value, serviceUrl.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(eventState), encryption.Value, identity, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new DicomServiceData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState,
+                authenticationConfiguration,
+                corsConfiguration,
+                serviceUrl,
+                privateEndpointConnections ?? new ChangeTrackingList<HealthcareApisPrivateEndpointConnectionData>(),
+                publicNetworkAccess,
+                eventState,
+                encryption,
+                identity,
+                etag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DicomServiceData>.Write(ModelReaderWriterOptions options)

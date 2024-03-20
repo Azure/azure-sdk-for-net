@@ -186,22 +186,22 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ExtendedLocation> extendedLocation = default;
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<SubnetData> subnet = default;
-            Optional<IReadOnlyList<NetworkInterfaceData>> networkInterfaces = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<IList<NetworkPrivateLinkServiceConnection>> privateLinkServiceConnections = default;
-            Optional<IList<NetworkPrivateLinkServiceConnection>> manualPrivateLinkServiceConnections = default;
-            Optional<IList<CustomDnsConfigProperties>> customDnsConfigs = default;
-            Optional<IList<ApplicationSecurityGroupData>> applicationSecurityGroups = default;
-            Optional<IList<PrivateEndpointIPConfiguration>> ipConfigurations = default;
-            Optional<string> customNetworkInterfaceName = default;
+            ExtendedLocation extendedLocation = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
+            IDictionary<string, string> tags = default;
+            SubnetData subnet = default;
+            IReadOnlyList<NetworkInterfaceData> networkInterfaces = default;
+            NetworkProvisioningState? provisioningState = default;
+            IList<NetworkPrivateLinkServiceConnection> privateLinkServiceConnections = default;
+            IList<NetworkPrivateLinkServiceConnection> manualPrivateLinkServiceConnections = default;
+            IList<CustomDnsConfigProperties> customDnsConfigs = default;
+            IList<ApplicationSecurityGroupData> applicationSecurityGroups = default;
+            IList<PrivateEndpointIPConfiguration> ipConfigurations = default;
+            string customNetworkInterfaceName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            subnet = SubnetData.DeserializeSubnetData(property0.Value);
+                            subnet = SubnetData.DeserializeSubnetData(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("networkInterfaces"u8))
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Network
                             List<NetworkInterfaceData> array = new List<NetworkInterfaceData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkInterfaceData.DeserializeNetworkInterfaceData(item));
+                                array.Add(NetworkInterfaceData.DeserializeNetworkInterfaceData(item, options));
                             }
                             networkInterfaces = array;
                             continue;
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Network
                             List<NetworkPrivateLinkServiceConnection> array = new List<NetworkPrivateLinkServiceConnection>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkPrivateLinkServiceConnection.DeserializeNetworkPrivateLinkServiceConnection(item));
+                                array.Add(NetworkPrivateLinkServiceConnection.DeserializeNetworkPrivateLinkServiceConnection(item, options));
                             }
                             privateLinkServiceConnections = array;
                             continue;
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.Network
                             List<NetworkPrivateLinkServiceConnection> array = new List<NetworkPrivateLinkServiceConnection>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkPrivateLinkServiceConnection.DeserializeNetworkPrivateLinkServiceConnection(item));
+                                array.Add(NetworkPrivateLinkServiceConnection.DeserializeNetworkPrivateLinkServiceConnection(item, options));
                             }
                             manualPrivateLinkServiceConnections = array;
                             continue;
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.Network
                             List<CustomDnsConfigProperties> array = new List<CustomDnsConfigProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(CustomDnsConfigProperties.DeserializeCustomDnsConfigProperties(item));
+                                array.Add(CustomDnsConfigProperties.DeserializeCustomDnsConfigProperties(item, options));
                             }
                             customDnsConfigs = array;
                             continue;
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.Network
                             List<ApplicationSecurityGroupData> array = new List<ApplicationSecurityGroupData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationSecurityGroupData.DeserializeApplicationSecurityGroupData(item));
+                                array.Add(ApplicationSecurityGroupData.DeserializeApplicationSecurityGroupData(item, options));
                             }
                             applicationSecurityGroups = array;
                             continue;
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.Network
                             List<PrivateEndpointIPConfiguration> array = new List<PrivateEndpointIPConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PrivateEndpointIPConfiguration.DeserializePrivateEndpointIPConfiguration(item));
+                                array.Add(PrivateEndpointIPConfiguration.DeserializePrivateEndpointIPConfiguration(item, options));
                             }
                             ipConfigurations = array;
                             continue;
@@ -395,7 +395,24 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateEndpointData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, extendedLocation, Optional.ToNullable(etag), subnet.Value, Optional.ToList(networkInterfaces), Optional.ToNullable(provisioningState), Optional.ToList(privateLinkServiceConnections), Optional.ToList(manualPrivateLinkServiceConnections), Optional.ToList(customDnsConfigs), Optional.ToList(applicationSecurityGroups), Optional.ToList(ipConfigurations), customNetworkInterfaceName.Value);
+            return new PrivateEndpointData(
+                id,
+                name,
+                type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                extendedLocation,
+                etag,
+                subnet,
+                networkInterfaces ?? new ChangeTrackingList<NetworkInterfaceData>(),
+                provisioningState,
+                privateLinkServiceConnections ?? new ChangeTrackingList<NetworkPrivateLinkServiceConnection>(),
+                manualPrivateLinkServiceConnections ?? new ChangeTrackingList<NetworkPrivateLinkServiceConnection>(),
+                customDnsConfigs ?? new ChangeTrackingList<CustomDnsConfigProperties>(),
+                applicationSecurityGroups ?? new ChangeTrackingList<ApplicationSecurityGroupData>(),
+                ipConfigurations ?? new ChangeTrackingList<PrivateEndpointIPConfiguration>(),
+                customNetworkInterfaceName);
         }
 
         BinaryData IPersistableModel<PrivateEndpointData>.Write(ModelReaderWriterOptions options)

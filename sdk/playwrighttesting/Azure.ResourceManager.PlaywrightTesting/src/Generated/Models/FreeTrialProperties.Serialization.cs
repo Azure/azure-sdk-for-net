@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PlaywrightTesting;
 
 namespace Azure.ResourceManager.PlaywrightTesting.Models
 {
@@ -151,7 +152,15 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FreeTrialProperties(accountId, createdAt, expiryAt, allocatedValue, usedValue, percentageUsed, state, serializedAdditionalRawData);
+            return new FreeTrialProperties(
+                accountId,
+                createdAt,
+                expiryAt,
+                allocatedValue,
+                usedValue,
+                percentageUsed,
+                state,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FreeTrialProperties>.Write(ModelReaderWriterOptions options)

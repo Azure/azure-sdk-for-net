@@ -104,13 +104,13 @@ namespace Azure.ResourceManager.HybridNetwork
             {
                 return null;
             }
-            Optional<NetworkFunctionDefinitionVersionPropertiesFormat> properties = default;
-            Optional<IDictionary<string, string>> tags = default;
+            NetworkFunctionDefinitionVersionPropertiesFormat properties = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.HybridNetwork
                     {
                         continue;
                     }
-                    properties = NetworkFunctionDefinitionVersionPropertiesFormat.DeserializeNetworkFunctionDefinitionVersionPropertiesFormat(property.Value);
+                    properties = NetworkFunctionDefinitionVersionPropertiesFormat.DeserializeNetworkFunctionDefinitionVersionPropertiesFormat(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -173,7 +173,15 @@ namespace Azure.ResourceManager.HybridNetwork
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFunctionDefinitionVersionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value, serializedAdditionalRawData);
+            return new NetworkFunctionDefinitionVersionData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkFunctionDefinitionVersionData>.Write(ModelReaderWriterOptions options)

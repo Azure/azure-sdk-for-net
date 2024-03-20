@@ -16,14 +16,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="timestamp"> data slice timestamp. </param>
         /// <param name="status"> latest ingestion task status for this data slice. </param>
         /// <param name="message"> the trimmed message of last ingestion job. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
         internal DataFeedIngestionStatus(DateTimeOffset timestamp, IngestionStatusType status, string message)
         {
-            if (message == null)
-            {
-                throw new ArgumentNullException(nameof(message));
-            }
-
             Timestamp = timestamp;
             Status = status;
             Message = message;

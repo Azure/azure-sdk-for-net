@@ -122,13 +122,13 @@ namespace Azure.ResourceManager.Avs
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<GlobalReachConnectionProvisioningState> provisioningState = default;
-            Optional<string> addressPrefix = default;
-            Optional<string> authorizationKey = default;
-            Optional<GlobalReachConnectionStatus> circuitConnectionStatus = default;
-            Optional<ResourceIdentifier> peerExpressRouteCircuit = default;
-            Optional<ResourceIdentifier> expressRouteId = default;
+            SystemData systemData = default;
+            GlobalReachConnectionProvisioningState? provisioningState = default;
+            string addressPrefix = default;
+            string authorizationKey = default;
+            GlobalReachConnectionStatus? circuitConnectionStatus = default;
+            ResourceIdentifier peerExpressRouteCircuit = default;
+            ResourceIdentifier expressRouteId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -221,7 +221,18 @@ namespace Azure.ResourceManager.Avs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GlobalReachConnectionData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), addressPrefix.Value, authorizationKey.Value, Optional.ToNullable(circuitConnectionStatus), peerExpressRouteCircuit.Value, expressRouteId.Value, serializedAdditionalRawData);
+            return new GlobalReachConnectionData(
+                id,
+                name,
+                type,
+                systemData,
+                provisioningState,
+                addressPrefix,
+                authorizationKey,
+                circuitConnectionStatus,
+                peerExpressRouteCircuit,
+                expressRouteId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GlobalReachConnectionData>.Write(ModelReaderWriterOptions options)

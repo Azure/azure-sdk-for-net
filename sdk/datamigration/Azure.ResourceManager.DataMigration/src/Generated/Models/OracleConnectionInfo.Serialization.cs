@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -99,13 +100,13 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             string dataSource = default;
-            Optional<string> serverName = default;
-            Optional<string> serverVersion = default;
-            Optional<int> port = default;
-            Optional<AuthenticationType> authentication = default;
+            string serverName = default;
+            string serverVersion = default;
+            int? port = default;
+            AuthenticationType? authentication = default;
             string type = default;
-            Optional<string> userName = default;
-            Optional<string> password = default;
+            string userName = default;
+            string password = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,7 +165,16 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OracleConnectionInfo(type, userName.Value, password.Value, serializedAdditionalRawData, dataSource, serverName.Value, serverVersion.Value, Optional.ToNullable(port), Optional.ToNullable(authentication));
+            return new OracleConnectionInfo(
+                type,
+                userName,
+                password,
+                serializedAdditionalRawData,
+                dataSource,
+                serverName,
+                serverVersion,
+                port,
+                authentication);
         }
 
         BinaryData IPersistableModel<OracleConnectionInfo>.Write(ModelReaderWriterOptions options)

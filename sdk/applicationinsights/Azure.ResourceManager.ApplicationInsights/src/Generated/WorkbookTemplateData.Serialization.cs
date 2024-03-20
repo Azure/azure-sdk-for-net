@@ -155,17 +155,17 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> priority = default;
-            Optional<string> author = default;
-            Optional<BinaryData> templateData = default;
-            Optional<IList<WorkbookTemplateGallery>> galleries = default;
-            Optional<IDictionary<string, IList<WorkbookTemplateLocalizedGallery>>> localized = default;
+            SystemData systemData = default;
+            int? priority = default;
+            string author = default;
+            BinaryData templateData = default;
+            IList<WorkbookTemplateGallery> galleries = default;
+            IDictionary<string, IList<WorkbookTemplateLocalizedGallery>> localized = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                             List<WorkbookTemplateGallery> array = new List<WorkbookTemplateGallery>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(WorkbookTemplateGallery.DeserializeWorkbookTemplateGallery(item));
+                                array.Add(WorkbookTemplateGallery.DeserializeWorkbookTemplateGallery(item, options));
                             }
                             galleries = array;
                             continue;
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                                     List<WorkbookTemplateLocalizedGallery> array = new List<WorkbookTemplateLocalizedGallery>();
                                     foreach (var item in property1.Value.EnumerateArray())
                                     {
-                                        array.Add(WorkbookTemplateLocalizedGallery.DeserializeWorkbookTemplateLocalizedGallery(item));
+                                        array.Add(WorkbookTemplateLocalizedGallery.DeserializeWorkbookTemplateLocalizedGallery(item, options));
                                     }
                                     dictionary.Add(property1.Name, array);
                                 }
@@ -294,7 +294,19 @@ namespace Azure.ResourceManager.ApplicationInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkbookTemplateData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(priority), author.Value, templateData.Value, Optional.ToList(galleries), Optional.ToDictionary(localized), serializedAdditionalRawData);
+            return new WorkbookTemplateData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                priority,
+                author,
+                templateData,
+                galleries ?? new ChangeTrackingList<WorkbookTemplateGallery>(),
+                localized ?? new ChangeTrackingDictionary<string, IList<WorkbookTemplateLocalizedGallery>>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkbookTemplateData>.Write(ModelReaderWriterOptions options)

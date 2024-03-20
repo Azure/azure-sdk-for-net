@@ -28,7 +28,17 @@ namespace Azure.Containers.ContainerRegistry
         /// <returns> A new <see cref="ContainerRegistry.ContainerRepositoryProperties"/> instance for mocking. </returns>
         public static ContainerRepositoryProperties ContainerRepositoryProperties(string registryLoginServer = null, string name = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, int manifestCount = default, int tagCount = default, bool? canDelete = null, bool? canWrite = null, bool? canList = null, bool? canRead = null)
         {
-            return new ContainerRepositoryProperties(registryLoginServer, name, createdOn, lastUpdatedOn, manifestCount, tagCount, canDelete, canWrite, canList, canRead);
+            return new ContainerRepositoryProperties(
+                registryLoginServer,
+                name,
+                createdOn,
+                lastUpdatedOn,
+                manifestCount,
+                tagCount,
+                canDelete,
+                canWrite,
+                canList,
+                canRead);
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistry.ArtifactTagProperties"/>. </summary>
@@ -45,7 +55,17 @@ namespace Azure.Containers.ContainerRegistry
         /// <returns> A new <see cref="ContainerRegistry.ArtifactTagProperties"/> instance for mocking. </returns>
         public static ArtifactTagProperties ArtifactTagProperties(string registryLoginServer = null, string repositoryName = null, string name = null, string digest = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, bool? canDelete = null, bool? canWrite = null, bool? canList = null, bool? canRead = null)
         {
-            return new ArtifactTagProperties(registryLoginServer, repositoryName, name, digest, createdOn, lastUpdatedOn, canDelete, canWrite, canList, canRead);
+            return new ArtifactTagProperties(
+                registryLoginServer,
+                repositoryName,
+                name,
+                digest,
+                createdOn,
+                lastUpdatedOn,
+                canDelete,
+                canWrite,
+                canList,
+                canRead);
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistry.ArtifactManifestPlatform"/>. </summary>
@@ -79,7 +99,21 @@ namespace Azure.Containers.ContainerRegistry
             relatedArtifacts ??= new List<ArtifactManifestPlatform>();
             tags ??= new List<string>();
 
-            return new ArtifactManifestProperties(registryLoginServer, repositoryName, digest, sizeInBytes, createdOn, lastUpdatedOn, architecture, operatingSystem, relatedArtifacts?.ToList(), tags?.ToList(), canDelete, canWrite, canList, canRead);
+            return new ArtifactManifestProperties(
+                registryLoginServer,
+                repositoryName,
+                digest,
+                sizeInBytes,
+                createdOn,
+                lastUpdatedOn,
+                architecture,
+                operatingSystem,
+                relatedArtifacts?.ToList(),
+                tags?.ToList(),
+                canDelete,
+                canWrite,
+                canList,
+                canRead);
         }
     }
 }

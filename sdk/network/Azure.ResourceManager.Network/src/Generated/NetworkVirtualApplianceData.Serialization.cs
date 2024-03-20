@@ -242,31 +242,31 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<VirtualApplianceSkuProperties> nvaSku = default;
-            Optional<string> addressPrefix = default;
-            Optional<IList<string>> bootStrapConfigurationBlobs = default;
-            Optional<WritableSubResource> virtualHub = default;
-            Optional<IList<string>> cloudInitConfigurationBlobs = default;
-            Optional<string> cloudInitConfiguration = default;
-            Optional<long> virtualApplianceAsn = default;
-            Optional<string> sshPublicKey = default;
-            Optional<IReadOnlyList<VirtualApplianceNicProperties>> virtualApplianceNics = default;
-            Optional<IList<VirtualApplianceAdditionalNicProperties>> additionalNics = default;
-            Optional<IList<WritableSubResource>> internetIngressPublicIPs = default;
-            Optional<IReadOnlyList<WritableSubResource>> virtualApplianceSites = default;
-            Optional<IReadOnlyList<WritableSubResource>> virtualApplianceConnections = default;
-            Optional<IReadOnlyList<WritableSubResource>> inboundSecurityRules = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<string> deploymentType = default;
-            Optional<VirtualApplianceDelegationProperties> delegation = default;
-            Optional<PartnerManagedResourceProperties> partnerManagedResource = default;
+            ManagedServiceIdentity identity = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
+            IDictionary<string, string> tags = default;
+            VirtualApplianceSkuProperties nvaSku = default;
+            string addressPrefix = default;
+            IList<string> bootStrapConfigurationBlobs = default;
+            WritableSubResource virtualHub = default;
+            IList<string> cloudInitConfigurationBlobs = default;
+            string cloudInitConfiguration = default;
+            long? virtualApplianceAsn = default;
+            string sshPublicKey = default;
+            IReadOnlyList<VirtualApplianceNicProperties> virtualApplianceNics = default;
+            IList<VirtualApplianceAdditionalNicProperties> additionalNics = default;
+            IList<WritableSubResource> internetIngressPublicIPs = default;
+            IReadOnlyList<WritableSubResource> virtualApplianceSites = default;
+            IReadOnlyList<WritableSubResource> virtualApplianceConnections = default;
+            IReadOnlyList<WritableSubResource> inboundSecurityRules = default;
+            NetworkProvisioningState? provisioningState = default;
+            string deploymentType = default;
+            VirtualApplianceDelegationProperties delegation = default;
+            PartnerManagedResourceProperties partnerManagedResource = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            nvaSku = VirtualApplianceSkuProperties.DeserializeVirtualApplianceSkuProperties(property0.Value);
+                            nvaSku = VirtualApplianceSkuProperties.DeserializeVirtualApplianceSkuProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("addressPrefix"u8))
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.Network
                             List<VirtualApplianceNicProperties> array = new List<VirtualApplianceNicProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VirtualApplianceNicProperties.DeserializeVirtualApplianceNicProperties(item));
+                                array.Add(VirtualApplianceNicProperties.DeserializeVirtualApplianceNicProperties(item, options));
                             }
                             virtualApplianceNics = array;
                             continue;
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.Network
                             List<VirtualApplianceAdditionalNicProperties> array = new List<VirtualApplianceAdditionalNicProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VirtualApplianceAdditionalNicProperties.DeserializeVirtualApplianceAdditionalNicProperties(item));
+                                array.Add(VirtualApplianceAdditionalNicProperties.DeserializeVirtualApplianceAdditionalNicProperties(item, options));
                             }
                             additionalNics = array;
                             continue;
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            delegation = VirtualApplianceDelegationProperties.DeserializeVirtualApplianceDelegationProperties(property0.Value);
+                            delegation = VirtualApplianceDelegationProperties.DeserializeVirtualApplianceDelegationProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("partnerManagedResource"u8))
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            partnerManagedResource = PartnerManagedResourceProperties.DeserializePartnerManagedResourceProperties(property0.Value);
+                            partnerManagedResource = PartnerManagedResourceProperties.DeserializePartnerManagedResourceProperties(property0.Value, options);
                             continue;
                         }
                     }
@@ -539,7 +539,33 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkVirtualApplianceData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, identity, Optional.ToNullable(etag), nvaSku.Value, addressPrefix.Value, Optional.ToList(bootStrapConfigurationBlobs), virtualHub, Optional.ToList(cloudInitConfigurationBlobs), cloudInitConfiguration.Value, Optional.ToNullable(virtualApplianceAsn), sshPublicKey.Value, Optional.ToList(virtualApplianceNics), Optional.ToList(additionalNics), Optional.ToList(internetIngressPublicIPs), Optional.ToList(virtualApplianceSites), Optional.ToList(virtualApplianceConnections), Optional.ToList(inboundSecurityRules), Optional.ToNullable(provisioningState), deploymentType.Value, delegation.Value, partnerManagedResource.Value);
+            return new NetworkVirtualApplianceData(
+                id,
+                name,
+                type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                identity,
+                etag,
+                nvaSku,
+                addressPrefix,
+                bootStrapConfigurationBlobs ?? new ChangeTrackingList<string>(),
+                virtualHub,
+                cloudInitConfigurationBlobs ?? new ChangeTrackingList<string>(),
+                cloudInitConfiguration,
+                virtualApplianceAsn,
+                sshPublicKey,
+                virtualApplianceNics ?? new ChangeTrackingList<VirtualApplianceNicProperties>(),
+                additionalNics ?? new ChangeTrackingList<VirtualApplianceAdditionalNicProperties>(),
+                internetIngressPublicIPs ?? new ChangeTrackingList<WritableSubResource>(),
+                virtualApplianceSites ?? new ChangeTrackingList<WritableSubResource>(),
+                virtualApplianceConnections ?? new ChangeTrackingList<WritableSubResource>(),
+                inboundSecurityRules ?? new ChangeTrackingList<WritableSubResource>(),
+                provisioningState,
+                deploymentType,
+                delegation,
+                partnerManagedResource);
         }
 
         BinaryData IPersistableModel<NetworkVirtualApplianceData>.Write(ModelReaderWriterOptions options)

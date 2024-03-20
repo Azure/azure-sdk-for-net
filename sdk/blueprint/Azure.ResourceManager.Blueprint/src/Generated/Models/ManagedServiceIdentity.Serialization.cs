@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Blueprint;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Blueprint.Models
@@ -89,9 +90,9 @@ namespace Azure.ResourceManager.Blueprint.Models
                 return null;
             }
             ManagedServiceIdentityType type = default;
-            Optional<string> principalId = default;
-            Optional<Guid> tenantId = default;
-            Optional<IDictionary<string, UserAssignedIdentity>> userAssignedIdentities = default;
+            string principalId = default;
+            Guid? tenantId = default;
+            IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -135,7 +136,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedServiceIdentity(type, principalId.Value, Optional.ToNullable(tenantId), Optional.ToDictionary(userAssignedIdentities), serializedAdditionalRawData);
+            return new ManagedServiceIdentity(type, principalId, tenantId, userAssignedIdentities ?? new ChangeTrackingDictionary<string, UserAssignedIdentity>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedServiceIdentity>.Write(ModelReaderWriterOptions options)

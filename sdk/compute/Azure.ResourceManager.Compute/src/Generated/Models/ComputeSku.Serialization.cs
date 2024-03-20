@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> tier = default;
-            Optional<long> capacity = default;
+            string name = default;
+            string tier = default;
+            long? capacity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComputeSku(name.Value, tier.Value, Optional.ToNullable(capacity), serializedAdditionalRawData);
+            return new ComputeSku(name, tier, capacity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComputeSku>.Write(ModelReaderWriterOptions options)

@@ -137,17 +137,17 @@ namespace Azure.ResourceManager.NetworkCloud
                 return null;
             }
             ExtendedLocation extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IReadOnlyList<string>> attachedTo = default;
-            Optional<VolumeDetailedStatus> detailedStatus = default;
-            Optional<string> detailedStatusMessage = default;
-            Optional<VolumeProvisioningState> provisioningState = default;
-            Optional<string> serialNumber = default;
+            SystemData systemData = default;
+            IReadOnlyList<string> attachedTo = default;
+            VolumeDetailedStatus? detailedStatus = default;
+            string detailedStatusMessage = default;
+            VolumeProvisioningState? provisioningState = default;
+            string serialNumber = default;
             long sizeMiB = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 if (property.NameEquals("extendedLocation"u8))
                 {
-                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -266,7 +266,21 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudVolumeData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, Optional.ToList(attachedTo), Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, Optional.ToNullable(provisioningState), serialNumber.Value, sizeMiB, serializedAdditionalRawData);
+            return new NetworkCloudVolumeData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation,
+                attachedTo ?? new ChangeTrackingList<string>(),
+                detailedStatus,
+                detailedStatusMessage,
+                provisioningState,
+                serialNumber,
+                sizeMiB,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudVolumeData>.Write(ModelReaderWriterOptions options)

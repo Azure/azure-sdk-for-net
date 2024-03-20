@@ -159,24 +159,24 @@ namespace Azure.ResourceManager.Hci
             {
                 return null;
             }
-            Optional<ArcVmExtendedLocation> extendedLocation = default;
-            Optional<ManagedServiceIdentity> identity = default;
+            ArcVmExtendedLocation extendedLocation = default;
+            ManagedServiceIdentity identity = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<VirtualMachineInstancePropertiesHardwareProfile> hardwareProfile = default;
-            Optional<VirtualMachineInstancePropertiesNetworkProfile> networkProfile = default;
-            Optional<VirtualMachineInstancePropertiesOSProfile> osProfile = default;
-            Optional<VirtualMachineInstancePropertiesSecurityProfile> securityProfile = default;
-            Optional<VirtualMachineInstancePropertiesStorageProfile> storageProfile = default;
-            Optional<HttpProxyConfiguration> httpProxyConfig = default;
-            Optional<ProvisioningStateEnum> provisioningState = default;
-            Optional<VirtualMachineInstanceView> instanceView = default;
-            Optional<VirtualMachineInstanceStatus> status = default;
-            Optional<GuestAgentInstallStatus> guestAgentInstallStatus = default;
-            Optional<string> vmId = default;
-            Optional<string> resourceUid = default;
+            SystemData systemData = default;
+            VirtualMachineInstancePropertiesHardwareProfile hardwareProfile = default;
+            VirtualMachineInstancePropertiesNetworkProfile networkProfile = default;
+            VirtualMachineInstancePropertiesOSProfile osProfile = default;
+            VirtualMachineInstancePropertiesSecurityProfile securityProfile = default;
+            VirtualMachineInstancePropertiesStorageProfile storageProfile = default;
+            HttpProxyConfiguration httpProxyConfig = default;
+            ProvisioningStateEnum? provisioningState = default;
+            VirtualMachineInstanceView instanceView = default;
+            VirtualMachineInstanceStatus status = default;
+            GuestAgentInstallStatus guestAgentInstallStatus = default;
+            string vmId = default;
+            string resourceUid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Hci
                     {
                         continue;
                     }
-                    extendedLocation = ArcVmExtendedLocation.DeserializeArcVmExtendedLocation(property.Value);
+                    extendedLocation = ArcVmExtendedLocation.DeserializeArcVmExtendedLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Hci
                             {
                                 continue;
                             }
-                            hardwareProfile = VirtualMachineInstancePropertiesHardwareProfile.DeserializeVirtualMachineInstancePropertiesHardwareProfile(property0.Value);
+                            hardwareProfile = VirtualMachineInstancePropertiesHardwareProfile.DeserializeVirtualMachineInstancePropertiesHardwareProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("networkProfile"u8))
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Hci
                             {
                                 continue;
                             }
-                            networkProfile = VirtualMachineInstancePropertiesNetworkProfile.DeserializeVirtualMachineInstancePropertiesNetworkProfile(property0.Value);
+                            networkProfile = VirtualMachineInstancePropertiesNetworkProfile.DeserializeVirtualMachineInstancePropertiesNetworkProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("osProfile"u8))
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Hci
                             {
                                 continue;
                             }
-                            osProfile = VirtualMachineInstancePropertiesOSProfile.DeserializeVirtualMachineInstancePropertiesOSProfile(property0.Value);
+                            osProfile = VirtualMachineInstancePropertiesOSProfile.DeserializeVirtualMachineInstancePropertiesOSProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("securityProfile"u8))
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Hci
                             {
                                 continue;
                             }
-                            securityProfile = VirtualMachineInstancePropertiesSecurityProfile.DeserializeVirtualMachineInstancePropertiesSecurityProfile(property0.Value);
+                            securityProfile = VirtualMachineInstancePropertiesSecurityProfile.DeserializeVirtualMachineInstancePropertiesSecurityProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("storageProfile"u8))
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Hci
                             {
                                 continue;
                             }
-                            storageProfile = VirtualMachineInstancePropertiesStorageProfile.DeserializeVirtualMachineInstancePropertiesStorageProfile(property0.Value);
+                            storageProfile = VirtualMachineInstancePropertiesStorageProfile.DeserializeVirtualMachineInstancePropertiesStorageProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("httpProxyConfig"u8))
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Hci
                             {
                                 continue;
                             }
-                            httpProxyConfig = HttpProxyConfiguration.DeserializeHttpProxyConfiguration(property0.Value);
+                            httpProxyConfig = HttpProxyConfiguration.DeserializeHttpProxyConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Hci
                             {
                                 continue;
                             }
-                            instanceView = VirtualMachineInstanceView.DeserializeVirtualMachineInstanceView(property0.Value);
+                            instanceView = VirtualMachineInstanceView.DeserializeVirtualMachineInstanceView(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("status"u8))
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Hci
                             {
                                 continue;
                             }
-                            status = VirtualMachineInstanceStatus.DeserializeVirtualMachineInstanceStatus(property0.Value);
+                            status = VirtualMachineInstanceStatus.DeserializeVirtualMachineInstanceStatus(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("guestAgentInstallStatus"u8))
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Hci
                             {
                                 continue;
                             }
-                            guestAgentInstallStatus = GuestAgentInstallStatus.DeserializeGuestAgentInstallStatus(property0.Value);
+                            guestAgentInstallStatus = GuestAgentInstallStatus.DeserializeGuestAgentInstallStatus(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("vmId"u8))
@@ -341,7 +341,26 @@ namespace Azure.ResourceManager.Hci
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineInstanceData(id, name, type, systemData.Value, extendedLocation.Value, identity, hardwareProfile.Value, networkProfile.Value, osProfile.Value, securityProfile.Value, storageProfile.Value, httpProxyConfig.Value, Optional.ToNullable(provisioningState), instanceView.Value, status.Value, guestAgentInstallStatus.Value, vmId.Value, resourceUid.Value, serializedAdditionalRawData);
+            return new VirtualMachineInstanceData(
+                id,
+                name,
+                type,
+                systemData,
+                extendedLocation,
+                identity,
+                hardwareProfile,
+                networkProfile,
+                osProfile,
+                securityProfile,
+                storageProfile,
+                httpProxyConfig,
+                provisioningState,
+                instanceView,
+                status,
+                guestAgentInstallStatus,
+                vmId,
+                resourceUid,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineInstanceData>.Write(ModelReaderWriterOptions options)

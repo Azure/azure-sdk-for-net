@@ -120,15 +120,15 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
-            Optional<InstanceSku> sku = default;
+            AzureLocation? location = default;
+            IReadOnlyDictionary<string, string> tags = default;
+            InstanceSku sku = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<RoleInstanceNetworkProfile> networkProfile = default;
-            Optional<RoleInstanceView> instanceView = default;
+            SystemData systemData = default;
+            RoleInstanceNetworkProfile networkProfile = default;
+            RoleInstanceView instanceView = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         continue;
                     }
-                    sku = InstanceSku.DeserializeInstanceSku(property.Value);
+                    sku = InstanceSku.DeserializeInstanceSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            networkProfile = RoleInstanceNetworkProfile.DeserializeRoleInstanceNetworkProfile(property0.Value);
+                            networkProfile = RoleInstanceNetworkProfile.DeserializeRoleInstanceNetworkProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("instanceView"u8))
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            instanceView = RoleInstanceView.DeserializeRoleInstanceView(property0.Value);
+                            instanceView = RoleInstanceView.DeserializeRoleInstanceView(property0.Value, options);
                             continue;
                         }
                     }
@@ -225,7 +225,17 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudServiceRoleInstanceData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToDictionary(tags), sku.Value, networkProfile.Value, instanceView.Value, serializedAdditionalRawData);
+            return new CloudServiceRoleInstanceData(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                sku,
+                networkProfile,
+                instanceView,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudServiceRoleInstanceData>.Write(ModelReaderWriterOptions options)

@@ -157,23 +157,23 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DevTestLabEnableStatus> status = default;
-            Optional<string> taskType = default;
-            Optional<DevTestLabWeekDetails> weeklyRecurrence = default;
-            Optional<DayDetails> dailyRecurrence = default;
-            Optional<HourDetails> hourlyRecurrence = default;
-            Optional<string> timeZoneId = default;
-            Optional<DevTestLabNotificationSettings> notificationSettings = default;
-            Optional<DateTimeOffset> createdDate = default;
-            Optional<string> targetResourceId = default;
-            Optional<string> provisioningState = default;
-            Optional<Guid> uniqueIdentifier = default;
+            SystemData systemData = default;
+            DevTestLabEnableStatus? status = default;
+            string taskType = default;
+            DevTestLabWeekDetails weeklyRecurrence = default;
+            DayDetails dailyRecurrence = default;
+            HourDetails hourlyRecurrence = default;
+            string timeZoneId = default;
+            DevTestLabNotificationSettings notificationSettings = default;
+            DateTimeOffset? createdDate = default;
+            string targetResourceId = default;
+            string provisioningState = default;
+            Guid? uniqueIdentifier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             {
                                 continue;
                             }
-                            weeklyRecurrence = DevTestLabWeekDetails.DeserializeDevTestLabWeekDetails(property0.Value);
+                            weeklyRecurrence = DevTestLabWeekDetails.DeserializeDevTestLabWeekDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("dailyRecurrence"u8))
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             {
                                 continue;
                             }
-                            dailyRecurrence = DayDetails.DeserializeDayDetails(property0.Value);
+                            dailyRecurrence = DayDetails.DeserializeDayDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("hourlyRecurrence"u8))
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             {
                                 continue;
                             }
-                            hourlyRecurrence = HourDetails.DeserializeHourDetails(property0.Value);
+                            hourlyRecurrence = HourDetails.DeserializeHourDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("timeZoneId"u8))
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             {
                                 continue;
                             }
-                            notificationSettings = DevTestLabNotificationSettings.DeserializeDevTestLabNotificationSettings(property0.Value);
+                            notificationSettings = DevTestLabNotificationSettings.DeserializeDevTestLabNotificationSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("createdDate"u8))
@@ -322,7 +322,25 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabScheduleData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(status), taskType.Value, weeklyRecurrence.Value, dailyRecurrence.Value, hourlyRecurrence.Value, timeZoneId.Value, notificationSettings.Value, Optional.ToNullable(createdDate), targetResourceId.Value, provisioningState.Value, Optional.ToNullable(uniqueIdentifier), serializedAdditionalRawData);
+            return new DevTestLabScheduleData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                status,
+                taskType,
+                weeklyRecurrence,
+                dailyRecurrence,
+                hourlyRecurrence,
+                timeZoneId,
+                notificationSettings,
+                createdDate,
+                targetResourceId,
+                provisioningState,
+                uniqueIdentifier,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabScheduleData>.Write(ModelReaderWriterOptions options)

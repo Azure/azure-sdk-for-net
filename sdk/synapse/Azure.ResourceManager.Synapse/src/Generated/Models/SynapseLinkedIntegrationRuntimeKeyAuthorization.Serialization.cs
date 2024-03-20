@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 if (property.NameEquals("key"u8))
                 {
-                    key = SynapseSecureString.DeserializeSynapseSecureString(property.Value);
+                    key = SynapseSecureString.DeserializeSynapseSecureString(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("authorizationType"u8))

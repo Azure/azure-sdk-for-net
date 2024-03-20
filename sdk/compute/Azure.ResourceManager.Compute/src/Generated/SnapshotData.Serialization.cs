@@ -233,38 +233,38 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Optional<string> managedBy = default;
-            Optional<SnapshotSku> sku = default;
-            Optional<ExtendedLocation> extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            string managedBy = default;
+            SnapshotSku sku = default;
+            ExtendedLocation extendedLocation = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> timeCreated = default;
-            Optional<SupportedOperatingSystemType> osType = default;
-            Optional<HyperVGeneration> hyperVGeneration = default;
-            Optional<DiskPurchasePlan> purchasePlan = default;
-            Optional<SupportedCapabilities> supportedCapabilities = default;
-            Optional<DiskCreationData> creationData = default;
-            Optional<int> diskSizeGB = default;
-            Optional<long> diskSizeBytes = default;
-            Optional<DiskState> diskState = default;
-            Optional<string> uniqueId = default;
-            Optional<EncryptionSettingsGroup> encryptionSettingsGroup = default;
-            Optional<string> provisioningState = default;
-            Optional<bool> incremental = default;
-            Optional<string> incrementalSnapshotFamilyId = default;
-            Optional<DiskEncryption> encryption = default;
-            Optional<NetworkAccessPolicy> networkAccessPolicy = default;
-            Optional<ResourceIdentifier> diskAccessId = default;
-            Optional<DiskSecurityProfile> securityProfile = default;
-            Optional<bool> supportsHibernation = default;
-            Optional<DiskPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<float> completionPercent = default;
-            Optional<CopyCompletionError> copyCompletionError = default;
-            Optional<DataAccessAuthMode> dataAccessAuthMode = default;
+            SystemData systemData = default;
+            DateTimeOffset? timeCreated = default;
+            SupportedOperatingSystemType? osType = default;
+            HyperVGeneration? hyperVGeneration = default;
+            DiskPurchasePlan purchasePlan = default;
+            SupportedCapabilities supportedCapabilities = default;
+            DiskCreationData creationData = default;
+            int? diskSizeGB = default;
+            long? diskSizeBytes = default;
+            DiskState? diskState = default;
+            string uniqueId = default;
+            EncryptionSettingsGroup encryptionSettingsGroup = default;
+            string provisioningState = default;
+            bool? incremental = default;
+            string incrementalSnapshotFamilyId = default;
+            DiskEncryption encryption = default;
+            NetworkAccessPolicy? networkAccessPolicy = default;
+            ResourceIdentifier diskAccessId = default;
+            DiskSecurityProfile securityProfile = default;
+            bool? supportsHibernation = default;
+            DiskPublicNetworkAccess? publicNetworkAccess = default;
+            float? completionPercent = default;
+            CopyCompletionError copyCompletionError = default;
+            DataAccessAuthMode? dataAccessAuthMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         continue;
                     }
-                    sku = SnapshotSku.DeserializeSnapshotSku(property.Value);
+                    sku = SnapshotSku.DeserializeSnapshotSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("extendedLocation"u8))
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            purchasePlan = DiskPurchasePlan.DeserializeDiskPurchasePlan(property0.Value);
+                            purchasePlan = DiskPurchasePlan.DeserializeDiskPurchasePlan(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("supportedCapabilities"u8))
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            supportedCapabilities = SupportedCapabilities.DeserializeSupportedCapabilities(property0.Value);
+                            supportedCapabilities = SupportedCapabilities.DeserializeSupportedCapabilities(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("creationData"u8))
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            creationData = DiskCreationData.DeserializeDiskCreationData(property0.Value);
+                            creationData = DiskCreationData.DeserializeDiskCreationData(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("diskSizeGB"u8))
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            encryptionSettingsGroup = EncryptionSettingsGroup.DeserializeEncryptionSettingsGroup(property0.Value);
+                            encryptionSettingsGroup = EncryptionSettingsGroup.DeserializeEncryptionSettingsGroup(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            encryption = DiskEncryption.DeserializeDiskEncryption(property0.Value);
+                            encryption = DiskEncryption.DeserializeDiskEncryption(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("networkAccessPolicy"u8))
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            securityProfile = DiskSecurityProfile.DeserializeDiskSecurityProfile(property0.Value);
+                            securityProfile = DiskSecurityProfile.DeserializeDiskSecurityProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("supportsHibernation"u8))
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            copyCompletionError = CopyCompletionError.DeserializeCopyCompletionError(property0.Value);
+                            copyCompletionError = CopyCompletionError.DeserializeCopyCompletionError(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("dataAccessAuthMode"u8))
@@ -548,7 +548,40 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SnapshotData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, managedBy.Value, sku.Value, extendedLocation, Optional.ToNullable(timeCreated), Optional.ToNullable(osType), Optional.ToNullable(hyperVGeneration), purchasePlan.Value, supportedCapabilities.Value, creationData.Value, Optional.ToNullable(diskSizeGB), Optional.ToNullable(diskSizeBytes), Optional.ToNullable(diskState), uniqueId.Value, encryptionSettingsGroup.Value, provisioningState.Value, Optional.ToNullable(incremental), incrementalSnapshotFamilyId.Value, encryption.Value, Optional.ToNullable(networkAccessPolicy), diskAccessId.Value, securityProfile.Value, Optional.ToNullable(supportsHibernation), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(completionPercent), copyCompletionError.Value, Optional.ToNullable(dataAccessAuthMode), serializedAdditionalRawData);
+            return new SnapshotData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                managedBy,
+                sku,
+                extendedLocation,
+                timeCreated,
+                osType,
+                hyperVGeneration,
+                purchasePlan,
+                supportedCapabilities,
+                creationData,
+                diskSizeGB,
+                diskSizeBytes,
+                diskState,
+                uniqueId,
+                encryptionSettingsGroup,
+                provisioningState,
+                incremental,
+                incrementalSnapshotFamilyId,
+                encryption,
+                networkAccessPolicy,
+                diskAccessId,
+                securityProfile,
+                supportsHibernation,
+                publicNetworkAccess,
+                completionPercent,
+                copyCompletionError,
+                dataAccessAuthMode,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SnapshotData>.Write(ModelReaderWriterOptions options)

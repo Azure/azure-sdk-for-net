@@ -44,6 +44,21 @@ namespace Azure.AI.OpenAI
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
+            if (Optional.IsDefined(EncodingFormat))
+            {
+                writer.WritePropertyName("encoding_format"u8);
+                writer.WriteStringValue(EncodingFormat.Value.ToString());
+            }
+            if (Optional.IsDefined(Dimensions))
+            {
+                writer.WritePropertyName("dimensions"u8);
+                writer.WriteNumberValue(Dimensions.Value);
+            }
+            if (Optional.IsDefined(InputType))
+            {
+                writer.WritePropertyName("input_type"u8);
+                writer.WriteStringValue(InputType);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -82,9 +97,12 @@ namespace Azure.AI.OpenAI
             {
                 return null;
             }
-            Optional<string> user = default;
-            Optional<string> model = default;
+            string user = default;
+            string model = default;
             IList<string> input = default;
+            EmbeddingEncodingFormat? encodingFormat = default;
+            int? dimensions = default;
+            string inputType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -109,13 +127,43 @@ namespace Azure.AI.OpenAI
                     input = array;
                     continue;
                 }
+                if (property.NameEquals("encoding_format"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    encodingFormat = new EmbeddingEncodingFormat(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("dimensions"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dimensions = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("input_type"u8))
+                {
+                    inputType = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EmbeddingsOptions(user.Value, model.Value, input, serializedAdditionalRawData);
+            return new EmbeddingsOptions(
+                user,
+                model,
+                input,
+                encodingFormat,
+                dimensions,
+                inputType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EmbeddingsOptions>.Write(ModelReaderWriterOptions options)

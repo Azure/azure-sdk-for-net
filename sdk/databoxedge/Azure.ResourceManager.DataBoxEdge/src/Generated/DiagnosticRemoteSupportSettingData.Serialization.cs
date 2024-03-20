@@ -102,8 +102,8 @@ namespace Azure.ResourceManager.DataBoxEdge
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IList<EdgeRemoteSupportSettings>> remoteSupportSettingsList = default;
+            SystemData systemData = default;
+            IList<EdgeRemoteSupportSettings> remoteSupportSettingsList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                             List<EdgeRemoteSupportSettings> array = new List<EdgeRemoteSupportSettings>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EdgeRemoteSupportSettings.DeserializeEdgeRemoteSupportSettings(item));
+                                array.Add(EdgeRemoteSupportSettings.DeserializeEdgeRemoteSupportSettings(item, options));
                             }
                             remoteSupportSettingsList = array;
                             continue;
@@ -164,7 +164,13 @@ namespace Azure.ResourceManager.DataBoxEdge
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiagnosticRemoteSupportSettingData(id, name, type, systemData.Value, Optional.ToList(remoteSupportSettingsList), serializedAdditionalRawData);
+            return new DiagnosticRemoteSupportSettingData(
+                id,
+                name,
+                type,
+                systemData,
+                remoteSupportSettingsList ?? new ChangeTrackingList<EdgeRemoteSupportSettings>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiagnosticRemoteSupportSettingData>.Write(ModelReaderWriterOptions options)

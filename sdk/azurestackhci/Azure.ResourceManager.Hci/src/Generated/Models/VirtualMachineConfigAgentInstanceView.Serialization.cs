@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> vmConfigAgentVersion = default;
-            Optional<IReadOnlyList<InstanceViewStatus>> statuses = default;
+            string vmConfigAgentVersion = default;
+            IReadOnlyList<InstanceViewStatus> statuses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.Hci.Models
                     List<InstanceViewStatus> array = new List<InstanceViewStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InstanceViewStatus.DeserializeInstanceViewStatus(item));
+                        array.Add(InstanceViewStatus.DeserializeInstanceViewStatus(item, options));
                     }
                     statuses = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineConfigAgentInstanceView(vmConfigAgentVersion.Value, Optional.ToList(statuses), serializedAdditionalRawData);
+            return new VirtualMachineConfigAgentInstanceView(vmConfigAgentVersion, statuses ?? new ChangeTrackingList<InstanceViewStatus>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineConfigAgentInstanceView>.Write(ModelReaderWriterOptions options)

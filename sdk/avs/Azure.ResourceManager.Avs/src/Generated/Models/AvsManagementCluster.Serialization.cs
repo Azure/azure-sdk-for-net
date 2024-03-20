@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -89,10 +90,10 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<int> clusterSize = default;
-            Optional<AvsPrivateCloudClusterProvisioningState> provisioningState = default;
-            Optional<int> clusterId = default;
-            Optional<IList<string>> hosts = default;
+            int? clusterSize = default;
+            AvsPrivateCloudClusterProvisioningState? provisioningState = default;
+            int? clusterId = default;
+            IList<string> hosts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvsManagementCluster(Optional.ToNullable(clusterSize), Optional.ToNullable(provisioningState), Optional.ToNullable(clusterId), Optional.ToList(hosts), serializedAdditionalRawData);
+            return new AvsManagementCluster(clusterSize, provisioningState, clusterId, hosts ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvsManagementCluster>.Write(ModelReaderWriterOptions options)

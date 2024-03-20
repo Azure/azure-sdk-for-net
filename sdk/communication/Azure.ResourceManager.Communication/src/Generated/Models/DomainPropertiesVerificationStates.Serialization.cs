@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Communication;
 
 namespace Azure.ResourceManager.Communication.Models
 {
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.Communication.Models
             {
                 return null;
             }
-            Optional<DomainVerificationStatusRecord> domain = default;
-            Optional<DomainVerificationStatusRecord> spf = default;
-            Optional<DomainVerificationStatusRecord> dkim = default;
-            Optional<DomainVerificationStatusRecord> dkiM2 = default;
-            Optional<DomainVerificationStatusRecord> dmarc = default;
+            DomainVerificationStatusRecord domain = default;
+            DomainVerificationStatusRecord spf = default;
+            DomainVerificationStatusRecord dkim = default;
+            DomainVerificationStatusRecord dkiM2 = default;
+            DomainVerificationStatusRecord dmarc = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Communication.Models
                     {
                         continue;
                     }
-                    domain = DomainVerificationStatusRecord.DeserializeDomainVerificationStatusRecord(property.Value);
+                    domain = DomainVerificationStatusRecord.DeserializeDomainVerificationStatusRecord(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("SPF"u8))
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.Communication.Models
                     {
                         continue;
                     }
-                    spf = DomainVerificationStatusRecord.DeserializeDomainVerificationStatusRecord(property.Value);
+                    spf = DomainVerificationStatusRecord.DeserializeDomainVerificationStatusRecord(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("DKIM"u8))
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.Communication.Models
                     {
                         continue;
                     }
-                    dkim = DomainVerificationStatusRecord.DeserializeDomainVerificationStatusRecord(property.Value);
+                    dkim = DomainVerificationStatusRecord.DeserializeDomainVerificationStatusRecord(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("DKIM2"u8))
@@ -131,7 +132,7 @@ namespace Azure.ResourceManager.Communication.Models
                     {
                         continue;
                     }
-                    dkiM2 = DomainVerificationStatusRecord.DeserializeDomainVerificationStatusRecord(property.Value);
+                    dkiM2 = DomainVerificationStatusRecord.DeserializeDomainVerificationStatusRecord(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("DMARC"u8))
@@ -140,7 +141,7 @@ namespace Azure.ResourceManager.Communication.Models
                     {
                         continue;
                     }
-                    dmarc = DomainVerificationStatusRecord.DeserializeDomainVerificationStatusRecord(property.Value);
+                    dmarc = DomainVerificationStatusRecord.DeserializeDomainVerificationStatusRecord(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -149,7 +150,13 @@ namespace Azure.ResourceManager.Communication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DomainPropertiesVerificationStates(domain.Value, spf.Value, dkim.Value, dkiM2.Value, dmarc.Value, serializedAdditionalRawData);
+            return new DomainPropertiesVerificationStates(
+                domain,
+                spf,
+                dkim,
+                dkiM2,
+                dmarc,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DomainPropertiesVerificationStates>.Write(ModelReaderWriterOptions options)

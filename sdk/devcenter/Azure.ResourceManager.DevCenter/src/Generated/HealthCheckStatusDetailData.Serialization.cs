@@ -112,10 +112,10 @@ namespace Azure.ResourceManager.DevCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> startDateTime = default;
-            Optional<DateTimeOffset> endDateTime = default;
-            Optional<IReadOnlyList<DevCenterHealthCheck>> healthChecks = default;
+            SystemData systemData = default;
+            DateTimeOffset? startDateTime = default;
+            DateTimeOffset? endDateTime = default;
+            IReadOnlyList<DevCenterHealthCheck> healthChecks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.DevCenter
                             List<DevCenterHealthCheck> array = new List<DevCenterHealthCheck>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DevCenterHealthCheck.DeserializeDevCenterHealthCheck(item));
+                                array.Add(DevCenterHealthCheck.DeserializeDevCenterHealthCheck(item, options));
                             }
                             healthChecks = array;
                             continue;
@@ -194,7 +194,15 @@ namespace Azure.ResourceManager.DevCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HealthCheckStatusDetailData(id, name, type, systemData.Value, Optional.ToNullable(startDateTime), Optional.ToNullable(endDateTime), Optional.ToList(healthChecks), serializedAdditionalRawData);
+            return new HealthCheckStatusDetailData(
+                id,
+                name,
+                type,
+                systemData,
+                startDateTime,
+                endDateTime,
+                healthChecks ?? new ChangeTrackingList<DevCenterHealthCheck>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HealthCheckStatusDetailData>.Write(ModelReaderWriterOptions options)

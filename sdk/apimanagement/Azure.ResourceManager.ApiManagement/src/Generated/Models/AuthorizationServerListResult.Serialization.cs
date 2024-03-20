@@ -85,9 +85,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ApiManagementAuthorizationServerData>> value = default;
-            Optional<long> count = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ApiManagementAuthorizationServerData> value = default;
+            long? count = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ApiManagementAuthorizationServerData> array = new List<ApiManagementAuthorizationServerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementAuthorizationServerData.DeserializeApiManagementAuthorizationServerData(item));
+                        array.Add(ApiManagementAuthorizationServerData.DeserializeApiManagementAuthorizationServerData(item, options));
                     }
                     value = array;
                     continue;
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AuthorizationServerListResult(Optional.ToList(value), Optional.ToNullable(count), nextLink.Value, serializedAdditionalRawData);
+            return new AuthorizationServerListResult(value ?? new ChangeTrackingList<ApiManagementAuthorizationServerData>(), count, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AuthorizationServerListResult>.Write(ModelReaderWriterOptions options)

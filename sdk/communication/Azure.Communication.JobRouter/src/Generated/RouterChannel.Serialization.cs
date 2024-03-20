@@ -76,7 +76,7 @@ namespace Azure.Communication.JobRouter
             }
             string channelId = default;
             int capacityCostPerJob = default;
-            Optional<int> maxNumberOfJobs = default;
+            int? maxNumberOfJobs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,7 +106,7 @@ namespace Azure.Communication.JobRouter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RouterChannel(channelId, capacityCostPerJob, Optional.ToNullable(maxNumberOfJobs), serializedAdditionalRawData);
+            return new RouterChannel(channelId, capacityCostPerJob, maxNumberOfJobs, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RouterChannel>.Write(ModelReaderWriterOptions options)

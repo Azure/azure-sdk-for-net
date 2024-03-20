@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -84,9 +85,9 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> dateTimeBegin = default;
-            Optional<DateTimeOffset> dateTimeEnd = default;
-            Optional<IReadOnlyList<RankingsResponseTablesItem>> tables = default;
+            DateTimeOffset? dateTimeBegin = default;
+            DateTimeOffset? dateTimeEnd = default;
+            IReadOnlyList<RankingsResponseTablesItem> tables = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<RankingsResponseTablesItem> array = new List<RankingsResponseTablesItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RankingsResponseTablesItem.DeserializeRankingsResponseTablesItem(item));
+                        array.Add(RankingsResponseTablesItem.DeserializeRankingsResponseTablesItem(item, options));
                     }
                     tables = array;
                     continue;
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RankingsResponse(Optional.ToNullable(dateTimeBegin), Optional.ToNullable(dateTimeEnd), Optional.ToList(tables), serializedAdditionalRawData);
+            return new RankingsResponse(dateTimeBegin, dateTimeEnd, tables ?? new ChangeTrackingList<RankingsResponseTablesItem>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RankingsResponse>.Write(ModelReaderWriterOptions options)

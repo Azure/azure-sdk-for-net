@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -73,7 +74,7 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 if (property.NameEquals("source"u8))
                 {
-                    source = LogicWorkflowTriggerReference.DeserializeLogicWorkflowTriggerReference(property.Value);
+                    source = LogicWorkflowTriggerReference.DeserializeLogicWorkflowTriggerReference(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

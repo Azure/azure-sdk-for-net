@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -52,14 +53,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <exception cref="ArgumentNullException"> <paramref name="publisherContact"/> or <paramref name="publicNames"/> is null. </exception>
         internal CommunityGalleryMetadata(string publisherContact, IEnumerable<string> publicNames)
         {
-            if (publisherContact == null)
-            {
-                throw new ArgumentNullException(nameof(publisherContact));
-            }
-            if (publicNames == null)
-            {
-                throw new ArgumentNullException(nameof(publicNames));
-            }
+            Argument.AssertNotNull(publisherContact, nameof(publisherContact));
+            Argument.AssertNotNull(publicNames, nameof(publicNames));
 
             PublisherContact = publisherContact;
             PublicNames = publicNames.ToList();

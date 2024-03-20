@@ -107,13 +107,13 @@ namespace Azure.ResourceManager.Resources
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<ArmDeploymentPropertiesExtended> properties = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            AzureLocation? location = default;
+            ArmDeploymentPropertiesExtended properties = default;
+            IReadOnlyDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         continue;
                     }
-                    properties = ArmDeploymentPropertiesExtended.DeserializeArmDeploymentPropertiesExtended(property.Value);
+                    properties = ArmDeploymentPropertiesExtended.DeserializeArmDeploymentPropertiesExtended(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -180,7 +180,15 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmDeploymentData(id, name, type, systemData.Value, Optional.ToNullable(location), properties.Value, Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new ArmDeploymentData(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                properties,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmDeploymentData>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -91,12 +92,12 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> tags = default;
-            Optional<int> order = default;
+            string tags = default;
+            int? order = default;
             string packageReferenceId = default;
-            Optional<string> configurationReference = default;
-            Optional<bool> treatFailureAsDeploymentFailure = default;
-            Optional<bool> enableAutomaticUpgrade = default;
+            string configurationReference = default;
+            bool? treatFailureAsDeploymentFailure = default;
+            bool? enableAutomaticUpgrade = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +150,14 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineGalleryApplication(tags.Value, Optional.ToNullable(order), packageReferenceId, configurationReference.Value, Optional.ToNullable(treatFailureAsDeploymentFailure), Optional.ToNullable(enableAutomaticUpgrade), serializedAdditionalRawData);
+            return new VirtualMachineGalleryApplication(
+                tags,
+                order,
+                packageReferenceId,
+                configurationReference,
+                treatFailureAsDeploymentFailure,
+                enableAutomaticUpgrade,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineGalleryApplication>.Write(ModelReaderWriterOptions options)

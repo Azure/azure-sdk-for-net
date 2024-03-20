@@ -147,18 +147,18 @@ namespace Azure.ResourceManager.AppContainers
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<DateTimeOffset> lastActiveTime = default;
-            Optional<string> fqdn = default;
-            Optional<ContainerAppTemplate> template = default;
-            Optional<bool> active = default;
-            Optional<int> replicas = default;
-            Optional<int> trafficWeight = default;
-            Optional<string> provisioningError = default;
-            Optional<ContainerAppRevisionHealthState> healthState = default;
-            Optional<ContainerAppRevisionProvisioningState> provisioningState = default;
-            Optional<RevisionRunningState> runningState = default;
+            SystemData systemData = default;
+            DateTimeOffset? createdTime = default;
+            DateTimeOffset? lastActiveTime = default;
+            string fqdn = default;
+            ContainerAppTemplate template = default;
+            bool? active = default;
+            int? replicas = default;
+            int? trafficWeight = default;
+            string provisioningError = default;
+            ContainerAppRevisionHealthState? healthState = default;
+            ContainerAppRevisionProvisioningState? provisioningState = default;
+            RevisionRunningState? runningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            template = ContainerAppTemplate.DeserializeContainerAppTemplate(property0.Value);
+                            template = ContainerAppTemplate.DeserializeContainerAppTemplate(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("active"u8))
@@ -296,7 +296,23 @@ namespace Azure.ResourceManager.AppContainers
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppRevisionData(id, name, type, systemData.Value, Optional.ToNullable(createdTime), Optional.ToNullable(lastActiveTime), fqdn.Value, template.Value, Optional.ToNullable(active), Optional.ToNullable(replicas), Optional.ToNullable(trafficWeight), provisioningError.Value, Optional.ToNullable(healthState), Optional.ToNullable(provisioningState), Optional.ToNullable(runningState), serializedAdditionalRawData);
+            return new ContainerAppRevisionData(
+                id,
+                name,
+                type,
+                systemData,
+                createdTime,
+                lastActiveTime,
+                fqdn,
+                template,
+                active,
+                replicas,
+                trafficWeight,
+                provisioningError,
+                healthState,
+                provisioningState,
+                runningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppRevisionData>.Write(ModelReaderWriterOptions options)

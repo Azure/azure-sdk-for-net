@@ -101,9 +101,9 @@ namespace Azure.ResourceManager.StorageSync
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> uniqueId = default;
-            Optional<string> syncGroupStatus = default;
+            SystemData systemData = default;
+            Guid? uniqueId = default;
+            string syncGroupStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.StorageSync
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageSyncGroupData(id, name, type, systemData.Value, Optional.ToNullable(uniqueId), syncGroupStatus.Value, serializedAdditionalRawData);
+            return new StorageSyncGroupData(
+                id,
+                name,
+                type,
+                systemData,
+                uniqueId,
+                syncGroupStatus,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageSyncGroupData>.Write(ModelReaderWriterOptions options)

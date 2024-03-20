@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ConnectedVMwarevSphere;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
@@ -124,17 +125,17 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> label = default;
-            Optional<IReadOnlyList<string>> ipAddresses = default;
-            Optional<string> macAddress = default;
-            Optional<string> networkId = default;
-            Optional<VMwareNicType> nicType = default;
-            Optional<PowerOnBootOption> powerOnBoot = default;
-            Optional<string> networkMoRefId = default;
-            Optional<string> networkMoName = default;
-            Optional<int> deviceKey = default;
-            Optional<NicIPSettings> ipSettings = default;
+            string name = default;
+            string label = default;
+            IReadOnlyList<string> ipAddresses = default;
+            string macAddress = default;
+            string networkId = default;
+            VMwareNicType? nicType = default;
+            PowerOnBootOption? powerOnBoot = default;
+            string networkMoRefId = default;
+            string networkMoName = default;
+            int? deviceKey = default;
+            NicIPSettings ipSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -216,7 +217,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     {
                         continue;
                     }
-                    ipSettings = NicIPSettings.DeserializeNicIPSettings(property.Value);
+                    ipSettings = NicIPSettings.DeserializeNicIPSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -225,7 +226,19 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareNetworkInterface(name.Value, label.Value, Optional.ToList(ipAddresses), macAddress.Value, networkId.Value, Optional.ToNullable(nicType), Optional.ToNullable(powerOnBoot), networkMoRefId.Value, networkMoName.Value, Optional.ToNullable(deviceKey), ipSettings.Value, serializedAdditionalRawData);
+            return new VMwareNetworkInterface(
+                name,
+                label,
+                ipAddresses ?? new ChangeTrackingList<string>(),
+                macAddress,
+                networkId,
+                nicType,
+                powerOnBoot,
+                networkMoRefId,
+                networkMoName,
+                deviceKey,
+                ipSettings,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VMwareNetworkInterface>.Write(ModelReaderWriterOptions options)

@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.Attestation
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<PrivateEndpoint> privateEndpoint = default;
-            Optional<AttestationPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
-            Optional<AttestationPrivateEndpointConnectionProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            PrivateEndpoint privateEndpoint = default;
+            AttestationPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            AttestationPrivateEndpointConnectionProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Attestation
                             {
                                 continue;
                             }
-                            privateEndpoint = PrivateEndpoint.DeserializePrivateEndpoint(property0.Value);
+                            privateEndpoint = PrivateEndpoint.DeserializePrivateEndpoint(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("privateLinkServiceConnectionState"u8))
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Attestation
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = AttestationPrivateLinkServiceConnectionState.DeserializeAttestationPrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = AttestationPrivateLinkServiceConnectionState.DeserializeAttestationPrivateLinkServiceConnectionState(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -184,7 +184,15 @@ namespace Azure.ResourceManager.Attestation
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AttestationPrivateEndpointConnectionData(id, name, type, systemData.Value, privateEndpoint.Value, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new AttestationPrivateEndpointConnectionData(
+                id,
+                name,
+                type,
+                systemData,
+                privateEndpoint,
+                privateLinkServiceConnectionState,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AttestationPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options)

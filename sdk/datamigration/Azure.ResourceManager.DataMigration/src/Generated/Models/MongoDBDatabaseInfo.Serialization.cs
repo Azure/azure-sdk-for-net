@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<MongoDBCollectionInfo> array = new List<MongoDBCollectionInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MongoDBCollectionInfo.DeserializeMongoDBCollectionInfo(item));
+                        array.Add(MongoDBCollectionInfo.DeserializeMongoDBCollectionInfo(item, options));
                     }
                     collections = array;
                     continue;
@@ -140,7 +141,15 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MongoDBDatabaseInfo(averageDocumentSize, dataSize, documentCount, name, qualifiedName, serializedAdditionalRawData, collections, supportsSharding);
+            return new MongoDBDatabaseInfo(
+                averageDocumentSize,
+                dataSize,
+                documentCount,
+                name,
+                qualifiedName,
+                serializedAdditionalRawData,
+                collections,
+                supportsSharding);
         }
 
         BinaryData IPersistableModel<MongoDBDatabaseInfo>.Write(ModelReaderWriterOptions options)

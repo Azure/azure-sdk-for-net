@@ -122,13 +122,13 @@ namespace Azure.ResourceManager.Automation
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DscConfigurationAssociationProperty> configuration = default;
-            Optional<string> source = default;
-            Optional<long> nodeCount = default;
-            Optional<bool> incrementNodeConfigurationBuild = default;
+            SystemData systemData = default;
+            DateTimeOffset? lastModifiedTime = default;
+            DateTimeOffset? creationTime = default;
+            DscConfigurationAssociationProperty configuration = default;
+            string source = default;
+            long? nodeCount = default;
+            bool? incrementNodeConfigurationBuild = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Automation
                             {
                                 continue;
                             }
-                            configuration = DscConfigurationAssociationProperty.DeserializeDscConfigurationAssociationProperty(property0.Value);
+                            configuration = DscConfigurationAssociationProperty.DeserializeDscConfigurationAssociationProperty(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("source"u8))
@@ -225,7 +225,18 @@ namespace Azure.ResourceManager.Automation
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DscNodeConfigurationData(id, name, type, systemData.Value, Optional.ToNullable(lastModifiedTime), Optional.ToNullable(creationTime), configuration.Value, source.Value, Optional.ToNullable(nodeCount), Optional.ToNullable(incrementNodeConfigurationBuild), serializedAdditionalRawData);
+            return new DscNodeConfigurationData(
+                id,
+                name,
+                type,
+                systemData,
+                lastModifiedTime,
+                creationTime,
+                configuration,
+                source,
+                nodeCount,
+                incrementNodeConfigurationBuild,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DscNodeConfigurationData>.Write(ModelReaderWriterOptions options)

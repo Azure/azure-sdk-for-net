@@ -123,14 +123,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IList<string>> connectionStringNames = default;
-            Optional<IList<string>> appSettingNames = default;
-            Optional<IList<string>> azureStorageConfigNames = default;
+            SystemData systemData = default;
+            IList<string> connectionStringNames = default;
+            IList<string> appSettingNames = default;
+            IList<string> azureStorageConfigNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -224,7 +224,16 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SlotConfigNamesResourceData(id, name, type, systemData.Value, Optional.ToList(connectionStringNames), Optional.ToList(appSettingNames), Optional.ToList(azureStorageConfigNames), kind.Value, serializedAdditionalRawData);
+            return new SlotConfigNamesResourceData(
+                id,
+                name,
+                type,
+                systemData,
+                connectionStringNames ?? new ChangeTrackingList<string>(),
+                appSettingNames ?? new ChangeTrackingList<string>(),
+                azureStorageConfigNames ?? new ChangeTrackingList<string>(),
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SlotConfigNamesResourceData>.Write(ModelReaderWriterOptions options)

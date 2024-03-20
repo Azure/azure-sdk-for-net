@@ -70,14 +70,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/CropProducts.xml" path="doc/members/member[@name='GetCropProductAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetCropProductAsync(string cropProductId, RequestContext context)
         {
-            if (cropProductId == null)
-            {
-                throw new ArgumentNullException(nameof(cropProductId));
-            }
-            if (cropProductId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cropProductId));
-            }
+            Argument.AssertNotNullOrEmpty(cropProductId, nameof(cropProductId));
 
             using var scope = ClientDiagnostics.CreateScope("CropProducts.GetCropProduct");
             scope.Start();
@@ -112,14 +105,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/CropProducts.xml" path="doc/members/member[@name='GetCropProduct(string,RequestContext)']/*" />
         public virtual Response GetCropProduct(string cropProductId, RequestContext context)
         {
-            if (cropProductId == null)
-            {
-                throw new ArgumentNullException(nameof(cropProductId));
-            }
-            if (cropProductId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cropProductId));
-            }
+            Argument.AssertNotNullOrEmpty(cropProductId, nameof(cropProductId));
 
             using var scope = ClientDiagnostics.CreateScope("CropProducts.GetCropProduct");
             scope.Start();
@@ -155,18 +141,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/CropProducts.xml" path="doc/members/member[@name='CreateOrUpdateAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateAsync(string cropProductId, RequestContent content, RequestContext context = null)
         {
-            if (cropProductId == null)
-            {
-                throw new ArgumentNullException(nameof(cropProductId));
-            }
-            if (cropProductId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cropProductId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(cropProductId, nameof(cropProductId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("CropProducts.CreateOrUpdate");
             scope.Start();
@@ -202,18 +178,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/CropProducts.xml" path="doc/members/member[@name='CreateOrUpdate(string,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdate(string cropProductId, RequestContent content, RequestContext context = null)
         {
-            if (cropProductId == null)
-            {
-                throw new ArgumentNullException(nameof(cropProductId));
-            }
-            if (cropProductId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cropProductId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(cropProductId, nameof(cropProductId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("CropProducts.CreateOrUpdate");
             scope.Start();
@@ -248,14 +214,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/CropProducts.xml" path="doc/members/member[@name='DeleteAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteAsync(string cropProductId, RequestContext context = null)
         {
-            if (cropProductId == null)
-            {
-                throw new ArgumentNullException(nameof(cropProductId));
-            }
-            if (cropProductId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cropProductId));
-            }
+            Argument.AssertNotNullOrEmpty(cropProductId, nameof(cropProductId));
 
             using var scope = ClientDiagnostics.CreateScope("CropProducts.Delete");
             scope.Start();
@@ -290,14 +249,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/CropProducts.xml" path="doc/members/member[@name='Delete(string,RequestContext)']/*" />
         public virtual Response Delete(string cropProductId, RequestContext context = null)
         {
-            if (cropProductId == null)
-            {
-                throw new ArgumentNullException(nameof(cropProductId));
-            }
-            if (cropProductId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cropProductId));
-            }
+            Argument.AssertNotNullOrEmpty(cropProductId, nameof(cropProductId));
 
             using var scope = ClientDiagnostics.CreateScope("CropProducts.Delete");
             scope.Start();
@@ -403,56 +355,56 @@ namespace Azure.Verticals.AgriFood.Farming
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/crop-products", false);
-            if (cropIds != null && Optional.IsCollectionDefined(cropIds))
+            if (cropIds != null && !(cropIds is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in cropIds)
                 {
                     uri.AppendQuery("cropIds", param, true);
                 }
             }
-            if (brands != null && Optional.IsCollectionDefined(brands))
+            if (brands != null && !(brands is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var param in brands)
                 {
                     uri.AppendQuery("brands", param, true);
                 }
             }
-            if (products != null && Optional.IsCollectionDefined(products))
+            if (products != null && !(products is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
                 foreach (var param in products)
                 {
                     uri.AppendQuery("products", param, true);
                 }
             }
-            if (traits != null && Optional.IsCollectionDefined(traits))
+            if (traits != null && !(traits is ChangeTrackingList<string> changeTrackingList2 && changeTrackingList2.IsUndefined))
             {
                 foreach (var param in traits)
                 {
                     uri.AppendQuery("traits", param, true);
                 }
             }
-            if (ids != null && Optional.IsCollectionDefined(ids))
+            if (ids != null && !(ids is ChangeTrackingList<string> changeTrackingList3 && changeTrackingList3.IsUndefined))
             {
                 foreach (var param in ids)
                 {
                     uri.AppendQuery("ids", param, true);
                 }
             }
-            if (names != null && Optional.IsCollectionDefined(names))
+            if (names != null && !(names is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
             {
                 foreach (var param in names)
                 {
                     uri.AppendQuery("names", param, true);
                 }
             }
-            if (propertyFilters != null && Optional.IsCollectionDefined(propertyFilters))
+            if (propertyFilters != null && !(propertyFilters is ChangeTrackingList<string> changeTrackingList5 && changeTrackingList5.IsUndefined))
             {
                 foreach (var param in propertyFilters)
                 {
                     uri.AppendQuery("propertyFilters", param, true);
                 }
             }
-            if (statuses != null && Optional.IsCollectionDefined(statuses))
+            if (statuses != null && !(statuses is ChangeTrackingList<string> changeTrackingList6 && changeTrackingList6.IsUndefined))
             {
                 foreach (var param in statuses)
                 {

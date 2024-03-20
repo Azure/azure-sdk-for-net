@@ -6,7 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
+using Azure.IoT.Hub.Service;
 
 namespace Azure.IoT.Hub.Service.Models
 {
@@ -18,8 +18,8 @@ namespace Azure.IoT.Hub.Service.Models
             {
                 return null;
             }
-            Optional<int> status = default;
-            Optional<object> payload = default;
+            int? status = default;
+            object payload = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -41,7 +41,7 @@ namespace Azure.IoT.Hub.Service.Models
                     continue;
                 }
             }
-            return new CloudToDeviceMethodResponse(Optional.ToNullable(status), payload.Value);
+            return new CloudToDeviceMethodResponse(status, payload);
         }
     }
 }

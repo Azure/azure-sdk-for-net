@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -87,8 +88,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
             string contactName = default;
             string phone = default;
-            Optional<string> phoneExtension = default;
-            Optional<string> mobile = default;
+            string phoneExtension = default;
+            string mobile = default;
             IList<string> emailList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -130,7 +131,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeOrderAddressContactDetails(contactName, phone, phoneExtension.Value, mobile.Value, emailList, serializedAdditionalRawData);
+            return new EdgeOrderAddressContactDetails(
+                contactName,
+                phone,
+                phoneExtension,
+                mobile,
+                emailList,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeOrderAddressContactDetails>.Write(ModelReaderWriterOptions options)

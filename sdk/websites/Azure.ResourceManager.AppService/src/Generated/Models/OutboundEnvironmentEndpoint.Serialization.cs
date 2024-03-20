@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> category = default;
-            Optional<IReadOnlyList<AppServiceEndpointDependency>> endpoints = default;
+            string category = default;
+            IReadOnlyList<AppServiceEndpointDependency> endpoints = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<AppServiceEndpointDependency> array = new List<AppServiceEndpointDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppServiceEndpointDependency.DeserializeAppServiceEndpointDependency(item));
+                        array.Add(AppServiceEndpointDependency.DeserializeAppServiceEndpointDependency(item, options));
                     }
                     endpoints = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OutboundEnvironmentEndpoint(category.Value, Optional.ToList(endpoints), serializedAdditionalRawData);
+            return new OutboundEnvironmentEndpoint(category, endpoints ?? new ChangeTrackingList<AppServiceEndpointDependency>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OutboundEnvironmentEndpoint>.Write(ModelReaderWriterOptions options)

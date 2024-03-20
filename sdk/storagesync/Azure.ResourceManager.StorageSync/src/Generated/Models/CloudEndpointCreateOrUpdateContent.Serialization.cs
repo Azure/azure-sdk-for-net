@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.StorageSync;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
@@ -111,11 +112,11 @@ namespace Azure.ResourceManager.StorageSync.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> storageAccountResourceId = default;
-            Optional<string> azureFileShareName = default;
-            Optional<Guid> storageAccountTenantId = default;
-            Optional<string> friendlyName = default;
+            SystemData systemData = default;
+            ResourceIdentifier storageAccountResourceId = default;
+            string azureFileShareName = default;
+            Guid? storageAccountTenantId = default;
+            string friendlyName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -190,7 +191,16 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudEndpointCreateOrUpdateContent(id, name, type, systemData.Value, storageAccountResourceId.Value, azureFileShareName.Value, Optional.ToNullable(storageAccountTenantId), friendlyName.Value, serializedAdditionalRawData);
+            return new CloudEndpointCreateOrUpdateContent(
+                id,
+                name,
+                type,
+                systemData,
+                storageAccountResourceId,
+                azureFileShareName,
+                storageAccountTenantId,
+                friendlyName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudEndpointCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

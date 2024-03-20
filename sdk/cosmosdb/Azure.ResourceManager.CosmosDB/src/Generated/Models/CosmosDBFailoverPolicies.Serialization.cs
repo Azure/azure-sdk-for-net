@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CosmosDBFailoverPolicy> array = new List<CosmosDBFailoverPolicy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CosmosDBFailoverPolicy.DeserializeCosmosDBFailoverPolicy(item));
+                        array.Add(CosmosDBFailoverPolicy.DeserializeCosmosDBFailoverPolicy(item, options));
                     }
                     failoverPolicies = array;
                     continue;

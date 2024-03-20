@@ -119,13 +119,13 @@ namespace Azure.ResourceManager.ElasticSan
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> volumeId = default;
-            Optional<ElasticSanVolumeDataSourceInfo> creationData = default;
+            SystemData systemData = default;
+            Guid? volumeId = default;
+            ElasticSanVolumeDataSourceInfo creationData = default;
             long sizeGiB = default;
-            Optional<IscsiTargetInfo> storageTarget = default;
-            Optional<ManagedByInfo> managedBy = default;
-            Optional<ElasticSanProvisioningState> provisioningState = default;
+            IscsiTargetInfo storageTarget = default;
+            ManagedByInfo managedBy = default;
+            ElasticSanProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.ElasticSan
                             {
                                 continue;
                             }
-                            creationData = ElasticSanVolumeDataSourceInfo.DeserializeElasticSanVolumeDataSourceInfo(property0.Value);
+                            creationData = ElasticSanVolumeDataSourceInfo.DeserializeElasticSanVolumeDataSourceInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("sizeGiB"u8))
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.ElasticSan
                             {
                                 continue;
                             }
-                            storageTarget = IscsiTargetInfo.DeserializeIscsiTargetInfo(property0.Value);
+                            storageTarget = IscsiTargetInfo.DeserializeIscsiTargetInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("managedBy"u8))
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.ElasticSan
                             {
                                 continue;
                             }
-                            managedBy = ManagedByInfo.DeserializeManagedByInfo(property0.Value);
+                            managedBy = ManagedByInfo.DeserializeManagedByInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -222,7 +222,18 @@ namespace Azure.ResourceManager.ElasticSan
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticSanVolumeData(id, name, type, systemData.Value, Optional.ToNullable(volumeId), creationData.Value, sizeGiB, storageTarget.Value, managedBy.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new ElasticSanVolumeData(
+                id,
+                name,
+                type,
+                systemData,
+                volumeId,
+                creationData,
+                sizeGiB,
+                storageTarget,
+                managedBy,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticSanVolumeData>.Write(ModelReaderWriterOptions options)

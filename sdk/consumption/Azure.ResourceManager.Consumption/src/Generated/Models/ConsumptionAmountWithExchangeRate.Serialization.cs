@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Consumption;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<decimal> exchangeRate = default;
-            Optional<int> exchangeRateMonth = default;
-            Optional<string> currency = default;
-            Optional<decimal> value = default;
+            decimal? exchangeRate = default;
+            int? exchangeRateMonth = default;
+            string currency = default;
+            decimal? value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionAmountWithExchangeRate(currency.Value, Optional.ToNullable(value), serializedAdditionalRawData, Optional.ToNullable(exchangeRate), Optional.ToNullable(exchangeRateMonth));
+            return new ConsumptionAmountWithExchangeRate(currency, value, serializedAdditionalRawData, exchangeRate, exchangeRateMonth);
         }
 
         BinaryData IPersistableModel<ConsumptionAmountWithExchangeRate>.Write(ModelReaderWriterOptions options)

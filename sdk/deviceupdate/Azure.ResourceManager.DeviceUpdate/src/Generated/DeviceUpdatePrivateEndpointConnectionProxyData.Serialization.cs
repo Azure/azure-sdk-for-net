@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.DeviceUpdate
             {
                 return null;
             }
-            Optional<string> eTag = default;
-            Optional<DeviceUpdateRemotePrivateEndpoint> remotePrivateEndpoint = default;
-            Optional<string> status = default;
+            string eTag = default;
+            DeviceUpdateRemotePrivateEndpoint remotePrivateEndpoint = default;
+            string status = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DeviceUpdatePrivateEndpointConnectionProxyProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            DeviceUpdatePrivateEndpointConnectionProxyProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                     {
                         continue;
                     }
-                    remotePrivateEndpoint = DeviceUpdateRemotePrivateEndpoint.DeserializeDeviceUpdateRemotePrivateEndpoint(property.Value);
+                    remotePrivateEndpoint = DeviceUpdateRemotePrivateEndpoint.DeserializeDeviceUpdateRemotePrivateEndpoint(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -191,7 +191,16 @@ namespace Azure.ResourceManager.DeviceUpdate
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeviceUpdatePrivateEndpointConnectionProxyData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), eTag.Value, remotePrivateEndpoint.Value, status.Value, serializedAdditionalRawData);
+            return new DeviceUpdatePrivateEndpointConnectionProxyData(
+                id,
+                name,
+                type,
+                systemData,
+                provisioningState,
+                eTag,
+                remotePrivateEndpoint,
+                status,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeviceUpdatePrivateEndpointConnectionProxyData>.Write(ModelReaderWriterOptions options)

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -38,10 +39,10 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 return null;
             }
-            Optional<StringIndexType> stringIndexType = default;
+            StringIndexType? stringIndexType = default;
             string projectName = default;
             string deploymentName = default;
-            Optional<bool> loggingOptOut = default;
+            bool? loggingOptOut = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("stringIndexType"u8))
@@ -73,7 +74,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new CustomEntitiesTaskParameters(Optional.ToNullable(loggingOptOut), projectName, deploymentName, Optional.ToNullable(stringIndexType));
+            return new CustomEntitiesTaskParameters(loggingOptOut, projectName, deploymentName, stringIndexType);
         }
     }
 }

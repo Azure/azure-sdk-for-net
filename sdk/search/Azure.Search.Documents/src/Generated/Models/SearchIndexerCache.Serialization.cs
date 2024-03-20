@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -53,9 +54,9 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<string> storageConnectionString = default;
-            Optional<bool?> enableReprocessing = default;
-            Optional<SearchIndexerDataIdentity> identity = default;
+            string storageConnectionString = default;
+            bool? enableReprocessing = default;
+            SearchIndexerDataIdentity identity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageConnectionString"u8))
@@ -84,7 +85,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SearchIndexerCache(storageConnectionString.Value, Optional.ToNullable(enableReprocessing), identity.Value);
+            return new SearchIndexerCache(storageConnectionString, enableReprocessing, identity);
         }
     }
 }

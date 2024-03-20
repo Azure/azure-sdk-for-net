@@ -124,15 +124,15 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> virtualNetworkName = default;
-            Optional<AppServiceVirtualNetworkProperties> virtualNetworkConnection = default;
-            Optional<IReadOnlyList<RelayServiceConnectionEntityData>> hybridConnections = default;
-            Optional<IReadOnlyList<HybridConnectionData>> hybridConnectionsV2 = default;
+            SystemData systemData = default;
+            string virtualNetworkName = default;
+            AppServiceVirtualNetworkProperties virtualNetworkConnection = default;
+            IReadOnlyList<RelayServiceConnectionEntityData> hybridConnections = default;
+            IReadOnlyList<HybridConnectionData> hybridConnectionsV2 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            virtualNetworkConnection = AppServiceVirtualNetworkProperties.DeserializeAppServiceVirtualNetworkProperties(property0.Value);
+                            virtualNetworkConnection = AppServiceVirtualNetworkProperties.DeserializeAppServiceVirtualNetworkProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("hybridConnections"u8))
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.AppService
                             List<RelayServiceConnectionEntityData> array = new List<RelayServiceConnectionEntityData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RelayServiceConnectionEntityData.DeserializeRelayServiceConnectionEntityData(item));
+                                array.Add(RelayServiceConnectionEntityData.DeserializeRelayServiceConnectionEntityData(item, options));
                             }
                             hybridConnections = array;
                             continue;
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.AppService
                             List<HybridConnectionData> array = new List<HybridConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(HybridConnectionData.DeserializeHybridConnectionData(item));
+                                array.Add(HybridConnectionData.DeserializeHybridConnectionData(item, options));
                             }
                             hybridConnectionsV2 = array;
                             continue;
@@ -226,7 +226,17 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFeatureData(id, name, type, systemData.Value, virtualNetworkName.Value, virtualNetworkConnection.Value, Optional.ToList(hybridConnections), Optional.ToList(hybridConnectionsV2), kind.Value, serializedAdditionalRawData);
+            return new NetworkFeatureData(
+                id,
+                name,
+                type,
+                systemData,
+                virtualNetworkName,
+                virtualNetworkConnection,
+                hybridConnections ?? new ChangeTrackingList<RelayServiceConnectionEntityData>(),
+                hybridConnectionsV2 ?? new ChangeTrackingList<HybridConnectionData>(),
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkFeatureData>.Write(ModelReaderWriterOptions options)

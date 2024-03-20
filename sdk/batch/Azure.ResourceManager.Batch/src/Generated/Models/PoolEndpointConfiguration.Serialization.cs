@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.Batch.Models
                     List<BatchInboundNatPool> array = new List<BatchInboundNatPool>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BatchInboundNatPool.DeserializeBatchInboundNatPool(item));
+                        array.Add(BatchInboundNatPool.DeserializeBatchInboundNatPool(item, options));
                     }
                     inboundNatPools = array;
                     continue;

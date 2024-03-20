@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IList<RecommendedSensitivityLabelUpdate>> operations = default;
+            IList<RecommendedSensitivityLabelUpdate> operations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<RecommendedSensitivityLabelUpdate> array = new List<RecommendedSensitivityLabelUpdate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RecommendedSensitivityLabelUpdate.DeserializeRecommendedSensitivityLabelUpdate(item));
+                        array.Add(RecommendedSensitivityLabelUpdate.DeserializeRecommendedSensitivityLabelUpdate(item, options));
                     }
                     operations = array;
                     continue;
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecommendedSensitivityLabelUpdateList(Optional.ToList(operations), serializedAdditionalRawData);
+            return new RecommendedSensitivityLabelUpdateList(operations ?? new ChangeTrackingList<RecommendedSensitivityLabelUpdate>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecommendedSensitivityLabelUpdateList>.Write(ModelReaderWriterOptions options)

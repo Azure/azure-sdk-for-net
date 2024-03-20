@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StreamAnalytics;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
@@ -115,14 +116,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string type = default;
-            Optional<string> serviceBusNamespace = default;
-            Optional<string> sharedAccessPolicyName = default;
-            Optional<string> sharedAccessPolicyKey = default;
-            Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
-            Optional<string> eventHubName = default;
-            Optional<int> partitionCount = default;
-            Optional<string> partitionKey = default;
-            Optional<IList<string>> propertyColumns = default;
+            string serviceBusNamespace = default;
+            string sharedAccessPolicyName = default;
+            string sharedAccessPolicyKey = default;
+            StreamAnalyticsAuthenticationMode? authenticationMode = default;
+            string eventHubName = default;
+            int? partitionCount = default;
+            string partitionKey = default;
+            IList<string> propertyColumns = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -207,7 +208,17 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventHubOutputDataSource(type, serializedAdditionalRawData, serviceBusNamespace.Value, sharedAccessPolicyName.Value, sharedAccessPolicyKey.Value, Optional.ToNullable(authenticationMode), eventHubName.Value, Optional.ToNullable(partitionCount), partitionKey.Value, Optional.ToList(propertyColumns));
+            return new EventHubOutputDataSource(
+                type,
+                serializedAdditionalRawData,
+                serviceBusNamespace,
+                sharedAccessPolicyName,
+                sharedAccessPolicyKey,
+                authenticationMode,
+                eventHubName,
+                partitionCount,
+                partitionKey,
+                propertyColumns ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<EventHubOutputDataSource>.Write(ModelReaderWriterOptions options)

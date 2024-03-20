@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -93,11 +94,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> continuationToken = default;
+            string continuationToken = default;
             DateTimeOffset lastUpdatedAfter = default;
             DateTimeOffset lastUpdatedBefore = default;
-            Optional<IList<RunQueryFilter>> filters = default;
-            Optional<IList<RunQueryOrderBy>> orderBy = default;
+            IList<RunQueryFilter> filters = default;
+            IList<RunQueryOrderBy> orderBy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<RunQueryFilter> array = new List<RunQueryFilter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RunQueryFilter.DeserializeRunQueryFilter(item));
+                        array.Add(RunQueryFilter.DeserializeRunQueryFilter(item, options));
                     }
                     filters = array;
                     continue;
@@ -140,7 +141,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<RunQueryOrderBy> array = new List<RunQueryOrderBy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RunQueryOrderBy.DeserializeRunQueryOrderBy(item));
+                        array.Add(RunQueryOrderBy.DeserializeRunQueryOrderBy(item, options));
                     }
                     orderBy = array;
                     continue;
@@ -151,7 +152,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RunFilterContent(continuationToken.Value, lastUpdatedAfter, lastUpdatedBefore, Optional.ToList(filters), Optional.ToList(orderBy), serializedAdditionalRawData);
+            return new RunFilterContent(
+                continuationToken,
+                lastUpdatedAfter,
+                lastUpdatedBefore,
+                filters ?? new ChangeTrackingList<RunQueryFilter>(),
+                orderBy ?? new ChangeTrackingList<RunQueryOrderBy>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RunFilterContent>.Write(ModelReaderWriterOptions options)

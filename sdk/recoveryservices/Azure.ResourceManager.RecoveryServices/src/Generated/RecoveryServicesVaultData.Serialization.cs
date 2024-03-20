@@ -120,16 +120,16 @@ namespace Azure.ResourceManager.RecoveryServices
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<RecoveryServicesVaultProperties> properties = default;
-            Optional<RecoveryServicesSku> sku = default;
-            Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ManagedServiceIdentity identity = default;
+            RecoveryServicesVaultProperties properties = default;
+            RecoveryServicesSku sku = default;
+            ETag? etag = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.RecoveryServices
                     {
                         continue;
                     }
-                    properties = RecoveryServicesVaultProperties.DeserializeRecoveryServicesVaultProperties(property.Value);
+                    properties = RecoveryServicesVaultProperties.DeserializeRecoveryServicesVaultProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.RecoveryServices
                     {
                         continue;
                     }
-                    sku = RecoveryServicesSku.DeserializeRecoveryServicesSku(property.Value);
+                    sku = RecoveryServicesSku.DeserializeRecoveryServicesSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -219,7 +219,18 @@ namespace Azure.ResourceManager.RecoveryServices
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecoveryServicesVaultData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, properties.Value, sku.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new RecoveryServicesVaultData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                properties,
+                sku,
+                etag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecoveryServicesVaultData>.Write(ModelReaderWriterOptions options)

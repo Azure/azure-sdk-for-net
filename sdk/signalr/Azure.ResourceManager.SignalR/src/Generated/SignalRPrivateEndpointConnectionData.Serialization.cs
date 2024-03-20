@@ -118,11 +118,11 @@ namespace Azure.ResourceManager.SignalR
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SignalRProvisioningState> provisioningState = default;
-            Optional<WritableSubResource> privateEndpoint = default;
-            Optional<IReadOnlyList<string>> groupIds = default;
-            Optional<SignalRPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
+            SystemData systemData = default;
+            SignalRProvisioningState? provisioningState = default;
+            WritableSubResource privateEndpoint = default;
+            IReadOnlyList<string> groupIds = default;
+            SignalRPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.SignalR
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = SignalRPrivateLinkServiceConnectionState.DeserializeSignalRPrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = SignalRPrivateLinkServiceConnectionState.DeserializeSignalRPrivateLinkServiceConnectionState(property0.Value, options);
                             continue;
                         }
                     }
@@ -210,7 +210,16 @@ namespace Azure.ResourceManager.SignalR
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SignalRPrivateEndpointConnectionData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), privateEndpoint, Optional.ToList(groupIds), privateLinkServiceConnectionState.Value, serializedAdditionalRawData);
+            return new SignalRPrivateEndpointConnectionData(
+                id,
+                name,
+                type,
+                systemData,
+                provisioningState,
+                privateEndpoint,
+                groupIds ?? new ChangeTrackingList<string>(),
+                privateLinkServiceConnectionState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SignalRPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Dns;
 
 namespace Azure.ResourceManager.Dns.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Dns.Models
             {
                 return null;
             }
-            Optional<int> flags = default;
-            Optional<string> tag = default;
-            Optional<string> value = default;
+            int? flags = default;
+            string tag = default;
+            string value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.Dns.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DnsCaaRecordInfo(Optional.ToNullable(flags), tag.Value, value.Value, serializedAdditionalRawData);
+            return new DnsCaaRecordInfo(flags, tag, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DnsCaaRecordInfo>.Write(ModelReaderWriterOptions options)

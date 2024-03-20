@@ -102,8 +102,8 @@ namespace Azure.ResourceManager.SignalR
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SignalRProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            SignalRProvisioningState? provisioningState = default;
             string domainName = default;
             WritableSubResource customCertificate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -171,7 +171,15 @@ namespace Azure.ResourceManager.SignalR
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SignalRCustomDomainData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), domainName, customCertificate, serializedAdditionalRawData);
+            return new SignalRCustomDomainData(
+                id,
+                name,
+                type,
+                systemData,
+                provisioningState,
+                domainName,
+                customCertificate,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SignalRCustomDomainData>.Write(ModelReaderWriterOptions options)

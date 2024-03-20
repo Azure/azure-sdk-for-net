@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -92,12 +93,12 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<JobStepOutputType> type = default;
-            Optional<Guid> subscriptionId = default;
-            Optional<string> resourceGroupName = default;
+            JobStepOutputType? type = default;
+            Guid? subscriptionId = default;
+            string resourceGroupName = default;
             string serverName = default;
             string databaseName = default;
-            Optional<string> schemaName = default;
+            string schemaName = default;
             string tableName = default;
             string credential = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -158,7 +159,16 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JobStepOutput(Optional.ToNullable(type), Optional.ToNullable(subscriptionId), resourceGroupName.Value, serverName, databaseName, schemaName.Value, tableName, credential, serializedAdditionalRawData);
+            return new JobStepOutput(
+                type,
+                subscriptionId,
+                resourceGroupName,
+                serverName,
+                databaseName,
+                schemaName,
+                tableName,
+                credential,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JobStepOutput>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -84,9 +85,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<IList<ResourceProviderAuthorization>> providerAuthorizations = default;
-            Optional<ResourceProviderAuthentication> providerAuthentication = default;
-            Optional<ThirdPartyProviderAuthorization> thirdPartyProviderAuthorization = default;
+            IList<ResourceProviderAuthorization> providerAuthorizations = default;
+            ResourceProviderAuthentication providerAuthentication = default;
+            ThirdPartyProviderAuthorization thirdPartyProviderAuthorization = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<ResourceProviderAuthorization> array = new List<ResourceProviderAuthorization>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceProviderAuthorization.DeserializeResourceProviderAuthorization(item));
+                        array.Add(ResourceProviderAuthorization.DeserializeResourceProviderAuthorization(item, options));
                     }
                     providerAuthorizations = array;
                     continue;
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    providerAuthentication = ResourceProviderAuthentication.DeserializeResourceProviderAuthentication(property.Value);
+                    providerAuthentication = ResourceProviderAuthentication.DeserializeResourceProviderAuthentication(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("thirdPartyProviderAuthorization"u8))
@@ -120,7 +121,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    thirdPartyProviderAuthorization = ThirdPartyProviderAuthorization.DeserializeThirdPartyProviderAuthorization(property.Value);
+                    thirdPartyProviderAuthorization = ThirdPartyProviderAuthorization.DeserializeThirdPartyProviderAuthorization(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProviderHubMetadata(Optional.ToList(providerAuthorizations), providerAuthentication.Value, thirdPartyProviderAuthorization.Value, serializedAdditionalRawData);
+            return new ProviderHubMetadata(providerAuthorizations ?? new ChangeTrackingList<ResourceProviderAuthorization>(), providerAuthentication, thirdPartyProviderAuthorization, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProviderHubMetadata>.Write(ModelReaderWriterOptions options)

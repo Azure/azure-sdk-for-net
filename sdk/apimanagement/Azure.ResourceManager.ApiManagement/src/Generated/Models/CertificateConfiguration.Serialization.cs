@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -81,10 +82,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> encodedCertificate = default;
-            Optional<string> certificatePassword = default;
+            string encodedCertificate = default;
+            string certificatePassword = default;
             CertificateConfigurationStoreName storeName = default;
-            Optional<CertificateInformation> certificate = default;
+            CertificateInformation certificate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    certificate = CertificateInformation.DeserializeCertificateInformation(property.Value);
+                    certificate = CertificateInformation.DeserializeCertificateInformation(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CertificateConfiguration(encodedCertificate.Value, certificatePassword.Value, storeName, certificate.Value, serializedAdditionalRawData);
+            return new CertificateConfiguration(encodedCertificate, certificatePassword, storeName, certificate, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CertificateConfiguration>.Write(ModelReaderWriterOptions options)

@@ -175,24 +175,24 @@ namespace Azure.ResourceManager.Logic
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<LogicWorkflowProvisioningState> provisioningState = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<DateTimeOffset> changedTime = default;
-            Optional<LogicWorkflowState> state = default;
-            Optional<string> version = default;
-            Optional<string> accessEndpoint = default;
-            Optional<FlowEndpointsConfiguration> endpointsConfiguration = default;
-            Optional<FlowAccessControlConfiguration> accessControl = default;
-            Optional<LogicSku> sku = default;
-            Optional<LogicResourceReference> integrationAccount = default;
-            Optional<BinaryData> definition = default;
-            Optional<IDictionary<string, LogicWorkflowParameterInfo>> parameters = default;
+            SystemData systemData = default;
+            LogicWorkflowProvisioningState? provisioningState = default;
+            DateTimeOffset? createdTime = default;
+            DateTimeOffset? changedTime = default;
+            LogicWorkflowState? state = default;
+            string version = default;
+            string accessEndpoint = default;
+            FlowEndpointsConfiguration endpointsConfiguration = default;
+            FlowAccessControlConfiguration accessControl = default;
+            LogicSku sku = default;
+            LogicResourceReference integrationAccount = default;
+            BinaryData definition = default;
+            IDictionary<string, LogicWorkflowParameterInfo> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            endpointsConfiguration = FlowEndpointsConfiguration.DeserializeFlowEndpointsConfiguration(property0.Value);
+                            endpointsConfiguration = FlowEndpointsConfiguration.DeserializeFlowEndpointsConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("accessControl"u8))
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            accessControl = FlowAccessControlConfiguration.DeserializeFlowAccessControlConfiguration(property0.Value);
+                            accessControl = FlowAccessControlConfiguration.DeserializeFlowAccessControlConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("sku"u8))
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            sku = LogicSku.DeserializeLogicSku(property0.Value);
+                            sku = LogicSku.DeserializeLogicSku(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("integrationAccount"u8))
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            integrationAccount = LogicResourceReference.DeserializeLogicResourceReference(property0.Value);
+                            integrationAccount = LogicResourceReference.DeserializeLogicResourceReference(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("definition"u8))
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Logic
                             Dictionary<string, LogicWorkflowParameterInfo> dictionary = new Dictionary<string, LogicWorkflowParameterInfo>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, LogicWorkflowParameterInfo.DeserializeLogicWorkflowParameterInfo(property1.Value));
+                                dictionary.Add(property1.Name, LogicWorkflowParameterInfo.DeserializeLogicWorkflowParameterInfo(property1.Value, options));
                             }
                             parameters = dictionary;
                             continue;
@@ -363,7 +363,26 @@ namespace Azure.ResourceManager.Logic
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicWorkflowVersionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), Optional.ToNullable(state), version.Value, accessEndpoint.Value, endpointsConfiguration.Value, accessControl.Value, sku.Value, integrationAccount.Value, definition.Value, Optional.ToDictionary(parameters), serializedAdditionalRawData);
+            return new LogicWorkflowVersionData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState,
+                createdTime,
+                changedTime,
+                state,
+                version,
+                accessEndpoint,
+                endpointsConfiguration,
+                accessControl,
+                sku,
+                integrationAccount,
+                definition,
+                parameters ?? new ChangeTrackingDictionary<string, LogicWorkflowParameterInfo>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicWorkflowVersionData>.Write(ModelReaderWriterOptions options)

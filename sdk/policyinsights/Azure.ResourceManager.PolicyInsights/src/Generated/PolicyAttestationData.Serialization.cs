@@ -156,18 +156,18 @@ namespace Azure.ResourceManager.PolicyInsights
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             ResourceIdentifier policyAssignmentId = default;
-            Optional<string> policyDefinitionReferenceId = default;
-            Optional<PolicyComplianceState> complianceState = default;
-            Optional<DateTimeOffset> expiresOn = default;
-            Optional<string> owner = default;
-            Optional<string> comments = default;
-            Optional<IList<AttestationEvidence>> evidence = default;
-            Optional<string> provisioningState = default;
-            Optional<DateTimeOffset> lastComplianceStateChangeAt = default;
-            Optional<DateTimeOffset> assessmentDate = default;
-            Optional<BinaryData> metadata = default;
+            string policyDefinitionReferenceId = default;
+            PolicyComplianceState? complianceState = default;
+            DateTimeOffset? expiresOn = default;
+            string owner = default;
+            string comments = default;
+            IList<AttestationEvidence> evidence = default;
+            string provisioningState = default;
+            DateTimeOffset? lastComplianceStateChangeAt = default;
+            DateTimeOffset? assessmentDate = default;
+            BinaryData metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.PolicyInsights
                             List<AttestationEvidence> array = new List<AttestationEvidence>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AttestationEvidence.DeserializeAttestationEvidence(item));
+                                array.Add(AttestationEvidence.DeserializeAttestationEvidence(item, options));
                             }
                             evidence = array;
                             continue;
@@ -298,7 +298,23 @@ namespace Azure.ResourceManager.PolicyInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyAttestationData(id, name, type, systemData.Value, policyAssignmentId, policyDefinitionReferenceId.Value, Optional.ToNullable(complianceState), Optional.ToNullable(expiresOn), owner.Value, comments.Value, Optional.ToList(evidence), provisioningState.Value, Optional.ToNullable(lastComplianceStateChangeAt), Optional.ToNullable(assessmentDate), metadata.Value, serializedAdditionalRawData);
+            return new PolicyAttestationData(
+                id,
+                name,
+                type,
+                systemData,
+                policyAssignmentId,
+                policyDefinitionReferenceId,
+                complianceState,
+                expiresOn,
+                owner,
+                comments,
+                evidence ?? new ChangeTrackingList<AttestationEvidence>(),
+                provisioningState,
+                lastComplianceStateChangeAt,
+                assessmentDate,
+                metadata,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicyAttestationData>.Write(ModelReaderWriterOptions options)

@@ -133,14 +133,14 @@ namespace Azure.ResourceManager.DataBoxEdge
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> title = default;
-            Optional<string> alertType = default;
-            Optional<DateTimeOffset> appearedAtDateTime = default;
-            Optional<string> recommendation = default;
-            Optional<DataBoxEdgeAlertSeverity> severity = default;
-            Optional<DataBoxEdgeAlertErrorDetails> errorDetails = default;
-            Optional<IReadOnlyDictionary<string, string>> detailedInformation = default;
+            SystemData systemData = default;
+            string title = default;
+            string alertType = default;
+            DateTimeOffset? appearedAtDateTime = default;
+            string recommendation = default;
+            DataBoxEdgeAlertSeverity? severity = default;
+            DataBoxEdgeAlertErrorDetails errorDetails = default;
+            IReadOnlyDictionary<string, string> detailedInformation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                             {
                                 continue;
                             }
-                            errorDetails = DataBoxEdgeAlertErrorDetails.DeserializeDataBoxEdgeAlertErrorDetails(property0.Value);
+                            errorDetails = DataBoxEdgeAlertErrorDetails.DeserializeDataBoxEdgeAlertErrorDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("detailedInformation"u8))
@@ -243,7 +243,19 @@ namespace Azure.ResourceManager.DataBoxEdge
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeAlertData(id, name, type, systemData.Value, title.Value, alertType.Value, Optional.ToNullable(appearedAtDateTime), recommendation.Value, Optional.ToNullable(severity), errorDetails.Value, Optional.ToDictionary(detailedInformation), serializedAdditionalRawData);
+            return new DataBoxEdgeAlertData(
+                id,
+                name,
+                type,
+                systemData,
+                title,
+                alertType,
+                appearedAtDateTime,
+                recommendation,
+                severity,
+                errorDetails,
+                detailedInformation ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeAlertData>.Write(ModelReaderWriterOptions options)

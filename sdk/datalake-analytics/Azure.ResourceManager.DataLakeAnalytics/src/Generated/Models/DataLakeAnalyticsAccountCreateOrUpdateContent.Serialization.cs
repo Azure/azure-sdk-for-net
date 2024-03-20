@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataLakeAnalytics;
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
@@ -160,20 +161,20 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 return null;
             }
             AzureLocation location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             string defaultDataLakeStoreAccount = default;
             IList<DataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdateContent> dataLakeStoreAccounts = default;
-            Optional<IList<StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent>> storageAccounts = default;
-            Optional<IList<ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent>> computePolicies = default;
-            Optional<IList<FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent>> firewallRules = default;
-            Optional<DataLakeAnalyticsFirewallState> firewallState = default;
-            Optional<DataLakeAnalyticsFirewallAllowAzureIPsState> firewallAllowAzureIPs = default;
-            Optional<DataLakeAnalyticsCommitmentTierType> newTier = default;
-            Optional<int> maxJobCount = default;
-            Optional<int> maxDegreeOfParallelism = default;
-            Optional<int> maxDegreeOfParallelismPerJob = default;
-            Optional<int> minPriorityPerJob = default;
-            Optional<int> queryStoreRetention = default;
+            IList<StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent> storageAccounts = default;
+            IList<ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent> computePolicies = default;
+            IList<FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent> firewallRules = default;
+            DataLakeAnalyticsFirewallState? firewallState = default;
+            DataLakeAnalyticsFirewallAllowAzureIPsState? firewallAllowAzureIPs = default;
+            DataLakeAnalyticsCommitmentTierType? newTier = default;
+            int? maxJobCount = default;
+            int? maxDegreeOfParallelism = default;
+            int? maxDegreeOfParallelismPerJob = default;
+            int? minPriorityPerJob = default;
+            int? queryStoreRetention = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -216,7 +217,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                             List<DataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdateContent> array = new List<DataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdateContent>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdateContent.DeserializeDataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdateContent(item));
+                                array.Add(DataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdateContent.DeserializeDataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdateContent(item, options));
                             }
                             dataLakeStoreAccounts = array;
                             continue;
@@ -230,7 +231,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                             List<StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent> array = new List<StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent.DeserializeStorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent(item));
+                                array.Add(StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent.DeserializeStorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent(item, options));
                             }
                             storageAccounts = array;
                             continue;
@@ -244,7 +245,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                             List<ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent> array = new List<ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent.DeserializeComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent(item));
+                                array.Add(ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent.DeserializeComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent(item, options));
                             }
                             computePolicies = array;
                             continue;
@@ -258,7 +259,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                             List<FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent> array = new List<FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent.DeserializeFirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent(item));
+                                array.Add(FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent.DeserializeFirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent(item, options));
                             }
                             firewallRules = array;
                             continue;
@@ -344,7 +345,23 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLakeAnalyticsAccountCreateOrUpdateContent(location, Optional.ToDictionary(tags), defaultDataLakeStoreAccount, dataLakeStoreAccounts, Optional.ToList(storageAccounts), Optional.ToList(computePolicies), Optional.ToList(firewallRules), Optional.ToNullable(firewallState), Optional.ToNullable(firewallAllowAzureIPs), Optional.ToNullable(newTier), Optional.ToNullable(maxJobCount), Optional.ToNullable(maxDegreeOfParallelism), Optional.ToNullable(maxDegreeOfParallelismPerJob), Optional.ToNullable(minPriorityPerJob), Optional.ToNullable(queryStoreRetention), serializedAdditionalRawData);
+            return new DataLakeAnalyticsAccountCreateOrUpdateContent(
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                defaultDataLakeStoreAccount,
+                dataLakeStoreAccounts,
+                storageAccounts ?? new ChangeTrackingList<StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent>(),
+                computePolicies ?? new ChangeTrackingList<ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent>(),
+                firewallRules ?? new ChangeTrackingList<FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent>(),
+                firewallState,
+                firewallAllowAzureIPs,
+                newTier,
+                maxJobCount,
+                maxDegreeOfParallelism,
+                maxDegreeOfParallelismPerJob,
+                minPriorityPerJob,
+                queryStoreRetention,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataLakeAnalyticsAccountCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

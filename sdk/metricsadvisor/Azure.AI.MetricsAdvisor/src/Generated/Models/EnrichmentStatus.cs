@@ -16,18 +16,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="timestamp"> data slice timestamp. </param>
         /// <param name="status"> latest enrichment status for this data slice. </param>
         /// <param name="message"> the trimmed message describes details of the enrichment status. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="status"/> or <paramref name="message"/> is null. </exception>
         internal EnrichmentStatus(DateTimeOffset timestamp, string status, string message)
         {
-            if (status == null)
-            {
-                throw new ArgumentNullException(nameof(status));
-            }
-            if (message == null)
-            {
-                throw new ArgumentNullException(nameof(message));
-            }
-
             Timestamp = timestamp;
             Status = status;
             Message = message;

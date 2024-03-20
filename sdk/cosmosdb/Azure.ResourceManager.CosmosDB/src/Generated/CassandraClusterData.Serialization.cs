@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 return null;
             }
-            Optional<CassandraClusterProperties> properties = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            CassandraClusterProperties properties = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.CosmosDB
                     {
                         continue;
                     }
-                    properties = CassandraClusterProperties.DeserializeCassandraClusterProperties(property.Value);
+                    properties = CassandraClusterProperties.DeserializeCassandraClusterProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -188,7 +188,16 @@ namespace Azure.ResourceManager.CosmosDB
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CassandraClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value, identity, serializedAdditionalRawData);
+            return new CassandraClusterData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                identity,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CassandraClusterData>.Write(ModelReaderWriterOptions options)

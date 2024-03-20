@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -86,7 +87,13 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new SentenceTarget(sentiment, confidenceScores, offset, length, text, relations);
+            return new SentenceTarget(
+                sentiment,
+                confidenceScores,
+                offset,
+                length,
+                text,
+                relations);
         }
     }
 }

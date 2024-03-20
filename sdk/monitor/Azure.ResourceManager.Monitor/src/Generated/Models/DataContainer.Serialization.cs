@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -73,7 +74,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 if (property.NameEquals("workspace"u8))
                 {
-                    workspace = DataContainerWorkspace.DeserializeDataContainerWorkspace(property.Value);
+                    workspace = DataContainerWorkspace.DeserializeDataContainerWorkspace(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -132,14 +132,14 @@ namespace Azure.ResourceManager.Peering
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> sourceAgent = default;
-            Optional<string> destination = default;
-            Optional<int> destinationPort = default;
-            Optional<int> testFrequencyInSec = default;
-            Optional<bool> isTestSuccessful = default;
-            Optional<IReadOnlyList<string>> path = default;
-            Optional<PeeringProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            string sourceAgent = default;
+            string destination = default;
+            int? destinationPort = default;
+            int? testFrequencyInSec = default;
+            bool? isTestSuccessful = default;
+            IReadOnlyList<string> path = default;
+            PeeringProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -246,7 +246,19 @@ namespace Azure.ResourceManager.Peering
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectionMonitorTestData(id, name, type, systemData.Value, sourceAgent.Value, destination.Value, Optional.ToNullable(destinationPort), Optional.ToNullable(testFrequencyInSec), Optional.ToNullable(isTestSuccessful), Optional.ToList(path), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new ConnectionMonitorTestData(
+                id,
+                name,
+                type,
+                systemData,
+                sourceAgent,
+                destination,
+                destinationPort,
+                testFrequencyInSec,
+                isTestSuccessful,
+                path ?? new ChangeTrackingList<string>(),
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectionMonitorTestData>.Write(ModelReaderWriterOptions options)

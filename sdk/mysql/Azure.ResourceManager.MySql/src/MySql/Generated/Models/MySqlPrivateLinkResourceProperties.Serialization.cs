@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MySql;
 
 namespace Azure.ResourceManager.MySql.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.MySql.Models
             {
                 return null;
             }
-            Optional<string> groupId = default;
-            Optional<IReadOnlyList<string>> requiredMembers = default;
+            string groupId = default;
+            IReadOnlyList<string> requiredMembers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.MySql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlPrivateLinkResourceProperties(groupId.Value, Optional.ToList(requiredMembers), serializedAdditionalRawData);
+            return new MySqlPrivateLinkResourceProperties(groupId, requiredMembers ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlPrivateLinkResourceProperties>.Write(ModelReaderWriterOptions options)

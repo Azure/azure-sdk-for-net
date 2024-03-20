@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SqlVirtualMachine;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 return null;
             }
-            Optional<string> clusterBootstrapAccountPassword = default;
-            Optional<string> clusterOperatorAccountPassword = default;
-            Optional<string> sqlServiceAccountPassword = default;
+            string clusterBootstrapAccountPassword = default;
+            string clusterOperatorAccountPassword = default;
+            string sqlServiceAccountPassword = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WindowsServerFailoverClusterDomainCredentials(clusterBootstrapAccountPassword.Value, clusterOperatorAccountPassword.Value, sqlServiceAccountPassword.Value, serializedAdditionalRawData);
+            return new WindowsServerFailoverClusterDomainCredentials(clusterBootstrapAccountPassword, clusterOperatorAccountPassword, sqlServiceAccountPassword, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WindowsServerFailoverClusterDomainCredentials>.Write(ModelReaderWriterOptions options)

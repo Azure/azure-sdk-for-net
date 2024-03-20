@@ -117,12 +117,12 @@ namespace Azure.ResourceManager.Kusto
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> privateLinkResourceId = default;
-            Optional<string> privateLinkResourceRegion = default;
-            Optional<string> groupId = default;
-            Optional<string> requestMessage = default;
-            Optional<KustoProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            ResourceIdentifier privateLinkResourceId = default;
+            string privateLinkResourceRegion = default;
+            string groupId = default;
+            string requestMessage = default;
+            KustoProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -202,7 +202,17 @@ namespace Azure.ResourceManager.Kusto
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustoManagedPrivateEndpointData(id, name, type, systemData.Value, privateLinkResourceId.Value, privateLinkResourceRegion.Value, groupId.Value, requestMessage.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new KustoManagedPrivateEndpointData(
+                id,
+                name,
+                type,
+                systemData,
+                privateLinkResourceId,
+                privateLinkResourceRegion,
+                groupId,
+                requestMessage,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KustoManagedPrivateEndpointData>.Write(ModelReaderWriterOptions options)

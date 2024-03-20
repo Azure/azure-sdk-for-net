@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> displayName = default;
-            Optional<string> internalName = default;
-            Optional<bool> toBeExportedForShoebox = default;
+            string name = default;
+            string displayName = default;
+            string internalName = default;
+            bool? toBeExportedForShoebox = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MetricDimension(name.Value, displayName.Value, internalName.Value, Optional.ToNullable(toBeExportedForShoebox), serializedAdditionalRawData);
+            return new MetricDimension(name, displayName, internalName, toBeExportedForShoebox, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MetricDimension>.Write(ModelReaderWriterOptions options)

@@ -104,13 +104,13 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<CloudServiceRoleSku> sku = default;
+            AzureLocation? location = default;
+            CloudServiceRoleSku sku = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> uniqueId = default;
+            SystemData systemData = default;
+            string uniqueId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         continue;
                     }
-                    sku = CloudServiceRoleSku.DeserializeCloudServiceRoleSku(property.Value);
+                    sku = CloudServiceRoleSku.DeserializeCloudServiceRoleSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -180,7 +180,15 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudServiceRoleData(id, name, type, systemData.Value, Optional.ToNullable(location), sku.Value, uniqueId.Value, serializedAdditionalRawData);
+            return new CloudServiceRoleData(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                sku,
+                uniqueId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudServiceRoleData>.Write(ModelReaderWriterOptions options)

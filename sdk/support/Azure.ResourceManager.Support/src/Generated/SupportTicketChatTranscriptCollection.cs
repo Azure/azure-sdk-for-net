@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -80,14 +80,7 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="chatTranscriptName"/> is null. </exception>
         public virtual async Task<Response<SupportTicketChatTranscriptResource>> GetAsync(string chatTranscriptName, CancellationToken cancellationToken = default)
         {
-            if (chatTranscriptName == null)
-            {
-                throw new ArgumentNullException(nameof(chatTranscriptName));
-            }
-            if (chatTranscriptName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(chatTranscriptName));
-            }
+            Argument.AssertNotNullOrEmpty(chatTranscriptName, nameof(chatTranscriptName));
 
             using var scope = _supportTicketChatTranscriptChatTranscriptsClientDiagnostics.CreateScope("SupportTicketChatTranscriptCollection.Get");
             scope.Start();
@@ -118,7 +111,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -132,14 +125,7 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="chatTranscriptName"/> is null. </exception>
         public virtual Response<SupportTicketChatTranscriptResource> Get(string chatTranscriptName, CancellationToken cancellationToken = default)
         {
-            if (chatTranscriptName == null)
-            {
-                throw new ArgumentNullException(nameof(chatTranscriptName));
-            }
-            if (chatTranscriptName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(chatTranscriptName));
-            }
+            Argument.AssertNotNullOrEmpty(chatTranscriptName, nameof(chatTranscriptName));
 
             using var scope = _supportTicketChatTranscriptChatTranscriptsClientDiagnostics.CreateScope("SupportTicketChatTranscriptCollection.Get");
             scope.Start();
@@ -170,7 +156,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -200,7 +186,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -230,7 +216,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -244,14 +230,7 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="chatTranscriptName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string chatTranscriptName, CancellationToken cancellationToken = default)
         {
-            if (chatTranscriptName == null)
-            {
-                throw new ArgumentNullException(nameof(chatTranscriptName));
-            }
-            if (chatTranscriptName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(chatTranscriptName));
-            }
+            Argument.AssertNotNullOrEmpty(chatTranscriptName, nameof(chatTranscriptName));
 
             using var scope = _supportTicketChatTranscriptChatTranscriptsClientDiagnostics.CreateScope("SupportTicketChatTranscriptCollection.Exists");
             scope.Start();
@@ -280,7 +259,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -294,14 +273,7 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="chatTranscriptName"/> is null. </exception>
         public virtual Response<bool> Exists(string chatTranscriptName, CancellationToken cancellationToken = default)
         {
-            if (chatTranscriptName == null)
-            {
-                throw new ArgumentNullException(nameof(chatTranscriptName));
-            }
-            if (chatTranscriptName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(chatTranscriptName));
-            }
+            Argument.AssertNotNullOrEmpty(chatTranscriptName, nameof(chatTranscriptName));
 
             using var scope = _supportTicketChatTranscriptChatTranscriptsClientDiagnostics.CreateScope("SupportTicketChatTranscriptCollection.Exists");
             scope.Start();
@@ -330,7 +302,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -344,14 +316,7 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="chatTranscriptName"/> is null. </exception>
         public virtual async Task<NullableResponse<SupportTicketChatTranscriptResource>> GetIfExistsAsync(string chatTranscriptName, CancellationToken cancellationToken = default)
         {
-            if (chatTranscriptName == null)
-            {
-                throw new ArgumentNullException(nameof(chatTranscriptName));
-            }
-            if (chatTranscriptName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(chatTranscriptName));
-            }
+            Argument.AssertNotNullOrEmpty(chatTranscriptName, nameof(chatTranscriptName));
 
             using var scope = _supportTicketChatTranscriptChatTranscriptsClientDiagnostics.CreateScope("SupportTicketChatTranscriptCollection.GetIfExists");
             scope.Start();
@@ -382,7 +347,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -396,14 +361,7 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="chatTranscriptName"/> is null. </exception>
         public virtual NullableResponse<SupportTicketChatTranscriptResource> GetIfExists(string chatTranscriptName, CancellationToken cancellationToken = default)
         {
-            if (chatTranscriptName == null)
-            {
-                throw new ArgumentNullException(nameof(chatTranscriptName));
-            }
-            if (chatTranscriptName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(chatTranscriptName));
-            }
+            Argument.AssertNotNullOrEmpty(chatTranscriptName, nameof(chatTranscriptName));
 
             using var scope = _supportTicketChatTranscriptChatTranscriptsClientDiagnostics.CreateScope("SupportTicketChatTranscriptCollection.GetIfExists");
             scope.Start();

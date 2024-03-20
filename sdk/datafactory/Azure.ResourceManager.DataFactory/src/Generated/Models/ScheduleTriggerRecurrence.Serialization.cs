@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -91,12 +92,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryRecurrenceFrequency> frequency = default;
-            Optional<int> interval = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<string> timeZone = default;
-            Optional<DataFactoryRecurrenceSchedule> schedule = default;
+            DataFactoryRecurrenceFrequency? frequency = default;
+            int? interval = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            string timeZone = default;
+            DataFactoryRecurrenceSchedule schedule = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -148,13 +149,20 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    schedule = DataFactoryRecurrenceSchedule.DeserializeDataFactoryRecurrenceSchedule(property.Value);
+                    schedule = DataFactoryRecurrenceSchedule.DeserializeDataFactoryRecurrenceSchedule(property.Value, options);
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ScheduleTriggerRecurrence(Optional.ToNullable(frequency), Optional.ToNullable(interval), Optional.ToNullable(startTime), Optional.ToNullable(endTime), timeZone.Value, schedule.Value, additionalProperties);
+            return new ScheduleTriggerRecurrence(
+                frequency,
+                interval,
+                startTime,
+                endTime,
+                timeZone,
+                schedule,
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<ScheduleTriggerRecurrence>.Write(ModelReaderWriterOptions options)

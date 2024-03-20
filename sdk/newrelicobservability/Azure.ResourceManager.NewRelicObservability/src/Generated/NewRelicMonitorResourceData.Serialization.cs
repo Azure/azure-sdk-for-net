@@ -162,24 +162,24 @@ namespace Azure.ResourceManager.NewRelicObservability
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<NewRelicProvisioningState> provisioningState = default;
-            Optional<NewRelicObservabilityMonitoringStatus> monitoringStatus = default;
-            Optional<NewRelicObservabilityMarketplaceSubscriptionStatus> marketplaceSubscriptionStatus = default;
-            Optional<string> marketplaceSubscriptionId = default;
-            Optional<NewRelicAccountProperties> newRelicAccountProperties = default;
-            Optional<NewRelicObservabilityUserInfo> userInfo = default;
-            Optional<NewRelicPlanDetails> planData = default;
-            Optional<NewRelicLiftrResourceCategory> liftrResourceCategory = default;
-            Optional<int> liftrResourcePreference = default;
-            Optional<NewRelicObservabilityOrgCreationSource> orgCreationSource = default;
-            Optional<NewRelicObservabilityAccountCreationSource> accountCreationSource = default;
+            SystemData systemData = default;
+            NewRelicProvisioningState? provisioningState = default;
+            NewRelicObservabilityMonitoringStatus? monitoringStatus = default;
+            NewRelicObservabilityMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = default;
+            string marketplaceSubscriptionId = default;
+            NewRelicAccountProperties newRelicAccountProperties = default;
+            NewRelicObservabilityUserInfo userInfo = default;
+            NewRelicPlanDetails planData = default;
+            NewRelicLiftrResourceCategory? liftrResourceCategory = default;
+            int? liftrResourcePreference = default;
+            NewRelicObservabilityOrgCreationSource? orgCreationSource = default;
+            NewRelicObservabilityAccountCreationSource? accountCreationSource = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                             {
                                 continue;
                             }
-                            newRelicAccountProperties = NewRelicAccountProperties.DeserializeNewRelicAccountProperties(property0.Value);
+                            newRelicAccountProperties = NewRelicAccountProperties.DeserializeNewRelicAccountProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("userInfo"u8))
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                             {
                                 continue;
                             }
-                            userInfo = NewRelicObservabilityUserInfo.DeserializeNewRelicObservabilityUserInfo(property0.Value);
+                            userInfo = NewRelicObservabilityUserInfo.DeserializeNewRelicObservabilityUserInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("planData"u8))
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                             {
                                 continue;
                             }
-                            planData = NewRelicPlanDetails.DeserializeNewRelicPlanDetails(property0.Value);
+                            planData = NewRelicPlanDetails.DeserializeNewRelicPlanDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("liftrResourceCategory"u8))
@@ -349,7 +349,26 @@ namespace Azure.ResourceManager.NewRelicObservability
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NewRelicMonitorResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(provisioningState), Optional.ToNullable(monitoringStatus), Optional.ToNullable(marketplaceSubscriptionStatus), marketplaceSubscriptionId.Value, newRelicAccountProperties.Value, userInfo.Value, planData.Value, Optional.ToNullable(liftrResourceCategory), Optional.ToNullable(liftrResourcePreference), Optional.ToNullable(orgCreationSource), Optional.ToNullable(accountCreationSource), serializedAdditionalRawData);
+            return new NewRelicMonitorResourceData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                provisioningState,
+                monitoringStatus,
+                marketplaceSubscriptionStatus,
+                marketplaceSubscriptionId,
+                newRelicAccountProperties,
+                userInfo,
+                planData,
+                liftrResourceCategory,
+                liftrResourcePreference,
+                orgCreationSource,
+                accountCreationSource,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NewRelicMonitorResourceData>.Write(ModelReaderWriterOptions options)

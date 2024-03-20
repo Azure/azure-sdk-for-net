@@ -127,16 +127,16 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Optional<ExtendedLocation> extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ExtendedLocation extendedLocation = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IReadOnlyList<ComputePrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Optional<string> provisioningState = default;
-            Optional<DateTimeOffset> timeCreated = default;
+            SystemData systemData = default;
+            IReadOnlyList<ComputePrivateEndpointConnectionData> privateEndpointConnections = default;
+            string provisioningState = default;
+            DateTimeOffset? timeCreated = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Compute
                             List<ComputePrivateEndpointConnectionData> array = new List<ComputePrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ComputePrivateEndpointConnectionData.DeserializeComputePrivateEndpointConnectionData(item));
+                                array.Add(ComputePrivateEndpointConnectionData.DeserializeComputePrivateEndpointConnectionData(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -239,7 +239,18 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiskAccessData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, Optional.ToList(privateEndpointConnections), provisioningState.Value, Optional.ToNullable(timeCreated), serializedAdditionalRawData);
+            return new DiskAccessData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation,
+                privateEndpointConnections ?? new ChangeTrackingList<ComputePrivateEndpointConnectionData>(),
+                provisioningState,
+                timeCreated,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiskAccessData>.Write(ModelReaderWriterOptions options)

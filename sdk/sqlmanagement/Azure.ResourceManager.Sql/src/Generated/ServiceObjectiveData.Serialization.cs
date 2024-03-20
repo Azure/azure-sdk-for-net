@@ -116,12 +116,12 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> serviceObjectiveName = default;
-            Optional<bool> isDefault = default;
-            Optional<bool> isSystem = default;
-            Optional<string> description = default;
-            Optional<bool> enabled = default;
+            SystemData systemData = default;
+            string serviceObjectiveName = default;
+            bool? isDefault = default;
+            bool? isSystem = default;
+            string description = default;
+            bool? enabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -205,7 +205,17 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceObjectiveData(id, name, type, systemData.Value, serviceObjectiveName.Value, Optional.ToNullable(isDefault), Optional.ToNullable(isSystem), description.Value, Optional.ToNullable(enabled), serializedAdditionalRawData);
+            return new ServiceObjectiveData(
+                id,
+                name,
+                type,
+                systemData,
+                serviceObjectiveName,
+                isDefault,
+                isSystem,
+                description,
+                enabled,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceObjectiveData>.Write(ModelReaderWriterOptions options)

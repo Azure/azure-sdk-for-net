@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Orbital;
 
 namespace Azure.ResourceManager.Orbital.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.Orbital.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<OrbitalAvailableContact>> value = default;
+            IReadOnlyList<OrbitalAvailableContact> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.Orbital.Models
                     List<OrbitalAvailableContact> array = new List<OrbitalAvailableContact>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OrbitalAvailableContact.DeserializeOrbitalAvailableContact(item));
+                        array.Add(OrbitalAvailableContact.DeserializeOrbitalAvailableContact(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.Orbital.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OrbitalAvailableContactsResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new OrbitalAvailableContactsResult(value ?? new ChangeTrackingList<OrbitalAvailableContact>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OrbitalAvailableContactsResult>.Write(ModelReaderWriterOptions options)

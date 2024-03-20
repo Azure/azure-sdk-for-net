@@ -201,29 +201,29 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ExpressRouteCircuitSku> sku = default;
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<bool> allowClassicOperations = default;
-            Optional<string> circuitProvisioningState = default;
-            Optional<ServiceProviderProvisioningState> serviceProviderProvisioningState = default;
-            Optional<IList<ExpressRouteCircuitAuthorizationData>> authorizations = default;
-            Optional<IList<ExpressRouteCircuitPeeringData>> peerings = default;
-            Optional<string> serviceKey = default;
-            Optional<string> serviceProviderNotes = default;
-            Optional<ExpressRouteCircuitServiceProviderProperties> serviceProviderProperties = default;
-            Optional<WritableSubResource> expressRoutePort = default;
-            Optional<float> bandwidthInGbps = default;
-            Optional<int> stag = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<string> gatewayManagerETag = default;
-            Optional<bool> globalReachEnabled = default;
-            Optional<string> authorizationKey = default;
-            Optional<string> authorizationStatus = default;
+            ExpressRouteCircuitSku sku = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
+            IDictionary<string, string> tags = default;
+            bool? allowClassicOperations = default;
+            string circuitProvisioningState = default;
+            ServiceProviderProvisioningState? serviceProviderProvisioningState = default;
+            IList<ExpressRouteCircuitAuthorizationData> authorizations = default;
+            IList<ExpressRouteCircuitPeeringData> peerings = default;
+            string serviceKey = default;
+            string serviceProviderNotes = default;
+            ExpressRouteCircuitServiceProviderProperties serviceProviderProperties = default;
+            WritableSubResource expressRoutePort = default;
+            float? bandwidthInGbps = default;
+            int? stag = default;
+            NetworkProvisioningState? provisioningState = default;
+            string gatewayManagerETag = default;
+            bool? globalReachEnabled = default;
+            string authorizationKey = default;
+            string authorizationStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Network
                     {
                         continue;
                     }
-                    sku = ExpressRouteCircuitSku.DeserializeExpressRouteCircuitSku(property.Value);
+                    sku = ExpressRouteCircuitSku.DeserializeExpressRouteCircuitSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Network
                             List<ExpressRouteCircuitAuthorizationData> array = new List<ExpressRouteCircuitAuthorizationData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ExpressRouteCircuitAuthorizationData.DeserializeExpressRouteCircuitAuthorizationData(item));
+                                array.Add(ExpressRouteCircuitAuthorizationData.DeserializeExpressRouteCircuitAuthorizationData(item, options));
                             }
                             authorizations = array;
                             continue;
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Network
                             List<ExpressRouteCircuitPeeringData> array = new List<ExpressRouteCircuitPeeringData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ExpressRouteCircuitPeeringData.DeserializeExpressRouteCircuitPeeringData(item));
+                                array.Add(ExpressRouteCircuitPeeringData.DeserializeExpressRouteCircuitPeeringData(item, options));
                             }
                             peerings = array;
                             continue;
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            serviceProviderProperties = ExpressRouteCircuitServiceProviderProperties.DeserializeExpressRouteCircuitServiceProviderProperties(property0.Value);
+                            serviceProviderProperties = ExpressRouteCircuitServiceProviderProperties.DeserializeExpressRouteCircuitServiceProviderProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("expressRoutePort"u8))
@@ -440,7 +440,31 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressRouteCircuitData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, sku.Value, Optional.ToNullable(etag), Optional.ToNullable(allowClassicOperations), circuitProvisioningState.Value, Optional.ToNullable(serviceProviderProvisioningState), Optional.ToList(authorizations), Optional.ToList(peerings), serviceKey.Value, serviceProviderNotes.Value, serviceProviderProperties.Value, expressRoutePort, Optional.ToNullable(bandwidthInGbps), Optional.ToNullable(stag), Optional.ToNullable(provisioningState), gatewayManagerETag.Value, Optional.ToNullable(globalReachEnabled), authorizationKey.Value, authorizationStatus.Value);
+            return new ExpressRouteCircuitData(
+                id,
+                name,
+                type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                sku,
+                etag,
+                allowClassicOperations,
+                circuitProvisioningState,
+                serviceProviderProvisioningState,
+                authorizations ?? new ChangeTrackingList<ExpressRouteCircuitAuthorizationData>(),
+                peerings ?? new ChangeTrackingList<ExpressRouteCircuitPeeringData>(),
+                serviceKey,
+                serviceProviderNotes,
+                serviceProviderProperties,
+                expressRoutePort,
+                bandwidthInGbps,
+                stag,
+                provisioningState,
+                gatewayManagerETag,
+                globalReachEnabled,
+                authorizationKey,
+                authorizationStatus);
         }
 
         BinaryData IPersistableModel<ExpressRouteCircuitData>.Write(ModelReaderWriterOptions options)

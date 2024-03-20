@@ -135,17 +135,17 @@ namespace Azure.ResourceManager.LoadTesting
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<LoadTestingProvisioningState> provisioningState = default;
-            Optional<string> dataPlaneUri = default;
-            Optional<LoadTestingCmkEncryptionProperties> encryption = default;
+            SystemData systemData = default;
+            string description = default;
+            LoadTestingProvisioningState? provisioningState = default;
+            string dataPlaneUri = default;
+            LoadTestingCmkEncryptionProperties encryption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.LoadTesting
                                 encryption = null;
                                 continue;
                             }
-                            encryption = LoadTestingCmkEncryptionProperties.DeserializeLoadTestingCmkEncryptionProperties(property0.Value);
+                            encryption = LoadTestingCmkEncryptionProperties.DeserializeLoadTestingCmkEncryptionProperties(property0.Value, options);
                             continue;
                         }
                     }
@@ -250,7 +250,19 @@ namespace Azure.ResourceManager.LoadTesting
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LoadTestingResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, description.Value, Optional.ToNullable(provisioningState), dataPlaneUri.Value, encryption.Value, serializedAdditionalRawData);
+            return new LoadTestingResourceData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                description,
+                provisioningState,
+                dataPlaneUri,
+                encryption,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LoadTestingResourceData>.Write(ModelReaderWriterOptions options)

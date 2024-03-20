@@ -113,10 +113,10 @@ namespace Azure.ResourceManager.Automation
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<WritableSubResource> privateEndpoint = default;
-            Optional<IList<string>> groupIds = default;
-            Optional<AutomationPrivateLinkServiceConnectionStateProperty> privateLinkServiceConnectionState = default;
+            SystemData systemData = default;
+            WritableSubResource privateEndpoint = default;
+            IList<string> groupIds = default;
+            AutomationPrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Automation
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = AutomationPrivateLinkServiceConnectionStateProperty.DeserializeAutomationPrivateLinkServiceConnectionStateProperty(property0.Value);
+                            privateLinkServiceConnectionState = AutomationPrivateLinkServiceConnectionStateProperty.DeserializeAutomationPrivateLinkServiceConnectionStateProperty(property0.Value, options);
                             continue;
                         }
                     }
@@ -195,7 +195,15 @@ namespace Azure.ResourceManager.Automation
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationPrivateEndpointConnectionData(id, name, type, systemData.Value, privateEndpoint, Optional.ToList(groupIds), privateLinkServiceConnectionState.Value, serializedAdditionalRawData);
+            return new AutomationPrivateEndpointConnectionData(
+                id,
+                name,
+                type,
+                systemData,
+                privateEndpoint,
+                groupIds ?? new ChangeTrackingList<string>(),
+                privateLinkServiceConnectionState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options)

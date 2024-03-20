@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetwork;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ManagedNetwork.Models
@@ -104,11 +105,11 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                 return null;
             }
             ConnectivityType type = default;
-            Optional<WritableSubResource> hub = default;
-            Optional<IList<WritableSubResource>> spokes = default;
-            Optional<IList<WritableSubResource>> mesh = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<ETag> etag = default;
+            WritableSubResource hub = default;
+            IList<WritableSubResource> spokes = default;
+            IList<WritableSubResource> mesh = default;
+            ProvisioningState? provisioningState = default;
+            ETag? etag = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,7 +180,14 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedNetworkPeeringPolicyProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(etag), serializedAdditionalRawData, type, hub, Optional.ToList(spokes), Optional.ToList(mesh));
+            return new ManagedNetworkPeeringPolicyProperties(
+                provisioningState,
+                etag,
+                serializedAdditionalRawData,
+                type,
+                hub,
+                spokes ?? new ChangeTrackingList<WritableSubResource>(),
+                mesh ?? new ChangeTrackingList<WritableSubResource>());
         }
 
         BinaryData IPersistableModel<ManagedNetworkPeeringPolicyProperties>.Write(ModelReaderWriterOptions options)

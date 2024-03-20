@@ -185,23 +185,23 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<ResourcesProvisioningState> provisioningState = default;
-            Optional<string> correlationId = default;
-            Optional<DateTimeOffset> timestamp = default;
-            Optional<TimeSpan> duration = default;
-            Optional<BinaryData> outputs = default;
-            Optional<IReadOnlyList<ResourceProviderData>> providers = default;
-            Optional<IReadOnlyList<ArmDependency>> dependencies = default;
-            Optional<ArmDeploymentTemplateLink> templateLink = default;
-            Optional<BinaryData> parameters = default;
-            Optional<ArmDeploymentParametersLink> parametersLink = default;
-            Optional<ArmDeploymentMode> mode = default;
-            Optional<DebugSetting> debugSetting = default;
-            Optional<ErrorDeploymentExtended> onErrorDeployment = default;
-            Optional<string> templateHash = default;
-            Optional<IReadOnlyList<SubResource>> outputResources = default;
-            Optional<IReadOnlyList<SubResource>> validatedResources = default;
-            Optional<ResponseError> error = default;
+            ResourcesProvisioningState? provisioningState = default;
+            string correlationId = default;
+            DateTimeOffset? timestamp = default;
+            TimeSpan? duration = default;
+            BinaryData outputs = default;
+            IReadOnlyList<ResourceProviderData> providers = default;
+            IReadOnlyList<ArmDependency> dependencies = default;
+            ArmDeploymentTemplateLink templateLink = default;
+            BinaryData parameters = default;
+            ArmDeploymentParametersLink parametersLink = default;
+            ArmDeploymentMode? mode = default;
+            DebugSetting debugSetting = default;
+            ErrorDeploymentExtended onErrorDeployment = default;
+            string templateHash = default;
+            IReadOnlyList<SubResource> outputResources = default;
+            IReadOnlyList<SubResource> validatedResources = default;
+            ResponseError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<ArmDependency> array = new List<ArmDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ArmDependency.DeserializeArmDependency(item));
+                        array.Add(ArmDependency.DeserializeArmDependency(item, options));
                     }
                     dependencies = array;
                     continue;
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    templateLink = ArmDeploymentTemplateLink.DeserializeArmDeploymentTemplateLink(property.Value);
+                    templateLink = ArmDeploymentTemplateLink.DeserializeArmDeploymentTemplateLink(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("parameters"u8))
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    parametersLink = ArmDeploymentParametersLink.DeserializeArmDeploymentParametersLink(property.Value);
+                    parametersLink = ArmDeploymentParametersLink.DeserializeArmDeploymentParametersLink(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("mode"u8))
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    debugSetting = DebugSetting.DeserializeDebugSetting(property.Value);
+                    debugSetting = DebugSetting.DeserializeDebugSetting(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("onErrorDeployment"u8))
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    onErrorDeployment = ErrorDeploymentExtended.DeserializeErrorDeploymentExtended(property.Value);
+                    onErrorDeployment = ErrorDeploymentExtended.DeserializeErrorDeploymentExtended(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("templateHash"u8))
@@ -377,7 +377,25 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmDeploymentPropertiesExtended(Optional.ToNullable(provisioningState), correlationId.Value, Optional.ToNullable(timestamp), Optional.ToNullable(duration), outputs.Value, Optional.ToList(providers), Optional.ToList(dependencies), templateLink.Value, parameters.Value, parametersLink.Value, Optional.ToNullable(mode), debugSetting.Value, onErrorDeployment.Value, templateHash.Value, Optional.ToList(outputResources), Optional.ToList(validatedResources), error.Value, serializedAdditionalRawData);
+            return new ArmDeploymentPropertiesExtended(
+                provisioningState,
+                correlationId,
+                timestamp,
+                duration,
+                outputs,
+                providers ?? new ChangeTrackingList<ResourceProviderData>(),
+                dependencies ?? new ChangeTrackingList<ArmDependency>(),
+                templateLink,
+                parameters,
+                parametersLink,
+                mode,
+                debugSetting,
+                onErrorDeployment,
+                templateHash,
+                outputResources ?? new ChangeTrackingList<SubResource>(),
+                validatedResources ?? new ChangeTrackingList<SubResource>(),
+                error,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmDeploymentPropertiesExtended>.Write(ModelReaderWriterOptions options)

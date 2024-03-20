@@ -153,22 +153,22 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<ExtendedLocation> extendedLocation = default;
-            Optional<string> kind = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ExtendedLocation extendedLocation = default;
+            string kind = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<KubeEnvironmentProvisioningState> provisioningState = default;
-            Optional<string> deploymentErrors = default;
-            Optional<bool> internalLoadBalancerEnabled = default;
-            Optional<string> defaultDomain = default;
-            Optional<string> staticIP = default;
-            Optional<ArcConfiguration> arcConfiguration = default;
-            Optional<AppLogsConfiguration> appLogsConfiguration = default;
-            Optional<ResourceIdentifier> aksResourceId = default;
+            SystemData systemData = default;
+            KubeEnvironmentProvisioningState? provisioningState = default;
+            string deploymentErrors = default;
+            bool? internalLoadBalancerEnabled = default;
+            string defaultDomain = default;
+            string staticIP = default;
+            ArcConfiguration arcConfiguration = default;
+            AppLogsConfiguration appLogsConfiguration = default;
+            ResourceIdentifier aksResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            arcConfiguration = ArcConfiguration.DeserializeArcConfiguration(property0.Value);
+                            arcConfiguration = ArcConfiguration.DeserializeArcConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("appLogsConfiguration"u8))
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            appLogsConfiguration = AppLogsConfiguration.DeserializeAppLogsConfiguration(property0.Value);
+                            appLogsConfiguration = AppLogsConfiguration.DeserializeAppLogsConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("aksResourceID"u8))
@@ -308,7 +308,24 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubeEnvironmentData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, Optional.ToNullable(provisioningState), deploymentErrors.Value, Optional.ToNullable(internalLoadBalancerEnabled), defaultDomain.Value, staticIP.Value, arcConfiguration.Value, appLogsConfiguration.Value, aksResourceId.Value, kind.Value, serializedAdditionalRawData);
+            return new KubeEnvironmentData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation,
+                provisioningState,
+                deploymentErrors,
+                internalLoadBalancerEnabled,
+                defaultDomain,
+                staticIP,
+                arcConfiguration,
+                appLogsConfiguration,
+                aksResourceId,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubeEnvironmentData>.Write(ModelReaderWriterOptions options)

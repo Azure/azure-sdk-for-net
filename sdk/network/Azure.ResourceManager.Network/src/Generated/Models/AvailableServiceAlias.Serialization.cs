@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -90,11 +91,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> resourceName = default;
+            string resourceName = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +135,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailableServiceAlias(id, name, type, systemData.Value, resourceName.Value, serializedAdditionalRawData);
+            return new AvailableServiceAlias(
+                id,
+                name,
+                type,
+                systemData,
+                resourceName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailableServiceAlias>.Write(ModelReaderWriterOptions options)

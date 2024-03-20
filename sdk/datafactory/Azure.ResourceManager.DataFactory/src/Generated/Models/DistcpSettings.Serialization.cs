@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             DataFactoryElement<string> resourceManagerEndpoint = default;
             DataFactoryElement<string> tempScriptPath = default;
-            Optional<DataFactoryElement<string>> distcpOptions = default;
+            DataFactoryElement<string> distcpOptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,7 +107,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DistcpSettings(resourceManagerEndpoint, tempScriptPath, distcpOptions.Value, serializedAdditionalRawData);
+            return new DistcpSettings(resourceManagerEndpoint, tempScriptPath, distcpOptions, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DistcpSettings>.Write(ModelReaderWriterOptions options)

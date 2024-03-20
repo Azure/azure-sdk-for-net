@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SphereDeploymentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string deploymentName, SphereDeploymentData data, CancellationToken cancellationToken = default)
         {
-            if (deploymentName == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentName));
-            }
-            if (deploymentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deploymentName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sphereDeploymentDeploymentsClientDiagnostics.CreateScope("SphereDeploymentCollection.CreateOrUpdate");
             scope.Start();
@@ -125,7 +115,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SphereDeploymentResource> CreateOrUpdate(WaitUntil waitUntil, string deploymentName, SphereDeploymentData data, CancellationToken cancellationToken = default)
         {
-            if (deploymentName == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentName));
-            }
-            if (deploymentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deploymentName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sphereDeploymentDeploymentsClientDiagnostics.CreateScope("SphereDeploymentCollection.CreateOrUpdate");
             scope.Start();
@@ -184,7 +164,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public virtual async Task<Response<SphereDeploymentResource>> GetAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
-            if (deploymentName == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentName));
-            }
-            if (deploymentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deploymentName));
-            }
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
             using var scope = _sphereDeploymentDeploymentsClientDiagnostics.CreateScope("SphereDeploymentCollection.Get");
             scope.Start();
@@ -236,7 +209,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public virtual Response<SphereDeploymentResource> Get(string deploymentName, CancellationToken cancellationToken = default)
         {
-            if (deploymentName == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentName));
-            }
-            if (deploymentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deploymentName));
-            }
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
             using var scope = _sphereDeploymentDeploymentsClientDiagnostics.CreateScope("SphereDeploymentCollection.Get");
             scope.Start();
@@ -288,7 +254,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -322,7 +288,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -356,7 +322,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -370,14 +336,7 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
-            if (deploymentName == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentName));
-            }
-            if (deploymentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deploymentName));
-            }
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
             using var scope = _sphereDeploymentDeploymentsClientDiagnostics.CreateScope("SphereDeploymentCollection.Exists");
             scope.Start();
@@ -406,7 +365,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -420,14 +379,7 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public virtual Response<bool> Exists(string deploymentName, CancellationToken cancellationToken = default)
         {
-            if (deploymentName == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentName));
-            }
-            if (deploymentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deploymentName));
-            }
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
             using var scope = _sphereDeploymentDeploymentsClientDiagnostics.CreateScope("SphereDeploymentCollection.Exists");
             scope.Start();
@@ -456,7 +408,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -470,14 +422,7 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public virtual async Task<NullableResponse<SphereDeploymentResource>> GetIfExistsAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
-            if (deploymentName == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentName));
-            }
-            if (deploymentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deploymentName));
-            }
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
             using var scope = _sphereDeploymentDeploymentsClientDiagnostics.CreateScope("SphereDeploymentCollection.GetIfExists");
             scope.Start();
@@ -508,7 +453,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -522,14 +467,7 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public virtual NullableResponse<SphereDeploymentResource> GetIfExists(string deploymentName, CancellationToken cancellationToken = default)
         {
-            if (deploymentName == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentName));
-            }
-            if (deploymentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deploymentName));
-            }
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
             using var scope = _sphereDeploymentDeploymentsClientDiagnostics.CreateScope("SphereDeploymentCollection.GetIfExists");
             scope.Start();

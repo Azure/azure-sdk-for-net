@@ -137,16 +137,16 @@ namespace Azure.ResourceManager.Logic
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<LogicWorkflowTriggerProvisioningState> provisioningState = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<DateTimeOffset> changedTime = default;
-            Optional<LogicWorkflowState> state = default;
-            Optional<LogicWorkflowStatus> status = default;
-            Optional<DateTimeOffset> lastExecutionTime = default;
-            Optional<DateTimeOffset> nextExecutionTime = default;
-            Optional<LogicWorkflowTriggerRecurrence> recurrence = default;
-            Optional<LogicResourceReference> workflow = default;
+            SystemData systemData = default;
+            LogicWorkflowTriggerProvisioningState? provisioningState = default;
+            DateTimeOffset? createdTime = default;
+            DateTimeOffset? changedTime = default;
+            LogicWorkflowState? state = default;
+            LogicWorkflowStatus? status = default;
+            DateTimeOffset? lastExecutionTime = default;
+            DateTimeOffset? nextExecutionTime = default;
+            LogicWorkflowTriggerRecurrence recurrence = default;
+            LogicResourceReference workflow = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            recurrence = LogicWorkflowTriggerRecurrence.DeserializeLogicWorkflowTriggerRecurrence(property0.Value);
+                            recurrence = LogicWorkflowTriggerRecurrence.DeserializeLogicWorkflowTriggerRecurrence(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("workflow"u8))
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            workflow = LogicResourceReference.DeserializeLogicResourceReference(property0.Value);
+                            workflow = LogicResourceReference.DeserializeLogicResourceReference(property0.Value, options);
                             continue;
                         }
                     }
@@ -274,7 +274,21 @@ namespace Azure.ResourceManager.Logic
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicWorkflowTriggerData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), Optional.ToNullable(state), Optional.ToNullable(status), Optional.ToNullable(lastExecutionTime), Optional.ToNullable(nextExecutionTime), recurrence.Value, workflow.Value, serializedAdditionalRawData);
+            return new LogicWorkflowTriggerData(
+                id,
+                name,
+                type,
+                systemData,
+                provisioningState,
+                createdTime,
+                changedTime,
+                state,
+                status,
+                lastExecutionTime,
+                nextExecutionTime,
+                recurrence,
+                workflow,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicWorkflowTriggerData>.Write(ModelReaderWriterOptions options)

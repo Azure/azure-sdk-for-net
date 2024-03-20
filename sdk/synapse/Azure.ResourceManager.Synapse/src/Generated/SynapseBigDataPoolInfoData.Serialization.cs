@@ -202,31 +202,31 @@ namespace Azure.ResourceManager.Synapse
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> provisioningState = default;
-            Optional<BigDataPoolAutoScaleProperties> autoScale = default;
-            Optional<DateTimeOffset> creationDate = default;
-            Optional<BigDataPoolAutoPauseProperties> autoPause = default;
-            Optional<bool> isComputeIsolationEnabled = default;
-            Optional<bool> isAutotuneEnabled = default;
-            Optional<bool> sessionLevelPackagesEnabled = default;
-            Optional<int> cacheSize = default;
-            Optional<SynapseDynamicExecutorAllocation> dynamicExecutorAllocation = default;
-            Optional<string> sparkEventsFolder = default;
-            Optional<int> nodeCount = default;
-            Optional<BigDataPoolLibraryRequirements> libraryRequirements = default;
-            Optional<IList<BigDataPoolLibraryInfo>> customLibraries = default;
-            Optional<BigDataPoolSparkConfigProperties> sparkConfigProperties = default;
-            Optional<string> sparkVersion = default;
-            Optional<string> defaultSparkLogFolder = default;
-            Optional<BigDataPoolNodeSize> nodeSize = default;
-            Optional<BigDataPoolNodeSizeFamily> nodeSizeFamily = default;
-            Optional<DateTimeOffset> lastSucceededTimestamp = default;
+            SystemData systemData = default;
+            string provisioningState = default;
+            BigDataPoolAutoScaleProperties autoScale = default;
+            DateTimeOffset? creationDate = default;
+            BigDataPoolAutoPauseProperties autoPause = default;
+            bool? isComputeIsolationEnabled = default;
+            bool? isAutotuneEnabled = default;
+            bool? sessionLevelPackagesEnabled = default;
+            int? cacheSize = default;
+            SynapseDynamicExecutorAllocation dynamicExecutorAllocation = default;
+            string sparkEventsFolder = default;
+            int? nodeCount = default;
+            BigDataPoolLibraryRequirements libraryRequirements = default;
+            IList<BigDataPoolLibraryInfo> customLibraries = default;
+            BigDataPoolSparkConfigProperties sparkConfigProperties = default;
+            string sparkVersion = default;
+            string defaultSparkLogFolder = default;
+            BigDataPoolNodeSize? nodeSize = default;
+            BigDataPoolNodeSizeFamily? nodeSizeFamily = default;
+            DateTimeOffset? lastSucceededTimestamp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Synapse
                             {
                                 continue;
                             }
-                            autoScale = BigDataPoolAutoScaleProperties.DeserializeBigDataPoolAutoScaleProperties(property0.Value);
+                            autoScale = BigDataPoolAutoScaleProperties.DeserializeBigDataPoolAutoScaleProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("creationDate"u8))
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Synapse
                             {
                                 continue;
                             }
-                            autoPause = BigDataPoolAutoPauseProperties.DeserializeBigDataPoolAutoPauseProperties(property0.Value);
+                            autoPause = BigDataPoolAutoPauseProperties.DeserializeBigDataPoolAutoPauseProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("isComputeIsolationEnabled"u8))
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Synapse
                             {
                                 continue;
                             }
-                            dynamicExecutorAllocation = SynapseDynamicExecutorAllocation.DeserializeSynapseDynamicExecutorAllocation(property0.Value);
+                            dynamicExecutorAllocation = SynapseDynamicExecutorAllocation.DeserializeSynapseDynamicExecutorAllocation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("sparkEventsFolder"u8))
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.Synapse
                             {
                                 continue;
                             }
-                            libraryRequirements = BigDataPoolLibraryRequirements.DeserializeBigDataPoolLibraryRequirements(property0.Value);
+                            libraryRequirements = BigDataPoolLibraryRequirements.DeserializeBigDataPoolLibraryRequirements(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("customLibraries"u8))
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.Synapse
                             List<BigDataPoolLibraryInfo> array = new List<BigDataPoolLibraryInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(BigDataPoolLibraryInfo.DeserializeBigDataPoolLibraryInfo(item));
+                                array.Add(BigDataPoolLibraryInfo.DeserializeBigDataPoolLibraryInfo(item, options));
                             }
                             customLibraries = array;
                             continue;
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.Synapse
                             {
                                 continue;
                             }
-                            sparkConfigProperties = BigDataPoolSparkConfigProperties.DeserializeBigDataPoolSparkConfigProperties(property0.Value);
+                            sparkConfigProperties = BigDataPoolSparkConfigProperties.DeserializeBigDataPoolSparkConfigProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("sparkVersion"u8))
@@ -452,7 +452,33 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseBigDataPoolInfoData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, provisioningState.Value, autoScale.Value, Optional.ToNullable(creationDate), autoPause.Value, Optional.ToNullable(isComputeIsolationEnabled), Optional.ToNullable(isAutotuneEnabled), Optional.ToNullable(sessionLevelPackagesEnabled), Optional.ToNullable(cacheSize), dynamicExecutorAllocation.Value, sparkEventsFolder.Value, Optional.ToNullable(nodeCount), libraryRequirements.Value, Optional.ToList(customLibraries), sparkConfigProperties.Value, sparkVersion.Value, defaultSparkLogFolder.Value, Optional.ToNullable(nodeSize), Optional.ToNullable(nodeSizeFamily), Optional.ToNullable(lastSucceededTimestamp), serializedAdditionalRawData);
+            return new SynapseBigDataPoolInfoData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState,
+                autoScale,
+                creationDate,
+                autoPause,
+                isComputeIsolationEnabled,
+                isAutotuneEnabled,
+                sessionLevelPackagesEnabled,
+                cacheSize,
+                dynamicExecutorAllocation,
+                sparkEventsFolder,
+                nodeCount,
+                libraryRequirements,
+                customLibraries ?? new ChangeTrackingList<BigDataPoolLibraryInfo>(),
+                sparkConfigProperties,
+                sparkVersion,
+                defaultSparkLogFolder,
+                nodeSize,
+                nodeSizeFamily,
+                lastSucceededTimestamp,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseBigDataPoolInfoData>.Write(ModelReaderWriterOptions options)

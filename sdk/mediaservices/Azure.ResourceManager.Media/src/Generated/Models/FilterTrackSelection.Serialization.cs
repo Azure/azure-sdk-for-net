@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<FilterTrackPropertyCondition> array = new List<FilterTrackPropertyCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FilterTrackPropertyCondition.DeserializeFilterTrackPropertyCondition(item));
+                        array.Add(FilterTrackPropertyCondition.DeserializeFilterTrackPropertyCondition(item, options));
                     }
                     trackSelections = array;
                     continue;

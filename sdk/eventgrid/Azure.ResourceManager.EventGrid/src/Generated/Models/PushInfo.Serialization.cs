@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<int> maxDeliveryCount = default;
-            Optional<string> eventTimeToLive = default;
-            Optional<DeadLetterWithResourceIdentity> deadLetterDestinationWithResourceIdentity = default;
-            Optional<DeliveryWithResourceIdentity> deliveryWithResourceIdentity = default;
+            int? maxDeliveryCount = default;
+            string eventTimeToLive = default;
+            DeadLetterWithResourceIdentity deadLetterDestinationWithResourceIdentity = default;
+            DeliveryWithResourceIdentity deliveryWithResourceIdentity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    deadLetterDestinationWithResourceIdentity = DeadLetterWithResourceIdentity.DeserializeDeadLetterWithResourceIdentity(property.Value);
+                    deadLetterDestinationWithResourceIdentity = DeadLetterWithResourceIdentity.DeserializeDeadLetterWithResourceIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("deliveryWithResourceIdentity"u8))
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    deliveryWithResourceIdentity = DeliveryWithResourceIdentity.DeserializeDeliveryWithResourceIdentity(property.Value);
+                    deliveryWithResourceIdentity = DeliveryWithResourceIdentity.DeserializeDeliveryWithResourceIdentity(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PushInfo(Optional.ToNullable(maxDeliveryCount), eventTimeToLive.Value, deadLetterDestinationWithResourceIdentity.Value, deliveryWithResourceIdentity.Value, serializedAdditionalRawData);
+            return new PushInfo(maxDeliveryCount, eventTimeToLive, deadLetterDestinationWithResourceIdentity, deliveryWithResourceIdentity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PushInfo>.Write(ModelReaderWriterOptions options)

@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Chaos;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
@@ -74,11 +75,11 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "List": return ChaosTargetListSelector.DeserializeChaosTargetListSelector(element);
-                    case "Query": return ChaosTargetQuerySelector.DeserializeChaosTargetQuerySelector(element);
+                    case "List": return ChaosTargetListSelector.DeserializeChaosTargetListSelector(element, options);
+                    case "Query": return ChaosTargetQuerySelector.DeserializeChaosTargetQuerySelector(element, options);
                 }
             }
-            return UnknownChaosTargetSelector.DeserializeUnknownChaosTargetSelector(element);
+            return UnknownChaosTargetSelector.DeserializeUnknownChaosTargetSelector(element, options);
         }
 
         BinaryData IPersistableModel<ChaosTargetSelector>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (property.NameEquals("parameters"u8))
                 {
-                    parameters = RouteConfigurationOverrideActionProperties.DeserializeRouteConfigurationOverrideActionProperties(property.Value);
+                    parameters = RouteConfigurationOverrideActionProperties.DeserializeRouteConfigurationOverrideActionProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))

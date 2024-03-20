@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<string> keyName = default;
-            Optional<string> keyVersion = default;
-            Optional<Uri> keyVaultUri = default;
-            Optional<Guid> identityClientId = default;
+            string keyName = default;
+            string keyVersion = default;
+            Uri keyVaultUri = default;
+            Guid? identityClientId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CognitiveServicesKeyVaultProperties(keyName.Value, keyVersion.Value, keyVaultUri.Value, Optional.ToNullable(identityClientId), serializedAdditionalRawData);
+            return new CognitiveServicesKeyVaultProperties(keyName, keyVersion, keyVaultUri, identityClientId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CognitiveServicesKeyVaultProperties>.Write(ModelReaderWriterOptions options)

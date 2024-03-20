@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -99,13 +100,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<Guid> id = default;
-            Optional<string> eventType = default;
-            Optional<string> commitId = default;
-            Optional<string> pullRequestId = default;
-            Optional<Uri> repositoryUrl = default;
-            Optional<string> branchName = default;
-            Optional<string> providerType = default;
+            Guid? id = default;
+            string eventType = default;
+            string commitId = default;
+            string pullRequestId = default;
+            Uri repositoryUrl = default;
+            string branchName = default;
+            string providerType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -159,7 +160,15 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistrySourceTriggerDescriptor(Optional.ToNullable(id), eventType.Value, commitId.Value, pullRequestId.Value, repositoryUrl.Value, branchName.Value, providerType.Value, serializedAdditionalRawData);
+            return new ContainerRegistrySourceTriggerDescriptor(
+                id,
+                eventType,
+                commitId,
+                pullRequestId,
+                repositoryUrl,
+                branchName,
+                providerType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistrySourceTriggerDescriptor>.Write(ModelReaderWriterOptions options)

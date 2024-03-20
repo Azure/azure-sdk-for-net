@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -121,17 +122,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<int> replicationFrequencyInSeconds = default;
-            Optional<int> recoveryPoints = default;
-            Optional<int> applicationConsistentSnapshotFrequencyInHours = default;
-            Optional<string> compression = default;
-            Optional<string> initialReplicationMethod = default;
-            Optional<string> onlineReplicationStartTime = default;
-            Optional<string> offlineReplicationImportPath = default;
-            Optional<string> offlineReplicationExportPath = default;
-            Optional<int> replicationPort = default;
-            Optional<int> allowedAuthenticationType = default;
-            Optional<string> replicaDeletion = default;
+            int? replicationFrequencyInSeconds = default;
+            int? recoveryPoints = default;
+            int? applicationConsistentSnapshotFrequencyInHours = default;
+            string compression = default;
+            string initialReplicationMethod = default;
+            string onlineReplicationStartTime = default;
+            string offlineReplicationImportPath = default;
+            string offlineReplicationExportPath = default;
+            int? replicationPort = default;
+            int? allowedAuthenticationType = default;
+            string replicaDeletion = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -223,7 +224,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HyperVReplicaBluePolicyContent(instanceType, serializedAdditionalRawData, Optional.ToNullable(recoveryPoints), Optional.ToNullable(applicationConsistentSnapshotFrequencyInHours), compression.Value, initialReplicationMethod.Value, onlineReplicationStartTime.Value, offlineReplicationImportPath.Value, offlineReplicationExportPath.Value, Optional.ToNullable(replicationPort), Optional.ToNullable(allowedAuthenticationType), replicaDeletion.Value, Optional.ToNullable(replicationFrequencyInSeconds));
+            return new HyperVReplicaBluePolicyContent(
+                instanceType,
+                serializedAdditionalRawData,
+                recoveryPoints,
+                applicationConsistentSnapshotFrequencyInHours,
+                compression,
+                initialReplicationMethod,
+                onlineReplicationStartTime,
+                offlineReplicationImportPath,
+                offlineReplicationExportPath,
+                replicationPort,
+                allowedAuthenticationType,
+                replicaDeletion,
+                replicationFrequencyInSeconds);
         }
 
         BinaryData IPersistableModel<HyperVReplicaBluePolicyContent>.Write(ModelReaderWriterOptions options)

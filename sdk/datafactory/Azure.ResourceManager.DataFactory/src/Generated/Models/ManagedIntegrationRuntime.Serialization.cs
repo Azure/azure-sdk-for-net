@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -96,13 +97,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<IntegrationRuntimeState> state = default;
-            Optional<ManagedVirtualNetworkReference> managedVirtualNetwork = default;
+            IntegrationRuntimeState? state = default;
+            ManagedVirtualNetworkReference managedVirtualNetwork = default;
             IntegrationRuntimeType type = default;
-            Optional<string> description = default;
-            Optional<IntegrationRuntimeComputeProperties> computeProperties = default;
-            Optional<IntegrationRuntimeSsisProperties> ssisProperties = default;
-            Optional<IntegrationRuntimeCustomerVirtualNetwork> customerVirtualNetwork = default;
+            string description = default;
+            IntegrationRuntimeComputeProperties computeProperties = default;
+            IntegrationRuntimeSsisProperties ssisProperties = default;
+            IntegrationRuntimeCustomerVirtualNetwork customerVirtualNetwork = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    managedVirtualNetwork = ManagedVirtualNetworkReference.DeserializeManagedVirtualNetworkReference(property.Value);
+                    managedVirtualNetwork = ManagedVirtualNetworkReference.DeserializeManagedVirtualNetworkReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -150,7 +151,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            computeProperties = IntegrationRuntimeComputeProperties.DeserializeIntegrationRuntimeComputeProperties(property0.Value);
+                            computeProperties = IntegrationRuntimeComputeProperties.DeserializeIntegrationRuntimeComputeProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("ssisProperties"u8))
@@ -159,7 +160,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            ssisProperties = IntegrationRuntimeSsisProperties.DeserializeIntegrationRuntimeSsisProperties(property0.Value);
+                            ssisProperties = IntegrationRuntimeSsisProperties.DeserializeIntegrationRuntimeSsisProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("customerVirtualNetwork"u8))
@@ -168,7 +169,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            customerVirtualNetwork = IntegrationRuntimeCustomerVirtualNetwork.DeserializeIntegrationRuntimeCustomerVirtualNetwork(property0.Value);
+                            customerVirtualNetwork = IntegrationRuntimeCustomerVirtualNetwork.DeserializeIntegrationRuntimeCustomerVirtualNetwork(property0.Value, options);
                             continue;
                         }
                     }
@@ -177,7 +178,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ManagedIntegrationRuntime(type, description.Value, additionalProperties, Optional.ToNullable(state), managedVirtualNetwork.Value, computeProperties.Value, ssisProperties.Value, customerVirtualNetwork.Value);
+            return new ManagedIntegrationRuntime(
+                type,
+                description,
+                additionalProperties,
+                state,
+                managedVirtualNetwork,
+                computeProperties,
+                ssisProperties,
+                customerVirtualNetwork);
         }
 
         BinaryData IPersistableModel<ManagedIntegrationRuntime>.Write(ModelReaderWriterOptions options)

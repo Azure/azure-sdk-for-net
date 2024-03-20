@@ -127,11 +127,11 @@ namespace Azure.ResourceManager.Advisor
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<IReadOnlyList<string>> dependsOn = default;
-            Optional<IReadOnlyList<Scenario>> applicableScenarios = default;
-            Optional<IReadOnlyList<MetadataSupportedValueDetail>> supportedValues = default;
+            SystemData systemData = default;
+            string displayName = default;
+            IReadOnlyList<string> dependsOn = default;
+            IReadOnlyList<Scenario> applicableScenarios = default;
+            IReadOnlyList<MetadataSupportedValueDetail> supportedValues = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Advisor
                             List<MetadataSupportedValueDetail> array = new List<MetadataSupportedValueDetail>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MetadataSupportedValueDetail.DeserializeMetadataSupportedValueDetail(item));
+                                array.Add(MetadataSupportedValueDetail.DeserializeMetadataSupportedValueDetail(item, options));
                             }
                             supportedValues = array;
                             continue;
@@ -225,7 +225,16 @@ namespace Azure.ResourceManager.Advisor
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MetadataEntityData(id, name, type, systemData.Value, displayName.Value, Optional.ToList(dependsOn), Optional.ToList(applicableScenarios), Optional.ToList(supportedValues), serializedAdditionalRawData);
+            return new MetadataEntityData(
+                id,
+                name,
+                type,
+                systemData,
+                displayName,
+                dependsOn ?? new ChangeTrackingList<string>(),
+                applicableScenarios ?? new ChangeTrackingList<Scenario>(),
+                supportedValues ?? new ChangeTrackingList<MetadataSupportedValueDetail>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MetadataEntityData>.Write(ModelReaderWriterOptions options)

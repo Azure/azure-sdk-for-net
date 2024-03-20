@@ -120,16 +120,16 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             {
                 return null;
             }
-            Optional<ETag> eTag = default;
+            ETag? eTag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ContainerServiceFleetUpdateRunProvisioningState> provisioningState = default;
-            Optional<ResourceIdentifier> updateStrategyId = default;
-            Optional<ContainerServiceFleetUpdateRunStrategy> strategy = default;
-            Optional<ContainerServiceFleetManagedClusterUpdate> managedClusterUpdate = default;
-            Optional<ContainerServiceFleetUpdateRunStatus> status = default;
+            SystemData systemData = default;
+            ContainerServiceFleetUpdateRunProvisioningState? provisioningState = default;
+            ResourceIdentifier updateStrategyId = default;
+            ContainerServiceFleetUpdateRunStrategy strategy = default;
+            ContainerServiceFleetManagedClusterUpdate managedClusterUpdate = default;
+            ContainerServiceFleetUpdateRunStatus status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                             {
                                 continue;
                             }
-                            strategy = ContainerServiceFleetUpdateRunStrategy.DeserializeContainerServiceFleetUpdateRunStrategy(property0.Value);
+                            strategy = ContainerServiceFleetUpdateRunStrategy.DeserializeContainerServiceFleetUpdateRunStrategy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("managedClusterUpdate"u8))
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                             {
                                 continue;
                             }
-                            managedClusterUpdate = ContainerServiceFleetManagedClusterUpdate.DeserializeContainerServiceFleetManagedClusterUpdate(property0.Value);
+                            managedClusterUpdate = ContainerServiceFleetManagedClusterUpdate.DeserializeContainerServiceFleetManagedClusterUpdate(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("status"u8))
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                             {
                                 continue;
                             }
-                            status = ContainerServiceFleetUpdateRunStatus.DeserializeContainerServiceFleetUpdateRunStatus(property0.Value);
+                            status = ContainerServiceFleetUpdateRunStatus.DeserializeContainerServiceFleetUpdateRunStatus(property0.Value, options);
                             continue;
                         }
                     }
@@ -230,7 +230,18 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServiceFleetUpdateRunData(id, name, type, systemData.Value, Optional.ToNullable(eTag), Optional.ToNullable(provisioningState), updateStrategyId.Value, strategy.Value, managedClusterUpdate.Value, status.Value, serializedAdditionalRawData);
+            return new ContainerServiceFleetUpdateRunData(
+                id,
+                name,
+                type,
+                systemData,
+                eTag,
+                provisioningState,
+                updateStrategyId,
+                strategy,
+                managedClusterUpdate,
+                status,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServiceFleetUpdateRunData>.Write(ModelReaderWriterOptions options)

@@ -114,15 +114,15 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<VpnLinkProviderProperties> linkProperties = default;
-            Optional<string> ipAddress = default;
-            Optional<string> fqdn = default;
-            Optional<VpnLinkBgpSettings> bgpProperties = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            VpnLinkProviderProperties linkProperties = default;
+            string ipAddress = default;
+            string fqdn = default;
+            VpnLinkBgpSettings bgpProperties = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            linkProperties = VpnLinkProviderProperties.DeserializeVpnLinkProviderProperties(property0.Value);
+                            linkProperties = VpnLinkProviderProperties.DeserializeVpnLinkProviderProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("ipAddress"u8))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            bgpProperties = VpnLinkBgpSettings.DeserializeVpnLinkBgpSettings(property0.Value);
+                            bgpProperties = VpnLinkBgpSettings.DeserializeVpnLinkBgpSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -214,7 +214,17 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VpnSiteLinkData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), linkProperties.Value, ipAddress.Value, fqdn.Value, bgpProperties.Value, Optional.ToNullable(provisioningState));
+            return new VpnSiteLinkData(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                linkProperties,
+                ipAddress,
+                fqdn,
+                bgpProperties,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<VpnSiteLinkData>.Write(ModelReaderWriterOptions options)

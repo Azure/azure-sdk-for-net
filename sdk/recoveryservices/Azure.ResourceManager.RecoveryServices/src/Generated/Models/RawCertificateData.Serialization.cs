@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServices;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Optional<RecoveryServicesAuthType> authType = default;
-            Optional<byte[]> certificate = default;
+            RecoveryServicesAuthType? authType = default;
+            byte[] certificate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RawCertificateData(Optional.ToNullable(authType), certificate.Value, serializedAdditionalRawData);
+            return new RawCertificateData(authType, certificate, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RawCertificateData>.Write(ModelReaderWriterOptions options)

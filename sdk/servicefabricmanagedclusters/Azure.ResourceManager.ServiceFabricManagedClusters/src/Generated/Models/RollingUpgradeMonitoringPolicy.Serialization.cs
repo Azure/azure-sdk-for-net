@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -122,7 +123,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RollingUpgradeMonitoringPolicy(failureAction, healthCheckWaitDuration, healthCheckStableDuration, healthCheckRetryTimeout, upgradeTimeout, upgradeDomainTimeout, serializedAdditionalRawData);
+            return new RollingUpgradeMonitoringPolicy(
+                failureAction,
+                healthCheckWaitDuration,
+                healthCheckStableDuration,
+                healthCheckRetryTimeout,
+                upgradeTimeout,
+                upgradeDomainTimeout,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RollingUpgradeMonitoringPolicy>.Write(ModelReaderWriterOptions options)

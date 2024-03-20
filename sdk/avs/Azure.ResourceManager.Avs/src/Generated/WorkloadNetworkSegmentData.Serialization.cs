@@ -132,14 +132,14 @@ namespace Azure.ResourceManager.Avs
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<string> connectedGateway = default;
-            Optional<WorkloadNetworkSegmentSubnet> subnet = default;
-            Optional<IReadOnlyList<WorkloadNetworkSegmentPortVif>> portVif = default;
-            Optional<WorkloadNetworkSegmentStatus> status = default;
-            Optional<WorkloadNetworkSegmentProvisioningState> provisioningState = default;
-            Optional<long> revision = default;
+            SystemData systemData = default;
+            string displayName = default;
+            string connectedGateway = default;
+            WorkloadNetworkSegmentSubnet subnet = default;
+            IReadOnlyList<WorkloadNetworkSegmentPortVif> portVif = default;
+            WorkloadNetworkSegmentStatus? status = default;
+            WorkloadNetworkSegmentProvisioningState? provisioningState = default;
+            long? revision = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Avs
                             {
                                 continue;
                             }
-                            subnet = WorkloadNetworkSegmentSubnet.DeserializeWorkloadNetworkSegmentSubnet(property0.Value);
+                            subnet = WorkloadNetworkSegmentSubnet.DeserializeWorkloadNetworkSegmentSubnet(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("portVif"u8))
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Avs
                             List<WorkloadNetworkSegmentPortVif> array = new List<WorkloadNetworkSegmentPortVif>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(WorkloadNetworkSegmentPortVif.DeserializeWorkloadNetworkSegmentPortVif(item));
+                                array.Add(WorkloadNetworkSegmentPortVif.DeserializeWorkloadNetworkSegmentPortVif(item, options));
                             }
                             portVif = array;
                             continue;
@@ -246,7 +246,19 @@ namespace Azure.ResourceManager.Avs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadNetworkSegmentData(id, name, type, systemData.Value, displayName.Value, connectedGateway.Value, subnet.Value, Optional.ToList(portVif), Optional.ToNullable(status), Optional.ToNullable(provisioningState), Optional.ToNullable(revision), serializedAdditionalRawData);
+            return new WorkloadNetworkSegmentData(
+                id,
+                name,
+                type,
+                systemData,
+                displayName,
+                connectedGateway,
+                subnet,
+                portVif ?? new ChangeTrackingList<WorkloadNetworkSegmentPortVif>(),
+                status,
+                provisioningState,
+                revision,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkloadNetworkSegmentData>.Write(ModelReaderWriterOptions options)

@@ -147,20 +147,20 @@ namespace Azure.ResourceManager.Resources
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> applicationResourceId = default;
-            Optional<Guid> publisherTenantId = default;
-            Optional<IList<JitAuthorizationPolicies>> jitAuthorizationPolicies = default;
-            Optional<JitSchedulingPolicy> jitSchedulingPolicy = default;
-            Optional<ResourcesProvisioningState> provisioningState = default;
-            Optional<JitRequestState> jitRequestState = default;
-            Optional<ArmApplicationDetails> createdBy = default;
-            Optional<ArmApplicationDetails> updatedBy = default;
+            SystemData systemData = default;
+            string applicationResourceId = default;
+            Guid? publisherTenantId = default;
+            IList<JitAuthorizationPolicies> jitAuthorizationPolicies = default;
+            JitSchedulingPolicy jitSchedulingPolicy = default;
+            ResourcesProvisioningState? provisioningState = default;
+            JitRequestState? jitRequestState = default;
+            ArmApplicationDetails createdBy = default;
+            ArmApplicationDetails updatedBy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Resources
                             List<JitAuthorizationPolicies> array = new List<JitAuthorizationPolicies>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Models.JitAuthorizationPolicies.DeserializeJitAuthorizationPolicies(item));
+                                array.Add(Models.JitAuthorizationPolicies.DeserializeJitAuthorizationPolicies(item, options));
                             }
                             jitAuthorizationPolicies = array;
                             continue;
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Resources
                             {
                                 continue;
                             }
-                            jitSchedulingPolicy = JitSchedulingPolicy.DeserializeJitSchedulingPolicy(property0.Value);
+                            jitSchedulingPolicy = JitSchedulingPolicy.DeserializeJitSchedulingPolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Resources
                             {
                                 continue;
                             }
-                            createdBy = ArmApplicationDetails.DeserializeArmApplicationDetails(property0.Value);
+                            createdBy = ArmApplicationDetails.DeserializeArmApplicationDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("updatedBy"u8))
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Resources
                             {
                                 continue;
                             }
-                            updatedBy = ArmApplicationDetails.DeserializeArmApplicationDetails(property0.Value);
+                            updatedBy = ArmApplicationDetails.DeserializeArmApplicationDetails(property0.Value, options);
                             continue;
                         }
                     }
@@ -299,7 +299,22 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JitRequestData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, applicationResourceId.Value, Optional.ToNullable(publisherTenantId), Optional.ToList(jitAuthorizationPolicies), jitSchedulingPolicy.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(jitRequestState), createdBy.Value, updatedBy.Value, serializedAdditionalRawData);
+            return new JitRequestData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                applicationResourceId,
+                publisherTenantId,
+                jitAuthorizationPolicies ?? new ChangeTrackingList<JitAuthorizationPolicies>(),
+                jitSchedulingPolicy,
+                provisioningState,
+                jitRequestState,
+                createdBy,
+                updatedBy,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JitRequestData>.Write(ModelReaderWriterOptions options)

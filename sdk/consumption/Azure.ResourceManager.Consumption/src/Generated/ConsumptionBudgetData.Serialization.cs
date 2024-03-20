@@ -141,19 +141,19 @@ namespace Azure.ResourceManager.Consumption
             {
                 return null;
             }
-            Optional<ETag> eTag = default;
+            ETag? eTag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<BudgetCategory> category = default;
-            Optional<decimal> amount = default;
-            Optional<BudgetTimeGrainType> timeGrain = default;
-            Optional<BudgetTimePeriod> timePeriod = default;
-            Optional<ConsumptionBudgetFilter> filter = default;
-            Optional<BudgetCurrentSpend> currentSpend = default;
-            Optional<IDictionary<string, BudgetAssociatedNotification>> notifications = default;
-            Optional<BudgetForecastSpend> forecastSpend = default;
+            SystemData systemData = default;
+            BudgetCategory? category = default;
+            decimal? amount = default;
+            BudgetTimeGrainType? timeGrain = default;
+            BudgetTimePeriod timePeriod = default;
+            ConsumptionBudgetFilter filter = default;
+            BudgetCurrentSpend currentSpend = default;
+            IDictionary<string, BudgetAssociatedNotification> notifications = default;
+            BudgetForecastSpend forecastSpend = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Consumption
                             {
                                 continue;
                             }
-                            timePeriod = BudgetTimePeriod.DeserializeBudgetTimePeriod(property0.Value);
+                            timePeriod = BudgetTimePeriod.DeserializeBudgetTimePeriod(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("filter"u8))
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Consumption
                             {
                                 continue;
                             }
-                            filter = ConsumptionBudgetFilter.DeserializeConsumptionBudgetFilter(property0.Value);
+                            filter = ConsumptionBudgetFilter.DeserializeConsumptionBudgetFilter(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("currentSpend"u8))
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Consumption
                             {
                                 continue;
                             }
-                            currentSpend = BudgetCurrentSpend.DeserializeBudgetCurrentSpend(property0.Value);
+                            currentSpend = BudgetCurrentSpend.DeserializeBudgetCurrentSpend(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("notifications"u8))
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Consumption
                             Dictionary<string, BudgetAssociatedNotification> dictionary = new Dictionary<string, BudgetAssociatedNotification>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, BudgetAssociatedNotification.DeserializeBudgetAssociatedNotification(property1.Value));
+                                dictionary.Add(property1.Name, BudgetAssociatedNotification.DeserializeBudgetAssociatedNotification(property1.Value, options));
                             }
                             notifications = dictionary;
                             continue;
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Consumption
                             {
                                 continue;
                             }
-                            forecastSpend = BudgetForecastSpend.DeserializeBudgetForecastSpend(property0.Value);
+                            forecastSpend = BudgetForecastSpend.DeserializeBudgetForecastSpend(property0.Value, options);
                             continue;
                         }
                     }
@@ -286,7 +286,21 @@ namespace Azure.ResourceManager.Consumption
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionBudgetData(id, name, type, systemData.Value, Optional.ToNullable(category), Optional.ToNullable(amount), Optional.ToNullable(timeGrain), timePeriod.Value, filter.Value, currentSpend.Value, Optional.ToDictionary(notifications), forecastSpend.Value, Optional.ToNullable(eTag), serializedAdditionalRawData);
+            return new ConsumptionBudgetData(
+                id,
+                name,
+                type,
+                systemData,
+                category,
+                amount,
+                timeGrain,
+                timePeriod,
+                filter,
+                currentSpend,
+                notifications ?? new ChangeTrackingDictionary<string, BudgetAssociatedNotification>(),
+                forecastSpend,
+                eTag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionBudgetData>.Write(ModelReaderWriterOptions options)

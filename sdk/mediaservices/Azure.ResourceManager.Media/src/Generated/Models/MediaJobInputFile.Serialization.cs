@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -81,9 +82,9 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<string> filename = default;
+            string filename = default;
             string odataType = default;
-            Optional<IList<TrackDescriptor>> includedTracks = default;
+            IList<TrackDescriptor> includedTracks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<TrackDescriptor> array = new List<TrackDescriptor>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TrackDescriptor.DeserializeTrackDescriptor(item));
+                        array.Add(TrackDescriptor.DeserializeTrackDescriptor(item, options));
                     }
                     includedTracks = array;
                     continue;
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaJobInputFile(odataType, Optional.ToList(includedTracks), serializedAdditionalRawData, filename.Value);
+            return new MediaJobInputFile(odataType, includedTracks ?? new ChangeTrackingList<TrackDescriptor>(), serializedAdditionalRawData, filename);
         }
 
         BinaryData IPersistableModel<MediaJobInputFile>.Write(ModelReaderWriterOptions options)

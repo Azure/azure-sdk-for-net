@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceBus;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
@@ -84,9 +85,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
             {
                 return null;
             }
-            Optional<IList<ServiceBusKeyVaultProperties>> keyVaultProperties = default;
-            Optional<ServiceBusEncryptionKeySource> keySource = default;
-            Optional<bool> requireInfrastructureEncryption = default;
+            IList<ServiceBusKeyVaultProperties> keyVaultProperties = default;
+            ServiceBusEncryptionKeySource? keySource = default;
+            bool? requireInfrastructureEncryption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     List<ServiceBusKeyVaultProperties> array = new List<ServiceBusKeyVaultProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceBusKeyVaultProperties.DeserializeServiceBusKeyVaultProperties(item));
+                        array.Add(ServiceBusKeyVaultProperties.DeserializeServiceBusKeyVaultProperties(item, options));
                     }
                     keyVaultProperties = array;
                     continue;
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceBusEncryption(Optional.ToList(keyVaultProperties), Optional.ToNullable(keySource), Optional.ToNullable(requireInfrastructureEncryption), serializedAdditionalRawData);
+            return new ServiceBusEncryption(keyVaultProperties ?? new ChangeTrackingList<ServiceBusKeyVaultProperties>(), keySource, requireInfrastructureEncryption, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceBusEncryption>.Write(ModelReaderWriterOptions options)

@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Media.VideoAnalyzer.Edge;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -86,7 +87,13 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new FileSink(type, name, inputs, baseDirectoryPath, fileNamePattern, maximumSizeMiB);
+            return new FileSink(
+                type,
+                name,
+                inputs,
+                baseDirectoryPath,
+                fileNamePattern,
+                maximumSizeMiB);
         }
     }
 }

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -90,7 +91,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     List<NodeTypeVaultCertificate> array = new List<NodeTypeVaultCertificate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NodeTypeVaultCertificate.DeserializeNodeTypeVaultCertificate(item));
+                        array.Add(NodeTypeVaultCertificate.DeserializeNodeTypeVaultCertificate(item, options));
                     }
                     vaultCertificates = array;
                     continue;

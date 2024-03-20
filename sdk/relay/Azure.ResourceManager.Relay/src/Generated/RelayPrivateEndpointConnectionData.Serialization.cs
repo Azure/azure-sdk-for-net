@@ -110,14 +110,14 @@ namespace Azure.ResourceManager.Relay
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<WritableSubResource> privateEndpoint = default;
-            Optional<RelayPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
-            Optional<RelayPrivateEndpointConnectionProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            WritableSubResource privateEndpoint = default;
+            RelayPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            RelayPrivateEndpointConnectionProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Relay
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = RelayPrivateLinkServiceConnectionState.DeserializeRelayPrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = RelayPrivateLinkServiceConnectionState.DeserializeRelayPrivateLinkServiceConnectionState(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -200,7 +200,16 @@ namespace Azure.ResourceManager.Relay
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RelayPrivateEndpointConnectionData(id, name, type, systemData.Value, privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(location), serializedAdditionalRawData);
+            return new RelayPrivateEndpointConnectionData(
+                id,
+                name,
+                type,
+                systemData,
+                privateEndpoint,
+                privateLinkServiceConnectionState,
+                provisioningState,
+                location,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RelayPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -75,7 +76,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<WritableSubResource>> networkInterfaces = default;
+            IReadOnlyList<WritableSubResource> networkInterfaces = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleInstanceNetworkProfile(Optional.ToList(networkInterfaces), serializedAdditionalRawData);
+            return new RoleInstanceNetworkProfile(networkInterfaces ?? new ChangeTrackingList<WritableSubResource>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoleInstanceNetworkProfile>.Write(ModelReaderWriterOptions options)

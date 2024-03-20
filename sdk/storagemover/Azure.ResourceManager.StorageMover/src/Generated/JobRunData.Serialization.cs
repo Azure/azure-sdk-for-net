@@ -253,35 +253,35 @@ namespace Azure.ResourceManager.StorageMover
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<JobRunStatus> status = default;
-            Optional<JobRunScanStatus> scanStatus = default;
-            Optional<string> agentName = default;
-            Optional<ResourceIdentifier> agentResourceId = default;
-            Optional<DateTimeOffset> executionStartTime = default;
-            Optional<DateTimeOffset> executionEndTime = default;
-            Optional<DateTimeOffset> lastStatusUpdate = default;
-            Optional<long> itemsScanned = default;
-            Optional<long> itemsExcluded = default;
-            Optional<long> itemsUnsupported = default;
-            Optional<long> itemsNoTransferNeeded = default;
-            Optional<long> itemsFailed = default;
-            Optional<long> itemsTransferred = default;
-            Optional<long> bytesScanned = default;
-            Optional<long> bytesExcluded = default;
-            Optional<long> bytesUnsupported = default;
-            Optional<long> bytesNoTransferNeeded = default;
-            Optional<long> bytesFailed = default;
-            Optional<long> bytesTransferred = default;
-            Optional<string> sourceName = default;
-            Optional<ResourceIdentifier> sourceResourceId = default;
-            Optional<BinaryData> sourceProperties = default;
-            Optional<string> targetName = default;
-            Optional<ResourceIdentifier> targetResourceId = default;
-            Optional<BinaryData> targetProperties = default;
-            Optional<BinaryData> jobDefinitionProperties = default;
-            Optional<JobRunError> error = default;
-            Optional<StorageMoverProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            JobRunStatus? status = default;
+            JobRunScanStatus? scanStatus = default;
+            string agentName = default;
+            ResourceIdentifier agentResourceId = default;
+            DateTimeOffset? executionStartTime = default;
+            DateTimeOffset? executionEndTime = default;
+            DateTimeOffset? lastStatusUpdate = default;
+            long? itemsScanned = default;
+            long? itemsExcluded = default;
+            long? itemsUnsupported = default;
+            long? itemsNoTransferNeeded = default;
+            long? itemsFailed = default;
+            long? itemsTransferred = default;
+            long? bytesScanned = default;
+            long? bytesExcluded = default;
+            long? bytesUnsupported = default;
+            long? bytesNoTransferNeeded = default;
+            long? bytesFailed = default;
+            long? bytesTransferred = default;
+            string sourceName = default;
+            ResourceIdentifier sourceResourceId = default;
+            BinaryData sourceProperties = default;
+            string targetName = default;
+            ResourceIdentifier targetResourceId = default;
+            BinaryData targetProperties = default;
+            BinaryData jobDefinitionProperties = default;
+            JobRunError error = default;
+            StorageMoverProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.StorageMover
                             {
                                 continue;
                             }
-                            error = JobRunError.DeserializeJobRunError(property0.Value);
+                            error = JobRunError.DeserializeJobRunError(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -568,7 +568,40 @@ namespace Azure.ResourceManager.StorageMover
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JobRunData(id, name, type, systemData.Value, Optional.ToNullable(status), Optional.ToNullable(scanStatus), agentName.Value, agentResourceId.Value, Optional.ToNullable(executionStartTime), Optional.ToNullable(executionEndTime), Optional.ToNullable(lastStatusUpdate), Optional.ToNullable(itemsScanned), Optional.ToNullable(itemsExcluded), Optional.ToNullable(itemsUnsupported), Optional.ToNullable(itemsNoTransferNeeded), Optional.ToNullable(itemsFailed), Optional.ToNullable(itemsTransferred), Optional.ToNullable(bytesScanned), Optional.ToNullable(bytesExcluded), Optional.ToNullable(bytesUnsupported), Optional.ToNullable(bytesNoTransferNeeded), Optional.ToNullable(bytesFailed), Optional.ToNullable(bytesTransferred), sourceName.Value, sourceResourceId.Value, sourceProperties.Value, targetName.Value, targetResourceId.Value, targetProperties.Value, jobDefinitionProperties.Value, error.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new JobRunData(
+                id,
+                name,
+                type,
+                systemData,
+                status,
+                scanStatus,
+                agentName,
+                agentResourceId,
+                executionStartTime,
+                executionEndTime,
+                lastStatusUpdate,
+                itemsScanned,
+                itemsExcluded,
+                itemsUnsupported,
+                itemsNoTransferNeeded,
+                itemsFailed,
+                itemsTransferred,
+                bytesScanned,
+                bytesExcluded,
+                bytesUnsupported,
+                bytesNoTransferNeeded,
+                bytesFailed,
+                bytesTransferred,
+                sourceName,
+                sourceResourceId,
+                sourceProperties,
+                targetName,
+                targetResourceId,
+                targetProperties,
+                jobDefinitionProperties,
+                error,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JobRunData>.Write(ModelReaderWriterOptions options)

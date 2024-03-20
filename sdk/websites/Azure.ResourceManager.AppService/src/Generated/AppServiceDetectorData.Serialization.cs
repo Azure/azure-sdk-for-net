@@ -129,16 +129,16 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DetectorInfo> metadata = default;
-            Optional<IList<DiagnosticDataset>> dataset = default;
-            Optional<AppServiceStatusInfo> status = default;
-            Optional<IList<DataProviderMetadata>> dataProvidersMetadata = default;
-            Optional<QueryUtterancesResults> suggestedUtterances = default;
+            SystemData systemData = default;
+            DetectorInfo metadata = default;
+            IList<DiagnosticDataset> dataset = default;
+            AppServiceStatusInfo status = default;
+            IList<DataProviderMetadata> dataProvidersMetadata = default;
+            QueryUtterancesResults suggestedUtterances = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            metadata = DetectorInfo.DeserializeDetectorInfo(property0.Value);
+                            metadata = DetectorInfo.DeserializeDetectorInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("dataset"u8))
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.AppService
                             List<DiagnosticDataset> array = new List<DiagnosticDataset>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DiagnosticDataset.DeserializeDiagnosticDataset(item));
+                                array.Add(DiagnosticDataset.DeserializeDiagnosticDataset(item, options));
                             }
                             dataset = array;
                             continue;
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            status = AppServiceStatusInfo.DeserializeAppServiceStatusInfo(property0.Value);
+                            status = AppServiceStatusInfo.DeserializeAppServiceStatusInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("dataProvidersMetadata"u8))
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.AppService
                             List<DataProviderMetadata> array = new List<DataProviderMetadata>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataProviderMetadata.DeserializeDataProviderMetadata(item));
+                                array.Add(DataProviderMetadata.DeserializeDataProviderMetadata(item, options));
                             }
                             dataProvidersMetadata = array;
                             continue;
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            suggestedUtterances = QueryUtterancesResults.DeserializeQueryUtterancesResults(property0.Value);
+                            suggestedUtterances = QueryUtterancesResults.DeserializeQueryUtterancesResults(property0.Value, options);
                             continue;
                         }
                     }
@@ -245,7 +245,18 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceDetectorData(id, name, type, systemData.Value, metadata.Value, Optional.ToList(dataset), status.Value, Optional.ToList(dataProvidersMetadata), suggestedUtterances.Value, kind.Value, serializedAdditionalRawData);
+            return new AppServiceDetectorData(
+                id,
+                name,
+                type,
+                systemData,
+                metadata,
+                dataset ?? new ChangeTrackingList<DiagnosticDataset>(),
+                status,
+                dataProvidersMetadata ?? new ChangeTrackingList<DataProviderMetadata>(),
+                suggestedUtterances,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceDetectorData>.Write(ModelReaderWriterOptions options)

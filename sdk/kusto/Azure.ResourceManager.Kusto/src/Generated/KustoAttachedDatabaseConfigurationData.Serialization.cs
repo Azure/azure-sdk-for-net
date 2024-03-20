@@ -139,19 +139,19 @@ namespace Azure.ResourceManager.Kusto
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<KustoProvisioningState> provisioningState = default;
-            Optional<string> databaseName = default;
-            Optional<ResourceIdentifier> clusterResourceId = default;
-            Optional<IReadOnlyList<string>> attachedDatabaseNames = default;
-            Optional<KustoDatabaseDefaultPrincipalsModificationKind> defaultPrincipalsModificationKind = default;
-            Optional<KustoDatabaseTableLevelSharingProperties> tableLevelSharingProperties = default;
-            Optional<string> databaseNameOverride = default;
-            Optional<string> databaseNamePrefix = default;
+            SystemData systemData = default;
+            KustoProvisioningState? provisioningState = default;
+            string databaseName = default;
+            ResourceIdentifier clusterResourceId = default;
+            IReadOnlyList<string> attachedDatabaseNames = default;
+            KustoDatabaseDefaultPrincipalsModificationKind? defaultPrincipalsModificationKind = default;
+            KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties = default;
+            string databaseNameOverride = default;
+            string databaseNamePrefix = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Kusto
                             {
                                 continue;
                             }
-                            tableLevelSharingProperties = KustoDatabaseTableLevelSharingProperties.DeserializeKustoDatabaseTableLevelSharingProperties(property0.Value);
+                            tableLevelSharingProperties = KustoDatabaseTableLevelSharingProperties.DeserializeKustoDatabaseTableLevelSharingProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("databaseNameOverride"u8))
@@ -272,7 +272,21 @@ namespace Azure.ResourceManager.Kusto
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustoAttachedDatabaseConfigurationData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(provisioningState), databaseName.Value, clusterResourceId.Value, Optional.ToList(attachedDatabaseNames), Optional.ToNullable(defaultPrincipalsModificationKind), tableLevelSharingProperties.Value, databaseNameOverride.Value, databaseNamePrefix.Value, serializedAdditionalRawData);
+            return new KustoAttachedDatabaseConfigurationData(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                provisioningState,
+                databaseName,
+                clusterResourceId,
+                attachedDatabaseNames ?? new ChangeTrackingList<string>(),
+                defaultPrincipalsModificationKind,
+                tableLevelSharingProperties,
+                databaseNameOverride,
+                databaseNamePrefix,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KustoAttachedDatabaseConfigurationData>.Write(ModelReaderWriterOptions options)

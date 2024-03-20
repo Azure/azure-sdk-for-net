@@ -116,12 +116,12 @@ namespace Azure.ResourceManager.Storage
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> storageAccountResourceId = default;
-            Optional<AzureLocation> location = default;
-            Optional<string> restoreReference = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> deletionTime = default;
+            SystemData systemData = default;
+            ResourceIdentifier storageAccountResourceId = default;
+            AzureLocation? location = default;
+            string restoreReference = default;
+            DateTimeOffset? creationTime = default;
+            DateTimeOffset? deletionTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -209,7 +209,17 @@ namespace Azure.ResourceManager.Storage
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeletedAccountData(id, name, type, systemData.Value, storageAccountResourceId.Value, Optional.ToNullable(location), restoreReference.Value, Optional.ToNullable(creationTime), Optional.ToNullable(deletionTime), serializedAdditionalRawData);
+            return new DeletedAccountData(
+                id,
+                name,
+                type,
+                systemData,
+                storageAccountResourceId,
+                location,
+                restoreReference,
+                creationTime,
+                deletionTime,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeletedAccountData>.Write(ModelReaderWriterOptions options)

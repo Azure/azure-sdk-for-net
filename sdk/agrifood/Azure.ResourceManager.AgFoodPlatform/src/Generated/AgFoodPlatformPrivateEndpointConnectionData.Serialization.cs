@@ -108,10 +108,10 @@ namespace Azure.ResourceManager.AgFoodPlatform
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SubResource> privateEndpoint = default;
-            Optional<AgFoodPlatformPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
-            Optional<AgFoodPlatformPrivateEndpointConnectionProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            SubResource privateEndpoint = default;
+            AgFoodPlatformPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            AgFoodPlatformPrivateEndpointConnectionProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = AgFoodPlatformPrivateLinkServiceConnectionState.DeserializeAgFoodPlatformPrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = AgFoodPlatformPrivateLinkServiceConnectionState.DeserializeAgFoodPlatformPrivateLinkServiceConnectionState(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -185,7 +185,15 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AgFoodPlatformPrivateEndpointConnectionData(id, name, type, systemData.Value, privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new AgFoodPlatformPrivateEndpointConnectionData(
+                id,
+                name,
+                type,
+                systemData,
+                privateEndpoint,
+                privateLinkServiceConnectionState,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AgFoodPlatformPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options)

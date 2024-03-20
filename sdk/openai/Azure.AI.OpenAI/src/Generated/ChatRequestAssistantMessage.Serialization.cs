@@ -97,9 +97,9 @@ namespace Azure.AI.OpenAI
                 return null;
             }
             string content = default;
-            Optional<string> name = default;
-            Optional<IList<ChatCompletionsToolCall>> toolCalls = default;
-            Optional<FunctionCall> functionCall = default;
+            string name = default;
+            IList<ChatCompletionsToolCall> toolCalls = default;
+            FunctionCall functionCall = default;
             ChatRole role = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -129,7 +129,7 @@ namespace Azure.AI.OpenAI
                     List<ChatCompletionsToolCall> array = new List<ChatCompletionsToolCall>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChatCompletionsToolCall.DeserializeChatCompletionsToolCall(item));
+                        array.Add(ChatCompletionsToolCall.DeserializeChatCompletionsToolCall(item, options));
                     }
                     toolCalls = array;
                     continue;
@@ -140,7 +140,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    functionCall = FunctionCall.DeserializeFunctionCall(property.Value);
+                    functionCall = FunctionCall.DeserializeFunctionCall(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("role"u8))
@@ -154,7 +154,13 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChatRequestAssistantMessage(role, serializedAdditionalRawData, content, name.Value, Optional.ToList(toolCalls), functionCall.Value);
+            return new ChatRequestAssistantMessage(
+                role,
+                serializedAdditionalRawData,
+                content,
+                name,
+                toolCalls ?? new ChangeTrackingList<ChatCompletionsToolCall>(),
+                functionCall);
         }
 
         BinaryData IPersistableModel<ChatRequestAssistantMessage>.Write(ModelReaderWriterOptions options)

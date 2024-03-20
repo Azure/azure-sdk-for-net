@@ -83,8 +83,8 @@ namespace Azure.Communication.Messages
             {
                 return null;
             }
-            Optional<string> locationName = default;
-            Optional<string> address = default;
+            string locationName = default;
+            string address = default;
             double latitude = default;
             double longitude = default;
             string name = default;
@@ -129,7 +129,14 @@ namespace Azure.Communication.Messages
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MessageTemplateLocation(name, kind, serializedAdditionalRawData, locationName.Value, address.Value, latitude, longitude);
+            return new MessageTemplateLocation(
+                name,
+                kind,
+                serializedAdditionalRawData,
+                locationName,
+                address,
+                latitude,
+                longitude);
         }
 
         BinaryData IPersistableModel<MessageTemplateLocation>.Write(ModelReaderWriterOptions options)

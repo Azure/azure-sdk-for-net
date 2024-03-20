@@ -26,11 +26,8 @@ namespace Azure.ResourceManager.DevSpaces.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("instanceType"u8);
-                writer.WriteStringValue(InstanceType);
-            }
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -58,7 +55,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownOrchestratorSpecificConnectionDetails(document.RootElement, options);
+            return DeserializeOrchestratorSpecificConnectionDetails(document.RootElement, options);
         }
 
         internal static UnknownOrchestratorSpecificConnectionDetails DeserializeUnknownOrchestratorSpecificConnectionDetails(JsonElement element, ModelReaderWriterOptions options = null)
@@ -110,7 +107,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownOrchestratorSpecificConnectionDetails(document.RootElement, options);
+                        return DeserializeOrchestratorSpecificConnectionDetails(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(OrchestratorSpecificConnectionDetails)} does not support '{options.Format}' format.");

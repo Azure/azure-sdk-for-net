@@ -152,22 +152,22 @@ namespace Azure.ResourceManager.LargeInstance
             {
                 return null;
             }
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            IReadOnlyDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<LargeInstanceHardwareProfile> hardwareProfile = default;
-            Optional<LargeInstanceStorageProfile> storageProfile = default;
-            Optional<LargeInstanceOSProfile> osProfile = default;
-            Optional<LargeInstanceNetworkProfile> networkProfile = default;
-            Optional<string> azureLargeInstanceId = default;
-            Optional<LargeInstancePowerState> powerState = default;
-            Optional<string> proximityPlacementGroup = default;
-            Optional<string> hwRevision = default;
-            Optional<string> partnerNodeId = default;
-            Optional<LargeInstanceProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            LargeInstanceHardwareProfile hardwareProfile = default;
+            LargeInstanceStorageProfile storageProfile = default;
+            LargeInstanceOSProfile osProfile = default;
+            LargeInstanceNetworkProfile networkProfile = default;
+            string azureLargeInstanceId = default;
+            LargeInstancePowerState? powerState = default;
+            string proximityPlacementGroup = default;
+            string hwRevision = default;
+            string partnerNodeId = default;
+            LargeInstanceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.LargeInstance
                             {
                                 continue;
                             }
-                            hardwareProfile = LargeInstanceHardwareProfile.DeserializeLargeInstanceHardwareProfile(property0.Value);
+                            hardwareProfile = LargeInstanceHardwareProfile.DeserializeLargeInstanceHardwareProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("storageProfile"u8))
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.LargeInstance
                             {
                                 continue;
                             }
-                            storageProfile = LargeInstanceStorageProfile.DeserializeLargeInstanceStorageProfile(property0.Value);
+                            storageProfile = LargeInstanceStorageProfile.DeserializeLargeInstanceStorageProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("osProfile"u8))
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.LargeInstance
                             {
                                 continue;
                             }
-                            osProfile = LargeInstanceOSProfile.DeserializeLargeInstanceOSProfile(property0.Value);
+                            osProfile = LargeInstanceOSProfile.DeserializeLargeInstanceOSProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("networkProfile"u8))
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.LargeInstance
                             {
                                 continue;
                             }
-                            networkProfile = LargeInstanceNetworkProfile.DeserializeLargeInstanceNetworkProfile(property0.Value);
+                            networkProfile = LargeInstanceNetworkProfile.DeserializeLargeInstanceNetworkProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("azureLargeInstanceId"u8))
@@ -307,7 +307,24 @@ namespace Azure.ResourceManager.LargeInstance
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LargeInstanceData(id, name, type, systemData.Value, hardwareProfile.Value, storageProfile.Value, osProfile.Value, networkProfile.Value, azureLargeInstanceId.Value, Optional.ToNullable(powerState), proximityPlacementGroup.Value, hwRevision.Value, partnerNodeId.Value, Optional.ToNullable(provisioningState), Optional.ToDictionary(tags), location, serializedAdditionalRawData);
+            return new LargeInstanceData(
+                id,
+                name,
+                type,
+                systemData,
+                hardwareProfile,
+                storageProfile,
+                osProfile,
+                networkProfile,
+                azureLargeInstanceId,
+                powerState,
+                proximityPlacementGroup,
+                hwRevision,
+                partnerNodeId,
+                provisioningState,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LargeInstanceData>.Write(ModelReaderWriterOptions options)

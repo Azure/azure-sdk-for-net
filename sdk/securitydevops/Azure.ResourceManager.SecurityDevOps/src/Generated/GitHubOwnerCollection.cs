@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentNullException"> <paramref name="gitHubOwnerName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<GitHubOwnerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string gitHubOwnerName, GitHubOwnerData data, CancellationToken cancellationToken = default)
         {
-            if (gitHubOwnerName == null)
-            {
-                throw new ArgumentNullException(nameof(gitHubOwnerName));
-            }
-            if (gitHubOwnerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(gitHubOwnerName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(gitHubOwnerName, nameof(gitHubOwnerName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _gitHubOwnerClientDiagnostics.CreateScope("GitHubOwnerCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentNullException"> <paramref name="gitHubOwnerName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<GitHubOwnerResource> CreateOrUpdate(WaitUntil waitUntil, string gitHubOwnerName, GitHubOwnerData data, CancellationToken cancellationToken = default)
         {
-            if (gitHubOwnerName == null)
-            {
-                throw new ArgumentNullException(nameof(gitHubOwnerName));
-            }
-            if (gitHubOwnerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(gitHubOwnerName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(gitHubOwnerName, nameof(gitHubOwnerName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _gitHubOwnerClientDiagnostics.CreateScope("GitHubOwnerCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentNullException"> <paramref name="gitHubOwnerName"/> is null. </exception>
         public virtual async Task<Response<GitHubOwnerResource>> GetAsync(string gitHubOwnerName, CancellationToken cancellationToken = default)
         {
-            if (gitHubOwnerName == null)
-            {
-                throw new ArgumentNullException(nameof(gitHubOwnerName));
-            }
-            if (gitHubOwnerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(gitHubOwnerName));
-            }
+            Argument.AssertNotNullOrEmpty(gitHubOwnerName, nameof(gitHubOwnerName));
 
             using var scope = _gitHubOwnerClientDiagnostics.CreateScope("GitHubOwnerCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentNullException"> <paramref name="gitHubOwnerName"/> is null. </exception>
         public virtual Response<GitHubOwnerResource> Get(string gitHubOwnerName, CancellationToken cancellationToken = default)
         {
-            if (gitHubOwnerName == null)
-            {
-                throw new ArgumentNullException(nameof(gitHubOwnerName));
-            }
-            if (gitHubOwnerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(gitHubOwnerName));
-            }
+            Argument.AssertNotNullOrEmpty(gitHubOwnerName, nameof(gitHubOwnerName));
 
             using var scope = _gitHubOwnerClientDiagnostics.CreateScope("GitHubOwnerCollection.Get");
             scope.Start();
@@ -362,14 +328,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentNullException"> <paramref name="gitHubOwnerName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string gitHubOwnerName, CancellationToken cancellationToken = default)
         {
-            if (gitHubOwnerName == null)
-            {
-                throw new ArgumentNullException(nameof(gitHubOwnerName));
-            }
-            if (gitHubOwnerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(gitHubOwnerName));
-            }
+            Argument.AssertNotNullOrEmpty(gitHubOwnerName, nameof(gitHubOwnerName));
 
             using var scope = _gitHubOwnerClientDiagnostics.CreateScope("GitHubOwnerCollection.Exists");
             scope.Start();
@@ -412,14 +371,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentNullException"> <paramref name="gitHubOwnerName"/> is null. </exception>
         public virtual Response<bool> Exists(string gitHubOwnerName, CancellationToken cancellationToken = default)
         {
-            if (gitHubOwnerName == null)
-            {
-                throw new ArgumentNullException(nameof(gitHubOwnerName));
-            }
-            if (gitHubOwnerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(gitHubOwnerName));
-            }
+            Argument.AssertNotNullOrEmpty(gitHubOwnerName, nameof(gitHubOwnerName));
 
             using var scope = _gitHubOwnerClientDiagnostics.CreateScope("GitHubOwnerCollection.Exists");
             scope.Start();
@@ -462,14 +414,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentNullException"> <paramref name="gitHubOwnerName"/> is null. </exception>
         public virtual async Task<NullableResponse<GitHubOwnerResource>> GetIfExistsAsync(string gitHubOwnerName, CancellationToken cancellationToken = default)
         {
-            if (gitHubOwnerName == null)
-            {
-                throw new ArgumentNullException(nameof(gitHubOwnerName));
-            }
-            if (gitHubOwnerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(gitHubOwnerName));
-            }
+            Argument.AssertNotNullOrEmpty(gitHubOwnerName, nameof(gitHubOwnerName));
 
             using var scope = _gitHubOwnerClientDiagnostics.CreateScope("GitHubOwnerCollection.GetIfExists");
             scope.Start();
@@ -514,14 +459,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentNullException"> <paramref name="gitHubOwnerName"/> is null. </exception>
         public virtual NullableResponse<GitHubOwnerResource> GetIfExists(string gitHubOwnerName, CancellationToken cancellationToken = default)
         {
-            if (gitHubOwnerName == null)
-            {
-                throw new ArgumentNullException(nameof(gitHubOwnerName));
-            }
-            if (gitHubOwnerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(gitHubOwnerName));
-            }
+            Argument.AssertNotNullOrEmpty(gitHubOwnerName, nameof(gitHubOwnerName));
 
             using var scope = _gitHubOwnerClientDiagnostics.CreateScope("GitHubOwnerCollection.GetIfExists");
             scope.Start();

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<string> connectorId = default;
-            Optional<IList<string>> dataTypes = default;
+            string connectorId = default;
+            IList<string> dataTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityMLAnalyticsSettingsDataSource(connectorId.Value, Optional.ToList(dataTypes), serializedAdditionalRawData);
+            return new SecurityMLAnalyticsSettingsDataSource(connectorId, dataTypes ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityMLAnalyticsSettingsDataSource>.Write(ModelReaderWriterOptions options)

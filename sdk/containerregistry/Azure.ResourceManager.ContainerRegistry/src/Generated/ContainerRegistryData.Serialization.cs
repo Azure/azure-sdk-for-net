@@ -190,34 +190,34 @@ namespace Azure.ResourceManager.ContainerRegistry
                 return null;
             }
             ContainerRegistrySku sku = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> loginServer = default;
-            Optional<DateTimeOffset> creationDate = default;
-            Optional<ContainerRegistryProvisioningState> provisioningState = default;
-            Optional<ContainerRegistryResourceStatus> status = default;
-            Optional<bool> adminUserEnabled = default;
-            Optional<ContainerRegistryNetworkRuleSet> networkRuleSet = default;
-            Optional<ContainerRegistryPolicies> policies = default;
-            Optional<ContainerRegistryEncryption> encryption = default;
-            Optional<bool> dataEndpointEnabled = default;
-            Optional<IReadOnlyList<string>> dataEndpointHostNames = default;
-            Optional<IReadOnlyList<ContainerRegistryPrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Optional<ContainerRegistryPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<ContainerRegistryNetworkRuleBypassOption> networkRuleBypassOptions = default;
-            Optional<ContainerRegistryZoneRedundancy> zoneRedundancy = default;
+            SystemData systemData = default;
+            string loginServer = default;
+            DateTimeOffset? creationDate = default;
+            ContainerRegistryProvisioningState? provisioningState = default;
+            ContainerRegistryResourceStatus status = default;
+            bool? adminUserEnabled = default;
+            ContainerRegistryNetworkRuleSet networkRuleSet = default;
+            ContainerRegistryPolicies policies = default;
+            ContainerRegistryEncryption encryption = default;
+            bool? dataEndpointEnabled = default;
+            IReadOnlyList<string> dataEndpointHostNames = default;
+            IReadOnlyList<ContainerRegistryPrivateEndpointConnectionData> privateEndpointConnections = default;
+            ContainerRegistryPublicNetworkAccess? publicNetworkAccess = default;
+            ContainerRegistryNetworkRuleBypassOption? networkRuleBypassOptions = default;
+            ContainerRegistryZoneRedundancy? zoneRedundancy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = ContainerRegistrySku.DeserializeContainerRegistrySku(property.Value);
+                    sku = ContainerRegistrySku.DeserializeContainerRegistrySku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             {
                                 continue;
                             }
-                            status = ContainerRegistryResourceStatus.DeserializeContainerRegistryResourceStatus(property0.Value);
+                            status = ContainerRegistryResourceStatus.DeserializeContainerRegistryResourceStatus(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("adminUserEnabled"u8))
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             {
                                 continue;
                             }
-                            networkRuleSet = ContainerRegistryNetworkRuleSet.DeserializeContainerRegistryNetworkRuleSet(property0.Value);
+                            networkRuleSet = ContainerRegistryNetworkRuleSet.DeserializeContainerRegistryNetworkRuleSet(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("policies"u8))
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             {
                                 continue;
                             }
-                            policies = ContainerRegistryPolicies.DeserializeContainerRegistryPolicies(property0.Value);
+                            policies = ContainerRegistryPolicies.DeserializeContainerRegistryPolicies(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("encryption"u8))
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             {
                                 continue;
                             }
-                            encryption = ContainerRegistryEncryption.DeserializeContainerRegistryEncryption(property0.Value);
+                            encryption = ContainerRegistryEncryption.DeserializeContainerRegistryEncryption(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("dataEndpointEnabled"u8))
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             List<ContainerRegistryPrivateEndpointConnectionData> array = new List<ContainerRegistryPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContainerRegistryPrivateEndpointConnectionData.DeserializeContainerRegistryPrivateEndpointConnectionData(item));
+                                array.Add(ContainerRegistryPrivateEndpointConnectionData.DeserializeContainerRegistryPrivateEndpointConnectionData(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -422,7 +422,30 @@ namespace Azure.ResourceManager.ContainerRegistry
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, identity, loginServer.Value, Optional.ToNullable(creationDate), Optional.ToNullable(provisioningState), status.Value, Optional.ToNullable(adminUserEnabled), networkRuleSet.Value, policies.Value, encryption.Value, Optional.ToNullable(dataEndpointEnabled), Optional.ToList(dataEndpointHostNames), Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(networkRuleBypassOptions), Optional.ToNullable(zoneRedundancy), serializedAdditionalRawData);
+            return new ContainerRegistryData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                identity,
+                loginServer,
+                creationDate,
+                provisioningState,
+                status,
+                adminUserEnabled,
+                networkRuleSet,
+                policies,
+                encryption,
+                dataEndpointEnabled,
+                dataEndpointHostNames ?? new ChangeTrackingList<string>(),
+                privateEndpointConnections ?? new ChangeTrackingList<ContainerRegistryPrivateEndpointConnectionData>(),
+                publicNetworkAccess,
+                networkRuleBypassOptions,
+                zoneRedundancy,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryData>.Write(ModelReaderWriterOptions options)

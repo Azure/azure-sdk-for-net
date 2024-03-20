@@ -52,10 +52,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal LogAnalyticsQueryPackQueryListResult(IEnumerable<LogAnalyticsQueryData> value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }

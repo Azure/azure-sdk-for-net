@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.MetricsAdvisor;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -59,11 +60,11 @@ namespace Azure.AI.MetricsAdvisor.Models
                 return null;
             }
             string endpoint = default;
-            Optional<string> username = default;
-            Optional<string> password = default;
-            Optional<IDictionary<string, string>> headers = default;
-            Optional<string> certificateKey = default;
-            Optional<string> certificatePassword = default;
+            string username = default;
+            string password = default;
+            IDictionary<string, string> headers = default;
+            string certificateKey = default;
+            string certificatePassword = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("endpoint"u8))
@@ -106,7 +107,13 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new WebhookHookParameter(endpoint, username.Value, password.Value, Optional.ToDictionary(headers), certificateKey.Value, certificatePassword.Value);
+            return new WebhookHookParameter(
+                endpoint,
+                username,
+                password,
+                headers ?? new ChangeTrackingDictionary<string, string>(),
+                certificateKey,
+                certificatePassword);
         }
     }
 }

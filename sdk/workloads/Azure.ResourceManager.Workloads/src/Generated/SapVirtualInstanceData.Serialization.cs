@@ -143,22 +143,22 @@ namespace Azure.ResourceManager.Workloads
             {
                 return null;
             }
-            Optional<UserAssignedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            UserAssignedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             SapEnvironmentType environment = default;
             SapProductType sapProduct = default;
             SapConfiguration configuration = default;
-            Optional<ManagedRGConfiguration> managedResourceGroupConfiguration = default;
-            Optional<SapVirtualInstanceStatus> status = default;
-            Optional<SapHealthState> health = default;
-            Optional<SapVirtualInstanceState> state = default;
-            Optional<SapVirtualInstanceProvisioningState> provisioningState = default;
-            Optional<SapVirtualInstanceError> errors = default;
+            ManagedRGConfiguration managedResourceGroupConfiguration = default;
+            SapVirtualInstanceStatus? status = default;
+            SapHealthState? health = default;
+            SapVirtualInstanceState? state = default;
+            SapVirtualInstanceProvisioningState? provisioningState = default;
+            SapVirtualInstanceError errors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Workloads
                     {
                         continue;
                     }
-                    identity = UserAssignedServiceIdentity.DeserializeUserAssignedServiceIdentity(property.Value);
+                    identity = UserAssignedServiceIdentity.DeserializeUserAssignedServiceIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Workloads
                         }
                         if (property0.NameEquals("configuration"u8))
                         {
-                            configuration = SapConfiguration.DeserializeSapConfiguration(property0.Value);
+                            configuration = SapConfiguration.DeserializeSapConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("managedResourceGroupConfiguration"u8))
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Workloads
                             {
                                 continue;
                             }
-                            managedResourceGroupConfiguration = ManagedRGConfiguration.DeserializeManagedRGConfiguration(property0.Value);
+                            managedResourceGroupConfiguration = ManagedRGConfiguration.DeserializeManagedRGConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("status"u8))
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Workloads
                             {
                                 continue;
                             }
-                            errors = SapVirtualInstanceError.DeserializeSapVirtualInstanceError(property0.Value);
+                            errors = SapVirtualInstanceError.DeserializeSapVirtualInstanceError(property0.Value, options);
                             continue;
                         }
                     }
@@ -302,7 +302,24 @@ namespace Azure.ResourceManager.Workloads
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SapVirtualInstanceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity.Value, environment, sapProduct, configuration, managedResourceGroupConfiguration.Value, Optional.ToNullable(status), Optional.ToNullable(health), Optional.ToNullable(state), Optional.ToNullable(provisioningState), errors.Value, serializedAdditionalRawData);
+            return new SapVirtualInstanceData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                environment,
+                sapProduct,
+                configuration,
+                managedResourceGroupConfiguration,
+                status,
+                health,
+                state,
+                provisioningState,
+                errors,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SapVirtualInstanceData>.Write(ModelReaderWriterOptions options)

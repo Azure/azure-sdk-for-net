@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 return null;
             }
-            Optional<AppPlatformServiceProperties> properties = default;
-            Optional<AppPlatformSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            AppPlatformServiceProperties properties = default;
+            AppPlatformSku sku = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AppPlatform
                     {
                         continue;
                     }
-                    properties = AppPlatformServiceProperties.DeserializeAppPlatformServiceProperties(property.Value);
+                    properties = AppPlatformServiceProperties.DeserializeAppPlatformServiceProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppPlatform
                     {
                         continue;
                     }
-                    sku = AppPlatformSku.DeserializeAppPlatformSku(property.Value);
+                    sku = AppPlatformSku.DeserializeAppPlatformSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -188,7 +188,16 @@ namespace Azure.ResourceManager.AppPlatform
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value, sku.Value, serializedAdditionalRawData);
+            return new AppPlatformServiceData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                sku,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformServiceData>.Write(ModelReaderWriterOptions options)

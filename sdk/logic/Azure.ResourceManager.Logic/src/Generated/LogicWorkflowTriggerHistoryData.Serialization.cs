@@ -159,19 +159,19 @@ namespace Azure.ResourceManager.Logic
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<DateTimeOffset> scheduledTime = default;
-            Optional<LogicWorkflowStatus> status = default;
-            Optional<string> code = default;
-            Optional<BinaryData> error = default;
-            Optional<Guid> trackingId = default;
-            Optional<Correlation> correlation = default;
-            Optional<LogicContentLink> inputsLink = default;
-            Optional<LogicContentLink> outputsLink = default;
-            Optional<bool> fired = default;
-            Optional<LogicResourceReference> run = default;
+            SystemData systemData = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            DateTimeOffset? scheduledTime = default;
+            LogicWorkflowStatus? status = default;
+            string code = default;
+            BinaryData error = default;
+            Guid? trackingId = default;
+            Correlation correlation = default;
+            LogicContentLink inputsLink = default;
+            LogicContentLink outputsLink = default;
+            bool? fired = default;
+            LogicResourceReference run = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            correlation = Correlation.DeserializeCorrelation(property0.Value);
+                            correlation = Correlation.DeserializeCorrelation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("inputsLink"u8))
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            inputsLink = LogicContentLink.DeserializeLogicContentLink(property0.Value);
+                            inputsLink = LogicContentLink.DeserializeLogicContentLink(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("outputsLink"u8))
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            outputsLink = LogicContentLink.DeserializeLogicContentLink(property0.Value);
+                            outputsLink = LogicContentLink.DeserializeLogicContentLink(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("fired"u8))
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Logic
                             {
                                 continue;
                             }
-                            run = LogicResourceReference.DeserializeLogicResourceReference(property0.Value);
+                            run = LogicResourceReference.DeserializeLogicResourceReference(property0.Value, options);
                             continue;
                         }
                     }
@@ -322,7 +322,24 @@ namespace Azure.ResourceManager.Logic
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicWorkflowTriggerHistoryData(id, name, type, systemData.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(scheduledTime), Optional.ToNullable(status), code.Value, error.Value, Optional.ToNullable(trackingId), correlation.Value, inputsLink.Value, outputsLink.Value, Optional.ToNullable(fired), run.Value, serializedAdditionalRawData);
+            return new LogicWorkflowTriggerHistoryData(
+                id,
+                name,
+                type,
+                systemData,
+                startTime,
+                endTime,
+                scheduledTime,
+                status,
+                code,
+                error,
+                trackingId,
+                correlation,
+                inputsLink,
+                outputsLink,
+                fired,
+                run,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicWorkflowTriggerHistoryData>.Write(ModelReaderWriterOptions options)

@@ -102,9 +102,9 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<HybridComputeSettingsProperties> hybridComputeSettings = default;
-            Optional<AuthenticationDetailsProperties> authenticationDetails = default;
+            SystemData systemData = default;
+            HybridComputeSettingsProperties hybridComputeSettings = default;
+            AuthenticationDetailsProperties authenticationDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            hybridComputeSettings = HybridComputeSettingsProperties.DeserializeHybridComputeSettingsProperties(property0.Value);
+                            hybridComputeSettings = HybridComputeSettingsProperties.DeserializeHybridComputeSettingsProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("authenticationDetails"u8))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            authenticationDetails = AuthenticationDetailsProperties.DeserializeAuthenticationDetailsProperties(property0.Value);
+                            authenticationDetails = AuthenticationDetailsProperties.DeserializeAuthenticationDetailsProperties(property0.Value, options);
                             continue;
                         }
                     }
@@ -169,7 +169,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityCloudConnectorData(id, name, type, systemData.Value, hybridComputeSettings.Value, authenticationDetails.Value, serializedAdditionalRawData);
+            return new SecurityCloudConnectorData(
+                id,
+                name,
+                type,
+                systemData,
+                hybridComputeSettings,
+                authenticationDetails,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityCloudConnectorData>.Write(ModelReaderWriterOptions options)

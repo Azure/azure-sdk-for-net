@@ -115,11 +115,11 @@ namespace Azure.ResourceManager.ElasticSan
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ElasticSanProvisioningState> provisioningState = default;
-            Optional<SubResource> privateEndpoint = default;
+            SystemData systemData = default;
+            ElasticSanProvisioningState? provisioningState = default;
+            SubResource privateEndpoint = default;
             ElasticSanPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
-            Optional<IList<string>> groupIds = default;
+            IList<string> groupIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ElasticSan
                         }
                         if (property0.NameEquals("privateLinkServiceConnectionState"u8))
                         {
-                            privateLinkServiceConnectionState = ElasticSanPrivateLinkServiceConnectionState.DeserializeElasticSanPrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = ElasticSanPrivateLinkServiceConnectionState.DeserializeElasticSanPrivateLinkServiceConnectionState(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("groupIds"u8))
@@ -203,7 +203,16 @@ namespace Azure.ResourceManager.ElasticSan
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticSanPrivateEndpointConnectionData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), privateEndpoint, privateLinkServiceConnectionState, Optional.ToList(groupIds), serializedAdditionalRawData);
+            return new ElasticSanPrivateEndpointConnectionData(
+                id,
+                name,
+                type,
+                systemData,
+                provisioningState,
+                privateEndpoint,
+                privateLinkServiceConnectionState,
+                groupIds ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticSanPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options)

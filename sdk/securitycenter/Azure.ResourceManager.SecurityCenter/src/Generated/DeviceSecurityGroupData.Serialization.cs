@@ -132,11 +132,11 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IList<ThresholdCustomAlertRule>> thresholdRules = default;
-            Optional<IList<TimeWindowCustomAlertRule>> timeWindowRules = default;
-            Optional<IList<AllowlistCustomAlertRule>> allowlistRules = default;
-            Optional<IList<DenylistCustomAlertRule>> denylistRules = default;
+            SystemData systemData = default;
+            IList<ThresholdCustomAlertRule> thresholdRules = default;
+            IList<TimeWindowCustomAlertRule> timeWindowRules = default;
+            IList<AllowlistCustomAlertRule> allowlistRules = default;
+            IList<DenylistCustomAlertRule> denylistRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<ThresholdCustomAlertRule> array = new List<ThresholdCustomAlertRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ThresholdCustomAlertRule.DeserializeThresholdCustomAlertRule(item));
+                                array.Add(ThresholdCustomAlertRule.DeserializeThresholdCustomAlertRule(item, options));
                             }
                             thresholdRules = array;
                             continue;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<TimeWindowCustomAlertRule> array = new List<TimeWindowCustomAlertRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(TimeWindowCustomAlertRule.DeserializeTimeWindowCustomAlertRule(item));
+                                array.Add(TimeWindowCustomAlertRule.DeserializeTimeWindowCustomAlertRule(item, options));
                             }
                             timeWindowRules = array;
                             continue;
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<AllowlistCustomAlertRule> array = new List<AllowlistCustomAlertRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AllowlistCustomAlertRule.DeserializeAllowlistCustomAlertRule(item));
+                                array.Add(AllowlistCustomAlertRule.DeserializeAllowlistCustomAlertRule(item, options));
                             }
                             allowlistRules = array;
                             continue;
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<DenylistCustomAlertRule> array = new List<DenylistCustomAlertRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DenylistCustomAlertRule.DeserializeDenylistCustomAlertRule(item));
+                                array.Add(DenylistCustomAlertRule.DeserializeDenylistCustomAlertRule(item, options));
                             }
                             denylistRules = array;
                             continue;
@@ -239,7 +239,16 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeviceSecurityGroupData(id, name, type, systemData.Value, Optional.ToList(thresholdRules), Optional.ToList(timeWindowRules), Optional.ToList(allowlistRules), Optional.ToList(denylistRules), serializedAdditionalRawData);
+            return new DeviceSecurityGroupData(
+                id,
+                name,
+                type,
+                systemData,
+                thresholdRules ?? new ChangeTrackingList<ThresholdCustomAlertRule>(),
+                timeWindowRules ?? new ChangeTrackingList<TimeWindowCustomAlertRule>(),
+                allowlistRules ?? new ChangeTrackingList<AllowlistCustomAlertRule>(),
+                denylistRules ?? new ChangeTrackingList<DenylistCustomAlertRule>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeviceSecurityGroupData>.Write(ModelReaderWriterOptions options)

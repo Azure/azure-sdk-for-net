@@ -177,24 +177,24 @@ namespace Azure.ResourceManager.Authorization
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> scope = default;
-            Optional<ResourceIdentifier> roleDefinitionId = default;
-            Optional<Guid> principalId = default;
-            Optional<RoleManagementPrincipalType> principalType = default;
-            Optional<ResourceIdentifier> roleAssignmentScheduleId = default;
-            Optional<ResourceIdentifier> originRoleAssignmentId = default;
-            Optional<RoleManagementScheduleStatus> status = default;
-            Optional<DateTimeOffset> startDateTime = default;
-            Optional<DateTimeOffset> endDateTime = default;
-            Optional<ResourceIdentifier> linkedRoleEligibilityScheduleId = default;
-            Optional<ResourceIdentifier> linkedRoleEligibilityScheduleInstanceId = default;
-            Optional<RoleAssignmentScheduleAssignmentType> assignmentType = default;
-            Optional<RoleManagementScheduleMemberType> memberType = default;
-            Optional<string> condition = default;
-            Optional<string> conditionVersion = default;
-            Optional<DateTimeOffset> createdOn = default;
-            Optional<RoleManagementExpandedProperties> expandedProperties = default;
+            SystemData systemData = default;
+            string scope = default;
+            ResourceIdentifier roleDefinitionId = default;
+            Guid? principalId = default;
+            RoleManagementPrincipalType? principalType = default;
+            ResourceIdentifier roleAssignmentScheduleId = default;
+            ResourceIdentifier originRoleAssignmentId = default;
+            RoleManagementScheduleStatus? status = default;
+            DateTimeOffset? startDateTime = default;
+            DateTimeOffset? endDateTime = default;
+            ResourceIdentifier linkedRoleEligibilityScheduleId = default;
+            ResourceIdentifier linkedRoleEligibilityScheduleInstanceId = default;
+            RoleAssignmentScheduleAssignmentType? assignmentType = default;
+            RoleManagementScheduleMemberType? memberType = default;
+            string condition = default;
+            string conditionVersion = default;
+            DateTimeOffset? createdOn = default;
+            RoleManagementExpandedProperties expandedProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.Authorization
                             {
                                 continue;
                             }
-                            expandedProperties = RoleManagementExpandedProperties.DeserializeRoleManagementExpandedProperties(property0.Value);
+                            expandedProperties = RoleManagementExpandedProperties.DeserializeRoleManagementExpandedProperties(property0.Value, options);
                             continue;
                         }
                     }
@@ -382,7 +382,29 @@ namespace Azure.ResourceManager.Authorization
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleAssignmentScheduleInstanceData(id, name, type, systemData.Value, scope.Value, roleDefinitionId.Value, Optional.ToNullable(principalId), Optional.ToNullable(principalType), roleAssignmentScheduleId.Value, originRoleAssignmentId.Value, Optional.ToNullable(status), Optional.ToNullable(startDateTime), Optional.ToNullable(endDateTime), linkedRoleEligibilityScheduleId.Value, linkedRoleEligibilityScheduleInstanceId.Value, Optional.ToNullable(assignmentType), Optional.ToNullable(memberType), condition.Value, conditionVersion.Value, Optional.ToNullable(createdOn), expandedProperties.Value, serializedAdditionalRawData);
+            return new RoleAssignmentScheduleInstanceData(
+                id,
+                name,
+                type,
+                systemData,
+                scope,
+                roleDefinitionId,
+                principalId,
+                principalType,
+                roleAssignmentScheduleId,
+                originRoleAssignmentId,
+                status,
+                startDateTime,
+                endDateTime,
+                linkedRoleEligibilityScheduleId,
+                linkedRoleEligibilityScheduleInstanceId,
+                assignmentType,
+                memberType,
+                condition,
+                conditionVersion,
+                createdOn,
+                expandedProperties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoleAssignmentScheduleInstanceData>.Write(ModelReaderWriterOptions options)

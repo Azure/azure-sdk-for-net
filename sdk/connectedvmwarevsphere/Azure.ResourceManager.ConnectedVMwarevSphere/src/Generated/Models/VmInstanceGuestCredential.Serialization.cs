@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ConnectedVMwarevSphere;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             {
                 return null;
             }
-            Optional<string> username = default;
-            Optional<string> password = default;
+            string username = default;
+            string password = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VmInstanceGuestCredential(username.Value, password.Value, serializedAdditionalRawData);
+            return new VmInstanceGuestCredential(username, password, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VmInstanceGuestCredential>.Write(ModelReaderWriterOptions options)

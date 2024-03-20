@@ -137,14 +137,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> provisioningState = default;
-            Optional<string> availabilityGroupName = default;
-            Optional<IList<AvailabilityGroupListenerLoadBalancerConfiguration>> loadBalancerConfigurations = default;
-            Optional<IList<MultiSubnetIPConfiguration>> multiSubnetIPConfigurations = default;
-            Optional<bool> createDefaultAvailabilityGroupIfNotExist = default;
-            Optional<int> port = default;
-            Optional<AvailabilityGroupConfiguration> availabilityGroupConfiguration = default;
+            SystemData systemData = default;
+            string provisioningState = default;
+            string availabilityGroupName = default;
+            IList<AvailabilityGroupListenerLoadBalancerConfiguration> loadBalancerConfigurations = default;
+            IList<MultiSubnetIPConfiguration> multiSubnetIPConfigurations = default;
+            bool? createDefaultAvailabilityGroupIfNotExist = default;
+            int? port = default;
+            AvailabilityGroupConfiguration availabilityGroupConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                             List<AvailabilityGroupListenerLoadBalancerConfiguration> array = new List<AvailabilityGroupListenerLoadBalancerConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AvailabilityGroupListenerLoadBalancerConfiguration.DeserializeAvailabilityGroupListenerLoadBalancerConfiguration(item));
+                                array.Add(AvailabilityGroupListenerLoadBalancerConfiguration.DeserializeAvailabilityGroupListenerLoadBalancerConfiguration(item, options));
                             }
                             loadBalancerConfigurations = array;
                             continue;
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                             List<MultiSubnetIPConfiguration> array = new List<MultiSubnetIPConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MultiSubnetIPConfiguration.DeserializeMultiSubnetIPConfiguration(item));
+                                array.Add(MultiSubnetIPConfiguration.DeserializeMultiSubnetIPConfiguration(item, options));
                             }
                             multiSubnetIPConfigurations = array;
                             continue;
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                             {
                                 continue;
                             }
-                            availabilityGroupConfiguration = AvailabilityGroupConfiguration.DeserializeAvailabilityGroupConfiguration(property0.Value);
+                            availabilityGroupConfiguration = AvailabilityGroupConfiguration.DeserializeAvailabilityGroupConfiguration(property0.Value, options);
                             continue;
                         }
                     }
@@ -256,7 +256,19 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailabilityGroupListenerData(id, name, type, systemData.Value, provisioningState.Value, availabilityGroupName.Value, Optional.ToList(loadBalancerConfigurations), Optional.ToList(multiSubnetIPConfigurations), Optional.ToNullable(createDefaultAvailabilityGroupIfNotExist), Optional.ToNullable(port), availabilityGroupConfiguration.Value, serializedAdditionalRawData);
+            return new AvailabilityGroupListenerData(
+                id,
+                name,
+                type,
+                systemData,
+                provisioningState,
+                availabilityGroupName,
+                loadBalancerConfigurations ?? new ChangeTrackingList<AvailabilityGroupListenerLoadBalancerConfiguration>(),
+                multiSubnetIPConfigurations ?? new ChangeTrackingList<MultiSubnetIPConfiguration>(),
+                createDefaultAvailabilityGroupIfNotExist,
+                port,
+                availabilityGroupConfiguration,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailabilityGroupListenerData>.Write(ModelReaderWriterOptions options)

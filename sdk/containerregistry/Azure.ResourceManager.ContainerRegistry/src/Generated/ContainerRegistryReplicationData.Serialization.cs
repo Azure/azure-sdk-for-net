@@ -122,16 +122,16 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ContainerRegistryProvisioningState> provisioningState = default;
-            Optional<ContainerRegistryResourceStatus> status = default;
-            Optional<bool> regionEndpointEnabled = default;
-            Optional<ContainerRegistryZoneRedundancy> zoneRedundancy = default;
+            SystemData systemData = default;
+            ContainerRegistryProvisioningState? provisioningState = default;
+            ContainerRegistryResourceStatus status = default;
+            bool? regionEndpointEnabled = default;
+            ContainerRegistryZoneRedundancy? zoneRedundancy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             {
                                 continue;
                             }
-                            status = ContainerRegistryResourceStatus.DeserializeContainerRegistryResourceStatus(property0.Value);
+                            status = ContainerRegistryResourceStatus.DeserializeContainerRegistryResourceStatus(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("regionEndpointEnabled"u8))
@@ -233,7 +233,18 @@ namespace Azure.ResourceManager.ContainerRegistry
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryReplicationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), status.Value, Optional.ToNullable(regionEndpointEnabled), Optional.ToNullable(zoneRedundancy), serializedAdditionalRawData);
+            return new ContainerRegistryReplicationData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState,
+                status,
+                regionEndpointEnabled,
+                zoneRedundancy,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryReplicationData>.Write(ModelReaderWriterOptions options)

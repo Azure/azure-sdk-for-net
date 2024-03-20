@@ -142,17 +142,17 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<AlwaysLog> alwaysLog = default;
-            Optional<string> loggerId = default;
-            Optional<SamplingSettings> sampling = default;
-            Optional<PipelineDiagnosticSettings> frontend = default;
-            Optional<PipelineDiagnosticSettings> backend = default;
-            Optional<bool> logClientIP = default;
-            Optional<HttpCorrelationProtocol> httpCorrelationProtocol = default;
-            Optional<TraceVerbosityLevel> verbosity = default;
-            Optional<OperationNameFormat> operationNameFormat = default;
-            Optional<bool> metrics = default;
+            SystemData systemData = default;
+            AlwaysLog? alwaysLog = default;
+            string loggerId = default;
+            SamplingSettings sampling = default;
+            PipelineDiagnosticSettings frontend = default;
+            PipelineDiagnosticSettings backend = default;
+            bool? logClientIP = default;
+            HttpCorrelationProtocol? httpCorrelationProtocol = default;
+            TraceVerbosityLevel? verbosity = default;
+            OperationNameFormat? operationNameFormat = default;
+            bool? metrics = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.ApiManagement
                             {
                                 continue;
                             }
-                            sampling = SamplingSettings.DeserializeSamplingSettings(property0.Value);
+                            sampling = SamplingSettings.DeserializeSamplingSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("frontend"u8))
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.ApiManagement
                             {
                                 continue;
                             }
-                            frontend = PipelineDiagnosticSettings.DeserializePipelineDiagnosticSettings(property0.Value);
+                            frontend = PipelineDiagnosticSettings.DeserializePipelineDiagnosticSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("backend"u8))
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ApiManagement
                             {
                                 continue;
                             }
-                            backend = PipelineDiagnosticSettings.DeserializePipelineDiagnosticSettings(property0.Value);
+                            backend = PipelineDiagnosticSettings.DeserializePipelineDiagnosticSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("logClientIp"u8))
@@ -285,7 +285,22 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiagnosticContractData(id, name, type, systemData.Value, Optional.ToNullable(alwaysLog), loggerId.Value, sampling.Value, frontend.Value, backend.Value, Optional.ToNullable(logClientIP), Optional.ToNullable(httpCorrelationProtocol), Optional.ToNullable(verbosity), Optional.ToNullable(operationNameFormat), Optional.ToNullable(metrics), serializedAdditionalRawData);
+            return new DiagnosticContractData(
+                id,
+                name,
+                type,
+                systemData,
+                alwaysLog,
+                loggerId,
+                sampling,
+                frontend,
+                backend,
+                logClientIP,
+                httpCorrelationProtocol,
+                verbosity,
+                operationNameFormat,
+                metrics,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiagnosticContractData>.Write(ModelReaderWriterOptions options)

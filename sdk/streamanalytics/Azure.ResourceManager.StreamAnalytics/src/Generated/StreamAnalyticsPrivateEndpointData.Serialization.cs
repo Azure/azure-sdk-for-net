@@ -104,12 +104,12 @@ namespace Azure.ResourceManager.StreamAnalytics
             {
                 return null;
             }
-            Optional<StreamAnalyticsPrivateEndpointProperties> properties = default;
-            Optional<ETag?> etag = default;
+            StreamAnalyticsPrivateEndpointProperties properties = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                     {
                         continue;
                     }
-                    properties = StreamAnalyticsPrivateEndpointProperties.DeserializeStreamAnalyticsPrivateEndpointProperties(property.Value);
+                    properties = StreamAnalyticsPrivateEndpointProperties.DeserializeStreamAnalyticsPrivateEndpointProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -163,7 +163,14 @@ namespace Azure.ResourceManager.StreamAnalytics
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamAnalyticsPrivateEndpointData(id, name, type, systemData.Value, properties.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new StreamAnalyticsPrivateEndpointData(
+                id,
+                name,
+                type,
+                systemData,
+                properties,
+                etag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamAnalyticsPrivateEndpointData>.Write(ModelReaderWriterOptions options)

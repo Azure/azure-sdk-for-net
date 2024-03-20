@@ -117,12 +117,12 @@ namespace Azure.ResourceManager.AppContainers
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ContainerAppAuthPlatform> platform = default;
-            Optional<ContainerAppGlobalValidation> globalValidation = default;
-            Optional<ContainerAppIdentityProvidersConfiguration> identityProviders = default;
-            Optional<ContainerAppLogin> login = default;
-            Optional<ContainerAppHttpSettings> httpSettings = default;
+            SystemData systemData = default;
+            ContainerAppAuthPlatform platform = default;
+            ContainerAppGlobalValidation globalValidation = default;
+            ContainerAppIdentityProvidersConfiguration identityProviders = default;
+            ContainerAppLogin login = default;
+            ContainerAppHttpSettings httpSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            platform = ContainerAppAuthPlatform.DeserializeContainerAppAuthPlatform(property0.Value);
+                            platform = ContainerAppAuthPlatform.DeserializeContainerAppAuthPlatform(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("globalValidation"u8))
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            globalValidation = ContainerAppGlobalValidation.DeserializeContainerAppGlobalValidation(property0.Value);
+                            globalValidation = ContainerAppGlobalValidation.DeserializeContainerAppGlobalValidation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("identityProviders"u8))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            identityProviders = ContainerAppIdentityProvidersConfiguration.DeserializeContainerAppIdentityProvidersConfiguration(property0.Value);
+                            identityProviders = ContainerAppIdentityProvidersConfiguration.DeserializeContainerAppIdentityProvidersConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("login"u8))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            login = ContainerAppLogin.DeserializeContainerAppLogin(property0.Value);
+                            login = ContainerAppLogin.DeserializeContainerAppLogin(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("httpSettings"u8))
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            httpSettings = ContainerAppHttpSettings.DeserializeContainerAppHttpSettings(property0.Value);
+                            httpSettings = ContainerAppHttpSettings.DeserializeContainerAppHttpSettings(property0.Value, options);
                             continue;
                         }
                     }
@@ -214,7 +214,17 @@ namespace Azure.ResourceManager.AppContainers
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppAuthConfigData(id, name, type, systemData.Value, platform.Value, globalValidation.Value, identityProviders.Value, login.Value, httpSettings.Value, serializedAdditionalRawData);
+            return new ContainerAppAuthConfigData(
+                id,
+                name,
+                type,
+                systemData,
+                platform,
+                globalValidation,
+                identityProviders,
+                login,
+                httpSettings,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppAuthConfigData>.Write(ModelReaderWriterOptions options)

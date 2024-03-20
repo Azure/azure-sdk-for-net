@@ -189,21 +189,21 @@ namespace Azure.ResourceManager.Automation
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DscConfigurationAssociationProperty> configuration = default;
-            Optional<string> startedBy = default;
-            Optional<Guid> jobId = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<JobProvisioningState> provisioningState = default;
-            Optional<string> runOn = default;
-            Optional<AutomationJobStatus> status = default;
-            Optional<string> statusDetails = default;
-            Optional<DateTimeOffset?> startTime = default;
-            Optional<DateTimeOffset?> endTime = default;
-            Optional<string> exception = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<DateTimeOffset?> lastStatusModifiedTime = default;
-            Optional<IDictionary<string, string>> parameters = default;
+            SystemData systemData = default;
+            DscConfigurationAssociationProperty configuration = default;
+            string startedBy = default;
+            Guid? jobId = default;
+            DateTimeOffset? creationTime = default;
+            JobProvisioningState? provisioningState = default;
+            string runOn = default;
+            AutomationJobStatus? status = default;
+            string statusDetails = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            string exception = default;
+            DateTimeOffset? lastModifiedTime = default;
+            DateTimeOffset? lastStatusModifiedTime = default;
+            IDictionary<string, string> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Automation
                             {
                                 continue;
                             }
-                            configuration = DscConfigurationAssociationProperty.DeserializeDscConfigurationAssociationProperty(property0.Value);
+                            configuration = DscConfigurationAssociationProperty.DeserializeDscConfigurationAssociationProperty(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("startedBy"u8))
@@ -368,7 +368,26 @@ namespace Azure.ResourceManager.Automation
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DscCompilationJobData(id, name, type, systemData.Value, configuration.Value, startedBy.Value, Optional.ToNullable(jobId), Optional.ToNullable(creationTime), Optional.ToNullable(provisioningState), runOn.Value, Optional.ToNullable(status), statusDetails.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), exception.Value, Optional.ToNullable(lastModifiedTime), Optional.ToNullable(lastStatusModifiedTime), Optional.ToDictionary(parameters), serializedAdditionalRawData);
+            return new DscCompilationJobData(
+                id,
+                name,
+                type,
+                systemData,
+                configuration,
+                startedBy,
+                jobId,
+                creationTime,
+                provisioningState,
+                runOn,
+                status,
+                statusDetails,
+                startTime,
+                endTime,
+                exception,
+                lastModifiedTime,
+                lastStatusModifiedTime,
+                parameters ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DscCompilationJobData>.Write(ModelReaderWriterOptions options)

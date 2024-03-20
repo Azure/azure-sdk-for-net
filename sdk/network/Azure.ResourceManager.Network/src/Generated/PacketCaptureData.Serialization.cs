@@ -145,20 +145,20 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> target = default;
-            Optional<PacketCaptureMachineScope> scope = default;
-            Optional<PacketCaptureTargetType> targetType = default;
-            Optional<long> bytesToCapturePerPacket = default;
-            Optional<long> totalBytesPerSession = default;
-            Optional<int> timeLimitInSeconds = default;
-            Optional<PacketCaptureStorageLocation> storageLocation = default;
-            Optional<IReadOnlyList<PacketCaptureFilter>> filters = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            string target = default;
+            PacketCaptureMachineScope scope = default;
+            PacketCaptureTargetType? targetType = default;
+            long? bytesToCapturePerPacket = default;
+            long? totalBytesPerSession = default;
+            int? timeLimitInSeconds = default;
+            PacketCaptureStorageLocation storageLocation = default;
+            IReadOnlyList<PacketCaptureFilter> filters = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            scope = PacketCaptureMachineScope.DeserializePacketCaptureMachineScope(property0.Value);
+                            scope = PacketCaptureMachineScope.DeserializePacketCaptureMachineScope(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("targetType"u8))
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            storageLocation = PacketCaptureStorageLocation.DeserializePacketCaptureStorageLocation(property0.Value);
+                            storageLocation = PacketCaptureStorageLocation.DeserializePacketCaptureStorageLocation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("filters"u8))
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Network
                             List<PacketCaptureFilter> array = new List<PacketCaptureFilter>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PacketCaptureFilter.DeserializePacketCaptureFilter(item));
+                                array.Add(PacketCaptureFilter.DeserializePacketCaptureFilter(item, options));
                             }
                             filters = array;
                             continue;
@@ -296,7 +296,22 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PacketCaptureData(id, name, type, systemData.Value, Optional.ToNullable(etag), target.Value, scope.Value, Optional.ToNullable(targetType), Optional.ToNullable(bytesToCapturePerPacket), Optional.ToNullable(totalBytesPerSession), Optional.ToNullable(timeLimitInSeconds), storageLocation.Value, Optional.ToList(filters), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new PacketCaptureData(
+                id,
+                name,
+                type,
+                systemData,
+                etag,
+                target,
+                scope,
+                targetType,
+                bytesToCapturePerPacket,
+                totalBytesPerSession,
+                timeLimitInSeconds,
+                storageLocation,
+                filters ?? new ChangeTrackingList<PacketCaptureFilter>(),
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PacketCaptureData>.Write(ModelReaderWriterOptions options)

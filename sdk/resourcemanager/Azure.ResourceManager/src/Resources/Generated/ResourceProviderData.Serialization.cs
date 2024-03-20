@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
@@ -100,12 +101,12 @@ namespace Azure.ResourceManager.Resources
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> @namespace = default;
-            Optional<string> registrationState = default;
-            Optional<string> registrationPolicy = default;
-            Optional<IReadOnlyList<ProviderResourceType>> resourceTypes = default;
-            Optional<ProviderAuthorizationConsentState> providerAuthorizationConsentState = default;
+            ResourceIdentifier id = default;
+            string @namespace = default;
+            string registrationState = default;
+            string registrationPolicy = default;
+            IReadOnlyList<ProviderResourceType> resourceTypes = default;
+            ProviderAuthorizationConsentState? providerAuthorizationConsentState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -143,7 +144,7 @@ namespace Azure.ResourceManager.Resources
                     List<ProviderResourceType> array = new List<ProviderResourceType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProviderResourceType.DeserializeProviderResourceType(item));
+                        array.Add(ProviderResourceType.DeserializeProviderResourceType(item, options));
                     }
                     resourceTypes = array;
                     continue;
@@ -163,7 +164,14 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceProviderData(id.Value, @namespace.Value, registrationState.Value, registrationPolicy.Value, Optional.ToList(resourceTypes), Optional.ToNullable(providerAuthorizationConsentState), serializedAdditionalRawData);
+            return new ResourceProviderData(
+                id,
+                @namespace,
+                registrationState,
+                registrationPolicy,
+                resourceTypes ?? new ChangeTrackingList<ProviderResourceType>(),
+                providerAuthorizationConsentState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceProviderData>.Write(ModelReaderWriterOptions options)

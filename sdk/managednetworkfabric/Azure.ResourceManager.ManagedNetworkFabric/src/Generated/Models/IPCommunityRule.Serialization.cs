@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             CommunityActionType action = default;
             long sequenceNumber = default;
-            Optional<IList<WellKnownCommunity>> wellKnownCommunities = default;
+            IList<WellKnownCommunity> wellKnownCommunities = default;
             IList<string> communityMembers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -133,7 +134,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IPCommunityRule(action, sequenceNumber, Optional.ToList(wellKnownCommunities), communityMembers, serializedAdditionalRawData);
+            return new IPCommunityRule(action, sequenceNumber, wellKnownCommunities ?? new ChangeTrackingList<WellKnownCommunity>(), communityMembers, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IPCommunityRule>.Write(ModelReaderWriterOptions options)

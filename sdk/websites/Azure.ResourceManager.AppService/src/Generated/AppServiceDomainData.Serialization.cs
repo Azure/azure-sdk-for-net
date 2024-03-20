@@ -222,33 +222,33 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
-            Optional<IDictionary<string, string>> tags = default;
+            string kind = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<RegistrationContactInfo> contactAdmin = default;
-            Optional<RegistrationContactInfo> contactBilling = default;
-            Optional<RegistrationContactInfo> contactRegistrant = default;
-            Optional<RegistrationContactInfo> contactTech = default;
-            Optional<AppServiceDomainStatus> registrationStatus = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<IReadOnlyList<string>> nameServers = default;
-            Optional<bool> privacy = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<DateTimeOffset> expirationTime = default;
-            Optional<DateTimeOffset> lastRenewedTime = default;
-            Optional<bool> autoRenew = default;
-            Optional<bool> readyForDnsRecordManagement = default;
-            Optional<IReadOnlyList<AppServiceHostName>> managedHostNames = default;
-            Optional<DomainPurchaseConsent> consent = default;
-            Optional<IReadOnlyList<DomainNotRenewableReason>> domainNotRenewableReasons = default;
-            Optional<AppServiceDnsType> dnsType = default;
-            Optional<string> dnsZoneId = default;
-            Optional<AppServiceDnsType> targetDnsType = default;
-            Optional<string> authCode = default;
+            SystemData systemData = default;
+            RegistrationContactInfo contactAdmin = default;
+            RegistrationContactInfo contactBilling = default;
+            RegistrationContactInfo contactRegistrant = default;
+            RegistrationContactInfo contactTech = default;
+            AppServiceDomainStatus? registrationStatus = default;
+            ProvisioningState? provisioningState = default;
+            IReadOnlyList<string> nameServers = default;
+            bool? privacy = default;
+            DateTimeOffset? createdTime = default;
+            DateTimeOffset? expirationTime = default;
+            DateTimeOffset? lastRenewedTime = default;
+            bool? autoRenew = default;
+            bool? readyForDnsRecordManagement = default;
+            IReadOnlyList<AppServiceHostName> managedHostNames = default;
+            DomainPurchaseConsent consent = default;
+            IReadOnlyList<DomainNotRenewableReason> domainNotRenewableReasons = default;
+            AppServiceDnsType? dnsType = default;
+            string dnsZoneId = default;
+            AppServiceDnsType? targetDnsType = default;
+            string authCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            contactAdmin = RegistrationContactInfo.DeserializeRegistrationContactInfo(property0.Value);
+                            contactAdmin = RegistrationContactInfo.DeserializeRegistrationContactInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("contactBilling"u8))
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            contactBilling = RegistrationContactInfo.DeserializeRegistrationContactInfo(property0.Value);
+                            contactBilling = RegistrationContactInfo.DeserializeRegistrationContactInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("contactRegistrant"u8))
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            contactRegistrant = RegistrationContactInfo.DeserializeRegistrationContactInfo(property0.Value);
+                            contactRegistrant = RegistrationContactInfo.DeserializeRegistrationContactInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("contactTech"u8))
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            contactTech = RegistrationContactInfo.DeserializeRegistrationContactInfo(property0.Value);
+                            contactTech = RegistrationContactInfo.DeserializeRegistrationContactInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("registrationStatus"u8))
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.AppService
                             List<AppServiceHostName> array = new List<AppServiceHostName>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AppServiceHostName.DeserializeAppServiceHostName(item));
+                                array.Add(AppServiceHostName.DeserializeAppServiceHostName(item, options));
                             }
                             managedHostNames = array;
                             continue;
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            consent = DomainPurchaseConsent.DeserializeDomainPurchaseConsent(property0.Value);
+                            consent = DomainPurchaseConsent.DeserializeDomainPurchaseConsent(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("domainNotRenewableReasons"u8))
@@ -506,7 +506,35 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceDomainData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, contactAdmin.Value, contactBilling.Value, contactRegistrant.Value, contactTech.Value, Optional.ToNullable(registrationStatus), Optional.ToNullable(provisioningState), Optional.ToList(nameServers), Optional.ToNullable(privacy), Optional.ToNullable(createdTime), Optional.ToNullable(expirationTime), Optional.ToNullable(lastRenewedTime), Optional.ToNullable(autoRenew), Optional.ToNullable(readyForDnsRecordManagement), Optional.ToList(managedHostNames), consent.Value, Optional.ToList(domainNotRenewableReasons), Optional.ToNullable(dnsType), dnsZoneId.Value, Optional.ToNullable(targetDnsType), authCode.Value, kind.Value, serializedAdditionalRawData);
+            return new AppServiceDomainData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                contactAdmin,
+                contactBilling,
+                contactRegistrant,
+                contactTech,
+                registrationStatus,
+                provisioningState,
+                nameServers ?? new ChangeTrackingList<string>(),
+                privacy,
+                createdTime,
+                expirationTime,
+                lastRenewedTime,
+                autoRenew,
+                readyForDnsRecordManagement,
+                managedHostNames ?? new ChangeTrackingList<AppServiceHostName>(),
+                consent,
+                domainNotRenewableReasons ?? new ChangeTrackingList<DomainNotRenewableReason>(),
+                dnsType,
+                dnsZoneId,
+                targetDnsType,
+                authCode,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceDomainData>.Write(ModelReaderWriterOptions options)

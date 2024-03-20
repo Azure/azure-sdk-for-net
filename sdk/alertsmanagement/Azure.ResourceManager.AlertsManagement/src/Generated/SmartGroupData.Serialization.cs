@@ -197,21 +197,21 @@ namespace Azure.ResourceManager.AlertsManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<long> alertsCount = default;
-            Optional<SmartGroupState> smartGroupState = default;
-            Optional<ServiceAlertSeverity> severity = default;
-            Optional<DateTimeOffset> startDateTime = default;
-            Optional<DateTimeOffset> lastModifiedDateTime = default;
-            Optional<string> lastModifiedUserName = default;
-            Optional<IList<SmartGroupAggregatedProperty>> resources = default;
-            Optional<IList<SmartGroupAggregatedProperty>> resourceTypes = default;
-            Optional<IList<SmartGroupAggregatedProperty>> resourceGroups = default;
-            Optional<IList<SmartGroupAggregatedProperty>> monitorServices = default;
-            Optional<IList<SmartGroupAggregatedProperty>> monitorConditions = default;
-            Optional<IList<SmartGroupAggregatedProperty>> alertStates = default;
-            Optional<IList<SmartGroupAggregatedProperty>> alertSeverities = default;
-            Optional<string> nextLink = default;
+            SystemData systemData = default;
+            long? alertsCount = default;
+            SmartGroupState? smartGroupState = default;
+            ServiceAlertSeverity? severity = default;
+            DateTimeOffset? startDateTime = default;
+            DateTimeOffset? lastModifiedDateTime = default;
+            string lastModifiedUserName = default;
+            IList<SmartGroupAggregatedProperty> resources = default;
+            IList<SmartGroupAggregatedProperty> resourceTypes = default;
+            IList<SmartGroupAggregatedProperty> resourceGroups = default;
+            IList<SmartGroupAggregatedProperty> monitorServices = default;
+            IList<SmartGroupAggregatedProperty> monitorConditions = default;
+            IList<SmartGroupAggregatedProperty> alertStates = default;
+            IList<SmartGroupAggregatedProperty> alertSeverities = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.AlertsManagement
                             List<SmartGroupAggregatedProperty> array = new List<SmartGroupAggregatedProperty>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SmartGroupAggregatedProperty.DeserializeSmartGroupAggregatedProperty(item));
+                                array.Add(SmartGroupAggregatedProperty.DeserializeSmartGroupAggregatedProperty(item, options));
                             }
                             resources = array;
                             continue;
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.AlertsManagement
                             List<SmartGroupAggregatedProperty> array = new List<SmartGroupAggregatedProperty>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SmartGroupAggregatedProperty.DeserializeSmartGroupAggregatedProperty(item));
+                                array.Add(SmartGroupAggregatedProperty.DeserializeSmartGroupAggregatedProperty(item, options));
                             }
                             resourceTypes = array;
                             continue;
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.AlertsManagement
                             List<SmartGroupAggregatedProperty> array = new List<SmartGroupAggregatedProperty>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SmartGroupAggregatedProperty.DeserializeSmartGroupAggregatedProperty(item));
+                                array.Add(SmartGroupAggregatedProperty.DeserializeSmartGroupAggregatedProperty(item, options));
                             }
                             resourceGroups = array;
                             continue;
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.AlertsManagement
                             List<SmartGroupAggregatedProperty> array = new List<SmartGroupAggregatedProperty>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SmartGroupAggregatedProperty.DeserializeSmartGroupAggregatedProperty(item));
+                                array.Add(SmartGroupAggregatedProperty.DeserializeSmartGroupAggregatedProperty(item, options));
                             }
                             monitorServices = array;
                             continue;
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.AlertsManagement
                             List<SmartGroupAggregatedProperty> array = new List<SmartGroupAggregatedProperty>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SmartGroupAggregatedProperty.DeserializeSmartGroupAggregatedProperty(item));
+                                array.Add(SmartGroupAggregatedProperty.DeserializeSmartGroupAggregatedProperty(item, options));
                             }
                             monitorConditions = array;
                             continue;
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.AlertsManagement
                             List<SmartGroupAggregatedProperty> array = new List<SmartGroupAggregatedProperty>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SmartGroupAggregatedProperty.DeserializeSmartGroupAggregatedProperty(item));
+                                array.Add(SmartGroupAggregatedProperty.DeserializeSmartGroupAggregatedProperty(item, options));
                             }
                             alertStates = array;
                             continue;
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.AlertsManagement
                             List<SmartGroupAggregatedProperty> array = new List<SmartGroupAggregatedProperty>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SmartGroupAggregatedProperty.DeserializeSmartGroupAggregatedProperty(item));
+                                array.Add(SmartGroupAggregatedProperty.DeserializeSmartGroupAggregatedProperty(item, options));
                             }
                             alertSeverities = array;
                             continue;
@@ -411,7 +411,26 @@ namespace Azure.ResourceManager.AlertsManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SmartGroupData(id, name, type, systemData.Value, Optional.ToNullable(alertsCount), Optional.ToNullable(smartGroupState), Optional.ToNullable(severity), Optional.ToNullable(startDateTime), Optional.ToNullable(lastModifiedDateTime), lastModifiedUserName.Value, Optional.ToList(resources), Optional.ToList(resourceTypes), Optional.ToList(resourceGroups), Optional.ToList(monitorServices), Optional.ToList(monitorConditions), Optional.ToList(alertStates), Optional.ToList(alertSeverities), nextLink.Value, serializedAdditionalRawData);
+            return new SmartGroupData(
+                id,
+                name,
+                type,
+                systemData,
+                alertsCount,
+                smartGroupState,
+                severity,
+                startDateTime,
+                lastModifiedDateTime,
+                lastModifiedUserName,
+                resources ?? new ChangeTrackingList<SmartGroupAggregatedProperty>(),
+                resourceTypes ?? new ChangeTrackingList<SmartGroupAggregatedProperty>(),
+                resourceGroups ?? new ChangeTrackingList<SmartGroupAggregatedProperty>(),
+                monitorServices ?? new ChangeTrackingList<SmartGroupAggregatedProperty>(),
+                monitorConditions ?? new ChangeTrackingList<SmartGroupAggregatedProperty>(),
+                alertStates ?? new ChangeTrackingList<SmartGroupAggregatedProperty>(),
+                alertSeverities ?? new ChangeTrackingList<SmartGroupAggregatedProperty>(),
+                nextLink,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SmartGroupData>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppPlatform;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> status = default;
-            Optional<string> reason = default;
-            Optional<string> discoveryStatus = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<string> zone = default;
+            string name = default;
+            string status = default;
+            string reason = default;
+            string discoveryStatus = default;
+            DateTimeOffset? startTime = default;
+            string zone = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,7 +145,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformDeploymentInstance(name.Value, status.Value, reason.Value, discoveryStatus.Value, Optional.ToNullable(startTime), zone.Value, serializedAdditionalRawData);
+            return new AppPlatformDeploymentInstance(
+                name,
+                status,
+                reason,
+                discoveryStatus,
+                startTime,
+                zone,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformDeploymentInstance>.Write(ModelReaderWriterOptions options)

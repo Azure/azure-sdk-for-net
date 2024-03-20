@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -109,13 +110,13 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<bool> disableBgpRoutePropagation = default;
-            Optional<EffectiveRouteSource> source = default;
-            Optional<EffectiveRouteState> state = default;
-            Optional<IReadOnlyList<string>> addressPrefix = default;
-            Optional<IReadOnlyList<string>> nextHopIPAddress = default;
-            Optional<RouteNextHopType> nextHopType = default;
+            string name = default;
+            bool? disableBgpRoutePropagation = default;
+            EffectiveRouteSource? source = default;
+            EffectiveRouteState? state = default;
+            IReadOnlyList<string> addressPrefix = default;
+            IReadOnlyList<string> nextHopIPAddress = default;
+            RouteNextHopType? nextHopType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -195,7 +196,15 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EffectiveRoute(name.Value, Optional.ToNullable(disableBgpRoutePropagation), Optional.ToNullable(source), Optional.ToNullable(state), Optional.ToList(addressPrefix), Optional.ToList(nextHopIPAddress), Optional.ToNullable(nextHopType), serializedAdditionalRawData);
+            return new EffectiveRoute(
+                name,
+                disableBgpRoutePropagation,
+                source,
+                state,
+                addressPrefix ?? new ChangeTrackingList<string>(),
+                nextHopIPAddress ?? new ChangeTrackingList<string>(),
+                nextHopType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EffectiveRoute>.Write(ModelReaderWriterOptions options)

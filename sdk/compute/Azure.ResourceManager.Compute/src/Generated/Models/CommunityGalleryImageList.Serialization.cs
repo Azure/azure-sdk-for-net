@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             IReadOnlyList<CommunityGalleryImageData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<CommunityGalleryImageData> array = new List<CommunityGalleryImageData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CommunityGalleryImageData.DeserializeCommunityGalleryImageData(item));
+                        array.Add(CommunityGalleryImageData.DeserializeCommunityGalleryImageData(item, options));
                     }
                     value = array;
                     continue;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CommunityGalleryImageList(value, nextLink.Value, serializedAdditionalRawData);
+            return new CommunityGalleryImageList(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CommunityGalleryImageList>.Write(ModelReaderWriterOptions options)

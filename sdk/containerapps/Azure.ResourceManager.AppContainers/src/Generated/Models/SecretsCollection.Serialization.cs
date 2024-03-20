@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppSecret> array = new List<ContainerAppSecret>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppSecret.DeserializeContainerAppSecret(item));
+                        array.Add(ContainerAppSecret.DeserializeContainerAppSecret(item, options));
                     }
                     value = array;
                     continue;

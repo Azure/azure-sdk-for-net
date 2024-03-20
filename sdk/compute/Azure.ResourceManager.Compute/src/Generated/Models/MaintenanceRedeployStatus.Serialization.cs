@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -99,13 +100,13 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<bool> isCustomerInitiatedMaintenanceAllowed = default;
-            Optional<DateTimeOffset> preMaintenanceWindowStartTime = default;
-            Optional<DateTimeOffset> preMaintenanceWindowEndTime = default;
-            Optional<DateTimeOffset> maintenanceWindowStartTime = default;
-            Optional<DateTimeOffset> maintenanceWindowEndTime = default;
-            Optional<MaintenanceOperationResultCodeType> lastOperationResultCode = default;
-            Optional<string> lastOperationMessage = default;
+            bool? isCustomerInitiatedMaintenanceAllowed = default;
+            DateTimeOffset? preMaintenanceWindowStartTime = default;
+            DateTimeOffset? preMaintenanceWindowEndTime = default;
+            DateTimeOffset? maintenanceWindowStartTime = default;
+            DateTimeOffset? maintenanceWindowEndTime = default;
+            MaintenanceOperationResultCodeType? lastOperationResultCode = default;
+            string lastOperationMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -175,7 +176,15 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MaintenanceRedeployStatus(Optional.ToNullable(isCustomerInitiatedMaintenanceAllowed), Optional.ToNullable(preMaintenanceWindowStartTime), Optional.ToNullable(preMaintenanceWindowEndTime), Optional.ToNullable(maintenanceWindowStartTime), Optional.ToNullable(maintenanceWindowEndTime), Optional.ToNullable(lastOperationResultCode), lastOperationMessage.Value, serializedAdditionalRawData);
+            return new MaintenanceRedeployStatus(
+                isCustomerInitiatedMaintenanceAllowed,
+                preMaintenanceWindowStartTime,
+                preMaintenanceWindowEndTime,
+                maintenanceWindowStartTime,
+                maintenanceWindowEndTime,
+                lastOperationResultCode,
+                lastOperationMessage,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MaintenanceRedeployStatus>.Write(ModelReaderWriterOptions options)

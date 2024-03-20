@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceFabric;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 return null;
             }
-            Optional<int> maxPercentUnhealthyServices = default;
-            Optional<int> maxPercentUnhealthyPartitionsPerService = default;
-            Optional<int> maxPercentUnhealthyReplicasPerPartition = default;
+            int? maxPercentUnhealthyServices = default;
+            int? maxPercentUnhealthyPartitionsPerService = default;
+            int? maxPercentUnhealthyReplicasPerPartition = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmServiceTypeHealthPolicy(Optional.ToNullable(maxPercentUnhealthyServices), Optional.ToNullable(maxPercentUnhealthyPartitionsPerService), Optional.ToNullable(maxPercentUnhealthyReplicasPerPartition), serializedAdditionalRawData);
+            return new ArmServiceTypeHealthPolicy(maxPercentUnhealthyServices, maxPercentUnhealthyPartitionsPerService, maxPercentUnhealthyReplicasPerPartition, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmServiceTypeHealthPolicy>.Write(ModelReaderWriterOptions options)

@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -161,75 +161,6 @@ namespace Azure.ResourceManager.Communication
             return GetSenderUsernameResources().Get(senderUsername, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SuppressionListResources in the CommunicationDomainResource. </summary>
-        /// <returns> An object representing collection of SuppressionListResources and their operations over a SuppressionListResource. </returns>
-        public virtual SuppressionListResourceCollection GetSuppressionListResources()
-        {
-            return GetCachedClient(client => new SuppressionListResourceCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a SuppressionList resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}/suppressionLists/{suppressionListName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SuppressionLists_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SuppressionListResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="suppressionListName"> The name of the suppression list. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="suppressionListName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="suppressionListName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<SuppressionListResource>> GetSuppressionListResourceAsync(string suppressionListName, CancellationToken cancellationToken = default)
-        {
-            return await GetSuppressionListResources().GetAsync(suppressionListName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a SuppressionList resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}/suppressionLists/{suppressionListName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SuppressionLists_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SuppressionListResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="suppressionListName"> The name of the suppression list. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="suppressionListName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="suppressionListName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<SuppressionListResource> GetSuppressionListResource(string suppressionListName, CancellationToken cancellationToken = default)
-        {
-            return GetSuppressionListResources().Get(suppressionListName, cancellationToken);
-        }
-
         /// <summary>
         /// Get the Domains resource and its properties.
         /// <list type="bullet">
@@ -243,7 +174,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -283,7 +214,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -323,7 +254,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -365,7 +296,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -407,7 +338,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -421,10 +352,7 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<CommunicationDomainResource>> UpdateAsync(WaitUntil waitUntil, CommunicationDomainResourcePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _communicationDomainResourceDomainsClientDiagnostics.CreateScope("CommunicationDomainResource.Update");
             scope.Start();
@@ -456,7 +384,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -470,10 +398,7 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<CommunicationDomainResource> Update(WaitUntil waitUntil, CommunicationDomainResourcePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _communicationDomainResourceDomainsClientDiagnostics.CreateScope("CommunicationDomainResource.Update");
             scope.Start();
@@ -505,7 +430,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -519,10 +444,7 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> InitiateVerificationAsync(WaitUntil waitUntil, DomainsRecordVerificationContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _communicationDomainResourceDomainsClientDiagnostics.CreateScope("CommunicationDomainResource.InitiateVerification");
             scope.Start();
@@ -554,7 +476,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -568,10 +490,7 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation InitiateVerification(WaitUntil waitUntil, DomainsRecordVerificationContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _communicationDomainResourceDomainsClientDiagnostics.CreateScope("CommunicationDomainResource.InitiateVerification");
             scope.Start();
@@ -603,7 +522,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -617,10 +536,7 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> CancelVerificationAsync(WaitUntil waitUntil, DomainsRecordVerificationContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _communicationDomainResourceDomainsClientDiagnostics.CreateScope("CommunicationDomainResource.CancelVerification");
             scope.Start();
@@ -652,7 +568,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -666,10 +582,7 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation CancelVerification(WaitUntil waitUntil, DomainsRecordVerificationContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _communicationDomainResourceDomainsClientDiagnostics.CreateScope("CommunicationDomainResource.CancelVerification");
             scope.Start();
@@ -701,7 +614,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -715,14 +628,8 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<CommunicationDomainResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _communicationDomainResourceDomainsClientDiagnostics.CreateScope("CommunicationDomainResource.AddTag");
             scope.Start();
@@ -769,7 +676,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -783,14 +690,8 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<CommunicationDomainResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _communicationDomainResourceDomainsClientDiagnostics.CreateScope("CommunicationDomainResource.AddTag");
             scope.Start();
@@ -837,7 +738,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -850,10 +751,7 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<CommunicationDomainResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _communicationDomainResourceDomainsClientDiagnostics.CreateScope("CommunicationDomainResource.SetTags");
             scope.Start();
@@ -897,7 +795,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -910,10 +808,7 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<CommunicationDomainResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _communicationDomainResourceDomainsClientDiagnostics.CreateScope("CommunicationDomainResource.SetTags");
             scope.Start();
@@ -957,7 +852,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -970,10 +865,7 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<CommunicationDomainResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _communicationDomainResourceDomainsClientDiagnostics.CreateScope("CommunicationDomainResource.RemoveTag");
             scope.Start();
@@ -1020,7 +912,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1033,10 +925,7 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<CommunicationDomainResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _communicationDomainResourceDomainsClientDiagnostics.CreateScope("CommunicationDomainResource.RemoveTag");
             scope.Start();

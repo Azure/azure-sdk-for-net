@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MySql;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
@@ -30,6 +31,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 writer.WritePropertyName("backupRetentionDays"u8);
                 writer.WriteNumberValue(BackupRetentionDays.Value);
+            }
+            if (Optional.IsDefined(BackupIntervalHours))
+            {
+                writer.WritePropertyName("backupIntervalHours"u8);
+                writer.WriteNumberValue(BackupIntervalHours.Value);
             }
             if (Optional.IsDefined(GeoRedundantBackup))
             {
@@ -79,9 +85,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<int> backupRetentionDays = default;
-            Optional<MySqlFlexibleServerEnableStatusEnum> geoRedundantBackup = default;
-            Optional<DateTimeOffset> earliestRestoreDate = default;
+            int? backupRetentionDays = default;
+            int? backupIntervalHours = default;
+            MySqlFlexibleServerEnableStatusEnum? geoRedundantBackup = default;
+            DateTimeOffset? earliestRestoreDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,6 +100,15 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                         continue;
                     }
                     backupRetentionDays = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("backupIntervalHours"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    backupIntervalHours = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("geoRedundantBackup"u8))
@@ -119,7 +135,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlFlexibleServerBackupProperties(Optional.ToNullable(backupRetentionDays), Optional.ToNullable(geoRedundantBackup), Optional.ToNullable(earliestRestoreDate), serializedAdditionalRawData);
+            return new MySqlFlexibleServerBackupProperties(backupRetentionDays, backupIntervalHours, geoRedundantBackup, earliestRestoreDate, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFlexibleServerBackupProperties>.Write(ModelReaderWriterOptions options)

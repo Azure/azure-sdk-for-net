@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -101,10 +102,10 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<IReadOnlyDictionary<string, HDInsightVersionsCapability>> versions = default;
-            Optional<IReadOnlyDictionary<string, RegionsCapability>> regions = default;
-            Optional<IReadOnlyList<string>> features = default;
-            Optional<QuotaCapability> quota = default;
+            IReadOnlyDictionary<string, HDInsightVersionsCapability> versions = default;
+            IReadOnlyDictionary<string, RegionsCapability> regions = default;
+            IReadOnlyList<string> features = default;
+            QuotaCapability quota = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     Dictionary<string, HDInsightVersionsCapability> dictionary = new Dictionary<string, HDInsightVersionsCapability>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, HDInsightVersionsCapability.DeserializeHDInsightVersionsCapability(property0.Value));
+                        dictionary.Add(property0.Name, HDInsightVersionsCapability.DeserializeHDInsightVersionsCapability(property0.Value, options));
                     }
                     versions = dictionary;
                     continue;
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     Dictionary<string, RegionsCapability> dictionary = new Dictionary<string, RegionsCapability>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, RegionsCapability.DeserializeRegionsCapability(property0.Value));
+                        dictionary.Add(property0.Name, RegionsCapability.DeserializeRegionsCapability(property0.Value, options));
                     }
                     regions = dictionary;
                     continue;
@@ -157,7 +158,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    quota = QuotaCapability.DeserializeQuotaCapability(property.Value);
+                    quota = QuotaCapability.DeserializeQuotaCapability(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -166,7 +167,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightCapabilitiesResult(Optional.ToDictionary(versions), Optional.ToDictionary(regions), Optional.ToList(features), quota.Value, serializedAdditionalRawData);
+            return new HDInsightCapabilitiesResult(versions ?? new ChangeTrackingDictionary<string, HDInsightVersionsCapability>(), regions ?? new ChangeTrackingDictionary<string, RegionsCapability>(), features ?? new ChangeTrackingList<string>(), quota, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightCapabilitiesResult>.Write(ModelReaderWriterOptions options)

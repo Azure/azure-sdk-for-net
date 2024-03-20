@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataLakeAnalytics;
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
@@ -80,8 +81,8 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 return null;
             }
             string name = default;
-            Optional<string> accessKey = default;
-            Optional<string> suffix = default;
+            string accessKey = default;
+            string suffix = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageAccountForDataLakeAnalyticsAccountUpdateContent(name, accessKey.Value, suffix.Value, serializedAdditionalRawData);
+            return new StorageAccountForDataLakeAnalyticsAccountUpdateContent(name, accessKey, suffix, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageAccountForDataLakeAnalyticsAccountUpdateContent>.Write(ModelReaderWriterOptions options)

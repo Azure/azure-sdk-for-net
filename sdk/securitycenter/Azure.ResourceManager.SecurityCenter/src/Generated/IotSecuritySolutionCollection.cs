@@ -83,18 +83,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="solutionName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<IotSecuritySolutionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string solutionName, IotSecuritySolutionData data, CancellationToken cancellationToken = default)
         {
-            if (solutionName == null)
-            {
-                throw new ArgumentNullException(nameof(solutionName));
-            }
-            if (solutionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(solutionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(solutionName, nameof(solutionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _iotSecuritySolutionClientDiagnostics.CreateScope("IotSecuritySolutionCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +132,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="solutionName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<IotSecuritySolutionResource> CreateOrUpdate(WaitUntil waitUntil, string solutionName, IotSecuritySolutionData data, CancellationToken cancellationToken = default)
         {
-            if (solutionName == null)
-            {
-                throw new ArgumentNullException(nameof(solutionName));
-            }
-            if (solutionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(solutionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(solutionName, nameof(solutionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _iotSecuritySolutionClientDiagnostics.CreateScope("IotSecuritySolutionCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +179,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="solutionName"/> is null. </exception>
         public virtual async Task<Response<IotSecuritySolutionResource>> GetAsync(string solutionName, CancellationToken cancellationToken = default)
         {
-            if (solutionName == null)
-            {
-                throw new ArgumentNullException(nameof(solutionName));
-            }
-            if (solutionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(solutionName));
-            }
+            Argument.AssertNotNullOrEmpty(solutionName, nameof(solutionName));
 
             using var scope = _iotSecuritySolutionClientDiagnostics.CreateScope("IotSecuritySolutionCollection.Get");
             scope.Start();
@@ -251,14 +224,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="solutionName"/> is null. </exception>
         public virtual Response<IotSecuritySolutionResource> Get(string solutionName, CancellationToken cancellationToken = default)
         {
-            if (solutionName == null)
-            {
-                throw new ArgumentNullException(nameof(solutionName));
-            }
-            if (solutionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(solutionName));
-            }
+            Argument.AssertNotNullOrEmpty(solutionName, nameof(solutionName));
 
             using var scope = _iotSecuritySolutionClientDiagnostics.CreateScope("IotSecuritySolutionCollection.Get");
             scope.Start();
@@ -365,14 +331,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="solutionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string solutionName, CancellationToken cancellationToken = default)
         {
-            if (solutionName == null)
-            {
-                throw new ArgumentNullException(nameof(solutionName));
-            }
-            if (solutionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(solutionName));
-            }
+            Argument.AssertNotNullOrEmpty(solutionName, nameof(solutionName));
 
             using var scope = _iotSecuritySolutionClientDiagnostics.CreateScope("IotSecuritySolutionCollection.Exists");
             scope.Start();
@@ -415,14 +374,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="solutionName"/> is null. </exception>
         public virtual Response<bool> Exists(string solutionName, CancellationToken cancellationToken = default)
         {
-            if (solutionName == null)
-            {
-                throw new ArgumentNullException(nameof(solutionName));
-            }
-            if (solutionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(solutionName));
-            }
+            Argument.AssertNotNullOrEmpty(solutionName, nameof(solutionName));
 
             using var scope = _iotSecuritySolutionClientDiagnostics.CreateScope("IotSecuritySolutionCollection.Exists");
             scope.Start();
@@ -465,14 +417,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="solutionName"/> is null. </exception>
         public virtual async Task<NullableResponse<IotSecuritySolutionResource>> GetIfExistsAsync(string solutionName, CancellationToken cancellationToken = default)
         {
-            if (solutionName == null)
-            {
-                throw new ArgumentNullException(nameof(solutionName));
-            }
-            if (solutionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(solutionName));
-            }
+            Argument.AssertNotNullOrEmpty(solutionName, nameof(solutionName));
 
             using var scope = _iotSecuritySolutionClientDiagnostics.CreateScope("IotSecuritySolutionCollection.GetIfExists");
             scope.Start();
@@ -517,14 +462,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="solutionName"/> is null. </exception>
         public virtual NullableResponse<IotSecuritySolutionResource> GetIfExists(string solutionName, CancellationToken cancellationToken = default)
         {
-            if (solutionName == null)
-            {
-                throw new ArgumentNullException(nameof(solutionName));
-            }
-            if (solutionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(solutionName));
-            }
+            Argument.AssertNotNullOrEmpty(solutionName, nameof(solutionName));
 
             using var scope = _iotSecuritySolutionClientDiagnostics.CreateScope("IotSecuritySolutionCollection.GetIfExists");
             scope.Start();

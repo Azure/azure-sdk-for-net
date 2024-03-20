@@ -140,18 +140,18 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<MobileNetworkProvisioningState> provisioningState = default;
-            Optional<IReadOnlyDictionary<string, MobileNetworkSiteProvisioningState>> siteProvisioningState = default;
+            SystemData systemData = default;
+            MobileNetworkProvisioningState? provisioningState = default;
+            IReadOnlyDictionary<string, MobileNetworkSiteProvisioningState> siteProvisioningState = default;
             Ambr ueAmbr = default;
             WritableSubResource defaultSlice = default;
-            Optional<int> rfspIndex = default;
-            Optional<int> registrationTimer = default;
+            int? rfspIndex = default;
+            int? registrationTimer = default;
             IList<MobileNetworkSliceConfiguration> sliceConfigurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.MobileNetwork
                         }
                         if (property0.NameEquals("ueAmbr"u8))
                         {
-                            ueAmbr = Ambr.DeserializeAmbr(property0.Value);
+                            ueAmbr = Ambr.DeserializeAmbr(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("defaultSlice"u8))
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.MobileNetwork
                             List<MobileNetworkSliceConfiguration> array = new List<MobileNetworkSliceConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MobileNetworkSliceConfiguration.DeserializeMobileNetworkSliceConfiguration(item));
+                                array.Add(MobileNetworkSliceConfiguration.DeserializeMobileNetworkSliceConfiguration(item, options));
                             }
                             sliceConfigurations = array;
                             continue;
@@ -279,7 +279,21 @@ namespace Azure.ResourceManager.MobileNetwork
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MobileNetworkSimPolicyData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), Optional.ToDictionary(siteProvisioningState), ueAmbr, defaultSlice, Optional.ToNullable(rfspIndex), Optional.ToNullable(registrationTimer), sliceConfigurations, serializedAdditionalRawData);
+            return new MobileNetworkSimPolicyData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState,
+                siteProvisioningState ?? new ChangeTrackingDictionary<string, MobileNetworkSiteProvisioningState>(),
+                ueAmbr,
+                defaultSlice,
+                rfspIndex,
+                registrationTimer,
+                sliceConfigurations,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MobileNetworkSimPolicyData>.Write(ModelReaderWriterOptions options)

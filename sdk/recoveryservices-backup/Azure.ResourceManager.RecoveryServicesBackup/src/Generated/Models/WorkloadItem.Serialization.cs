@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -90,16 +91,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureVmWorkloadItem": return VmWorkloadItem.DeserializeVmWorkloadItem(element);
-                    case "SAPAseDatabase": return VmWorkloadSapAseDatabaseWorkloadItem.DeserializeVmWorkloadSapAseDatabaseWorkloadItem(element);
-                    case "SAPAseSystem": return VmWorkloadSapAseSystemWorkloadItem.DeserializeVmWorkloadSapAseSystemWorkloadItem(element);
-                    case "SAPHanaDatabase": return VmWorkloadSapHanaDatabaseWorkloadItem.DeserializeVmWorkloadSapHanaDatabaseWorkloadItem(element);
-                    case "SAPHanaSystem": return VmWorkloadSapHanaSystemWorkloadItem.DeserializeVmWorkloadSapHanaSystemWorkloadItem(element);
-                    case "SQLDataBase": return VmWorkloadSqlDatabaseWorkloadItem.DeserializeVmWorkloadSqlDatabaseWorkloadItem(element);
-                    case "SQLInstance": return VmWorkloadSqlInstanceWorkloadItem.DeserializeVmWorkloadSqlInstanceWorkloadItem(element);
+                    case "AzureVmWorkloadItem": return VmWorkloadItem.DeserializeVmWorkloadItem(element, options);
+                    case "SAPAseDatabase": return VmWorkloadSapAseDatabaseWorkloadItem.DeserializeVmWorkloadSapAseDatabaseWorkloadItem(element, options);
+                    case "SAPAseSystem": return VmWorkloadSapAseSystemWorkloadItem.DeserializeVmWorkloadSapAseSystemWorkloadItem(element, options);
+                    case "SAPHanaDatabase": return VmWorkloadSapHanaDatabaseWorkloadItem.DeserializeVmWorkloadSapHanaDatabaseWorkloadItem(element, options);
+                    case "SAPHanaSystem": return VmWorkloadSapHanaSystemWorkloadItem.DeserializeVmWorkloadSapHanaSystemWorkloadItem(element, options);
+                    case "SQLDataBase": return VmWorkloadSqlDatabaseWorkloadItem.DeserializeVmWorkloadSqlDatabaseWorkloadItem(element, options);
+                    case "SQLInstance": return VmWorkloadSqlInstanceWorkloadItem.DeserializeVmWorkloadSqlInstanceWorkloadItem(element, options);
                 }
             }
-            return UnknownWorkloadItem.DeserializeUnknownWorkloadItem(element);
+            return UnknownWorkloadItem.DeserializeUnknownWorkloadItem(element, options);
         }
 
         BinaryData IPersistableModel<WorkloadItem>.Write(ModelReaderWriterOptions options)

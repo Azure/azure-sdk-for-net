@@ -144,21 +144,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> annotation = default;
-            Optional<RedistributeConnectedSubnet> redistributeConnectedSubnets = default;
-            Optional<RedistributeStaticRoute> redistributeStaticRoutes = default;
-            Optional<AggregateRouteConfiguration> aggregateRouteConfiguration = default;
-            Optional<ConnectedSubnetRoutePolicy> connectedSubnetRoutePolicy = default;
+            SystemData systemData = default;
+            string annotation = default;
+            RedistributeConnectedSubnet? redistributeConnectedSubnets = default;
+            RedistributeStaticRoute? redistributeStaticRoutes = default;
+            AggregateRouteConfiguration aggregateRouteConfiguration = default;
+            ConnectedSubnetRoutePolicy connectedSubnetRoutePolicy = default;
             ResourceIdentifier networkFabricId = default;
-            Optional<NetworkFabricConfigurationState> configurationState = default;
-            Optional<NetworkFabricProvisioningState> provisioningState = default;
-            Optional<NetworkFabricAdministrativeState> administrativeState = default;
+            NetworkFabricConfigurationState? configurationState = default;
+            NetworkFabricProvisioningState? provisioningState = default;
+            NetworkFabricAdministrativeState? administrativeState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            aggregateRouteConfiguration = AggregateRouteConfiguration.DeserializeAggregateRouteConfiguration(property0.Value);
+                            aggregateRouteConfiguration = AggregateRouteConfiguration.DeserializeAggregateRouteConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("connectedSubnetRoutePolicy"u8))
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            connectedSubnetRoutePolicy = ConnectedSubnetRoutePolicy.DeserializeConnectedSubnetRoutePolicy(property0.Value);
+                            connectedSubnetRoutePolicy = ConnectedSubnetRoutePolicy.DeserializeConnectedSubnetRoutePolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("networkFabricId"u8))
@@ -297,7 +297,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFabricL3IsolationDomainData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, annotation.Value, Optional.ToNullable(redistributeConnectedSubnets), Optional.ToNullable(redistributeStaticRoutes), aggregateRouteConfiguration.Value, connectedSubnetRoutePolicy.Value, networkFabricId, Optional.ToNullable(configurationState), Optional.ToNullable(provisioningState), Optional.ToNullable(administrativeState), serializedAdditionalRawData);
+            return new NetworkFabricL3IsolationDomainData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                annotation,
+                redistributeConnectedSubnets,
+                redistributeStaticRoutes,
+                aggregateRouteConfiguration,
+                connectedSubnetRoutePolicy,
+                networkFabricId,
+                configurationState,
+                provisioningState,
+                administrativeState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkFabricL3IsolationDomainData>.Write(ModelReaderWriterOptions options)

@@ -92,14 +92,14 @@ namespace Azure.ResourceManager.MachineLearning
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = MachineLearningFeatureSetContainerProperties.DeserializeMachineLearningFeatureSetContainerProperties(property.Value);
+                    properties = MachineLearningFeatureSetContainerProperties.DeserializeMachineLearningFeatureSetContainerProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -132,7 +132,13 @@ namespace Azure.ResourceManager.MachineLearning
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningFeatureSetContainerData(id, name, type, systemData.Value, properties, serializedAdditionalRawData);
+            return new MachineLearningFeatureSetContainerData(
+                id,
+                name,
+                type,
+                systemData,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningFeatureSetContainerData>.Write(ModelReaderWriterOptions options)

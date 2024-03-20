@@ -113,11 +113,11 @@ namespace Azure.ResourceManager.Avs
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<AvsPrivateCloudDatastoreProvisioningState> provisioningState = default;
-            Optional<WritableSubResource> netAppVolume = default;
-            Optional<DiskPoolVolume> diskPoolVolume = default;
-            Optional<DatastoreStatus> status = default;
+            SystemData systemData = default;
+            AvsPrivateCloudDatastoreProvisioningState? provisioningState = default;
+            WritableSubResource netAppVolume = default;
+            DiskPoolVolume diskPoolVolume = default;
+            DatastoreStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Avs
                             {
                                 continue;
                             }
-                            diskPoolVolume = DiskPoolVolume.DeserializeDiskPoolVolume(property0.Value);
+                            diskPoolVolume = DiskPoolVolume.DeserializeDiskPoolVolume(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("status"u8))
@@ -200,7 +200,16 @@ namespace Azure.ResourceManager.Avs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvsPrivateCloudDatastoreData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), netAppVolume, diskPoolVolume.Value, Optional.ToNullable(status), serializedAdditionalRawData);
+            return new AvsPrivateCloudDatastoreData(
+                id,
+                name,
+                type,
+                systemData,
+                provisioningState,
+                netAppVolume,
+                diskPoolVolume,
+                status,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvsPrivateCloudDatastoreData>.Write(ModelReaderWriterOptions options)

@@ -1,5 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
+    <PackageReference Include="Azure.ResourceManager.Network" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.BotService.csproj" />
   </ItemGroup>
   <ItemGroup>

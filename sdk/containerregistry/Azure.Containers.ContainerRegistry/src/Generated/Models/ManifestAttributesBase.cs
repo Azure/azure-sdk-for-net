@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
@@ -18,14 +17,8 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="digest"> Manifest. </param>
         /// <param name="createdOn"> Created time. </param>
         /// <param name="lastUpdatedOn"> Last update time. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="digest"/> is null. </exception>
         internal ManifestAttributesBase(string digest, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn)
         {
-            if (digest == null)
-            {
-                throw new ArgumentNullException(nameof(digest));
-            }
-
             Digest = digest;
             CreatedOn = createdOn;
             LastUpdatedOn = lastUpdatedOn;

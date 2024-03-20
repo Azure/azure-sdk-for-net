@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -85,8 +86,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<IList<DWCopyCommandDefaultValue>> defaultValues = default;
-            Optional<IDictionary<string, string>> additionalOptions = default;
+            IList<DWCopyCommandDefaultValue> defaultValues = default;
+            IDictionary<string, string> additionalOptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<DWCopyCommandDefaultValue> array = new List<DWCopyCommandDefaultValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DWCopyCommandDefaultValue.DeserializeDWCopyCommandDefaultValue(item));
+                        array.Add(DWCopyCommandDefaultValue.DeserializeDWCopyCommandDefaultValue(item, options));
                     }
                     defaultValues = array;
                     continue;
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DWCopyCommandSettings(Optional.ToList(defaultValues), Optional.ToDictionary(additionalOptions), serializedAdditionalRawData);
+            return new DWCopyCommandSettings(defaultValues ?? new ChangeTrackingList<DWCopyCommandDefaultValue>(), additionalOptions ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DWCopyCommandSettings>.Write(ModelReaderWriterOptions options)

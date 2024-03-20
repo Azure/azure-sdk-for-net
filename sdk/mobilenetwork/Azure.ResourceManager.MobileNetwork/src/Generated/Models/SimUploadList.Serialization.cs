@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MobileNetwork;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     List<SimNameAndProperties> array = new List<SimNameAndProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SimNameAndProperties.DeserializeSimNameAndProperties(item));
+                        array.Add(SimNameAndProperties.DeserializeSimNameAndProperties(item, options));
                     }
                     sims = array;
                     continue;

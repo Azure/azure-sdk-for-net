@@ -132,18 +132,18 @@ namespace Azure.ResourceManager.FluidRelay
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> frsTenantId = default;
-            Optional<FluidRelayEndpoints> fluidRelayEndpoints = default;
-            Optional<FluidRelayProvisioningState> provisioningState = default;
-            Optional<Models.EncryptionProperties> encryption = default;
-            Optional<FluidRelayStorageSku> storagesku = default;
+            SystemData systemData = default;
+            Guid? frsTenantId = default;
+            FluidRelayEndpoints fluidRelayEndpoints = default;
+            FluidRelayProvisioningState? provisioningState = default;
+            Models.EncryptionProperties encryption = default;
+            FluidRelayStorageSku? storagesku = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.FluidRelay
                             {
                                 continue;
                             }
-                            fluidRelayEndpoints = FluidRelayEndpoints.DeserializeFluidRelayEndpoints(property0.Value);
+                            fluidRelayEndpoints = FluidRelayEndpoints.DeserializeFluidRelayEndpoints(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.FluidRelay
                             {
                                 continue;
                             }
-                            encryption = Models.EncryptionProperties.DeserializeEncryptionProperties(property0.Value);
+                            encryption = Models.EncryptionProperties.DeserializeEncryptionProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("storagesku"u8))
@@ -263,7 +263,20 @@ namespace Azure.ResourceManager.FluidRelay
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FluidRelayServerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(frsTenantId), fluidRelayEndpoints.Value, Optional.ToNullable(provisioningState), encryption.Value, Optional.ToNullable(storagesku), serializedAdditionalRawData);
+            return new FluidRelayServerData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                frsTenantId,
+                fluidRelayEndpoints,
+                provisioningState,
+                encryption,
+                storagesku,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FluidRelayServerData>.Write(ModelReaderWriterOptions options)

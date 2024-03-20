@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -75,7 +76,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 return null;
             }
             EndpointType endpointType = default;
-            Optional<string> resourceId = default;
+            string resourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +109,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PartnerEventSubscriptionDestination(endpointType, serializedAdditionalRawData, resourceId.Value);
+            return new PartnerEventSubscriptionDestination(endpointType, serializedAdditionalRawData, resourceId);
         }
 
         BinaryData IPersistableModel<PartnerEventSubscriptionDestination>.Write(ModelReaderWriterOptions options)

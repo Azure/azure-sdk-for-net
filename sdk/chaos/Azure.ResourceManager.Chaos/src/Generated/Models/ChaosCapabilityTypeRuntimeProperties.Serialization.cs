@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Chaos;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChaosCapabilityTypeRuntimeProperties(kind.Value, serializedAdditionalRawData);
+            return new ChaosCapabilityTypeRuntimeProperties(kind, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChaosCapabilityTypeRuntimeProperties>.Write(ModelReaderWriterOptions options)

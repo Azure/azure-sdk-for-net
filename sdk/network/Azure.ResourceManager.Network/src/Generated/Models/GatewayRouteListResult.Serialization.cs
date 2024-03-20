@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<GatewayRoute>> value = default;
+            IReadOnlyList<GatewayRoute> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<GatewayRoute> array = new List<GatewayRoute>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GatewayRoute.DeserializeGatewayRoute(item));
+                        array.Add(GatewayRoute.DeserializeGatewayRoute(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GatewayRouteListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new GatewayRouteListResult(value ?? new ChangeTrackingList<GatewayRoute>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GatewayRouteListResult>.Write(ModelReaderWriterOptions options)

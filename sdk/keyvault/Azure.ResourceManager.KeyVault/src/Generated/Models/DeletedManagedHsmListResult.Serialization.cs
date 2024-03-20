@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DeletedManagedHsmData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<DeletedManagedHsmData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     List<DeletedManagedHsmData> array = new List<DeletedManagedHsmData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeletedManagedHsmData.DeserializeDeletedManagedHsmData(item));
+                        array.Add(DeletedManagedHsmData.DeserializeDeletedManagedHsmData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeletedManagedHsmListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DeletedManagedHsmListResult(value ?? new ChangeTrackingList<DeletedManagedHsmData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeletedManagedHsmListResult>.Write(ModelReaderWriterOptions options)

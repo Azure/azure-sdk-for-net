@@ -99,8 +99,8 @@ namespace Azure.ResourceManager.HybridContainerService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<HybridContainerServiceResourceProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            HybridContainerServiceResourceProvisioningState? provisioningState = default;
             ProvisionedClusterPoolUpgradeProfile controlPlaneProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.HybridContainerService
                         }
                         if (property0.NameEquals("controlPlaneProfile"u8))
                         {
-                            controlPlaneProfile = ProvisionedClusterPoolUpgradeProfile.DeserializeProvisionedClusterPoolUpgradeProfile(property0.Value);
+                            controlPlaneProfile = ProvisionedClusterPoolUpgradeProfile.DeserializeProvisionedClusterPoolUpgradeProfile(property0.Value, options);
                             continue;
                         }
                     }
@@ -162,7 +162,14 @@ namespace Azure.ResourceManager.HybridContainerService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProvisionedClusterUpgradeProfileData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), controlPlaneProfile, serializedAdditionalRawData);
+            return new ProvisionedClusterUpgradeProfileData(
+                id,
+                name,
+                type,
+                systemData,
+                provisioningState,
+                controlPlaneProfile,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProvisionedClusterUpgradeProfileData>.Write(ModelReaderWriterOptions options)

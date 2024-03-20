@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkFunction;
 
 namespace Azure.ResourceManager.NetworkFunction.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.NetworkFunction.Models
             {
                 return null;
             }
-            Optional<EmissionType> emissionType = default;
-            Optional<IList<EmissionPolicyDestination>> emissionDestinations = default;
+            EmissionType? emissionType = default;
+            IList<EmissionPolicyDestination> emissionDestinations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                     List<EmissionPolicyDestination> array = new List<EmissionPolicyDestination>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EmissionPolicyDestination.DeserializeEmissionPolicyDestination(item));
+                        array.Add(EmissionPolicyDestination.DeserializeEmissionPolicyDestination(item, options));
                     }
                     emissionDestinations = array;
                     continue;
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EmissionPoliciesPropertiesFormat(Optional.ToNullable(emissionType), Optional.ToList(emissionDestinations), serializedAdditionalRawData);
+            return new EmissionPoliciesPropertiesFormat(emissionType, emissionDestinations ?? new ChangeTrackingList<EmissionPolicyDestination>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EmissionPoliciesPropertiesFormat>.Write(ModelReaderWriterOptions options)

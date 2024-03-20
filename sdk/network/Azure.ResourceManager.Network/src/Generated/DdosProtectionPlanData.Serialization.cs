@@ -139,17 +139,17 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ETag? etag = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> resourceGuid = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<IReadOnlyList<WritableSubResource>> publicIPAddresses = default;
-            Optional<IReadOnlyList<WritableSubResource>> virtualNetworks = default;
+            SystemData systemData = default;
+            Guid? resourceGuid = default;
+            NetworkProvisioningState? provisioningState = default;
+            IReadOnlyList<WritableSubResource> publicIPAddresses = default;
+            IReadOnlyList<WritableSubResource> virtualNetworks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -270,7 +270,19 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DdosProtectionPlanData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), Optional.ToList(publicIPAddresses), Optional.ToList(virtualNetworks), serializedAdditionalRawData);
+            return new DdosProtectionPlanData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                etag,
+                resourceGuid,
+                provisioningState,
+                publicIPAddresses ?? new ChangeTrackingList<WritableSubResource>(),
+                virtualNetworks ?? new ChangeTrackingList<WritableSubResource>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DdosProtectionPlanData>.Write(ModelReaderWriterOptions options)

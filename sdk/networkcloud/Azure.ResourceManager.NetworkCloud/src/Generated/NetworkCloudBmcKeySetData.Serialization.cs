@@ -148,28 +148,28 @@ namespace Azure.ResourceManager.NetworkCloud
                 return null;
             }
             ExtendedLocation extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             string azureGroupId = default;
-            Optional<BmcKeySetDetailedStatus> detailedStatus = default;
-            Optional<string> detailedStatusMessage = default;
+            BmcKeySetDetailedStatus? detailedStatus = default;
+            string detailedStatusMessage = default;
             DateTimeOffset expiration = default;
-            Optional<DateTimeOffset> lastValidation = default;
+            DateTimeOffset? lastValidation = default;
             BmcKeySetPrivilegeLevel privilegeLevel = default;
-            Optional<BmcKeySetProvisioningState> provisioningState = default;
+            BmcKeySetProvisioningState? provisioningState = default;
             IList<KeySetUser> userList = default;
-            Optional<IReadOnlyList<KeySetUserStatus>> userListStatus = default;
+            IReadOnlyList<KeySetUserStatus> userListStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
                 {
-                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             List<KeySetUser> array = new List<KeySetUser>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(KeySetUser.DeserializeKeySetUser(item));
+                                array.Add(KeySetUser.DeserializeKeySetUser(item, options));
                             }
                             userList = array;
                             continue;
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             List<KeySetUserStatus> array = new List<KeySetUserStatus>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(KeySetUserStatus.DeserializeKeySetUserStatus(item));
+                                array.Add(KeySetUserStatus.DeserializeKeySetUserStatus(item, options));
                             }
                             userListStatus = array;
                             continue;
@@ -304,7 +304,24 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudBmcKeySetData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, azureGroupId, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, expiration, Optional.ToNullable(lastValidation), privilegeLevel, Optional.ToNullable(provisioningState), userList, Optional.ToList(userListStatus), serializedAdditionalRawData);
+            return new NetworkCloudBmcKeySetData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation,
+                azureGroupId,
+                detailedStatus,
+                detailedStatusMessage,
+                expiration,
+                lastValidation,
+                privilegeLevel,
+                provisioningState,
+                userList,
+                userListStatus ?? new ChangeTrackingList<KeySetUserStatus>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudBmcKeySetData>.Write(ModelReaderWriterOptions options)

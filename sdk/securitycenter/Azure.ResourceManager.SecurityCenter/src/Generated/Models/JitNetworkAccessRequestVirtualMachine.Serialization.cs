@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<JitNetworkAccessRequestPort> array = new List<JitNetworkAccessRequestPort>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JitNetworkAccessRequestPort.DeserializeJitNetworkAccessRequestPort(item));
+                        array.Add(JitNetworkAccessRequestPort.DeserializeJitNetworkAccessRequestPort(item, options));
                     }
                     ports = array;
                     continue;

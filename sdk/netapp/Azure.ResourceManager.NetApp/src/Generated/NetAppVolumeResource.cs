@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -498,10 +498,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<NetAppVolumeResource>> UpdateAsync(WaitUntil waitUntil, NetAppVolumePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _netAppVolumeVolumesClientDiagnostics.CreateScope("NetAppVolumeResource.Update");
             scope.Start();
@@ -533,7 +530,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -547,10 +544,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<NetAppVolumeResource> Update(WaitUntil waitUntil, NetAppVolumePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _netAppVolumeVolumesClientDiagnostics.CreateScope("NetAppVolumeResource.Update");
             scope.Start();
@@ -582,7 +576,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -624,7 +618,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -666,7 +660,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -680,10 +674,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> RevertAsync(WaitUntil waitUntil, NetAppVolumeRevertContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _netAppVolumeVolumesClientDiagnostics.CreateScope("NetAppVolumeResource.Revert");
             scope.Start();
@@ -715,7 +706,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -729,10 +720,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation Revert(WaitUntil waitUntil, NetAppVolumeRevertContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _netAppVolumeVolumesClientDiagnostics.CreateScope("NetAppVolumeResource.Revert");
             scope.Start();
@@ -764,7 +752,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -806,7 +794,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -848,7 +836,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -891,7 +879,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -934,7 +922,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -948,10 +936,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<GetGroupIdListForLdapUserResult>> GetGetGroupIdListForLdapUserAsync(WaitUntil waitUntil, GetGroupIdListForLdapUserContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _netAppVolumeVolumesClientDiagnostics.CreateScope("NetAppVolumeResource.GetGetGroupIdListForLdapUser");
             scope.Start();
@@ -983,7 +968,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -997,10 +982,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<GetGroupIdListForLdapUserResult> GetGetGroupIdListForLdapUser(WaitUntil waitUntil, GetGroupIdListForLdapUserContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _netAppVolumeVolumesClientDiagnostics.CreateScope("NetAppVolumeResource.GetGetGroupIdListForLdapUser");
             scope.Start();
@@ -1032,7 +1014,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1075,7 +1057,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1118,7 +1100,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1132,10 +1114,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> ReestablishReplicationAsync(WaitUntil waitUntil, NetAppVolumeReestablishReplicationContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _netAppVolumeVolumesClientDiagnostics.CreateScope("NetAppVolumeResource.ReestablishReplication");
             scope.Start();
@@ -1167,7 +1146,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1181,10 +1160,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation ReestablishReplication(WaitUntil waitUntil, NetAppVolumeReestablishReplicationContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _netAppVolumeVolumesClientDiagnostics.CreateScope("NetAppVolumeResource.ReestablishReplication");
             scope.Start();
@@ -1216,7 +1192,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1254,7 +1230,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1292,7 +1268,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1321,7 +1297,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1350,7 +1326,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1392,7 +1368,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1434,7 +1410,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1476,7 +1452,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1518,7 +1494,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1532,10 +1508,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> AuthorizeReplicationAsync(WaitUntil waitUntil, NetAppVolumeAuthorizeReplicationContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _netAppVolumeVolumesClientDiagnostics.CreateScope("NetAppVolumeResource.AuthorizeReplication");
             scope.Start();
@@ -1567,7 +1540,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1581,10 +1554,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation AuthorizeReplication(WaitUntil waitUntil, NetAppVolumeAuthorizeReplicationContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _netAppVolumeVolumesClientDiagnostics.CreateScope("NetAppVolumeResource.AuthorizeReplication");
             scope.Start();
@@ -1616,7 +1586,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1658,7 +1628,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1700,7 +1670,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1714,10 +1684,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> PoolChangeAsync(WaitUntil waitUntil, NetAppVolumePoolChangeContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _netAppVolumeVolumesClientDiagnostics.CreateScope("NetAppVolumeResource.PoolChange");
             scope.Start();
@@ -1749,7 +1716,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1763,10 +1730,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation PoolChange(WaitUntil waitUntil, NetAppVolumePoolChangeContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _netAppVolumeVolumesClientDiagnostics.CreateScope("NetAppVolumeResource.PoolChange");
             scope.Start();
@@ -1798,7 +1762,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1841,7 +1805,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1884,7 +1848,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1926,7 +1890,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1968,7 +1932,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2010,7 +1974,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2052,7 +2016,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2086,7 +2050,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2120,7 +2084,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2134,14 +2098,8 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<NetAppVolumeResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _netAppVolumeVolumesClientDiagnostics.CreateScope("NetAppVolumeResource.AddTag");
             scope.Start();
@@ -2188,7 +2146,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2202,14 +2160,8 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<NetAppVolumeResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _netAppVolumeVolumesClientDiagnostics.CreateScope("NetAppVolumeResource.AddTag");
             scope.Start();
@@ -2256,7 +2208,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2269,10 +2221,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<NetAppVolumeResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _netAppVolumeVolumesClientDiagnostics.CreateScope("NetAppVolumeResource.SetTags");
             scope.Start();
@@ -2316,7 +2265,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2329,10 +2278,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<NetAppVolumeResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _netAppVolumeVolumesClientDiagnostics.CreateScope("NetAppVolumeResource.SetTags");
             scope.Start();
@@ -2376,7 +2322,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2389,10 +2335,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<NetAppVolumeResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _netAppVolumeVolumesClientDiagnostics.CreateScope("NetAppVolumeResource.RemoveTag");
             scope.Start();
@@ -2439,7 +2382,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2452,10 +2395,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<NetAppVolumeResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _netAppVolumeVolumesClientDiagnostics.CreateScope("NetAppVolumeResource.RemoveTag");
             scope.Start();

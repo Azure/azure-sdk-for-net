@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MySql;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
@@ -73,7 +74,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 if (property.NameEquals("backupSettings"u8))
                 {
-                    backupSettings = MySqlFlexibleServerBackupSettings.DeserializeMySqlFlexibleServerBackupSettings(property.Value);
+                    backupSettings = MySqlFlexibleServerBackupSettings.DeserializeMySqlFlexibleServerBackupSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

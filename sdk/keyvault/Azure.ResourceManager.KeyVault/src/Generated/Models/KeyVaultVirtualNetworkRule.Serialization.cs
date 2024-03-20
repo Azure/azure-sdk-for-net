@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 return null;
             }
             string id = default;
-            Optional<bool> ignoreMissingVnetServiceEndpoint = default;
+            bool? ignoreMissingVnetServiceEndpoint = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KeyVaultVirtualNetworkRule(id, Optional.ToNullable(ignoreMissingVnetServiceEndpoint), serializedAdditionalRawData);
+            return new KeyVaultVirtualNetworkRule(id, ignoreMissingVnetServiceEndpoint, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KeyVaultVirtualNetworkRule>.Write(ModelReaderWriterOptions options)

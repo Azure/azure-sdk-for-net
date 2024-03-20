@@ -117,11 +117,11 @@ namespace Azure.ResourceManager.Media
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<string> description = default;
-            Optional<DateTimeOffset> lastModified = default;
-            Optional<IList<MediaTransformOutput>> outputs = default;
+            SystemData systemData = default;
+            DateTimeOffset? created = default;
+            string description = default;
+            DateTimeOffset? lastModified = default;
+            IList<MediaTransformOutput> outputs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Media
                             List<MediaTransformOutput> array = new List<MediaTransformOutput>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MediaTransformOutput.DeserializeMediaTransformOutput(item));
+                                array.Add(MediaTransformOutput.DeserializeMediaTransformOutput(item, options));
                             }
                             outputs = array;
                             continue;
@@ -205,7 +205,16 @@ namespace Azure.ResourceManager.Media
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaTransformData(id, name, type, systemData.Value, Optional.ToNullable(created), description.Value, Optional.ToNullable(lastModified), Optional.ToList(outputs), serializedAdditionalRawData);
+            return new MediaTransformData(
+                id,
+                name,
+                type,
+                systemData,
+                created,
+                description,
+                lastModified,
+                outputs ?? new ChangeTrackingList<MediaTransformOutput>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MediaTransformData>.Write(ModelReaderWriterOptions options)

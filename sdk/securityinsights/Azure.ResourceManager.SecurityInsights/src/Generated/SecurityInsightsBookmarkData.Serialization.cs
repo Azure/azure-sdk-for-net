@@ -165,24 +165,24 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<SecurityInsightsUserInfo> createdBy = default;
-            Optional<string> displayName = default;
-            Optional<IList<string>> labels = default;
-            Optional<string> notes = default;
-            Optional<string> query = default;
-            Optional<string> queryResult = default;
-            Optional<DateTimeOffset> updated = default;
-            Optional<SecurityInsightsUserInfo> updatedBy = default;
-            Optional<DateTimeOffset> eventTime = default;
-            Optional<DateTimeOffset> queryStartTime = default;
-            Optional<DateTimeOffset> queryEndTime = default;
-            Optional<SecurityInsightsBookmarkIncidentInfo> incidentInfo = default;
+            SystemData systemData = default;
+            DateTimeOffset? created = default;
+            SecurityInsightsUserInfo createdBy = default;
+            string displayName = default;
+            IList<string> labels = default;
+            string notes = default;
+            string query = default;
+            string queryResult = default;
+            DateTimeOffset? updated = default;
+            SecurityInsightsUserInfo updatedBy = default;
+            DateTimeOffset? eventTime = default;
+            DateTimeOffset? queryStartTime = default;
+            DateTimeOffset? queryEndTime = default;
+            SecurityInsightsBookmarkIncidentInfo incidentInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            createdBy = SecurityInsightsUserInfo.DeserializeSecurityInsightsUserInfo(property0.Value);
+                            createdBy = SecurityInsightsUserInfo.DeserializeSecurityInsightsUserInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("displayName"u8))
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            updatedBy = SecurityInsightsUserInfo.DeserializeSecurityInsightsUserInfo(property0.Value);
+                            updatedBy = SecurityInsightsUserInfo.DeserializeSecurityInsightsUserInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("eventTime"u8))
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            incidentInfo = SecurityInsightsBookmarkIncidentInfo.DeserializeSecurityInsightsBookmarkIncidentInfo(property0.Value);
+                            incidentInfo = SecurityInsightsBookmarkIncidentInfo.DeserializeSecurityInsightsBookmarkIncidentInfo(property0.Value, options);
                             continue;
                         }
                     }
@@ -344,7 +344,26 @@ namespace Azure.ResourceManager.SecurityInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsBookmarkData(id, name, type, systemData.Value, Optional.ToNullable(created), createdBy.Value, displayName.Value, Optional.ToList(labels), notes.Value, query.Value, queryResult.Value, Optional.ToNullable(updated), updatedBy.Value, Optional.ToNullable(eventTime), Optional.ToNullable(queryStartTime), Optional.ToNullable(queryEndTime), incidentInfo.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new SecurityInsightsBookmarkData(
+                id,
+                name,
+                type,
+                systemData,
+                created,
+                createdBy,
+                displayName,
+                labels ?? new ChangeTrackingList<string>(),
+                notes,
+                query,
+                queryResult,
+                updated,
+                updatedBy,
+                eventTime,
+                queryStartTime,
+                queryEndTime,
+                incidentInfo,
+                etag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityInsightsBookmarkData>.Write(ModelReaderWriterOptions options)

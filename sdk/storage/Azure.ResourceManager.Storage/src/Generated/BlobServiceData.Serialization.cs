@@ -139,20 +139,20 @@ namespace Azure.ResourceManager.Storage
             {
                 return null;
             }
-            Optional<StorageSku> sku = default;
+            StorageSku sku = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<StorageCorsRules> cors = default;
-            Optional<string> defaultServiceVersion = default;
-            Optional<DeleteRetentionPolicy> deleteRetentionPolicy = default;
-            Optional<bool> isVersioningEnabled = default;
-            Optional<bool> automaticSnapshotPolicyEnabled = default;
-            Optional<BlobServiceChangeFeed> changeFeed = default;
-            Optional<RestorePolicy> restorePolicy = default;
-            Optional<DeleteRetentionPolicy> containerDeleteRetentionPolicy = default;
-            Optional<LastAccessTimeTrackingPolicy> lastAccessTimeTrackingPolicy = default;
+            SystemData systemData = default;
+            StorageCorsRules cors = default;
+            string defaultServiceVersion = default;
+            DeleteRetentionPolicy deleteRetentionPolicy = default;
+            bool? isVersioningEnabled = default;
+            bool? automaticSnapshotPolicyEnabled = default;
+            BlobServiceChangeFeed changeFeed = default;
+            RestorePolicy restorePolicy = default;
+            DeleteRetentionPolicy containerDeleteRetentionPolicy = default;
+            LastAccessTimeTrackingPolicy lastAccessTimeTrackingPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         continue;
                     }
-                    sku = StorageSku.DeserializeStorageSku(property.Value);
+                    sku = StorageSku.DeserializeStorageSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Storage
                             {
                                 continue;
                             }
-                            cors = StorageCorsRules.DeserializeStorageCorsRules(property0.Value);
+                            cors = StorageCorsRules.DeserializeStorageCorsRules(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("defaultServiceVersion"u8))
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Storage
                             {
                                 continue;
                             }
-                            deleteRetentionPolicy = DeleteRetentionPolicy.DeserializeDeleteRetentionPolicy(property0.Value);
+                            deleteRetentionPolicy = DeleteRetentionPolicy.DeserializeDeleteRetentionPolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("isVersioningEnabled"u8))
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Storage
                             {
                                 continue;
                             }
-                            changeFeed = BlobServiceChangeFeed.DeserializeBlobServiceChangeFeed(property0.Value);
+                            changeFeed = BlobServiceChangeFeed.DeserializeBlobServiceChangeFeed(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("restorePolicy"u8))
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Storage
                             {
                                 continue;
                             }
-                            restorePolicy = RestorePolicy.DeserializeRestorePolicy(property0.Value);
+                            restorePolicy = RestorePolicy.DeserializeRestorePolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("containerDeleteRetentionPolicy"u8))
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Storage
                             {
                                 continue;
                             }
-                            containerDeleteRetentionPolicy = DeleteRetentionPolicy.DeserializeDeleteRetentionPolicy(property0.Value);
+                            containerDeleteRetentionPolicy = DeleteRetentionPolicy.DeserializeDeleteRetentionPolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("lastAccessTimeTrackingPolicy"u8))
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Storage
                             {
                                 continue;
                             }
-                            lastAccessTimeTrackingPolicy = LastAccessTimeTrackingPolicy.DeserializeLastAccessTimeTrackingPolicy(property0.Value);
+                            lastAccessTimeTrackingPolicy = LastAccessTimeTrackingPolicy.DeserializeLastAccessTimeTrackingPolicy(property0.Value, options);
                             continue;
                         }
                     }
@@ -285,7 +285,22 @@ namespace Azure.ResourceManager.Storage
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BlobServiceData(id, name, type, systemData.Value, sku.Value, cors.Value, defaultServiceVersion.Value, deleteRetentionPolicy.Value, Optional.ToNullable(isVersioningEnabled), Optional.ToNullable(automaticSnapshotPolicyEnabled), changeFeed.Value, restorePolicy.Value, containerDeleteRetentionPolicy.Value, lastAccessTimeTrackingPolicy.Value, serializedAdditionalRawData);
+            return new BlobServiceData(
+                id,
+                name,
+                type,
+                systemData,
+                sku,
+                cors,
+                defaultServiceVersion,
+                deleteRetentionPolicy,
+                isVersioningEnabled,
+                automaticSnapshotPolicyEnabled,
+                changeFeed,
+                restorePolicy,
+                containerDeleteRetentionPolicy,
+                lastAccessTimeTrackingPolicy,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BlobServiceData>.Write(ModelReaderWriterOptions options)

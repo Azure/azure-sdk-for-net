@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.Analytics.Synapse.Artifacts;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -20,14 +20,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="pythonFile"/> is null. </exception>
         public DatabricksSparkPythonActivity(string name, object pythonFile) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (pythonFile == null)
-            {
-                throw new ArgumentNullException(nameof(pythonFile));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(pythonFile, nameof(pythonFile));
 
             PythonFile = pythonFile;
             Parameters = new ChangeTrackingList<object>();

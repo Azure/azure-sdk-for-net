@@ -123,12 +123,12 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> edition = default;
-            Optional<string> serviceLevelObjective = default;
-            Optional<string> elasticPoolName = default;
-            Optional<DateTimeOffset> lastAvailableBackupDate = default;
-            Optional<IDictionary<string, SqlDatabaseKey>> keys = default;
+            SystemData systemData = default;
+            string edition = default;
+            string serviceLevelObjective = default;
+            string elasticPoolName = default;
+            DateTimeOffset? lastAvailableBackupDate = default;
+            IDictionary<string, SqlDatabaseKey> keys = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Sql
                             Dictionary<string, SqlDatabaseKey> dictionary = new Dictionary<string, SqlDatabaseKey>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, SqlDatabaseKey.DeserializeSqlDatabaseKey(property1.Value));
+                                dictionary.Add(property1.Name, SqlDatabaseKey.DeserializeSqlDatabaseKey(property1.Value, options));
                             }
                             keys = dictionary;
                             continue;
@@ -213,7 +213,17 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecoverableDatabaseData(id, name, type, systemData.Value, edition.Value, serviceLevelObjective.Value, elasticPoolName.Value, Optional.ToNullable(lastAvailableBackupDate), Optional.ToDictionary(keys), serializedAdditionalRawData);
+            return new RecoverableDatabaseData(
+                id,
+                name,
+                type,
+                systemData,
+                edition,
+                serviceLevelObjective,
+                elasticPoolName,
+                lastAvailableBackupDate,
+                keys ?? new ChangeTrackingDictionary<string, SqlDatabaseKey>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecoverableDatabaseData>.Write(ModelReaderWriterOptions options)

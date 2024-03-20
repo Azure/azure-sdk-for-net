@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            Optional<ContainerNetworkProtocol> protocol = default;
+            ContainerNetworkProtocol? protocol = default;
             int port = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerPort(Optional.ToNullable(protocol), port, serializedAdditionalRawData);
+            return new ContainerPort(protocol, port, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerPort>.Write(ModelReaderWriterOptions options)

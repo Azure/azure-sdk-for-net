@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 if (property.NameEquals("triggerOption"u8))
                 {
-                    triggerOption = AdhocBackupTriggerSetting.DeserializeAdhocBackupTriggerSetting(property.Value);
+                    triggerOption = AdhocBackupTriggerSetting.DeserializeAdhocBackupTriggerSetting(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -96,12 +96,12 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 return null;
             }
-            Optional<AppPlatformDeploymentProperties> properties = default;
-            Optional<AppPlatformSku> sku = default;
+            AppPlatformDeploymentProperties properties = default;
+            AppPlatformSku sku = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AppPlatform
                     {
                         continue;
                     }
-                    properties = AppPlatformDeploymentProperties.DeserializeAppPlatformDeploymentProperties(property.Value);
+                    properties = AppPlatformDeploymentProperties.DeserializeAppPlatformDeploymentProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppPlatform
                     {
                         continue;
                     }
-                    sku = AppPlatformSku.DeserializeAppPlatformSku(property.Value);
+                    sku = AppPlatformSku.DeserializeAppPlatformSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -154,7 +154,14 @@ namespace Azure.ResourceManager.AppPlatform
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformDeploymentData(id, name, type, systemData.Value, properties.Value, sku.Value, serializedAdditionalRawData);
+            return new AppPlatformDeploymentData(
+                id,
+                name,
+                type,
+                systemData,
+                properties,
+                sku,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformDeploymentData>.Write(ModelReaderWriterOptions options)

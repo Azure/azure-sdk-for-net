@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 return null;
             }
-            Optional<bool> forceRestart = default;
-            Optional<ManagedClusterHealthPolicy> healthPolicy = default;
-            Optional<ManagedClusterUpgradeDeltaHealthPolicy> deltaHealthPolicy = default;
-            Optional<ManagedClusterMonitoringPolicy> monitoringPolicy = default;
-            Optional<string> upgradeReplicaSetCheckTimeout = default;
+            bool? forceRestart = default;
+            ManagedClusterHealthPolicy healthPolicy = default;
+            ManagedClusterUpgradeDeltaHealthPolicy deltaHealthPolicy = default;
+            ManagedClusterMonitoringPolicy monitoringPolicy = default;
+            string upgradeReplicaSetCheckTimeout = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     {
                         continue;
                     }
-                    healthPolicy = ManagedClusterHealthPolicy.DeserializeManagedClusterHealthPolicy(property.Value);
+                    healthPolicy = ManagedClusterHealthPolicy.DeserializeManagedClusterHealthPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("deltaHealthPolicy"u8))
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     {
                         continue;
                     }
-                    deltaHealthPolicy = ManagedClusterUpgradeDeltaHealthPolicy.DeserializeManagedClusterUpgradeDeltaHealthPolicy(property.Value);
+                    deltaHealthPolicy = ManagedClusterUpgradeDeltaHealthPolicy.DeserializeManagedClusterUpgradeDeltaHealthPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("monitoringPolicy"u8))
@@ -131,7 +132,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     {
                         continue;
                     }
-                    monitoringPolicy = ManagedClusterMonitoringPolicy.DeserializeManagedClusterMonitoringPolicy(property.Value);
+                    monitoringPolicy = ManagedClusterMonitoringPolicy.DeserializeManagedClusterMonitoringPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("upgradeReplicaSetCheckTimeout"u8))
@@ -145,7 +146,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterUpgradePolicy(Optional.ToNullable(forceRestart), healthPolicy.Value, deltaHealthPolicy.Value, monitoringPolicy.Value, upgradeReplicaSetCheckTimeout.Value, serializedAdditionalRawData);
+            return new ManagedClusterUpgradePolicy(
+                forceRestart,
+                healthPolicy,
+                deltaHealthPolicy,
+                monitoringPolicy,
+                upgradeReplicaSetCheckTimeout,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterUpgradePolicy>.Write(ModelReaderWriterOptions options)

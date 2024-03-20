@@ -283,10 +283,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<IntegrationAccountAgreementResource>> UpdateAsync(WaitUntil waitUntil, IntegrationAccountAgreementData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _integrationAccountAgreementClientDiagnostics.CreateScope("IntegrationAccountAgreementResource.Update");
             scope.Start();
@@ -332,10 +329,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<IntegrationAccountAgreementResource> Update(WaitUntil waitUntil, IntegrationAccountAgreementData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _integrationAccountAgreementClientDiagnostics.CreateScope("IntegrationAccountAgreementResource.Update");
             scope.Start();
@@ -380,10 +374,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
         public virtual async Task<Response<LogicWorkflowTriggerCallbackUri>> GetContentCallbackUrlAsync(ListOperationCallbackUrlParameterInfo info, CancellationToken cancellationToken = default)
         {
-            if (info == null)
-            {
-                throw new ArgumentNullException(nameof(info));
-            }
+            Argument.AssertNotNull(info, nameof(info));
 
             using var scope = _integrationAccountAgreementClientDiagnostics.CreateScope("IntegrationAccountAgreementResource.GetContentCallbackUrl");
             scope.Start();
@@ -425,10 +416,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
         public virtual Response<LogicWorkflowTriggerCallbackUri> GetContentCallbackUrl(ListOperationCallbackUrlParameterInfo info, CancellationToken cancellationToken = default)
         {
-            if (info == null)
-            {
-                throw new ArgumentNullException(nameof(info));
-            }
+            Argument.AssertNotNull(info, nameof(info));
 
             using var scope = _integrationAccountAgreementClientDiagnostics.CreateScope("IntegrationAccountAgreementResource.GetContentCallbackUrl");
             scope.Start();
@@ -471,14 +459,8 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<IntegrationAccountAgreementResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _integrationAccountAgreementClientDiagnostics.CreateScope("IntegrationAccountAgreementResource.AddTag");
             scope.Start();
@@ -534,14 +516,8 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<IntegrationAccountAgreementResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _integrationAccountAgreementClientDiagnostics.CreateScope("IntegrationAccountAgreementResource.AddTag");
             scope.Start();
@@ -596,10 +572,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<IntegrationAccountAgreementResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _integrationAccountAgreementClientDiagnostics.CreateScope("IntegrationAccountAgreementResource.SetTags");
             scope.Start();
@@ -655,10 +628,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<IntegrationAccountAgreementResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _integrationAccountAgreementClientDiagnostics.CreateScope("IntegrationAccountAgreementResource.SetTags");
             scope.Start();
@@ -714,10 +684,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<IntegrationAccountAgreementResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _integrationAccountAgreementClientDiagnostics.CreateScope("IntegrationAccountAgreementResource.RemoveTag");
             scope.Start();
@@ -772,10 +739,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<IntegrationAccountAgreementResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _integrationAccountAgreementClientDiagnostics.CreateScope("IntegrationAccountAgreementResource.RemoveTag");
             scope.Start();

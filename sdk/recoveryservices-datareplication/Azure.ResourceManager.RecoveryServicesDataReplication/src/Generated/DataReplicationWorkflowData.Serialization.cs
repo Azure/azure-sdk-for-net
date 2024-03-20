@@ -92,14 +92,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = DataReplicationWorkflowProperties.DeserializeDataReplicationWorkflowProperties(property.Value);
+                    properties = DataReplicationWorkflowProperties.DeserializeDataReplicationWorkflowProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -132,7 +132,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataReplicationWorkflowData(id, name, type, systemData.Value, properties, serializedAdditionalRawData);
+            return new DataReplicationWorkflowData(
+                id,
+                name,
+                type,
+                systemData,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataReplicationWorkflowData>.Write(ModelReaderWriterOptions options)

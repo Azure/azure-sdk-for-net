@@ -177,25 +177,25 @@ namespace Azure.ResourceManager.HybridCompute
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<MachineRunCommandScriptSource> source = default;
-            Optional<IList<RunCommandInputParameter>> parameters = default;
-            Optional<IList<RunCommandInputParameter>> protectedParameters = default;
-            Optional<bool> asyncExecution = default;
-            Optional<string> runAsUser = default;
-            Optional<string> runAsPassword = default;
-            Optional<int> timeoutInSeconds = default;
-            Optional<Uri> outputBlobUri = default;
-            Optional<Uri> errorBlobUri = default;
-            Optional<RunCommandManagedIdentity> outputBlobManagedIdentity = default;
-            Optional<RunCommandManagedIdentity> errorBlobManagedIdentity = default;
-            Optional<string> provisioningState = default;
-            Optional<MachineRunCommandInstanceView> instanceView = default;
+            SystemData systemData = default;
+            MachineRunCommandScriptSource source = default;
+            IList<RunCommandInputParameter> parameters = default;
+            IList<RunCommandInputParameter> protectedParameters = default;
+            bool? asyncExecution = default;
+            string runAsUser = default;
+            string runAsPassword = default;
+            int? timeoutInSeconds = default;
+            Uri outputBlobUri = default;
+            Uri errorBlobUri = default;
+            RunCommandManagedIdentity outputBlobManagedIdentity = default;
+            RunCommandManagedIdentity errorBlobManagedIdentity = default;
+            string provisioningState = default;
+            MachineRunCommandInstanceView instanceView = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.HybridCompute
                             {
                                 continue;
                             }
-                            source = MachineRunCommandScriptSource.DeserializeMachineRunCommandScriptSource(property0.Value);
+                            source = MachineRunCommandScriptSource.DeserializeMachineRunCommandScriptSource(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("parameters"u8))
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.HybridCompute
                             List<RunCommandInputParameter> array = new List<RunCommandInputParameter>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RunCommandInputParameter.DeserializeRunCommandInputParameter(item));
+                                array.Add(RunCommandInputParameter.DeserializeRunCommandInputParameter(item, options));
                             }
                             parameters = array;
                             continue;
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.HybridCompute
                             List<RunCommandInputParameter> array = new List<RunCommandInputParameter>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RunCommandInputParameter.DeserializeRunCommandInputParameter(item));
+                                array.Add(RunCommandInputParameter.DeserializeRunCommandInputParameter(item, options));
                             }
                             protectedParameters = array;
                             continue;
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.HybridCompute
                             {
                                 continue;
                             }
-                            outputBlobManagedIdentity = RunCommandManagedIdentity.DeserializeRunCommandManagedIdentity(property0.Value);
+                            outputBlobManagedIdentity = RunCommandManagedIdentity.DeserializeRunCommandManagedIdentity(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("errorBlobManagedIdentity"u8))
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.HybridCompute
                             {
                                 continue;
                             }
-                            errorBlobManagedIdentity = RunCommandManagedIdentity.DeserializeRunCommandManagedIdentity(property0.Value);
+                            errorBlobManagedIdentity = RunCommandManagedIdentity.DeserializeRunCommandManagedIdentity(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.HybridCompute
                             {
                                 continue;
                             }
-                            instanceView = MachineRunCommandInstanceView.DeserializeMachineRunCommandInstanceView(property0.Value);
+                            instanceView = MachineRunCommandInstanceView.DeserializeMachineRunCommandInstanceView(property0.Value, options);
                             continue;
                         }
                     }
@@ -376,7 +376,27 @@ namespace Azure.ResourceManager.HybridCompute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineRunCommandData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, source.Value, Optional.ToList(parameters), Optional.ToList(protectedParameters), Optional.ToNullable(asyncExecution), runAsUser.Value, runAsPassword.Value, Optional.ToNullable(timeoutInSeconds), outputBlobUri.Value, errorBlobUri.Value, outputBlobManagedIdentity.Value, errorBlobManagedIdentity.Value, provisioningState.Value, instanceView.Value, serializedAdditionalRawData);
+            return new MachineRunCommandData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                source,
+                parameters ?? new ChangeTrackingList<RunCommandInputParameter>(),
+                protectedParameters ?? new ChangeTrackingList<RunCommandInputParameter>(),
+                asyncExecution,
+                runAsUser,
+                runAsPassword,
+                timeoutInSeconds,
+                outputBlobUri,
+                errorBlobUri,
+                outputBlobManagedIdentity,
+                errorBlobManagedIdentity,
+                provisioningState,
+                instanceView,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineRunCommandData>.Write(ModelReaderWriterOptions options)

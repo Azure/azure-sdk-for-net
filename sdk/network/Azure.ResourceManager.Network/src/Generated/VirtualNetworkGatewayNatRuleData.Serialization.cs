@@ -129,16 +129,16 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<VpnNatRuleType> type0 = default;
-            Optional<VpnNatRuleMode> mode = default;
-            Optional<IList<VpnNatRuleMapping>> internalMappings = default;
-            Optional<IList<VpnNatRuleMapping>> externalMappings = default;
-            Optional<string> ipConfigurationId = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            NetworkProvisioningState? provisioningState = default;
+            VpnNatRuleType? type0 = default;
+            VpnNatRuleMode? mode = default;
+            IList<VpnNatRuleMapping> internalMappings = default;
+            IList<VpnNatRuleMapping> externalMappings = default;
+            string ipConfigurationId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Network
                             List<VpnNatRuleMapping> array = new List<VpnNatRuleMapping>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VpnNatRuleMapping.DeserializeVpnNatRuleMapping(item));
+                                array.Add(VpnNatRuleMapping.DeserializeVpnNatRuleMapping(item, options));
                             }
                             internalMappings = array;
                             continue;
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Network
                             List<VpnNatRuleMapping> array = new List<VpnNatRuleMapping>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VpnNatRuleMapping.DeserializeVpnNatRuleMapping(item));
+                                array.Add(VpnNatRuleMapping.DeserializeVpnNatRuleMapping(item, options));
                             }
                             externalMappings = array;
                             continue;
@@ -253,7 +253,18 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualNetworkGatewayNatRuleData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(provisioningState), Optional.ToNullable(type0), Optional.ToNullable(mode), Optional.ToList(internalMappings), Optional.ToList(externalMappings), ipConfigurationId.Value);
+            return new VirtualNetworkGatewayNatRuleData(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                provisioningState,
+                type0,
+                mode,
+                internalMappings ?? new ChangeTrackingList<VpnNatRuleMapping>(),
+                externalMappings ?? new ChangeTrackingList<VpnNatRuleMapping>(),
+                ipConfigurationId);
         }
 
         BinaryData IPersistableModel<VirtualNetworkGatewayNatRuleData>.Write(ModelReaderWriterOptions options)

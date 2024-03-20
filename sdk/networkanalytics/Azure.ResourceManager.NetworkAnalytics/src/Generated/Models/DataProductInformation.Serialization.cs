@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkAnalytics;
 
 namespace Azure.ResourceManager.NetworkAnalytics.Models
 {
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                     List<DataProductVersion> array = new List<DataProductVersion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataProductVersion.DeserializeDataProductVersion(item));
+                        array.Add(DataProductVersion.DeserializeDataProductVersion(item, options));
                     }
                     dataProductVersions = array;
                     continue;

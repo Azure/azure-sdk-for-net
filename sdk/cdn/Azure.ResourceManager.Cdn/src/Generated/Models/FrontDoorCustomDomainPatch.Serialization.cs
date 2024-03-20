@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
@@ -95,10 +96,10 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<string> profileName = default;
-            Optional<FrontDoorCustomDomainHttpsContent> tlsSettings = default;
-            Optional<WritableSubResource> azureDnsZone = default;
-            Optional<FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId> preValidatedCustomDomainResourceId = default;
+            string profileName = default;
+            FrontDoorCustomDomainHttpsContent tlsSettings = default;
+            WritableSubResource azureDnsZone = default;
+            FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId preValidatedCustomDomainResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,7 +124,7 @@ namespace Azure.ResourceManager.Cdn.Models
                             {
                                 continue;
                             }
-                            tlsSettings = FrontDoorCustomDomainHttpsContent.DeserializeFrontDoorCustomDomainHttpsContent(property0.Value);
+                            tlsSettings = FrontDoorCustomDomainHttpsContent.DeserializeFrontDoorCustomDomainHttpsContent(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("azureDnsZone"u8))
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.Cdn.Models
                                 preValidatedCustomDomainResourceId = null;
                                 continue;
                             }
-                            preValidatedCustomDomainResourceId = FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId.DeserializeFrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId(property0.Value);
+                            preValidatedCustomDomainResourceId = FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId.DeserializeFrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId(property0.Value, options);
                             continue;
                         }
                     }
@@ -154,7 +155,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorCustomDomainPatch(profileName.Value, tlsSettings.Value, azureDnsZone, preValidatedCustomDomainResourceId.Value, serializedAdditionalRawData);
+            return new FrontDoorCustomDomainPatch(profileName, tlsSettings, azureDnsZone, preValidatedCustomDomainResourceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorCustomDomainPatch>.Write(ModelReaderWriterOptions options)

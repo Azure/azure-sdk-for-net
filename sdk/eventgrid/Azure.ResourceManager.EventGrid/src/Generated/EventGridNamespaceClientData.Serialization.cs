@@ -140,13 +140,13 @@ namespace Azure.ResourceManager.EventGrid
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<string> authenticationName = default;
-            Optional<ClientCertificateAuthentication> clientCertificateAuthentication = default;
-            Optional<EventGridNamespaceClientState> state = default;
-            Optional<IDictionary<string, BinaryData>> attributes = default;
-            Optional<EventGridNamespaceClientProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            string description = default;
+            string authenticationName = default;
+            ClientCertificateAuthentication clientCertificateAuthentication = default;
+            EventGridNamespaceClientState? state = default;
+            IDictionary<string, BinaryData> attributes = default;
+            EventGridNamespaceClientProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.EventGrid
                             {
                                 continue;
                             }
-                            clientCertificateAuthentication = ClientCertificateAuthentication.DeserializeClientCertificateAuthentication(property0.Value);
+                            clientCertificateAuthentication = ClientCertificateAuthentication.DeserializeClientCertificateAuthentication(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("state"u8))
@@ -251,7 +251,18 @@ namespace Azure.ResourceManager.EventGrid
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventGridNamespaceClientData(id, name, type, systemData.Value, description.Value, authenticationName.Value, clientCertificateAuthentication.Value, Optional.ToNullable(state), Optional.ToDictionary(attributes), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new EventGridNamespaceClientData(
+                id,
+                name,
+                type,
+                systemData,
+                description,
+                authenticationName,
+                clientCertificateAuthentication,
+                state,
+                attributes ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventGridNamespaceClientData>.Write(ModelReaderWriterOptions options)

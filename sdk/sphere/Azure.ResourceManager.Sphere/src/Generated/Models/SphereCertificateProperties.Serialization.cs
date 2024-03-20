@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sphere;
 
 namespace Azure.ResourceManager.Sphere.Models
 {
@@ -99,13 +100,13 @@ namespace Azure.ResourceManager.Sphere.Models
             {
                 return null;
             }
-            Optional<string> certificate = default;
-            Optional<SphereCertificateStatus> status = default;
-            Optional<string> subject = default;
-            Optional<string> thumbprint = default;
-            Optional<DateTimeOffset> expiryUtc = default;
-            Optional<DateTimeOffset> notBeforeUtc = default;
-            Optional<SphereProvisioningState> provisioningState = default;
+            string certificate = default;
+            SphereCertificateStatus? status = default;
+            string subject = default;
+            string thumbprint = default;
+            DateTimeOffset? expiryUtc = default;
+            DateTimeOffset? notBeforeUtc = default;
+            SphereProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -167,7 +168,15 @@ namespace Azure.ResourceManager.Sphere.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SphereCertificateProperties(certificate.Value, Optional.ToNullable(status), subject.Value, thumbprint.Value, Optional.ToNullable(expiryUtc), Optional.ToNullable(notBeforeUtc), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new SphereCertificateProperties(
+                certificate,
+                status,
+                subject,
+                thumbprint,
+                expiryUtc,
+                notBeforeUtc,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SphereCertificateProperties>.Write(ModelReaderWriterOptions options)

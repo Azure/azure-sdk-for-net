@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -99,8 +100,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ServerVulnerabilityAssessmentsAzureSettingSelectedProvider> selectedProvider = default;
+            SystemData systemData = default;
+            ServerVulnerabilityAssessmentsAzureSettingSelectedProvider? selectedProvider = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -161,7 +162,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureServersSetting(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToNullable(selectedProvider));
+            return new AzureServersSetting(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData,
+                selectedProvider);
         }
 
         BinaryData IPersistableModel<AzureServersSetting>.Write(ModelReaderWriterOptions options)

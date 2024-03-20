@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<IList<string>> topSid = default;
+            string name = default;
+            IList<string> topSid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SapLandscapeMonitorSidMapping(name.Value, Optional.ToList(topSid), serializedAdditionalRawData);
+            return new SapLandscapeMonitorSidMapping(name, topSid ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SapLandscapeMonitorSidMapping>.Write(ModelReaderWriterOptions options)

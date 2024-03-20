@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataLakeStore;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataLakeStore.Models
@@ -134,18 +135,18 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            AzureLocation? location = default;
+            IReadOnlyDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> accountId = default;
-            Optional<DataLakeStoreAccountStatus> provisioningState = default;
-            Optional<DataLakeStoreAccountState> state = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<string> endpoint = default;
+            SystemData systemData = default;
+            Guid? accountId = default;
+            DataLakeStoreAccountStatus? provisioningState = default;
+            DataLakeStoreAccountState? state = default;
+            DateTimeOffset? creationTime = default;
+            DateTimeOffset? lastModifiedTime = default;
+            string endpoint = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -265,7 +266,20 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLakeStoreAccountBasicData(id, name, type, systemData.Value, Optional.ToNullable(accountId), Optional.ToNullable(provisioningState), Optional.ToNullable(state), Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), endpoint.Value, Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new DataLakeStoreAccountBasicData(
+                id,
+                name,
+                type,
+                systemData,
+                accountId,
+                provisioningState,
+                state,
+                creationTime,
+                lastModifiedTime,
+                endpoint,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataLakeStoreAccountBasicData>.Write(ModelReaderWriterOptions options)

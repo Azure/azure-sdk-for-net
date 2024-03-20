@@ -7,7 +7,7 @@
 
 using System;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Routing.Models
 {
@@ -19,11 +19,11 @@ namespace Azure.Maps.Routing.Models
             {
                 return null;
             }
-            Optional<int> lengthInMeters = default;
-            Optional<int> travelTimeInSeconds = default;
-            Optional<int> trafficDelayInSeconds = default;
-            Optional<DateTimeOffset> departureTime = default;
-            Optional<DateTimeOffset> arrivalTime = default;
+            int? lengthInMeters = default;
+            int? travelTimeInSeconds = default;
+            int? trafficDelayInSeconds = default;
+            DateTimeOffset? departureTime = default;
+            DateTimeOffset? arrivalTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lengthInMeters"u8))
@@ -72,7 +72,7 @@ namespace Azure.Maps.Routing.Models
                     continue;
                 }
             }
-            return new RouteSummary(Optional.ToNullable(lengthInMeters), Optional.ToNullable(travelTimeInSeconds), Optional.ToNullable(trafficDelayInSeconds), Optional.ToNullable(departureTime), Optional.ToNullable(arrivalTime));
+            return new RouteSummary(lengthInMeters, travelTimeInSeconds, trafficDelayInSeconds, departureTime, arrivalTime);
         }
     }
 }

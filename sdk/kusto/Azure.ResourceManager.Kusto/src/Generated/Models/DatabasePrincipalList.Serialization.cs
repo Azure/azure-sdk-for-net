@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Optional<IList<KustoDatabasePrincipal>> value = default;
+            IList<KustoDatabasePrincipal> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     List<KustoDatabasePrincipal> array = new List<KustoDatabasePrincipal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KustoDatabasePrincipal.DeserializeKustoDatabasePrincipal(item));
+                        array.Add(KustoDatabasePrincipal.DeserializeKustoDatabasePrincipal(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatabasePrincipalList(Optional.ToList(value), serializedAdditionalRawData);
+            return new DatabasePrincipalList(value ?? new ChangeTrackingList<KustoDatabasePrincipal>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatabasePrincipalList>.Write(ModelReaderWriterOptions options)

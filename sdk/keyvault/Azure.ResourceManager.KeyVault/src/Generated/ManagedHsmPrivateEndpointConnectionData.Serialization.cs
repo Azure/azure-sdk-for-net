@@ -129,17 +129,17 @@ namespace Azure.ResourceManager.KeyVault
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ManagedHsmSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ETag? etag = default;
+            ManagedHsmSku sku = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SubResource> privateEndpoint = default;
-            Optional<ManagedHsmPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
-            Optional<ManagedHsmPrivateEndpointConnectionProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            SubResource privateEndpoint = default;
+            ManagedHsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            ManagedHsmPrivateEndpointConnectionProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         continue;
                     }
-                    sku = ManagedHsmSku.DeserializeManagedHsmSku(property.Value);
+                    sku = ManagedHsmSku.DeserializeManagedHsmSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.KeyVault
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = ManagedHsmPrivateLinkServiceConnectionState.DeserializeManagedHsmPrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = ManagedHsmPrivateLinkServiceConnectionState.DeserializeManagedHsmPrivateLinkServiceConnectionState(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -250,7 +250,19 @@ namespace Azure.ResourceManager.KeyVault
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedHsmPrivateEndpointConnectionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), sku.Value, serializedAdditionalRawData);
+            return new ManagedHsmPrivateEndpointConnectionData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                etag,
+                privateEndpoint,
+                privateLinkServiceConnectionState,
+                provisioningState,
+                sku,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedHsmPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options)

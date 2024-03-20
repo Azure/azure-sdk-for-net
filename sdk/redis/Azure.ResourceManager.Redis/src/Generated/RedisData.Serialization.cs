@@ -249,35 +249,35 @@ namespace Azure.ResourceManager.Redis
             {
                 return null;
             }
-            Optional<IList<string>> zones = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IList<string> zones = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<RedisCommonConfiguration> redisConfiguration = default;
-            Optional<string> redisVersion = default;
-            Optional<bool> enableNonSslPort = default;
-            Optional<int> replicasPerMaster = default;
-            Optional<int> replicasPerPrimary = default;
-            Optional<IDictionary<string, string>> tenantSettings = default;
-            Optional<int> shardCount = default;
-            Optional<RedisTlsVersion> minimumTlsVersion = default;
-            Optional<RedisPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<UpdateChannel> updateChannel = default;
+            SystemData systemData = default;
+            RedisCommonConfiguration redisConfiguration = default;
+            string redisVersion = default;
+            bool? enableNonSslPort = default;
+            int? replicasPerMaster = default;
+            int? replicasPerPrimary = default;
+            IDictionary<string, string> tenantSettings = default;
+            int? shardCount = default;
+            RedisTlsVersion? minimumTlsVersion = default;
+            RedisPublicNetworkAccess? publicNetworkAccess = default;
+            UpdateChannel? updateChannel = default;
             RedisSku sku = default;
-            Optional<ResourceIdentifier> subnetId = default;
-            Optional<IPAddress> staticIP = default;
-            Optional<RedisProvisioningState> provisioningState = default;
-            Optional<string> hostName = default;
-            Optional<int> port = default;
-            Optional<int> sslPort = default;
-            Optional<RedisAccessKeys> accessKeys = default;
-            Optional<IReadOnlyList<SubResource>> linkedServers = default;
-            Optional<IReadOnlyList<RedisInstanceDetails>> instances = default;
-            Optional<IReadOnlyList<RedisPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            ResourceIdentifier subnetId = default;
+            IPAddress staticIP = default;
+            RedisProvisioningState? provisioningState = default;
+            string hostName = default;
+            int? port = default;
+            int? sslPort = default;
+            RedisAccessKeys accessKeys = default;
+            IReadOnlyList<SubResource> linkedServers = default;
+            IReadOnlyList<RedisInstanceDetails> instances = default;
+            IReadOnlyList<RedisPrivateEndpointConnectionData> privateEndpointConnections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.Redis
                             {
                                 continue;
                             }
-                            redisConfiguration = RedisCommonConfiguration.DeserializeRedisCommonConfiguration(property0.Value);
+                            redisConfiguration = RedisCommonConfiguration.DeserializeRedisCommonConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("redisVersion"u8))
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.Redis
                         }
                         if (property0.NameEquals("sku"u8))
                         {
-                            sku = RedisSku.DeserializeRedisSku(property0.Value);
+                            sku = RedisSku.DeserializeRedisSku(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("subnetId"u8))
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.Redis
                                 accessKeys = null;
                                 continue;
                             }
-                            accessKeys = RedisAccessKeys.DeserializeRedisAccessKeys(property0.Value);
+                            accessKeys = RedisAccessKeys.DeserializeRedisAccessKeys(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("linkedServers"u8))
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.Redis
                             List<RedisInstanceDetails> array = new List<RedisInstanceDetails>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RedisInstanceDetails.DeserializeRedisInstanceDetails(item));
+                                array.Add(RedisInstanceDetails.DeserializeRedisInstanceDetails(item, options));
                             }
                             instances = array;
                             continue;
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.Redis
                             List<RedisPrivateEndpointConnectionData> array = new List<RedisPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RedisPrivateEndpointConnectionData.DeserializeRedisPrivateEndpointConnectionData(item));
+                                array.Add(RedisPrivateEndpointConnectionData.DeserializeRedisPrivateEndpointConnectionData(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -564,7 +564,37 @@ namespace Azure.ResourceManager.Redis
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(zones), identity, redisConfiguration.Value, redisVersion.Value, Optional.ToNullable(enableNonSslPort), Optional.ToNullable(replicasPerMaster), Optional.ToNullable(replicasPerPrimary), Optional.ToDictionary(tenantSettings), Optional.ToNullable(shardCount), Optional.ToNullable(minimumTlsVersion), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(updateChannel), sku, subnetId.Value, staticIP.Value, Optional.ToNullable(provisioningState), hostName.Value, Optional.ToNullable(port), Optional.ToNullable(sslPort), accessKeys.Value, Optional.ToList(linkedServers), Optional.ToList(instances), Optional.ToList(privateEndpointConnections), serializedAdditionalRawData);
+            return new RedisData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                zones ?? new ChangeTrackingList<string>(),
+                identity,
+                redisConfiguration,
+                redisVersion,
+                enableNonSslPort,
+                replicasPerMaster,
+                replicasPerPrimary,
+                tenantSettings ?? new ChangeTrackingDictionary<string, string>(),
+                shardCount,
+                minimumTlsVersion,
+                publicNetworkAccess,
+                updateChannel,
+                sku,
+                subnetId,
+                staticIP,
+                provisioningState,
+                hostName,
+                port,
+                sslPort,
+                accessKeys,
+                linkedServers ?? new ChangeTrackingList<SubResource>(),
+                instances ?? new ChangeTrackingList<RedisInstanceDetails>(),
+                privateEndpointConnections ?? new ChangeTrackingList<RedisPrivateEndpointConnectionData>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisData>.Write(ModelReaderWriterOptions options)

@@ -101,9 +101,9 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> azureDnsRecord = default;
-            Optional<string> publicAzureDnsRecord = default;
+            SystemData systemData = default;
+            string azureDnsRecord = default;
+            string publicAzureDnsRecord = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedServerDnsAliasData(id, name, type, systemData.Value, azureDnsRecord.Value, publicAzureDnsRecord.Value, serializedAdditionalRawData);
+            return new ManagedServerDnsAliasData(
+                id,
+                name,
+                type,
+                systemData,
+                azureDnsRecord,
+                publicAzureDnsRecord,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedServerDnsAliasData>.Write(ModelReaderWriterOptions options)

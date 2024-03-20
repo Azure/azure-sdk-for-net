@@ -128,17 +128,17 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<MachineLearningSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ManagedServiceIdentity identity = default;
+            MachineLearningSku sku = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<MachineLearningPrivateEndpoint> privateEndpoint = default;
-            Optional<MachineLearningPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
-            Optional<MachineLearningPrivateEndpointConnectionProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            MachineLearningPrivateEndpoint privateEndpoint = default;
+            MachineLearningPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            MachineLearningPrivateEndpointConnectionProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.MachineLearning
                     {
                         continue;
                     }
-                    sku = MachineLearningSku.DeserializeMachineLearningSku(property.Value);
+                    sku = MachineLearningSku.DeserializeMachineLearningSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.MachineLearning
                             {
                                 continue;
                             }
-                            privateEndpoint = MachineLearningPrivateEndpoint.DeserializeMachineLearningPrivateEndpoint(property0.Value);
+                            privateEndpoint = MachineLearningPrivateEndpoint.DeserializeMachineLearningPrivateEndpoint(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("privateLinkServiceConnectionState"u8))
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.MachineLearning
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = MachineLearningPrivateLinkServiceConnectionState.DeserializeMachineLearningPrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = MachineLearningPrivateLinkServiceConnectionState.DeserializeMachineLearningPrivateLinkServiceConnectionState(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -250,7 +250,19 @@ namespace Azure.ResourceManager.MachineLearning
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningPrivateEndpointConnectionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, sku.Value, privateEndpoint.Value, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new MachineLearningPrivateEndpointConnectionData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                sku,
+                privateEndpoint,
+                privateLinkServiceConnectionState,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options)

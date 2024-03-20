@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.Analytics.Synapse.Artifacts;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -20,14 +20,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="sparkJob"/> is null. </exception>
         public SynapseSparkJobDefinitionActivity(string name, SynapseSparkJobReference sparkJob) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (sparkJob == null)
-            {
-                throw new ArgumentNullException(nameof(sparkJob));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(sparkJob, nameof(sparkJob));
 
             SparkJob = sparkJob;
             Arguments = new ChangeTrackingList<object>();

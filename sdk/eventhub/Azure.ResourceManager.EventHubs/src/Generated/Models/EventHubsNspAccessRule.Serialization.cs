@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventHubs;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs.Models
@@ -90,11 +91,11 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            Optional<EventHubsNspAccessRuleProperties> properties = default;
+            EventHubsNspAccessRuleProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +106,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     {
                         continue;
                     }
-                    properties = EventHubsNspAccessRuleProperties.DeserializeEventHubsNspAccessRuleProperties(property.Value);
+                    properties = EventHubsNspAccessRuleProperties.DeserializeEventHubsNspAccessRuleProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -138,7 +139,13 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventHubsNspAccessRule(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new EventHubsNspAccessRule(
+                id,
+                name,
+                type,
+                systemData,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventHubsNspAccessRule>.Write(ModelReaderWriterOptions options)

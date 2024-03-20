@@ -111,11 +111,11 @@ namespace Azure.ResourceManager.ContainerService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             string kubernetesVersion = default;
             ContainerServiceOSType osType = default;
-            Optional<IReadOnlyList<AgentPoolUpgradeProfilePropertiesUpgradesItem>> upgrades = default;
-            Optional<string> latestNodeImageVersion = default;
+            IReadOnlyList<AgentPoolUpgradeProfilePropertiesUpgradesItem> upgrades = default;
+            string latestNodeImageVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ContainerService
                             List<AgentPoolUpgradeProfilePropertiesUpgradesItem> array = new List<AgentPoolUpgradeProfilePropertiesUpgradesItem>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AgentPoolUpgradeProfilePropertiesUpgradesItem.DeserializeAgentPoolUpgradeProfilePropertiesUpgradesItem(item));
+                                array.Add(AgentPoolUpgradeProfilePropertiesUpgradesItem.DeserializeAgentPoolUpgradeProfilePropertiesUpgradesItem(item, options));
                             }
                             upgrades = array;
                             continue;
@@ -191,7 +191,16 @@ namespace Azure.ResourceManager.ContainerService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AgentPoolUpgradeProfileData(id, name, type, systemData.Value, kubernetesVersion, osType, Optional.ToList(upgrades), latestNodeImageVersion.Value, serializedAdditionalRawData);
+            return new AgentPoolUpgradeProfileData(
+                id,
+                name,
+                type,
+                systemData,
+                kubernetesVersion,
+                osType,
+                upgrades ?? new ChangeTrackingList<AgentPoolUpgradeProfilePropertiesUpgradesItem>(),
+                latestNodeImageVersion,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AgentPoolUpgradeProfileData>.Write(ModelReaderWriterOptions options)

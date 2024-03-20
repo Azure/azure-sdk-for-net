@@ -143,18 +143,18 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Optional<IList<string>> zones = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IList<string> zones = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> platformFaultDomainCount = default;
-            Optional<IReadOnlyList<SubResource>> hosts = default;
-            Optional<DedicatedHostGroupInstanceView> instanceView = default;
-            Optional<bool> supportAutomaticPlacement = default;
-            Optional<DedicatedHostGroupPropertiesAdditionalCapabilities> additionalCapabilities = default;
+            SystemData systemData = default;
+            int? platformFaultDomainCount = default;
+            IReadOnlyList<SubResource> hosts = default;
+            DedicatedHostGroupInstanceView instanceView = default;
+            bool? supportAutomaticPlacement = default;
+            DedicatedHostGroupPropertiesAdditionalCapabilities additionalCapabilities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            instanceView = DedicatedHostGroupInstanceView.DeserializeDedicatedHostGroupInstanceView(property0.Value);
+                            instanceView = DedicatedHostGroupInstanceView.DeserializeDedicatedHostGroupInstanceView(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("supportAutomaticPlacement"u8))
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            additionalCapabilities = DedicatedHostGroupPropertiesAdditionalCapabilities.DeserializeDedicatedHostGroupPropertiesAdditionalCapabilities(property0.Value);
+                            additionalCapabilities = DedicatedHostGroupPropertiesAdditionalCapabilities.DeserializeDedicatedHostGroupPropertiesAdditionalCapabilities(property0.Value, options);
                             continue;
                         }
                     }
@@ -284,7 +284,20 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DedicatedHostGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(zones), Optional.ToNullable(platformFaultDomainCount), Optional.ToList(hosts), instanceView.Value, Optional.ToNullable(supportAutomaticPlacement), additionalCapabilities.Value, serializedAdditionalRawData);
+            return new DedicatedHostGroupData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                zones ?? new ChangeTrackingList<string>(),
+                platformFaultDomainCount,
+                hosts ?? new ChangeTrackingList<SubResource>(),
+                instanceView,
+                supportAutomaticPlacement,
+                additionalCapabilities,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DedicatedHostGroupData>.Write(ModelReaderWriterOptions options)

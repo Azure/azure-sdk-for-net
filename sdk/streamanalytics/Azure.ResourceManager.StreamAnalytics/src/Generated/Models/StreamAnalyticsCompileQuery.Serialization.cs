@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StreamAnalytics;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
@@ -94,10 +95,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string query = default;
-            Optional<IList<StreamAnalyticsQueryInput>> inputs = default;
-            Optional<IList<StreamAnalyticsQueryFunction>> functions = default;
+            IList<StreamAnalyticsQueryInput> inputs = default;
+            IList<StreamAnalyticsQueryFunction> functions = default;
             StreamingJobType jobType = default;
-            Optional<StreamingJobCompatibilityLevel> compatibilityLevel = default;
+            StreamingJobCompatibilityLevel? compatibilityLevel = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,7 +117,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     List<StreamAnalyticsQueryInput> array = new List<StreamAnalyticsQueryInput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StreamAnalyticsQueryInput.DeserializeStreamAnalyticsQueryInput(item));
+                        array.Add(StreamAnalyticsQueryInput.DeserializeStreamAnalyticsQueryInput(item, options));
                     }
                     inputs = array;
                     continue;
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     List<StreamAnalyticsQueryFunction> array = new List<StreamAnalyticsQueryFunction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StreamAnalyticsQueryFunction.DeserializeStreamAnalyticsQueryFunction(item));
+                        array.Add(StreamAnalyticsQueryFunction.DeserializeStreamAnalyticsQueryFunction(item, options));
                     }
                     functions = array;
                     continue;
@@ -155,7 +156,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamAnalyticsCompileQuery(query, Optional.ToList(inputs), Optional.ToList(functions), jobType, Optional.ToNullable(compatibilityLevel), serializedAdditionalRawData);
+            return new StreamAnalyticsCompileQuery(
+                query,
+                inputs ?? new ChangeTrackingList<StreamAnalyticsQueryInput>(),
+                functions ?? new ChangeTrackingList<StreamAnalyticsQueryFunction>(),
+                jobType,
+                compatibilityLevel,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamAnalyticsCompileQuery>.Write(ModelReaderWriterOptions options)

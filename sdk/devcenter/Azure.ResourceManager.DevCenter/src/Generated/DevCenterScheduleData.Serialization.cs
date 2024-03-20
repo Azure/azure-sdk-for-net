@@ -122,13 +122,13 @@ namespace Azure.ResourceManager.DevCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DevCenterScheduledType> type0 = default;
-            Optional<DevCenterScheduledFrequency> frequency = default;
-            Optional<string> time = default;
-            Optional<string> timeZone = default;
-            Optional<DevCenterScheduleEnableStatus> state = default;
-            Optional<DevCenterProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            DevCenterScheduledType? type0 = default;
+            DevCenterScheduledFrequency? frequency = default;
+            string time = default;
+            string timeZone = default;
+            DevCenterScheduleEnableStatus? state = default;
+            DevCenterProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -221,7 +221,18 @@ namespace Azure.ResourceManager.DevCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevCenterScheduleData(id, name, type, systemData.Value, Optional.ToNullable(type0), Optional.ToNullable(frequency), time.Value, timeZone.Value, Optional.ToNullable(state), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new DevCenterScheduleData(
+                id,
+                name,
+                type,
+                systemData,
+                type0,
+                frequency,
+                time,
+                timeZone,
+                state,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevCenterScheduleData>.Write(ModelReaderWriterOptions options)

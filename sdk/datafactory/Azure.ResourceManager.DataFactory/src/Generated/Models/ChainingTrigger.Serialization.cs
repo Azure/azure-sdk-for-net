@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -111,9 +112,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             TriggerPipelineReference pipeline = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<DataFactoryTriggerRuntimeState> runtimeState = default;
-            Optional<IList<BinaryData>> annotations = default;
+            string description = default;
+            DataFactoryTriggerRuntimeState? runtimeState = default;
+            IList<BinaryData> annotations = default;
             IList<DataFactoryPipelineReference> dependsOn = default;
             string runDimension = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (property.NameEquals("pipeline"u8))
                 {
-                    pipeline = TriggerPipelineReference.DeserializeTriggerPipelineReference(property.Value);
+                    pipeline = TriggerPipelineReference.DeserializeTriggerPipelineReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -179,7 +180,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<DataFactoryPipelineReference> array = new List<DataFactoryPipelineReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataFactoryPipelineReference.DeserializeDataFactoryPipelineReference(item));
+                                array.Add(DataFactoryPipelineReference.DeserializeDataFactoryPipelineReference(item, options));
                             }
                             dependsOn = array;
                             continue;
@@ -195,7 +196,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ChainingTrigger(type, description.Value, Optional.ToNullable(runtimeState), Optional.ToList(annotations), additionalProperties, pipeline, dependsOn, runDimension);
+            return new ChainingTrigger(
+                type,
+                description,
+                runtimeState,
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                pipeline,
+                dependsOn,
+                runDimension);
         }
 
         BinaryData IPersistableModel<ChainingTrigger>.Write(ModelReaderWriterOptions options)

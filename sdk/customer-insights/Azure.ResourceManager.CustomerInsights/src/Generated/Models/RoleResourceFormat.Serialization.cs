@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CustomerInsights;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
@@ -101,9 +102,9 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> roleName = default;
-            Optional<string> description = default;
+            SystemData systemData = default;
+            string roleName = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +161,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleResourceFormat(id, name, type, systemData.Value, roleName.Value, description.Value, serializedAdditionalRawData);
+            return new RoleResourceFormat(
+                id,
+                name,
+                type,
+                systemData,
+                roleName,
+                description,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoleResourceFormat>.Write(ModelReaderWriterOptions options)

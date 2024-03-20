@@ -91,11 +91,11 @@ namespace Azure.ResourceManager.DataMigration
             {
                 return null;
             }
-            Optional<DatabaseMigrationSqlDBProperties> properties = default;
+            DatabaseMigrationSqlDBProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             Core.ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DataMigration
                     {
                         continue;
                     }
-                    properties = DatabaseMigrationSqlDBProperties.DeserializeDatabaseMigrationSqlDBProperties(property.Value);
+                    properties = DatabaseMigrationSqlDBProperties.DeserializeDatabaseMigrationSqlDBProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -139,7 +139,13 @@ namespace Azure.ResourceManager.DataMigration
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatabaseMigrationSqlDBData(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new DatabaseMigrationSqlDBData(
+                id,
+                name,
+                type,
+                systemData,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatabaseMigrationSqlDBData>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> connectionName = default;
-            Optional<MapperConnectionType> type = default;
+            string connectionName = default;
+            MapperConnectionType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MapperConnectionReference(connectionName.Value, Optional.ToNullable(type), serializedAdditionalRawData);
+            return new MapperConnectionReference(connectionName, type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MapperConnectionReference>.Write(ModelReaderWriterOptions options)

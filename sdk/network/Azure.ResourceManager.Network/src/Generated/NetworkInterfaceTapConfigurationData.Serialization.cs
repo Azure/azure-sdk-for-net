@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<VirtualNetworkTapData> virtualNetworkTap = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            VirtualNetworkTapData virtualNetworkTap = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            virtualNetworkTap = VirtualNetworkTapData.DeserializeVirtualNetworkTapData(property0.Value);
+                            virtualNetworkTap = VirtualNetworkTapData.DeserializeVirtualNetworkTapData(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -177,7 +177,14 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkInterfaceTapConfigurationData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), virtualNetworkTap.Value, Optional.ToNullable(provisioningState));
+            return new NetworkInterfaceTapConfigurationData(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                virtualNetworkTap,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<NetworkInterfaceTapConfigurationData>.Write(ModelReaderWriterOptions options)

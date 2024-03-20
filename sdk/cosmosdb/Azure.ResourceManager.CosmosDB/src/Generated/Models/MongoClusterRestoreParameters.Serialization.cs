@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> pointInTimeUTC = default;
-            Optional<string> sourceResourceId = default;
+            DateTimeOffset? pointInTimeUTC = default;
+            string sourceResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MongoClusterRestoreParameters(Optional.ToNullable(pointInTimeUTC), sourceResourceId.Value, serializedAdditionalRawData);
+            return new MongoClusterRestoreParameters(pointInTimeUTC, sourceResourceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MongoClusterRestoreParameters>.Write(ModelReaderWriterOptions options)

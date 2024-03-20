@@ -164,19 +164,19 @@ namespace Azure.ResourceManager.DigitalTwins
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<DateTimeOffset> lastUpdatedTime = default;
-            Optional<DigitalTwinsProvisioningState> provisioningState = default;
-            Optional<string> hostName = default;
-            Optional<IList<DigitalTwinsPrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Optional<DigitalTwinsPublicNetworkAccess?> publicNetworkAccess = default;
+            SystemData systemData = default;
+            DateTimeOffset? createdTime = default;
+            DateTimeOffset? lastUpdatedTime = default;
+            DigitalTwinsProvisioningState? provisioningState = default;
+            string hostName = default;
+            IList<DigitalTwinsPrivateEndpointConnectionData> privateEndpointConnections = default;
+            DigitalTwinsPublicNetworkAccess? publicNetworkAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.DigitalTwins
                             List<DigitalTwinsPrivateEndpointConnectionData> array = new List<DigitalTwinsPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DigitalTwinsPrivateEndpointConnectionData.DeserializeDigitalTwinsPrivateEndpointConnectionData(item));
+                                array.Add(DigitalTwinsPrivateEndpointConnectionData.DeserializeDigitalTwinsPrivateEndpointConnectionData(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -314,7 +314,21 @@ namespace Azure.ResourceManager.DigitalTwins
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DigitalTwinsDescriptionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(createdTime), Optional.ToNullable(lastUpdatedTime), Optional.ToNullable(provisioningState), hostName.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess), identity, serializedAdditionalRawData);
+            return new DigitalTwinsDescriptionData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                createdTime,
+                lastUpdatedTime,
+                provisioningState,
+                hostName,
+                privateEndpointConnections ?? new ChangeTrackingList<DigitalTwinsPrivateEndpointConnectionData>(),
+                publicNetworkAccess,
+                identity,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DigitalTwinsDescriptionData>.Write(ModelReaderWriterOptions options)

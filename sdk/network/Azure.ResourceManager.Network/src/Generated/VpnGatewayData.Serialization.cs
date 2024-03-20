@@ -166,21 +166,21 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<WritableSubResource> virtualHub = default;
-            Optional<IList<VpnConnectionData>> connections = default;
-            Optional<BgpSettings> bgpSettings = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<int> vpnGatewayScaleUnit = default;
-            Optional<IReadOnlyList<VpnGatewayIPConfiguration>> ipConfigurations = default;
-            Optional<bool> enableBgpRouteTranslationForNat = default;
-            Optional<bool> isRoutingPreferenceInternet = default;
-            Optional<IList<VpnGatewayNatRuleData>> natRules = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
+            IDictionary<string, string> tags = default;
+            WritableSubResource virtualHub = default;
+            IList<VpnConnectionData> connections = default;
+            BgpSettings bgpSettings = default;
+            NetworkProvisioningState? provisioningState = default;
+            int? vpnGatewayScaleUnit = default;
+            IReadOnlyList<VpnGatewayIPConfiguration> ipConfigurations = default;
+            bool? enableBgpRouteTranslationForNat = default;
+            bool? isRoutingPreferenceInternet = default;
+            IList<VpnGatewayNatRuleData> natRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Network
                             List<VpnConnectionData> array = new List<VpnConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VpnConnectionData.DeserializeVpnConnectionData(item));
+                                array.Add(VpnConnectionData.DeserializeVpnConnectionData(item, options));
                             }
                             connections = array;
                             continue;
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            bgpSettings = BgpSettings.DeserializeBgpSettings(property0.Value);
+                            bgpSettings = BgpSettings.DeserializeBgpSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Network
                             List<VpnGatewayIPConfiguration> array = new List<VpnGatewayIPConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VpnGatewayIPConfiguration.DeserializeVpnGatewayIPConfiguration(item));
+                                array.Add(VpnGatewayIPConfiguration.DeserializeVpnGatewayIPConfiguration(item, options));
                             }
                             ipConfigurations = array;
                             continue;
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Network
                             List<VpnGatewayNatRuleData> array = new List<VpnGatewayNatRuleData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VpnGatewayNatRuleData.DeserializeVpnGatewayNatRuleData(item));
+                                array.Add(VpnGatewayNatRuleData.DeserializeVpnGatewayNatRuleData(item, options));
                             }
                             natRules = array;
                             continue;
@@ -354,7 +354,23 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VpnGatewayData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(etag), virtualHub, Optional.ToList(connections), bgpSettings.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(vpnGatewayScaleUnit), Optional.ToList(ipConfigurations), Optional.ToNullable(enableBgpRouteTranslationForNat), Optional.ToNullable(isRoutingPreferenceInternet), Optional.ToList(natRules));
+            return new VpnGatewayData(
+                id,
+                name,
+                type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                etag,
+                virtualHub,
+                connections ?? new ChangeTrackingList<VpnConnectionData>(),
+                bgpSettings,
+                provisioningState,
+                vpnGatewayScaleUnit,
+                ipConfigurations ?? new ChangeTrackingList<VpnGatewayIPConfiguration>(),
+                enableBgpRouteTranslationForNat,
+                isRoutingPreferenceInternet,
+                natRules ?? new ChangeTrackingList<VpnGatewayNatRuleData>());
         }
 
         BinaryData IPersistableModel<VpnGatewayData>.Write(ModelReaderWriterOptions options)

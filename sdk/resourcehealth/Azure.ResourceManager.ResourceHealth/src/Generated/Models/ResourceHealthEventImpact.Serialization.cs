@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ResourceHealth;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Optional<string> impactedService = default;
-            Optional<IReadOnlyList<ResourceHealthEventImpactedServiceRegion>> impactedRegions = default;
+            string impactedService = default;
+            IReadOnlyList<ResourceHealthEventImpactedServiceRegion> impactedRegions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     List<ResourceHealthEventImpactedServiceRegion> array = new List<ResourceHealthEventImpactedServiceRegion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceHealthEventImpactedServiceRegion.DeserializeResourceHealthEventImpactedServiceRegion(item));
+                        array.Add(ResourceHealthEventImpactedServiceRegion.DeserializeResourceHealthEventImpactedServiceRegion(item, options));
                     }
                     impactedRegions = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceHealthEventImpact(impactedService.Value, Optional.ToList(impactedRegions), serializedAdditionalRawData);
+            return new ResourceHealthEventImpact(impactedService, impactedRegions ?? new ChangeTrackingList<ResourceHealthEventImpactedServiceRegion>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceHealthEventImpact>.Write(ModelReaderWriterOptions options)

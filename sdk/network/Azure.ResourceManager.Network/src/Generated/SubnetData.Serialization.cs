@@ -245,30 +245,30 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<string> addressPrefix = default;
-            Optional<IList<string>> addressPrefixes = default;
-            Optional<NetworkSecurityGroupData> networkSecurityGroup = default;
-            Optional<RouteTableData> routeTable = default;
-            Optional<WritableSubResource> natGateway = default;
-            Optional<IList<ServiceEndpointProperties>> serviceEndpoints = default;
-            Optional<IList<ServiceEndpointPolicyData>> serviceEndpointPolicies = default;
-            Optional<IReadOnlyList<PrivateEndpointData>> privateEndpoints = default;
-            Optional<IReadOnlyList<NetworkIPConfiguration>> ipConfigurations = default;
-            Optional<IReadOnlyList<NetworkIPConfigurationProfile>> ipConfigurationProfiles = default;
-            Optional<IList<WritableSubResource>> ipAllocations = default;
-            Optional<IReadOnlyList<ResourceNavigationLink>> resourceNavigationLinks = default;
-            Optional<IReadOnlyList<ServiceAssociationLink>> serviceAssociationLinks = default;
-            Optional<IList<ServiceDelegation>> delegations = default;
-            Optional<string> purpose = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<VirtualNetworkPrivateEndpointNetworkPolicy> privateEndpointNetworkPolicies = default;
-            Optional<VirtualNetworkPrivateLinkServiceNetworkPolicy> privateLinkServiceNetworkPolicies = default;
-            Optional<IList<ApplicationGatewayIPConfiguration>> applicationGatewayIPConfigurations = default;
-            Optional<bool> defaultOutboundAccess = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            string addressPrefix = default;
+            IList<string> addressPrefixes = default;
+            NetworkSecurityGroupData networkSecurityGroup = default;
+            RouteTableData routeTable = default;
+            WritableSubResource natGateway = default;
+            IList<ServiceEndpointProperties> serviceEndpoints = default;
+            IList<ServiceEndpointPolicyData> serviceEndpointPolicies = default;
+            IReadOnlyList<PrivateEndpointData> privateEndpoints = default;
+            IReadOnlyList<NetworkIPConfiguration> ipConfigurations = default;
+            IReadOnlyList<NetworkIPConfigurationProfile> ipConfigurationProfiles = default;
+            IList<WritableSubResource> ipAllocations = default;
+            IReadOnlyList<ResourceNavigationLink> resourceNavigationLinks = default;
+            IReadOnlyList<ServiceAssociationLink> serviceAssociationLinks = default;
+            IList<ServiceDelegation> delegations = default;
+            string purpose = default;
+            NetworkProvisioningState? provisioningState = default;
+            VirtualNetworkPrivateEndpointNetworkPolicy? privateEndpointNetworkPolicies = default;
+            VirtualNetworkPrivateLinkServiceNetworkPolicy? privateLinkServiceNetworkPolicies = default;
+            IList<ApplicationGatewayIPConfiguration> applicationGatewayIPConfigurations = default;
+            bool? defaultOutboundAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            networkSecurityGroup = NetworkSecurityGroupData.DeserializeNetworkSecurityGroupData(property0.Value);
+                            networkSecurityGroup = NetworkSecurityGroupData.DeserializeNetworkSecurityGroupData(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("routeTable"u8))
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            routeTable = RouteTableData.DeserializeRouteTableData(property0.Value);
+                            routeTable = RouteTableData.DeserializeRouteTableData(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("natGateway"u8))
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Network
                             List<ServiceEndpointProperties> array = new List<ServiceEndpointProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ServiceEndpointProperties.DeserializeServiceEndpointProperties(item));
+                                array.Add(ServiceEndpointProperties.DeserializeServiceEndpointProperties(item, options));
                             }
                             serviceEndpoints = array;
                             continue;
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.Network
                             List<ServiceEndpointPolicyData> array = new List<ServiceEndpointPolicyData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ServiceEndpointPolicyData.DeserializeServiceEndpointPolicyData(item));
+                                array.Add(ServiceEndpointPolicyData.DeserializeServiceEndpointPolicyData(item, options));
                             }
                             serviceEndpointPolicies = array;
                             continue;
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.Network
                             List<PrivateEndpointData> array = new List<PrivateEndpointData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PrivateEndpointData.DeserializePrivateEndpointData(item));
+                                array.Add(PrivateEndpointData.DeserializePrivateEndpointData(item, options));
                             }
                             privateEndpoints = array;
                             continue;
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.Network
                             List<NetworkIPConfiguration> array = new List<NetworkIPConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkIPConfiguration.DeserializeNetworkIPConfiguration(item));
+                                array.Add(NetworkIPConfiguration.DeserializeNetworkIPConfiguration(item, options));
                             }
                             ipConfigurations = array;
                             continue;
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.Network
                             List<NetworkIPConfigurationProfile> array = new List<NetworkIPConfigurationProfile>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkIPConfigurationProfile.DeserializeNetworkIPConfigurationProfile(item));
+                                array.Add(NetworkIPConfigurationProfile.DeserializeNetworkIPConfigurationProfile(item, options));
                             }
                             ipConfigurationProfiles = array;
                             continue;
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.Network
                             List<ResourceNavigationLink> array = new List<ResourceNavigationLink>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ResourceNavigationLink.DeserializeResourceNavigationLink(item));
+                                array.Add(ResourceNavigationLink.DeserializeResourceNavigationLink(item, options));
                             }
                             resourceNavigationLinks = array;
                             continue;
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.Network
                             List<ServiceAssociationLink> array = new List<ServiceAssociationLink>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ServiceAssociationLink.DeserializeServiceAssociationLink(item));
+                                array.Add(ServiceAssociationLink.DeserializeServiceAssociationLink(item, options));
                             }
                             serviceAssociationLinks = array;
                             continue;
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.Network
                             List<ServiceDelegation> array = new List<ServiceDelegation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ServiceDelegation.DeserializeServiceDelegation(item));
+                                array.Add(ServiceDelegation.DeserializeServiceDelegation(item, options));
                             }
                             delegations = array;
                             continue;
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.Network
                             List<ApplicationGatewayIPConfiguration> array = new List<ApplicationGatewayIPConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationGatewayIPConfiguration.DeserializeApplicationGatewayIPConfiguration(item));
+                                array.Add(ApplicationGatewayIPConfiguration.DeserializeApplicationGatewayIPConfiguration(item, options));
                             }
                             applicationGatewayIPConfigurations = array;
                             continue;
@@ -550,7 +550,32 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubnetData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), addressPrefix.Value, Optional.ToList(addressPrefixes), networkSecurityGroup.Value, routeTable.Value, natGateway, Optional.ToList(serviceEndpoints), Optional.ToList(serviceEndpointPolicies), Optional.ToList(privateEndpoints), Optional.ToList(ipConfigurations), Optional.ToList(ipConfigurationProfiles), Optional.ToList(ipAllocations), Optional.ToList(resourceNavigationLinks), Optional.ToList(serviceAssociationLinks), Optional.ToList(delegations), purpose.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(privateEndpointNetworkPolicies), Optional.ToNullable(privateLinkServiceNetworkPolicies), Optional.ToList(applicationGatewayIPConfigurations), Optional.ToNullable(defaultOutboundAccess));
+            return new SubnetData(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                addressPrefix,
+                addressPrefixes ?? new ChangeTrackingList<string>(),
+                networkSecurityGroup,
+                routeTable,
+                natGateway,
+                serviceEndpoints ?? new ChangeTrackingList<ServiceEndpointProperties>(),
+                serviceEndpointPolicies ?? new ChangeTrackingList<ServiceEndpointPolicyData>(),
+                privateEndpoints ?? new ChangeTrackingList<PrivateEndpointData>(),
+                ipConfigurations ?? new ChangeTrackingList<NetworkIPConfiguration>(),
+                ipConfigurationProfiles ?? new ChangeTrackingList<NetworkIPConfigurationProfile>(),
+                ipAllocations ?? new ChangeTrackingList<WritableSubResource>(),
+                resourceNavigationLinks ?? new ChangeTrackingList<ResourceNavigationLink>(),
+                serviceAssociationLinks ?? new ChangeTrackingList<ServiceAssociationLink>(),
+                delegations ?? new ChangeTrackingList<ServiceDelegation>(),
+                purpose,
+                provisioningState,
+                privateEndpointNetworkPolicies,
+                privateLinkServiceNetworkPolicies,
+                applicationGatewayIPConfigurations ?? new ChangeTrackingList<ApplicationGatewayIPConfiguration>(),
+                defaultOutboundAccess);
         }
 
         BinaryData IPersistableModel<SubnetData>.Write(ModelReaderWriterOptions options)

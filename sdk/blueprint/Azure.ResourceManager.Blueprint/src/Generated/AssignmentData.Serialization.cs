@@ -149,23 +149,23 @@ namespace Azure.ResourceManager.Blueprint
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<string> blueprintId = default;
-            Optional<string> scope = default;
+            SystemData systemData = default;
+            string displayName = default;
+            string description = default;
+            string blueprintId = default;
+            string scope = default;
             IDictionary<string, ParameterValue> parameters = default;
             IDictionary<string, ResourceGroupValue> resourceGroups = default;
-            Optional<AssignmentStatus> status = default;
-            Optional<AssignmentLockSettings> locks = default;
-            Optional<AssignmentProvisioningState> provisioningState = default;
+            AssignmentStatus status = default;
+            AssignmentLockSettings locks = default;
+            AssignmentProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
                 {
-                    identity = Models.ManagedServiceIdentity.DeserializeManagedServiceIdentity(property.Value);
+                    identity = Models.ManagedServiceIdentity.DeserializeManagedServiceIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("location"u8))
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Blueprint
                             Dictionary<string, ParameterValue> dictionary = new Dictionary<string, ParameterValue>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, ParameterValue.DeserializeParameterValue(property1.Value));
+                                dictionary.Add(property1.Name, ParameterValue.DeserializeParameterValue(property1.Value, options));
                             }
                             parameters = dictionary;
                             continue;
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Blueprint
                             Dictionary<string, ResourceGroupValue> dictionary = new Dictionary<string, ResourceGroupValue>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, ResourceGroupValue.DeserializeResourceGroupValue(property1.Value));
+                                dictionary.Add(property1.Name, ResourceGroupValue.DeserializeResourceGroupValue(property1.Value, options));
                             }
                             resourceGroups = dictionary;
                             continue;
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Blueprint
                             {
                                 continue;
                             }
-                            status = AssignmentStatus.DeserializeAssignmentStatus(property0.Value);
+                            status = AssignmentStatus.DeserializeAssignmentStatus(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("locks"u8))
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Blueprint
                             {
                                 continue;
                             }
-                            locks = AssignmentLockSettings.DeserializeAssignmentLockSettings(property0.Value);
+                            locks = AssignmentLockSettings.DeserializeAssignmentLockSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -282,7 +282,23 @@ namespace Azure.ResourceManager.Blueprint
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssignmentData(id, name, type, systemData.Value, identity, displayName.Value, description.Value, blueprintId.Value, scope.Value, parameters, resourceGroups, status.Value, locks.Value, Optional.ToNullable(provisioningState), location, serializedAdditionalRawData);
+            return new AssignmentData(
+                id,
+                name,
+                type,
+                systemData,
+                identity,
+                displayName,
+                description,
+                blueprintId,
+                scope,
+                parameters,
+                resourceGroups,
+                status,
+                locks,
+                provisioningState,
+                location,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssignmentData>.Write(ModelReaderWriterOptions options)

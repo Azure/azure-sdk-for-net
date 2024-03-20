@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<ImplementationMethod> method = default;
-            Optional<string> script = default;
+            ImplementationMethod? method = default;
+            string script = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecommendedActionImplementationInfo(Optional.ToNullable(method), script.Value, serializedAdditionalRawData);
+            return new RecommendedActionImplementationInfo(method, script, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecommendedActionImplementationInfo>.Write(ModelReaderWriterOptions options)

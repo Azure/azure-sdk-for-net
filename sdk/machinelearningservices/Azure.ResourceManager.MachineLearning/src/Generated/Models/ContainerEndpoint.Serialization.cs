@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -103,11 +104,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<ContainerCommunicationProtocol> protocol = default;
-            Optional<string> name = default;
-            Optional<int> target = default;
-            Optional<int?> published = default;
-            Optional<string> hostIP = default;
+            ContainerCommunicationProtocol? protocol = default;
+            string name = default;
+            int? target = default;
+            int? published = default;
+            string hostIP = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -161,7 +162,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerEndpoint(Optional.ToNullable(protocol), name.Value, Optional.ToNullable(target), Optional.ToNullable(published), hostIP.Value, serializedAdditionalRawData);
+            return new ContainerEndpoint(
+                protocol,
+                name,
+                target,
+                published,
+                hostIP,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerEndpoint>.Write(ModelReaderWriterOptions options)

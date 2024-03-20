@@ -113,15 +113,15 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<double> rank = default;
-            Optional<bool> isEnabled = default;
+            SystemData systemData = default;
+            string displayName = default;
+            string description = default;
+            double? rank = default;
+            bool? isEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -201,7 +201,17 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DetectorDefinitionResourceData(id, name, type, systemData.Value, displayName.Value, description.Value, Optional.ToNullable(rank), Optional.ToNullable(isEnabled), kind.Value, serializedAdditionalRawData);
+            return new DetectorDefinitionResourceData(
+                id,
+                name,
+                type,
+                systemData,
+                displayName,
+                description,
+                rank,
+                isEnabled,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DetectorDefinitionResourceData>.Write(ModelReaderWriterOptions options)

@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.Analytics.Synapse.Artifacts;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -20,14 +20,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="dataset"/> is null. </exception>
         public GetMetadataActivity(string name, DatasetReference dataset) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (dataset == null)
-            {
-                throw new ArgumentNullException(nameof(dataset));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(dataset, nameof(dataset));
 
             Dataset = dataset;
             FieldList = new ChangeTrackingList<object>();
@@ -55,7 +49,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="formatSettings">
         /// GetMetadata activity format settings.
         /// Please note <see cref="FormatReadSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="BinaryReadSettings"/>, <see cref="JsonReadSettings"/>, <see cref="XmlReadSettings"/> and <see cref="DelimitedTextReadSettings"/>.
+        /// The available derived classes include <see cref="BinaryReadSettings"/>, <see cref="DelimitedTextReadSettings"/>, <see cref="JsonReadSettings"/> and <see cref="XmlReadSettings"/>.
         /// </param>
         internal GetMetadataActivity(string name, string type, string description, ActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, DatasetReference dataset, IList<object> fieldList, StoreReadSettings storeSettings, FormatReadSettings formatSettings) : base(name, type, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
@@ -79,7 +73,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary>
         /// GetMetadata activity format settings.
         /// Please note <see cref="FormatReadSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="BinaryReadSettings"/>, <see cref="JsonReadSettings"/>, <see cref="XmlReadSettings"/> and <see cref="DelimitedTextReadSettings"/>.
+        /// The available derived classes include <see cref="BinaryReadSettings"/>, <see cref="DelimitedTextReadSettings"/>, <see cref="JsonReadSettings"/> and <see cref="XmlReadSettings"/>.
         /// </summary>
         public FormatReadSettings FormatSettings { get; set; }
     }

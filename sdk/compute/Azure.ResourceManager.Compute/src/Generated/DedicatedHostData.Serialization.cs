@@ -156,28 +156,28 @@ namespace Azure.ResourceManager.Compute
                 return null;
             }
             ComputeSku sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> platformFaultDomain = default;
-            Optional<bool> autoReplaceOnFailure = default;
-            Optional<string> hostId = default;
-            Optional<IReadOnlyList<SubResource>> virtualMachines = default;
-            Optional<DedicatedHostLicenseType> licenseType = default;
-            Optional<DateTimeOffset> provisioningTime = default;
-            Optional<string> provisioningState = default;
-            Optional<DedicatedHostInstanceView> instanceView = default;
-            Optional<DateTimeOffset> timeCreated = default;
+            SystemData systemData = default;
+            int? platformFaultDomain = default;
+            bool? autoReplaceOnFailure = default;
+            string hostId = default;
+            IReadOnlyList<SubResource> virtualMachines = default;
+            DedicatedHostLicenseType? licenseType = default;
+            DateTimeOffset? provisioningTime = default;
+            string provisioningState = default;
+            DedicatedHostInstanceView instanceView = default;
+            DateTimeOffset? timeCreated = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = ComputeSku.DeserializeComputeSku(property.Value);
+                    sku = ComputeSku.DeserializeComputeSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            instanceView = DedicatedHostInstanceView.DeserializeDedicatedHostInstanceView(property0.Value);
+                            instanceView = DedicatedHostInstanceView.DeserializeDedicatedHostInstanceView(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("timeCreated"u8))
@@ -319,7 +319,24 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DedicatedHostData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, Optional.ToNullable(platformFaultDomain), Optional.ToNullable(autoReplaceOnFailure), hostId.Value, Optional.ToList(virtualMachines), Optional.ToNullable(licenseType), Optional.ToNullable(provisioningTime), provisioningState.Value, instanceView.Value, Optional.ToNullable(timeCreated), serializedAdditionalRawData);
+            return new DedicatedHostData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                platformFaultDomain,
+                autoReplaceOnFailure,
+                hostId,
+                virtualMachines ?? new ChangeTrackingList<SubResource>(),
+                licenseType,
+                provisioningTime,
+                provisioningState,
+                instanceView,
+                timeCreated,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DedicatedHostData>.Write(ModelReaderWriterOptions options)

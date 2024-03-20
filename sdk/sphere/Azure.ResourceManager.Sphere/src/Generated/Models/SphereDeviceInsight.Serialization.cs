@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sphere;
 
 namespace Azure.ResourceManager.Sphere.Models
 {
@@ -138,7 +139,16 @@ namespace Azure.ResourceManager.Sphere.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SphereDeviceInsight(deviceId, description, startTimestampUtc, endTimestampUtc, eventCategory, eventClass, eventType, eventCount, serializedAdditionalRawData);
+            return new SphereDeviceInsight(
+                deviceId,
+                description,
+                startTimestampUtc,
+                endTimestampUtc,
+                eventCategory,
+                eventClass,
+                eventType,
+                eventCount,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SphereDeviceInsight>.Write(ModelReaderWriterOptions options)

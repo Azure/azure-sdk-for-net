@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -111,14 +112,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<long> folderId = default;
-            Optional<long> version = default;
-            Optional<IReadOnlyList<SsisEnvironmentReference>> environmentRefs = default;
-            Optional<IReadOnlyList<SsisParameterInfo>> parameters = default;
+            long? folderId = default;
+            long? version = default;
+            IReadOnlyList<SsisEnvironmentReference> environmentRefs = default;
+            IReadOnlyList<SsisParameterInfo> parameters = default;
             SsisObjectMetadataType type = default;
-            Optional<long> id = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
+            long? id = default;
+            string name = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,7 +151,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<SsisEnvironmentReference> array = new List<SsisEnvironmentReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SsisEnvironmentReference.DeserializeSsisEnvironmentReference(item));
+                        array.Add(SsisEnvironmentReference.DeserializeSsisEnvironmentReference(item, options));
                     }
                     environmentRefs = array;
                     continue;
@@ -164,7 +165,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<SsisParameterInfo> array = new List<SsisParameterInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SsisParameterInfo.DeserializeSsisParameterInfo(item));
+                        array.Add(SsisParameterInfo.DeserializeSsisParameterInfo(item, options));
                     }
                     parameters = array;
                     continue;
@@ -199,7 +200,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SsisProject(type, Optional.ToNullable(id), name.Value, description.Value, serializedAdditionalRawData, Optional.ToNullable(folderId), Optional.ToNullable(version), Optional.ToList(environmentRefs), Optional.ToList(parameters));
+            return new SsisProject(
+                type,
+                id,
+                name,
+                description,
+                serializedAdditionalRawData,
+                folderId,
+                version,
+                environmentRefs ?? new ChangeTrackingList<SsisEnvironmentReference>(),
+                parameters ?? new ChangeTrackingList<SsisParameterInfo>());
         }
 
         BinaryData IPersistableModel<SsisProject>.Write(ModelReaderWriterOptions options)

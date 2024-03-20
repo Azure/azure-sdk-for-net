@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             IReadOnlyList<WebJobData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<WebJobData> array = new List<WebJobData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WebJobData.DeserializeWebJobData(item));
+                        array.Add(WebJobData.DeserializeWebJobData(item, options));
                     }
                     value = array;
                     continue;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebJobCListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new WebJobCListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebJobCListResult>.Write(ModelReaderWriterOptions options)

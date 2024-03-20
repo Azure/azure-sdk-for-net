@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Models
 {
@@ -80,12 +81,12 @@ namespace Azure.ResourceManager.Models
             {
                 return null;
             }
-            Optional<string> createdBy = default;
-            Optional<CreatedByType> createdByType = default;
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<string> lastModifiedBy = default;
-            Optional<CreatedByType> lastModifiedByType = default;
-            Optional<DateTimeOffset> lastModifiedAt = default;
+            string createdBy = default;
+            CreatedByType? createdByType = default;
+            DateTimeOffset? createdAt = default;
+            string lastModifiedBy = default;
+            CreatedByType? lastModifiedByType = default;
+            DateTimeOffset? lastModifiedAt = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("createdBy"u8))
@@ -135,7 +136,13 @@ namespace Azure.ResourceManager.Models
                     continue;
                 }
             }
-            return new SystemData(createdBy.Value, Optional.ToNullable(createdByType), Optional.ToNullable(createdAt), lastModifiedBy.Value, Optional.ToNullable(lastModifiedByType), Optional.ToNullable(lastModifiedAt));
+            return new SystemData(
+                createdBy,
+                createdByType,
+                createdAt,
+                lastModifiedBy,
+                lastModifiedByType,
+                lastModifiedAt);
         }
 
         BinaryData IPersistableModel<SystemData>.Write(ModelReaderWriterOptions options)

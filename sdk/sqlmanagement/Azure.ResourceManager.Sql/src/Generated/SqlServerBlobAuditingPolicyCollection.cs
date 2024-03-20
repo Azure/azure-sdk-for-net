@@ -82,10 +82,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SqlServerBlobAuditingPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, BlobAuditingPolicyName blobAuditingPolicyName, SqlServerBlobAuditingPolicyData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sqlServerBlobAuditingPolicyServerBlobAuditingPoliciesClientDiagnostics.CreateScope("SqlServerBlobAuditingPolicyCollection.CreateOrUpdate");
             scope.Start();
@@ -132,10 +129,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SqlServerBlobAuditingPolicyResource> CreateOrUpdate(WaitUntil waitUntil, BlobAuditingPolicyName blobAuditingPolicyName, SqlServerBlobAuditingPolicyData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sqlServerBlobAuditingPolicyServerBlobAuditingPoliciesClientDiagnostics.CreateScope("SqlServerBlobAuditingPolicyCollection.CreateOrUpdate");
             scope.Start();

@@ -194,22 +194,22 @@ namespace Azure.ResourceManager.NetworkCloud
                 return null;
             }
             ExtendedLocation extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IReadOnlyList<string>> associatedResourceIds = default;
-            Optional<ResourceIdentifier> clusterId = default;
-            Optional<TrunkedNetworkDetailedStatus> detailedStatus = default;
-            Optional<string> detailedStatusMessage = default;
-            Optional<IReadOnlyList<ResourceIdentifier>> hybridAksClustersAssociatedIds = default;
-            Optional<HybridAksPluginType> hybridAksPluginType = default;
-            Optional<string> interfaceName = default;
+            SystemData systemData = default;
+            IReadOnlyList<string> associatedResourceIds = default;
+            ResourceIdentifier clusterId = default;
+            TrunkedNetworkDetailedStatus? detailedStatus = default;
+            string detailedStatusMessage = default;
+            IReadOnlyList<ResourceIdentifier> hybridAksClustersAssociatedIds = default;
+            HybridAksPluginType? hybridAksPluginType = default;
+            string interfaceName = default;
             IList<ResourceIdentifier> isolationDomainIds = default;
-            Optional<TrunkedNetworkProvisioningState> provisioningState = default;
-            Optional<IReadOnlyList<ResourceIdentifier>> virtualMachinesAssociatedIds = default;
+            TrunkedNetworkProvisioningState? provisioningState = default;
+            IReadOnlyList<ResourceIdentifier> virtualMachinesAssociatedIds = default;
             IList<long> vlans = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 if (property.NameEquals("extendedLocation"u8))
                 {
-                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -410,7 +410,26 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudTrunkedNetworkData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, Optional.ToList(associatedResourceIds), clusterId.Value, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, Optional.ToList(hybridAksClustersAssociatedIds), Optional.ToNullable(hybridAksPluginType), interfaceName.Value, isolationDomainIds, Optional.ToNullable(provisioningState), Optional.ToList(virtualMachinesAssociatedIds), vlans, serializedAdditionalRawData);
+            return new NetworkCloudTrunkedNetworkData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation,
+                associatedResourceIds ?? new ChangeTrackingList<string>(),
+                clusterId,
+                detailedStatus,
+                detailedStatusMessage,
+                hybridAksClustersAssociatedIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                hybridAksPluginType,
+                interfaceName,
+                isolationDomainIds,
+                provisioningState,
+                virtualMachinesAssociatedIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                vlans,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudTrunkedNetworkData>.Write(ModelReaderWriterOptions options)

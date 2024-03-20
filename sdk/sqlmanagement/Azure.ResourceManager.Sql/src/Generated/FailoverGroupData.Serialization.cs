@@ -150,18 +150,18 @@ namespace Azure.ResourceManager.Sql
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            AzureLocation? location = default;
+            IDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<FailoverGroupReadWriteEndpoint> readWriteEndpoint = default;
-            Optional<FailoverGroupReadOnlyEndpoint> readOnlyEndpoint = default;
-            Optional<FailoverGroupReplicationRole> replicationRole = default;
-            Optional<string> replicationState = default;
-            Optional<IList<PartnerServerInfo>> partnerServers = default;
-            Optional<IList<ResourceIdentifier>> databases = default;
+            SystemData systemData = default;
+            FailoverGroupReadWriteEndpoint readWriteEndpoint = default;
+            FailoverGroupReadOnlyEndpoint readOnlyEndpoint = default;
+            FailoverGroupReplicationRole? replicationRole = default;
+            string replicationState = default;
+            IList<PartnerServerInfo> partnerServers = default;
+            IList<ResourceIdentifier> databases = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            readWriteEndpoint = FailoverGroupReadWriteEndpoint.DeserializeFailoverGroupReadWriteEndpoint(property0.Value);
+                            readWriteEndpoint = FailoverGroupReadWriteEndpoint.DeserializeFailoverGroupReadWriteEndpoint(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("readOnlyEndpoint"u8))
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            readOnlyEndpoint = FailoverGroupReadOnlyEndpoint.DeserializeFailoverGroupReadOnlyEndpoint(property0.Value);
+                            readOnlyEndpoint = FailoverGroupReadOnlyEndpoint.DeserializeFailoverGroupReadOnlyEndpoint(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("replicationRole"u8))
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Sql
                             List<PartnerServerInfo> array = new List<PartnerServerInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PartnerServerInfo.DeserializePartnerServerInfo(item));
+                                array.Add(PartnerServerInfo.DeserializePartnerServerInfo(item, options));
                             }
                             partnerServers = array;
                             continue;
@@ -298,7 +298,20 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FailoverGroupData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToDictionary(tags), readWriteEndpoint.Value, readOnlyEndpoint.Value, Optional.ToNullable(replicationRole), replicationState.Value, Optional.ToList(partnerServers), Optional.ToList(databases), serializedAdditionalRawData);
+            return new FailoverGroupData(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                readWriteEndpoint,
+                readOnlyEndpoint,
+                replicationRole,
+                replicationState,
+                partnerServers ?? new ChangeTrackingList<PartnerServerInfo>(),
+                databases ?? new ChangeTrackingList<ResourceIdentifier>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FailoverGroupData>.Write(ModelReaderWriterOptions options)

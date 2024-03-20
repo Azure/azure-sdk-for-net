@@ -165,18 +165,18 @@ namespace Azure.ResourceManager.CustomerInsights
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> connectorId = default;
-            Optional<string> connectorName = default;
-            Optional<ConnectorType> connectorType = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, BinaryData>> connectorProperties = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<DateTimeOffset> lastModified = default;
-            Optional<ConnectorState> state = default;
-            Optional<Guid> tenantId = default;
-            Optional<bool> isInternal = default;
+            SystemData systemData = default;
+            int? connectorId = default;
+            string connectorName = default;
+            ConnectorType? connectorType = default;
+            string displayName = default;
+            string description = default;
+            IDictionary<string, BinaryData> connectorProperties = default;
+            DateTimeOffset? created = default;
+            DateTimeOffset? lastModified = default;
+            ConnectorState? state = default;
+            Guid? tenantId = default;
+            bool? isInternal = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -322,7 +322,23 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectorResourceFormatData(id, name, type, systemData.Value, Optional.ToNullable(connectorId), connectorName.Value, Optional.ToNullable(connectorType), displayName.Value, description.Value, Optional.ToDictionary(connectorProperties), Optional.ToNullable(created), Optional.ToNullable(lastModified), Optional.ToNullable(state), Optional.ToNullable(tenantId), Optional.ToNullable(isInternal), serializedAdditionalRawData);
+            return new ConnectorResourceFormatData(
+                id,
+                name,
+                type,
+                systemData,
+                connectorId,
+                connectorName,
+                connectorType,
+                displayName,
+                description,
+                connectorProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                created,
+                lastModified,
+                state,
+                tenantId,
+                isInternal,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectorResourceFormatData>.Write(ModelReaderWriterOptions options)

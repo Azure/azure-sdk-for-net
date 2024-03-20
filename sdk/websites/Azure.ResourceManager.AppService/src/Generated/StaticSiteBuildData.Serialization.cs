@@ -139,19 +139,19 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> buildId = default;
-            Optional<string> sourceBranch = default;
-            Optional<string> pullRequestTitle = default;
-            Optional<string> hostname = default;
-            Optional<DateTimeOffset> createdTimeUtc = default;
-            Optional<DateTimeOffset> lastUpdatedOn = default;
-            Optional<StaticSiteBuildStatus> status = default;
-            Optional<IReadOnlyList<StaticSiteUserProvidedFunctionAppData>> userProvidedFunctionApps = default;
+            SystemData systemData = default;
+            string buildId = default;
+            string sourceBranch = default;
+            string pullRequestTitle = default;
+            string hostname = default;
+            DateTimeOffset? createdTimeUtc = default;
+            DateTimeOffset? lastUpdatedOn = default;
+            StaticSiteBuildStatus? status = default;
+            IReadOnlyList<StaticSiteUserProvidedFunctionAppData> userProvidedFunctionApps = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.AppService
                             List<StaticSiteUserProvidedFunctionAppData> array = new List<StaticSiteUserProvidedFunctionAppData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StaticSiteUserProvidedFunctionAppData.DeserializeStaticSiteUserProvidedFunctionAppData(item));
+                                array.Add(StaticSiteUserProvidedFunctionAppData.DeserializeStaticSiteUserProvidedFunctionAppData(item, options));
                             }
                             userProvidedFunctionApps = array;
                             continue;
@@ -264,7 +264,21 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StaticSiteBuildData(id, name, type, systemData.Value, buildId.Value, sourceBranch.Value, pullRequestTitle.Value, hostname.Value, Optional.ToNullable(createdTimeUtc), Optional.ToNullable(lastUpdatedOn), Optional.ToNullable(status), Optional.ToList(userProvidedFunctionApps), kind.Value, serializedAdditionalRawData);
+            return new StaticSiteBuildData(
+                id,
+                name,
+                type,
+                systemData,
+                buildId,
+                sourceBranch,
+                pullRequestTitle,
+                hostname,
+                createdTimeUtc,
+                lastUpdatedOn,
+                status,
+                userProvidedFunctionApps ?? new ChangeTrackingList<StaticSiteUserProvidedFunctionAppData>(),
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StaticSiteBuildData>.Write(ModelReaderWriterOptions options)

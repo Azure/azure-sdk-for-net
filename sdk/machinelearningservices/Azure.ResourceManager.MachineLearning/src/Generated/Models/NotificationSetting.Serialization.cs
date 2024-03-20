@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -116,9 +117,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IList<EmailNotificationEnableType>> emailOn = default;
-            Optional<IList<string>> emails = default;
-            Optional<IDictionary<string, MachineLearningWebhook>> webhooks = default;
+            IList<EmailNotificationEnableType> emailOn = default;
+            IList<string> emails = default;
+            IDictionary<string, MachineLearningWebhook> webhooks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -163,7 +164,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, MachineLearningWebhook> dictionary = new Dictionary<string, MachineLearningWebhook>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, MachineLearningWebhook.DeserializeMachineLearningWebhook(property0.Value));
+                        dictionary.Add(property0.Name, MachineLearningWebhook.DeserializeMachineLearningWebhook(property0.Value, options));
                     }
                     webhooks = dictionary;
                     continue;
@@ -174,7 +175,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NotificationSetting(Optional.ToList(emailOn), Optional.ToList(emails), Optional.ToDictionary(webhooks), serializedAdditionalRawData);
+            return new NotificationSetting(emailOn ?? new ChangeTrackingList<EmailNotificationEnableType>(), emails ?? new ChangeTrackingList<string>(), webhooks ?? new ChangeTrackingDictionary<string, MachineLearningWebhook>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NotificationSetting>.Write(ModelReaderWriterOptions options)

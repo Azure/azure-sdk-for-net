@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -169,24 +170,24 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
-            Optional<IList<BinaryData>> annotations = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
+            IDictionary<string, EntityParameterSpecification> parameters = default;
+            IList<BinaryData> annotations = default;
             DataFactoryElement<string> host = default;
             DataFactoryElement<string> serverVersion = default;
             DataFactoryElement<string> catalog = default;
-            Optional<DataFactoryElement<int>> port = default;
+            DataFactoryElement<int> port = default;
             PrestoAuthenticationType authenticationType = default;
-            Optional<DataFactoryElement<string>> username = default;
-            Optional<DataFactorySecretBaseDefinition> password = default;
-            Optional<DataFactoryElement<bool>> enableSsl = default;
-            Optional<DataFactoryElement<string>> trustedCertPath = default;
-            Optional<DataFactoryElement<bool>> useSystemTrustStore = default;
-            Optional<DataFactoryElement<bool>> allowHostNameCNMismatch = default;
-            Optional<DataFactoryElement<bool>> allowSelfSignedServerCert = default;
-            Optional<DataFactoryElement<string>> timeZoneId = default;
-            Optional<string> encryptedCredential = default;
+            DataFactoryElement<string> username = default;
+            DataFactorySecret password = default;
+            DataFactoryElement<bool> enableSsl = default;
+            DataFactoryElement<string> trustedCertPath = default;
+            DataFactoryElement<bool> useSystemTrustStore = default;
+            DataFactoryElement<bool> allowHostNameCNMismatch = default;
+            DataFactoryElement<bool> allowSelfSignedServerCert = default;
+            DataFactoryElement<string> timeZoneId = default;
+            string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -202,7 +203,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value);
+                    connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("description"u8))
@@ -219,7 +220,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     Dictionary<string, EntityParameterSpecification> dictionary = new Dictionary<string, EntityParameterSpecification>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, EntityParameterSpecification.DeserializeEntityParameterSpecification(property0.Value));
+                        dictionary.Add(property0.Name, EntityParameterSpecification.DeserializeEntityParameterSpecification(property0.Value, options));
                     }
                     parameters = dictionary;
                     continue;
@@ -298,7 +299,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
+                            password = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("enableSsl"u8))
@@ -366,7 +367,27 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new PrestoLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, host, serverVersion, catalog, port.Value, authenticationType, username.Value, password, enableSsl.Value, trustedCertPath.Value, useSystemTrustStore.Value, allowHostNameCNMismatch.Value, allowSelfSignedServerCert.Value, timeZoneId.Value, encryptedCredential.Value);
+            return new PrestoLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                host,
+                serverVersion,
+                catalog,
+                port,
+                authenticationType,
+                username,
+                password,
+                enableSsl,
+                trustedCertPath,
+                useSystemTrustStore,
+                allowHostNameCNMismatch,
+                allowSelfSignedServerCert,
+                timeZoneId,
+                encryptedCredential);
         }
 
         BinaryData IPersistableModel<PrestoLinkedService>.Write(ModelReaderWriterOptions options)

@@ -150,22 +150,22 @@ namespace Azure.ResourceManager.CostManagement
             {
                 return null;
             }
-            Optional<ETag> eTag = default;
+            ETag? eTag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<AlertPropertiesDefinition> definition = default;
-            Optional<string> description = default;
-            Optional<CostManagementAlertSource> source = default;
-            Optional<AlertPropertiesDetails> details = default;
-            Optional<string> costEntityId = default;
-            Optional<CostManagementAlertStatus> status = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> closeTime = default;
-            Optional<DateTimeOffset> modificationTime = default;
-            Optional<string> statusModificationUserName = default;
-            Optional<DateTimeOffset> statusModificationTime = default;
+            SystemData systemData = default;
+            AlertPropertiesDefinition definition = default;
+            string description = default;
+            CostManagementAlertSource? source = default;
+            AlertPropertiesDetails details = default;
+            string costEntityId = default;
+            CostManagementAlertStatus? status = default;
+            DateTimeOffset? creationTime = default;
+            DateTimeOffset? closeTime = default;
+            DateTimeOffset? modificationTime = default;
+            string statusModificationUserName = default;
+            DateTimeOffset? statusModificationTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.CostManagement
                             {
                                 continue;
                             }
-                            definition = AlertPropertiesDefinition.DeserializeAlertPropertiesDefinition(property0.Value);
+                            definition = AlertPropertiesDefinition.DeserializeAlertPropertiesDefinition(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("description"u8))
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.CostManagement
                             {
                                 continue;
                             }
-                            details = AlertPropertiesDetails.DeserializeAlertPropertiesDetails(property0.Value);
+                            details = AlertPropertiesDetails.DeserializeAlertPropertiesDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("costEntityId"u8))
@@ -308,7 +308,24 @@ namespace Azure.ResourceManager.CostManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CostManagementAlertData(id, name, type, systemData.Value, definition.Value, description.Value, Optional.ToNullable(source), details.Value, costEntityId.Value, Optional.ToNullable(status), Optional.ToNullable(creationTime), Optional.ToNullable(closeTime), Optional.ToNullable(modificationTime), statusModificationUserName.Value, Optional.ToNullable(statusModificationTime), Optional.ToNullable(eTag), serializedAdditionalRawData);
+            return new CostManagementAlertData(
+                id,
+                name,
+                type,
+                systemData,
+                definition,
+                description,
+                source,
+                details,
+                costEntityId,
+                status,
+                creationTime,
+                closeTime,
+                modificationTime,
+                statusModificationUserName,
+                statusModificationTime,
+                eTag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CostManagementAlertData>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -67,7 +68,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownWebhook(document.RootElement, options);
+            return DeserializeMachineLearningWebhook(document.RootElement, options);
         }
 
         internal static UnknownWebhook DeserializeUnknownWebhook(JsonElement element, ModelReaderWriterOptions options = null)
@@ -78,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> eventType = default;
+            string eventType = default;
             MachineLearningWebhookType webhookType = "Unknown";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -105,7 +106,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownWebhook(eventType.Value, webhookType, serializedAdditionalRawData);
+            return new UnknownWebhook(eventType, webhookType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningWebhook>.Write(ModelReaderWriterOptions options)
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownWebhook(document.RootElement, options);
+                        return DeserializeMachineLearningWebhook(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningWebhook)} does not support '{options.Format}' format.");

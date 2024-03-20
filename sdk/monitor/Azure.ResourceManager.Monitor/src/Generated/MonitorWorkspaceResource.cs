@@ -282,10 +282,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<MonitorWorkspaceResource>> UpdateAsync(MonitorWorkspaceResourcePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _monitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics.CreateScope("MonitorWorkspaceResource.Update");
             scope.Start();
@@ -327,10 +324,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<MonitorWorkspaceResource> Update(MonitorWorkspaceResourcePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _monitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics.CreateScope("MonitorWorkspaceResource.Update");
             scope.Start();
@@ -373,14 +367,8 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<MonitorWorkspaceResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _monitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics.CreateScope("MonitorWorkspaceResource.AddTag");
             scope.Start();
@@ -441,14 +429,8 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<MonitorWorkspaceResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _monitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics.CreateScope("MonitorWorkspaceResource.AddTag");
             scope.Start();
@@ -508,10 +490,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<MonitorWorkspaceResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _monitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics.CreateScope("MonitorWorkspaceResource.SetTags");
             scope.Start();
@@ -568,10 +547,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<MonitorWorkspaceResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _monitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics.CreateScope("MonitorWorkspaceResource.SetTags");
             scope.Start();
@@ -628,10 +604,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<MonitorWorkspaceResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _monitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics.CreateScope("MonitorWorkspaceResource.RemoveTag");
             scope.Start();
@@ -691,10 +664,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<MonitorWorkspaceResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _monitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics.CreateScope("MonitorWorkspaceResource.RemoveTag");
             scope.Start();

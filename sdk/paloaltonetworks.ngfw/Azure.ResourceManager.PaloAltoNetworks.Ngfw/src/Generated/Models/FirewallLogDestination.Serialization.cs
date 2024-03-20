@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 return null;
             }
-            Optional<StorageAccountConfiguration> storageConfigurations = default;
-            Optional<EventHubConfiguration> eventHubConfigurations = default;
-            Optional<MonitorLogConfiguration> monitorConfigurations = default;
+            StorageAccountConfiguration storageConfigurations = default;
+            EventHubConfiguration eventHubConfigurations = default;
+            MonitorLogConfiguration monitorConfigurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     {
                         continue;
                     }
-                    storageConfigurations = StorageAccountConfiguration.DeserializeStorageAccountConfiguration(property.Value);
+                    storageConfigurations = StorageAccountConfiguration.DeserializeStorageAccountConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("eventHubConfigurations"u8))
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     {
                         continue;
                     }
-                    eventHubConfigurations = EventHubConfiguration.DeserializeEventHubConfiguration(property.Value);
+                    eventHubConfigurations = EventHubConfiguration.DeserializeEventHubConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("monitorConfigurations"u8))
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     {
                         continue;
                     }
-                    monitorConfigurations = MonitorLogConfiguration.DeserializeMonitorLogConfiguration(property.Value);
+                    monitorConfigurations = MonitorLogConfiguration.DeserializeMonitorLogConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallLogDestination(storageConfigurations.Value, eventHubConfigurations.Value, monitorConfigurations.Value, serializedAdditionalRawData);
+            return new FirewallLogDestination(storageConfigurations, eventHubConfigurations, monitorConfigurations, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirewallLogDestination>.Write(ModelReaderWriterOptions options)

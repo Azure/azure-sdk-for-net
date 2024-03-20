@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
@@ -18,9 +17,9 @@ namespace Azure.Communication.CallingServer
             {
                 return null;
             }
-            Optional<int> code = default;
-            Optional<int> subCode = default;
-            Optional<string> message = default;
+            int? code = default;
+            int? subCode = default;
+            string message = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -47,7 +46,7 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new ResultInformation(Optional.ToNullable(code), Optional.ToNullable(subCode), message.Value);
+            return new ResultInformation(code, subCode, message);
         }
     }
 }

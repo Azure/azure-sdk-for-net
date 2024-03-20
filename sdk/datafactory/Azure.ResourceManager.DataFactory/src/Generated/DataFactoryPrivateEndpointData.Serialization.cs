@@ -95,18 +95,18 @@ namespace Azure.ResourceManager.DataFactory
                 return null;
             }
             DataFactoryPrivateEndpointProperties properties = default;
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = DataFactoryPrivateEndpointProperties.DeserializeDataFactoryPrivateEndpointProperties(property.Value);
+                    properties = DataFactoryPrivateEndpointProperties.DeserializeDataFactoryPrivateEndpointProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -148,7 +148,14 @@ namespace Azure.ResourceManager.DataFactory
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataFactoryPrivateEndpointData(id, name, type, systemData.Value, properties, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new DataFactoryPrivateEndpointData(
+                id,
+                name,
+                type,
+                systemData,
+                properties,
+                etag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataFactoryPrivateEndpointData>.Write(ModelReaderWriterOptions options)

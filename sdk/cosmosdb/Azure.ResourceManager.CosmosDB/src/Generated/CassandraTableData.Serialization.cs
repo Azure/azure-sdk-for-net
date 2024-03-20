@@ -118,15 +118,15 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ExtendedCassandraTableResourceInfo> resource = default;
-            Optional<CassandraTablePropertiesConfig> options0 = default;
+            SystemData systemData = default;
+            ExtendedCassandraTableResourceInfo resource = default;
+            CassandraTablePropertiesConfig options0 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.CosmosDB
                             {
                                 continue;
                             }
-                            resource = ExtendedCassandraTableResourceInfo.DeserializeExtendedCassandraTableResourceInfo(property0.Value);
+                            resource = ExtendedCassandraTableResourceInfo.DeserializeExtendedCassandraTableResourceInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("options"u8))
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.CosmosDB
                             {
                                 continue;
                             }
-                            options0 = CassandraTablePropertiesConfig.DeserializeCassandraTablePropertiesConfig(property0.Value);
+                            options0 = CassandraTablePropertiesConfig.DeserializeCassandraTablePropertiesConfig(property0.Value, options);
                             continue;
                         }
                     }
@@ -220,7 +220,17 @@ namespace Azure.ResourceManager.CosmosDB
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CassandraTableData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, resource.Value, options0.Value, identity, serializedAdditionalRawData);
+            return new CassandraTableData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                resource,
+                options0,
+                identity,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CassandraTableData>.Write(ModelReaderWriterOptions options)

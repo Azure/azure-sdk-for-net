@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (property.NameEquals("keySourceParameters"u8))
                 {
-                    keySourceParameters = KeyVaultSigningKey.DeserializeKeyVaultSigningKey(property.Value);
+                    keySourceParameters = KeyVaultSigningKey.DeserializeKeyVaultSigningKey(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

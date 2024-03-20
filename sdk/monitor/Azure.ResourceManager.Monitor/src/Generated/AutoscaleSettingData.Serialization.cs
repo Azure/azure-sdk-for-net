@@ -158,19 +158,19 @@ namespace Azure.ResourceManager.Monitor
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IList<AutoscaleProfile> profiles = default;
-            Optional<IList<AutoscaleNotification>> notifications = default;
-            Optional<bool> enabled = default;
-            Optional<PredictiveAutoscalePolicy> predictiveAutoscalePolicy = default;
-            Optional<string> name0 = default;
-            Optional<ResourceIdentifier> targetResourceUri = default;
-            Optional<AzureLocation> targetResourceLocation = default;
+            IList<AutoscaleNotification> notifications = default;
+            bool? enabled = default;
+            PredictiveAutoscalePolicy predictiveAutoscalePolicy = default;
+            string name0 = default;
+            ResourceIdentifier targetResourceUri = default;
+            AzureLocation? targetResourceLocation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Monitor
                             List<AutoscaleProfile> array = new List<AutoscaleProfile>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AutoscaleProfile.DeserializeAutoscaleProfile(item));
+                                array.Add(AutoscaleProfile.DeserializeAutoscaleProfile(item, options));
                             }
                             profiles = array;
                             continue;
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Monitor
                             List<AutoscaleNotification> array = new List<AutoscaleNotification>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AutoscaleNotification.DeserializeAutoscaleNotification(item));
+                                array.Add(AutoscaleNotification.DeserializeAutoscaleNotification(item, options));
                             }
                             notifications = array;
                             continue;
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Monitor
                                 predictiveAutoscalePolicy = null;
                                 continue;
                             }
-                            predictiveAutoscalePolicy = PredictiveAutoscalePolicy.DeserializePredictiveAutoscalePolicy(property0.Value);
+                            predictiveAutoscalePolicy = PredictiveAutoscalePolicy.DeserializePredictiveAutoscalePolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("name"u8))
@@ -303,7 +303,21 @@ namespace Azure.ResourceManager.Monitor
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutoscaleSettingData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, profiles, Optional.ToList(notifications), Optional.ToNullable(enabled), predictiveAutoscalePolicy.Value, name0.Value, targetResourceUri.Value, Optional.ToNullable(targetResourceLocation), serializedAdditionalRawData);
+            return new AutoscaleSettingData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                profiles,
+                notifications ?? new ChangeTrackingList<AutoscaleNotification>(),
+                enabled,
+                predictiveAutoscalePolicy,
+                name0,
+                targetResourceUri,
+                targetResourceLocation,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutoscaleSettingData>.Write(ModelReaderWriterOptions options)

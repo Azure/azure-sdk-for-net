@@ -152,18 +152,18 @@ namespace Azure.ResourceManager.EventGrid
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> topic = default;
-            Optional<EventSubscriptionProvisioningState> provisioningState = default;
-            Optional<EventSubscriptionDestination> destination = default;
-            Optional<DeliveryWithResourceIdentity> deliveryWithResourceIdentity = default;
-            Optional<EventSubscriptionFilter> filter = default;
-            Optional<IList<string>> labels = default;
-            Optional<DateTimeOffset> expirationTimeUtc = default;
-            Optional<EventDeliverySchema> eventDeliverySchema = default;
-            Optional<EventSubscriptionRetryPolicy> retryPolicy = default;
-            Optional<DeadLetterDestination> deadLetterDestination = default;
-            Optional<DeadLetterWithResourceIdentity> deadLetterWithResourceIdentity = default;
+            SystemData systemData = default;
+            string topic = default;
+            EventSubscriptionProvisioningState? provisioningState = default;
+            EventSubscriptionDestination destination = default;
+            DeliveryWithResourceIdentity deliveryWithResourceIdentity = default;
+            EventSubscriptionFilter filter = default;
+            IList<string> labels = default;
+            DateTimeOffset? expirationTimeUtc = default;
+            EventDeliverySchema? eventDeliverySchema = default;
+            EventSubscriptionRetryPolicy retryPolicy = default;
+            DeadLetterDestination deadLetterDestination = default;
+            DeadLetterWithResourceIdentity deadLetterWithResourceIdentity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.EventGrid
                             {
                                 continue;
                             }
-                            destination = EventSubscriptionDestination.DeserializeEventSubscriptionDestination(property0.Value);
+                            destination = EventSubscriptionDestination.DeserializeEventSubscriptionDestination(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("deliveryWithResourceIdentity"u8))
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.EventGrid
                             {
                                 continue;
                             }
-                            deliveryWithResourceIdentity = DeliveryWithResourceIdentity.DeserializeDeliveryWithResourceIdentity(property0.Value);
+                            deliveryWithResourceIdentity = DeliveryWithResourceIdentity.DeserializeDeliveryWithResourceIdentity(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("filter"u8))
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.EventGrid
                             {
                                 continue;
                             }
-                            filter = EventSubscriptionFilter.DeserializeEventSubscriptionFilter(property0.Value);
+                            filter = EventSubscriptionFilter.DeserializeEventSubscriptionFilter(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("labels"u8))
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.EventGrid
                             {
                                 continue;
                             }
-                            retryPolicy = EventSubscriptionRetryPolicy.DeserializeEventSubscriptionRetryPolicy(property0.Value);
+                            retryPolicy = EventSubscriptionRetryPolicy.DeserializeEventSubscriptionRetryPolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("deadLetterDestination"u8))
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.EventGrid
                             {
                                 continue;
                             }
-                            deadLetterDestination = DeadLetterDestination.DeserializeDeadLetterDestination(property0.Value);
+                            deadLetterDestination = DeadLetterDestination.DeserializeDeadLetterDestination(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("deadLetterWithResourceIdentity"u8))
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.EventGrid
                             {
                                 continue;
                             }
-                            deadLetterWithResourceIdentity = DeadLetterWithResourceIdentity.DeserializeDeadLetterWithResourceIdentity(property0.Value);
+                            deadLetterWithResourceIdentity = DeadLetterWithResourceIdentity.DeserializeDeadLetterWithResourceIdentity(property0.Value, options);
                             continue;
                         }
                     }
@@ -310,7 +310,23 @@ namespace Azure.ResourceManager.EventGrid
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventGridSubscriptionData(id, name, type, systemData.Value, topic.Value, Optional.ToNullable(provisioningState), destination.Value, deliveryWithResourceIdentity.Value, filter.Value, Optional.ToList(labels), Optional.ToNullable(expirationTimeUtc), Optional.ToNullable(eventDeliverySchema), retryPolicy.Value, deadLetterDestination.Value, deadLetterWithResourceIdentity.Value, serializedAdditionalRawData);
+            return new EventGridSubscriptionData(
+                id,
+                name,
+                type,
+                systemData,
+                topic,
+                provisioningState,
+                destination,
+                deliveryWithResourceIdentity,
+                filter,
+                labels ?? new ChangeTrackingList<string>(),
+                expirationTimeUtc,
+                eventDeliverySchema,
+                retryPolicy,
+                deadLetterDestination,
+                deadLetterWithResourceIdentity,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventGridSubscriptionData>.Write(ModelReaderWriterOptions options)

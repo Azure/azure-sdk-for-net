@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
-    /// <summary> The UnknownWorkflowModelCustomProperties. </summary>
+    /// <summary> Unknown version of WorkflowModelCustomProperties. </summary>
     internal partial class UnknownWorkflowModelCustomProperties : WorkflowModelCustomProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownWorkflowModelCustomProperties"/>. </summary>

@@ -5,9 +5,8 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Models
 {
@@ -16,14 +15,8 @@ namespace Azure.Search.Documents.Models
     {
         /// <summary> Initializes a new instance of <see cref="SuggestResult"/>. </summary>
         /// <param name="text"> The text of the suggestion result. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
         internal SuggestResult(string text)
         {
-            if (text == null)
-            {
-                throw new ArgumentNullException(nameof(text));
-            }
-
             Text = text;
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }

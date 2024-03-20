@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -126,12 +127,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<IList<BackupAbsoluteMarker>> absoluteCriteria = default;
-            Optional<IList<DataProtectionBackupDay>> daysOfMonth = default;
-            Optional<IList<DataProtectionBackupDayOfWeek>> daysOfTheWeek = default;
-            Optional<IList<DataProtectionBackupMonth>> monthsOfYear = default;
-            Optional<IList<DateTimeOffset>> scheduleTimes = default;
-            Optional<IList<DataProtectionBackupWeekNumber>> weeksOfTheMonth = default;
+            IList<BackupAbsoluteMarker> absoluteCriteria = default;
+            IList<DataProtectionBackupDay> daysOfMonth = default;
+            IList<DataProtectionBackupDayOfWeek> daysOfTheWeek = default;
+            IList<DataProtectionBackupMonth> monthsOfYear = default;
+            IList<DateTimeOffset> scheduleTimes = default;
+            IList<DataProtectionBackupWeekNumber> weeksOfTheMonth = default;
             string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -160,7 +161,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<DataProtectionBackupDay> array = new List<DataProtectionBackupDay>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataProtectionBackupDay.DeserializeDataProtectionBackupDay(item));
+                        array.Add(DataProtectionBackupDay.DeserializeDataProtectionBackupDay(item, options));
                     }
                     daysOfMonth = array;
                     continue;
@@ -232,7 +233,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScheduleBasedBackupCriteria(objectType, serializedAdditionalRawData, Optional.ToList(absoluteCriteria), Optional.ToList(daysOfMonth), Optional.ToList(daysOfTheWeek), Optional.ToList(monthsOfYear), Optional.ToList(scheduleTimes), Optional.ToList(weeksOfTheMonth));
+            return new ScheduleBasedBackupCriteria(
+                objectType,
+                serializedAdditionalRawData,
+                absoluteCriteria ?? new ChangeTrackingList<BackupAbsoluteMarker>(),
+                daysOfMonth ?? new ChangeTrackingList<DataProtectionBackupDay>(),
+                daysOfTheWeek ?? new ChangeTrackingList<DataProtectionBackupDayOfWeek>(),
+                monthsOfYear ?? new ChangeTrackingList<DataProtectionBackupMonth>(),
+                scheduleTimes ?? new ChangeTrackingList<DateTimeOffset>(),
+                weeksOfTheMonth ?? new ChangeTrackingList<DataProtectionBackupWeekNumber>());
         }
 
         BinaryData IPersistableModel<ScheduleBasedBackupCriteria>.Write(ModelReaderWriterOptions options)

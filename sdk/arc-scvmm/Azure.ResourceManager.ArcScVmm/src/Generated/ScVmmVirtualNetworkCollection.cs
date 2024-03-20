@@ -83,18 +83,8 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ScVmmVirtualNetworkResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string virtualNetworkName, ScVmmVirtualNetworkData data, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkName));
-            }
-            if (virtualNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _scVmmVirtualNetworkVirtualNetworksClientDiagnostics.CreateScope("ScVmmVirtualNetworkCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +132,8 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ScVmmVirtualNetworkResource> CreateOrUpdate(WaitUntil waitUntil, string virtualNetworkName, ScVmmVirtualNetworkData data, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkName));
-            }
-            if (virtualNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _scVmmVirtualNetworkVirtualNetworksClientDiagnostics.CreateScope("ScVmmVirtualNetworkCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +179,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
         public virtual async Task<Response<ScVmmVirtualNetworkResource>> GetAsync(string virtualNetworkName, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkName));
-            }
-            if (virtualNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
 
             using var scope = _scVmmVirtualNetworkVirtualNetworksClientDiagnostics.CreateScope("ScVmmVirtualNetworkCollection.Get");
             scope.Start();
@@ -251,14 +224,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
         public virtual Response<ScVmmVirtualNetworkResource> Get(string virtualNetworkName, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkName));
-            }
-            if (virtualNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
 
             using var scope = _scVmmVirtualNetworkVirtualNetworksClientDiagnostics.CreateScope("ScVmmVirtualNetworkCollection.Get");
             scope.Start();
@@ -363,14 +329,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string virtualNetworkName, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkName));
-            }
-            if (virtualNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
 
             using var scope = _scVmmVirtualNetworkVirtualNetworksClientDiagnostics.CreateScope("ScVmmVirtualNetworkCollection.Exists");
             scope.Start();
@@ -413,14 +372,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
         public virtual Response<bool> Exists(string virtualNetworkName, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkName));
-            }
-            if (virtualNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
 
             using var scope = _scVmmVirtualNetworkVirtualNetworksClientDiagnostics.CreateScope("ScVmmVirtualNetworkCollection.Exists");
             scope.Start();
@@ -463,14 +415,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
         public virtual async Task<NullableResponse<ScVmmVirtualNetworkResource>> GetIfExistsAsync(string virtualNetworkName, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkName));
-            }
-            if (virtualNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
 
             using var scope = _scVmmVirtualNetworkVirtualNetworksClientDiagnostics.CreateScope("ScVmmVirtualNetworkCollection.GetIfExists");
             scope.Start();
@@ -515,14 +460,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
         public virtual NullableResponse<ScVmmVirtualNetworkResource> GetIfExists(string virtualNetworkName, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkName));
-            }
-            if (virtualNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
 
             using var scope = _scVmmVirtualNetworkVirtualNetworksClientDiagnostics.CreateScope("ScVmmVirtualNetworkCollection.GetIfExists");
             scope.Start();

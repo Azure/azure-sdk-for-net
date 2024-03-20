@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <returns> A new <see cref="Models.ResourceHealthAvailabilityStatus"/> instance for mocking. </returns>
         public static ResourceHealthAvailabilityStatus ResourceHealthAvailabilityStatus(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, ResourceHealthAvailabilityStatusProperties properties = null)
         {
-            return new ResourceHealthAvailabilityStatus(id, name, resourceType, systemData, location, properties, serializedAdditionalRawData: null);
+            return new ResourceHealthAvailabilityStatus(
+                id,
+                name,
+                resourceType,
+                systemData,
+                location,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ResourceHealthAvailabilityStatusProperties"/>. </summary>
@@ -57,7 +64,28 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             recommendedActions ??= new List<ResourceHealthRecommendedAction>();
             serviceImpactingEvents ??= new List<ServiceImpactingEvent>();
 
-            return new ResourceHealthAvailabilityStatusProperties(availabilityState, title, summary, detailedStatus, reasonType, context, category, articleId, rootCauseAttributionOn, healthEventType, healthEventCause, healthEventCategory, healthEventId, resolutionEta, occuredOn, reasonChronicity, reportedOn, recentlyResolved, recommendedActions?.ToList(), serviceImpactingEvents?.ToList(), serializedAdditionalRawData: null);
+            return new ResourceHealthAvailabilityStatusProperties(
+                availabilityState,
+                title,
+                summary,
+                detailedStatus,
+                reasonType,
+                context,
+                category,
+                articleId,
+                rootCauseAttributionOn,
+                healthEventType,
+                healthEventCause,
+                healthEventCategory,
+                healthEventId,
+                resolutionEta,
+                occuredOn,
+                reasonChronicity,
+                reportedOn,
+                recentlyResolved,
+                recommendedActions?.ToList(),
+                serviceImpactingEvents?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ResourceHealthAvailabilityStateRecentlyResolved"/>. </summary>
@@ -90,7 +118,13 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <returns> A new <see cref="Models.ServiceImpactingEvent"/> instance for mocking. </returns>
         public static ServiceImpactingEvent ServiceImpactingEvent(DateTimeOffset? eventStartOn = null, DateTimeOffset? eventStatusLastModifiedOn = null, string correlationId = null, string statusValue = null, ServiceImpactingEventIncidentProperties incidentProperties = null)
         {
-            return new ServiceImpactingEvent(eventStartOn, eventStatusLastModifiedOn, correlationId, statusValue != null ? new ServiceImpactingEventStatus(statusValue, serializedAdditionalRawData: null) : null, incidentProperties, serializedAdditionalRawData: null);
+            return new ServiceImpactingEvent(
+                eventStartOn,
+                eventStatusLastModifiedOn,
+                correlationId,
+                statusValue != null ? new ServiceImpactingEventStatus(statusValue, serializedAdditionalRawData: null) : null,
+                incidentProperties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ServiceImpactingEventIncidentProperties"/>. </summary>
@@ -120,7 +154,16 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             applicableScenarios ??= new List<MetadataEntityScenario>();
             supportedValues ??= new List<MetadataSupportedValueDetail>();
 
-            return new ResourceHealthMetadataEntityData(id, name, resourceType, systemData, displayName, dependsOn?.ToList(), applicableScenarios?.ToList(), supportedValues?.ToList(), serializedAdditionalRawData: null);
+            return new ResourceHealthMetadataEntityData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                displayName,
+                dependsOn?.ToList(),
+                applicableScenarios?.ToList(),
+                supportedValues?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MetadataSupportedValueDetail"/>. </summary>
@@ -154,7 +197,21 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         {
             info ??= new List<ResourceHealthKeyValueItem>();
 
-            return new ResourceHealthEventImpactedResourceData(id, name, resourceType, systemData, targetResourceType, targetResourceId, targetRegion, resourceName, resourceGroup, status, maintenanceStartTime, maintenanceEndTime, info?.ToList(), serializedAdditionalRawData: null);
+            return new ResourceHealthEventImpactedResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                targetResourceType,
+                targetResourceId,
+                targetRegion,
+                resourceName,
+                resourceGroup,
+                status,
+                maintenanceStartTime,
+                maintenanceEndTime,
+                info?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ResourceHealthKeyValueItem"/>. </summary>
@@ -210,7 +267,44 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             impact ??= new List<ResourceHealthEventImpact>();
             faqs ??= new List<ResourceHealthEventFaq>();
 
-            return new ResourceHealthEventData(id, name, resourceType, systemData, eventType, eventSubType, eventSource, status, title, summary, header, level, eventLevel, externalIncidentId, reason, article, links?.ToList(), impactStartOn, impactMitigationOn, impact?.ToList(), recommendedActions, faqs?.ToList(), isHirEvent, isMicrosoftSupportEnabled, description, isPlatformInitiated, isChatWithUsEnabled, priority, lastUpdateOn, hirStage, additionalInformationMessage != null ? new ResourceHealthEventAdditionalInformation(additionalInformationMessage, serializedAdditionalRawData: null) : null, duration, impactType, maintenanceId, maintenanceType, argQuery, serializedAdditionalRawData: null);
+            return new ResourceHealthEventData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                eventType,
+                eventSubType,
+                eventSource,
+                status,
+                title,
+                summary,
+                header,
+                level,
+                eventLevel,
+                externalIncidentId,
+                reason,
+                article,
+                links?.ToList(),
+                impactStartOn,
+                impactMitigationOn,
+                impact?.ToList(),
+                recommendedActions,
+                faqs?.ToList(),
+                isHirEvent,
+                isMicrosoftSupportEnabled,
+                description,
+                isPlatformInitiated,
+                isChatWithUsEnabled,
+                priority,
+                lastUpdateOn,
+                hirStage,
+                additionalInformationMessage != null ? new ResourceHealthEventAdditionalInformation(additionalInformationMessage, serializedAdditionalRawData: null) : null,
+                duration,
+                impactType,
+                maintenanceId,
+                maintenanceType,
+                argQuery,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ResourceHealthEventArticle"/>. </summary>
@@ -232,7 +326,13 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <returns> A new <see cref="Models.ResourceHealthEventLink"/> instance for mocking. </returns>
         public static ResourceHealthEventLink ResourceHealthEventLink(ResourceHealthEventLinkTypeValue? linkType = null, ResourceHealthEventLinkDisplayText displayText = null, string extensionName = null, string bladeName = null, BinaryData parameters = null)
         {
-            return new ResourceHealthEventLink(linkType, displayText, extensionName, bladeName, parameters, serializedAdditionalRawData: null);
+            return new ResourceHealthEventLink(
+                linkType,
+                displayText,
+                extensionName,
+                bladeName,
+                parameters,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ResourceHealthEventLinkDisplayText"/>. </summary>
@@ -269,7 +369,14 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             impactedTenants ??= new List<string>();
             updates ??= new List<ResourceHealthEventUpdate>();
 
-            return new ResourceHealthEventImpactedServiceRegion(impactedRegion, status, impactedSubscriptions?.ToList(), impactedTenants?.ToList(), lastUpdateOn, updates?.ToList(), serializedAdditionalRawData: null);
+            return new ResourceHealthEventImpactedServiceRegion(
+                impactedRegion,
+                status,
+                impactedSubscriptions?.ToList(),
+                impactedTenants?.ToList(),
+                lastUpdateOn,
+                updates?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ResourceHealthEventUpdate"/>. </summary>
@@ -326,7 +433,15 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             statusBanners ??= new List<EmergingIssueBannerType>();
             statusActiveEvents ??= new List<EmergingIssueActiveEventType>();
 
-            return new ServiceEmergingIssueData(id, name, resourceType, systemData, refreshedOn, statusBanners?.ToList(), statusActiveEvents?.ToList(), serializedAdditionalRawData: null);
+            return new ServiceEmergingIssueData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                refreshedOn,
+                statusBanners?.ToList(),
+                statusActiveEvents?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.EmergingIssueBannerType"/>. </summary>
@@ -356,7 +471,18 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         {
             impacts ??= new List<EmergingIssueImpact>();
 
-            return new EmergingIssueActiveEventType(title, description, trackingId, startOn, cloud, severity, stage, isPublished, lastModifiedOn, impacts?.ToList(), serializedAdditionalRawData: null);
+            return new EmergingIssueActiveEventType(
+                title,
+                description,
+                trackingId,
+                startOn,
+                cloud,
+                severity,
+                stage,
+                isPublished,
+                lastModifiedOn,
+                impacts?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.EmergingIssueImpact"/>. </summary>

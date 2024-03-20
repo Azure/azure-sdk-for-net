@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -89,10 +90,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IList<string>> paths = default;
-            Optional<CosmosDBPartitionKind> kind = default;
-            Optional<int> version = default;
-            Optional<bool> systemKey = default;
+            IList<string> paths = default;
+            CosmosDBPartitionKind? kind = default;
+            int? version = default;
+            bool? systemKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBContainerPartitionKey(Optional.ToList(paths), Optional.ToNullable(kind), Optional.ToNullable(version), Optional.ToNullable(systemKey), serializedAdditionalRawData);
+            return new CosmosDBContainerPartitionKey(paths ?? new ChangeTrackingList<string>(), kind, version, systemKey, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBContainerPartitionKey>.Write(ModelReaderWriterOptions options)

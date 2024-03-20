@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MobileNetwork;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
@@ -98,7 +99,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     List<DataNetworkConfiguration> array = new List<DataNetworkConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataNetworkConfiguration.DeserializeDataNetworkConfiguration(item));
+                        array.Add(DataNetworkConfiguration.DeserializeDataNetworkConfiguration(item, options));
                     }
                     dataNetworkConfigurations = array;
                     continue;

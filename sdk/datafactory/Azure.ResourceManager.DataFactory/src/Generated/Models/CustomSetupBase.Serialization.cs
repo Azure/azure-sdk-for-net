@@ -70,13 +70,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzPowerShellSetup": return AzPowerShellSetup.DeserializeAzPowerShellSetup(element);
-                    case "CmdkeySetup": return CmdkeySetup.DeserializeCmdkeySetup(element);
-                    case "ComponentSetup": return ComponentSetup.DeserializeComponentSetup(element);
-                    case "EnvironmentVariableSetup": return EnvironmentVariableSetup.DeserializeEnvironmentVariableSetup(element);
+                    case "AzPowerShellSetup": return AzPowerShellSetup.DeserializeAzPowerShellSetup(element, options);
+                    case "CmdkeySetup": return CmdkeySetup.DeserializeCmdkeySetup(element, options);
+                    case "ComponentSetup": return ComponentSetup.DeserializeComponentSetup(element, options);
+                    case "EnvironmentVariableSetup": return EnvironmentVariableSetup.DeserializeEnvironmentVariableSetup(element, options);
                 }
             }
-            return UnknownCustomSetupBase.DeserializeUnknownCustomSetupBase(element);
+            return UnknownCustomSetupBase.DeserializeUnknownCustomSetupBase(element, options);
         }
 
         BinaryData IPersistableModel<CustomSetupBase>.Write(ModelReaderWriterOptions options)

@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PeeringRegisteredAsnData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<PeeringRegisteredAsnData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Peering.Models
                     List<PeeringRegisteredAsnData> array = new List<PeeringRegisteredAsnData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PeeringRegisteredAsnData.DeserializePeeringRegisteredAsnData(item));
+                        array.Add(PeeringRegisteredAsnData.DeserializePeeringRegisteredAsnData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PeeringRegisteredAsnListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new PeeringRegisteredAsnListResult(value ?? new ChangeTrackingList<PeeringRegisteredAsnData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PeeringRegisteredAsnListResult>.Write(ModelReaderWriterOptions options)

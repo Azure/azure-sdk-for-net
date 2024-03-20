@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         if (property0.NameEquals("resource"u8))
                         {
-                            resource = CosmosDBSqlClientEncryptionKeyResourceInfo.DeserializeCosmosDBSqlClientEncryptionKeyResourceInfo(property0.Value);
+                            resource = CosmosDBSqlClientEncryptionKeyResourceInfo.DeserializeCosmosDBSqlClientEncryptionKeyResourceInfo(property0.Value, options);
                             continue;
                         }
                     }

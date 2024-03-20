@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 return null;
             }
             IReadOnlyList<ContainerAppData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppData> array = new List<ContainerAppData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppData.DeserializeContainerAppData(item));
+                        array.Add(ContainerAppData.DeserializeContainerAppData(item, options));
                     }
                     value = array;
                     continue;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppCollection(value, nextLink.Value, serializedAdditionalRawData);
+            return new ContainerAppCollection(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppCollection>.Write(ModelReaderWriterOptions options)

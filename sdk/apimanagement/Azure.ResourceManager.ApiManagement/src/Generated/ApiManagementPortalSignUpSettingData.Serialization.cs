@@ -102,9 +102,9 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> enabled = default;
-            Optional<TermsOfServiceProperties> termsOfService = default;
+            SystemData systemData = default;
+            bool? enabled = default;
+            TermsOfServiceProperties termsOfService = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ApiManagement
                             {
                                 continue;
                             }
-                            termsOfService = TermsOfServiceProperties.DeserializeTermsOfServiceProperties(property0.Value);
+                            termsOfService = TermsOfServiceProperties.DeserializeTermsOfServiceProperties(property0.Value, options);
                             continue;
                         }
                     }
@@ -169,7 +169,14 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementPortalSignUpSettingData(id, name, type, systemData.Value, Optional.ToNullable(enabled), termsOfService.Value, serializedAdditionalRawData);
+            return new ApiManagementPortalSignUpSettingData(
+                id,
+                name,
+                type,
+                systemData,
+                enabled,
+                termsOfService,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementPortalSignUpSettingData>.Write(ModelReaderWriterOptions options)

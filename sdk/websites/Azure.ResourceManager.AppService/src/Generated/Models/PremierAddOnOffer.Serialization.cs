@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -143,21 +144,21 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> sku = default;
-            Optional<string> product = default;
-            Optional<string> vendor = default;
-            Optional<bool> promoCodeRequired = default;
-            Optional<int> quota = default;
-            Optional<AppServicePlanRestriction> webHostingPlanRestrictions = default;
-            Optional<Uri> privacyPolicyUrl = default;
-            Optional<Uri> legalTermsUrl = default;
-            Optional<string> marketplacePublisher = default;
-            Optional<string> marketplaceOffer = default;
+            SystemData systemData = default;
+            string sku = default;
+            string product = default;
+            string vendor = default;
+            bool? promoCodeRequired = default;
+            int? quota = default;
+            AppServicePlanRestriction? webHostingPlanRestrictions = default;
+            Uri privacyPolicyUrl = default;
+            Uri legalTermsUrl = default;
+            string marketplacePublisher = default;
+            string marketplaceOffer = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -279,7 +280,23 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PremierAddOnOffer(id, name, type, systemData.Value, sku.Value, product.Value, vendor.Value, Optional.ToNullable(promoCodeRequired), Optional.ToNullable(quota), Optional.ToNullable(webHostingPlanRestrictions), privacyPolicyUrl.Value, legalTermsUrl.Value, marketplacePublisher.Value, marketplaceOffer.Value, kind.Value, serializedAdditionalRawData);
+            return new PremierAddOnOffer(
+                id,
+                name,
+                type,
+                systemData,
+                sku,
+                product,
+                vendor,
+                promoCodeRequired,
+                quota,
+                webHostingPlanRestrictions,
+                privacyPolicyUrl,
+                legalTermsUrl,
+                marketplacePublisher,
+                marketplaceOffer,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PremierAddOnOffer>.Write(ModelReaderWriterOptions options)

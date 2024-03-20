@@ -184,27 +184,27 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 return null;
             }
-            Optional<FhirServiceKind> kind = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            FhirServiceKind? kind = default;
+            ManagedServiceIdentity identity = default;
+            ETag? etag = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<HealthcareApisProvisioningState> provisioningState = default;
-            Optional<FhirServiceAcrConfiguration> acrConfiguration = default;
-            Optional<FhirServiceAuthenticationConfiguration> authenticationConfiguration = default;
-            Optional<FhirServiceCorsConfiguration> corsConfiguration = default;
-            Optional<FhirServiceExportConfiguration> exportConfiguration = default;
-            Optional<IReadOnlyList<HealthcareApisPrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Optional<HealthcareApisPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<FhirServiceEventState> eventState = default;
-            Optional<FhirServiceResourceVersionPolicyConfiguration> resourceVersionPolicyConfiguration = default;
-            Optional<FhirServiceImportConfiguration> importConfiguration = default;
-            Optional<ImplementationGuidesConfiguration> implementationGuidesConfiguration = default;
-            Optional<Encryption> encryption = default;
+            SystemData systemData = default;
+            HealthcareApisProvisioningState? provisioningState = default;
+            FhirServiceAcrConfiguration acrConfiguration = default;
+            FhirServiceAuthenticationConfiguration authenticationConfiguration = default;
+            FhirServiceCorsConfiguration corsConfiguration = default;
+            FhirServiceExportConfiguration exportConfiguration = default;
+            IReadOnlyList<HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections = default;
+            HealthcareApisPublicNetworkAccess? publicNetworkAccess = default;
+            FhirServiceEventState? eventState = default;
+            FhirServiceResourceVersionPolicyConfiguration resourceVersionPolicyConfiguration = default;
+            FhirServiceImportConfiguration importConfiguration = default;
+            ImplementationGuidesConfiguration implementationGuidesConfiguration = default;
+            Encryption encryption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.HealthcareApis
                             {
                                 continue;
                             }
-                            acrConfiguration = FhirServiceAcrConfiguration.DeserializeFhirServiceAcrConfiguration(property0.Value);
+                            acrConfiguration = FhirServiceAcrConfiguration.DeserializeFhirServiceAcrConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("authenticationConfiguration"u8))
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.HealthcareApis
                             {
                                 continue;
                             }
-                            authenticationConfiguration = FhirServiceAuthenticationConfiguration.DeserializeFhirServiceAuthenticationConfiguration(property0.Value);
+                            authenticationConfiguration = FhirServiceAuthenticationConfiguration.DeserializeFhirServiceAuthenticationConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("corsConfiguration"u8))
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.HealthcareApis
                             {
                                 continue;
                             }
-                            corsConfiguration = FhirServiceCorsConfiguration.DeserializeFhirServiceCorsConfiguration(property0.Value);
+                            corsConfiguration = FhirServiceCorsConfiguration.DeserializeFhirServiceCorsConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("exportConfiguration"u8))
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.HealthcareApis
                             {
                                 continue;
                             }
-                            exportConfiguration = FhirServiceExportConfiguration.DeserializeFhirServiceExportConfiguration(property0.Value);
+                            exportConfiguration = FhirServiceExportConfiguration.DeserializeFhirServiceExportConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("privateEndpointConnections"u8))
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.HealthcareApis
                             List<HealthcareApisPrivateEndpointConnectionData> array = new List<HealthcareApisPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(HealthcareApisPrivateEndpointConnectionData.DeserializeHealthcareApisPrivateEndpointConnectionData(item));
+                                array.Add(HealthcareApisPrivateEndpointConnectionData.DeserializeHealthcareApisPrivateEndpointConnectionData(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.HealthcareApis
                             {
                                 continue;
                             }
-                            resourceVersionPolicyConfiguration = FhirServiceResourceVersionPolicyConfiguration.DeserializeFhirServiceResourceVersionPolicyConfiguration(property0.Value);
+                            resourceVersionPolicyConfiguration = FhirServiceResourceVersionPolicyConfiguration.DeserializeFhirServiceResourceVersionPolicyConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("importConfiguration"u8))
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.HealthcareApis
                             {
                                 continue;
                             }
-                            importConfiguration = FhirServiceImportConfiguration.DeserializeFhirServiceImportConfiguration(property0.Value);
+                            importConfiguration = FhirServiceImportConfiguration.DeserializeFhirServiceImportConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("implementationGuidesConfiguration"u8))
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.HealthcareApis
                             {
                                 continue;
                             }
-                            implementationGuidesConfiguration = ImplementationGuidesConfiguration.DeserializeImplementationGuidesConfiguration(property0.Value);
+                            implementationGuidesConfiguration = ImplementationGuidesConfiguration.DeserializeImplementationGuidesConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("encryption"u8))
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.HealthcareApis
                             {
                                 continue;
                             }
-                            encryption = Encryption.DeserializeEncryption(property0.Value);
+                            encryption = Encryption.DeserializeEncryption(property0.Value, options);
                             continue;
                         }
                     }
@@ -411,7 +411,29 @@ namespace Azure.ResourceManager.HealthcareApis
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FhirServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(kind), Optional.ToNullable(provisioningState), acrConfiguration.Value, authenticationConfiguration.Value, corsConfiguration.Value, exportConfiguration.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(eventState), resourceVersionPolicyConfiguration.Value, importConfiguration.Value, implementationGuidesConfiguration.Value, encryption.Value, identity, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new FhirServiceData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                kind,
+                provisioningState,
+                acrConfiguration,
+                authenticationConfiguration,
+                corsConfiguration,
+                exportConfiguration,
+                privateEndpointConnections ?? new ChangeTrackingList<HealthcareApisPrivateEndpointConnectionData>(),
+                publicNetworkAccess,
+                eventState,
+                resourceVersionPolicyConfiguration,
+                importConfiguration,
+                implementationGuidesConfiguration,
+                encryption,
+                identity,
+                etag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FhirServiceData>.Write(ModelReaderWriterOptions options)

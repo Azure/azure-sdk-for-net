@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ContainerServicePrivateLinkResourceData>> value = default;
+            IReadOnlyList<ContainerServicePrivateLinkResourceData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<ContainerServicePrivateLinkResourceData> array = new List<ContainerServicePrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerServicePrivateLinkResourceData.DeserializeContainerServicePrivateLinkResourceData(item));
+                        array.Add(ContainerServicePrivateLinkResourceData.DeserializeContainerServicePrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServicePrivateLinkResourcesListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new ContainerServicePrivateLinkResourcesListResult(value ?? new ChangeTrackingList<ContainerServicePrivateLinkResourceData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServicePrivateLinkResourcesListResult>.Write(ModelReaderWriterOptions options)

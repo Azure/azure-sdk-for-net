@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataShare;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare.Models
@@ -101,8 +102,8 @@ namespace Azure.ResourceManager.DataShare.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> dataSetId = default;
+            SystemData systemData = default;
+            Guid? dataSetId = default;
             ResourceIdentifier synapseWorkspaceSqlPoolTableResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -169,7 +170,15 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseWorkspaceSqlPoolTableDataSet(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToNullable(dataSetId), synapseWorkspaceSqlPoolTableResourceId);
+            return new SynapseWorkspaceSqlPoolTableDataSet(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData,
+                dataSetId,
+                synapseWorkspaceSqlPoolTableResourceId);
         }
 
         BinaryData IPersistableModel<SynapseWorkspaceSqlPoolTableDataSet>.Write(ModelReaderWriterOptions options)

@@ -212,26 +212,26 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<IList<string>> zones = default;
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<IList<AzureFirewallApplicationRuleCollectionData>> applicationRuleCollections = default;
-            Optional<IList<AzureFirewallNatRuleCollectionData>> natRuleCollections = default;
-            Optional<IList<AzureFirewallNetworkRuleCollectionData>> networkRuleCollections = default;
-            Optional<IList<AzureFirewallIPConfiguration>> ipConfigurations = default;
-            Optional<AzureFirewallIPConfiguration> managementIPConfiguration = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<AzureFirewallThreatIntelMode> threatIntelMode = default;
-            Optional<WritableSubResource> virtualHub = default;
-            Optional<WritableSubResource> firewallPolicy = default;
-            Optional<HubIPAddresses> hubIPAddresses = default;
-            Optional<IReadOnlyList<AzureFirewallIPGroups>> ipGroups = default;
-            Optional<AzureFirewallSku> sku = default;
-            Optional<IDictionary<string, string>> additionalProperties = default;
+            IList<string> zones = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
+            IDictionary<string, string> tags = default;
+            IList<AzureFirewallApplicationRuleCollectionData> applicationRuleCollections = default;
+            IList<AzureFirewallNatRuleCollectionData> natRuleCollections = default;
+            IList<AzureFirewallNetworkRuleCollectionData> networkRuleCollections = default;
+            IList<AzureFirewallIPConfiguration> ipConfigurations = default;
+            AzureFirewallIPConfiguration managementIPConfiguration = default;
+            NetworkProvisioningState? provisioningState = default;
+            AzureFirewallThreatIntelMode? threatIntelMode = default;
+            WritableSubResource virtualHub = default;
+            WritableSubResource firewallPolicy = default;
+            HubIPAddresses hubIPAddresses = default;
+            IReadOnlyList<AzureFirewallIPGroups> ipGroups = default;
+            AzureFirewallSku sku = default;
+            IDictionary<string, string> additionalProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Network
                             List<AzureFirewallApplicationRuleCollectionData> array = new List<AzureFirewallApplicationRuleCollectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AzureFirewallApplicationRuleCollectionData.DeserializeAzureFirewallApplicationRuleCollectionData(item));
+                                array.Add(AzureFirewallApplicationRuleCollectionData.DeserializeAzureFirewallApplicationRuleCollectionData(item, options));
                             }
                             applicationRuleCollections = array;
                             continue;
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.Network
                             List<AzureFirewallNatRuleCollectionData> array = new List<AzureFirewallNatRuleCollectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AzureFirewallNatRuleCollectionData.DeserializeAzureFirewallNatRuleCollectionData(item));
+                                array.Add(AzureFirewallNatRuleCollectionData.DeserializeAzureFirewallNatRuleCollectionData(item, options));
                             }
                             natRuleCollections = array;
                             continue;
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.Network
                             List<AzureFirewallNetworkRuleCollectionData> array = new List<AzureFirewallNetworkRuleCollectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AzureFirewallNetworkRuleCollectionData.DeserializeAzureFirewallNetworkRuleCollectionData(item));
+                                array.Add(AzureFirewallNetworkRuleCollectionData.DeserializeAzureFirewallNetworkRuleCollectionData(item, options));
                             }
                             networkRuleCollections = array;
                             continue;
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.Network
                             List<AzureFirewallIPConfiguration> array = new List<AzureFirewallIPConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AzureFirewallIPConfiguration.DeserializeAzureFirewallIPConfiguration(item));
+                                array.Add(AzureFirewallIPConfiguration.DeserializeAzureFirewallIPConfiguration(item, options));
                             }
                             ipConfigurations = array;
                             continue;
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            managementIPConfiguration = AzureFirewallIPConfiguration.DeserializeAzureFirewallIPConfiguration(property0.Value);
+                            managementIPConfiguration = AzureFirewallIPConfiguration.DeserializeAzureFirewallIPConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            hubIPAddresses = HubIPAddresses.DeserializeHubIPAddresses(property0.Value);
+                            hubIPAddresses = HubIPAddresses.DeserializeHubIPAddresses(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("ipGroups"u8))
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.Network
                             List<AzureFirewallIPGroups> array = new List<AzureFirewallIPGroups>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AzureFirewallIPGroups.DeserializeAzureFirewallIPGroups(item));
+                                array.Add(AzureFirewallIPGroups.DeserializeAzureFirewallIPGroups(item, options));
                             }
                             ipGroups = array;
                             continue;
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            sku = AzureFirewallSku.DeserializeAzureFirewallSku(property0.Value);
+                            sku = AzureFirewallSku.DeserializeAzureFirewallSku(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("additionalProperties"u8))
@@ -470,7 +470,28 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureFirewallData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToList(zones), Optional.ToNullable(etag), Optional.ToList(applicationRuleCollections), Optional.ToList(natRuleCollections), Optional.ToList(networkRuleCollections), Optional.ToList(ipConfigurations), managementIPConfiguration.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(threatIntelMode), virtualHub, firewallPolicy, hubIPAddresses.Value, Optional.ToList(ipGroups), sku.Value, Optional.ToDictionary(additionalProperties));
+            return new AzureFirewallData(
+                id,
+                name,
+                type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                zones ?? new ChangeTrackingList<string>(),
+                etag,
+                applicationRuleCollections ?? new ChangeTrackingList<AzureFirewallApplicationRuleCollectionData>(),
+                natRuleCollections ?? new ChangeTrackingList<AzureFirewallNatRuleCollectionData>(),
+                networkRuleCollections ?? new ChangeTrackingList<AzureFirewallNetworkRuleCollectionData>(),
+                ipConfigurations ?? new ChangeTrackingList<AzureFirewallIPConfiguration>(),
+                managementIPConfiguration,
+                provisioningState,
+                threatIntelMode,
+                virtualHub,
+                firewallPolicy,
+                hubIPAddresses,
+                ipGroups ?? new ChangeTrackingList<AzureFirewallIPGroups>(),
+                sku,
+                additionalProperties ?? new ChangeTrackingDictionary<string, string>());
         }
 
         BinaryData IPersistableModel<AzureFirewallData>.Write(ModelReaderWriterOptions options)

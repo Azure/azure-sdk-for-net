@@ -96,12 +96,12 @@ namespace Azure.ResourceManager.GuestConfiguration
             {
                 return null;
             }
-            Optional<GuestConfigurationAssignmentProperties> properties = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<AzureLocation> location = default;
-            Optional<ResourceType> type = default;
-            Optional<SystemData> systemData = default;
+            GuestConfigurationAssignmentProperties properties = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            AzureLocation? location = default;
+            ResourceType? type = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.GuestConfiguration
                     {
                         continue;
                     }
-                    properties = GuestConfigurationAssignmentProperties.DeserializeGuestConfigurationAssignmentProperties(property.Value);
+                    properties = GuestConfigurationAssignmentProperties.DeserializeGuestConfigurationAssignmentProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -162,7 +162,14 @@ namespace Azure.ResourceManager.GuestConfiguration
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GuestConfigurationAssignmentData(id.Value, name.Value, Optional.ToNullable(location), Optional.ToNullable(type), systemData, serializedAdditionalRawData, properties.Value);
+            return new GuestConfigurationAssignmentData(
+                id,
+                name,
+                location,
+                type,
+                systemData,
+                serializedAdditionalRawData,
+                properties);
         }
 
         BinaryData IPersistableModel<GuestConfigurationAssignmentData>.Write(ModelReaderWriterOptions options)

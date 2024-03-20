@@ -81,14 +81,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="serviceRegistryName"/> is null. </exception>
         public virtual async Task<ArmOperation<AppPlatformServiceRegistryResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string serviceRegistryName, CancellationToken cancellationToken = default)
         {
-            if (serviceRegistryName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceRegistryName));
-            }
-            if (serviceRegistryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceRegistryName));
-            }
+            Argument.AssertNotNullOrEmpty(serviceRegistryName, nameof(serviceRegistryName));
 
             using var scope = _appPlatformServiceRegistryServiceRegistriesClientDiagnostics.CreateScope("AppPlatformServiceRegistryCollection.CreateOrUpdate");
             scope.Start();
@@ -135,14 +128,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="serviceRegistryName"/> is null. </exception>
         public virtual ArmOperation<AppPlatformServiceRegistryResource> CreateOrUpdate(WaitUntil waitUntil, string serviceRegistryName, CancellationToken cancellationToken = default)
         {
-            if (serviceRegistryName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceRegistryName));
-            }
-            if (serviceRegistryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceRegistryName));
-            }
+            Argument.AssertNotNullOrEmpty(serviceRegistryName, nameof(serviceRegistryName));
 
             using var scope = _appPlatformServiceRegistryServiceRegistriesClientDiagnostics.CreateScope("AppPlatformServiceRegistryCollection.CreateOrUpdate");
             scope.Start();
@@ -188,14 +174,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="serviceRegistryName"/> is null. </exception>
         public virtual async Task<Response<AppPlatformServiceRegistryResource>> GetAsync(string serviceRegistryName, CancellationToken cancellationToken = default)
         {
-            if (serviceRegistryName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceRegistryName));
-            }
-            if (serviceRegistryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceRegistryName));
-            }
+            Argument.AssertNotNullOrEmpty(serviceRegistryName, nameof(serviceRegistryName));
 
             using var scope = _appPlatformServiceRegistryServiceRegistriesClientDiagnostics.CreateScope("AppPlatformServiceRegistryCollection.Get");
             scope.Start();
@@ -240,14 +219,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="serviceRegistryName"/> is null. </exception>
         public virtual Response<AppPlatformServiceRegistryResource> Get(string serviceRegistryName, CancellationToken cancellationToken = default)
         {
-            if (serviceRegistryName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceRegistryName));
-            }
-            if (serviceRegistryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceRegistryName));
-            }
+            Argument.AssertNotNullOrEmpty(serviceRegistryName, nameof(serviceRegistryName));
 
             using var scope = _appPlatformServiceRegistryServiceRegistriesClientDiagnostics.CreateScope("AppPlatformServiceRegistryCollection.Get");
             scope.Start();
@@ -352,14 +324,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="serviceRegistryName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string serviceRegistryName, CancellationToken cancellationToken = default)
         {
-            if (serviceRegistryName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceRegistryName));
-            }
-            if (serviceRegistryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceRegistryName));
-            }
+            Argument.AssertNotNullOrEmpty(serviceRegistryName, nameof(serviceRegistryName));
 
             using var scope = _appPlatformServiceRegistryServiceRegistriesClientDiagnostics.CreateScope("AppPlatformServiceRegistryCollection.Exists");
             scope.Start();
@@ -402,14 +367,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="serviceRegistryName"/> is null. </exception>
         public virtual Response<bool> Exists(string serviceRegistryName, CancellationToken cancellationToken = default)
         {
-            if (serviceRegistryName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceRegistryName));
-            }
-            if (serviceRegistryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceRegistryName));
-            }
+            Argument.AssertNotNullOrEmpty(serviceRegistryName, nameof(serviceRegistryName));
 
             using var scope = _appPlatformServiceRegistryServiceRegistriesClientDiagnostics.CreateScope("AppPlatformServiceRegistryCollection.Exists");
             scope.Start();
@@ -452,14 +410,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="serviceRegistryName"/> is null. </exception>
         public virtual async Task<NullableResponse<AppPlatformServiceRegistryResource>> GetIfExistsAsync(string serviceRegistryName, CancellationToken cancellationToken = default)
         {
-            if (serviceRegistryName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceRegistryName));
-            }
-            if (serviceRegistryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceRegistryName));
-            }
+            Argument.AssertNotNullOrEmpty(serviceRegistryName, nameof(serviceRegistryName));
 
             using var scope = _appPlatformServiceRegistryServiceRegistriesClientDiagnostics.CreateScope("AppPlatformServiceRegistryCollection.GetIfExists");
             scope.Start();
@@ -504,14 +455,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="serviceRegistryName"/> is null. </exception>
         public virtual NullableResponse<AppPlatformServiceRegistryResource> GetIfExists(string serviceRegistryName, CancellationToken cancellationToken = default)
         {
-            if (serviceRegistryName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceRegistryName));
-            }
-            if (serviceRegistryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceRegistryName));
-            }
+            Argument.AssertNotNullOrEmpty(serviceRegistryName, nameof(serviceRegistryName));
 
             using var scope = _appPlatformServiceRegistryServiceRegistriesClientDiagnostics.CreateScope("AppPlatformServiceRegistryCollection.GetIfExists");
             scope.Start();

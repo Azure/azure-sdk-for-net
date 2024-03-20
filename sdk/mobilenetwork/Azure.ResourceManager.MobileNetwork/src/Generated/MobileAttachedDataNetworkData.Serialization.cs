@@ -141,18 +141,18 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<MobileNetworkProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            MobileNetworkProvisioningState? provisioningState = default;
             MobileNetworkInterfaceProperties userPlaneDataInterface = default;
             IList<string> dnsAddresses = default;
-            Optional<NaptConfiguration> naptConfiguration = default;
-            Optional<IList<string>> userEquipmentAddressPoolPrefix = default;
-            Optional<IList<string>> userEquipmentStaticAddressPoolPrefix = default;
+            NaptConfiguration naptConfiguration = default;
+            IList<string> userEquipmentAddressPoolPrefix = default;
+            IList<string> userEquipmentStaticAddressPoolPrefix = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.MobileNetwork
                         }
                         if (property0.NameEquals("userPlaneDataInterface"u8))
                         {
-                            userPlaneDataInterface = MobileNetworkInterfaceProperties.DeserializeMobileNetworkInterfaceProperties(property0.Value);
+                            userPlaneDataInterface = MobileNetworkInterfaceProperties.DeserializeMobileNetworkInterfaceProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("dnsAddresses"u8))
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.MobileNetwork
                             {
                                 continue;
                             }
-                            naptConfiguration = NaptConfiguration.DeserializeNaptConfiguration(property0.Value);
+                            naptConfiguration = NaptConfiguration.DeserializeNaptConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("userEquipmentAddressPoolPrefix"u8))
@@ -279,7 +279,20 @@ namespace Azure.ResourceManager.MobileNetwork
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MobileAttachedDataNetworkData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), userPlaneDataInterface, dnsAddresses, naptConfiguration.Value, Optional.ToList(userEquipmentAddressPoolPrefix), Optional.ToList(userEquipmentStaticAddressPoolPrefix), serializedAdditionalRawData);
+            return new MobileAttachedDataNetworkData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState,
+                userPlaneDataInterface,
+                dnsAddresses,
+                naptConfiguration,
+                userEquipmentAddressPoolPrefix ?? new ChangeTrackingList<string>(),
+                userEquipmentStaticAddressPoolPrefix ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MobileAttachedDataNetworkData>.Write(ModelReaderWriterOptions options)

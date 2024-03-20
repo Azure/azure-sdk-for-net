@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -100,11 +101,11 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Open": return ConfigurationValueWithoutSecrets.DeserializeConfigurationValueWithoutSecrets(element);
-                    case "Secret": return ConfigurationValueWithSecrets.DeserializeConfigurationValueWithSecrets(element);
+                    case "Open": return ConfigurationValueWithoutSecrets.DeserializeConfigurationValueWithoutSecrets(element, options);
+                    case "Secret": return ConfigurationValueWithSecrets.DeserializeConfigurationValueWithSecrets(element, options);
                 }
             }
-            return UnknownConfigurationGroupValuePropertiesFormat.DeserializeUnknownConfigurationGroupValuePropertiesFormat(element);
+            return UnknownConfigurationGroupValuePropertiesFormat.DeserializeUnknownConfigurationGroupValuePropertiesFormat(element, options);
         }
 
         BinaryData IPersistableModel<ConfigurationGroupValuePropertiesFormat>.Write(ModelReaderWriterOptions options)

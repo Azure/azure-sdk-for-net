@@ -114,15 +114,15 @@ namespace Azure.ResourceManager.EdgeOrder
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<EdgeOrderShippingAddress> shippingAddress = default;
+            SystemData systemData = default;
+            EdgeOrderShippingAddress shippingAddress = default;
             EdgeOrderAddressContactDetails contactDetails = default;
-            Optional<EdgeOrderAddressValidationStatus> addressValidationStatus = default;
+            EdgeOrderAddressValidationStatus? addressValidationStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -185,12 +185,12 @@ namespace Azure.ResourceManager.EdgeOrder
                             {
                                 continue;
                             }
-                            shippingAddress = EdgeOrderShippingAddress.DeserializeEdgeOrderShippingAddress(property0.Value);
+                            shippingAddress = EdgeOrderShippingAddress.DeserializeEdgeOrderShippingAddress(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("contactDetails"u8))
                         {
-                            contactDetails = EdgeOrderAddressContactDetails.DeserializeEdgeOrderAddressContactDetails(property0.Value);
+                            contactDetails = EdgeOrderAddressContactDetails.DeserializeEdgeOrderAddressContactDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("addressValidationStatus"u8))
@@ -211,7 +211,17 @@ namespace Azure.ResourceManager.EdgeOrder
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeOrderAddressData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, shippingAddress.Value, contactDetails, Optional.ToNullable(addressValidationStatus), serializedAdditionalRawData);
+            return new EdgeOrderAddressData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                shippingAddress,
+                contactDetails,
+                addressValidationStatus,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeOrderAddressData>.Write(ModelReaderWriterOptions options)

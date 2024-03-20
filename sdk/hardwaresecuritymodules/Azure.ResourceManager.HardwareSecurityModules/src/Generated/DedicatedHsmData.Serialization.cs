@@ -142,19 +142,19 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             {
                 return null;
             }
-            Optional<HardwareSecurityModulesSku> sku = default;
-            Optional<IList<string>> zones = default;
-            Optional<IDictionary<string, string>> tags = default;
+            HardwareSecurityModulesSku sku = default;
+            IList<string> zones = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<NetworkProfile> networkProfile = default;
-            Optional<NetworkProfile> managementNetworkProfile = default;
-            Optional<string> stampId = default;
-            Optional<string> statusMessage = default;
-            Optional<JsonWebKeyType> provisioningState = default;
+            SystemData systemData = default;
+            NetworkProfile networkProfile = default;
+            NetworkProfile managementNetworkProfile = default;
+            string stampId = default;
+            string statusMessage = default;
+            JsonWebKeyType? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                     {
                         continue;
                     }
-                    sku = HardwareSecurityModulesSku.DeserializeHardwareSecurityModulesSku(property.Value);
+                    sku = HardwareSecurityModulesSku.DeserializeHardwareSecurityModulesSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("zones"u8))
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                             {
                                 continue;
                             }
-                            networkProfile = NetworkProfile.DeserializeNetworkProfile(property0.Value);
+                            networkProfile = NetworkProfile.DeserializeNetworkProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("managementNetworkProfile"u8))
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                             {
                                 continue;
                             }
-                            managementNetworkProfile = NetworkProfile.DeserializeNetworkProfile(property0.Value);
+                            managementNetworkProfile = NetworkProfile.DeserializeNetworkProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("stampId"u8))
@@ -280,7 +280,21 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DedicatedHsmData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, networkProfile.Value, managementNetworkProfile.Value, stampId.Value, statusMessage.Value, Optional.ToNullable(provisioningState), sku.Value, Optional.ToList(zones), serializedAdditionalRawData);
+            return new DedicatedHsmData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                networkProfile,
+                managementNetworkProfile,
+                stampId,
+                statusMessage,
+                provisioningState,
+                sku,
+                zones ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DedicatedHsmData>.Write(ModelReaderWriterOptions options)

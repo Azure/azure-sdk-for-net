@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<string> runtimeVersion = default;
-            Optional<string> configFilePath = default;
+            bool? enabled = default;
+            string runtimeVersion = default;
+            string configFilePath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AuthPlatform(Optional.ToNullable(enabled), runtimeVersion.Value, configFilePath.Value, serializedAdditionalRawData);
+            return new AuthPlatform(enabled, runtimeVersion, configFilePath, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AuthPlatform>.Write(ModelReaderWriterOptions options)

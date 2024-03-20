@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MobileNetwork;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     List<SimNameAndEncryptedProperties> array = new List<SimNameAndEncryptedProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SimNameAndEncryptedProperties.DeserializeSimNameAndEncryptedProperties(item));
+                        array.Add(SimNameAndEncryptedProperties.DeserializeSimNameAndEncryptedProperties(item, options));
                     }
                     sims = array;
                     continue;
@@ -132,7 +133,14 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EncryptedSimUploadList(version, azureKeyIdentifier, vendorKeyFingerprint, encryptedTransportKey, signedTransportKey, sims, serializedAdditionalRawData);
+            return new EncryptedSimUploadList(
+                version,
+                azureKeyIdentifier,
+                vendorKeyFingerprint,
+                encryptedTransportKey,
+                signedTransportKey,
+                sims,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EncryptedSimUploadList>.Write(ModelReaderWriterOptions options)

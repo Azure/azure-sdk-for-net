@@ -167,25 +167,25 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ContainerRegistryProvisioningState> provisioningState = default;
-            Optional<DateTimeOffset> creationDate = default;
-            Optional<ContainerRegistryTaskStatus> status = default;
-            Optional<ContainerRegistryPlatformProperties> platform = default;
-            Optional<ContainerRegistryAgentProperties> agentConfiguration = default;
-            Optional<string> agentPoolName = default;
-            Optional<int> timeout = default;
-            Optional<ContainerRegistryTaskStepProperties> step = default;
-            Optional<ContainerRegistryTriggerProperties> trigger = default;
-            Optional<ContainerRegistryCredentials> credentials = default;
-            Optional<string> logTemplate = default;
-            Optional<bool> isSystemTask = default;
+            SystemData systemData = default;
+            ContainerRegistryProvisioningState? provisioningState = default;
+            DateTimeOffset? creationDate = default;
+            ContainerRegistryTaskStatus? status = default;
+            ContainerRegistryPlatformProperties platform = default;
+            ContainerRegistryAgentProperties agentConfiguration = default;
+            string agentPoolName = default;
+            int? timeout = default;
+            ContainerRegistryTaskStepProperties step = default;
+            ContainerRegistryTriggerProperties trigger = default;
+            ContainerRegistryCredentials credentials = default;
+            string logTemplate = default;
+            bool? isSystemTask = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             {
                                 continue;
                             }
-                            platform = ContainerRegistryPlatformProperties.DeserializeContainerRegistryPlatformProperties(property0.Value);
+                            platform = ContainerRegistryPlatformProperties.DeserializeContainerRegistryPlatformProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("agentConfiguration"u8))
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             {
                                 continue;
                             }
-                            agentConfiguration = ContainerRegistryAgentProperties.DeserializeContainerRegistryAgentProperties(property0.Value);
+                            agentConfiguration = ContainerRegistryAgentProperties.DeserializeContainerRegistryAgentProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("agentPoolName"u8))
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             {
                                 continue;
                             }
-                            step = ContainerRegistryTaskStepProperties.DeserializeContainerRegistryTaskStepProperties(property0.Value);
+                            step = ContainerRegistryTaskStepProperties.DeserializeContainerRegistryTaskStepProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("trigger"u8))
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             {
                                 continue;
                             }
-                            trigger = ContainerRegistryTriggerProperties.DeserializeContainerRegistryTriggerProperties(property0.Value);
+                            trigger = ContainerRegistryTriggerProperties.DeserializeContainerRegistryTriggerProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("credentials"u8))
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             {
                                 continue;
                             }
-                            credentials = ContainerRegistryCredentials.DeserializeContainerRegistryCredentials(property0.Value);
+                            credentials = ContainerRegistryCredentials.DeserializeContainerRegistryCredentials(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("logTemplate"u8))
@@ -360,7 +360,27 @@ namespace Azure.ResourceManager.ContainerRegistry
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryTaskData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(provisioningState), Optional.ToNullable(creationDate), Optional.ToNullable(status), platform.Value, agentConfiguration.Value, agentPoolName.Value, Optional.ToNullable(timeout), step.Value, trigger.Value, credentials.Value, logTemplate.Value, Optional.ToNullable(isSystemTask), serializedAdditionalRawData);
+            return new ContainerRegistryTaskData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                provisioningState,
+                creationDate,
+                status,
+                platform,
+                agentConfiguration,
+                agentPoolName,
+                timeout,
+                step,
+                trigger,
+                credentials,
+                logTemplate,
+                isSystemTask,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryTaskData>.Write(ModelReaderWriterOptions options)

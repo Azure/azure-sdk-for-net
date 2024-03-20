@@ -136,16 +136,16 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 return null;
             }
-            Optional<ETag> eTag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ETag? eTag = default;
+            IDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IList<string>> containers = default;
-            Optional<IList<string>> tables = default;
-            Optional<OperationalInsightsStorageAccount> storageAccount = default;
-            Optional<StorageInsightStatus> status = default;
+            SystemData systemData = default;
+            IList<string> containers = default;
+            IList<string> tables = default;
+            OperationalInsightsStorageAccount storageAccount = default;
+            StorageInsightStatus status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.OperationalInsights
                             {
                                 continue;
                             }
-                            storageAccount = OperationalInsightsStorageAccount.DeserializeOperationalInsightsStorageAccount(property0.Value);
+                            storageAccount = OperationalInsightsStorageAccount.DeserializeOperationalInsightsStorageAccount(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("status"u8))
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.OperationalInsights
                             {
                                 continue;
                             }
-                            status = StorageInsightStatus.DeserializeStorageInsightStatus(property0.Value);
+                            status = StorageInsightStatus.DeserializeStorageInsightStatus(property0.Value, options);
                             continue;
                         }
                     }
@@ -261,7 +261,18 @@ namespace Azure.ResourceManager.OperationalInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageInsightData(id, name, type, systemData.Value, Optional.ToNullable(eTag), Optional.ToDictionary(tags), Optional.ToList(containers), Optional.ToList(tables), storageAccount.Value, status.Value, serializedAdditionalRawData);
+            return new StorageInsightData(
+                id,
+                name,
+                type,
+                systemData,
+                eTag,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                containers ?? new ChangeTrackingList<string>(),
+                tables ?? new ChangeTrackingList<string>(),
+                storageAccount,
+                status,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageInsightData>.Write(ModelReaderWriterOptions options)

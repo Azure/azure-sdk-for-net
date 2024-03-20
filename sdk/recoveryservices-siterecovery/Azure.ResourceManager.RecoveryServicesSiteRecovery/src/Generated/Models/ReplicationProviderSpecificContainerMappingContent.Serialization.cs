@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "A2A": return A2AContainerMappingContent.DeserializeA2AContainerMappingContent(element);
-                    case "VMwareCbt": return VMwareCbtContainerMappingContent.DeserializeVMwareCbtContainerMappingContent(element);
+                    case "A2A": return A2AContainerMappingContent.DeserializeA2AContainerMappingContent(element, options);
+                    case "VMwareCbt": return VMwareCbtContainerMappingContent.DeserializeVMwareCbtContainerMappingContent(element, options);
                 }
             }
-            return UnknownReplicationProviderSpecificContainerMappingContent.DeserializeUnknownReplicationProviderSpecificContainerMappingContent(element);
+            return UnknownReplicationProviderSpecificContainerMappingContent.DeserializeUnknownReplicationProviderSpecificContainerMappingContent(element, options);
         }
 
         BinaryData IPersistableModel<ReplicationProviderSpecificContainerMappingContent>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -86,9 +87,9 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<DateTimeOffset> changedTime = default;
-            Optional<BinaryData> metadata = default;
+            DateTimeOffset? createdTime = default;
+            DateTimeOffset? changedTime = default;
+            BinaryData metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArtifactProperties(Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), metadata.Value, serializedAdditionalRawData);
+            return new ArtifactProperties(createdTime, changedTime, metadata, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArtifactProperties>.Write(ModelReaderWriterOptions options)

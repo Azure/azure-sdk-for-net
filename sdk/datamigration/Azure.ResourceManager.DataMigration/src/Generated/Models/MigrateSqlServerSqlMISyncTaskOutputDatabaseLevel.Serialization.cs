@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -136,18 +137,18 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> sourceDatabaseName = default;
-            Optional<DatabaseMigrationState> migrationState = default;
-            Optional<DateTimeOffset> startedOn = default;
-            Optional<DateTimeOffset> endedOn = default;
-            Optional<BackupSetInfo> fullBackupSetInfo = default;
-            Optional<BackupSetInfo> lastRestoredBackupSetInfo = default;
-            Optional<IReadOnlyList<BackupSetInfo>> activeBackupSets = default;
-            Optional<string> containerName = default;
-            Optional<string> errorPrefix = default;
-            Optional<bool> isFullBackupRestored = default;
-            Optional<IReadOnlyList<ReportableException>> exceptionsAndWarnings = default;
-            Optional<string> id = default;
+            string sourceDatabaseName = default;
+            DatabaseMigrationState? migrationState = default;
+            DateTimeOffset? startedOn = default;
+            DateTimeOffset? endedOn = default;
+            BackupSetInfo fullBackupSetInfo = default;
+            BackupSetInfo lastRestoredBackupSetInfo = default;
+            IReadOnlyList<BackupSetInfo> activeBackupSets = default;
+            string containerName = default;
+            string errorPrefix = default;
+            bool? isFullBackupRestored = default;
+            IReadOnlyList<ReportableException> exceptionsAndWarnings = default;
+            string id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -191,7 +192,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    fullBackupSetInfo = BackupSetInfo.DeserializeBackupSetInfo(property.Value);
+                    fullBackupSetInfo = BackupSetInfo.DeserializeBackupSetInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("lastRestoredBackupSetInfo"u8))
@@ -200,7 +201,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    lastRestoredBackupSetInfo = BackupSetInfo.DeserializeBackupSetInfo(property.Value);
+                    lastRestoredBackupSetInfo = BackupSetInfo.DeserializeBackupSetInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("activeBackupSets"u8))
@@ -212,7 +213,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<BackupSetInfo> array = new List<BackupSetInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BackupSetInfo.DeserializeBackupSetInfo(item));
+                        array.Add(BackupSetInfo.DeserializeBackupSetInfo(item, options));
                     }
                     activeBackupSets = array;
                     continue;
@@ -245,7 +246,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ReportableException> array = new List<ReportableException>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReportableException.DeserializeReportableException(item));
+                        array.Add(ReportableException.DeserializeReportableException(item, options));
                     }
                     exceptionsAndWarnings = array;
                     continue;
@@ -266,7 +267,21 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel(id.Value, resultType, serializedAdditionalRawData, sourceDatabaseName.Value, Optional.ToNullable(migrationState), Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), fullBackupSetInfo.Value, lastRestoredBackupSetInfo.Value, Optional.ToList(activeBackupSets), containerName.Value, errorPrefix.Value, Optional.ToNullable(isFullBackupRestored), Optional.ToList(exceptionsAndWarnings));
+            return new MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel(
+                id,
+                resultType,
+                serializedAdditionalRawData,
+                sourceDatabaseName,
+                migrationState,
+                startedOn,
+                endedOn,
+                fullBackupSetInfo,
+                lastRestoredBackupSetInfo,
+                activeBackupSets ?? new ChangeTrackingList<BackupSetInfo>(),
+                containerName,
+                errorPrefix,
+                isFullBackupRestored,
+                exceptionsAndWarnings ?? new ChangeTrackingList<ReportableException>());
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel>.Write(ModelReaderWriterOptions options)

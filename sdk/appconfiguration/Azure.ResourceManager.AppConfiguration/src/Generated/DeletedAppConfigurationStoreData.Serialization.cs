@@ -127,13 +127,13 @@ namespace Azure.ResourceManager.AppConfiguration
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> configurationStoreId = default;
-            Optional<AzureLocation> location = default;
-            Optional<DateTimeOffset> deletionDate = default;
-            Optional<DateTimeOffset> scheduledPurgeDate = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
-            Optional<bool> purgeProtectionEnabled = default;
+            SystemData systemData = default;
+            ResourceIdentifier configurationStoreId = default;
+            AzureLocation? location = default;
+            DateTimeOffset? deletionDate = default;
+            DateTimeOffset? scheduledPurgeDate = default;
+            IReadOnlyDictionary<string, string> tags = default;
+            bool? purgeProtectionEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -239,7 +239,18 @@ namespace Azure.ResourceManager.AppConfiguration
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeletedAppConfigurationStoreData(id, name, type, systemData.Value, configurationStoreId.Value, Optional.ToNullable(location), Optional.ToNullable(deletionDate), Optional.ToNullable(scheduledPurgeDate), Optional.ToDictionary(tags), Optional.ToNullable(purgeProtectionEnabled), serializedAdditionalRawData);
+            return new DeletedAppConfigurationStoreData(
+                id,
+                name,
+                type,
+                systemData,
+                configurationStoreId,
+                location,
+                deletionDate,
+                scheduledPurgeDate,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                purgeProtectionEnabled,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeletedAppConfigurationStoreData>.Write(ModelReaderWriterOptions options)

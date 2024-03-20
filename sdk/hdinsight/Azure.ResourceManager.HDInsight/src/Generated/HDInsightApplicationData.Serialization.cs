@@ -108,13 +108,13 @@ namespace Azure.ResourceManager.HDInsight
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<HDInsightApplicationProperties> properties = default;
+            ETag? etag = default;
+            IDictionary<string, string> tags = default;
+            HDInsightApplicationProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.HDInsight
                     {
                         continue;
                     }
-                    properties = HDInsightApplicationProperties.DeserializeHDInsightApplicationProperties(property.Value);
+                    properties = HDInsightApplicationProperties.DeserializeHDInsightApplicationProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -181,7 +181,15 @@ namespace Azure.ResourceManager.HDInsight
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightApplicationData(id, name, type, systemData.Value, Optional.ToNullable(etag), Optional.ToDictionary(tags), properties.Value, serializedAdditionalRawData);
+            return new HDInsightApplicationData(
+                id,
+                name,
+                type,
+                systemData,
+                etag,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightApplicationData>.Write(ModelReaderWriterOptions options)

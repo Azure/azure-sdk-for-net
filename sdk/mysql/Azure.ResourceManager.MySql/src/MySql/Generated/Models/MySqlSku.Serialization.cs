@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MySql;
 
 namespace Azure.ResourceManager.MySql.Models
 {
@@ -87,10 +88,10 @@ namespace Azure.ResourceManager.MySql.Models
                 return null;
             }
             string name = default;
-            Optional<MySqlSkuTier> tier = default;
-            Optional<int> capacity = default;
-            Optional<string> size = default;
-            Optional<string> family = default;
+            MySqlSkuTier? tier = default;
+            int? capacity = default;
+            string size = default;
+            string family = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +135,13 @@ namespace Azure.ResourceManager.MySql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlSku(name, Optional.ToNullable(tier), Optional.ToNullable(capacity), size.Value, family.Value, serializedAdditionalRawData);
+            return new MySqlSku(
+                name,
+                tier,
+                capacity,
+                size,
+                family,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlSku>.Write(ModelReaderWriterOptions options)

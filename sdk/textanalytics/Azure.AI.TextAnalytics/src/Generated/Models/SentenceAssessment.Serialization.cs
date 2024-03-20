@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -75,7 +76,13 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new SentenceAssessment(sentiment, confidenceScores, offset, length, text, isNegated);
+            return new SentenceAssessment(
+                sentiment,
+                confidenceScores,
+                offset,
+                length,
+                text,
+                isNegated);
         }
     }
 }

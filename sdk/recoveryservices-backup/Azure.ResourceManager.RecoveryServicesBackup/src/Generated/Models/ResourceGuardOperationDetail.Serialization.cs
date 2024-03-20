@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> vaultCriticalOperation = default;
-            Optional<ResourceIdentifier> defaultResourceRequest = default;
+            string vaultCriticalOperation = default;
+            ResourceIdentifier defaultResourceRequest = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceGuardOperationDetail(vaultCriticalOperation.Value, defaultResourceRequest.Value, serializedAdditionalRawData);
+            return new ResourceGuardOperationDetail(vaultCriticalOperation, defaultResourceRequest, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceGuardOperationDetail>.Write(ModelReaderWriterOptions options)

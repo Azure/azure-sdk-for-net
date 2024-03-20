@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -150,14 +151,14 @@ namespace Azure.ResourceManager.Resources
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<PolicyType> policyType = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<BinaryData> metadata = default;
-            Optional<IDictionary<string, ArmPolicyParameter>> parameters = default;
-            Optional<IList<PolicyDefinitionReference>> policyDefinitions = default;
-            Optional<IList<PolicyDefinitionGroup>> policyDefinitionGroups = default;
+            SystemData systemData = default;
+            PolicyType? policyType = default;
+            string displayName = default;
+            string description = default;
+            BinaryData metadata = default;
+            IDictionary<string, ArmPolicyParameter> parameters = default;
+            IList<PolicyDefinitionReference> policyDefinitions = default;
+            IList<PolicyDefinitionGroup> policyDefinitionGroups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -232,7 +233,7 @@ namespace Azure.ResourceManager.Resources
                             Dictionary<string, ArmPolicyParameter> dictionary = new Dictionary<string, ArmPolicyParameter>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, ArmPolicyParameter.DeserializeArmPolicyParameter(property1.Value));
+                                dictionary.Add(property1.Name, ArmPolicyParameter.DeserializeArmPolicyParameter(property1.Value, options));
                             }
                             parameters = dictionary;
                             continue;
@@ -246,7 +247,7 @@ namespace Azure.ResourceManager.Resources
                             List<PolicyDefinitionReference> array = new List<PolicyDefinitionReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PolicyDefinitionReference.DeserializePolicyDefinitionReference(item));
+                                array.Add(PolicyDefinitionReference.DeserializePolicyDefinitionReference(item, options));
                             }
                             policyDefinitions = array;
                             continue;
@@ -260,7 +261,7 @@ namespace Azure.ResourceManager.Resources
                             List<PolicyDefinitionGroup> array = new List<PolicyDefinitionGroup>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PolicyDefinitionGroup.DeserializePolicyDefinitionGroup(item));
+                                array.Add(PolicyDefinitionGroup.DeserializePolicyDefinitionGroup(item, options));
                             }
                             policyDefinitionGroups = array;
                             continue;
@@ -274,7 +275,19 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicySetDefinitionData(id, name, type, systemData.Value, Optional.ToNullable(policyType), displayName.Value, description.Value, metadata.Value, Optional.ToDictionary(parameters), Optional.ToList(policyDefinitions), Optional.ToList(policyDefinitionGroups), serializedAdditionalRawData);
+            return new PolicySetDefinitionData(
+                id,
+                name,
+                type,
+                systemData,
+                policyType,
+                displayName,
+                description,
+                metadata,
+                parameters ?? new ChangeTrackingDictionary<string, ArmPolicyParameter>(),
+                policyDefinitions ?? new ChangeTrackingList<PolicyDefinitionReference>(),
+                policyDefinitionGroups ?? new ChangeTrackingList<PolicyDefinitionGroup>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicySetDefinitionData>.Write(ModelReaderWriterOptions options)

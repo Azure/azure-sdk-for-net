@@ -137,18 +137,18 @@ namespace Azure.ResourceManager.Hci
             {
                 return null;
             }
-            Optional<ArcVmExtendedLocation> extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ArcVmExtendedLocation extendedLocation = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IList<IPConfiguration>> ipConfigurations = default;
-            Optional<string> macAddress = default;
-            Optional<InterfaceDnsSettings> dnsSettings = default;
-            Optional<ProvisioningStateEnum> provisioningState = default;
-            Optional<NetworkInterfaceStatus> status = default;
+            SystemData systemData = default;
+            IList<IPConfiguration> ipConfigurations = default;
+            string macAddress = default;
+            InterfaceDnsSettings dnsSettings = default;
+            ProvisioningStateEnum? provisioningState = default;
+            NetworkInterfaceStatus status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Hci
                     {
                         continue;
                     }
-                    extendedLocation = ArcVmExtendedLocation.DeserializeArcVmExtendedLocation(property.Value);
+                    extendedLocation = ArcVmExtendedLocation.DeserializeArcVmExtendedLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Hci
                             List<IPConfiguration> array = new List<IPConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IPConfiguration.DeserializeIPConfiguration(item));
+                                array.Add(IPConfiguration.DeserializeIPConfiguration(item, options));
                             }
                             ipConfigurations = array;
                             continue;
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Hci
                             {
                                 continue;
                             }
-                            dnsSettings = InterfaceDnsSettings.DeserializeInterfaceDnsSettings(property0.Value);
+                            dnsSettings = InterfaceDnsSettings.DeserializeInterfaceDnsSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Hci
                             {
                                 continue;
                             }
-                            status = NetworkInterfaceStatus.DeserializeNetworkInterfaceStatus(property0.Value);
+                            status = NetworkInterfaceStatus.DeserializeNetworkInterfaceStatus(property0.Value, options);
                             continue;
                         }
                     }
@@ -269,7 +269,20 @@ namespace Azure.ResourceManager.Hci
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkInterfaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation.Value, Optional.ToList(ipConfigurations), macAddress.Value, dnsSettings.Value, Optional.ToNullable(provisioningState), status.Value, serializedAdditionalRawData);
+            return new NetworkInterfaceData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation,
+                ipConfigurations ?? new ChangeTrackingList<IPConfiguration>(),
+                macAddress,
+                dnsSettings,
+                provisioningState,
+                status,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkInterfaceData>.Write(ModelReaderWriterOptions options)

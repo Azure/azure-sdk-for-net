@@ -132,18 +132,18 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<GalleryIdentifier> identifier = default;
-            Optional<GalleryProvisioningState> provisioningState = default;
-            Optional<SharingProfile> sharingProfile = default;
-            Optional<SoftDeletePolicy> softDeletePolicy = default;
-            Optional<SharingStatus> sharingStatus = default;
+            SystemData systemData = default;
+            string description = default;
+            GalleryIdentifier identifier = default;
+            GalleryProvisioningState? provisioningState = default;
+            SharingProfile sharingProfile = default;
+            SoftDeletePolicy softDeletePolicy = default;
+            SharingStatus sharingStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            identifier = GalleryIdentifier.DeserializeGalleryIdentifier(property0.Value);
+                            identifier = GalleryIdentifier.DeserializeGalleryIdentifier(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            sharingProfile = SharingProfile.DeserializeSharingProfile(property0.Value);
+                            sharingProfile = SharingProfile.DeserializeSharingProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("softDeletePolicy"u8))
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            softDeletePolicy = SoftDeletePolicy.DeserializeSoftDeletePolicy(property0.Value);
+                            softDeletePolicy = SoftDeletePolicy.DeserializeSoftDeletePolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("sharingStatus"u8))
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            sharingStatus = SharingStatus.DeserializeSharingStatus(property0.Value);
+                            sharingStatus = SharingStatus.DeserializeSharingStatus(property0.Value, options);
                             continue;
                         }
                     }
@@ -259,7 +259,20 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GalleryData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, description.Value, identifier.Value, Optional.ToNullable(provisioningState), sharingProfile.Value, softDeletePolicy.Value, sharingStatus.Value, serializedAdditionalRawData);
+            return new GalleryData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                description,
+                identifier,
+                provisioningState,
+                sharingProfile,
+                softDeletePolicy,
+                sharingStatus,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GalleryData>.Write(ModelReaderWriterOptions options)

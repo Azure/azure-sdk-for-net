@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PowerBIDedicated;
 
 namespace Azure.ResourceManager.PowerBIDedicated.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             {
                 return null;
             }
-            Optional<string> resourceType = default;
-            Optional<CapacitySku> sku = default;
+            string resourceType = default;
+            CapacitySku sku = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                     {
                         continue;
                     }
-                    sku = CapacitySku.DeserializeCapacitySku(property.Value);
+                    sku = CapacitySku.DeserializeCapacitySku(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SkuDetails(resourceType.Value, sku.Value, serializedAdditionalRawData);
+            return new SkuDetails(resourceType, sku, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SkuDetails>.Write(ModelReaderWriterOptions options)

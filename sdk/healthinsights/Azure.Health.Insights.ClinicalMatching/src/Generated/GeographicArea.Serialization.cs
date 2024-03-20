@@ -85,12 +85,12 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
                 if (property.NameEquals("geometry"u8))
                 {
-                    geometry = AreaGeometry.DeserializeAreaGeometry(property.Value);
+                    geometry = AreaGeometry.DeserializeAreaGeometry(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = AreaProperties.DeserializeAreaProperties(property.Value);
+                    properties = AreaProperties.DeserializeAreaProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

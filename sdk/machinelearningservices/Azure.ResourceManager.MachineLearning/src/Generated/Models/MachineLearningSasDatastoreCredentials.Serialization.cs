@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (property.NameEquals("secrets"u8))
                 {
-                    secrets = MachineLearningSasDatastoreSecrets.DeserializeMachineLearningSasDatastoreSecrets(property.Value);
+                    secrets = MachineLearningSasDatastoreSecrets.DeserializeMachineLearningSasDatastoreSecrets(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("credentialsType"u8))

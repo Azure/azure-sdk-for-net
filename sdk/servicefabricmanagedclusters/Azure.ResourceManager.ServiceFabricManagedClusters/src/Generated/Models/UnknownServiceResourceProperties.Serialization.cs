@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownServiceResourceProperties(document.RootElement, options);
+            return DeserializeManagedServiceProperties(document.RootElement, options);
         }
 
         internal static UnknownServiceResourceProperties DeserializeUnknownServiceResourceProperties(JsonElement element, ModelReaderWriterOptions options = null)
@@ -135,18 +136,18 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 return null;
             }
-            Optional<string> provisioningState = default;
+            string provisioningState = default;
             ServiceKind serviceKind = "Unknown";
             string serviceTypeName = default;
             ManagedServicePartitionScheme partitionDescription = default;
-            Optional<ManagedServicePackageActivationMode> servicePackageActivationMode = default;
-            Optional<string> serviceDnsName = default;
-            Optional<string> placementConstraints = default;
-            Optional<IList<ManagedServiceCorrelation>> correlationScheme = default;
-            Optional<IList<ManagedServiceLoadMetric>> serviceLoadMetrics = default;
-            Optional<IList<ManagedServicePlacementPolicy>> servicePlacementPolicies = default;
-            Optional<ServiceFabricManagedServiceMoveCost> defaultMoveCost = default;
-            Optional<IList<ManagedServiceScalingPolicy>> scalingPolicies = default;
+            ManagedServicePackageActivationMode? servicePackageActivationMode = default;
+            string serviceDnsName = default;
+            string placementConstraints = default;
+            IList<ManagedServiceCorrelation> correlationScheme = default;
+            IList<ManagedServiceLoadMetric> serviceLoadMetrics = default;
+            IList<ManagedServicePlacementPolicy> servicePlacementPolicies = default;
+            ServiceFabricManagedServiceMoveCost? defaultMoveCost = default;
+            IList<ManagedServiceScalingPolicy> scalingPolicies = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,7 +169,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
                 if (property.NameEquals("partitionDescription"u8))
                 {
-                    partitionDescription = ManagedServicePartitionScheme.DeserializeManagedServicePartitionScheme(property.Value);
+                    partitionDescription = ManagedServicePartitionScheme.DeserializeManagedServicePartitionScheme(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("servicePackageActivationMode"u8))
@@ -199,7 +200,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     List<ManagedServiceCorrelation> array = new List<ManagedServiceCorrelation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedServiceCorrelation.DeserializeManagedServiceCorrelation(item));
+                        array.Add(ManagedServiceCorrelation.DeserializeManagedServiceCorrelation(item, options));
                     }
                     correlationScheme = array;
                     continue;
@@ -213,7 +214,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     List<ManagedServiceLoadMetric> array = new List<ManagedServiceLoadMetric>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedServiceLoadMetric.DeserializeManagedServiceLoadMetric(item));
+                        array.Add(ManagedServiceLoadMetric.DeserializeManagedServiceLoadMetric(item, options));
                     }
                     serviceLoadMetrics = array;
                     continue;
@@ -227,7 +228,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     List<ManagedServicePlacementPolicy> array = new List<ManagedServicePlacementPolicy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedServicePlacementPolicy.DeserializeManagedServicePlacementPolicy(item));
+                        array.Add(ManagedServicePlacementPolicy.DeserializeManagedServicePlacementPolicy(item, options));
                     }
                     servicePlacementPolicies = array;
                     continue;
@@ -250,7 +251,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     List<ManagedServiceScalingPolicy> array = new List<ManagedServiceScalingPolicy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedServiceScalingPolicy.DeserializeManagedServiceScalingPolicy(item));
+                        array.Add(ManagedServiceScalingPolicy.DeserializeManagedServiceScalingPolicy(item, options));
                     }
                     scalingPolicies = array;
                     continue;
@@ -261,7 +262,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownServiceResourceProperties(placementConstraints.Value, Optional.ToList(correlationScheme), Optional.ToList(serviceLoadMetrics), Optional.ToList(servicePlacementPolicies), Optional.ToNullable(defaultMoveCost), Optional.ToList(scalingPolicies), serializedAdditionalRawData, provisioningState.Value, serviceKind, serviceTypeName, partitionDescription, Optional.ToNullable(servicePackageActivationMode), serviceDnsName.Value);
+            return new UnknownServiceResourceProperties(
+                placementConstraints,
+                correlationScheme ?? new ChangeTrackingList<ManagedServiceCorrelation>(),
+                serviceLoadMetrics ?? new ChangeTrackingList<ManagedServiceLoadMetric>(),
+                servicePlacementPolicies ?? new ChangeTrackingList<ManagedServicePlacementPolicy>(),
+                defaultMoveCost,
+                scalingPolicies ?? new ChangeTrackingList<ManagedServiceScalingPolicy>(),
+                serializedAdditionalRawData,
+                provisioningState,
+                serviceKind,
+                serviceTypeName,
+                partitionDescription,
+                servicePackageActivationMode,
+                serviceDnsName);
         }
 
         BinaryData IPersistableModel<ManagedServiceProperties>.Write(ModelReaderWriterOptions options)
@@ -286,7 +300,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownServiceResourceProperties(document.RootElement, options);
+                        return DeserializeManagedServiceProperties(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ManagedServiceProperties)} does not support '{options.Format}' format.");

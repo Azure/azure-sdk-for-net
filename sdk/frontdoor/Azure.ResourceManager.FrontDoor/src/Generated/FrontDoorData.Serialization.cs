@@ -208,26 +208,26 @@ namespace Azure.ResourceManager.FrontDoor
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> friendlyName = default;
-            Optional<IList<RoutingRuleData>> routingRules = default;
-            Optional<IList<FrontDoorLoadBalancingSettingsData>> loadBalancingSettings = default;
-            Optional<IList<FrontDoorHealthProbeSettingsData>> healthProbeSettings = default;
-            Optional<IList<FrontDoorBackendPool>> backendPools = default;
-            Optional<IList<FrontendEndpointData>> frontendEndpoints = default;
-            Optional<BackendPoolsSettings> backendPoolsSettings = default;
-            Optional<FrontDoorEnabledState> enabledState = default;
-            Optional<FrontDoorResourceState> resourceState = default;
-            Optional<string> provisioningState = default;
-            Optional<string> cname = default;
-            Optional<string> frontdoorId = default;
-            Optional<IReadOnlyList<FrontDoorRulesEngineData>> rulesEngines = default;
-            Optional<IReadOnlyDictionary<string, string>> extendedProperties = default;
+            SystemData systemData = default;
+            string friendlyName = default;
+            IList<RoutingRuleData> routingRules = default;
+            IList<FrontDoorLoadBalancingSettingsData> loadBalancingSettings = default;
+            IList<FrontDoorHealthProbeSettingsData> healthProbeSettings = default;
+            IList<FrontDoorBackendPool> backendPools = default;
+            IList<FrontendEndpointData> frontendEndpoints = default;
+            BackendPoolsSettings backendPoolsSettings = default;
+            FrontDoorEnabledState? enabledState = default;
+            FrontDoorResourceState? resourceState = default;
+            string provisioningState = default;
+            string cname = default;
+            string frontdoorId = default;
+            IReadOnlyList<FrontDoorRulesEngineData> rulesEngines = default;
+            IReadOnlyDictionary<string, string> extendedProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.FrontDoor
                             List<RoutingRuleData> array = new List<RoutingRuleData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RoutingRuleData.DeserializeRoutingRuleData(item));
+                                array.Add(RoutingRuleData.DeserializeRoutingRuleData(item, options));
                             }
                             routingRules = array;
                             continue;
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.FrontDoor
                             List<FrontDoorLoadBalancingSettingsData> array = new List<FrontDoorLoadBalancingSettingsData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FrontDoorLoadBalancingSettingsData.DeserializeFrontDoorLoadBalancingSettingsData(item));
+                                array.Add(FrontDoorLoadBalancingSettingsData.DeserializeFrontDoorLoadBalancingSettingsData(item, options));
                             }
                             loadBalancingSettings = array;
                             continue;
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.FrontDoor
                             List<FrontDoorHealthProbeSettingsData> array = new List<FrontDoorHealthProbeSettingsData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FrontDoorHealthProbeSettingsData.DeserializeFrontDoorHealthProbeSettingsData(item));
+                                array.Add(FrontDoorHealthProbeSettingsData.DeserializeFrontDoorHealthProbeSettingsData(item, options));
                             }
                             healthProbeSettings = array;
                             continue;
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.FrontDoor
                             List<FrontDoorBackendPool> array = new List<FrontDoorBackendPool>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FrontDoorBackendPool.DeserializeFrontDoorBackendPool(item));
+                                array.Add(FrontDoorBackendPool.DeserializeFrontDoorBackendPool(item, options));
                             }
                             backendPools = array;
                             continue;
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.FrontDoor
                             List<FrontendEndpointData> array = new List<FrontendEndpointData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FrontendEndpointData.DeserializeFrontendEndpointData(item));
+                                array.Add(FrontendEndpointData.DeserializeFrontendEndpointData(item, options));
                             }
                             frontendEndpoints = array;
                             continue;
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.FrontDoor
                             {
                                 continue;
                             }
-                            backendPoolsSettings = BackendPoolsSettings.DeserializeBackendPoolsSettings(property0.Value);
+                            backendPoolsSettings = BackendPoolsSettings.DeserializeBackendPoolsSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("enabledState"u8))
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.FrontDoor
                             List<FrontDoorRulesEngineData> array = new List<FrontDoorRulesEngineData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FrontDoorRulesEngineData.DeserializeFrontDoorRulesEngineData(item));
+                                array.Add(FrontDoorRulesEngineData.DeserializeFrontDoorRulesEngineData(item, options));
                             }
                             rulesEngines = array;
                             continue;
@@ -438,7 +438,28 @@ namespace Azure.ResourceManager.FrontDoor
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, friendlyName.Value, Optional.ToList(routingRules), Optional.ToList(loadBalancingSettings), Optional.ToList(healthProbeSettings), Optional.ToList(backendPools), Optional.ToList(frontendEndpoints), backendPoolsSettings.Value, Optional.ToNullable(enabledState), Optional.ToNullable(resourceState), provisioningState.Value, cname.Value, frontdoorId.Value, Optional.ToList(rulesEngines), Optional.ToDictionary(extendedProperties), serializedAdditionalRawData);
+            return new FrontDoorData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                friendlyName,
+                routingRules ?? new ChangeTrackingList<RoutingRuleData>(),
+                loadBalancingSettings ?? new ChangeTrackingList<FrontDoorLoadBalancingSettingsData>(),
+                healthProbeSettings ?? new ChangeTrackingList<FrontDoorHealthProbeSettingsData>(),
+                backendPools ?? new ChangeTrackingList<FrontDoorBackendPool>(),
+                frontendEndpoints ?? new ChangeTrackingList<FrontendEndpointData>(),
+                backendPoolsSettings,
+                enabledState,
+                resourceState,
+                provisioningState,
+                cname,
+                frontdoorId,
+                rulesEngines ?? new ChangeTrackingList<FrontDoorRulesEngineData>(),
+                extendedProperties ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorData>.Write(ModelReaderWriterOptions options)

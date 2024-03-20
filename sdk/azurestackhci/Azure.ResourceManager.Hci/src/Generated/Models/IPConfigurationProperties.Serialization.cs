@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Hci;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Hci.Models
@@ -85,10 +86,10 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> gateway = default;
-            Optional<string> prefixLength = default;
-            Optional<string> privateIPAddress = default;
-            Optional<WritableSubResource> subnet = default;
+            string gateway = default;
+            string prefixLength = default;
+            string privateIPAddress = default;
+            WritableSubResource subnet = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,7 +124,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IPConfigurationProperties(gateway.Value, prefixLength.Value, privateIPAddress.Value, subnet, serializedAdditionalRawData);
+            return new IPConfigurationProperties(gateway, prefixLength, privateIPAddress, subnet, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IPConfigurationProperties>.Write(ModelReaderWriterOptions options)

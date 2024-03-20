@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -76,12 +77,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 if (property.NameEquals("scalingMechanism"u8))
                 {
-                    scalingMechanism = ManagedServiceScalingMechanism.DeserializeManagedServiceScalingMechanism(property.Value);
+                    scalingMechanism = ManagedServiceScalingMechanism.DeserializeManagedServiceScalingMechanism(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("scalingTrigger"u8))
                 {
-                    scalingTrigger = ManagedServiceScalingTrigger.DeserializeManagedServiceScalingTrigger(property.Value);
+                    scalingTrigger = ManagedServiceScalingTrigger.DeserializeManagedServiceScalingTrigger(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

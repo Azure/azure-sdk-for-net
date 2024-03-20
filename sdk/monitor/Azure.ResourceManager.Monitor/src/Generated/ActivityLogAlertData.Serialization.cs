@@ -132,17 +132,17 @@ namespace Azure.ResourceManager.Monitor
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IList<string>> scopes = default;
-            Optional<AlertRuleAllOfCondition> condition = default;
-            Optional<ActionList> actions = default;
-            Optional<bool> enabled = default;
-            Optional<string> description = default;
+            SystemData systemData = default;
+            IList<string> scopes = default;
+            AlertRuleAllOfCondition condition = default;
+            ActionList actions = default;
+            bool? enabled = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Monitor
                             {
                                 continue;
                             }
-                            condition = AlertRuleAllOfCondition.DeserializeAlertRuleAllOfCondition(property0.Value);
+                            condition = AlertRuleAllOfCondition.DeserializeAlertRuleAllOfCondition(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("actions"u8))
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Monitor
                             {
                                 continue;
                             }
-                            actions = ActionList.DeserializeActionList(property0.Value);
+                            actions = ActionList.DeserializeActionList(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("enabled"u8))
@@ -254,7 +254,19 @@ namespace Azure.ResourceManager.Monitor
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ActivityLogAlertData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(scopes), condition.Value, actions.Value, Optional.ToNullable(enabled), description.Value, serializedAdditionalRawData);
+            return new ActivityLogAlertData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                scopes ?? new ChangeTrackingList<string>(),
+                condition,
+                actions,
+                enabled,
+                description,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ActivityLogAlertData>.Write(ModelReaderWriterOptions options)

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -53,14 +54,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountCredentialId"/> or <paramref name="containerName"/> is null. </exception>
         public DataBoxEdgeStorageContainerInfo(ResourceIdentifier storageAccountCredentialId, string containerName, DataBoxEdgeStorageContainerDataFormat dataFormat)
         {
-            if (storageAccountCredentialId == null)
-            {
-                throw new ArgumentNullException(nameof(storageAccountCredentialId));
-            }
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
+            Argument.AssertNotNull(storageAccountCredentialId, nameof(storageAccountCredentialId));
+            Argument.AssertNotNull(containerName, nameof(containerName));
 
             StorageAccountCredentialId = storageAccountCredentialId;
             ContainerName = containerName;

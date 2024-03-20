@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<Uri> url = default;
-            Optional<string> storageAccountId = default;
+            Uri url = default;
+            string storageAccountId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeployerVmPackages(url.Value, storageAccountId.Value, serializedAdditionalRawData);
+            return new DeployerVmPackages(url, storageAccountId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeployerVmPackages>.Write(ModelReaderWriterOptions options)

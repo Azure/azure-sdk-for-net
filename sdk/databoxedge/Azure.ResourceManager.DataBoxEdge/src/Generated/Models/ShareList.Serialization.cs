@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DataBoxEdgeShareData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<DataBoxEdgeShareData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     List<DataBoxEdgeShareData> array = new List<DataBoxEdgeShareData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxEdgeShareData.DeserializeDataBoxEdgeShareData(item));
+                        array.Add(DataBoxEdgeShareData.DeserializeDataBoxEdgeShareData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ShareList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ShareList(value ?? new ChangeTrackingList<DataBoxEdgeShareData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ShareList>.Write(ModelReaderWriterOptions options)

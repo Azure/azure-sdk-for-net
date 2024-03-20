@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 if (property.NameEquals("comparisonRule"u8))
                 {
-                    comparisonRule = HDInsightComparisonRule.DeserializeHDInsightComparisonRule(property.Value);
+                    comparisonRule = HDInsightComparisonRule.DeserializeHDInsightComparisonRule(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

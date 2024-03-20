@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Media.VideoAnalyzer.Edge;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -51,9 +52,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<MotionDetectionSensitivity> sensitivity = default;
-            Optional<bool> outputMotionRegion = default;
-            Optional<string> eventAggregationWindow = default;
+            MotionDetectionSensitivity? sensitivity = default;
+            bool? outputMotionRegion = default;
+            string eventAggregationWindow = default;
             string type = default;
             string name = default;
             IList<NodeInput> inputs = default;
@@ -103,7 +104,13 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new MotionDetectionProcessor(type, name, inputs, Optional.ToNullable(sensitivity), Optional.ToNullable(outputMotionRegion), eventAggregationWindow.Value);
+            return new MotionDetectionProcessor(
+                type,
+                name,
+                inputs,
+                sensitivity,
+                outputMotionRegion,
+                eventAggregationWindow);
         }
     }
 }

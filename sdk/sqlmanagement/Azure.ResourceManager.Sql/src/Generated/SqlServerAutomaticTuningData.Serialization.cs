@@ -113,10 +113,10 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<AutomaticTuningServerMode> desiredState = default;
-            Optional<AutomaticTuningServerMode> actualState = default;
-            Optional<IDictionary<string, AutomaticTuningServerOptions>> options0 = default;
+            SystemData systemData = default;
+            AutomaticTuningServerMode? desiredState = default;
+            AutomaticTuningServerMode? actualState = default;
+            IDictionary<string, AutomaticTuningServerOptions> options0 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Sql
                             Dictionary<string, AutomaticTuningServerOptions> dictionary = new Dictionary<string, AutomaticTuningServerOptions>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, AutomaticTuningServerOptions.DeserializeAutomaticTuningServerOptions(property1.Value));
+                                dictionary.Add(property1.Name, AutomaticTuningServerOptions.DeserializeAutomaticTuningServerOptions(property1.Value, options));
                             }
                             options0 = dictionary;
                             continue;
@@ -195,7 +195,15 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlServerAutomaticTuningData(id, name, type, systemData.Value, Optional.ToNullable(desiredState), Optional.ToNullable(actualState), Optional.ToDictionary(options0), serializedAdditionalRawData);
+            return new SqlServerAutomaticTuningData(
+                id,
+                name,
+                type,
+                systemData,
+                desiredState,
+                actualState,
+                options0 ?? new ChangeTrackingDictionary<string, AutomaticTuningServerOptions>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlServerAutomaticTuningData>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     List<ClusterComputeNodeProfile> array = new List<ClusterComputeNodeProfile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClusterComputeNodeProfile.DeserializeClusterComputeNodeProfile(item));
+                        array.Add(ClusterComputeNodeProfile.DeserializeClusterComputeNodeProfile(item, options));
                     }
                     nodes = array;
                     continue;

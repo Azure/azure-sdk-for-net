@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageSync;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
@@ -104,14 +105,14 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> timestamp = default;
-            Optional<long> perItemErrorCount = default;
-            Optional<long> appliedItemCount = default;
-            Optional<long> totalItemCount = default;
-            Optional<long> appliedBytes = default;
-            Optional<long> totalBytes = default;
-            Optional<ServerEndpointSyncMode> syncMode = default;
-            Optional<int> sessionMinutesRemaining = default;
+            DateTimeOffset? timestamp = default;
+            long? perItemErrorCount = default;
+            long? appliedItemCount = default;
+            long? totalItemCount = default;
+            long? appliedBytes = default;
+            long? totalBytes = default;
+            ServerEndpointSyncMode? syncMode = default;
+            int? sessionMinutesRemaining = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -194,7 +195,16 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServerEndpointSyncActivityStatus(Optional.ToNullable(timestamp), Optional.ToNullable(perItemErrorCount), Optional.ToNullable(appliedItemCount), Optional.ToNullable(totalItemCount), Optional.ToNullable(appliedBytes), Optional.ToNullable(totalBytes), Optional.ToNullable(syncMode), Optional.ToNullable(sessionMinutesRemaining), serializedAdditionalRawData);
+            return new ServerEndpointSyncActivityStatus(
+                timestamp,
+                perItemErrorCount,
+                appliedItemCount,
+                totalItemCount,
+                appliedBytes,
+                totalBytes,
+                syncMode,
+                sessionMinutesRemaining,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServerEndpointSyncActivityStatus>.Write(ModelReaderWriterOptions options)

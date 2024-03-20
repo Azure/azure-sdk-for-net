@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Models
 {
@@ -60,8 +61,8 @@ namespace Azure.ResourceManager.Models
             {
                 return null;
             }
-            Optional<EncryptionStatus> status = default;
-            Optional<KeyVaultProperties> keyVaultProperties = default;
+            EncryptionStatus? status = default;
+            KeyVaultProperties keyVaultProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -79,11 +80,11 @@ namespace Azure.ResourceManager.Models
                     {
                         continue;
                     }
-                    keyVaultProperties = KeyVaultProperties.DeserializeKeyVaultProperties(property.Value);
+                    keyVaultProperties = KeyVaultProperties.DeserializeKeyVaultProperties(property.Value, options);
                     continue;
                 }
             }
-            return new EncryptionProperties(Optional.ToNullable(status), keyVaultProperties.Value);
+            return new EncryptionProperties(status, keyVaultProperties);
         }
 
         BinaryData IPersistableModel<EncryptionProperties>.Write(ModelReaderWriterOptions options)

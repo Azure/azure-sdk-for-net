@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PrivateLinkServiceData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<PrivateLinkServiceData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<PrivateLinkServiceData> array = new List<PrivateLinkServiceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateLinkServiceData.DeserializePrivateLinkServiceData(item));
+                        array.Add(PrivateLinkServiceData.DeserializePrivateLinkServiceData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateLinkServiceListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new PrivateLinkServiceListResult(value ?? new ChangeTrackingList<PrivateLinkServiceData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateLinkServiceListResult>.Write(ModelReaderWriterOptions options)

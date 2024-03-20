@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (property.NameEquals("parameters"u8))
                 {
-                    parameters = QueryStringMatchCondition.DeserializeQueryStringMatchCondition(property.Value);
+                    parameters = QueryStringMatchCondition.DeserializeQueryStringMatchCondition(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))

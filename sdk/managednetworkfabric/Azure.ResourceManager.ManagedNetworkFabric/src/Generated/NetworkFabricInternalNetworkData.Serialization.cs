@@ -189,25 +189,25 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> annotation = default;
-            Optional<int> mtu = default;
-            Optional<IList<ConnectedSubnet>> connectedIPv4Subnets = default;
-            Optional<IList<ConnectedSubnet>> connectedIPv6Subnets = default;
-            Optional<ResourceIdentifier> importRoutePolicyId = default;
-            Optional<ResourceIdentifier> exportRoutePolicyId = default;
-            Optional<ImportRoutePolicy> importRoutePolicy = default;
-            Optional<ExportRoutePolicy> exportRoutePolicy = default;
-            Optional<ResourceIdentifier> ingressAclId = default;
-            Optional<ResourceIdentifier> egressAclId = default;
-            Optional<IsMonitoringEnabled> isMonitoringEnabled = default;
-            Optional<StaticRouteConfigurationExtension> extension = default;
+            SystemData systemData = default;
+            string annotation = default;
+            int? mtu = default;
+            IList<ConnectedSubnet> connectedIPv4Subnets = default;
+            IList<ConnectedSubnet> connectedIPv6Subnets = default;
+            ResourceIdentifier importRoutePolicyId = default;
+            ResourceIdentifier exportRoutePolicyId = default;
+            ImportRoutePolicy importRoutePolicy = default;
+            ExportRoutePolicy exportRoutePolicy = default;
+            ResourceIdentifier ingressAclId = default;
+            ResourceIdentifier egressAclId = default;
+            IsMonitoringEnabled? isMonitoringEnabled = default;
+            StaticRouteConfigurationExtension? extension = default;
             int vlanId = default;
-            Optional<InternalNetworkBgpConfiguration> bgpConfiguration = default;
-            Optional<InternalNetworkStaticRouteConfiguration> staticRouteConfiguration = default;
-            Optional<NetworkFabricConfigurationState> configurationState = default;
-            Optional<NetworkFabricProvisioningState> provisioningState = default;
-            Optional<NetworkFabricAdministrativeState> administrativeState = default;
+            InternalNetworkBgpConfiguration bgpConfiguration = default;
+            InternalNetworkStaticRouteConfiguration staticRouteConfiguration = default;
+            NetworkFabricConfigurationState? configurationState = default;
+            NetworkFabricProvisioningState? provisioningState = default;
+            NetworkFabricAdministrativeState? administrativeState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             List<ConnectedSubnet> array = new List<ConnectedSubnet>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ConnectedSubnet.DeserializeConnectedSubnet(item));
+                                array.Add(ConnectedSubnet.DeserializeConnectedSubnet(item, options));
                             }
                             connectedIPv4Subnets = array;
                             continue;
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             List<ConnectedSubnet> array = new List<ConnectedSubnet>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ConnectedSubnet.DeserializeConnectedSubnet(item));
+                                array.Add(ConnectedSubnet.DeserializeConnectedSubnet(item, options));
                             }
                             connectedIPv6Subnets = array;
                             continue;
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            importRoutePolicy = ImportRoutePolicy.DeserializeImportRoutePolicy(property0.Value);
+                            importRoutePolicy = ImportRoutePolicy.DeserializeImportRoutePolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("exportRoutePolicy"u8))
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            exportRoutePolicy = ExportRoutePolicy.DeserializeExportRoutePolicy(property0.Value);
+                            exportRoutePolicy = ExportRoutePolicy.DeserializeExportRoutePolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("ingressAclId"u8))
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            bgpConfiguration = InternalNetworkBgpConfiguration.DeserializeInternalNetworkBgpConfiguration(property0.Value);
+                            bgpConfiguration = InternalNetworkBgpConfiguration.DeserializeInternalNetworkBgpConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("staticRouteConfiguration"u8))
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            staticRouteConfiguration = InternalNetworkStaticRouteConfiguration.DeserializeInternalNetworkStaticRouteConfiguration(property0.Value);
+                            staticRouteConfiguration = InternalNetworkStaticRouteConfiguration.DeserializeInternalNetworkStaticRouteConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("configurationState"u8))
@@ -418,7 +418,30 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFabricInternalNetworkData(id, name, type, systemData.Value, annotation.Value, Optional.ToNullable(mtu), Optional.ToList(connectedIPv4Subnets), Optional.ToList(connectedIPv6Subnets), importRoutePolicyId.Value, exportRoutePolicyId.Value, importRoutePolicy.Value, exportRoutePolicy.Value, ingressAclId.Value, egressAclId.Value, Optional.ToNullable(isMonitoringEnabled), Optional.ToNullable(extension), vlanId, bgpConfiguration.Value, staticRouteConfiguration.Value, Optional.ToNullable(configurationState), Optional.ToNullable(provisioningState), Optional.ToNullable(administrativeState), serializedAdditionalRawData);
+            return new NetworkFabricInternalNetworkData(
+                id,
+                name,
+                type,
+                systemData,
+                annotation,
+                mtu,
+                connectedIPv4Subnets ?? new ChangeTrackingList<ConnectedSubnet>(),
+                connectedIPv6Subnets ?? new ChangeTrackingList<ConnectedSubnet>(),
+                importRoutePolicyId,
+                exportRoutePolicyId,
+                importRoutePolicy,
+                exportRoutePolicy,
+                ingressAclId,
+                egressAclId,
+                isMonitoringEnabled,
+                extension,
+                vlanId,
+                bgpConfiguration,
+                staticRouteConfiguration,
+                configurationState,
+                provisioningState,
+                administrativeState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkFabricInternalNetworkData>.Write(ModelReaderWriterOptions options)

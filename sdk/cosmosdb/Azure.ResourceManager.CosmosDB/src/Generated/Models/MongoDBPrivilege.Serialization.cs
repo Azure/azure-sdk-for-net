@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<MongoDBPrivilegeResourceInfo> resource = default;
-            Optional<IList<string>> actions = default;
+            MongoDBPrivilegeResourceInfo resource = default;
+            IList<string> actions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    resource = MongoDBPrivilegeResourceInfo.DeserializeMongoDBPrivilegeResourceInfo(property.Value);
+                    resource = MongoDBPrivilegeResourceInfo.DeserializeMongoDBPrivilegeResourceInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("actions"u8))
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MongoDBPrivilege(resource.Value, Optional.ToList(actions), serializedAdditionalRawData);
+            return new MongoDBPrivilege(resource, actions ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MongoDBPrivilege>.Write(ModelReaderWriterOptions options)

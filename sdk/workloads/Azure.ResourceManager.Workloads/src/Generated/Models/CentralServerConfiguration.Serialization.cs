@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -84,7 +85,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 if (property.NameEquals("virtualMachineConfiguration"u8))
                 {
-                    virtualMachineConfiguration = SapVirtualMachineConfiguration.DeserializeSapVirtualMachineConfiguration(property.Value);
+                    virtualMachineConfiguration = SapVirtualMachineConfiguration.DeserializeSapVirtualMachineConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("instanceCount"u8))

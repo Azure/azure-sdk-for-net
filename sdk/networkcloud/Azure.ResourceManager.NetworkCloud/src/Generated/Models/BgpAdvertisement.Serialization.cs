@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -96,10 +97,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<AdvertiseToFabric> advertiseToFabric = default;
-            Optional<IList<string>> communities = default;
+            AdvertiseToFabric? advertiseToFabric = default;
+            IList<string> communities = default;
             IList<string> ipAddressPools = default;
-            Optional<IList<string>> peers = default;
+            IList<string> peers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,7 +158,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BgpAdvertisement(Optional.ToNullable(advertiseToFabric), Optional.ToList(communities), ipAddressPools, Optional.ToList(peers), serializedAdditionalRawData);
+            return new BgpAdvertisement(advertiseToFabric, communities ?? new ChangeTrackingList<string>(), ipAddressPools, peers ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BgpAdvertisement>.Write(ModelReaderWriterOptions options)

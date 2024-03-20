@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CustomerInsights;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<string> profileName = default;
-            Optional<string> profilePropertyName = default;
-            Optional<int> rank = default;
-            Optional<CanonicalPropertyValueType> type = default;
-            Optional<string> value = default;
+            string profileName = default;
+            string profilePropertyName = default;
+            int? rank = default;
+            CanonicalPropertyValueType? type = default;
+            string value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +138,13 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CanonicalProfileDefinitionPropertiesItem(profileName.Value, profilePropertyName.Value, Optional.ToNullable(rank), Optional.ToNullable(type), value.Value, serializedAdditionalRawData);
+            return new CanonicalProfileDefinitionPropertiesItem(
+                profileName,
+                profilePropertyName,
+                rank,
+                type,
+                value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CanonicalProfileDefinitionPropertiesItem>.Write(ModelReaderWriterOptions options)

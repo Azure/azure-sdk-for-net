@@ -157,20 +157,20 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> jobVersion = default;
-            Optional<string> stepName = default;
-            Optional<int> stepId = default;
-            Optional<Guid> jobExecutionId = default;
-            Optional<JobExecutionLifecycle> lifecycle = default;
-            Optional<JobExecutionProvisioningState> provisioningState = default;
-            Optional<DateTimeOffset> createTime = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<int> currentAttempts = default;
-            Optional<DateTimeOffset> currentAttemptStartTime = default;
-            Optional<string> lastMessage = default;
-            Optional<JobExecutionTarget> target = default;
+            SystemData systemData = default;
+            int? jobVersion = default;
+            string stepName = default;
+            int? stepId = default;
+            Guid? jobExecutionId = default;
+            JobExecutionLifecycle? lifecycle = default;
+            JobExecutionProvisioningState? provisioningState = default;
+            DateTimeOffset? createTime = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            int? currentAttempts = default;
+            DateTimeOffset? currentAttemptStartTime = default;
+            string lastMessage = default;
+            JobExecutionTarget target = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            target = JobExecutionTarget.DeserializeJobExecutionTarget(property0.Value);
+                            target = JobExecutionTarget.DeserializeJobExecutionTarget(property0.Value, options);
                             continue;
                         }
                     }
@@ -326,7 +326,25 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlServerJobExecutionData(id, name, type, systemData.Value, Optional.ToNullable(jobVersion), stepName.Value, Optional.ToNullable(stepId), Optional.ToNullable(jobExecutionId), Optional.ToNullable(lifecycle), Optional.ToNullable(provisioningState), Optional.ToNullable(createTime), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(currentAttempts), Optional.ToNullable(currentAttemptStartTime), lastMessage.Value, target.Value, serializedAdditionalRawData);
+            return new SqlServerJobExecutionData(
+                id,
+                name,
+                type,
+                systemData,
+                jobVersion,
+                stepName,
+                stepId,
+                jobExecutionId,
+                lifecycle,
+                provisioningState,
+                createTime,
+                startTime,
+                endTime,
+                currentAttempts,
+                currentAttemptStartTime,
+                lastMessage,
+                target,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlServerJobExecutionData>.Write(ModelReaderWriterOptions options)

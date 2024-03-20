@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> status = default;
-            Optional<ValidateResponseError> error = default;
+            string status = default;
+            ValidateResponseError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    error = ValidateResponseError.DeserializeValidateResponseError(property.Value);
+                    error = ValidateResponseError.DeserializeValidateResponseError(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceValidateResult(status.Value, error.Value, serializedAdditionalRawData);
+            return new AppServiceValidateResult(status, error, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceValidateResult>.Write(ModelReaderWriterOptions options)

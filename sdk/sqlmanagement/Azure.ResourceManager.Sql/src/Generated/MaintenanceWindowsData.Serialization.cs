@@ -102,8 +102,8 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IList<MaintenanceWindowTimeRange>> timeRanges = default;
+            SystemData systemData = default;
+            IList<MaintenanceWindowTimeRange> timeRanges = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Sql
                             List<MaintenanceWindowTimeRange> array = new List<MaintenanceWindowTimeRange>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MaintenanceWindowTimeRange.DeserializeMaintenanceWindowTimeRange(item));
+                                array.Add(MaintenanceWindowTimeRange.DeserializeMaintenanceWindowTimeRange(item, options));
                             }
                             timeRanges = array;
                             continue;
@@ -164,7 +164,13 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MaintenanceWindowsData(id, name, type, systemData.Value, Optional.ToList(timeRanges), serializedAdditionalRawData);
+            return new MaintenanceWindowsData(
+                id,
+                name,
+                type,
+                systemData,
+                timeRanges ?? new ChangeTrackingList<MaintenanceWindowTimeRange>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MaintenanceWindowsData>.Write(ModelReaderWriterOptions options)

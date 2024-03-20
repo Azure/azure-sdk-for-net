@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Nginx;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Nginx.Models
             {
                 return null;
             }
-            Optional<bool> enableDiagnosticsSupport = default;
-            Optional<NginxLogging> logging = default;
-            Optional<NginxDeploymentScalingProperties> scalingProperties = default;
-            Optional<NginxDeploymentUserProfile> userProfile = default;
+            bool? enableDiagnosticsSupport = default;
+            NginxLogging logging = default;
+            NginxDeploymentScalingProperties scalingProperties = default;
+            NginxDeploymentUserProfile userProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     {
                         continue;
                     }
-                    logging = NginxLogging.DeserializeNginxLogging(property.Value);
+                    logging = NginxLogging.DeserializeNginxLogging(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("scalingProperties"u8))
@@ -116,7 +117,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     {
                         continue;
                     }
-                    scalingProperties = NginxDeploymentScalingProperties.DeserializeNginxDeploymentScalingProperties(property.Value);
+                    scalingProperties = NginxDeploymentScalingProperties.DeserializeNginxDeploymentScalingProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("userProfile"u8))
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     {
                         continue;
                     }
-                    userProfile = NginxDeploymentUserProfile.DeserializeNginxDeploymentUserProfile(property.Value);
+                    userProfile = NginxDeploymentUserProfile.DeserializeNginxDeploymentUserProfile(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NginxDeploymentUpdateProperties(Optional.ToNullable(enableDiagnosticsSupport), logging.Value, scalingProperties.Value, userProfile.Value, serializedAdditionalRawData);
+            return new NginxDeploymentUpdateProperties(enableDiagnosticsSupport, logging, scalingProperties, userProfile, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NginxDeploymentUpdateProperties>.Write(ModelReaderWriterOptions options)

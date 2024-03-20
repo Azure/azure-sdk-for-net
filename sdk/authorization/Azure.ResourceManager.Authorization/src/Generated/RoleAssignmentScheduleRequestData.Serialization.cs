@@ -203,28 +203,28 @@ namespace Azure.ResourceManager.Authorization
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> scope = default;
-            Optional<ResourceIdentifier> roleDefinitionId = default;
-            Optional<Guid> principalId = default;
-            Optional<RoleManagementPrincipalType> principalType = default;
-            Optional<RoleManagementScheduleRequestType> requestType = default;
-            Optional<RoleManagementScheduleStatus> status = default;
-            Optional<string> approvalId = default;
-            Optional<ResourceIdentifier> targetRoleAssignmentScheduleId = default;
-            Optional<ResourceIdentifier> targetRoleAssignmentScheduleInstanceId = default;
-            Optional<ResourceIdentifier> linkedRoleEligibilityScheduleId = default;
-            Optional<string> justification = default;
-            Optional<RoleAssignmentScheduleTicketInfo> ticketInfo = default;
-            Optional<string> condition = default;
-            Optional<string> conditionVersion = default;
-            Optional<DateTimeOffset> createdOn = default;
-            Optional<Guid> requestorId = default;
-            Optional<RoleManagementExpandedProperties> expandedProperties = default;
-            Optional<DateTimeOffset> startDateTime = default;
-            Optional<RoleManagementScheduleExpirationType> type0 = default;
-            Optional<DateTimeOffset> endDateTime = default;
-            Optional<TimeSpan> duration = default;
+            SystemData systemData = default;
+            string scope = default;
+            ResourceIdentifier roleDefinitionId = default;
+            Guid? principalId = default;
+            RoleManagementPrincipalType? principalType = default;
+            RoleManagementScheduleRequestType? requestType = default;
+            RoleManagementScheduleStatus? status = default;
+            string approvalId = default;
+            ResourceIdentifier targetRoleAssignmentScheduleId = default;
+            ResourceIdentifier targetRoleAssignmentScheduleInstanceId = default;
+            ResourceIdentifier linkedRoleEligibilityScheduleId = default;
+            string justification = default;
+            RoleAssignmentScheduleTicketInfo ticketInfo = default;
+            string condition = default;
+            string conditionVersion = default;
+            DateTimeOffset? createdOn = default;
+            Guid? requestorId = default;
+            RoleManagementExpandedProperties expandedProperties = default;
+            DateTimeOffset? startDateTime = default;
+            RoleManagementScheduleExpirationType? type0 = default;
+            DateTimeOffset? endDateTime = default;
+            TimeSpan? duration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.Authorization
                             {
                                 continue;
                             }
-                            ticketInfo = RoleAssignmentScheduleTicketInfo.DeserializeRoleAssignmentScheduleTicketInfo(property0.Value);
+                            ticketInfo = RoleAssignmentScheduleTicketInfo.DeserializeRoleAssignmentScheduleTicketInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("condition"u8))
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.Authorization
                             {
                                 continue;
                             }
-                            expandedProperties = RoleManagementExpandedProperties.DeserializeRoleManagementExpandedProperties(property0.Value);
+                            expandedProperties = RoleManagementExpandedProperties.DeserializeRoleManagementExpandedProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("scheduleInfo"u8))
@@ -464,7 +464,33 @@ namespace Azure.ResourceManager.Authorization
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleAssignmentScheduleRequestData(id, name, type, systemData.Value, scope.Value, roleDefinitionId.Value, Optional.ToNullable(principalId), Optional.ToNullable(principalType), Optional.ToNullable(requestType), Optional.ToNullable(status), approvalId.Value, targetRoleAssignmentScheduleId.Value, targetRoleAssignmentScheduleInstanceId.Value, linkedRoleEligibilityScheduleId.Value, justification.Value, ticketInfo.Value, condition.Value, conditionVersion.Value, Optional.ToNullable(createdOn), Optional.ToNullable(requestorId), expandedProperties.Value, Optional.ToNullable(startDateTime), Optional.ToNullable(type0), Optional.ToNullable(endDateTime), Optional.ToNullable(duration), serializedAdditionalRawData);
+            return new RoleAssignmentScheduleRequestData(
+                id,
+                name,
+                type,
+                systemData,
+                scope,
+                roleDefinitionId,
+                principalId,
+                principalType,
+                requestType,
+                status,
+                approvalId,
+                targetRoleAssignmentScheduleId,
+                targetRoleAssignmentScheduleInstanceId,
+                linkedRoleEligibilityScheduleId,
+                justification,
+                ticketInfo,
+                condition,
+                conditionVersion,
+                createdOn,
+                requestorId,
+                expandedProperties,
+                startDateTime,
+                type0,
+                endDateTime,
+                duration,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoleAssignmentScheduleRequestData>.Write(ModelReaderWriterOptions options)

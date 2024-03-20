@@ -108,10 +108,10 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SubResource> privateEndpoint = default;
-            Optional<ApiManagementPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
-            Optional<ApiManagementPrivateEndpointConnectionProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            SubResource privateEndpoint = default;
+            ApiManagementPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            ApiManagementPrivateEndpointConnectionProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.ApiManagement
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = ApiManagementPrivateLinkServiceConnectionState.DeserializeApiManagementPrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = ApiManagementPrivateLinkServiceConnectionState.DeserializeApiManagementPrivateLinkServiceConnectionState(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -185,7 +185,15 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementPrivateEndpointConnectionData(id, name, type, systemData.Value, privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new ApiManagementPrivateEndpointConnectionData(
+                id,
+                name,
+                type,
+                systemData,
+                privateEndpoint,
+                privateLinkServiceConnectionState,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options)

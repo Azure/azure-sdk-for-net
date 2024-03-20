@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SqlVirtualMachine;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 if (property.NameEquals("privateIpAddress"u8))
                 {
-                    privateIPAddress = AvailabilityGroupListenerPrivateIPAddress.DeserializeAvailabilityGroupListenerPrivateIPAddress(property.Value);
+                    privateIPAddress = AvailabilityGroupListenerPrivateIPAddress.DeserializeAvailabilityGroupListenerPrivateIPAddress(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sqlVirtualMachineInstance"u8))

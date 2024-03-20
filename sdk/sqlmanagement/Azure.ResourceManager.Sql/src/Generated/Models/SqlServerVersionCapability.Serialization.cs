@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -99,11 +100,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<IReadOnlyList<EditionCapability>> supportedEditions = default;
-            Optional<IReadOnlyList<ElasticPoolEditionCapability>> supportedElasticPoolEditions = default;
-            Optional<SqlCapabilityStatus> status = default;
-            Optional<string> reason = default;
+            string name = default;
+            IReadOnlyList<EditionCapability> supportedEditions = default;
+            IReadOnlyList<ElasticPoolEditionCapability> supportedElasticPoolEditions = default;
+            SqlCapabilityStatus? status = default;
+            string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<EditionCapability> array = new List<EditionCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EditionCapability.DeserializeEditionCapability(item));
+                        array.Add(EditionCapability.DeserializeEditionCapability(item, options));
                     }
                     supportedEditions = array;
                     continue;
@@ -136,7 +137,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ElasticPoolEditionCapability> array = new List<ElasticPoolEditionCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ElasticPoolEditionCapability.DeserializeElasticPoolEditionCapability(item));
+                        array.Add(ElasticPoolEditionCapability.DeserializeElasticPoolEditionCapability(item, options));
                     }
                     supportedElasticPoolEditions = array;
                     continue;
@@ -161,7 +162,13 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlServerVersionCapability(name.Value, Optional.ToList(supportedEditions), Optional.ToList(supportedElasticPoolEditions), Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
+            return new SqlServerVersionCapability(
+                name,
+                supportedEditions ?? new ChangeTrackingList<EditionCapability>(),
+                supportedElasticPoolEditions ?? new ChangeTrackingList<ElasticPoolEditionCapability>(),
+                status,
+                reason,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlServerVersionCapability>.Write(ModelReaderWriterOptions options)

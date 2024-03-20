@@ -32,11 +32,11 @@ rename-mapping:
   CommitRequest.moveResources: MoverResources
   DiscardRequest.moveResourceInputType: MoverResourceInputType
   DiscardRequest.moveResources: MoverResources
-  LBFrontendIPConfigurationResourceSettings.privateIpAddress: -|ip-address
+  LBFrontendIPConfigurationResourceSettings.privateIpAddress: PrivateIPAddressStringValue
   ManualResolutionProperties.targetId: -|arm-id
   MoveErrorInfo.moveResources: InfoMoverResources
   MoveResourceDependency.id: -|arm-id
-  MoveResourceDependency.isOptional: -|boolean
+  MoveResourceDependency.isOptional: IsDependencyOptional
   MoveResourceDependencyOverride.id: -|arm-id
   MoveResourceDependencyOverride.targetId: -|arm-id
   MoveResourceProperties.targetId: -|arm-id
@@ -44,7 +44,7 @@ rename-mapping:
   MoveResourceInputType.MoveResourceId: MoverResourceId
   MoveResourceInputType.MoveResourceSourceId: MoverResourceSourceId
   NicIpConfigurationResourceSettings.primary: IsPrimary
-  NicIpConfigurationResourceSettings.privateIpAddress: -|ip-address
+  NicIpConfigurationResourceSettings.privateIpAddress: PrivateIPAddressStringValue
   OperationStatus.endTime: EndOn
   OperationStatus.id: -|arm-id
   OperationStatus.startTime: startOn
@@ -185,6 +185,4 @@ directive:
     where: $.paths..parameters[?(@.name === 'moveResourceName')]
     transform: >
       $['x-ms-client-name'] = 'moverResourceName';
-  - remove-operation: MoveCollections_Delete
-    reason: The azure-asyncoperation header will change when polling
 ```

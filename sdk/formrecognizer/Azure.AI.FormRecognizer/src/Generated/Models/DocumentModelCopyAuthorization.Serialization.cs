@@ -7,6 +7,7 @@
 
 using System;
 using System.Text.Json;
+using Azure.AI.FormRecognizer;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
@@ -76,7 +77,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new DocumentModelCopyAuthorization(targetResourceId, targetResourceRegion, targetModelId, targetModelLocation, accessToken, expirationDateTime);
+            return new DocumentModelCopyAuthorization(
+                targetResourceId,
+                targetResourceRegion,
+                targetModelId,
+                targetModelLocation,
+                accessToken,
+                expirationDateTime);
         }
     }
 }

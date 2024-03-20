@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     List<ClusterFabricSettingsParameterDescription> array = new List<ClusterFabricSettingsParameterDescription>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClusterFabricSettingsParameterDescription.DeserializeClusterFabricSettingsParameterDescription(item));
+                        array.Add(ClusterFabricSettingsParameterDescription.DeserializeClusterFabricSettingsParameterDescription(item, options));
                     }
                     parameters = array;
                     continue;

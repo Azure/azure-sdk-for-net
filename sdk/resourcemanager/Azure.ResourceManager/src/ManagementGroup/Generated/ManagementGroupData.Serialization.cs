@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.ManagementGroups.Models;
 using Azure.ResourceManager.Models;
 
@@ -124,11 +125,11 @@ namespace Azure.ResourceManager.ManagementGroups
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> tenantId = default;
-            Optional<string> displayName = default;
-            Optional<ManagementGroupInfo> details = default;
-            Optional<IReadOnlyList<ManagementGroupChildInfo>> children = default;
+            SystemData systemData = default;
+            Guid? tenantId = default;
+            string displayName = default;
+            ManagementGroupInfo details = default;
+            IReadOnlyList<ManagementGroupChildInfo> children = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -186,7 +187,7 @@ namespace Azure.ResourceManager.ManagementGroups
                             {
                                 continue;
                             }
-                            details = ManagementGroupInfo.DeserializeManagementGroupInfo(property0.Value);
+                            details = ManagementGroupInfo.DeserializeManagementGroupInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("children"u8))
@@ -199,7 +200,7 @@ namespace Azure.ResourceManager.ManagementGroups
                             List<ManagementGroupChildInfo> array = new List<ManagementGroupChildInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagementGroupChildInfo.DeserializeManagementGroupChildInfo(item));
+                                array.Add(ManagementGroupChildInfo.DeserializeManagementGroupChildInfo(item, options));
                             }
                             children = array;
                             continue;
@@ -213,7 +214,16 @@ namespace Azure.ResourceManager.ManagementGroups
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagementGroupData(id, name, type, systemData.Value, Optional.ToNullable(tenantId), displayName.Value, details.Value, Optional.ToList(children), serializedAdditionalRawData);
+            return new ManagementGroupData(
+                id,
+                name,
+                type,
+                systemData,
+                tenantId,
+                displayName,
+                details,
+                children ?? new ChangeTrackingList<ManagementGroupChildInfo>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagementGroupData>.Write(ModelReaderWriterOptions options)

@@ -278,45 +278,45 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Optional<ComputePlan> plan = default;
-            Optional<IReadOnlyList<VirtualMachineExtensionData>> resources = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IList<string>> zones = default;
-            Optional<ExtendedLocation> extendedLocation = default;
-            Optional<string> managedBy = default;
-            Optional<string> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ComputePlan plan = default;
+            IReadOnlyList<VirtualMachineExtensionData> resources = default;
+            ManagedServiceIdentity identity = default;
+            IList<string> zones = default;
+            ExtendedLocation extendedLocation = default;
+            string managedBy = default;
+            string etag = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<VirtualMachineHardwareProfile> hardwareProfile = default;
-            Optional<VirtualMachineStorageProfile> storageProfile = default;
-            Optional<AdditionalCapabilities> additionalCapabilities = default;
-            Optional<VirtualMachineOSProfile> osProfile = default;
-            Optional<VirtualMachineNetworkProfile> networkProfile = default;
-            Optional<SecurityProfile> securityProfile = default;
-            Optional<DiagnosticsProfile> diagnosticsProfile = default;
-            Optional<WritableSubResource> availabilitySet = default;
-            Optional<WritableSubResource> virtualMachineScaleSet = default;
-            Optional<WritableSubResource> proximityPlacementGroup = default;
-            Optional<VirtualMachinePriorityType> priority = default;
-            Optional<VirtualMachineEvictionPolicyType> evictionPolicy = default;
-            Optional<BillingProfile> billingProfile = default;
-            Optional<WritableSubResource> host = default;
-            Optional<WritableSubResource> hostGroup = default;
-            Optional<string> provisioningState = default;
-            Optional<VirtualMachineInstanceView> instanceView = default;
-            Optional<string> licenseType = default;
-            Optional<string> vmId = default;
-            Optional<string> extensionsTimeBudget = default;
-            Optional<int> platformFaultDomain = default;
-            Optional<ComputeScheduledEventsProfile> scheduledEventsProfile = default;
-            Optional<string> userData = default;
-            Optional<CapacityReservationProfile> capacityReservation = default;
-            Optional<ApplicationProfile> applicationProfile = default;
-            Optional<DateTimeOffset> timeCreated = default;
+            SystemData systemData = default;
+            VirtualMachineHardwareProfile hardwareProfile = default;
+            VirtualMachineStorageProfile storageProfile = default;
+            AdditionalCapabilities additionalCapabilities = default;
+            VirtualMachineOSProfile osProfile = default;
+            VirtualMachineNetworkProfile networkProfile = default;
+            SecurityProfile securityProfile = default;
+            DiagnosticsProfile diagnosticsProfile = default;
+            WritableSubResource availabilitySet = default;
+            WritableSubResource virtualMachineScaleSet = default;
+            WritableSubResource proximityPlacementGroup = default;
+            VirtualMachinePriorityType? priority = default;
+            VirtualMachineEvictionPolicyType? evictionPolicy = default;
+            BillingProfile billingProfile = default;
+            WritableSubResource host = default;
+            WritableSubResource hostGroup = default;
+            string provisioningState = default;
+            VirtualMachineInstanceView instanceView = default;
+            string licenseType = default;
+            string vmId = default;
+            string extensionsTimeBudget = default;
+            int? platformFaultDomain = default;
+            ComputeScheduledEventsProfile scheduledEventsProfile = default;
+            string userData = default;
+            CapacityReservationProfile capacityReservation = default;
+            ApplicationProfile applicationProfile = default;
+            DateTimeOffset? timeCreated = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         continue;
                     }
-                    plan = ComputePlan.DeserializeComputePlan(property.Value);
+                    plan = ComputePlan.DeserializeComputePlan(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("resources"u8))
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.Compute
                     List<VirtualMachineExtensionData> array = new List<VirtualMachineExtensionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachineExtensionData.DeserializeVirtualMachineExtensionData(item));
+                        array.Add(VirtualMachineExtensionData.DeserializeVirtualMachineExtensionData(item, options));
                     }
                     resources = array;
                     continue;
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            hardwareProfile = VirtualMachineHardwareProfile.DeserializeVirtualMachineHardwareProfile(property0.Value);
+                            hardwareProfile = VirtualMachineHardwareProfile.DeserializeVirtualMachineHardwareProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("storageProfile"u8))
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            storageProfile = VirtualMachineStorageProfile.DeserializeVirtualMachineStorageProfile(property0.Value);
+                            storageProfile = VirtualMachineStorageProfile.DeserializeVirtualMachineStorageProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("additionalCapabilities"u8))
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            additionalCapabilities = AdditionalCapabilities.DeserializeAdditionalCapabilities(property0.Value);
+                            additionalCapabilities = AdditionalCapabilities.DeserializeAdditionalCapabilities(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("osProfile"u8))
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            osProfile = VirtualMachineOSProfile.DeserializeVirtualMachineOSProfile(property0.Value);
+                            osProfile = VirtualMachineOSProfile.DeserializeVirtualMachineOSProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("networkProfile"u8))
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            networkProfile = VirtualMachineNetworkProfile.DeserializeVirtualMachineNetworkProfile(property0.Value);
+                            networkProfile = VirtualMachineNetworkProfile.DeserializeVirtualMachineNetworkProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("securityProfile"u8))
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            securityProfile = SecurityProfile.DeserializeSecurityProfile(property0.Value);
+                            securityProfile = SecurityProfile.DeserializeSecurityProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("diagnosticsProfile"u8))
@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            diagnosticsProfile = DiagnosticsProfile.DeserializeDiagnosticsProfile(property0.Value);
+                            diagnosticsProfile = DiagnosticsProfile.DeserializeDiagnosticsProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("availabilitySet"u8))
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            billingProfile = BillingProfile.DeserializeBillingProfile(property0.Value);
+                            billingProfile = BillingProfile.DeserializeBillingProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("host"u8))
@@ -584,7 +584,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            instanceView = VirtualMachineInstanceView.DeserializeVirtualMachineInstanceView(property0.Value);
+                            instanceView = VirtualMachineInstanceView.DeserializeVirtualMachineInstanceView(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("licenseType"u8))
@@ -617,7 +617,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            scheduledEventsProfile = ComputeScheduledEventsProfile.DeserializeComputeScheduledEventsProfile(property0.Value);
+                            scheduledEventsProfile = ComputeScheduledEventsProfile.DeserializeComputeScheduledEventsProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("userData"u8))
@@ -631,7 +631,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            capacityReservation = CapacityReservationProfile.DeserializeCapacityReservationProfile(property0.Value);
+                            capacityReservation = CapacityReservationProfile.DeserializeCapacityReservationProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("applicationProfile"u8))
@@ -640,7 +640,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            applicationProfile = ApplicationProfile.DeserializeApplicationProfile(property0.Value);
+                            applicationProfile = ApplicationProfile.DeserializeApplicationProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("timeCreated"u8))
@@ -661,7 +661,47 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, plan.Value, Optional.ToList(resources), identity, Optional.ToList(zones), extendedLocation, managedBy.Value, etag.Value, hardwareProfile.Value, storageProfile.Value, additionalCapabilities.Value, osProfile.Value, networkProfile.Value, securityProfile.Value, diagnosticsProfile.Value, availabilitySet, virtualMachineScaleSet, proximityPlacementGroup, Optional.ToNullable(priority), Optional.ToNullable(evictionPolicy), billingProfile.Value, host, hostGroup, provisioningState.Value, instanceView.Value, licenseType.Value, vmId.Value, extensionsTimeBudget.Value, Optional.ToNullable(platformFaultDomain), scheduledEventsProfile.Value, userData.Value, capacityReservation.Value, applicationProfile.Value, Optional.ToNullable(timeCreated), serializedAdditionalRawData);
+            return new VirtualMachineData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                plan,
+                resources ?? new ChangeTrackingList<VirtualMachineExtensionData>(),
+                identity,
+                zones ?? new ChangeTrackingList<string>(),
+                extendedLocation,
+                managedBy,
+                etag,
+                hardwareProfile,
+                storageProfile,
+                additionalCapabilities,
+                osProfile,
+                networkProfile,
+                securityProfile,
+                diagnosticsProfile,
+                availabilitySet,
+                virtualMachineScaleSet,
+                proximityPlacementGroup,
+                priority,
+                evictionPolicy,
+                billingProfile,
+                host,
+                hostGroup,
+                provisioningState,
+                instanceView,
+                licenseType,
+                vmId,
+                extensionsTimeBudget,
+                platformFaultDomain,
+                scheduledEventsProfile,
+                userData,
+                capacityReservation,
+                applicationProfile,
+                timeCreated,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineData>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SpringAppDiscovery;
 
 namespace Azure.ResourceManager.SpringAppDiscovery.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             {
                 return null;
             }
-            Optional<string> masterSiteId = default;
-            Optional<string> migrateProjectId = default;
-            Optional<SpringAppDiscoveryProvisioningState> provisioningState = default;
+            string masterSiteId = default;
+            string migrateProjectId = default;
+            SpringAppDiscoveryProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SpringBootSiteProperties(masterSiteId.Value, migrateProjectId.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new SpringBootSiteProperties(masterSiteId, migrateProjectId, provisioningState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SpringBootSiteProperties>.Write(ModelReaderWriterOptions options)

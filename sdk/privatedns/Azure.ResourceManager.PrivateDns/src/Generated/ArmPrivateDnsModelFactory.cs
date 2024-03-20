@@ -38,7 +38,23 @@ namespace Azure.ResourceManager.PrivateDns.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new PrivateDnsZoneData(id, name, resourceType, systemData, tags, location, etag, maxNumberOfRecords, numberOfRecords, maxNumberOfVirtualNetworkLinks, numberOfVirtualNetworkLinks, maxNumberOfVirtualNetworkLinksWithRegistration, numberOfVirtualNetworkLinksWithRegistration, privateDnsProvisioningState, internalId, serializedAdditionalRawData: null);
+            return new PrivateDnsZoneData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                etag,
+                maxNumberOfRecords,
+                numberOfRecords,
+                maxNumberOfVirtualNetworkLinks,
+                numberOfVirtualNetworkLinks,
+                maxNumberOfVirtualNetworkLinksWithRegistration,
+                numberOfVirtualNetworkLinksWithRegistration,
+                privateDnsProvisioningState,
+                internalId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="PrivateDns.VirtualNetworkLinkData"/>. </summary>
@@ -58,7 +74,19 @@ namespace Azure.ResourceManager.PrivateDns.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new VirtualNetworkLinkData(id, name, resourceType, systemData, tags, location, etag, virtualNetworkId != null ? ResourceManagerModelFactory.WritableSubResource(virtualNetworkId) : null, registrationEnabled, virtualNetworkLinkState, privateDnsProvisioningState, serializedAdditionalRawData: null);
+            return new VirtualNetworkLinkData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                etag,
+                virtualNetworkId != null ? ResourceManagerModelFactory.WritableSubResource(virtualNetworkId) : null,
+                registrationEnabled,
+                virtualNetworkLinkState,
+                privateDnsProvisioningState,
+                serializedAdditionalRawData: null);
         }
     }
 }

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<EndpointDependency> array = new List<EndpointDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EndpointDependency.DeserializeEndpointDependency(item));
+                        array.Add(EndpointDependency.DeserializeEndpointDependency(item, options));
                     }
                     endpoints = array;
                     continue;

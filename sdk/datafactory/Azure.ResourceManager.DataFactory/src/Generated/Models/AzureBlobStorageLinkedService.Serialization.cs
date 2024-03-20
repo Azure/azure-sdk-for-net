@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -181,24 +182,24 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
-            Optional<IList<BinaryData>> annotations = default;
-            Optional<DataFactoryElement<string>> connectionString = default;
-            Optional<DataFactoryKeyVaultSecretReference> accountKey = default;
-            Optional<DataFactoryElement<string>> sasUri = default;
-            Optional<DataFactoryKeyVaultSecretReference> sasToken = default;
-            Optional<DataFactoryElement<string>> serviceEndpoint = default;
-            Optional<DataFactoryElement<string>> servicePrincipalId = default;
-            Optional<DataFactorySecretBaseDefinition> servicePrincipalKey = default;
-            Optional<DataFactoryElement<string>> tenant = default;
-            Optional<DataFactoryElement<string>> azureCloudType = default;
-            Optional<DataFactoryElement<string>> accountKind = default;
-            Optional<string> encryptedCredential = default;
-            Optional<DataFactoryCredentialReference> credential = default;
-            Optional<AzureStorageAuthenticationType> authenticationType = default;
-            Optional<DataFactoryElement<string>> containerUri = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
+            IDictionary<string, EntityParameterSpecification> parameters = default;
+            IList<BinaryData> annotations = default;
+            DataFactoryElement<string> connectionString = default;
+            DataFactoryKeyVaultSecret accountKey = default;
+            DataFactoryElement<string> sasUri = default;
+            DataFactoryKeyVaultSecret sasToken = default;
+            DataFactoryElement<string> serviceEndpoint = default;
+            DataFactoryElement<string> servicePrincipalId = default;
+            DataFactorySecret servicePrincipalKey = default;
+            DataFactoryElement<string> tenant = default;
+            DataFactoryElement<string> azureCloudType = default;
+            DataFactoryElement<string> accountKind = default;
+            string encryptedCredential = default;
+            DataFactoryCredentialReference credential = default;
+            AzureStorageAuthenticationType? authenticationType = default;
+            DataFactoryElement<string> containerUri = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -214,7 +215,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value);
+                    connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("description"u8))
@@ -231,7 +232,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     Dictionary<string, EntityParameterSpecification> dictionary = new Dictionary<string, EntityParameterSpecification>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, EntityParameterSpecification.DeserializeEntityParameterSpecification(property0.Value));
+                        dictionary.Add(property0.Name, EntityParameterSpecification.DeserializeEntityParameterSpecification(property0.Value, options));
                     }
                     parameters = dictionary;
                     continue;
@@ -281,7 +282,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            accountKey = JsonSerializer.Deserialize<DataFactoryKeyVaultSecretReference>(property0.Value.GetRawText());
+                            accountKey = JsonSerializer.Deserialize<DataFactoryKeyVaultSecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("sasUri"u8))
@@ -299,7 +300,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            sasToken = JsonSerializer.Deserialize<DataFactoryKeyVaultSecretReference>(property0.Value.GetRawText());
+                            sasToken = JsonSerializer.Deserialize<DataFactoryKeyVaultSecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("serviceEndpoint"u8))
@@ -326,7 +327,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            servicePrincipalKey = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
+                            servicePrincipalKey = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("tenant"u8))
@@ -367,7 +368,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            credential = DataFactoryCredentialReference.DeserializeDataFactoryCredentialReference(property0.Value);
+                            credential = DataFactoryCredentialReference.DeserializeDataFactoryCredentialReference(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("authenticationType"u8))
@@ -394,7 +395,27 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureBlobStorageLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, connectionString.Value, accountKey, sasUri.Value, sasToken, serviceEndpoint.Value, servicePrincipalId.Value, servicePrincipalKey, tenant.Value, azureCloudType.Value, accountKind.Value, encryptedCredential.Value, credential.Value, Optional.ToNullable(authenticationType), containerUri.Value);
+            return new AzureBlobStorageLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                connectionString,
+                accountKey,
+                sasUri,
+                sasToken,
+                serviceEndpoint,
+                servicePrincipalId,
+                servicePrincipalKey,
+                tenant,
+                azureCloudType,
+                accountKind,
+                encryptedCredential,
+                credential,
+                authenticationType,
+                containerUri);
         }
 
         BinaryData IPersistableModel<AzureBlobStorageLinkedService>.Write(ModelReaderWriterOptions options)

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Buffers;
 using System.ClientModel.Internal;
 using System.ClientModel.Primitives;
 using System.IO;
@@ -9,25 +10,48 @@ using System.Threading.Tasks;
 
 namespace System.ClientModel;
 
+/// <summary>
+/// Represents binary content that can be sent to a cloud service as part of
+/// a <see cref="PipelineRequest"/>.
+/// </summary>
 public abstract class BinaryContent : IDisposable
 {
     private static readonly ModelReaderWriterOptions ModelWriteWireOptions = new ModelReaderWriterOptions("W");
 
     /// <summary>
-    /// Creates an instance of <see cref="BinaryContent"/> that wraps a <see cref="BinaryData"/>.
+    /// Creates an instance of <see cref="BinaryContent"/> that contains the
+    /// bytes held in the provided <see cref="BinaryData"/> instance.
     /// </summary>
-    /// <param name="value">The <see cref="BinaryData"/> to use.</param>
-    /// <returns>An instance of <see cref="BinaryContent"/> that wraps a <see cref="BinaryData"/>.</returns>
-    public static BinaryContent Create(BinaryData value) => new BinaryDataBinaryContent(value.ToMemory());
+    /// <param name="value">The <see cref="BinaryData"/> containing the bytes
+    /// this <see cref="BinaryContent"/> will hold.</param>
+    /// <returns>An an instance of <see cref="BinaryContent"/> that contains the
+    /// bytes held in the provided <see cref="BinaryData"/> instance.</returns>
+    public static BinaryContent Create(BinaryData value)
+        => new BinaryDataBinaryContent(value.ToMemory());
 
     /// <summary>
-    /// Creates an instance of <see cref="BinaryContent"/> that wraps a <see cref="IPersistableModel{T}"/>.
+    /// Creates an instance of <see cref="BinaryContent"/> that contains the
+    /// bytes resulting from writing the value of the provided
+    /// <see cref="IPersistableModel{T}"/>.
     /// </summary>
     /// <param name="model">The <see cref="IPersistableModel{T}"/> to write.</param>
-    /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
+    /// <param name="options">The <see cref="ModelReaderWriterOptions"/>, if any,
+    /// that indicates what format the <paramref name="model"/> will be written in.
+    /// </param>
     /// <returns>An instance of <see cref="BinaryContent"/> that wraps a <see cref="IPersistableModel{T}"/>.</returns>
     public static BinaryContent Create<T>(T model, ModelReaderWriterOptions? options = default) where T : IPersistableModel<T>
         => new ModelBinaryContent<T>(model, options ?? ModelWriteWireOptions);
+
+    /// <summary>
+    /// Creates an instance of <see cref="BinaryContent"/> that contains the
+    /// bytes held in the provided <see cref="Stream"/> instance.
+    /// </summary>
+    /// <param name="stream">The <see cref="Stream"/> containing the bytes
+    /// this <see cref="BinaryContent"/> will hold.</param>
+    /// <returns>An an instance of <see cref="BinaryContent"/> that contains the
+    /// bytes held in the provided <see cref="Stream"/> instance.</returns>
+    public static BinaryContent Create(Stream stream)
+        => new StreamBinaryContent(stream);
 
     /// <summary>
     /// Attempts to compute the length of the underlying body content, if available.
@@ -36,17 +60,21 @@ public abstract class BinaryContent : IDisposable
     public abstract bool TryComputeLength(out long length);
 
     /// <summary>
-    /// Writes contents of this object to an instance of <see cref="Stream"/>.
+    /// Writes contents of this <see cref="BinaryContent"/> instance to the
+    /// provided <see cref="Stream"/>.
     /// </summary>
-    /// <param name="stream">The stream to write to.</param>
-    /// <param name="cancellationToken">To cancellation token to use.</param>
+    /// <param name="stream">The stream to write the binary content to.</param>
+    /// <param name="cancellationToken">To <see cref="CancellationToken"/> to
+    /// use for the write operation.</param>
     public abstract Task WriteToAsync(Stream stream, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Writes contents of this object to an instance of <see cref="Stream"/>.
+    /// Writes contents of this <see cref="BinaryContent"/> instance to the
+    /// provided <see cref="Stream"/>.
     /// </summary>
-    /// <param name="stream">The stream to write to.</param>
-    /// <param name="cancellationToken">To cancellation token to use.</param>
+    /// <param name="stream">The stream to write the binary content to.</param>
+    /// <param name="cancellationToken">To <see cref="CancellationToken"/> to
+    /// use for the write operation.</param>
     public abstract void WriteTo(Stream stream, CancellationToken cancellationToken = default);
 
     /// <inheritdoc/>
@@ -105,10 +133,7 @@ public abstract class BinaryContent : IDisposable
                     throw new InvalidOperationException("Cannot use Writer with non-IJsonModel model type.");
                 }
 
-                if (_sequenceReader == null)
-                {
-                    _sequenceReader = new ModelWriter<T>(jsonModel, _options).ExtractReader();
-                }
+                _sequenceReader ??= new ModelWriter<T>(jsonModel, _options).ExtractReader();
                 return _sequenceReader;
             }
         }
@@ -173,6 +198,49 @@ public abstract class BinaryContent : IDisposable
                 _sequenceReader = null;
                 sequenceReader.Dispose();
             }
+        }
+    }
+
+    private sealed class StreamBinaryContent : BinaryContent
+    {
+        private readonly Stream _stream;
+        private readonly long _origin;
+
+        public StreamBinaryContent(Stream stream)
+        {
+            if (!stream.CanSeek)
+            {
+                throw new ArgumentException("Stream must be seekable.", nameof(stream));
+            }
+
+            _stream = stream;
+            _origin = stream.Position;
+        }
+
+        public override bool TryComputeLength(out long length)
+        {
+            // CanSeek is validated in constructor - it will always be true.
+            length = _stream.Length - _origin;
+            return true;
+        }
+
+        public override void WriteTo(Stream stream, CancellationToken cancellationToken)
+        {
+            _stream.Seek(_origin, SeekOrigin.Begin);
+            _stream.CopyTo(stream, cancellationToken);
+            _stream.Flush();
+        }
+
+        public override async Task WriteToAsync(Stream stream, CancellationToken cancellationToken)
+        {
+            _stream.Seek(_origin, SeekOrigin.Begin);
+            await _stream.CopyToAsync(stream, cancellationToken).ConfigureAwait(false);
+            await _stream.FlushAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        public override void Dispose()
+        {
+            _stream.Dispose();
         }
     }
 }

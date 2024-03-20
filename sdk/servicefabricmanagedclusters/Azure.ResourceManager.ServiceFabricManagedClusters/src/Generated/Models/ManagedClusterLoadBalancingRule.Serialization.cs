@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -90,10 +91,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             int frontendPort = default;
             int backendPort = default;
             ManagedClusterLoadBalancingRuleTransportProtocol protocol = default;
-            Optional<int> probePort = default;
+            int? probePort = default;
             ManagedClusterLoadBalanceProbeProtocol probeProtocol = default;
-            Optional<string> probeRequestPath = default;
-            Optional<string> loadDistribution = default;
+            string probeRequestPath = default;
+            string loadDistribution = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -143,7 +144,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterLoadBalancingRule(frontendPort, backendPort, protocol, Optional.ToNullable(probePort), probeProtocol, probeRequestPath.Value, loadDistribution.Value, serializedAdditionalRawData);
+            return new ManagedClusterLoadBalancingRule(
+                frontendPort,
+                backendPort,
+                protocol,
+                probePort,
+                probeProtocol,
+                probeRequestPath,
+                loadDistribution,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterLoadBalancingRule>.Write(ModelReaderWriterOptions options)

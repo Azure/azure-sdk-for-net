@@ -143,18 +143,18 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Optional<ComputeSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ComputeSku sku = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> platformUpdateDomainCount = default;
-            Optional<int> platformFaultDomainCount = default;
-            Optional<IList<WritableSubResource>> virtualMachines = default;
-            Optional<WritableSubResource> proximityPlacementGroup = default;
-            Optional<IReadOnlyList<InstanceViewStatus>> statuses = default;
+            SystemData systemData = default;
+            int? platformUpdateDomainCount = default;
+            int? platformFaultDomainCount = default;
+            IList<WritableSubResource> virtualMachines = default;
+            WritableSubResource proximityPlacementGroup = default;
+            IReadOnlyList<InstanceViewStatus> statuses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         continue;
                     }
-                    sku = ComputeSku.DeserializeComputeSku(property.Value);
+                    sku = ComputeSku.DeserializeComputeSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Compute
                             List<InstanceViewStatus> array = new List<InstanceViewStatus>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(InstanceViewStatus.DeserializeInstanceViewStatus(item));
+                                array.Add(InstanceViewStatus.DeserializeInstanceViewStatus(item, options));
                             }
                             statuses = array;
                             continue;
@@ -284,7 +284,20 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailabilitySetData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, Optional.ToNullable(platformUpdateDomainCount), Optional.ToNullable(platformFaultDomainCount), Optional.ToList(virtualMachines), proximityPlacementGroup, Optional.ToList(statuses), serializedAdditionalRawData);
+            return new AvailabilitySetData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                platformUpdateDomainCount,
+                platformFaultDomainCount,
+                virtualMachines ?? new ChangeTrackingList<WritableSubResource>(),
+                proximityPlacementGroup,
+                statuses ?? new ChangeTrackingList<InstanceViewStatus>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailabilitySetData>.Write(ModelReaderWriterOptions options)

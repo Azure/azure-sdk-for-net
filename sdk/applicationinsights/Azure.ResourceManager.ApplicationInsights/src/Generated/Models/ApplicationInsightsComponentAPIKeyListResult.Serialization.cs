@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     List<ApplicationInsightsComponentAPIKey> array = new List<ApplicationInsightsComponentAPIKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationInsightsComponentAPIKey.DeserializeApplicationInsightsComponentAPIKey(item));
+                        array.Add(ApplicationInsightsComponentAPIKey.DeserializeApplicationInsightsComponentAPIKey(item, options));
                     }
                     value = array;
                     continue;

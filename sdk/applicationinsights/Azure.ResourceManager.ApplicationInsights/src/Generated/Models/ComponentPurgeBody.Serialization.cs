@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     List<ComponentPurgeBodyFilters> array = new List<ComponentPurgeBodyFilters>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ComponentPurgeBodyFilters.DeserializeComponentPurgeBodyFilters(item));
+                        array.Add(ComponentPurgeBodyFilters.DeserializeComponentPurgeBodyFilters(item, options));
                     }
                     filters = array;
                     continue;

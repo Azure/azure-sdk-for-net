@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AlertsManagement;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
@@ -84,7 +85,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     List<MonitorServiceDetails> array = new List<MonitorServiceDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorServiceDetails.DeserializeMonitorServiceDetails(item));
+                        array.Add(MonitorServiceDetails.DeserializeMonitorServiceDetails(item, options));
                     }
                     data = array;
                     continue;

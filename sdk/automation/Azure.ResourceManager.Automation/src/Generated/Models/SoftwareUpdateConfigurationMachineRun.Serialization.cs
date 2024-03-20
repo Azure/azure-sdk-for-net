@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -164,24 +165,24 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<ResourceIdentifier> targetComputer = default;
-            Optional<string> targetComputerType = default;
-            Optional<SoftwareUpdateConfigurationNavigation> softwareUpdateConfiguration = default;
-            Optional<string> status = default;
-            Optional<string> osType = default;
-            Optional<Guid> correlationId = default;
-            Optional<Guid> sourceComputerId = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset?> endTime = default;
-            Optional<TimeSpan> configuredDuration = default;
-            Optional<JobNavigation> job = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<string> createdBy = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<string> lastModifiedBy = default;
-            Optional<AutomationResponseError> error = default;
+            string name = default;
+            ResourceIdentifier id = default;
+            ResourceIdentifier targetComputer = default;
+            string targetComputerType = default;
+            SoftwareUpdateConfigurationNavigation softwareUpdateConfiguration = default;
+            string status = default;
+            string osType = default;
+            Guid? correlationId = default;
+            Guid? sourceComputerId = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            TimeSpan? configuredDuration = default;
+            JobNavigation job = default;
+            DateTimeOffset? creationTime = default;
+            string createdBy = default;
+            DateTimeOffset? lastModifiedTime = default;
+            string lastModifiedBy = default;
+            AutomationResponseError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -229,7 +230,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            softwareUpdateConfiguration = SoftwareUpdateConfigurationNavigation.DeserializeSoftwareUpdateConfigurationNavigation(property0.Value);
+                            softwareUpdateConfiguration = SoftwareUpdateConfigurationNavigation.DeserializeSoftwareUpdateConfigurationNavigation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("status"u8))
@@ -294,7 +295,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            job = JobNavigation.DeserializeJobNavigation(property0.Value);
+                            job = JobNavigation.DeserializeJobNavigation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("creationTime"u8))
@@ -331,7 +332,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            error = AutomationResponseError.DeserializeAutomationResponseError(property0.Value);
+                            error = AutomationResponseError.DeserializeAutomationResponseError(property0.Value, options);
                             continue;
                         }
                     }
@@ -343,7 +344,26 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SoftwareUpdateConfigurationMachineRun(name.Value, id.Value, targetComputer.Value, targetComputerType.Value, softwareUpdateConfiguration.Value, status.Value, osType.Value, Optional.ToNullable(correlationId), Optional.ToNullable(sourceComputerId), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(configuredDuration), job.Value, Optional.ToNullable(creationTime), createdBy.Value, Optional.ToNullable(lastModifiedTime), lastModifiedBy.Value, error.Value, serializedAdditionalRawData);
+            return new SoftwareUpdateConfigurationMachineRun(
+                name,
+                id,
+                targetComputer,
+                targetComputerType,
+                softwareUpdateConfiguration,
+                status,
+                osType,
+                correlationId,
+                sourceComputerId,
+                startTime,
+                endTime,
+                configuredDuration,
+                job,
+                creationTime,
+                createdBy,
+                lastModifiedTime,
+                lastModifiedBy,
+                error,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SoftwareUpdateConfigurationMachineRun>.Write(ModelReaderWriterOptions options)

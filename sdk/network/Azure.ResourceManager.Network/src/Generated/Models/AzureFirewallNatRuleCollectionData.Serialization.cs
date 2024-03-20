@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -113,14 +114,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<int> priority = default;
-            Optional<AzureFirewallNatRCAction> action = default;
-            Optional<IList<AzureFirewallNatRule>> rules = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            int? priority = default;
+            AzureFirewallNatRCAction action = default;
+            IList<AzureFirewallNatRule> rules = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -181,7 +182,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            action = AzureFirewallNatRCAction.DeserializeAzureFirewallNatRCAction(property0.Value);
+                            action = AzureFirewallNatRCAction.DeserializeAzureFirewallNatRCAction(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("rules"u8))
@@ -193,7 +194,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<AzureFirewallNatRule> array = new List<AzureFirewallNatRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AzureFirewallNatRule.DeserializeAzureFirewallNatRule(item));
+                                array.Add(AzureFirewallNatRule.DeserializeAzureFirewallNatRule(item, options));
                             }
                             rules = array;
                             continue;
@@ -216,7 +217,16 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureFirewallNatRuleCollectionData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(priority), action.Value, Optional.ToList(rules), Optional.ToNullable(provisioningState));
+            return new AzureFirewallNatRuleCollectionData(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                priority,
+                action,
+                rules ?? new ChangeTrackingList<AzureFirewallNatRule>(),
+                provisioningState);
         }
 
         BinaryData IPersistableModel<AzureFirewallNatRuleCollectionData>.Write(ModelReaderWriterOptions options)

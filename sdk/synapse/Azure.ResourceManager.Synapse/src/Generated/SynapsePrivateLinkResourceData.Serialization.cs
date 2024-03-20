@@ -91,11 +91,11 @@ namespace Azure.ResourceManager.Synapse
             {
                 return null;
             }
-            Optional<SynapsePrivateLinkResourceProperties> properties = default;
+            SynapsePrivateLinkResourceProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Synapse
                     {
                         continue;
                     }
-                    properties = SynapsePrivateLinkResourceProperties.DeserializeSynapsePrivateLinkResourceProperties(property.Value);
+                    properties = SynapsePrivateLinkResourceProperties.DeserializeSynapsePrivateLinkResourceProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -139,7 +139,13 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapsePrivateLinkResourceData(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new SynapsePrivateLinkResourceData(
+                id,
+                name,
+                type,
+                systemData,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapsePrivateLinkResourceData>.Write(ModelReaderWriterOptions options)

@@ -137,14 +137,14 @@ namespace Azure.ResourceManager.Cdn
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> ruleSetName = default;
-            Optional<int> order = default;
-            Optional<IList<DeliveryRuleCondition>> conditions = default;
-            Optional<IList<DeliveryRuleAction>> actions = default;
-            Optional<MatchProcessingBehavior> matchProcessingBehavior = default;
-            Optional<FrontDoorProvisioningState> provisioningState = default;
-            Optional<FrontDoorDeploymentStatus> deploymentStatus = default;
+            SystemData systemData = default;
+            string ruleSetName = default;
+            int? order = default;
+            IList<DeliveryRuleCondition> conditions = default;
+            IList<DeliveryRuleAction> actions = default;
+            MatchProcessingBehavior? matchProcessingBehavior = default;
+            FrontDoorProvisioningState? provisioningState = default;
+            FrontDoorDeploymentStatus? deploymentStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Cdn
                             List<DeliveryRuleCondition> array = new List<DeliveryRuleCondition>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeliveryRuleCondition.DeserializeDeliveryRuleCondition(item));
+                                array.Add(DeliveryRuleCondition.DeserializeDeliveryRuleCondition(item, options));
                             }
                             conditions = array;
                             continue;
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Cdn
                             List<DeliveryRuleAction> array = new List<DeliveryRuleAction>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeliveryRuleAction.DeserializeDeliveryRuleAction(item));
+                                array.Add(DeliveryRuleAction.DeserializeDeliveryRuleAction(item, options));
                             }
                             actions = array;
                             continue;
@@ -260,7 +260,19 @@ namespace Azure.ResourceManager.Cdn
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorRuleData(id, name, type, systemData.Value, ruleSetName.Value, Optional.ToNullable(order), Optional.ToList(conditions), Optional.ToList(actions), Optional.ToNullable(matchProcessingBehavior), Optional.ToNullable(provisioningState), Optional.ToNullable(deploymentStatus), serializedAdditionalRawData);
+            return new FrontDoorRuleData(
+                id,
+                name,
+                type,
+                systemData,
+                ruleSetName,
+                order,
+                conditions ?? new ChangeTrackingList<DeliveryRuleCondition>(),
+                actions ?? new ChangeTrackingList<DeliveryRuleAction>(),
+                matchProcessingBehavior,
+                provisioningState,
+                deploymentStatus,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorRuleData>.Write(ModelReaderWriterOptions options)

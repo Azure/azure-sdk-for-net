@@ -145,16 +145,16 @@ namespace Azure.ResourceManager.Cdn
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> profileName = default;
-            Optional<FrontDoorCustomDomainHttpsContent> tlsSettings = default;
-            Optional<WritableSubResource> azureDnsZone = default;
-            Optional<FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId> preValidatedCustomDomainResourceId = default;
-            Optional<FrontDoorProvisioningState> provisioningState = default;
-            Optional<FrontDoorDeploymentStatus> deploymentStatus = default;
-            Optional<DomainValidationState> domainValidationState = default;
-            Optional<string> hostName = default;
-            Optional<DomainValidationProperties> validationProperties = default;
+            SystemData systemData = default;
+            string profileName = default;
+            FrontDoorCustomDomainHttpsContent tlsSettings = default;
+            WritableSubResource azureDnsZone = default;
+            FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId preValidatedCustomDomainResourceId = default;
+            FrontDoorProvisioningState? provisioningState = default;
+            FrontDoorDeploymentStatus? deploymentStatus = default;
+            DomainValidationState? domainValidationState = default;
+            string hostName = default;
+            DomainValidationProperties validationProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Cdn
                             {
                                 continue;
                             }
-                            tlsSettings = FrontDoorCustomDomainHttpsContent.DeserializeFrontDoorCustomDomainHttpsContent(property0.Value);
+                            tlsSettings = FrontDoorCustomDomainHttpsContent.DeserializeFrontDoorCustomDomainHttpsContent(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("azureDnsZone"u8))
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Cdn
                                 preValidatedCustomDomainResourceId = null;
                                 continue;
                             }
-                            preValidatedCustomDomainResourceId = FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId.DeserializeFrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId(property0.Value);
+                            preValidatedCustomDomainResourceId = FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId.DeserializeFrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Cdn
                             {
                                 continue;
                             }
-                            validationProperties = DomainValidationProperties.DeserializeDomainValidationProperties(property0.Value);
+                            validationProperties = DomainValidationProperties.DeserializeDomainValidationProperties(property0.Value, options);
                             continue;
                         }
                     }
@@ -275,7 +275,21 @@ namespace Azure.ResourceManager.Cdn
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorCustomDomainData(id, name, type, systemData.Value, profileName.Value, tlsSettings.Value, azureDnsZone, preValidatedCustomDomainResourceId.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(deploymentStatus), Optional.ToNullable(domainValidationState), hostName.Value, validationProperties.Value, serializedAdditionalRawData);
+            return new FrontDoorCustomDomainData(
+                id,
+                name,
+                type,
+                systemData,
+                profileName,
+                tlsSettings,
+                azureDnsZone,
+                preValidatedCustomDomainResourceId,
+                provisioningState,
+                deploymentStatus,
+                domainValidationState,
+                hostName,
+                validationProperties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorCustomDomainData>.Write(ModelReaderWriterOptions options)

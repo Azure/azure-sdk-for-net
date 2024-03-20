@@ -129,17 +129,17 @@ namespace Azure.ResourceManager.ElasticSan
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
+            ManagedServiceIdentity identity = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ElasticSanProvisioningState> provisioningState = default;
-            Optional<ElasticSanStorageTargetType> protocolType = default;
-            Optional<ElasticSanEncryptionType> encryption = default;
-            Optional<ElasticSanEncryptionProperties> encryptionProperties = default;
-            Optional<NetworkRuleSet> networkAcls = default;
-            Optional<IReadOnlyList<ElasticSanPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            SystemData systemData = default;
+            ElasticSanProvisioningState? provisioningState = default;
+            ElasticSanStorageTargetType? protocolType = default;
+            ElasticSanEncryptionType? encryption = default;
+            ElasticSanEncryptionProperties encryptionProperties = default;
+            NetworkRuleSet networkAcls = default;
+            IReadOnlyList<ElasticSanPrivateEndpointConnectionData> privateEndpointConnections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.ElasticSan
                             {
                                 continue;
                             }
-                            encryptionProperties = ElasticSanEncryptionProperties.DeserializeElasticSanEncryptionProperties(property0.Value);
+                            encryptionProperties = ElasticSanEncryptionProperties.DeserializeElasticSanEncryptionProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("networkAcls"u8))
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ElasticSan
                             {
                                 continue;
                             }
-                            networkAcls = NetworkRuleSet.DeserializeNetworkRuleSet(property0.Value);
+                            networkAcls = NetworkRuleSet.DeserializeNetworkRuleSet(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("privateEndpointConnections"u8))
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.ElasticSan
                             List<ElasticSanPrivateEndpointConnectionData> array = new List<ElasticSanPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ElasticSanPrivateEndpointConnectionData.DeserializeElasticSanPrivateEndpointConnectionData(item));
+                                array.Add(ElasticSanPrivateEndpointConnectionData.DeserializeElasticSanPrivateEndpointConnectionData(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -254,7 +254,19 @@ namespace Azure.ResourceManager.ElasticSan
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticSanVolumeGroupData(id, name, type, systemData.Value, identity, Optional.ToNullable(provisioningState), Optional.ToNullable(protocolType), Optional.ToNullable(encryption), encryptionProperties.Value, networkAcls.Value, Optional.ToList(privateEndpointConnections), serializedAdditionalRawData);
+            return new ElasticSanVolumeGroupData(
+                id,
+                name,
+                type,
+                systemData,
+                identity,
+                provisioningState,
+                protocolType,
+                encryption,
+                encryptionProperties,
+                networkAcls,
+                privateEndpointConnections ?? new ChangeTrackingList<ElasticSanPrivateEndpointConnectionData>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticSanVolumeGroupData>.Write(ModelReaderWriterOptions options)

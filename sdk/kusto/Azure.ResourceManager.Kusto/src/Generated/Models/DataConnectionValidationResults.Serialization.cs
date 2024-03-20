@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DataConnectionValidationResult>> value = default;
+            IReadOnlyList<DataConnectionValidationResult> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     List<DataConnectionValidationResult> array = new List<DataConnectionValidationResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataConnectionValidationResult.DeserializeDataConnectionValidationResult(item));
+                        array.Add(DataConnectionValidationResult.DeserializeDataConnectionValidationResult(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataConnectionValidationResults(Optional.ToList(value), serializedAdditionalRawData);
+            return new DataConnectionValidationResults(value ?? new ChangeTrackingList<DataConnectionValidationResult>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataConnectionValidationResults>.Write(ModelReaderWriterOptions options)

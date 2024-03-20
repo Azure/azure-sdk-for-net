@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -76,12 +77,12 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 if (property.NameEquals("metricTrigger"u8))
                 {
-                    metricTrigger = MetricTrigger.DeserializeMetricTrigger(property.Value);
+                    metricTrigger = MetricTrigger.DeserializeMetricTrigger(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("scaleAction"u8))
                 {
-                    scaleAction = MonitorScaleAction.DeserializeMonitorScaleAction(property.Value);
+                    scaleAction = MonitorScaleAction.DeserializeMonitorScaleAction(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -143,18 +143,18 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> provisioningState = default;
-            Optional<string> version = default;
-            Optional<IDictionary<string, string>> parameters = default;
-            Optional<ApplicationUpgradePolicy> upgradePolicy = default;
-            Optional<IList<ApplicationUserAssignedIdentityInfo>> managedIdentities = default;
+            SystemData systemData = default;
+            string provisioningState = default;
+            string version = default;
+            IDictionary<string, string> parameters = default;
+            ApplicationUpgradePolicy upgradePolicy = default;
+            IList<ApplicationUserAssignedIdentityInfo> managedIdentities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             {
                                 continue;
                             }
-                            upgradePolicy = ApplicationUpgradePolicy.DeserializeApplicationUpgradePolicy(property0.Value);
+                            upgradePolicy = ApplicationUpgradePolicy.DeserializeApplicationUpgradePolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("managedIdentities"u8))
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             List<ApplicationUserAssignedIdentityInfo> array = new List<ApplicationUserAssignedIdentityInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationUserAssignedIdentityInfo.DeserializeApplicationUserAssignedIdentityInfo(item));
+                                array.Add(ApplicationUserAssignedIdentityInfo.DeserializeApplicationUserAssignedIdentityInfo(item, options));
                             }
                             managedIdentities = array;
                             continue;
@@ -276,7 +276,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceFabricManagedApplicationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, provisioningState.Value, version.Value, Optional.ToDictionary(parameters), upgradePolicy.Value, Optional.ToList(managedIdentities), serializedAdditionalRawData);
+            return new ServiceFabricManagedApplicationData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                provisioningState,
+                version,
+                parameters ?? new ChangeTrackingDictionary<string, string>(),
+                upgradePolicy,
+                managedIdentities ?? new ChangeTrackingList<ApplicationUserAssignedIdentityInfo>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceFabricManagedApplicationData>.Write(ModelReaderWriterOptions options)

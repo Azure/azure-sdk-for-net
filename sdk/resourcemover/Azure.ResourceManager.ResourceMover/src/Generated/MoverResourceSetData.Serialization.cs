@@ -115,15 +115,15 @@ namespace Azure.ResourceManager.ResourceMover
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<MoverResourceSetProperties> properties = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ETag? etag = default;
+            ManagedServiceIdentity identity = default;
+            MoverResourceSetProperties properties = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ResourceMover
                     {
                         continue;
                     }
-                    properties = MoverResourceSetProperties.DeserializeMoverResourceSetProperties(property.Value);
+                    properties = MoverResourceSetProperties.DeserializeMoverResourceSetProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -204,7 +204,17 @@ namespace Azure.ResourceManager.ResourceMover
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoverResourceSetData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), identity, properties.Value, serializedAdditionalRawData);
+            return new MoverResourceSetData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                etag,
+                identity,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MoverResourceSetData>.Write(ModelReaderWriterOptions options)

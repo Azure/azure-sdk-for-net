@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -57,7 +58,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownDeleteOption(document.RootElement, options);
+            return DeserializeDataProtectionBackupDeleteSetting(document.RootElement, options);
         }
 
         internal static UnknownDeleteOption DeserializeUnknownDeleteOption(JsonElement element, ModelReaderWriterOptions options = null)
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownDeleteOption(document.RootElement, options);
+                        return DeserializeDataProtectionBackupDeleteSetting(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(DataProtectionBackupDeleteSetting)} does not support '{options.Format}' format.");

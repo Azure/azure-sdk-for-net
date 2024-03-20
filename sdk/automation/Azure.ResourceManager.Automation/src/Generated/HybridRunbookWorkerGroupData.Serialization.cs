@@ -102,9 +102,9 @@ namespace Azure.ResourceManager.Automation
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<HybridWorkerGroup> groupType = default;
-            Optional<RunAsCredentialAssociationProperty> credential = default;
+            SystemData systemData = default;
+            HybridWorkerGroup? groupType = default;
+            RunAsCredentialAssociationProperty credential = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Automation
                             {
                                 continue;
                             }
-                            credential = RunAsCredentialAssociationProperty.DeserializeRunAsCredentialAssociationProperty(property0.Value);
+                            credential = RunAsCredentialAssociationProperty.DeserializeRunAsCredentialAssociationProperty(property0.Value, options);
                             continue;
                         }
                     }
@@ -169,7 +169,14 @@ namespace Azure.ResourceManager.Automation
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridRunbookWorkerGroupData(id, name, type, systemData.Value, Optional.ToNullable(groupType), credential.Value, serializedAdditionalRawData);
+            return new HybridRunbookWorkerGroupData(
+                id,
+                name,
+                type,
+                systemData,
+                groupType,
+                credential,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridRunbookWorkerGroupData>.Write(ModelReaderWriterOptions options)

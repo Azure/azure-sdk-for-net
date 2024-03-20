@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CaCertificateData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<CaCertificateData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     List<CaCertificateData> array = new List<CaCertificateData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CaCertificateData.DeserializeCaCertificateData(item));
+                        array.Add(CaCertificateData.DeserializeCaCertificateData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CaCertificatesListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new CaCertificatesListResult(value ?? new ChangeTrackingList<CaCertificateData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CaCertificatesListResult>.Write(ModelReaderWriterOptions options)

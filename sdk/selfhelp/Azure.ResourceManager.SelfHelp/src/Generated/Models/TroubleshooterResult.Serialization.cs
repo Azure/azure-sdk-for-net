@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SelfHelp;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Optional<string> questionId = default;
-            Optional<QuestionType> questionType = default;
-            Optional<string> response = default;
+            string questionId = default;
+            QuestionType? questionType = default;
+            string response = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TroubleshooterResult(questionId.Value, Optional.ToNullable(questionType), response.Value, serializedAdditionalRawData);
+            return new TroubleshooterResult(questionId, questionType, response, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TroubleshooterResult>.Write(ModelReaderWriterOptions options)

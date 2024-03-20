@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
@@ -135,13 +136,13 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             {
                 return null;
             }
-            Optional<int> version = default;
-            Optional<DateTimeOffset> updatedTime = default;
-            Optional<string> updatedBy = default;
-            Optional<ParentManagementGroupInfo> parent = default;
-            Optional<IReadOnlyList<ManagementGroupPathElement>> path = default;
-            Optional<IReadOnlyList<string>> managementGroupAncestors = default;
-            Optional<IReadOnlyList<ManagementGroupPathElement>> managementGroupAncestorsChain = default;
+            int? version = default;
+            DateTimeOffset? updatedTime = default;
+            string updatedBy = default;
+            ParentManagementGroupInfo parent = default;
+            IReadOnlyList<ManagementGroupPathElement> path = default;
+            IReadOnlyList<string> managementGroupAncestors = default;
+            IReadOnlyList<ManagementGroupPathElement> managementGroupAncestorsChain = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -175,7 +176,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     {
                         continue;
                     }
-                    parent = ParentManagementGroupInfo.DeserializeParentManagementGroupInfo(property.Value);
+                    parent = ParentManagementGroupInfo.DeserializeParentManagementGroupInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("path"u8))
@@ -188,7 +189,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     List<ManagementGroupPathElement> array = new List<ManagementGroupPathElement>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagementGroupPathElement.DeserializeManagementGroupPathElement(item));
+                        array.Add(ManagementGroupPathElement.DeserializeManagementGroupPathElement(item, options));
                     }
                     path = array;
                     continue;
@@ -218,7 +219,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     List<ManagementGroupPathElement> array = new List<ManagementGroupPathElement>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagementGroupPathElement.DeserializeManagementGroupPathElement(item));
+                        array.Add(ManagementGroupPathElement.DeserializeManagementGroupPathElement(item, options));
                     }
                     managementGroupAncestorsChain = array;
                     continue;
@@ -229,7 +230,15 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagementGroupInfo(Optional.ToNullable(version), Optional.ToNullable(updatedTime), updatedBy.Value, parent.Value, Optional.ToList(path), Optional.ToList(managementGroupAncestors), Optional.ToList(managementGroupAncestorsChain), serializedAdditionalRawData);
+            return new ManagementGroupInfo(
+                version,
+                updatedTime,
+                updatedBy,
+                parent,
+                path ?? new ChangeTrackingList<ManagementGroupPathElement>(),
+                managementGroupAncestors ?? new ChangeTrackingList<string>(),
+                managementGroupAncestorsChain ?? new ChangeTrackingList<ManagementGroupPathElement>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagementGroupInfo>.Write(ModelReaderWriterOptions options)

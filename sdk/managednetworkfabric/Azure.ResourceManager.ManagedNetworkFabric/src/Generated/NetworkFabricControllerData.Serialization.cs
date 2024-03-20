@@ -202,26 +202,26 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> annotation = default;
-            Optional<IList<ExpressRouteConnectionInformation>> infrastructureExpressRouteConnections = default;
-            Optional<IList<ExpressRouteConnectionInformation>> workloadExpressRouteConnections = default;
-            Optional<NetworkFabricControllerServices> infrastructureServices = default;
-            Optional<NetworkFabricControllerServices> workloadServices = default;
-            Optional<ManagedResourceGroupConfiguration> managedResourceGroupConfiguration = default;
-            Optional<IReadOnlyList<ResourceIdentifier>> networkFabricIds = default;
-            Optional<bool> workloadManagementNetwork = default;
-            Optional<IsWorkloadManagementNetworkEnabled> isWorkloadManagementNetworkEnabled = default;
-            Optional<IReadOnlyList<ResourceIdentifier>> tenantInternetGatewayIds = default;
-            Optional<string> ipv4AddressSpace = default;
-            Optional<string> ipv6AddressSpace = default;
-            Optional<NetworkFabricControllerSKU> nfcSku = default;
-            Optional<NetworkFabricProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            string annotation = default;
+            IList<ExpressRouteConnectionInformation> infrastructureExpressRouteConnections = default;
+            IList<ExpressRouteConnectionInformation> workloadExpressRouteConnections = default;
+            NetworkFabricControllerServices infrastructureServices = default;
+            NetworkFabricControllerServices workloadServices = default;
+            ManagedResourceGroupConfiguration managedResourceGroupConfiguration = default;
+            IReadOnlyList<ResourceIdentifier> networkFabricIds = default;
+            bool? workloadManagementNetwork = default;
+            IsWorkloadManagementNetworkEnabled? isWorkloadManagementNetworkEnabled = default;
+            IReadOnlyList<ResourceIdentifier> tenantInternetGatewayIds = default;
+            string ipv4AddressSpace = default;
+            string ipv6AddressSpace = default;
+            NetworkFabricControllerSKU? nfcSku = default;
+            NetworkFabricProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             List<ExpressRouteConnectionInformation> array = new List<ExpressRouteConnectionInformation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ExpressRouteConnectionInformation.DeserializeExpressRouteConnectionInformation(item));
+                                array.Add(ExpressRouteConnectionInformation.DeserializeExpressRouteConnectionInformation(item, options));
                             }
                             infrastructureExpressRouteConnections = array;
                             continue;
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             List<ExpressRouteConnectionInformation> array = new List<ExpressRouteConnectionInformation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ExpressRouteConnectionInformation.DeserializeExpressRouteConnectionInformation(item));
+                                array.Add(ExpressRouteConnectionInformation.DeserializeExpressRouteConnectionInformation(item, options));
                             }
                             workloadExpressRouteConnections = array;
                             continue;
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            infrastructureServices = NetworkFabricControllerServices.DeserializeNetworkFabricControllerServices(property0.Value);
+                            infrastructureServices = NetworkFabricControllerServices.DeserializeNetworkFabricControllerServices(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("workloadServices"u8))
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            workloadServices = NetworkFabricControllerServices.DeserializeNetworkFabricControllerServices(property0.Value);
+                            workloadServices = NetworkFabricControllerServices.DeserializeNetworkFabricControllerServices(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("managedResourceGroupConfiguration"u8))
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            managedResourceGroupConfiguration = ManagedResourceGroupConfiguration.DeserializeManagedResourceGroupConfiguration(property0.Value);
+                            managedResourceGroupConfiguration = ManagedResourceGroupConfiguration.DeserializeManagedResourceGroupConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("networkFabricIds"u8))
@@ -435,7 +435,28 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFabricControllerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, annotation.Value, Optional.ToList(infrastructureExpressRouteConnections), Optional.ToList(workloadExpressRouteConnections), infrastructureServices.Value, workloadServices.Value, managedResourceGroupConfiguration.Value, Optional.ToList(networkFabricIds), Optional.ToNullable(workloadManagementNetwork), Optional.ToNullable(isWorkloadManagementNetworkEnabled), Optional.ToList(tenantInternetGatewayIds), ipv4AddressSpace.Value, ipv6AddressSpace.Value, Optional.ToNullable(nfcSku), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new NetworkFabricControllerData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                annotation,
+                infrastructureExpressRouteConnections ?? new ChangeTrackingList<ExpressRouteConnectionInformation>(),
+                workloadExpressRouteConnections ?? new ChangeTrackingList<ExpressRouteConnectionInformation>(),
+                infrastructureServices,
+                workloadServices,
+                managedResourceGroupConfiguration,
+                networkFabricIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                workloadManagementNetwork,
+                isWorkloadManagementNetworkEnabled,
+                tenantInternetGatewayIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                ipv4AddressSpace,
+                ipv6AddressSpace,
+                nfcSku,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkFabricControllerData>.Write(ModelReaderWriterOptions options)

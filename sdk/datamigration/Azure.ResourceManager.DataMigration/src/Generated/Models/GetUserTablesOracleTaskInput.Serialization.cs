@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 if (property.NameEquals("connectionInfo"u8))
                 {
-                    connectionInfo = OracleConnectionInfo.DeserializeOracleConnectionInfo(property.Value);
+                    connectionInfo = OracleConnectionInfo.DeserializeOracleConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("selectedSchemas"u8))

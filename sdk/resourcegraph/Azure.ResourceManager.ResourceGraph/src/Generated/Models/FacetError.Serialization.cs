@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ResourceGraph;
 
 namespace Azure.ResourceManager.ResourceGraph.Models
 {
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                     List<FacetErrorDetails> array = new List<FacetErrorDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FacetErrorDetails.DeserializeFacetErrorDetails(item));
+                        array.Add(FacetErrorDetails.DeserializeFacetErrorDetails(item, options));
                     }
                     errors = array;
                     continue;

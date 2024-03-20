@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -73,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (property.NameEquals("keyVaultProperties"u8))
                 {
-                    keyVaultProperties = EncryptionKeyVaultUpdateProperties.DeserializeEncryptionKeyVaultUpdateProperties(property.Value);
+                    keyVaultProperties = EncryptionKeyVaultUpdateProperties.DeserializeEncryptionKeyVaultUpdateProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

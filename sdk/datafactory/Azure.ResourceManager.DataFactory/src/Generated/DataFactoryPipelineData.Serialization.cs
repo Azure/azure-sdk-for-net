@@ -189,20 +189,20 @@ namespace Azure.ResourceManager.DataFactory
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<IList<PipelineActivity>> activities = default;
-            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
-            Optional<IDictionary<string, PipelineVariableSpecification>> variables = default;
-            Optional<int> concurrency = default;
-            Optional<IList<BinaryData>> annotations = default;
-            Optional<IDictionary<string, BinaryData>> runDimensions = default;
-            Optional<PipelineFolder> folder = default;
-            Optional<DataFactoryPipelinePolicy> policy = default;
+            SystemData systemData = default;
+            string description = default;
+            IList<PipelineActivity> activities = default;
+            IDictionary<string, EntityParameterSpecification> parameters = default;
+            IDictionary<string, PipelineVariableSpecification> variables = default;
+            int? concurrency = default;
+            IList<BinaryData> annotations = default;
+            IDictionary<string, BinaryData> runDimensions = default;
+            PipelineFolder folder = default;
+            DataFactoryPipelinePolicy policy = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.DataFactory
                             List<PipelineActivity> array = new List<PipelineActivity>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PipelineActivity.DeserializePipelineActivity(item));
+                                array.Add(PipelineActivity.DeserializePipelineActivity(item, options));
                             }
                             activities = array;
                             continue;
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.DataFactory
                             Dictionary<string, EntityParameterSpecification> dictionary = new Dictionary<string, EntityParameterSpecification>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, EntityParameterSpecification.DeserializeEntityParameterSpecification(property1.Value));
+                                dictionary.Add(property1.Name, EntityParameterSpecification.DeserializeEntityParameterSpecification(property1.Value, options));
                             }
                             parameters = dictionary;
                             continue;
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.DataFactory
                             Dictionary<string, PipelineVariableSpecification> dictionary = new Dictionary<string, PipelineVariableSpecification>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, PipelineVariableSpecification.DeserializePipelineVariableSpecification(property1.Value));
+                                dictionary.Add(property1.Name, PipelineVariableSpecification.DeserializePipelineVariableSpecification(property1.Value, options));
                             }
                             variables = dictionary;
                             continue;
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.DataFactory
                             {
                                 continue;
                             }
-                            folder = PipelineFolder.DeserializePipelineFolder(property0.Value);
+                            folder = PipelineFolder.DeserializePipelineFolder(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("policy"u8))
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.DataFactory
                             {
                                 continue;
                             }
-                            policy = DataFactoryPipelinePolicy.DeserializeDataFactoryPipelinePolicy(property0.Value);
+                            policy = DataFactoryPipelinePolicy.DeserializeDataFactoryPipelinePolicy(property0.Value, options);
                             continue;
                         }
                     }
@@ -371,7 +371,22 @@ namespace Azure.ResourceManager.DataFactory
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFactoryPipelineData(id, name, type, systemData.Value, description.Value, Optional.ToList(activities), Optional.ToDictionary(parameters), Optional.ToDictionary(variables), Optional.ToNullable(concurrency), Optional.ToList(annotations), Optional.ToDictionary(runDimensions), folder.Value, policy.Value, Optional.ToNullable(etag), additionalProperties);
+            return new DataFactoryPipelineData(
+                id,
+                name,
+                type,
+                systemData,
+                description,
+                activities ?? new ChangeTrackingList<PipelineActivity>(),
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                variables ?? new ChangeTrackingDictionary<string, PipelineVariableSpecification>(),
+                concurrency,
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                runDimensions ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                folder,
+                policy,
+                etag,
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<DataFactoryPipelineData>.Write(ModelReaderWriterOptions options)

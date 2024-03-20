@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -75,8 +76,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<bool>> fileMissing = default;
-            Optional<DataFactoryElement<bool>> dataInconsistency = default;
+            DataFactoryElement<bool> fileMissing = default;
+            DataFactoryElement<bool> dataInconsistency = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +106,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SkipErrorFile(fileMissing.Value, dataInconsistency.Value, serializedAdditionalRawData);
+            return new SkipErrorFile(fileMissing, dataInconsistency, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SkipErrorFile>.Write(ModelReaderWriterOptions options)

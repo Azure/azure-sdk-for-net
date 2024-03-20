@@ -194,10 +194,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<PublishingUserResource>> CreateOrUpdateAsync(WaitUntil waitUntil, PublishingUserData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _publishingUserClientDiagnostics.CreateScope("PublishingUserResource.CreateOrUpdate");
             scope.Start();
@@ -243,10 +240,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<PublishingUserResource> CreateOrUpdate(WaitUntil waitUntil, PublishingUserData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _publishingUserClientDiagnostics.CreateScope("PublishingUserResource.CreateOrUpdate");
             scope.Start();

@@ -136,15 +136,15 @@ namespace Azure.ResourceManager.Logic
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<DateTimeOffset> changedTime = default;
-            Optional<BinaryData> metadata = default;
+            SystemData systemData = default;
+            DateTimeOffset? createdTime = default;
+            DateTimeOffset? changedTime = default;
+            BinaryData metadata = default;
             IntegrationAccountAgreementType agreementType = default;
             string hostPartner = default;
             string guestPartner = default;
@@ -251,17 +251,17 @@ namespace Azure.ResourceManager.Logic
                         }
                         if (property0.NameEquals("hostIdentity"u8))
                         {
-                            hostIdentity = IntegrationAccountBusinessIdentity.DeserializeIntegrationAccountBusinessIdentity(property0.Value);
+                            hostIdentity = IntegrationAccountBusinessIdentity.DeserializeIntegrationAccountBusinessIdentity(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("guestIdentity"u8))
                         {
-                            guestIdentity = IntegrationAccountBusinessIdentity.DeserializeIntegrationAccountBusinessIdentity(property0.Value);
+                            guestIdentity = IntegrationAccountBusinessIdentity.DeserializeIntegrationAccountBusinessIdentity(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("content"u8))
                         {
-                            content = IntegrationAccountAgreementContent.DeserializeIntegrationAccountAgreementContent(property0.Value);
+                            content = IntegrationAccountAgreementContent.DeserializeIntegrationAccountAgreementContent(property0.Value, options);
                             continue;
                         }
                     }
@@ -273,7 +273,23 @@ namespace Azure.ResourceManager.Logic
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationAccountAgreementData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), metadata.Value, agreementType, hostPartner, guestPartner, hostIdentity, guestIdentity, content, serializedAdditionalRawData);
+            return new IntegrationAccountAgreementData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                createdTime,
+                changedTime,
+                metadata,
+                agreementType,
+                hostPartner,
+                guestPartner,
+                hostIdentity,
+                guestIdentity,
+                content,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationAccountAgreementData>.Write(ModelReaderWriterOptions options)
