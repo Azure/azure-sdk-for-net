@@ -4,7 +4,6 @@
 #nullable enable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
@@ -287,6 +286,7 @@ namespace Azure.Core
             }
 
             // if this is a fake delete LRO with 404, just return empty response with 204
+            // A fake delete LRO is a delete LRO completed with the initial call
             if (RequestMethod.Delete == requestmethod && state.RawResponse.Status == 404)
             {
                 return new EmptyResponse(HttpStatusCode.NoContent);
@@ -297,6 +297,7 @@ namespace Azure.Core
 
         /// <summary>
         /// This is only used for fake delete LRO, we just want to return an empty response with 204 to the user for this case.
+        /// A fake delete LRO is a delete LRO completed with the initial call.
         /// </summary>
         private sealed class EmptyResponse : Response
         {

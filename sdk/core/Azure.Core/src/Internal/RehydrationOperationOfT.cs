@@ -3,7 +3,6 @@
 
 #nullable disable
 
-using System;
 using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,15 +19,8 @@ namespace Azure.Core
 
         public RehydrationOperation(HttpPipeline pipeline, RehydrationToken? rehydrationToken, ClientOptions options = null)
         {
-            if (pipeline is null)
-            {
-                throw new ArgumentNullException(nameof(pipeline));
-            }
-
-            if (rehydrationToken is null)
-            {
-                throw new ArgumentNullException(nameof(rehydrationToken));
-            }
+            Argument.AssertNotNull(pipeline, nameof(pipeline));
+            Argument.AssertNotNull(rehydrationToken, nameof(rehydrationToken));
 
             IOperationSource<T> source = new GenericOperationSource<T>();
             _nextLinkOperation = (NextLinkOperationImplementation)NextLinkOperationImplementation.Create(pipeline, rehydrationToken);

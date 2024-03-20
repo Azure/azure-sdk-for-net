@@ -30,6 +30,9 @@ namespace Azure.Core
         private string? _lastKnownLocation;
         private string _nextRequestUri;
 
+        public string? OperationId { get; }
+        public RequestMethod RequestMethod { get; }
+
         public static IOperation Create(
             HttpPipeline pipeline,
             RequestMethod requestMethod,
@@ -75,9 +78,6 @@ namespace Azure.Core
             IOperationSource<T> operationSource,
             IOperation operation)
             => new OperationToOperationOfT<T>(operationSource, operation);
-
-        public string? OperationId { get; }
-        public RequestMethod RequestMethod { get; }
 
         public static IOperation Create(
             HttpPipeline pipeline,

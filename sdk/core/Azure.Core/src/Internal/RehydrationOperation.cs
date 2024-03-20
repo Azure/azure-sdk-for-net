@@ -3,7 +3,6 @@
 
 #nullable disable
 
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -17,8 +16,8 @@ namespace Azure.Core
 
         public RehydrationOperation(HttpPipeline pipeline, RehydrationToken? rehydrationToken, ClientOptions options = null)
         {
-            AssertNotNull(pipeline, nameof(pipeline));
-            AssertNotNull(rehydrationToken, nameof(rehydrationToken));
+            Argument.AssertNotNull(pipeline, nameof(pipeline));
+            Argument.AssertNotNull(rehydrationToken, nameof(rehydrationToken));
             _nextLinkOperation = (NextLinkOperationImplementation)NextLinkOperationImplementation.Create(pipeline, rehydrationToken);
             _operation = new OperationInternal(_nextLinkOperation, new ClientDiagnostics(options ?? ClientOptions.Default), null, requestMethod: _nextLinkOperation.RequestMethod);
         }
@@ -34,13 +33,5 @@ namespace Azure.Core
         public override Response UpdateStatus(CancellationToken cancellationToken = default) => _operation.UpdateStatus(cancellationToken);
 
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
-
-        private static void AssertNotNull<T>(T value, string name)
-        {
-            if (value is null)
-            {
-                throw new ArgumentNullException(name);
-            }
-        }
     }
 }
