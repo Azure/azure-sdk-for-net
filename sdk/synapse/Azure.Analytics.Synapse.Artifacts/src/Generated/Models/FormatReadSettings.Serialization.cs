@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -39,9 +40,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 switch (discriminator.GetString())
                 {
                     case "BinaryReadSettings": return BinaryReadSettings.DeserializeBinaryReadSettings(element);
+                    case "DelimitedTextReadSettings": return DelimitedTextReadSettings.DeserializeDelimitedTextReadSettings(element);
                     case "JsonReadSettings": return JsonReadSettings.DeserializeJsonReadSettings(element);
                     case "XmlReadSettings": return XmlReadSettings.DeserializeXmlReadSettings(element);
-                    case "DelimitedTextReadSettings": return DelimitedTextReadSettings.DeserializeDelimitedTextReadSettings(element);
                 }
             }
             return UnknownFormatReadSettings.DeserializeUnknownFormatReadSettings(element);
