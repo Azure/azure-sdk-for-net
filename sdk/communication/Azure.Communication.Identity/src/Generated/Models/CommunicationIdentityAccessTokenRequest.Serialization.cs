@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Communication.Identity;
 using Azure.Core;
 
 namespace Azure.Communication.Identity.Models

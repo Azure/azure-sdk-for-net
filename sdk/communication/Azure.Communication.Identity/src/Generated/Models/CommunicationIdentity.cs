@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Communication.Identity;
 
 namespace Azure.Communication.Identity.Models
 {
