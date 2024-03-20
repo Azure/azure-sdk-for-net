@@ -20,6 +20,7 @@ namespace Azure.Communication.Chat
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public ChatAttachmentType(string value) { throw null; }
+        public static Azure.Communication.Chat.ChatAttachmentType File { get { throw null; } }
         public static Azure.Communication.Chat.ChatAttachmentType Image { get { throw null; } }
         public bool Equals(Azure.Communication.Chat.ChatAttachmentType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -131,7 +132,6 @@ namespace Azure.Communication.Chat
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Communication.Chat.ChatMessageReadReceipt ChatMessageReadReceipt(Azure.Communication.CommunicationIdentifier sender, string chatMessageId, System.DateTimeOffset readOn) { throw null; }
         public static Azure.Communication.Chat.ChatParticipant ChatParticipant(Azure.Communication.CommunicationIdentifier user, string displayName, System.DateTimeOffset? shareHistoryTime) { throw null; }
-        public static Azure.Communication.Chat.ChatParticipant ChatParticipant(Azure.Communication.CommunicationIdentifier user, string displayName, System.DateTimeOffset? shareHistoryTime, System.Collections.Generic.IDictionary<string, string> Metadata) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Communication.Chat.ChatThreadItem ChatThreadItem(string id, string topic, System.DateTimeOffset? deletedOn, System.DateTimeOffset? lastMessageReceivedOn) { throw null; }
         public static Azure.Communication.Chat.ChatThreadProperties ChatThreadProperties(string id, string topic, System.DateTimeOffset createdOn, Azure.Communication.CommunicationIdentifier createdBy, System.DateTimeOffset deletedOn) { throw null; }
