@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.ResourceManager.DeviceProvisioningServices;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {

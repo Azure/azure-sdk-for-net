@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.IoT.Hub.Service;
 
 namespace Azure.IoT.Hub.Service.Models
 {

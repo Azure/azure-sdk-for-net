@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Analytics.Synapse.Spark;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Spark.Models

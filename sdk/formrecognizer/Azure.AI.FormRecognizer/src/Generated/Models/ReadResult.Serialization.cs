@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.FormRecognizer;
 
 namespace Azure.AI.FormRecognizer.Models
 {

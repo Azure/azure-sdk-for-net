@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Analytics.Synapse.ManagedPrivateEndpoints;
 
 namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
 {

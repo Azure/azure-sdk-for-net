@@ -8,8 +8,6 @@
 using System;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
-using Azure.AI.Language.Conversations;
 using Azure.Core;
 using Azure.Core.Pipeline;
 

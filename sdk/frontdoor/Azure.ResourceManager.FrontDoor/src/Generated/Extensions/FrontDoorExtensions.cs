@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.FrontDoor.Mocking;
 using Azure.ResourceManager.FrontDoor.Models;
 using Azure.ResourceManager.Resources;

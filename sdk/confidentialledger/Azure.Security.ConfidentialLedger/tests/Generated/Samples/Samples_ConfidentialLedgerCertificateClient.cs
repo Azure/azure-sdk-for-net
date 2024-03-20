@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Identity;
 using Azure.Security.ConfidentialLedger.Certificate;
 using NUnit.Framework;

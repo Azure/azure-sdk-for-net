@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Dns;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Dns.Models

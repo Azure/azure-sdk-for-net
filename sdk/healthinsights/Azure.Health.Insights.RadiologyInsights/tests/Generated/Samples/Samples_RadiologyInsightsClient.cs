@@ -9,9 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.Health.Insights.RadiologyInsights;
 using Azure.Identity;
 using NUnit.Framework;
 

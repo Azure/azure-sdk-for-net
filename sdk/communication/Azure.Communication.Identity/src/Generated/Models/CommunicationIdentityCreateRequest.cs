@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Communication.Identity;
 
 namespace Azure.Communication.Identity.Models
 {

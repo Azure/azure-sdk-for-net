@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
-using Azure;
 
 namespace Azure.ResourceManager.Network.Models
 {

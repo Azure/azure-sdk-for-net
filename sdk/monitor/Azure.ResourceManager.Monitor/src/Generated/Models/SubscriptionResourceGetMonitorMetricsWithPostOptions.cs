@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {

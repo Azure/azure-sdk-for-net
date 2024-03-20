@@ -7,11 +7,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DefenderEasm;
 using Azure.ResourceManager.DefenderEasm.Models;
 
 namespace Azure.ResourceManager.DefenderEasm.Samples

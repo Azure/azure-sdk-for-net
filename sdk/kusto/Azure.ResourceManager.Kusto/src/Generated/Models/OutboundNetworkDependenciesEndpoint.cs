@@ -7,9 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Kusto;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto.Models

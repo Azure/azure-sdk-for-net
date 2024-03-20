@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Quantum.Jobs;
 
 namespace Azure.Quantum.Jobs.Models
 {

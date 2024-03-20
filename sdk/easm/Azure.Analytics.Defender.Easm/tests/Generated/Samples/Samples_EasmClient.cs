@@ -8,8 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure;
-using Azure.Analytics.Defender.Easm;
 using Azure.Core;
 using Azure.Identity;
 using NUnit.Framework;

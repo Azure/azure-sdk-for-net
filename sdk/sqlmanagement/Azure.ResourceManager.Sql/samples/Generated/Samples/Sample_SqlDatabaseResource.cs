@@ -8,12 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql.Samples

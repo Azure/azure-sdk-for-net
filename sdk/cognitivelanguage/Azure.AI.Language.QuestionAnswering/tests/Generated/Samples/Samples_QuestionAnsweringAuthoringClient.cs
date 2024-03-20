@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure;
 using Azure.AI.Language.QuestionAnswering.Authoring;
 using Azure.Core;
 using Azure.Identity;

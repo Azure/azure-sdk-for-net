@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Communication.ShortCodes;
 
 namespace Azure.Communication.ShortCodes.Models
 {

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Monitor.OpenTelemetry.LiveMetrics;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {

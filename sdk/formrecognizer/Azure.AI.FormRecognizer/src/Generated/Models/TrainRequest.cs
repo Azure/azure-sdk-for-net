@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.AI.FormRecognizer;
 using Azure.AI.FormRecognizer.Training;
 
 namespace Azure.AI.FormRecognizer.Models

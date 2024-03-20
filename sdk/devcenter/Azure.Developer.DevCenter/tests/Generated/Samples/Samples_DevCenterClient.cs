@@ -8,9 +8,7 @@
 using System;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.Developer.DevCenter;
 using Azure.Identity;
 using NUnit.Framework;
 

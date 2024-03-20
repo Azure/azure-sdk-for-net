@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using Azure.Core;
-using Azure.ResourceManager.HDInsight;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HDInsight.Models

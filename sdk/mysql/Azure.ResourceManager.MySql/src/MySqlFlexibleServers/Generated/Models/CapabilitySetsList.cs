@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.MySql;
-using Azure.ResourceManager.MySql.FlexibleServers;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
