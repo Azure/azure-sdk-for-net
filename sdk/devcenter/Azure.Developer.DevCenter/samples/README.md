@@ -15,6 +15,6 @@ description: Samples for the Azure.Developer.DevCenter client library.
 * [Create Deployment Environment Client and Get an Environment](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/devcenter/Azure.Developer.DevCenter/samples/Sample3_EnvironmentsClient_HelloWorldAsync.md)
 * [Create, Connect and Delete a Dev Box](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/devcenter/Azure.Developer.DevCenter/samples/Sample4_CreateDeleteDevBoxAsync.md)
 * [Stop, Start and Restart a Dev Box](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/devcenter/Azure.Developer.DevCenter/samples/Sample5_StopStartRestartDevBoxAsync.md)
-* [Manipulate Dev Box Actions](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/devcenter/Azure.Developer.DevCenter/samples/Sample6_GetDelaySkipDevBoxActionsAsync)
-* [Deployment Environments Operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/devcenter/Azure.Developer.DevCenter/samples/Sample7_CreateDeleteEnvironmentAsync)
+* [Manipulate Dev Box Actions](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/devcenter/Azure.Developer.DevCenter/samples/Sample6_GetDelaySkipDevBoxActionsAsync.md)
+* [Deployment Environments Operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/devcenter/Azure.Developer.DevCenter/samples/Sample7_CreateDeleteEnvironmentAsync.md)
 
