@@ -97,6 +97,8 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
+            writer.WritePropertyName("ruleType"u8);
+            writer.WriteStringValue(RuleType.ToString());
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
@@ -107,8 +109,6 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            writer.WritePropertyName("ruleType"u8);
-            writer.WriteStringValue(RuleType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -154,9 +154,9 @@ namespace Azure.ResourceManager.Network.Models
             IList<string> sourceIPGroups = default;
             IList<string> destinationIPGroups = default;
             IList<string> destinationFqdns = default;
+            FirewallPolicyRuleType ruleType = default;
             string name = default;
             string description = default;
-            FirewallPolicyRuleType ruleType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -259,6 +259,11 @@ namespace Azure.ResourceManager.Network.Models
                     destinationFqdns = array;
                     continue;
                 }
+                if (property.NameEquals("ruleType"u8))
+                {
+                    ruleType = new FirewallPolicyRuleType(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
@@ -267,11 +272,6 @@ namespace Azure.ResourceManager.Network.Models
                 if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("ruleType"u8))
-                {
-                    ruleType = new FirewallPolicyRuleType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

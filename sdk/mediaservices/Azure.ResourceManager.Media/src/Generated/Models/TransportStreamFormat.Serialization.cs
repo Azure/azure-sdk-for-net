@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("@odata.type"u8);
+            writer.WriteStringValue(OdataType);
             if (Optional.IsCollectionDefined(OutputFiles))
             {
                 writer.WritePropertyName("outputFiles"u8);
@@ -37,8 +39,6 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("@odata.type"u8);
-            writer.WriteStringValue(OdataType);
             writer.WritePropertyName("filenamePattern"u8);
             writer.WriteStringValue(FilenamePattern);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -79,13 +79,18 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            IList<MediaOutputFile> outputFiles = default;
             string odataType = default;
+            IList<MediaOutputFile> outputFiles = default;
             string filenamePattern = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("@odata.type"u8))
+                {
+                    odataType = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("outputFiles"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -98,11 +103,6 @@ namespace Azure.ResourceManager.Media.Models
                         array.Add(MediaOutputFile.DeserializeMediaOutputFile(item, options));
                     }
                     outputFiles = array;
-                    continue;
-                }
-                if (property.NameEquals("@odata.type"u8))
-                {
-                    odataType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("filenamePattern"u8))

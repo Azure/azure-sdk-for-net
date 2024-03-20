@@ -31,6 +31,8 @@ namespace Azure.ResourceManager.MySql.Models
             writer.WriteStringValue(SourceServerId);
             writer.WritePropertyName("restorePointInTime"u8);
             writer.WriteStringValue(RestorePointInTime, "O");
+            writer.WritePropertyName("createMode"u8);
+            writer.WriteStringValue(CreateMode.ToString());
             if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
@@ -61,8 +63,6 @@ namespace Azure.ResourceManager.MySql.Models
                 writer.WritePropertyName("storageProfile"u8);
                 writer.WriteObjectValue(StorageProfile);
             }
-            writer.WritePropertyName("createMode"u8);
-            writer.WriteStringValue(CreateMode.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -103,13 +103,13 @@ namespace Azure.ResourceManager.MySql.Models
             }
             ResourceIdentifier sourceServerId = default;
             DateTimeOffset restorePointInTime = default;
+            MySqlCreateMode createMode = default;
             MySqlServerVersion? version = default;
             MySqlSslEnforcementEnum? sslEnforcement = default;
             MySqlMinimalTlsVersionEnum? minimalTlsVersion = default;
             MySqlInfrastructureEncryption? infrastructureEncryption = default;
             MySqlPublicNetworkAccessEnum? publicNetworkAccess = default;
             MySqlStorageProfile storageProfile = default;
-            MySqlCreateMode createMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,6 +122,11 @@ namespace Azure.ResourceManager.MySql.Models
                 if (property.NameEquals("restorePointInTime"u8))
                 {
                     restorePointInTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("createMode"u8))
+                {
+                    createMode = new MySqlCreateMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("version"u8))
@@ -176,11 +181,6 @@ namespace Azure.ResourceManager.MySql.Models
                         continue;
                     }
                     storageProfile = MySqlStorageProfile.DeserializeMySqlStorageProfile(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("createMode"u8))
-                {
-                    createMode = new MySqlCreateMode(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

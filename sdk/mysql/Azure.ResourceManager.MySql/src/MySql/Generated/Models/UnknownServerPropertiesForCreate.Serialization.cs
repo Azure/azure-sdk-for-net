@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.MySql.Models
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("createMode"u8);
+            writer.WriteStringValue(CreateMode.ToString());
             if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
@@ -57,8 +59,6 @@ namespace Azure.ResourceManager.MySql.Models
                 writer.WritePropertyName("storageProfile"u8);
                 writer.WriteObjectValue(StorageProfile);
             }
-            writer.WritePropertyName("createMode"u8);
-            writer.WriteStringValue(CreateMode.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -97,17 +97,22 @@ namespace Azure.ResourceManager.MySql.Models
             {
                 return null;
             }
+            MySqlCreateMode createMode = "Unknown";
             MySqlServerVersion? version = default;
             MySqlSslEnforcementEnum? sslEnforcement = default;
             MySqlMinimalTlsVersionEnum? minimalTlsVersion = default;
             MySqlInfrastructureEncryption? infrastructureEncryption = default;
             MySqlPublicNetworkAccessEnum? publicNetworkAccess = default;
             MySqlStorageProfile storageProfile = default;
-            MySqlCreateMode createMode = "Unknown";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("createMode"u8))
+                {
+                    createMode = new MySqlCreateMode(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("version"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -160,11 +165,6 @@ namespace Azure.ResourceManager.MySql.Models
                         continue;
                     }
                     storageProfile = MySqlStorageProfile.DeserializeMySqlStorageProfile(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("createMode"u8))
-                {
-                    createMode = new MySqlCreateMode(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

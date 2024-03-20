@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
@@ -72,8 +74,6 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(Description))
@@ -195,6 +195,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
+            EffectiveAdminRuleKind kind = default;
             string id = default;
             DateTimeOffset? commitTime = default;
             string region = default;
@@ -202,7 +203,6 @@ namespace Azure.ResourceManager.Network.Models
             string ruleCollectionDescription = default;
             IReadOnlyList<NetworkManagerSecurityGroupItem> ruleCollectionAppliesToGroups = default;
             IReadOnlyList<NetworkConfigurationGroup> ruleGroups = default;
-            EffectiveAdminRuleKind kind = default;
             string description = default;
             string flag = default;
             SecurityConfigurationRuleProtocol? protocol = default;
@@ -219,6 +219,11 @@ namespace Azure.ResourceManager.Network.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("kind"u8))
+                {
+                    kind = new EffectiveAdminRuleKind(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
@@ -274,11 +279,6 @@ namespace Azure.ResourceManager.Network.Models
                         array.Add(NetworkConfigurationGroup.DeserializeNetworkConfigurationGroup(item, options));
                     }
                     ruleGroups = array;
-                    continue;
-                }
-                if (property.NameEquals("kind"u8))
-                {
-                    kind = new EffectiveAdminRuleKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
