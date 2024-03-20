@@ -7,7 +7,7 @@
 
 using System;
 using System.Text.Json;
-using Azure.Monitor.OpenTelemetry.LiveMetrics;
+using Azure.Core;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
