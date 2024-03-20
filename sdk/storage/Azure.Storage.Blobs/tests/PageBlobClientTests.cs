@@ -3370,7 +3370,7 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2024_08_04)]
-        public async Task UploadPagesFromUriAsync_SourceErrorAndStatusCod()
+        public async Task UploadPagesFromUriAsync_SourceErrorAndStatusCode()
         {
             // Arrange
             await using DisposingContainer test = await GetTestContainerAsync(publicAccessType: PublicAccessType.None);
