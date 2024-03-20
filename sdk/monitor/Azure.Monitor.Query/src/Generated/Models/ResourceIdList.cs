@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.Monitor.Query;
 
 namespace Azure.Monitor.Query.Models
 {
