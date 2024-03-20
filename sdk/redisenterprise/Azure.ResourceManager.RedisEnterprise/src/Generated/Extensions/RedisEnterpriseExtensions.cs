@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.RedisEnterprise.Mocking;
 using Azure.ResourceManager.RedisEnterprise.Models;
 using Azure.ResourceManager.Resources;
