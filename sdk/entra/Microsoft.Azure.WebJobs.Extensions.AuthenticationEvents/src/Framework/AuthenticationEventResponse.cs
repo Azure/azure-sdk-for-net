@@ -20,10 +20,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         [Required]
         public string Body
         {
-            get
-            {
-                return Content == null ? string.Empty : Content.ReadAsStringAsync();
-            }
+            get { return Content == null ? string.Empty : Content.ReadAsStringAsync()?.Result; }
             set
             {
                 Content = new StringContent(value, Encoding.UTF8, "application/json");

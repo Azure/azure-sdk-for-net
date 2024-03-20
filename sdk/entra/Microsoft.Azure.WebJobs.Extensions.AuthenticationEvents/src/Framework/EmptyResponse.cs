@@ -12,7 +12,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
 
         #region Empty Response/Data
 
-        internal class EmptyData : CustomExtensionCalloutRequestData { }
+        internal class EmptyData : AuthenticationEventData { }
 
         internal class EmptyRequest : AuthenticationEventRequest<EmptyResponse, EmptyData>
         {

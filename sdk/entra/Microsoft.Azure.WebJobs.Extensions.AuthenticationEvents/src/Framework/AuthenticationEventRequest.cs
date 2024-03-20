@@ -13,10 +13,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
     /// <typeparam name="TResponse">The EventResponse related to the request.</typeparam>
     /// <typeparam name="TData">The EventData model related to the request.</typeparam>
     /// <seealso cref="AuthenticationEventResponse" />
-    /// <seealso cref="CustomExtensionCalloutRequestData" />
+    /// <seealso cref="AuthenticationEventData" />
     public abstract class AuthenticationEventRequest<TResponse, TData> : AuthenticationEventRequestBase
-        where TResponse : AuthenticationEventResponse, new()
-        where TData : CustomExtensionCalloutRequestData
+        where TResponse : AuthenticationEventResponse , new()
+        where TData : AuthenticationEventData
     {
         /// <summary>Initializes a new instance of the <see cref="AuthenticationEventRequest{T, K}" /> class.</summary>
         /// <param name="request">The request.</param>
@@ -40,11 +40,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         {
             try
             {
-                if (RequestStatus == AuthenticationEventRequestType.Failed || RequestStatus == AuthenticationEventRequestType.ValidationError)
+                if (RequestStatus == RequestStatusType.Failed || RequestStatus == RequestStatusType.ValidationError)
                 {
                     Response.MarkAsFailed(new Exception(string.IsNullOrEmpty(StatusMessage) ? AuthenticationEventResource.Ex_Gen_Failure : StatusMessage), true);
                 }
-                else if (RequestStatus == AuthenticationEventRequestType.TokenInvalid)
+                else if (RequestStatus == RequestStatusType.TokenInvalid)
                 {
                     Response.MarkAsUnauthorized();
                 }

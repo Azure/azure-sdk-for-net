@@ -53,17 +53,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framewor
         [Test]
         public void TestCreate()
         {
-            Assert.Throws<ArgumentNullException>(() => CustomExtensionCalloutRequestData.CreateInstance(null, null));
+            Assert.Throws<ArgumentNullException>(() => AuthenticationEventData.CreateInstance(null, null));
 
             Type type = typeof(TokenIssuanceStartData);
-            CustomExtensionCalloutRequestData data = CustomExtensionCalloutRequestData.CreateInstance(type, new AuthenticationEventJsonElement(BuildDataString()));
+            AuthenticationEventData data = AuthenticationEventData.CreateInstance(type, new AuthenticationEventJsonElement(BuildDataString()));
             Assert.AreEqual(TenantId, data.TenantId.ToString());
             Assert.AreEqual(AuthenticationEventListenerId, data.AuthenticationEventListenerId.ToString());
             Assert.AreEqual(CustomAuthenticationExtensionId, data.CustomAuthenticationExtensionId.ToString());
 
             var ex = Assert.Throws<System.ComponentModel.DataAnnotations.ValidationException>(
                 () => Helpers.ValidateGraph(
-                    CustomExtensionCalloutRequestData.CreateInstance(
+                    AuthenticationEventData.CreateInstance(
                         type: type,
                         json: new AuthenticationEventJsonElement(BuildDataString(hasTenantIdKey: false)))));
 
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framewor
 
             ex = Assert.Throws<System.ComponentModel.DataAnnotations.ValidationException>(
                 () => Helpers.ValidateGraph(
-                    CustomExtensionCalloutRequestData.CreateInstance(
+                    AuthenticationEventData.CreateInstance(
                         type: type,
                         json: new AuthenticationEventJsonElement(BuildDataString(hasAuthenticationEventListenerIdKey: false)))));
 
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framewor
 
             ex = Assert.Throws<System.ComponentModel.DataAnnotations.ValidationException>(
                 () => Helpers.ValidateGraph(
-                    CustomExtensionCalloutRequestData.CreateInstance(
+                    AuthenticationEventData.CreateInstance(
                         type: type,
                         json: new AuthenticationEventJsonElement(BuildDataString(hasCustomAuthenticationExtensionIdKey: false)))));
 
