@@ -3369,6 +3369,31 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2024_08_04)]
+        public async Task UploadPagesFromUriAsync_SourceErrorAndStatusCod()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync(publicAccessType: PublicAccessType.None);
+
+            PageBlobClient sourceBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+
+            PageBlobClient destBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+            await destBlob.CreateIfNotExistsAsync(Constants.KB);
+
+            HttpRange range = new HttpRange(0, Constants.KB);
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                destBlob.UploadPagesFromUriAsync(sourceBlob.Uri, range, range),
+                e =>
+                {
+                    Assert.IsTrue(e.Message.Contains("CopySourceStatusCode: 409"));
+                    Assert.IsTrue(e.Message.Contains("CopySourceErrorCode: PublicAccessNotPermitted"));
+                    Assert.IsTrue(e.Message.Contains("CopySourceErrorMessage: Public access is not permitted on this storage account."));
+                });
+        }
+
+        [RecordedTest]
         [TestCase(nameof(PageBlobRequestConditions.LeaseId))]
         [TestCase(nameof(PageBlobRequestConditions.IfSequenceNumberLessThanOrEqual))]
         [TestCase(nameof(PageBlobRequestConditions.IfSequenceNumberLessThan))]
