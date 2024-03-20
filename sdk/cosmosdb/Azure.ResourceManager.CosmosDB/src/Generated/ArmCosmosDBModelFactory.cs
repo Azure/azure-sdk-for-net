@@ -2278,7 +2278,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             return new CassandraCommandOutput(commandOutput, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CassandraClusterCommandPublicParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CassandraClusterCommand"/>. </summary>
         /// <param name="command"> The command which should be run. </param>
         /// <param name="commandId"> The unique id of command. </param>
         /// <param name="arguments"> The arguments for the command to be run. </param>
@@ -2289,10 +2289,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="result"> Result output of the command. </param>
         /// <param name="status"> Status of the command. </param>
         /// <param name="outputFile"> The name of the file where the result is written. </param>
-        /// <returns> A new <see cref="Models.CassandraClusterCommandPublicParameters"/> instance for mocking. </returns>
-        public static CassandraClusterCommandPublicParameters CassandraClusterCommandPublicParameters(string command = null, string commandId = null, BinaryData arguments = null, string host = null, bool? isAdmin = null, bool? cassandraStopStart = null, bool? readWrite = null, string result = null, CommandStatus? status = null, string outputFile = null)
+        /// <returns> A new <see cref="Models.CassandraClusterCommand"/> instance for mocking. </returns>
+        public static CassandraClusterCommand CassandraClusterCommand(string command = null, string commandId = null, BinaryData arguments = null, string host = null, bool? isAdmin = null, bool? cassandraStopStart = null, bool? readWrite = null, string result = null, CommandStatus? status = null, string outputFile = null)
         {
-            return new CassandraClusterCommandPublicParameters(
+            return new CassandraClusterCommand(
                 command,
                 commandId,
                 arguments,

@@ -14,16 +14,16 @@ using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CassandraClusterCommandPublicParameters : IUtf8JsonSerializable, IJsonModel<CassandraClusterCommandPublicParameters>
+    public partial class CassandraClusterCommand : IUtf8JsonSerializable, IJsonModel<CassandraClusterCommand>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CassandraClusterCommandPublicParameters>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CassandraClusterCommand>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<CassandraClusterCommandPublicParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CassandraClusterCommand>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CassandraClusterCommandPublicParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CassandraClusterCommand>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CassandraClusterCommandPublicParameters)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CassandraClusterCommand)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -102,19 +102,19 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteEndObject();
         }
 
-        CassandraClusterCommandPublicParameters IJsonModel<CassandraClusterCommandPublicParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        CassandraClusterCommand IJsonModel<CassandraClusterCommand>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CassandraClusterCommandPublicParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CassandraClusterCommand>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CassandraClusterCommandPublicParameters)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CassandraClusterCommand)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCassandraClusterCommandPublicParameters(document.RootElement, options);
+            return DeserializeCassandraClusterCommand(document.RootElement, options);
         }
 
-        internal static CassandraClusterCommandPublicParameters DeserializeCassandraClusterCommandPublicParameters(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static CassandraClusterCommand DeserializeCassandraClusterCommand(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CassandraClusterCommandPublicParameters(
+            return new CassandraClusterCommand(
                 command,
                 commandId,
                 arguments,
@@ -226,35 +226,35 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<CassandraClusterCommandPublicParameters>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<CassandraClusterCommand>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CassandraClusterCommandPublicParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CassandraClusterCommand>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CassandraClusterCommandPublicParameters)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CassandraClusterCommand)} does not support '{options.Format}' format.");
             }
         }
 
-        CassandraClusterCommandPublicParameters IPersistableModel<CassandraClusterCommandPublicParameters>.Create(BinaryData data, ModelReaderWriterOptions options)
+        CassandraClusterCommand IPersistableModel<CassandraClusterCommand>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CassandraClusterCommandPublicParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CassandraClusterCommand>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeCassandraClusterCommandPublicParameters(document.RootElement, options);
+                        return DeserializeCassandraClusterCommand(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CassandraClusterCommandPublicParameters)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CassandraClusterCommand)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<CassandraClusterCommandPublicParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CassandraClusterCommand>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

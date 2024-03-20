@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> resource representing a command. </summary>
-    public partial class CassandraClusterCommandPublicParameters
+    public partial class CassandraClusterCommand
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CassandraClusterCommandPublicParameters"/>. </summary>
-        internal CassandraClusterCommandPublicParameters()
+        /// <summary> Initializes a new instance of <see cref="CassandraClusterCommand"/>. </summary>
+        internal CassandraClusterCommand()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CassandraClusterCommandPublicParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraClusterCommand"/>. </summary>
         /// <param name="command"> The command which should be run. </param>
         /// <param name="commandId"> The unique id of command. </param>
         /// <param name="arguments"> The arguments for the command to be run. </param>
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="status"> Status of the command. </param>
         /// <param name="outputFile"> The name of the file where the result is written. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CassandraClusterCommandPublicParameters(string command, string commandId, BinaryData arguments, string host, bool? isAdmin, bool? cassandraStopStart, bool? readWrite, string result, CommandStatus? status, string outputFile, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CassandraClusterCommand(string command, string commandId, BinaryData arguments, string host, bool? isAdmin, bool? cassandraStopStart, bool? readWrite, string result, CommandStatus? status, string outputFile, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Command = command;
             CommandId = commandId;

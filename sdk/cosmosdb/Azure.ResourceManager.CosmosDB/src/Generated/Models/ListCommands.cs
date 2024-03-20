@@ -49,19 +49,19 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="ListCommands"/>. </summary>
         internal ListCommands()
         {
-            Value = new ChangeTrackingList<CassandraClusterCommandPublicParameters>();
+            Value = new ChangeTrackingList<CassandraClusterCommand>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ListCommands"/>. </summary>
         /// <param name="value"> Container for array of commands. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ListCommands(IReadOnlyList<CassandraClusterCommandPublicParameters> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ListCommands(IReadOnlyList<CassandraClusterCommand> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Container for array of commands. </summary>
-        public IReadOnlyList<CassandraClusterCommandPublicParameters> Value { get; }
+        public IReadOnlyList<CassandraClusterCommand> Value { get; }
     }
 }

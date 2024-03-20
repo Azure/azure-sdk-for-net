@@ -230,7 +230,7 @@ IPAddress = "10.52.221.4",
             CassandraClusterResource cassandraCluster = client.GetCassandraClusterResource(cassandraClusterResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (CassandraClusterCommandPublicParameters item in cassandraCluster.GetCommandAsync())
+            await foreach (CassandraClusterCommand item in cassandraCluster.GetCommandAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -261,7 +261,7 @@ IPAddress = "10.52.221.4",
 
             // invoke the operation and iterate over the result
             string commandId = "318653d0-3da5-4814-b8f6-429f2af0b2a4";
-            await foreach (CassandraClusterCommandPublicParameters item in cassandraCluster.GetCommandAsyncAsync(commandId))
+            await foreach (CassandraClusterCommand item in cassandraCluster.GetCommandAsyncAsync(commandId))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
