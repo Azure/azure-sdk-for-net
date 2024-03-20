@@ -9,12 +9,12 @@
 
   <ItemGroup Condition="$(TargetFramework.StartsWith('net4'))">
     <PackageReference Include="Microsoft.AspNetCore" />
-    <PackageReference Include="Microsoft.Extensions.Primitives" />
+    <PackageReference Include="Microsoft.Extensions.Http" />
   </ItemGroup>
 
   <ItemGroup Condition="!$(TargetFramework.StartsWith('net4'))">
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Microsoft.Extensions.Primitives" />
+    <PackageReference Include="Microsoft.Extensions.Http" />
   </ItemGroup>
 
   <ItemGroup>
@@ -40,7 +40,7 @@
   <ItemGroup>
     <ProjectReference Include="..\src\Microsoft.CoreWCF.Azure.StorageQueues.csproj" />
   </ItemGroup>
-  
+
   <ItemGroup Condition="!$(TargetFramework.StartsWith('net4'))">
     <ProjectReference Include="..\..\Microsoft.WCF.Azure.StorageQueues\src\Microsoft.WCF.Azure.StorageQueues.csproj" />
   </ItemGroup>
