@@ -1,12 +1,12 @@
 # Release History
 
-## 1.0.0-beta.15 (Unreleased)
+## 1.0.0-beta.15 (2024-03-20)
+
+This release targets the latest `2024-03-01-preview` service API label and brings support for the `Dimensions` property when using new embedding models.
 
 ### Features Added
 
 - `EmbeddingsOptions` now includes the `Dimensions` property, new to Azure OpenAI's `2024-03-01-preview` service API.
-
-### Breaking Changes
 
 ### Bugs Fixed
 
@@ -15,8 +15,6 @@
   - `ImageGenerations.Created` no longer has a public setter
   - `ImageGenerations.Data` is now an `IReadOnlyList` instead of an `IList`
   - A corresponding replacement factory method for mocks is added to `AzureOpenAIModelFactory`
-
-### Other Changes
 
 ## 1.0.0-beta.14 (2024-03-04)
 
