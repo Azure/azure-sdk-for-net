@@ -1330,12 +1330,32 @@ namespace Azure.Communication.Chat.Tests.ChatClients
         }
 
         [Test]
-        public void CreateChatThreadWithRetentionPolicyShouldSucceed()
+        public void CreateChatThreadWithThreadRetentionPolicyShouldSucceed()
         {
             //act
             var chatClient = CreateMockChatClient(201, CreateChatThreadSuccessApiResponsePayload);
             var chatParticipant = new ChatParticipant(new CommunicationUserIdentifier("8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c"));
             CreateChatThreadResult createChatThreadResult = chatClient.CreateChatThread(new CreateChatThreadOptions("new topic") { RetentionPolicy = new ThreadCreationDateRetentionPolicy(40) });
+
+            //assert
+            var chatThread = createChatThreadResult.ChatThread;
+            Assert.AreEqual("8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c", CommunicationIdentifierSerializer.Serialize(chatThread.CreatedBy).CommunicationUser.Id);
+            Assert.AreEqual("Topic for testing success", chatThread.Topic);
+            Assert.AreEqual("19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2", chatThread.Id);
+
+            var threadCreationDateRetentionPolicy = chatThread.RetentionPolicy as ThreadCreationDateRetentionPolicy;
+
+            Assert.IsNotNull(threadCreationDateRetentionPolicy);
+            Assert.AreEqual(40, threadCreationDateRetentionPolicy?.DeleteThreadAfterDays);
+        }
+
+        [Test]
+        public void CreateChatThreadWithUnknownRetentionPolicyShouldSucceed()
+        {
+            //act
+            var chatClient = CreateMockChatClient(201, CreateChatThreadSuccessApiResponsePayload);
+            var chatParticipant = new ChatParticipant(new CommunicationUserIdentifier("8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c"));
+            CreateChatThreadResult createChatThreadResult = chatClient.CreateChatThread(new CreateChatThreadOptions("new topic") { RetentionPolicy = new UnknownChatRetentionPolicy(RetentionPolicyKind.ThreadCreationDate) });
 
             //assert
             var chatThread = createChatThreadResult.ChatThread;
