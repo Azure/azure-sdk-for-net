@@ -35,9 +35,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
         private readonly List<DerivedMetric<ExceptionDocument>> exceptionTelemetryMetrics =
             new List<DerivedMetric<ExceptionDocument>>();
 
-        // private readonly List<DerivedMetric<EventTelemetry>> eventTelemetryMetrics = new List<DerivedMetric<EventTelemetry>>();
-
-        // private readonly List<DerivedMetric<TraceTelemetry>> traceTelemetryMetrics = new List<DerivedMetric<TraceTelemetry>>();
+        private readonly List<DerivedMetric<Trace>> traceTelemetryMetrics = new List<DerivedMetric<Trace>>();
 
         // TODO: Add back: private readonly List<DocumentStream> documentStreams = new List<DocumentStream>();
         #endregion
@@ -92,9 +90,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
 
         public IEnumerable<DerivedMetric<ExceptionDocument>> ExceptionMetrics => this.exceptionTelemetryMetrics;
 
-        // public IEnumerable<CalculatedMetric<EventTelemetry>> EventMetrics => this.eventTelemetryMetrics;
-
-        // public IEnumerable<CalculatedMetric<TraceTelemetry>> TraceMetrics => this.traceTelemetryMetrics;
+        public IEnumerable<DerivedMetric<Trace>> TraceMetrics => this.traceTelemetryMetrics;
 
         /// <summary>
         /// Gets Telemetry types only. Used by QuickPulseTelemetryProcessor.
@@ -169,13 +165,9 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
                     case TelemetryType.Exception:
                         CollectionConfiguration.AddMetric(metricInfo, this.exceptionTelemetryMetrics, out localErrors);
                         break;
-                    //TODO: Add back:
-                    //case TelemetryType.Event:
-                    //    CollectionConfiguration.AddMetric(metricInfo, this.evenDocumentIngressMetrics, out localErrors);
-                    //    break;
-                    //case TelemetryType.Trace:
-                    //    CollectionConfiguration.AddMetric(metricInfo, this.traceTelemetryMetrics, out localErrors);
-                    //    break;
+                    case TelemetryType.Trace:
+                        CollectionConfiguration.AddMetric(metricInfo, this.traceTelemetryMetrics, out localErrors);
+                        break;
                     default:
                         errorList.Add(
                             CollectionConfigurationError.CreateError(
@@ -203,10 +195,8 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
             foreach (var metricIds in
                 this.requestDocumentIngressMetrics.Select(metric => Tuple.Create(metric.Id, metric.AggregationType))
                 .Concat(this.dependencyTelemetryMetrics.Select(metric => Tuple.Create(metric.Id, metric.AggregationType)))
-                .Concat(this.exceptionTelemetryMetrics.Select(metric => Tuple.Create(metric.Id, metric.AggregationType))))
-            //TODO: Add back:
-            //.Concat(this.evenDocumentIngressMetrics.Select(metric => Tuple.Create(metric.Id, metric.AggregationType)))
-            //.Concat(this.traceTelemetryMetrics.Select(metric => Tuple.Create(metric.Id, metric.AggregationType)))
+                .Concat(this.exceptionTelemetryMetrics.Select(metric => Tuple.Create(metric.Id, metric.AggregationType)))
+                .Concat(this.traceTelemetryMetrics.Select(metric => Tuple.Create(metric.Id, metric.AggregationType))))
             {
                 this.telemetryMetadata.Add(metricIds);
             }
