@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+		<IsExtensionClientLibrary>true</IsExtensionClientLibrary>
+		<Version>1.0.1-beta.1</Version>
+		<Description>Data Models representing the Authentication event extensions defined by Entra ID.</Description>
+		<NoWarn>$(NoWarn);AZC0001;AZC0007</NoWarn>
+	</PropertyGroup>
+	<ItemGroup>
+	  <PackageReference Include="Newtonsoft.Json" />
+	</ItemGroup>
+</Project>

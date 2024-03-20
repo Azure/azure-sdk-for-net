@@ -1,0 +1,13 @@
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<PropertyGroup Condition="$(MSBuildProjectName.StartsWith('Microsoft.Azure.Entra.')) and $(MSBuildProjectName.EndsWith('Authentication'))">
+		<IsClientLibrary>true</IsClientLibrary>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="$(MSBuildProjectName.StartsWith('Microsoft.Azure.Entra.Authentication')) and $(MSBuildProjectName.EndsWith('.Tests'))">
+		<IsTestProject>true</IsTestProject>
+		<ImportDefaultReferences>false</ImportDefaultReferences>
+	</PropertyGroup>
+
+	<Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.props))\Directory.Build.props" />
+
+</Project>

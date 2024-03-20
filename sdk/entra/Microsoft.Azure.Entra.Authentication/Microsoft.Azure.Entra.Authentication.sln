@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.8.34601.278
+VisualStudioVersion = 17.9.34701.34
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Azure.Entra.Authentication", "Microsoft.Azure.Entra.Authentication.csproj", "{63854B66-AAF2-4BD5-BE20-6F25B1122369}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Entra.Authentication", "src\Microsoft.Azure.Entra.Authentication.csproj", "{0291D3F3-FB10-4D6A-8C7E-4E8D2F276FB3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{63854B66-AAF2-4BD5-BE20-6F25B1122369}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{63854B66-AAF2-4BD5-BE20-6F25B1122369}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{63854B66-AAF2-4BD5-BE20-6F25B1122369}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{63854B66-AAF2-4BD5-BE20-6F25B1122369}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0291D3F3-FB10-4D6A-8C7E-4E8D2F276FB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0291D3F3-FB10-4D6A-8C7E-4E8D2F276FB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0291D3F3-FB10-4D6A-8C7E-4E8D2F276FB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0291D3F3-FB10-4D6A-8C7E-4E8D2F276FB3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {8CB403DD-844E-4CF7-8CFB-7DBD625F09C1}
+		SolutionGuid = {D531641B-704A-4C30-A793-B6DFD00FDCE4}
 	EndGlobalSection
 EndGlobal
