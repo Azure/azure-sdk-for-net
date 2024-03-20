@@ -219,9 +219,16 @@ public abstract class BinaryContent : IDisposable
 
         public override bool TryComputeLength(out long length)
         {
-            // CanSeek is validated in constructor - it will always be true.
-            length = _stream.Length - _origin;
-            return true;
+            // CanSeek was checked in the type constructor, but it can
+            // change based on the state of the stream.
+            if (_stream.CanSeek)
+            {
+                length = _stream.Length - _origin;
+                return true;
+            }
+
+            length = 0;
+            return false;
         }
 
         public override void WriteTo(Stream stream, CancellationToken cancellationToken)

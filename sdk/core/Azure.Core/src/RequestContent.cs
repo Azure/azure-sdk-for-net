@@ -207,11 +207,14 @@ namespace Azure.Core
 
             public override bool TryComputeLength(out long length)
             {
+                // CanSeek was checked in the type constructor, but it can
+                // change based on the state of the stream.
                 if (_stream.CanSeek)
                 {
                     length = _stream.Length - _origin;
                     return true;
                 }
+
                 length = 0;
                 return false;
             }
