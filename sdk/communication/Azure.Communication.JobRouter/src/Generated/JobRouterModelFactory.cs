@@ -346,14 +346,6 @@ namespace Azure.Communication.JobRouter
             return new StaticWorkerSelectorAttachment(WorkerSelectorAttachmentKind.Static, serializedAdditionalRawData: null, workerSelector);
         }
 
-        /// <summary> Initializes a new instance of <see cref="JobRouter.WaitTimeExceptionTrigger"/>. </summary>
-        /// <param name="threshold"> Threshold for wait time for this trigger. </param>
-        /// <returns> A new <see cref="JobRouter.WaitTimeExceptionTrigger"/> instance for mocking. </returns>
-        public static WaitTimeExceptionTrigger WaitTimeExceptionTrigger(TimeSpan threshold = default)
-        {
-            return new WaitTimeExceptionTrigger(ExceptionTriggerKind.WaitTime, serializedAdditionalRawData: null, threshold);
-        }
-
         /// <summary> Initializes a new instance of <see cref="JobRouter.WebhookRouterRule"/>. </summary>
         /// <param name="authorizationServerUri"> Uri for Authorization Server. </param>
         /// <param name="clientCredential"> OAuth2.0 Credentials used to Contoso's Authorization server. Reference: https://www.oauth.com/oauth2-servers/access-tokens/client-credentials/. </param>
@@ -382,6 +374,17 @@ namespace Azure.Communication.JobRouter
             allocations ??= new List<WorkerWeightedAllocation>();
 
             return new WeightedAllocationWorkerSelectorAttachment(WorkerSelectorAttachmentKind.WeightedAllocation, serializedAdditionalRawData: null, allocations?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JobRouter.WorkerWeightedAllocation"/>. </summary>
+        /// <param name="weight"> The percentage of this weight, expressed as a fraction of 1. </param>
+        /// <param name="workerSelectors"> A collection of worker selectors that will be applied if this allocation is selected. </param>
+        /// <returns> A new <see cref="JobRouter.WorkerWeightedAllocation"/> instance for mocking. </returns>
+        public static WorkerWeightedAllocation WorkerWeightedAllocation(double weight = default, IEnumerable<RouterWorkerSelector> workerSelectors = null)
+        {
+            workerSelectors ??= new List<RouterWorkerSelector>();
+
+            return new WorkerWeightedAllocation(weight, workerSelectors?.ToList(), serializedAdditionalRawData: null);
         }
     }
 }
