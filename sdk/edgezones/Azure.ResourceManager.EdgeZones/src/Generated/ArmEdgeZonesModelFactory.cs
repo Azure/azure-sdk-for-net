@@ -20,17 +20,17 @@ namespace Azure.ResourceManager.EdgeZones.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> The status of the last operation. </param>
-        /// <param name="registrationState"> AzureExtendedZone registration approved or not. </param>
-        /// <param name="displayName"> AzureExtendedZone displayName. </param>
-        /// <param name="regionalDisplayName"> AzureExtendedZone regionalDisplayName. </param>
-        /// <param name="regionType"> AzureExtendedZone regionType. </param>
-        /// <param name="regionCategory"> AzureExtendedZone regionCategory. </param>
-        /// <param name="geography"> AzureExtendedZone geography. </param>
-        /// <param name="geographyGroup"> AzureExtendedZone geographyGroup. </param>
-        /// <param name="longitude"> AzureExtendedZone longitude. </param>
-        /// <param name="latitude"> AzureExtendedZone latitude. </param>
-        /// <param name="homeLocation"> AzureExtendedZone homeLocation. </param>
+        /// <param name="provisioningState"> Status of the last operation performed by the subscription on the Edge Zone resource. </param>
+        /// <param name="registrationState"> Indicates the Azure Extended Zone registration’s approval status. </param>
+        /// <param name="displayName"> Display name of the Azure Extended Zone. </param>
+        /// <param name="regionalDisplayName"> Regional display name of the Azure Extended Zone. </param>
+        /// <param name="regionType"> Type of region for the Azure Extended Zone. </param>
+        /// <param name="regionCategory"> Category of region for the Azure Extended Zone. </param>
+        /// <param name="geography"> Geography of the Azure Extended Zone. </param>
+        /// <param name="geographyGroup"> The Geography Group of the Azure Extended Zone. </param>
+        /// <param name="longitude"> The Longitude of the Azure Extended Zone. </param>
+        /// <param name="latitude"> The Latitude of the Azure Extended Zone. </param>
+        /// <param name="homeLocation"> The Home Location of the Azure Extended Zone. </param>
         /// <returns> A new <see cref="EdgeZones.ExtendedZoneData"/> instance for mocking. </returns>
         public static ExtendedZoneData ExtendedZoneData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, EdgeZonesProvisioningState? provisioningState = null, EdgeZonesRegistrationState? registrationState = null, string displayName = null, string regionalDisplayName = null, string regionType = null, string regionCategory = null, string geography = null, string geographyGroup = null, string longitude = null, string latitude = null, string homeLocation = null)
         {

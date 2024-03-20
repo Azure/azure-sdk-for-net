@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 library-name: EdgeZones
 namespace: Azure.ResourceManager.EdgeZones
-require: https://github.com/Azure/azure-rest-api-specs/blob/475747ff6322e9bf180b8911d871561b264379c3/specification/edgezones/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/44a81f85be1e4797fbf5e290fc6b41d48788a6ba/specification/edgezones/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -20,10 +20,6 @@ use-model-reader-writer: true
 
 #mgmt-debug:
 #  show-serialized-names: true
-
-rename-mapping:
-  AzureExtendedZone: ExtendedZone
-  AzureExtendedZoneListResult: ExtendedZoneListResult
 
 prepend-rp-prefix:
   - ProvisioningState

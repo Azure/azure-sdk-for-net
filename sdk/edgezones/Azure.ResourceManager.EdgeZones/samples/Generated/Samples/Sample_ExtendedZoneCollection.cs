@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.EdgeZones.Samples
 {
     public partial class Sample_ExtendedZoneCollection
     {
-        // ListAzureExtendedZones
+        // ListExtendedZones
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_ListAzureExtendedZones()
+        public async Task GetAll_ListExtendedZones()
         {
-            // Generated from example definition: specification/edgezones/resource-manager/Microsoft.EdgeZones/preview/2024-04-01-preview/examples/AzureExtendedZones_ListBySubscription.json
-            // this example is just showing the usage of "AzureExtendedZones_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edgezones/resource-manager/Microsoft.EdgeZones/preview/2024-04-01-preview/examples/ExtendedZones_ListBySubscription.json
+            // this example is just showing the usage of "ExtendedZones_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.EdgeZones.Samples
             Console.WriteLine($"Succeeded");
         }
 
-        // GetAzureExtendedZone
+        // GetExtendedZone
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_GetAzureExtendedZone()
+        public async Task Get_GetExtendedZone()
         {
-            // Generated from example definition: specification/edgezones/resource-manager/Microsoft.EdgeZones/preview/2024-04-01-preview/examples/AzureExtendedZones_Get.json
-            // this example is just showing the usage of "AzureExtendedZones_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edgezones/resource-manager/Microsoft.EdgeZones/preview/2024-04-01-preview/examples/ExtendedZones_Get.json
+            // this example is just showing the usage of "ExtendedZones_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.EdgeZones.Samples
             ExtendedZoneCollection collection = subscriptionResource.GetExtendedZones();
 
             // invoke the operation
-            string azureExtendedZoneName = "losangeles";
-            ExtendedZoneResource result = await collection.GetAsync(azureExtendedZoneName);
+            string extendedZoneName = "losangeles";
+            ExtendedZoneResource result = await collection.GetAsync(extendedZoneName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -86,13 +86,13 @@ namespace Azure.ResourceManager.EdgeZones.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GetAzureExtendedZone
+        // GetExtendedZone
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_GetAzureExtendedZone()
+        public async Task Exists_GetExtendedZone()
         {
-            // Generated from example definition: specification/edgezones/resource-manager/Microsoft.EdgeZones/preview/2024-04-01-preview/examples/AzureExtendedZones_Get.json
-            // this example is just showing the usage of "AzureExtendedZones_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edgezones/resource-manager/Microsoft.EdgeZones/preview/2024-04-01-preview/examples/ExtendedZones_Get.json
+            // this example is just showing the usage of "ExtendedZones_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -109,19 +109,19 @@ namespace Azure.ResourceManager.EdgeZones.Samples
             ExtendedZoneCollection collection = subscriptionResource.GetExtendedZones();
 
             // invoke the operation
-            string azureExtendedZoneName = "losangeles";
-            bool result = await collection.ExistsAsync(azureExtendedZoneName);
+            string extendedZoneName = "losangeles";
+            bool result = await collection.ExistsAsync(extendedZoneName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // GetAzureExtendedZone
+        // GetExtendedZone
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_GetAzureExtendedZone()
+        public async Task GetIfExists_GetExtendedZone()
         {
-            // Generated from example definition: specification/edgezones/resource-manager/Microsoft.EdgeZones/preview/2024-04-01-preview/examples/AzureExtendedZones_Get.json
-            // this example is just showing the usage of "AzureExtendedZones_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edgezones/resource-manager/Microsoft.EdgeZones/preview/2024-04-01-preview/examples/ExtendedZones_Get.json
+            // this example is just showing the usage of "ExtendedZones_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -138,8 +138,8 @@ namespace Azure.ResourceManager.EdgeZones.Samples
             ExtendedZoneCollection collection = subscriptionResource.GetExtendedZones();
 
             // invoke the operation
-            string azureExtendedZoneName = "losangeles";
-            NullableResponse<ExtendedZoneResource> response = await collection.GetIfExistsAsync(azureExtendedZoneName);
+            string extendedZoneName = "losangeles";
+            NullableResponse<ExtendedZoneResource> response = await collection.GetIfExistsAsync(extendedZoneName);
             ExtendedZoneResource result = response.HasValue ? response.Value : null;
 
             if (result == null)

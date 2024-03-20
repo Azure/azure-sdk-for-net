@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.EdgeZones.Samples
 {
     public partial class Sample_ExtendedZoneResource
     {
-        // GetAzureExtendedZone
+        // GetExtendedZone
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_GetAzureExtendedZone()
+        public async Task Get_GetExtendedZone()
         {
-            // Generated from example definition: specification/edgezones/resource-manager/Microsoft.EdgeZones/preview/2024-04-01-preview/examples/AzureExtendedZones_Get.json
-            // this example is just showing the usage of "AzureExtendedZones_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edgezones/resource-manager/Microsoft.EdgeZones/preview/2024-04-01-preview/examples/ExtendedZones_Get.json
+            // this example is just showing the usage of "ExtendedZones_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.EdgeZones.Samples
             // this example assumes you already have this ExtendedZoneResource created on azure
             // for more information of creating ExtendedZoneResource, please refer to the document of ExtendedZoneResource
             string subscriptionId = "a1ffc958-d2c7-493e-9f1e-125a0477f536";
-            string azureExtendedZoneName = "losangeles";
-            ResourceIdentifier extendedZoneResourceId = ExtendedZoneResource.CreateResourceIdentifier(subscriptionId, azureExtendedZoneName);
+            string extendedZoneName = "losangeles";
+            ResourceIdentifier extendedZoneResourceId = ExtendedZoneResource.CreateResourceIdentifier(subscriptionId, extendedZoneName);
             ExtendedZoneResource extendedZone = client.GetExtendedZoneResource(extendedZoneResourceId);
 
             // invoke the operation
@@ -46,13 +46,13 @@ namespace Azure.ResourceManager.EdgeZones.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // RegisterAzureExtendedZone
+        // RegisterExtendedZone
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Register_RegisterAzureExtendedZone()
+        public async Task Register_RegisterExtendedZone()
         {
-            // Generated from example definition: specification/edgezones/resource-manager/Microsoft.EdgeZones/preview/2024-04-01-preview/examples/AzureExtendedZones_Register.json
-            // this example is just showing the usage of "AzureExtendedZones_Register" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edgezones/resource-manager/Microsoft.EdgeZones/preview/2024-04-01-preview/examples/ExtendedZones_Register.json
+            // this example is just showing the usage of "ExtendedZones_Register" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.EdgeZones.Samples
             // this example assumes you already have this ExtendedZoneResource created on azure
             // for more information of creating ExtendedZoneResource, please refer to the document of ExtendedZoneResource
             string subscriptionId = "a1ffc958-d2c7-493e-9f1e-125a0477f536";
-            string azureExtendedZoneName = "losangeles";
-            ResourceIdentifier extendedZoneResourceId = ExtendedZoneResource.CreateResourceIdentifier(subscriptionId, azureExtendedZoneName);
+            string extendedZoneName = "losangeles";
+            ResourceIdentifier extendedZoneResourceId = ExtendedZoneResource.CreateResourceIdentifier(subscriptionId, extendedZoneName);
             ExtendedZoneResource extendedZone = client.GetExtendedZoneResource(extendedZoneResourceId);
 
             // invoke the operation
@@ -76,13 +76,13 @@ namespace Azure.ResourceManager.EdgeZones.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // UnregisterAzureExtendedZone
+        // UnregisterExtendedZone
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Unregister_UnregisterAzureExtendedZone()
+        public async Task Unregister_UnregisterExtendedZone()
         {
-            // Generated from example definition: specification/edgezones/resource-manager/Microsoft.EdgeZones/preview/2024-04-01-preview/examples/AzureExtendedZones_Unregister.json
-            // this example is just showing the usage of "AzureExtendedZones_Unregister" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/edgezones/resource-manager/Microsoft.EdgeZones/preview/2024-04-01-preview/examples/ExtendedZones_Unregister.json
+            // this example is just showing the usage of "ExtendedZones_Unregister" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -92,8 +92,8 @@ namespace Azure.ResourceManager.EdgeZones.Samples
             // this example assumes you already have this ExtendedZoneResource created on azure
             // for more information of creating ExtendedZoneResource, please refer to the document of ExtendedZoneResource
             string subscriptionId = "a1ffc958-d2c7-493e-9f1e-125a0477f536";
-            string azureExtendedZoneName = "losangeles";
-            ResourceIdentifier extendedZoneResourceId = ExtendedZoneResource.CreateResourceIdentifier(subscriptionId, azureExtendedZoneName);
+            string extendedZoneName = "losangeles";
+            ResourceIdentifier extendedZoneResourceId = ExtendedZoneResource.CreateResourceIdentifier(subscriptionId, extendedZoneName);
             ExtendedZoneResource extendedZone = client.GetExtendedZoneResource(extendedZoneResourceId);
 
             // invoke the operation

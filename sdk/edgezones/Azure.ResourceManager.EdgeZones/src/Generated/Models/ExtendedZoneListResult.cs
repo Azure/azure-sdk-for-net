@@ -12,7 +12,7 @@ using Azure.ResourceManager.EdgeZones;
 
 namespace Azure.ResourceManager.EdgeZones.Models
 {
-    /// <summary> The response of a AzureExtendedZone list operation. </summary>
+    /// <summary> The response of a ExtendedZone list operation. </summary>
     internal partial class ExtendedZoneListResult
     {
         /// <summary>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.EdgeZones.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ExtendedZoneListResult"/>. </summary>
-        /// <param name="value"> The AzureExtendedZone items on this page. </param>
+        /// <param name="value"> The ExtendedZone items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ExtendedZoneListResult(IEnumerable<ExtendedZoneData> value)
         {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.EdgeZones.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ExtendedZoneListResult"/>. </summary>
-        /// <param name="value"> The AzureExtendedZone items on this page. </param>
+        /// <param name="value"> The ExtendedZone items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ExtendedZoneListResult(IReadOnlyList<ExtendedZoneData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.EdgeZones.Models
         {
         }
 
-        /// <summary> The AzureExtendedZone items on this page. </summary>
+        /// <summary> The ExtendedZone items on this page. </summary>
         public IReadOnlyList<ExtendedZoneData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

@@ -27,19 +27,19 @@ namespace Azure.ResourceManager.EdgeZones
     {
         /// <summary> Generate the resource identifier of a <see cref="ExtendedZoneResource"/> instance. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="azureExtendedZoneName"> The azureExtendedZoneName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string azureExtendedZoneName)
+        /// <param name="extendedZoneName"> The extendedZoneName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string extendedZoneName)
         {
-            var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.EdgeZones/azureExtendedZones/{azureExtendedZoneName}";
+            var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.EdgeZones/extendedZones/{extendedZoneName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _extendedZoneAzureExtendedZonesClientDiagnostics;
-        private readonly AzureExtendedZonesRestOperations _extendedZoneAzureExtendedZonesRestClient;
+        private readonly ClientDiagnostics _extendedZoneClientDiagnostics;
+        private readonly ExtendedZonesRestOperations _extendedZoneRestClient;
         private readonly ExtendedZoneData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.EdgeZones/azureExtendedZones";
+        public static readonly ResourceType ResourceType = "Microsoft.EdgeZones/extendedZones";
 
         /// <summary> Initializes a new instance of the <see cref="ExtendedZoneResource"/> class for mocking. </summary>
         protected ExtendedZoneResource()
@@ -60,9 +60,9 @@ namespace Azure.ResourceManager.EdgeZones
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ExtendedZoneResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _extendedZoneAzureExtendedZonesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeZones", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string extendedZoneAzureExtendedZonesApiVersion);
-            _extendedZoneAzureExtendedZonesRestClient = new AzureExtendedZonesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, extendedZoneAzureExtendedZonesApiVersion);
+            _extendedZoneClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeZones", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string extendedZoneApiVersion);
+            _extendedZoneRestClient = new ExtendedZonesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, extendedZoneApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -90,15 +90,15 @@ namespace Azure.ResourceManager.EdgeZones
         }
 
         /// <summary>
-        /// Get an Azure Extended Zone for a subscription
+        /// Gets an Azure Extended Zone for a subscription
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EdgeZones/azureExtendedZones/{azureExtendedZoneName}</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EdgeZones/extendedZones/{extendedZoneName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AzureExtendedZones_Get</description>
+        /// <description>ExtendedZones_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -113,11 +113,11 @@ namespace Azure.ResourceManager.EdgeZones
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ExtendedZoneResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _extendedZoneAzureExtendedZonesClientDiagnostics.CreateScope("ExtendedZoneResource.Get");
+            using var scope = _extendedZoneClientDiagnostics.CreateScope("ExtendedZoneResource.Get");
             scope.Start();
             try
             {
-                var response = await _extendedZoneAzureExtendedZonesRestClient.GetAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _extendedZoneRestClient.GetAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ExtendedZoneResource(Client, response.Value), response.GetRawResponse());
@@ -130,15 +130,15 @@ namespace Azure.ResourceManager.EdgeZones
         }
 
         /// <summary>
-        /// Get an Azure Extended Zone for a subscription
+        /// Gets an Azure Extended Zone for a subscription
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EdgeZones/azureExtendedZones/{azureExtendedZoneName}</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EdgeZones/extendedZones/{extendedZoneName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AzureExtendedZones_Get</description>
+        /// <description>ExtendedZones_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -153,11 +153,11 @@ namespace Azure.ResourceManager.EdgeZones
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ExtendedZoneResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _extendedZoneAzureExtendedZonesClientDiagnostics.CreateScope("ExtendedZoneResource.Get");
+            using var scope = _extendedZoneClientDiagnostics.CreateScope("ExtendedZoneResource.Get");
             scope.Start();
             try
             {
-                var response = _extendedZoneAzureExtendedZonesRestClient.Get(Id.SubscriptionId, Id.Name, cancellationToken);
+                var response = _extendedZoneRestClient.Get(Id.SubscriptionId, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ExtendedZoneResource(Client, response.Value), response.GetRawResponse());
@@ -170,15 +170,15 @@ namespace Azure.ResourceManager.EdgeZones
         }
 
         /// <summary>
-        /// Registers a subscription for an Azure Extended Zone
+        /// Registers a subscription for an Extended Zone
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EdgeZones/azureExtendedZones/{azureExtendedZoneName}/register</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EdgeZones/extendedZones/{extendedZoneName}/register</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AzureExtendedZones_Register</description>
+        /// <description>ExtendedZones_Register</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -193,11 +193,11 @@ namespace Azure.ResourceManager.EdgeZones
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ExtendedZoneResource>> RegisterAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _extendedZoneAzureExtendedZonesClientDiagnostics.CreateScope("ExtendedZoneResource.Register");
+            using var scope = _extendedZoneClientDiagnostics.CreateScope("ExtendedZoneResource.Register");
             scope.Start();
             try
             {
-                var response = await _extendedZoneAzureExtendedZonesRestClient.RegisterAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _extendedZoneRestClient.RegisterAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ExtendedZoneResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -208,15 +208,15 @@ namespace Azure.ResourceManager.EdgeZones
         }
 
         /// <summary>
-        /// Registers a subscription for an Azure Extended Zone
+        /// Registers a subscription for an Extended Zone
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EdgeZones/azureExtendedZones/{azureExtendedZoneName}/register</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EdgeZones/extendedZones/{extendedZoneName}/register</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AzureExtendedZones_Register</description>
+        /// <description>ExtendedZones_Register</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -231,11 +231,11 @@ namespace Azure.ResourceManager.EdgeZones
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ExtendedZoneResource> Register(CancellationToken cancellationToken = default)
         {
-            using var scope = _extendedZoneAzureExtendedZonesClientDiagnostics.CreateScope("ExtendedZoneResource.Register");
+            using var scope = _extendedZoneClientDiagnostics.CreateScope("ExtendedZoneResource.Register");
             scope.Start();
             try
             {
-                var response = _extendedZoneAzureExtendedZonesRestClient.Register(Id.SubscriptionId, Id.Name, cancellationToken);
+                var response = _extendedZoneRestClient.Register(Id.SubscriptionId, Id.Name, cancellationToken);
                 return Response.FromValue(new ExtendedZoneResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -246,15 +246,15 @@ namespace Azure.ResourceManager.EdgeZones
         }
 
         /// <summary>
-        /// Unregisters a subscription for an Azure Extended Zone
+        /// Unregisters a subscription for an Extended Zone
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EdgeZones/azureExtendedZones/{azureExtendedZoneName}/unregister</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EdgeZones/extendedZones/{extendedZoneName}/unregister</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AzureExtendedZones_Unregister</description>
+        /// <description>ExtendedZones_Unregister</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -269,11 +269,11 @@ namespace Azure.ResourceManager.EdgeZones
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ExtendedZoneResource>> UnregisterAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _extendedZoneAzureExtendedZonesClientDiagnostics.CreateScope("ExtendedZoneResource.Unregister");
+            using var scope = _extendedZoneClientDiagnostics.CreateScope("ExtendedZoneResource.Unregister");
             scope.Start();
             try
             {
-                var response = await _extendedZoneAzureExtendedZonesRestClient.UnregisterAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _extendedZoneRestClient.UnregisterAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ExtendedZoneResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -284,15 +284,15 @@ namespace Azure.ResourceManager.EdgeZones
         }
 
         /// <summary>
-        /// Unregisters a subscription for an Azure Extended Zone
+        /// Unregisters a subscription for an Extended Zone
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EdgeZones/azureExtendedZones/{azureExtendedZoneName}/unregister</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EdgeZones/extendedZones/{extendedZoneName}/unregister</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AzureExtendedZones_Unregister</description>
+        /// <description>ExtendedZones_Unregister</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -307,11 +307,11 @@ namespace Azure.ResourceManager.EdgeZones
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ExtendedZoneResource> Unregister(CancellationToken cancellationToken = default)
         {
-            using var scope = _extendedZoneAzureExtendedZonesClientDiagnostics.CreateScope("ExtendedZoneResource.Unregister");
+            using var scope = _extendedZoneClientDiagnostics.CreateScope("ExtendedZoneResource.Unregister");
             scope.Start();
             try
             {
-                var response = _extendedZoneAzureExtendedZonesRestClient.Unregister(Id.SubscriptionId, Id.Name, cancellationToken);
+                var response = _extendedZoneRestClient.Unregister(Id.SubscriptionId, Id.Name, cancellationToken);
                 return Response.FromValue(new ExtendedZoneResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

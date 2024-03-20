@@ -2,22 +2,22 @@ namespace Azure.ResourceManager.EdgeZones
 {
     public static partial class EdgeZonesExtensions
     {
-        public static Azure.Response<Azure.ResourceManager.EdgeZones.ExtendedZoneResource> GetExtendedZone(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string azureExtendedZoneName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EdgeZones.ExtendedZoneResource>> GetExtendedZoneAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string azureExtendedZoneName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.EdgeZones.ExtendedZoneResource> GetExtendedZone(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string extendedZoneName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EdgeZones.ExtendedZoneResource>> GetExtendedZoneAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string extendedZoneName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.EdgeZones.ExtendedZoneResource GetExtendedZoneResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.EdgeZones.ExtendedZoneCollection GetExtendedZones(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource) { throw null; }
     }
     public partial class ExtendedZoneCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.EdgeZones.ExtendedZoneResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EdgeZones.ExtendedZoneResource>, System.Collections.IEnumerable
     {
         protected ExtendedZoneCollection() { }
-        public virtual Azure.Response<bool> Exists(string azureExtendedZoneName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string azureExtendedZoneName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.EdgeZones.ExtendedZoneResource> Get(string azureExtendedZoneName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string extendedZoneName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string extendedZoneName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.EdgeZones.ExtendedZoneResource> Get(string extendedZoneName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.EdgeZones.ExtendedZoneResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.EdgeZones.ExtendedZoneResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EdgeZones.ExtendedZoneResource>> GetAsync(string azureExtendedZoneName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.EdgeZones.ExtendedZoneResource> GetIfExists(string azureExtendedZoneName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.EdgeZones.ExtendedZoneResource>> GetIfExistsAsync(string azureExtendedZoneName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EdgeZones.ExtendedZoneResource>> GetAsync(string extendedZoneName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.EdgeZones.ExtendedZoneResource> GetIfExists(string extendedZoneName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.EdgeZones.ExtendedZoneResource>> GetIfExistsAsync(string extendedZoneName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.EdgeZones.ExtendedZoneResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.EdgeZones.ExtendedZoneResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.EdgeZones.ExtendedZoneResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EdgeZones.ExtendedZoneResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.EdgeZones
         protected ExtendedZoneResource() { }
         public virtual Azure.ResourceManager.EdgeZones.ExtendedZoneData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string azureExtendedZoneName) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string extendedZoneName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EdgeZones.ExtendedZoneResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EdgeZones.ExtendedZoneResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EdgeZones.ExtendedZoneResource> Register(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -67,8 +67,8 @@ namespace Azure.ResourceManager.EdgeZones.Mocking
     public partial class MockableEdgeZonesSubscriptionResource : Azure.ResourceManager.ArmResource
     {
         protected MockableEdgeZonesSubscriptionResource() { }
-        public virtual Azure.Response<Azure.ResourceManager.EdgeZones.ExtendedZoneResource> GetExtendedZone(string azureExtendedZoneName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EdgeZones.ExtendedZoneResource>> GetExtendedZoneAsync(string azureExtendedZoneName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.EdgeZones.ExtendedZoneResource> GetExtendedZone(string extendedZoneName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EdgeZones.ExtendedZoneResource>> GetExtendedZoneAsync(string extendedZoneName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.EdgeZones.ExtendedZoneCollection GetExtendedZones() { throw null; }
     }
 }

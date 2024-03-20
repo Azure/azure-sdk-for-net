@@ -44,15 +44,15 @@ namespace Azure.ResourceManager.EdgeZones.Mocking
         }
 
         /// <summary>
-        /// Get an Azure Extended Zone for a subscription
+        /// Gets an Azure Extended Zone for a subscription
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EdgeZones/azureExtendedZones/{azureExtendedZoneName}</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EdgeZones/extendedZones/{extendedZoneName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AzureExtendedZones_Get</description>
+        /// <description>ExtendedZones_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -64,26 +64,26 @@ namespace Azure.ResourceManager.EdgeZones.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="azureExtendedZoneName"> The name of the AzureExtendedZone. </param>
+        /// <param name="extendedZoneName"> The name of the ExtendedZone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="azureExtendedZoneName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="azureExtendedZoneName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="extendedZoneName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="extendedZoneName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ExtendedZoneResource>> GetExtendedZoneAsync(string azureExtendedZoneName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ExtendedZoneResource>> GetExtendedZoneAsync(string extendedZoneName, CancellationToken cancellationToken = default)
         {
-            return await GetExtendedZones().GetAsync(azureExtendedZoneName, cancellationToken).ConfigureAwait(false);
+            return await GetExtendedZones().GetAsync(extendedZoneName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Get an Azure Extended Zone for a subscription
+        /// Gets an Azure Extended Zone for a subscription
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EdgeZones/azureExtendedZones/{azureExtendedZoneName}</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EdgeZones/extendedZones/{extendedZoneName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AzureExtendedZones_Get</description>
+        /// <description>ExtendedZones_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -95,14 +95,14 @@ namespace Azure.ResourceManager.EdgeZones.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="azureExtendedZoneName"> The name of the AzureExtendedZone. </param>
+        /// <param name="extendedZoneName"> The name of the ExtendedZone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="azureExtendedZoneName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="azureExtendedZoneName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="extendedZoneName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="extendedZoneName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ExtendedZoneResource> GetExtendedZone(string azureExtendedZoneName, CancellationToken cancellationToken = default)
+        public virtual Response<ExtendedZoneResource> GetExtendedZone(string extendedZoneName, CancellationToken cancellationToken = default)
         {
-            return GetExtendedZones().Get(azureExtendedZoneName, cancellationToken);
+            return GetExtendedZones().Get(extendedZoneName, cancellationToken);
         }
     }
 }

@@ -16,20 +16,20 @@ using Azure.ResourceManager.EdgeZones.Models;
 
 namespace Azure.ResourceManager.EdgeZones
 {
-    internal partial class AzureExtendedZonesRestOperations
+    internal partial class ExtendedZonesRestOperations
     {
         private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of AzureExtendedZonesRestOperations. </summary>
+        /// <summary> Initializes a new instance of ExtendedZonesRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public AzureExtendedZonesRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        public ExtendedZonesRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.EdgeZones
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.EdgeZones/azureExtendedZones", false);
+            uri.AppendPath("/providers/Microsoft.EdgeZones/extendedZones", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.EdgeZones
             return message;
         }
 
-        /// <summary> Lists the Azure Extended Zones for a subscription. </summary>
+        /// <summary> Lists the Azure Extended Zones available to a subscription. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.EdgeZones
             }
         }
 
-        /// <summary> Lists the Azure Extended Zones for a subscription. </summary>
+        /// <summary> Lists the Azure Extended Zones available to a subscription. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.EdgeZones
             }
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string azureExtendedZoneName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string extendedZoneName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -113,8 +113,8 @@ namespace Azure.ResourceManager.EdgeZones
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.EdgeZones/azureExtendedZones/", false);
-            uri.AppendPath(azureExtendedZoneName, true);
+            uri.AppendPath("/providers/Microsoft.EdgeZones/extendedZones/", false);
+            uri.AppendPath(extendedZoneName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -122,18 +122,18 @@ namespace Azure.ResourceManager.EdgeZones
             return message;
         }
 
-        /// <summary> Get an Azure Extended Zone for a subscription. </summary>
+        /// <summary> Gets an Azure Extended Zone for a subscription. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="azureExtendedZoneName"> The name of the AzureExtendedZone. </param>
+        /// <param name="extendedZoneName"> The name of the ExtendedZone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="azureExtendedZoneName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="azureExtendedZoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ExtendedZoneData>> GetAsync(string subscriptionId, string azureExtendedZoneName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="extendedZoneName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="extendedZoneName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ExtendedZoneData>> GetAsync(string subscriptionId, string extendedZoneName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(azureExtendedZoneName, nameof(azureExtendedZoneName));
+            Argument.AssertNotNullOrEmpty(extendedZoneName, nameof(extendedZoneName));
 
-            using var message = CreateGetRequest(subscriptionId, azureExtendedZoneName);
+            using var message = CreateGetRequest(subscriptionId, extendedZoneName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -151,18 +151,18 @@ namespace Azure.ResourceManager.EdgeZones
             }
         }
 
-        /// <summary> Get an Azure Extended Zone for a subscription. </summary>
+        /// <summary> Gets an Azure Extended Zone for a subscription. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="azureExtendedZoneName"> The name of the AzureExtendedZone. </param>
+        /// <param name="extendedZoneName"> The name of the ExtendedZone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="azureExtendedZoneName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="azureExtendedZoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ExtendedZoneData> Get(string subscriptionId, string azureExtendedZoneName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="extendedZoneName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="extendedZoneName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ExtendedZoneData> Get(string subscriptionId, string extendedZoneName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(azureExtendedZoneName, nameof(azureExtendedZoneName));
+            Argument.AssertNotNullOrEmpty(extendedZoneName, nameof(extendedZoneName));
 
-            using var message = CreateGetRequest(subscriptionId, azureExtendedZoneName);
+            using var message = CreateGetRequest(subscriptionId, extendedZoneName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.EdgeZones
             }
         }
 
-        internal HttpMessage CreateRegisterRequest(string subscriptionId, string azureExtendedZoneName)
+        internal HttpMessage CreateRegisterRequest(string subscriptionId, string extendedZoneName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -189,8 +189,8 @@ namespace Azure.ResourceManager.EdgeZones
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.EdgeZones/azureExtendedZones/", false);
-            uri.AppendPath(azureExtendedZoneName, true);
+            uri.AppendPath("/providers/Microsoft.EdgeZones/extendedZones/", false);
+            uri.AppendPath(extendedZoneName, true);
             uri.AppendPath("/register", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -199,18 +199,18 @@ namespace Azure.ResourceManager.EdgeZones
             return message;
         }
 
-        /// <summary> Registers a subscription for an Azure Extended Zone. </summary>
+        /// <summary> Registers a subscription for an Extended Zone. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="azureExtendedZoneName"> The name of the AzureExtendedZone. </param>
+        /// <param name="extendedZoneName"> The name of the ExtendedZone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="azureExtendedZoneName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="azureExtendedZoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ExtendedZoneData>> RegisterAsync(string subscriptionId, string azureExtendedZoneName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="extendedZoneName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="extendedZoneName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ExtendedZoneData>> RegisterAsync(string subscriptionId, string extendedZoneName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(azureExtendedZoneName, nameof(azureExtendedZoneName));
+            Argument.AssertNotNullOrEmpty(extendedZoneName, nameof(extendedZoneName));
 
-            using var message = CreateRegisterRequest(subscriptionId, azureExtendedZoneName);
+            using var message = CreateRegisterRequest(subscriptionId, extendedZoneName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -226,18 +226,18 @@ namespace Azure.ResourceManager.EdgeZones
             }
         }
 
-        /// <summary> Registers a subscription for an Azure Extended Zone. </summary>
+        /// <summary> Registers a subscription for an Extended Zone. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="azureExtendedZoneName"> The name of the AzureExtendedZone. </param>
+        /// <param name="extendedZoneName"> The name of the ExtendedZone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="azureExtendedZoneName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="azureExtendedZoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ExtendedZoneData> Register(string subscriptionId, string azureExtendedZoneName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="extendedZoneName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="extendedZoneName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ExtendedZoneData> Register(string subscriptionId, string extendedZoneName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(azureExtendedZoneName, nameof(azureExtendedZoneName));
+            Argument.AssertNotNullOrEmpty(extendedZoneName, nameof(extendedZoneName));
 
-            using var message = CreateRegisterRequest(subscriptionId, azureExtendedZoneName);
+            using var message = CreateRegisterRequest(subscriptionId, extendedZoneName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.EdgeZones
             }
         }
 
-        internal HttpMessage CreateUnregisterRequest(string subscriptionId, string azureExtendedZoneName)
+        internal HttpMessage CreateUnregisterRequest(string subscriptionId, string extendedZoneName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -262,8 +262,8 @@ namespace Azure.ResourceManager.EdgeZones
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.EdgeZones/azureExtendedZones/", false);
-            uri.AppendPath(azureExtendedZoneName, true);
+            uri.AppendPath("/providers/Microsoft.EdgeZones/extendedZones/", false);
+            uri.AppendPath(extendedZoneName, true);
             uri.AppendPath("/unregister", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -272,18 +272,18 @@ namespace Azure.ResourceManager.EdgeZones
             return message;
         }
 
-        /// <summary> Unregisters a subscription for an Azure Extended Zone. </summary>
+        /// <summary> Unregisters a subscription for an Extended Zone. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="azureExtendedZoneName"> The name of the AzureExtendedZone. </param>
+        /// <param name="extendedZoneName"> The name of the ExtendedZone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="azureExtendedZoneName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="azureExtendedZoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ExtendedZoneData>> UnregisterAsync(string subscriptionId, string azureExtendedZoneName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="extendedZoneName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="extendedZoneName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ExtendedZoneData>> UnregisterAsync(string subscriptionId, string extendedZoneName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(azureExtendedZoneName, nameof(azureExtendedZoneName));
+            Argument.AssertNotNullOrEmpty(extendedZoneName, nameof(extendedZoneName));
 
-            using var message = CreateUnregisterRequest(subscriptionId, azureExtendedZoneName);
+            using var message = CreateUnregisterRequest(subscriptionId, extendedZoneName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -299,18 +299,18 @@ namespace Azure.ResourceManager.EdgeZones
             }
         }
 
-        /// <summary> Unregisters a subscription for an Azure Extended Zone. </summary>
+        /// <summary> Unregisters a subscription for an Extended Zone. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="azureExtendedZoneName"> The name of the AzureExtendedZone. </param>
+        /// <param name="extendedZoneName"> The name of the ExtendedZone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="azureExtendedZoneName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="azureExtendedZoneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ExtendedZoneData> Unregister(string subscriptionId, string azureExtendedZoneName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="extendedZoneName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="extendedZoneName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ExtendedZoneData> Unregister(string subscriptionId, string extendedZoneName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(azureExtendedZoneName, nameof(azureExtendedZoneName));
+            Argument.AssertNotNullOrEmpty(extendedZoneName, nameof(extendedZoneName));
 
-            using var message = CreateUnregisterRequest(subscriptionId, azureExtendedZoneName);
+            using var message = CreateUnregisterRequest(subscriptionId, extendedZoneName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.EdgeZones
             return message;
         }
 
-        /// <summary> Lists the Azure Extended Zones for a subscription. </summary>
+        /// <summary> Lists the Azure Extended Zones available to a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.EdgeZones
             }
         }
 
-        /// <summary> Lists the Azure Extended Zones for a subscription. </summary>
+        /// <summary> Lists the Azure Extended Zones available to a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

@@ -60,47 +60,47 @@ namespace Azure.ResourceManager.EdgeZones
                 writer.WritePropertyName("registrationState"u8);
                 writer.WriteStringValue(RegistrationState.Value.ToString());
             }
-            if (Optional.IsDefined(DisplayName))
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(RegionalDisplayName))
+            if (options.Format != "W" && Optional.IsDefined(RegionalDisplayName))
             {
                 writer.WritePropertyName("regionalDisplayName"u8);
                 writer.WriteStringValue(RegionalDisplayName);
             }
-            if (Optional.IsDefined(RegionType))
+            if (options.Format != "W" && Optional.IsDefined(RegionType))
             {
                 writer.WritePropertyName("regionType"u8);
                 writer.WriteStringValue(RegionType);
             }
-            if (Optional.IsDefined(RegionCategory))
+            if (options.Format != "W" && Optional.IsDefined(RegionCategory))
             {
                 writer.WritePropertyName("regionCategory"u8);
                 writer.WriteStringValue(RegionCategory);
             }
-            if (Optional.IsDefined(Geography))
+            if (options.Format != "W" && Optional.IsDefined(Geography))
             {
                 writer.WritePropertyName("geography"u8);
                 writer.WriteStringValue(Geography);
             }
-            if (Optional.IsDefined(GeographyGroup))
+            if (options.Format != "W" && Optional.IsDefined(GeographyGroup))
             {
                 writer.WritePropertyName("geographyGroup"u8);
                 writer.WriteStringValue(GeographyGroup);
             }
-            if (Optional.IsDefined(Longitude))
+            if (options.Format != "W" && Optional.IsDefined(Longitude))
             {
                 writer.WritePropertyName("longitude"u8);
                 writer.WriteStringValue(Longitude);
             }
-            if (Optional.IsDefined(Latitude))
+            if (options.Format != "W" && Optional.IsDefined(Latitude))
             {
                 writer.WritePropertyName("latitude"u8);
                 writer.WriteStringValue(Latitude);
             }
-            if (Optional.IsDefined(HomeLocation))
+            if (options.Format != "W" && Optional.IsDefined(HomeLocation))
             {
                 writer.WritePropertyName("homeLocation"u8);
                 writer.WriteStringValue(HomeLocation);

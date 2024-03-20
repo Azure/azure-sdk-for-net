@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.EdgeZones.Models
         private const string RegisteredValue = "Registered";
         private const string PendingUnregisterValue = "PendingUnregister";
 
-        /// <summary> Not Registered State. </summary>
+        /// <summary> Subscription not registered for the Azure Extended Zone. </summary>
         public static EdgeZonesRegistrationState NotRegistered { get; } = new EdgeZonesRegistrationState(NotRegisteredValue);
-        /// <summary> Pending Register State. </summary>
+        /// <summary> Subscription pending registration for the Azure Extended Zone. </summary>
         public static EdgeZonesRegistrationState PendingRegister { get; } = new EdgeZonesRegistrationState(PendingRegisterValue);
-        /// <summary> Registered State. </summary>
+        /// <summary> Subscription is registered for the Azure Extended Zone. </summary>
         public static EdgeZonesRegistrationState Registered { get; } = new EdgeZonesRegistrationState(RegisteredValue);
-        /// <summary> Pending Unregister State. </summary>
+        /// <summary> Subscription is pending unregistering for the Azure Extended Zone. </summary>
         public static EdgeZonesRegistrationState PendingUnregister { get; } = new EdgeZonesRegistrationState(PendingUnregisterValue);
         /// <summary> Determines if two <see cref="EdgeZonesRegistrationState"/> values are the same. </summary>
         public static bool operator ==(EdgeZonesRegistrationState left, EdgeZonesRegistrationState right) => left.Equals(right);

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.EdgeZones
 {
     /// <summary>
     /// A class representing the ExtendedZone data model.
-    /// An AzureExtendedZone resource
+    /// Resource that represents an Azure Extended Zone available to a subscription for registering and unregistering.
     /// </summary>
     public partial class ExtendedZoneData : ResourceData
     {
@@ -61,17 +61,17 @@ namespace Azure.ResourceManager.EdgeZones
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> The status of the last operation. </param>
-        /// <param name="registrationState"> AzureExtendedZone registration approved or not. </param>
-        /// <param name="displayName"> AzureExtendedZone displayName. </param>
-        /// <param name="regionalDisplayName"> AzureExtendedZone regionalDisplayName. </param>
-        /// <param name="regionType"> AzureExtendedZone regionType. </param>
-        /// <param name="regionCategory"> AzureExtendedZone regionCategory. </param>
-        /// <param name="geography"> AzureExtendedZone geography. </param>
-        /// <param name="geographyGroup"> AzureExtendedZone geographyGroup. </param>
-        /// <param name="longitude"> AzureExtendedZone longitude. </param>
-        /// <param name="latitude"> AzureExtendedZone latitude. </param>
-        /// <param name="homeLocation"> AzureExtendedZone homeLocation. </param>
+        /// <param name="provisioningState"> Status of the last operation performed by the subscription on the Edge Zone resource. </param>
+        /// <param name="registrationState"> Indicates the Azure Extended Zone registration’s approval status. </param>
+        /// <param name="displayName"> Display name of the Azure Extended Zone. </param>
+        /// <param name="regionalDisplayName"> Regional display name of the Azure Extended Zone. </param>
+        /// <param name="regionType"> Type of region for the Azure Extended Zone. </param>
+        /// <param name="regionCategory"> Category of region for the Azure Extended Zone. </param>
+        /// <param name="geography"> Geography of the Azure Extended Zone. </param>
+        /// <param name="geographyGroup"> The Geography Group of the Azure Extended Zone. </param>
+        /// <param name="longitude"> The Longitude of the Azure Extended Zone. </param>
+        /// <param name="latitude"> The Latitude of the Azure Extended Zone. </param>
+        /// <param name="homeLocation"> The Home Location of the Azure Extended Zone. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ExtendedZoneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EdgeZonesProvisioningState? provisioningState, EdgeZonesRegistrationState? registrationState, string displayName, string regionalDisplayName, string regionType, string regionCategory, string geography, string geographyGroup, string longitude, string latitude, string homeLocation, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -89,27 +89,27 @@ namespace Azure.ResourceManager.EdgeZones
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The status of the last operation. </summary>
+        /// <summary> Status of the last operation performed by the subscription on the Edge Zone resource. </summary>
         public EdgeZonesProvisioningState? ProvisioningState { get; }
-        /// <summary> AzureExtendedZone registration approved or not. </summary>
+        /// <summary> Indicates the Azure Extended Zone registration’s approval status. </summary>
         public EdgeZonesRegistrationState? RegistrationState { get; }
-        /// <summary> AzureExtendedZone displayName. </summary>
+        /// <summary> Display name of the Azure Extended Zone. </summary>
         public string DisplayName { get; }
-        /// <summary> AzureExtendedZone regionalDisplayName. </summary>
+        /// <summary> Regional display name of the Azure Extended Zone. </summary>
         public string RegionalDisplayName { get; }
-        /// <summary> AzureExtendedZone regionType. </summary>
+        /// <summary> Type of region for the Azure Extended Zone. </summary>
         public string RegionType { get; }
-        /// <summary> AzureExtendedZone regionCategory. </summary>
+        /// <summary> Category of region for the Azure Extended Zone. </summary>
         public string RegionCategory { get; }
-        /// <summary> AzureExtendedZone geography. </summary>
+        /// <summary> Geography of the Azure Extended Zone. </summary>
         public string Geography { get; }
-        /// <summary> AzureExtendedZone geographyGroup. </summary>
+        /// <summary> The Geography Group of the Azure Extended Zone. </summary>
         public string GeographyGroup { get; }
-        /// <summary> AzureExtendedZone longitude. </summary>
+        /// <summary> The Longitude of the Azure Extended Zone. </summary>
         public string Longitude { get; }
-        /// <summary> AzureExtendedZone latitude. </summary>
+        /// <summary> The Latitude of the Azure Extended Zone. </summary>
         public string Latitude { get; }
-        /// <summary> AzureExtendedZone homeLocation. </summary>
+        /// <summary> The Home Location of the Azure Extended Zone. </summary>
         public string HomeLocation { get; }
     }
 }
