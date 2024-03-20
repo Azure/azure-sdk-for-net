@@ -96,7 +96,7 @@ namespace Azure.Communication.Chat
         public static ChatMessageContent ChatMessageContent(string message, string topic, CommunicationUserIdentifier communicationUserIdentifier, IEnumerable<ChatParticipant> participants, IEnumerable<ChatAttachment> attachments = null) => new ChatMessageContent(message, topic, communicationUserIdentifier, participants, attachments);
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ChatThreadProperties"/> class.
+        /// Initializes a new instance of the <see cref="Chat.ChatThreadProperties"/> class.
         /// </summary>
         /// <param name="id"> Chat message. </param>
         /// <param name="topic"> Topic of the message content. </param>
@@ -144,7 +144,7 @@ namespace Azure.Communication.Chat
         /// <param name="displayName">Display name for the chat thread member.</param>
         /// <param name="shareHistoryTime"> Time from which the chat history is shared with the member. The timestamp is in ISO8601 format: `yyyy-MM-ddTHH:mm:ssZ`.</param>
         /// <returns>A new <see cref="Chat.ChatParticipant"/> instance for mocking.</returns>
-        public static ChatParticipant ChatParticipant(CommunicationIdentifier user, string displayName, DateTimeOffset? shareHistoryTime) => ChatParticipant(user, displayName, shareHistoryTime, null);
+        public static ChatParticipant ChatParticipant(CommunicationIdentifier user, string displayName, DateTimeOffset? shareHistoryTime) => new ChatParticipant(user, displayName, shareHistoryTime, null);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SendChatMessageResult"/> class.

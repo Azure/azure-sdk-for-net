@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Communication.Chat
 {
-    /// <summary> An attachment in a chat message. </summary>
+    /// <summary> An attachment in a chat message. Currently only supported in Teams Interop scenarios. </summary>
     internal partial class ChatAttachmentInternal
     {
         /// <summary> Initializes a new instance of <see cref="ChatAttachmentInternal"/>. </summary>
