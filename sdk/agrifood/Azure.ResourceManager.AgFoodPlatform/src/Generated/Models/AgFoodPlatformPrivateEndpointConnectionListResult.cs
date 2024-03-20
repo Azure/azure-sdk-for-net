@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AgFoodPlatform;
 
 namespace Azure.ResourceManager.AgFoodPlatform.Models
 {
