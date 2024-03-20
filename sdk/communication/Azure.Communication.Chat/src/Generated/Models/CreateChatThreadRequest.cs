@@ -28,10 +28,12 @@ namespace Azure.Communication.Chat
         /// <summary> Initializes a new instance of <see cref="CreateChatThreadRequest"/>. </summary>
         /// <param name="topic"> The chat thread topic. </param>
         /// <param name="participants"> Participants to be added to the chat thread. </param>
-        internal CreateChatThreadRequest(string topic, IList<ChatParticipantInternal> participants)
+        /// <param name="metadata"> Contextual metadata for the thread. The metadata consists of name/value pairs. The total size of all metadata pairs can be up to 1KB in size. </param>
+        internal CreateChatThreadRequest(string topic, IList<ChatParticipantInternal> participants, IDictionary<string, string> metadata)
         {
             Topic = topic;
             Participants = participants;
+            Metadata = metadata;
         }
 
         /// <summary> The chat thread topic. </summary>

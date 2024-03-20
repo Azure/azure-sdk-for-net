@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
@@ -21,9 +20,11 @@ namespace Azure.Communication.Chat
 
         /// <summary> Initializes a new instance of <see cref="UpdateChatThreadRequest"/>. </summary>
         /// <param name="topic"> Chat thread topic. </param>
-        internal UpdateChatThreadRequest(string topic)
+        /// <param name="metadata"> Contextual metadata for the thread. The metadata consists of name/value pairs. The total size of all metadata pairs can be up to 1KB in size. </param>
+        internal UpdateChatThreadRequest(string topic, IDictionary<string, string> metadata)
         {
             Topic = topic;
+            Metadata = metadata;
         }
 
         /// <summary> Chat thread topic. </summary>

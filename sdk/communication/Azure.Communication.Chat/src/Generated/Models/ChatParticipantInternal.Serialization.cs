@@ -90,7 +90,7 @@ namespace Azure.Communication.Chat
                     continue;
                 }
             }
-            return new ChatParticipantInternal(communicationIdentifier, displayName.Value, Optional.ToNullable(shareHistoryTime), Optional.ToDictionary(metadata));
+            return new ChatParticipantInternal(communicationIdentifier, displayName, shareHistoryTime, metadata ?? new ChangeTrackingDictionary<string, string>());
         }
     }
 }
