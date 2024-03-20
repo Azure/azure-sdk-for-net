@@ -11,7 +11,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using Azure.Core;
-using Azure.ResourceManager.Avs;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs.Models
