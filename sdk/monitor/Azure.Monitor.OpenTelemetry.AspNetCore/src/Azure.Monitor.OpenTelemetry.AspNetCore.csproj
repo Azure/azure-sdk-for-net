@@ -1,11 +1,11 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>An OpenTelemetry .NET distro that exports to Azure Monitor</Description>
     <AssemblyTitle>AzureMonitor OpenTelemetry ASP.NET Core Distro</AssemblyTitle>
-    <Version>1.2.0-beta.2</Version>
+    <Version>1.2.0-beta.3</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <!-- TODO: Need to disable this because adding new target framwork. This needs to be reenabled when we release. -->
-    <!--<ApiCompatVersion>1.1.0</ApiCompatVersion>-->
+    <!-- TODO: Remove this condition from ApiCompatVersion after we release our next stable. Need to disable this because added new target framwork. -->
+    <ApiCompatVersion Condition="'$(TargetFramework)' != 'net6.0'">1.1.0</ApiCompatVersion>
     <PackageTags>Azure Monitor OpenTelemetry Exporter Distro ApplicationInsights</PackageTags>
     <TargetFrameworks>net6.0;$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
@@ -36,7 +36,7 @@
   <ItemGroup>
     <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\ExceptionExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)EventSourceEventFormatting.cs" LinkBase="Shared\Core" />
-    <Compile Include="$(AzureCoreSharedSources)EventSourceEvent.cs"  LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)EventSourceEvent.cs" LinkBase="Shared\Core" />
   </ItemGroup>
 
 </Project>
