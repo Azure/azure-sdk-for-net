@@ -19,7 +19,10 @@ namespace Azure.ResourceManager
             AssertNotNull(client, nameof(client));
             AssertNotNull(rehydrationToken, nameof(rehydrationToken));
             _nextLinkOperation = (NextLinkOperationImplementation)NextLinkOperationImplementation.Create(client.Pipeline, rehydrationToken);
-            _operation = new OperationInternal(_nextLinkOperation, new ClientDiagnostics(options ?? ClientOptions.Default), null, requestMethod: _nextLinkOperation.RequestMethod);
+            var operationState = _nextLinkOperation.UpdateStateAsync(false, default).EnsureCompleted();
+            _operation = operationState.HasCompleted
+                ? _operation = new OperationInternal(operationState)
+                : new OperationInternal(_nextLinkOperation, new ClientDiagnostics(options ?? ClientOptions.Default), operationState.RawResponse, requestMethod: _nextLinkOperation.RequestMethod);
         }
 
         public override string Id => _nextLinkOperation?.OperationId ?? null;

@@ -47,8 +47,10 @@ namespace Azure.ResourceManager
             IOperationSource<T> source = new GenericOperationSource<T>(client, isResource);
             _nextLinkOperation = (NextLinkOperationImplementation)NextLinkOperationImplementation.Create(client.Pipeline, rehydrationToken);
             var operation = NextLinkOperationImplementation.Create(source, _nextLinkOperation);
-            var clientDiagnostics = new ClientDiagnostics(options ?? ClientOptions.Default);
-            _operation = new OperationInternal<T>(operation, clientDiagnostics, null);
+            var operationState = operation.UpdateStateAsync(false, default).EnsureCompleted();
+            _operation = operationState.HasCompleted
+                    ? new OperationInternal<T>(operationState)
+                    : new OperationInternal<T>(operation, new ClientDiagnostics(options ?? ClientOptions.Default), operationState.RawResponse);
         }
 
         public override T Value => _operation.Value;
