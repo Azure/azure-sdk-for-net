@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (CanDelete.HasValue)
+            if (Optional.IsDefined(CanDelete))
             {
                 writer.WritePropertyName("canDelete"u8);
                 writer.WriteBooleanValue(CanDelete.Value);
             }
-            if (ShardKey != null)
+            if (Optional.IsDefined(ShardKey))
             {
                 writer.WritePropertyName("shardKey"u8);
                 writer.WriteObjectValue(ShardKey);
             }
-            if (TargetRUs.HasValue)
+            if (Optional.IsDefined(TargetRUs))
             {
                 writer.WritePropertyName("targetRUs"u8);
                 writer.WriteNumberValue(TargetRUs.Value);

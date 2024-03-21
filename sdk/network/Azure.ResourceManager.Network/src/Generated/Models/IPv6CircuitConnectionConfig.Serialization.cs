@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (AddressPrefix != null)
+            if (Optional.IsDefined(AddressPrefix))
             {
                 writer.WritePropertyName("addressPrefix"u8);
                 writer.WriteStringValue(AddressPrefix);
             }
-            if (options.Format != "W" && CircuitConnectionStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CircuitConnectionStatus))
             {
                 writer.WritePropertyName("circuitConnectionStatus"u8);
                 writer.WriteStringValue(CircuitConnectionStatus.Value.ToString());

@@ -28,24 +28,24 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(RuntimeType.ToString());
-            if (options.Format != "W" && DataFactoryName != null)
+            if (options.Format != "W" && Optional.IsDefined(DataFactoryName))
             {
                 writer.WritePropertyName("dataFactoryName"u8);
                 writer.WriteStringValue(DataFactoryName);
             }
-            if (options.Format != "W" && State.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && !(Nodes is ChangeTrackingList<ManagedIntegrationRuntimeNode> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Nodes))
             {
                 writer.WritePropertyName("nodes"u8);
                 writer.WriteStartArray();
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(OtherErrors is ChangeTrackingList<ManagedIntegrationRuntimeError> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(OtherErrors))
             {
                 writer.WritePropertyName("otherErrors"u8);
                 writer.WriteStartArray();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && LastOperation != null)
+            if (options.Format != "W" && Optional.IsDefined(LastOperation))
             {
                 writer.WritePropertyName("lastOperation"u8);
                 writer.WriteObjectValue(LastOperation);

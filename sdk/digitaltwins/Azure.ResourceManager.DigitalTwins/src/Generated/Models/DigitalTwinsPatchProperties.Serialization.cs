@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             }
 
             writer.WriteStartObject();
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 if (PublicNetworkAccess != null)
                 {

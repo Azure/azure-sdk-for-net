@@ -17,7 +17,7 @@ namespace Azure.AI.Language.QuestionAnswering
             writer.WriteStartObject();
             writer.WritePropertyName("previousQnaId"u8);
             writer.WriteNumberValue(PreviousQnaId);
-            if (PreviousQuestion != null)
+            if (Optional.IsDefined(PreviousQuestion))
             {
                 writer.WritePropertyName("previousUserQuery"u8);
                 writer.WriteStringValue(PreviousQuestion);

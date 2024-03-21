@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (ConnectorId != null)
+            if (Optional.IsDefined(ConnectorId))
             {
                 writer.WritePropertyName("connectorId"u8);
                 writer.WriteStringValue(ConnectorId);
             }
-            if (!(DataTypes is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DataTypes))
             {
                 writer.WritePropertyName("dataTypes"u8);
                 writer.WriteStartArray();

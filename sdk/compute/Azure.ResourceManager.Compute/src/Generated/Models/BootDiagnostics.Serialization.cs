@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Enabled.HasValue)
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(Enabled.Value);
             }
-            if (StorageUri != null)
+            if (Optional.IsDefined(StorageUri))
             {
                 writer.WritePropertyName("storageUri"u8);
                 writer.WriteStringValue(StorageUri.AbsoluteUri);

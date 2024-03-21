@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -27,12 +26,12 @@ namespace Azure.Communication.JobRouter
             }
 
             writer.WriteStartObject();
-            if (ClientId != null)
+            if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
-            if (ClientSecret != null)
+            if (Optional.IsDefined(ClientSecret))
             {
                 writer.WritePropertyName("clientSecret"u8);
                 writer.WriteStringValue(ClientSecret);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);

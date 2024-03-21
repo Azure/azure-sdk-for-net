@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Orbital.Models;
@@ -29,12 +28,12 @@ namespace Azure.ResourceManager.Orbital
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -62,44 +61,44 @@ namespace Azure.ResourceManager.Orbital
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (MinimumViableContactDuration.HasValue)
+            if (Optional.IsDefined(MinimumViableContactDuration))
             {
                 writer.WritePropertyName("minimumViableContactDuration"u8);
                 writer.WriteStringValue(MinimumViableContactDuration.Value, "P");
             }
-            if (MinimumElevationDegrees.HasValue)
+            if (Optional.IsDefined(MinimumElevationDegrees))
             {
                 writer.WritePropertyName("minimumElevationDegrees"u8);
                 writer.WriteNumberValue(MinimumElevationDegrees.Value);
             }
-            if (AutoTrackingConfiguration.HasValue)
+            if (Optional.IsDefined(AutoTrackingConfiguration))
             {
                 writer.WritePropertyName("autoTrackingConfiguration"u8);
                 writer.WriteStringValue(AutoTrackingConfiguration.Value.ToSerialString());
             }
-            if (EventHubUri != null)
+            if (Optional.IsDefined(EventHubUri))
             {
                 writer.WritePropertyName("eventHubUri"u8);
                 writer.WriteStringValue(EventHubUri.AbsoluteUri);
             }
-            if (NetworkConfiguration != null)
+            if (Optional.IsDefined(NetworkConfiguration))
             {
                 writer.WritePropertyName("networkConfiguration"u8);
                 writer.WriteObjectValue(NetworkConfiguration);
             }
-            if (!(Links is ChangeTrackingList<OrbitalContactProfileLink> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Links))
             {
                 writer.WritePropertyName("links"u8);
                 writer.WriteStartArray();

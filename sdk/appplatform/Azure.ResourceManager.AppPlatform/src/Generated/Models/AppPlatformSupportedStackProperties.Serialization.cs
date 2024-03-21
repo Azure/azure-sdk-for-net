@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (StackId != null)
+            if (Optional.IsDefined(StackId))
             {
                 writer.WritePropertyName("stackId"u8);
                 writer.WriteStringValue(StackId);
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);

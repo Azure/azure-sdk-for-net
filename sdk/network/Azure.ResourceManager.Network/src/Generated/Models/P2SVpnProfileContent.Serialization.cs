@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (AuthenticationMethod.HasValue)
+            if (Optional.IsDefined(AuthenticationMethod))
             {
                 writer.WritePropertyName("authenticationMethod"u8);
                 writer.WriteStringValue(AuthenticationMethod.Value.ToString());

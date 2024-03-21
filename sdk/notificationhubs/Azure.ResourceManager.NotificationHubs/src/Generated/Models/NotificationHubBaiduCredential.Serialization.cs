@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (BaiduApiKey != null)
+            if (Optional.IsDefined(BaiduApiKey))
             {
                 writer.WritePropertyName("baiduApiKey"u8);
                 writer.WriteStringValue(BaiduApiKey);
             }
-            if (BaiduEndpoint != null)
+            if (Optional.IsDefined(BaiduEndpoint))
             {
                 writer.WritePropertyName("baiduEndPoint"u8);
                 writer.WriteStringValue(BaiduEndpoint.AbsoluteUri);
             }
-            if (BaiduSecretKey != null)
+            if (Optional.IsDefined(BaiduSecretKey))
             {
                 writer.WritePropertyName("baiduSecretKey"u8);
                 writer.WriteStringValue(BaiduSecretKey);

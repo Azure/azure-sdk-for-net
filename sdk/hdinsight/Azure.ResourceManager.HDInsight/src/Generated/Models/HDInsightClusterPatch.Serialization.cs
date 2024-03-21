@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 if (Tags != null)
                 {

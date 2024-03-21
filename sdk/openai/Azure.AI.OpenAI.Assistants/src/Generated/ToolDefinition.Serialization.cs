@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
@@ -72,8 +71,8 @@ namespace Azure.AI.OpenAI.Assistants
                 switch (discriminator.GetString())
                 {
                     case "code_interpreter": return CodeInterpreterToolDefinition.DeserializeCodeInterpreterToolDefinition(element, options);
-                    case "retrieval": return RetrievalToolDefinition.DeserializeRetrievalToolDefinition(element, options);
                     case "function": return FunctionToolDefinition.DeserializeFunctionToolDefinition(element, options);
+                    case "retrieval": return RetrievalToolDefinition.DeserializeRetrievalToolDefinition(element, options);
                 }
             }
             return UnknownToolDefinition.DeserializeUnknownToolDefinition(element, options);

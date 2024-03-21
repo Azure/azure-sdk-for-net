@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.Storage
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(PermissionScopes is ChangeTrackingList<StoragePermissionScope> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PermissionScopes))
             {
                 writer.WritePropertyName("permissionScopes"u8);
                 writer.WriteStartArray();
@@ -60,12 +60,12 @@ namespace Azure.ResourceManager.Storage
                 }
                 writer.WriteEndArray();
             }
-            if (HomeDirectory != null)
+            if (Optional.IsDefined(HomeDirectory))
             {
                 writer.WritePropertyName("homeDirectory"u8);
                 writer.WriteStringValue(HomeDirectory);
             }
-            if (!(SshAuthorizedKeys is ChangeTrackingList<StorageSshPublicKey> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(SshAuthorizedKeys))
             {
                 writer.WritePropertyName("sshAuthorizedKeys"u8);
                 writer.WriteStartArray();
@@ -75,22 +75,22 @@ namespace Azure.ResourceManager.Storage
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Sid != null)
+            if (options.Format != "W" && Optional.IsDefined(Sid))
             {
                 writer.WritePropertyName("sid"u8);
                 writer.WriteStringValue(Sid);
             }
-            if (HasSharedKey.HasValue)
+            if (Optional.IsDefined(HasSharedKey))
             {
                 writer.WritePropertyName("hasSharedKey"u8);
                 writer.WriteBooleanValue(HasSharedKey.Value);
             }
-            if (HasSshKey.HasValue)
+            if (Optional.IsDefined(HasSshKey))
             {
                 writer.WritePropertyName("hasSshKey"u8);
                 writer.WriteBooleanValue(HasSshKey.Value);
             }
-            if (HasSshPassword.HasValue)
+            if (Optional.IsDefined(HasSshPassword))
             {
                 writer.WritePropertyName("hasSshPassword"u8);
                 writer.WriteBooleanValue(HasSshPassword.Value);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(ValidationErrors is ChangeTrackingList<ReportableException> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ValidationErrors))
             {
                 writer.WritePropertyName("validationErrors"u8);
                 writer.WriteStartArray();

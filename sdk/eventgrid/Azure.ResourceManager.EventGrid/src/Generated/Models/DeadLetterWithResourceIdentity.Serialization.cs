@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
             }
-            if (DeadLetterDestination != null)
+            if (Optional.IsDefined(DeadLetterDestination))
             {
                 writer.WritePropertyName("deadLetterDestination"u8);
                 writer.WriteObjectValue(DeadLetterDestination);

@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.Synapse.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(MetadataType.ToString());
-            if (Id.HasValue)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteNumberValue(Id.Value);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);

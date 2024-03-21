@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
@@ -32,7 +31,7 @@ namespace Azure.AI.DocumentIntelligence
             writer.WritePropertyName("quota"u8);
             writer.WriteNumberValue(Quota);
             writer.WritePropertyName("quotaResetDateTime"u8);
-            writer.WriteStringValue(QuotaResetDateTime, "O");
+            writer.WriteStringValue(QuotaResetsOn, "O");
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

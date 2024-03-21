@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);

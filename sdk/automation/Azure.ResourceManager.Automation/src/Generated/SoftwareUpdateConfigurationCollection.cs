@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Automation.Models;
 
 namespace Azure.ResourceManager.Automation
@@ -84,18 +82,8 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="softwareUpdateConfigurationName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SoftwareUpdateConfigurationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string softwareUpdateConfigurationName, SoftwareUpdateConfigurationData data, string clientRequestId = null, CancellationToken cancellationToken = default)
         {
-            if (softwareUpdateConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(softwareUpdateConfigurationName));
-            }
-            if (softwareUpdateConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(softwareUpdateConfigurationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(softwareUpdateConfigurationName, nameof(softwareUpdateConfigurationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _softwareUpdateConfigurationClientDiagnostics.CreateScope("SoftwareUpdateConfigurationCollection.CreateOrUpdate");
             scope.Start();
@@ -144,18 +132,8 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="softwareUpdateConfigurationName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SoftwareUpdateConfigurationResource> CreateOrUpdate(WaitUntil waitUntil, string softwareUpdateConfigurationName, SoftwareUpdateConfigurationData data, string clientRequestId = null, CancellationToken cancellationToken = default)
         {
-            if (softwareUpdateConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(softwareUpdateConfigurationName));
-            }
-            if (softwareUpdateConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(softwareUpdateConfigurationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(softwareUpdateConfigurationName, nameof(softwareUpdateConfigurationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _softwareUpdateConfigurationClientDiagnostics.CreateScope("SoftwareUpdateConfigurationCollection.CreateOrUpdate");
             scope.Start();
@@ -202,14 +180,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="softwareUpdateConfigurationName"/> is null. </exception>
         public virtual async Task<Response<SoftwareUpdateConfigurationResource>> GetAsync(string softwareUpdateConfigurationName, string clientRequestId = null, CancellationToken cancellationToken = default)
         {
-            if (softwareUpdateConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(softwareUpdateConfigurationName));
-            }
-            if (softwareUpdateConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(softwareUpdateConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(softwareUpdateConfigurationName, nameof(softwareUpdateConfigurationName));
 
             using var scope = _softwareUpdateConfigurationClientDiagnostics.CreateScope("SoftwareUpdateConfigurationCollection.Get");
             scope.Start();
@@ -255,14 +226,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="softwareUpdateConfigurationName"/> is null. </exception>
         public virtual Response<SoftwareUpdateConfigurationResource> Get(string softwareUpdateConfigurationName, string clientRequestId = null, CancellationToken cancellationToken = default)
         {
-            if (softwareUpdateConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(softwareUpdateConfigurationName));
-            }
-            if (softwareUpdateConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(softwareUpdateConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(softwareUpdateConfigurationName, nameof(softwareUpdateConfigurationName));
 
             using var scope = _softwareUpdateConfigurationClientDiagnostics.CreateScope("SoftwareUpdateConfigurationCollection.Get");
             scope.Start();
@@ -370,14 +334,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="softwareUpdateConfigurationName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string softwareUpdateConfigurationName, string clientRequestId = null, CancellationToken cancellationToken = default)
         {
-            if (softwareUpdateConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(softwareUpdateConfigurationName));
-            }
-            if (softwareUpdateConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(softwareUpdateConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(softwareUpdateConfigurationName, nameof(softwareUpdateConfigurationName));
 
             using var scope = _softwareUpdateConfigurationClientDiagnostics.CreateScope("SoftwareUpdateConfigurationCollection.Exists");
             scope.Start();
@@ -421,14 +378,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="softwareUpdateConfigurationName"/> is null. </exception>
         public virtual Response<bool> Exists(string softwareUpdateConfigurationName, string clientRequestId = null, CancellationToken cancellationToken = default)
         {
-            if (softwareUpdateConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(softwareUpdateConfigurationName));
-            }
-            if (softwareUpdateConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(softwareUpdateConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(softwareUpdateConfigurationName, nameof(softwareUpdateConfigurationName));
 
             using var scope = _softwareUpdateConfigurationClientDiagnostics.CreateScope("SoftwareUpdateConfigurationCollection.Exists");
             scope.Start();
@@ -472,14 +422,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="softwareUpdateConfigurationName"/> is null. </exception>
         public virtual async Task<NullableResponse<SoftwareUpdateConfigurationResource>> GetIfExistsAsync(string softwareUpdateConfigurationName, string clientRequestId = null, CancellationToken cancellationToken = default)
         {
-            if (softwareUpdateConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(softwareUpdateConfigurationName));
-            }
-            if (softwareUpdateConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(softwareUpdateConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(softwareUpdateConfigurationName, nameof(softwareUpdateConfigurationName));
 
             using var scope = _softwareUpdateConfigurationClientDiagnostics.CreateScope("SoftwareUpdateConfigurationCollection.GetIfExists");
             scope.Start();
@@ -525,14 +468,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="softwareUpdateConfigurationName"/> is null. </exception>
         public virtual NullableResponse<SoftwareUpdateConfigurationResource> GetIfExists(string softwareUpdateConfigurationName, string clientRequestId = null, CancellationToken cancellationToken = default)
         {
-            if (softwareUpdateConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(softwareUpdateConfigurationName));
-            }
-            if (softwareUpdateConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(softwareUpdateConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(softwareUpdateConfigurationName, nameof(softwareUpdateConfigurationName));
 
             using var scope = _softwareUpdateConfigurationClientDiagnostics.CreateScope("SoftwareUpdateConfigurationCollection.GetIfExists");
             scope.Start();

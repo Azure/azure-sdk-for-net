@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (IsSecureBootEnabled.HasValue)
+            if (Optional.IsDefined(IsSecureBootEnabled))
             {
                 writer.WritePropertyName("secureBootEnabled"u8);
                 writer.WriteBooleanValue(IsSecureBootEnabled.Value);
             }
-            if (IsVirtualTpmEnabled.HasValue)
+            if (Optional.IsDefined(IsVirtualTpmEnabled))
             {
                 writer.WritePropertyName("vTpmEnabled"u8);
                 writer.WriteBooleanValue(IsVirtualTpmEnabled.Value);

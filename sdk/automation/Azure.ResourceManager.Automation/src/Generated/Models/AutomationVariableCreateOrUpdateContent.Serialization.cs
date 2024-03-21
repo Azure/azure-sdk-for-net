@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (IsEncrypted.HasValue)
+            if (Optional.IsDefined(IsEncrypted))
             {
                 writer.WritePropertyName("isEncrypted"u8);
                 writer.WriteBooleanValue(IsEncrypted.Value);

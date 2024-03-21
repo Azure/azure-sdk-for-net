@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -34,7 +33,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && NextLink != null)
+            if (options.Format != "W" && Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);

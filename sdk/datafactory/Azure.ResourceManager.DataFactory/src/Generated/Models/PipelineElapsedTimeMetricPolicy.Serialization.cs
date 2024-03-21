@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Duration != null)
+            if (Optional.IsDefined(Duration))
             {
                 writer.WritePropertyName("duration"u8);
 #if NET6_0_OR_GREATER

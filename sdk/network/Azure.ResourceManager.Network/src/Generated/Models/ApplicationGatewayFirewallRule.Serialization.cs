@@ -28,22 +28,22 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("ruleId"u8);
             writer.WriteNumberValue(RuleId);
-            if (RuleIdString != null)
+            if (Optional.IsDefined(RuleIdString))
             {
                 writer.WritePropertyName("ruleIdString"u8);
                 writer.WriteStringValue(RuleIdString);
             }
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Action.HasValue)
+            if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action.Value.ToString());
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (StatusCode.HasValue)
+            if (Optional.IsDefined(StatusCode))
             {
                 writer.WritePropertyName("statusCode"u8);
                 writer.WriteStringValue(StatusCode.Value.ToString());
             }
-            if (CustomErrorPageUri != null)
+            if (Optional.IsDefined(CustomErrorPageUri))
             {
                 writer.WritePropertyName("customErrorPageUrl"u8);
                 writer.WriteStringValue(CustomErrorPageUri.AbsoluteUri);

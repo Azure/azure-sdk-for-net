@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(AvailableDates is ChangeTrackingList<DateTimeOffset> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AvailableDates))
             {
                 writer.WritePropertyName("availableDates"u8);
                 writer.WriteStartArray();

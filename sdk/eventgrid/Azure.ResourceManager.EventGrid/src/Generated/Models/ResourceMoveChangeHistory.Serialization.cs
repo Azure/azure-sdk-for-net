@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (AzureSubscriptionId != null)
+            if (Optional.IsDefined(AzureSubscriptionId))
             {
                 writer.WritePropertyName("azureSubscriptionId"u8);
                 writer.WriteStringValue(AzureSubscriptionId);
             }
-            if (ResourceGroupName != null)
+            if (Optional.IsDefined(ResourceGroupName))
             {
                 writer.WritePropertyName("resourceGroupName"u8);
                 writer.WriteStringValue(ResourceGroupName);
             }
-            if (ChangedTimeUtc.HasValue)
+            if (Optional.IsDefined(ChangedTimeUtc))
             {
                 writer.WritePropertyName("changedTimeUtc"u8);
                 writer.WriteStringValue(ChangedTimeUtc.Value, "O");

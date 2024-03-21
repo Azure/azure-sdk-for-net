@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (FeatureType.HasValue)
+            if (Optional.IsDefined(FeatureType))
             {
                 writer.WritePropertyName("featureType"u8);
                 writer.WriteStringValue(FeatureType.Value.ToString());
             }
-            if (!(Features is ChangeTrackingList<BackupSupportedFeature> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Features))
             {
                 writer.WritePropertyName("features"u8);
                 writer.WriteStartArray();

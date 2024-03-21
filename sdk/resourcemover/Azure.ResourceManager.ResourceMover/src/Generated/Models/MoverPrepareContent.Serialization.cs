@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             writer.WriteStartObject();
-            if (ValidateOnly.HasValue)
+            if (Optional.IsDefined(ValidateOnly))
             {
                 writer.WritePropertyName("validateOnly"u8);
                 writer.WriteBooleanValue(ValidateOnly.Value);
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (MoverResourceInputType.HasValue)
+            if (Optional.IsDefined(MoverResourceInputType))
             {
                 writer.WritePropertyName("moveResourceInputType"u8);
                 writer.WriteStringValue(MoverResourceInputType.Value.ToString());

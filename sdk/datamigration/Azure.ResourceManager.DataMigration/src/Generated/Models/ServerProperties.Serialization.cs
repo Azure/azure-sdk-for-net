@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ServerPlatform != null)
+            if (options.Format != "W" && Optional.IsDefined(ServerPlatform))
             {
                 writer.WritePropertyName("serverPlatform"u8);
                 writer.WriteStringValue(ServerPlatform);
             }
-            if (options.Format != "W" && ServerName != null)
+            if (options.Format != "W" && Optional.IsDefined(ServerName))
             {
                 writer.WritePropertyName("serverName"u8);
                 writer.WriteStringValue(ServerName);
             }
-            if (options.Format != "W" && ServerVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(ServerVersion))
             {
                 writer.WritePropertyName("serverVersion"u8);
                 writer.WriteStringValue(ServerVersion);
             }
-            if (options.Format != "W" && ServerEdition != null)
+            if (options.Format != "W" && Optional.IsDefined(ServerEdition))
             {
                 writer.WritePropertyName("serverEdition"u8);
                 writer.WriteStringValue(ServerEdition);
             }
-            if (options.Format != "W" && ServerOperatingSystemVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(ServerOperatingSystemVersion))
             {
                 writer.WritePropertyName("serverOperatingSystemVersion"u8);
                 writer.WriteStringValue(ServerOperatingSystemVersion);
             }
-            if (options.Format != "W" && ServerDatabaseCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ServerDatabaseCount))
             {
                 writer.WritePropertyName("serverDatabaseCount"u8);
                 writer.WriteNumberValue(ServerDatabaseCount.Value);

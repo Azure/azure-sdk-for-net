@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Field != null)
+            if (Optional.IsDefined(Field))
             {
                 writer.WritePropertyName("field"u8);
                 writer.WriteStringValue(Field);

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Address != null)
+            if (Optional.IsDefined(Address))
             {
                 writer.WritePropertyName("address"u8);
                 writer.WriteStringValue(Address);
             }
-            if (options.Format != "W" && ConfigurationState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ConfigurationState))
             {
                 writer.WritePropertyName("configurationState"u8);
                 writer.WriteStringValue(ConfigurationState.Value.ToString());

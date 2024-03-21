@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && RegionType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RegionType))
             {
                 writer.WritePropertyName("regionType"u8);
                 writer.WriteStringValue(RegionType.Value.ToString());
             }
-            if (options.Format != "W" && RegionCategory.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RegionCategory))
             {
                 writer.WritePropertyName("regionCategory"u8);
                 writer.WriteStringValue(RegionCategory.Value.ToString());
             }
-            if (options.Format != "W" && Geography != null)
+            if (options.Format != "W" && Optional.IsDefined(Geography))
             {
                 writer.WritePropertyName("geography"u8);
                 writer.WriteStringValue(Geography);
             }
-            if (options.Format != "W" && GeographyGroup != null)
+            if (options.Format != "W" && Optional.IsDefined(GeographyGroup))
             {
                 writer.WritePropertyName("geographyGroup"u8);
                 writer.WriteStringValue(GeographyGroup);
             }
-            if (options.Format != "W" && Longitude.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Longitude))
             {
                 writer.WritePropertyName("longitude"u8);
                 WriteLongitude(writer);
             }
-            if (options.Format != "W" && Latitude.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Latitude))
             {
                 writer.WritePropertyName("latitude"u8);
                 WriteLatitude(writer);
             }
-            if (options.Format != "W" && PhysicalLocation != null)
+            if (options.Format != "W" && Optional.IsDefined(PhysicalLocation))
             {
                 writer.WritePropertyName("physicalLocation"u8);
                 writer.WriteStringValue(PhysicalLocation);
             }
-            if (!(PairedRegions is ChangeTrackingList<PairedRegion> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PairedRegions))
             {
                 writer.WritePropertyName("pairedRegion"u8);
                 writer.WriteStartArray();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && HomeLocation != null)
+            if (options.Format != "W" && Optional.IsDefined(HomeLocation))
             {
                 writer.WritePropertyName("homeLocation"u8);
                 writer.WriteStringValue(HomeLocation);

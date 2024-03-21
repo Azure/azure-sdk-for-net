@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (RuleId != null)
+            if (Optional.IsDefined(RuleId))
             {
                 writer.WritePropertyName("ruleId"u8);
                 writer.WriteStringValue(RuleId);
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStringValue(SourceContainer);
             writer.WritePropertyName("destinationContainer"u8);
             writer.WriteStringValue(DestinationContainer);
-            if (Filters != null)
+            if (Optional.IsDefined(Filters))
             {
                 writer.WritePropertyName("filters"u8);
                 writer.WriteObjectValue(Filters);

@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.Elastic.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && DeploymentId != null)
+            if (options.Format != "W" && Optional.IsDefined(DeploymentId))
             {
                 writer.WritePropertyName("deploymentId"u8);
                 writer.WriteStringValue(DeploymentId);
             }
-            if (options.Format != "W" && AzureSubscriptionId != null)
+            if (options.Format != "W" && Optional.IsDefined(AzureSubscriptionId))
             {
                 writer.WritePropertyName("azureSubscriptionId"u8);
                 writer.WriteStringValue(AzureSubscriptionId);
             }
-            if (options.Format != "W" && ElasticsearchRegion != null)
+            if (options.Format != "W" && Optional.IsDefined(ElasticsearchRegion))
             {
                 writer.WritePropertyName("elasticsearchRegion"u8);
                 writer.WriteStringValue(ElasticsearchRegion);
             }
-            if (options.Format != "W" && ElasticsearchServiceUri != null)
+            if (options.Format != "W" && Optional.IsDefined(ElasticsearchServiceUri))
             {
                 writer.WritePropertyName("elasticsearchServiceUrl"u8);
                 writer.WriteStringValue(ElasticsearchServiceUri.AbsoluteUri);
             }
-            if (options.Format != "W" && KibanaServiceUri != null)
+            if (options.Format != "W" && Optional.IsDefined(KibanaServiceUri))
             {
                 writer.WritePropertyName("kibanaServiceUrl"u8);
                 writer.WriteStringValue(KibanaServiceUri.AbsoluteUri);
             }
-            if (options.Format != "W" && KibanaSsoUri != null)
+            if (options.Format != "W" && Optional.IsDefined(KibanaSsoUri))
             {
                 writer.WritePropertyName("kibanaSsoUrl"u8);
                 writer.WriteStringValue(KibanaSsoUri.AbsoluteUri);

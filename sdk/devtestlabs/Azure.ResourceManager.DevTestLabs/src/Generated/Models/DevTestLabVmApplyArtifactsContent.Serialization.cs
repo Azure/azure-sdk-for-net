@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (!(Artifacts is ChangeTrackingList<DevTestLabArtifactInstallInfo> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Artifacts))
             {
                 writer.WritePropertyName("artifacts"u8);
                 writer.WriteStartArray();

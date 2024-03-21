@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStringValue(Access.ToSerialString());
             writer.WritePropertyName("sourceAddressPrefix"u8);
             writer.WriteStringValue(SourceAddressPrefix);
-            if (!(SourcePortRanges is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SourcePortRanges))
             {
                 writer.WritePropertyName("sourcePortRanges"u8);
                 writer.WriteStartArray();

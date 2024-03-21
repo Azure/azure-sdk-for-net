@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartObject();
             writer.WritePropertyName("error"u8);
             writer.WriteStartObject();
-            if (Code != null)
+            if (Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);

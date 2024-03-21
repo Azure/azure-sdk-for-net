@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);

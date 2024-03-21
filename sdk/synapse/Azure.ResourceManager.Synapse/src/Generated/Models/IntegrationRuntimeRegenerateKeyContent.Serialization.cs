@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (KeyName.HasValue)
+            if (Optional.IsDefined(KeyName))
             {
                 writer.WritePropertyName("keyName"u8);
                 writer.WriteStringValue(KeyName.Value.ToString());

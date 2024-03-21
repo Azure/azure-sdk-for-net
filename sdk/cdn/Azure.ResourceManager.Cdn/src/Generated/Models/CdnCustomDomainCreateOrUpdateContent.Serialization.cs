@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (HostName != null)
+            if (Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);

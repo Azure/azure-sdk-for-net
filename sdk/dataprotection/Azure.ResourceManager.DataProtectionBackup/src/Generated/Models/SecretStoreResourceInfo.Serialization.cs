@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Uri != null)
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
             writer.WritePropertyName("secretStoreType"u8);
             writer.WriteStringValue(SecretStoreType.ToString());
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);

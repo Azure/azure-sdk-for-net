@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.DataShare.Models;
@@ -65,10 +64,7 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="emailRegistration"/> is null. </exception>
         public async Task<Response<DataShareEmailRegistration>> ActivateEmailAsync(AzureLocation location, DataShareEmailRegistration emailRegistration, CancellationToken cancellationToken = default)
         {
-            if (emailRegistration == null)
-            {
-                throw new ArgumentNullException(nameof(emailRegistration));
-            }
+            Argument.AssertNotNull(emailRegistration, nameof(emailRegistration));
 
             using var message = CreateActivateEmailRequest(location, emailRegistration);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -93,10 +89,7 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="emailRegistration"/> is null. </exception>
         public Response<DataShareEmailRegistration> ActivateEmail(AzureLocation location, DataShareEmailRegistration emailRegistration, CancellationToken cancellationToken = default)
         {
-            if (emailRegistration == null)
-            {
-                throw new ArgumentNullException(nameof(emailRegistration));
-            }
+            Argument.AssertNotNull(emailRegistration, nameof(emailRegistration));
 
             using var message = CreateActivateEmailRequest(location, emailRegistration);
             _pipeline.Send(message, cancellationToken);

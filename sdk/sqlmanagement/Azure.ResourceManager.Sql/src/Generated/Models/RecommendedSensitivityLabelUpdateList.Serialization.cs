@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (!(Operations is ChangeTrackingList<RecommendedSensitivityLabelUpdate> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Operations))
             {
                 writer.WritePropertyName("operations"u8);
                 writer.WriteStartArray();

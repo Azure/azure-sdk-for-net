@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (SecretIdentifier != null)
+            if (Optional.IsDefined(SecretIdentifier))
             {
                 writer.WritePropertyName("secretIdentifier"u8);
                 writer.WriteStringValue(SecretIdentifier);
             }
-            if (KeyVaultResourceArmId != null)
+            if (Optional.IsDefined(KeyVaultResourceArmId))
             {
                 writer.WritePropertyName("keyVaultResourceArmId"u8);
                 writer.WriteStringValue(KeyVaultResourceArmId);

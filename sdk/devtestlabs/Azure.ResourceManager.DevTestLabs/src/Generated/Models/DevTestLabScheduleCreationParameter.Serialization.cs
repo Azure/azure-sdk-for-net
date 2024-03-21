@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -49,42 +49,42 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (TaskType != null)
+            if (Optional.IsDefined(TaskType))
             {
                 writer.WritePropertyName("taskType"u8);
                 writer.WriteStringValue(TaskType);
             }
-            if (WeeklyRecurrence != null)
+            if (Optional.IsDefined(WeeklyRecurrence))
             {
                 writer.WritePropertyName("weeklyRecurrence"u8);
                 writer.WriteObjectValue(WeeklyRecurrence);
             }
-            if (DailyRecurrence != null)
+            if (Optional.IsDefined(DailyRecurrence))
             {
                 writer.WritePropertyName("dailyRecurrence"u8);
                 writer.WriteObjectValue(DailyRecurrence);
             }
-            if (HourlyRecurrence != null)
+            if (Optional.IsDefined(HourlyRecurrence))
             {
                 writer.WritePropertyName("hourlyRecurrence"u8);
                 writer.WriteObjectValue(HourlyRecurrence);
             }
-            if (TimeZoneId != null)
+            if (Optional.IsDefined(TimeZoneId))
             {
                 writer.WritePropertyName("timeZoneId"u8);
                 writer.WriteStringValue(TimeZoneId);
             }
-            if (NotificationSettings != null)
+            if (Optional.IsDefined(NotificationSettings))
             {
                 writer.WritePropertyName("notificationSettings"u8);
                 writer.WriteObjectValue(NotificationSettings);
             }
-            if (TargetResourceId != null)
+            if (Optional.IsDefined(TargetResourceId))
             {
                 writer.WritePropertyName("targetResourceId"u8);
                 writer.WriteStringValue(TargetResourceId);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
 
             writer.WriteStartObject();
-            if (!(ExtensionTargets is ChangeTrackingDictionary<string, ExtensionTargetProperties> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ExtensionTargets))
             {
                 writer.WritePropertyName("extensionTargets"u8);
                 writer.WriteStartObject();

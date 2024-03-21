@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && !(Groups is ChangeTrackingList<ContainerServiceFleetUpdateGroupStatus> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Groups))
             {
                 writer.WritePropertyName("groups"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && AfterStageWaitStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(AfterStageWaitStatus))
             {
                 writer.WritePropertyName("afterStageWaitStatus"u8);
                 writer.WriteObjectValue(AfterStageWaitStatus);

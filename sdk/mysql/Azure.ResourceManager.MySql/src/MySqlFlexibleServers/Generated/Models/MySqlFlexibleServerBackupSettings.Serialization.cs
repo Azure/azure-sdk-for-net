@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             writer.WriteStartObject();
             writer.WritePropertyName("backupName"u8);
             writer.WriteStringValue(BackupName);
-            if (BackupFormat.HasValue)
+            if (Optional.IsDefined(BackupFormat))
             {
                 writer.WritePropertyName("backupFormat"u8);
                 writer.WriteStringValue(BackupFormat.Value.ToString());

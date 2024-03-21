@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(StepType.ToString());
-            if (ContextPath != null)
+            if (Optional.IsDefined(ContextPath))
             {
                 writer.WritePropertyName("contextPath"u8);
                 writer.WriteStringValue(ContextPath);
             }
-            if (ContextAccessToken != null)
+            if (Optional.IsDefined(ContextAccessToken))
             {
                 writer.WritePropertyName("contextAccessToken"u8);
                 writer.WriteStringValue(ContextAccessToken);

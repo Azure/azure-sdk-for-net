@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         public CosmosDBTableResourceInfo(string tableName)
         {
-            if (tableName == null)
-            {
-                throw new ArgumentNullException(nameof(tableName));
-            }
+            Argument.AssertNotNull(tableName, nameof(tableName));
 
             TableName = tableName;
         }

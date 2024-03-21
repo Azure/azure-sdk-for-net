@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (KeyData != null)
+            if (Optional.IsDefined(KeyData))
             {
                 writer.WritePropertyName("keyData"u8);
                 writer.WriteStringValue(KeyData);

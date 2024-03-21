@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             writer.WriteStartObject();
             writer.WritePropertyName("networkId"u8);
             writer.WriteStringValue(NetworkId);
-            if (PluginType.HasValue)
+            if (Optional.IsDefined(PluginType))
             {
                 writer.WritePropertyName("pluginType"u8);
                 writer.WriteStringValue(PluginType.Value.ToString());

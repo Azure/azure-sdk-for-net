@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SignalR.Models
             }
 
             writer.WriteStartObject();
-            if (!(Templates is ChangeTrackingList<SignalRUpstreamTemplate> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Templates))
             {
                 writer.WritePropertyName("templates"u8);
                 writer.WriteStartArray();

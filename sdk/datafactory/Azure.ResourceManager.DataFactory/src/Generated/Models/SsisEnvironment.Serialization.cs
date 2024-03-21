@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (FolderId.HasValue)
+            if (Optional.IsDefined(FolderId))
             {
                 writer.WritePropertyName("folderId"u8);
                 writer.WriteNumberValue(FolderId.Value);
             }
-            if (!(Variables is ChangeTrackingList<SsisVariable> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Variables))
             {
                 writer.WritePropertyName("variables"u8);
                 writer.WriteStartArray();
@@ -43,17 +43,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(MetadataType.ToString());
-            if (Id.HasValue)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteNumberValue(Id.Value);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);

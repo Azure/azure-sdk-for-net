@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartObject();
             writer.WritePropertyName("number"u8);
             writer.WriteNumberValue(Number);
-            if (AllowedSourceAddressPrefix != null)
+            if (Optional.IsDefined(AllowedSourceAddressPrefix))
             {
                 writer.WritePropertyName("allowedSourceAddressPrefix"u8);
                 writer.WriteStringValue(AllowedSourceAddressPrefix);
             }
-            if (!(AllowedSourceAddressPrefixes is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AllowedSourceAddressPrefixes))
             {
                 writer.WritePropertyName("allowedSourceAddressPrefixes"u8);
                 writer.WriteStartArray();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStringValue(Status.ToString());
             writer.WritePropertyName("statusReason"u8);
             writer.WriteStringValue(StatusReason.ToString());
-            if (MappedPort.HasValue)
+            if (Optional.IsDefined(MappedPort))
             {
                 writer.WritePropertyName("mappedPort"u8);
                 writer.WriteNumberValue(MappedPort.Value);

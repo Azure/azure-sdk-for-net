@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SignalR.Models
             }
 
             writer.WriteStartObject();
-            if (IsClientCertEnabled.HasValue)
+            if (Optional.IsDefined(IsClientCertEnabled))
             {
                 writer.WritePropertyName("clientCertEnabled"u8);
                 writer.WriteBooleanValue(IsClientCertEnabled.Value);

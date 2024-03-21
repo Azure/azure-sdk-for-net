@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
@@ -33,7 +32,7 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteStringValue(ModelId);
             writer.WritePropertyName("stringIndexType"u8);
             writer.WriteStringValue(StringIndexType.ToString());
-            if (ContentFormat.HasValue)
+            if (Optional.IsDefined(ContentFormat))
             {
                 writer.WritePropertyName("contentFormat"u8);
                 writer.WriteStringValue(ContentFormat.Value.ToString());
@@ -47,7 +46,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (!(Paragraphs is ChangeTrackingList<DocumentParagraph> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Paragraphs))
             {
                 writer.WritePropertyName("paragraphs"u8);
                 writer.WriteStartArray();
@@ -57,7 +56,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 writer.WriteEndArray();
             }
-            if (!(Tables is ChangeTrackingList<DocumentTable> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Tables))
             {
                 writer.WritePropertyName("tables"u8);
                 writer.WriteStartArray();
@@ -67,7 +66,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 writer.WriteEndArray();
             }
-            if (!(Figures is ChangeTrackingList<DocumentFigure> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Figures))
             {
                 writer.WritePropertyName("figures"u8);
                 writer.WriteStartArray();
@@ -77,7 +76,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 writer.WriteEndArray();
             }
-            if (!(Lists is ChangeTrackingList<DocumentList> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(Lists))
             {
                 writer.WritePropertyName("lists"u8);
                 writer.WriteStartArray();
@@ -87,7 +86,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 writer.WriteEndArray();
             }
-            if (!(Sections is ChangeTrackingList<DocumentSection> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(Sections))
             {
                 writer.WritePropertyName("sections"u8);
                 writer.WriteStartArray();
@@ -97,7 +96,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 writer.WriteEndArray();
             }
-            if (!(KeyValuePairs is ChangeTrackingList<DocumentKeyValuePair> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(KeyValuePairs))
             {
                 writer.WritePropertyName("keyValuePairs"u8);
                 writer.WriteStartArray();
@@ -107,7 +106,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 writer.WriteEndArray();
             }
-            if (!(Styles is ChangeTrackingList<DocumentStyle> collection5 && collection5.IsUndefined))
+            if (Optional.IsCollectionDefined(Styles))
             {
                 writer.WritePropertyName("styles"u8);
                 writer.WriteStartArray();
@@ -117,7 +116,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 writer.WriteEndArray();
             }
-            if (!(Languages is ChangeTrackingList<DocumentLanguage> collection6 && collection6.IsUndefined))
+            if (Optional.IsCollectionDefined(Languages))
             {
                 writer.WritePropertyName("languages"u8);
                 writer.WriteStartArray();
@@ -127,7 +126,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 writer.WriteEndArray();
             }
-            if (!(Documents is ChangeTrackingList<AnalyzedDocument> collection7 && collection7.IsUndefined))
+            if (Optional.IsCollectionDefined(Documents))
             {
                 writer.WritePropertyName("documents"u8);
                 writer.WriteStartArray();

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (AccountResourceId != null)
+            if (Optional.IsDefined(AccountResourceId))
             {
                 writer.WritePropertyName("accountResourceId"u8);
                 writer.WriteStringValue(AccountResourceId);
             }
-            if (options.Format != "W" && AccountId != null)
+            if (options.Format != "W" && Optional.IsDefined(AccountId))
             {
                 writer.WritePropertyName("accountId"u8);
                 writer.WriteStringValue(AccountId);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);

@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Exe.HasValue)
+            if (Optional.IsDefined(Exe))
             {
                 writer.WritePropertyName("exe"u8);
                 writer.WriteStringValue(Exe.Value.ToString());
             }
-            if (Msi.HasValue)
+            if (Optional.IsDefined(Msi))
             {
                 writer.WritePropertyName("msi"u8);
                 writer.WriteStringValue(Msi.Value.ToString());
             }
-            if (Script.HasValue)
+            if (Optional.IsDefined(Script))
             {
                 writer.WritePropertyName("script"u8);
                 writer.WriteStringValue(Script.Value.ToString());
             }
-            if (Executable.HasValue)
+            if (Optional.IsDefined(Executable))
             {
                 writer.WritePropertyName("executable"u8);
                 writer.WriteStringValue(Executable.Value.ToString());

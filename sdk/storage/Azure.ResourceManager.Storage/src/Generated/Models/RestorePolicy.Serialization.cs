@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStartObject();
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(IsEnabled);
-            if (Days.HasValue)
+            if (Optional.IsDefined(Days))
             {
                 writer.WritePropertyName("days"u8);
                 writer.WriteNumberValue(Days.Value);
             }
-            if (options.Format != "W" && LastEnabledOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastEnabledOn))
             {
                 writer.WritePropertyName("lastEnabledTime"u8);
                 writer.WriteStringValue(LastEnabledOn.Value, "O");
             }
-            if (options.Format != "W" && MinRestoreOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MinRestoreOn))
             {
                 writer.WritePropertyName("minRestoreTime"u8);
                 writer.WriteStringValue(MinRestoreOn.Value, "O");

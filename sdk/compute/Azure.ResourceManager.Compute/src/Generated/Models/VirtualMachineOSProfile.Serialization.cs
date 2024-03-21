@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (ComputerName != null)
+            if (Optional.IsDefined(ComputerName))
             {
                 writer.WritePropertyName("computerName"u8);
                 writer.WriteStringValue(ComputerName);
             }
-            if (AdminUsername != null)
+            if (Optional.IsDefined(AdminUsername))
             {
                 writer.WritePropertyName("adminUsername"u8);
                 writer.WriteStringValue(AdminUsername);
             }
-            if (AdminPassword != null)
+            if (Optional.IsDefined(AdminPassword))
             {
                 writer.WritePropertyName("adminPassword"u8);
                 writer.WriteStringValue(AdminPassword);
             }
-            if (CustomData != null)
+            if (Optional.IsDefined(CustomData))
             {
                 writer.WritePropertyName("customData"u8);
                 writer.WriteStringValue(CustomData);
             }
-            if (WindowsConfiguration != null)
+            if (Optional.IsDefined(WindowsConfiguration))
             {
                 writer.WritePropertyName("windowsConfiguration"u8);
                 writer.WriteObjectValue(WindowsConfiguration);
             }
-            if (LinuxConfiguration != null)
+            if (Optional.IsDefined(LinuxConfiguration))
             {
                 writer.WritePropertyName("linuxConfiguration"u8);
                 writer.WriteObjectValue(LinuxConfiguration);
             }
-            if (!(Secrets is ChangeTrackingList<VaultSecretGroup> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Secrets))
             {
                 writer.WritePropertyName("secrets"u8);
                 writer.WriteStartArray();
@@ -66,12 +66,12 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (AllowExtensionOperations.HasValue)
+            if (Optional.IsDefined(AllowExtensionOperations))
             {
                 writer.WritePropertyName("allowExtensionOperations"u8);
                 writer.WriteBooleanValue(AllowExtensionOperations.Value);
             }
-            if (RequireGuestProvisionSignal.HasValue)
+            if (Optional.IsDefined(RequireGuestProvisionSignal))
             {
                 writer.WritePropertyName("requireGuestProvisionSignal"u8);
                 writer.WriteBooleanValue(RequireGuestProvisionSignal.Value);

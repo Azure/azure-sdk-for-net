@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && CurrentState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CurrentState))
             {
                 writer.WritePropertyName("currentState"u8);
                 writer.WriteStringValue(CurrentState.Value.ToString());
             }
-            if (ErrorMessage != null)
+            if (Optional.IsDefined(ErrorMessage))
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
             }
-            if (!(ReadyReplicas is ChangeTrackingList<AgentPoolUpdateProfile> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ReadyReplicas))
             {
                 writer.WritePropertyName("readyReplicas"u8);
                 writer.WriteStartArray();

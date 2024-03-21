@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Order.HasValue)
+            if (Optional.IsDefined(Order))
             {
                 writer.WritePropertyName("order"u8);
                 writer.WriteStringValue(Order.Value.ToString());

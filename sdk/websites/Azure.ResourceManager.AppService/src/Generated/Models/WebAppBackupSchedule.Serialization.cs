@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteBooleanValue(ShouldKeepAtLeastOneBackup);
             writer.WritePropertyName("retentionPeriodInDays"u8);
             writer.WriteNumberValue(RetentionPeriodInDays);
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && LastExecutedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastExecutedOn))
             {
                 writer.WritePropertyName("lastExecutionTime"u8);
                 writer.WriteStringValue(LastExecutedOn.Value, "O");

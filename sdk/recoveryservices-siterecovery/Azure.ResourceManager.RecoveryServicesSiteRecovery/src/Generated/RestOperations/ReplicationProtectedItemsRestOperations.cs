@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
@@ -73,46 +72,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/> or <paramref name="protectionContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ReplicationProtectedItemListResult>> ListByReplicationProtectionContainersAsync(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
-            if (protectionContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(protectionContainerName));
-            }
-            if (protectionContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectionContainerName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
 
             using var message = CreateListByReplicationProtectionContainersRequest(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -141,46 +105,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/> or <paramref name="protectionContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ReplicationProtectedItemListResult> ListByReplicationProtectionContainers(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
-            if (protectionContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(protectionContainerName));
-            }
-            if (protectionContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectionContainerName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
 
             using var message = CreateListByReplicationProtectionContainersRequest(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName);
             _pipeline.Send(message, cancellationToken);
@@ -236,54 +165,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/> or <paramref name="replicatedProtectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ReplicationProtectedItemData>> GetAsync(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string replicatedProtectedItemName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
-            if (protectionContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(protectionContainerName));
-            }
-            if (protectionContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectionContainerName));
-            }
-            if (replicatedProtectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(replicatedProtectedItemName));
-            }
-            if (replicatedProtectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicatedProtectedItemName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
+            Argument.AssertNotNullOrEmpty(replicatedProtectedItemName, nameof(replicatedProtectedItemName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicatedProtectedItemName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -315,54 +202,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/> or <paramref name="replicatedProtectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ReplicationProtectedItemData> Get(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string replicatedProtectedItemName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
-            if (protectionContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(protectionContainerName));
-            }
-            if (protectionContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectionContainerName));
-            }
-            if (replicatedProtectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(replicatedProtectedItemName));
-            }
-            if (replicatedProtectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicatedProtectedItemName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
+            Argument.AssertNotNullOrEmpty(replicatedProtectedItemName, nameof(replicatedProtectedItemName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicatedProtectedItemName);
             _pipeline.Send(message, cancellationToken);
@@ -425,58 +270,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/> or <paramref name="replicatedProtectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string replicatedProtectedItemName, ReplicationProtectedItemCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
-            if (protectionContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(protectionContainerName));
-            }
-            if (protectionContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectionContainerName));
-            }
-            if (replicatedProtectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(replicatedProtectedItemName));
-            }
-            if (replicatedProtectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicatedProtectedItemName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
+            Argument.AssertNotNullOrEmpty(replicatedProtectedItemName, nameof(replicatedProtectedItemName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicatedProtectedItemName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -503,58 +303,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/> or <paramref name="replicatedProtectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Create(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string replicatedProtectedItemName, ReplicationProtectedItemCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
-            if (protectionContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(protectionContainerName));
-            }
-            if (protectionContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectionContainerName));
-            }
-            if (replicatedProtectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(replicatedProtectedItemName));
-            }
-            if (replicatedProtectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicatedProtectedItemName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
+            Argument.AssertNotNullOrEmpty(replicatedProtectedItemName, nameof(replicatedProtectedItemName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicatedProtectedItemName, content);
             _pipeline.Send(message, cancellationToken);
@@ -605,54 +360,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/> or <paramref name="replicatedProtectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> PurgeAsync(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string replicatedProtectedItemName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
-            if (protectionContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(protectionContainerName));
-            }
-            if (protectionContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectionContainerName));
-            }
-            if (replicatedProtectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(replicatedProtectedItemName));
-            }
-            if (replicatedProtectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicatedProtectedItemName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
+            Argument.AssertNotNullOrEmpty(replicatedProtectedItemName, nameof(replicatedProtectedItemName));
 
             using var message = CreatePurgeRequest(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicatedProtectedItemName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -678,54 +391,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/> or <paramref name="replicatedProtectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Purge(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string replicatedProtectedItemName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
-            if (protectionContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(protectionContainerName));
-            }
-            if (protectionContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectionContainerName));
-            }
-            if (replicatedProtectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(replicatedProtectedItemName));
-            }
-            if (replicatedProtectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicatedProtectedItemName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
+            Argument.AssertNotNullOrEmpty(replicatedProtectedItemName, nameof(replicatedProtectedItemName));
 
             using var message = CreatePurgeRequest(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicatedProtectedItemName);
             _pipeline.Send(message, cancellationToken);
@@ -782,58 +453,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/> or <paramref name="replicatedProtectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string replicatedProtectedItemName, ReplicationProtectedItemPatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
-            if (protectionContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(protectionContainerName));
-            }
-            if (protectionContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectionContainerName));
-            }
-            if (replicatedProtectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(replicatedProtectedItemName));
-            }
-            if (replicatedProtectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicatedProtectedItemName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
+            Argument.AssertNotNullOrEmpty(replicatedProtectedItemName, nameof(replicatedProtectedItemName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicatedProtectedItemName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -860,58 +486,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/> or <paramref name="replicatedProtectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Update(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string replicatedProtectedItemName, ReplicationProtectedItemPatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
-            if (protectionContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(protectionContainerName));
-            }
-            if (protectionContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectionContainerName));
-            }
-            if (replicatedProtectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(replicatedProtectedItemName));
-            }
-            if (replicatedProtectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicatedProtectedItemName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
+            Argument.AssertNotNullOrEmpty(replicatedProtectedItemName, nameof(replicatedProtectedItemName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicatedProtectedItemName, patch);
             _pipeline.Send(message, cancellationToken);
@@ -969,58 +550,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/> or <paramref name="replicatedProtectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> AddDisksAsync(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string replicatedProtectedItemName, SiteRecoveryAddDisksContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
-            if (protectionContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(protectionContainerName));
-            }
-            if (protectionContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectionContainerName));
-            }
-            if (replicatedProtectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(replicatedProtectedItemName));
-            }
-            if (replicatedProtectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicatedProtectedItemName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
+            Argument.AssertNotNullOrEmpty(replicatedProtectedItemName, nameof(replicatedProtectedItemName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateAddDisksRequest(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicatedProtectedItemName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1047,58 +583,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/> or <paramref name="replicatedProtectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response AddDisks(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string replicatedProtectedItemName, SiteRecoveryAddDisksContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
-            if (protectionContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(protectionContainerName));
-            }
-            if (protectionContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectionContainerName));
-            }
-            if (replicatedProtectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(replicatedProtectedItemName));
-            }
-            if (replicatedProtectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicatedProtectedItemName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
+            Argument.AssertNotNullOrEmpty(replicatedProtectedItemName, nameof(replicatedProtectedItemName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateAddDisksRequest(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicatedProtectedItemName, content);
             _pipeline.Send(message, cancellationToken);
@@ -1156,58 +647,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/> or <paramref name="replicatedProtectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> ApplyRecoveryPointAsync(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string replicatedProtectedItemName, SiteRecoveryApplyRecoveryPointContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
-            if (protectionContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(protectionContainerName));
-            }
-            if (protectionContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectionContainerName));
-            }
-            if (replicatedProtectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(replicatedProtectedItemName));
-            }
-            if (replicatedProtectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicatedProtectedItemName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
+            Argument.AssertNotNullOrEmpty(replicatedProtectedItemName, nameof(replicatedProtectedItemName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateApplyRecoveryPointRequest(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicatedProtectedItemName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1234,58 +680,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/> or <paramref name="replicatedProtectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response ApplyRecoveryPoint(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string replicatedProtectedItemName, SiteRecoveryApplyRecoveryPointContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
-            if (protectionContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(protectionContainerName));
-            }
-            if (protectionContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectionContainerName));
-            }
-            if (replicatedProtectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(replicatedProtectedItemName));
-            }
-            if (replicatedProtectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicatedProtectedItemName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
+            Argument.AssertNotNullOrEmpty(replicatedProtectedItemName, nameof(replicatedProtectedItemName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateApplyRecoveryPointRequest(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicatedProtectedItemName, content);
             _pipeline.Send(message, cancellationToken);
@@ -1338,54 +739,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/> or <paramref name="replicatedProtectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> FailoverCancelAsync(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string replicatedProtectedItemName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
-            if (protectionContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(protectionContainerName));
-            }
-            if (protectionContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectionContainerName));
-            }
-            if (replicatedProtectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(replicatedProtectedItemName));
-            }
-            if (replicatedProtectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicatedProtectedItemName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
+            Argument.AssertNotNullOrEmpty(replicatedProtectedItemName, nameof(replicatedProtectedItemName));
 
             using var message = CreateFailoverCancelRequest(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicatedProtectedItemName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1411,54 +770,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/> or <paramref name="replicatedProtectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response FailoverCancel(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string replicatedProtectedItemName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
-            if (protectionContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(protectionContainerName));
-            }
-            if (protectionContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectionContainerName));
-            }
-            if (replicatedProtectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(replicatedProtectedItemName));
-            }
-            if (replicatedProtectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicatedProtectedItemName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
+            Argument.AssertNotNullOrEmpty(replicatedProtectedItemName, nameof(replicatedProtectedItemName));
 
             using var message = CreateFailoverCancelRequest(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicatedProtectedItemName);
             _pipeline.Send(message, cancellationToken);
@@ -1511,54 +828,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/> or <paramref name="replicatedProtectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> FailoverCommitAsync(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string replicatedProtectedItemName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
-            if (protectionContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(protectionContainerName));
-            }
-            if (protectionContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectionContainerName));
-            }
-            if (replicatedProtectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(replicatedProtectedItemName));
-            }
-            if (replicatedProtectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicatedProtectedItemName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
+            Argument.AssertNotNullOrEmpty(replicatedProtectedItemName, nameof(replicatedProtectedItemName));
 
             using var message = CreateFailoverCommitRequest(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicatedProtectedItemName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1584,54 +859,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/> or <paramref name="replicatedProtectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response FailoverCommit(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string replicatedProtectedItemName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
-            if (protectionContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(protectionContainerName));
-            }
-            if (protectionContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectionContainerName));
-            }
-            if (replicatedProtectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(replicatedProtectedItemName));
-            }
-            if (replicatedProtectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicatedProtectedItemName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
+            Argument.AssertNotNullOrEmpty(replicatedProtectedItemName, nameof(replicatedProtectedItemName));
 
             using var message = CreateFailoverCommitRequest(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicatedProtectedItemName);
             _pipeline.Send(message, cancellationToken);
@@ -1689,58 +922,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/> or <paramref name="replicatedProtectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> PlannedFailoverAsync(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string replicatedProtectedItemName, PlannedFailoverContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
-            if (protectionContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(protectionContainerName));
-            }
-            if (protectionContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectionContainerName));
-            }
-            if (replicatedProtectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(replicatedProtectedItemName));
-            }
-            if (replicatedProtectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicatedProtectedItemName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
+            Argument.AssertNotNullOrEmpty(replicatedProtectedItemName, nameof(replicatedProtectedItemName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreatePlannedFailoverRequest(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicatedProtectedItemName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1767,58 +955,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/> or <paramref name="replicatedProtectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response PlannedFailover(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string replicatedProtectedItemName, PlannedFailoverContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
-            if (protectionContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(protectionContainerName));
-            }
-            if (protectionContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectionContainerName));
-            }
-            if (replicatedProtectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(replicatedProtectedItemName));
-            }
-            if (replicatedProtectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicatedProtectedItemName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
+            Argument.AssertNotNullOrEmpty(replicatedProtectedItemName, nameof(replicatedProtectedItemName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreatePlannedFailoverRequest(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicatedProtectedItemName, content);
             _pipeline.Send(message, cancellationToken);
@@ -1875,58 +1018,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/> or <paramref name="replicatedProtectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string replicatedProtectedItemName, DisableProtectionContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
-            if (protectionContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(protectionContainerName));
-            }
-            if (protectionContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectionContainerName));
-            }
-            if (replicatedProtectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(replicatedProtectedItemName));
-            }
-            if (replicatedProtectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicatedProtectedItemName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
+            Argument.AssertNotNullOrEmpty(replicatedProtectedItemName, nameof(replicatedProtectedItemName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicatedProtectedItemName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1953,58 +1051,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/> or <paramref name="replicatedProtectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string replicatedProtectedItemName, DisableProtectionContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
-            if (protectionContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(protectionContainerName));
-            }
-            if (protectionContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectionContainerName));
-            }
-            if (replicatedProtectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(replicatedProtectedItemName));
-            }
-            if (replicatedProtectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicatedProtectedItemName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
+            Argument.AssertNotNullOrEmpty(replicatedProtectedItemName, nameof(replicatedProtectedItemName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicatedProtectedItemName, content);
             _pipeline.Send(message, cancellationToken);
@@ -2062,58 +1115,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/> or <paramref name="replicatedProtectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> RemoveDisksAsync(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string replicatedProtectedItemName, RemoveDisksContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
-            if (protectionContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(protectionContainerName));
-            }
-            if (protectionContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectionContainerName));
-            }
-            if (replicatedProtectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(replicatedProtectedItemName));
-            }
-            if (replicatedProtectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicatedProtectedItemName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
+            Argument.AssertNotNullOrEmpty(replicatedProtectedItemName, nameof(replicatedProtectedItemName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateRemoveDisksRequest(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicatedProtectedItemName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2140,58 +1148,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/> or <paramref name="replicatedProtectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response RemoveDisks(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string replicatedProtectedItemName, RemoveDisksContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
-            if (protectionContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(protectionContainerName));
-            }
-            if (protectionContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectionContainerName));
-            }
-            if (replicatedProtectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(replicatedProtectedItemName));
-            }
-            if (replicatedProtectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicatedProtectedItemName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
+            Argument.AssertNotNullOrEmpty(replicatedProtectedItemName, nameof(replicatedProtectedItemName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateRemoveDisksRequest(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicatedProtectedItemName, content);
             _pipeline.Send(message, cancellationToken);
@@ -2244,54 +1207,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/> or <paramref name="replicatedProtectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> RepairReplicationAsync(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string replicatedProtectedItemName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
-            if (protectionContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(protectionContainerName));
-            }
-            if (protectionContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectionContainerName));
-            }
-            if (replicatedProtectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(replicatedProtectedItemName));
-            }
-            if (replicatedProtectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicatedProtectedItemName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
+            Argument.AssertNotNullOrEmpty(replicatedProtectedItemName, nameof(replicatedProtectedItemName));
 
             using var message = CreateRepairReplicationRequest(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicatedProtectedItemName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2317,54 +1238,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/> or <paramref name="replicatedProtectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response RepairReplication(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string replicatedProtectedItemName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
-            if (protectionContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(protectionContainerName));
-            }
-            if (protectionContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectionContainerName));
-            }
-            if (replicatedProtectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(replicatedProtectedItemName));
-            }
-            if (replicatedProtectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicatedProtectedItemName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
+            Argument.AssertNotNullOrEmpty(replicatedProtectedItemName, nameof(replicatedProtectedItemName));
 
             using var message = CreateRepairReplicationRequest(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicatedProtectedItemName);
             _pipeline.Send(message, cancellationToken);
@@ -2422,58 +1301,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/> or <paramref name="replicatedProtectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> ReprotectAsync(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string replicatedProtectedItemName, ReverseReplicationContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
-            if (protectionContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(protectionContainerName));
-            }
-            if (protectionContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectionContainerName));
-            }
-            if (replicatedProtectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(replicatedProtectedItemName));
-            }
-            if (replicatedProtectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicatedProtectedItemName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
+            Argument.AssertNotNullOrEmpty(replicatedProtectedItemName, nameof(replicatedProtectedItemName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateReprotectRequest(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicatedProtectedItemName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2500,58 +1334,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/> or <paramref name="replicatedProtectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Reprotect(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string replicatedProtectedItemName, ReverseReplicationContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
-            if (protectionContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(protectionContainerName));
-            }
-            if (protectionContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectionContainerName));
-            }
-            if (replicatedProtectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(replicatedProtectedItemName));
-            }
-            if (replicatedProtectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicatedProtectedItemName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
+            Argument.AssertNotNullOrEmpty(replicatedProtectedItemName, nameof(replicatedProtectedItemName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateReprotectRequest(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicatedProtectedItemName, content);
             _pipeline.Send(message, cancellationToken);
@@ -2609,58 +1398,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/> or <paramref name="replicatedProtectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> ResolveHealthErrorsAsync(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string replicatedProtectedItemName, ResolveHealthContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
-            if (protectionContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(protectionContainerName));
-            }
-            if (protectionContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectionContainerName));
-            }
-            if (replicatedProtectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(replicatedProtectedItemName));
-            }
-            if (replicatedProtectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicatedProtectedItemName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
+            Argument.AssertNotNullOrEmpty(replicatedProtectedItemName, nameof(replicatedProtectedItemName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateResolveHealthErrorsRequest(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicatedProtectedItemName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2687,58 +1431,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/> or <paramref name="replicatedProtectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response ResolveHealthErrors(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string replicatedProtectedItemName, ResolveHealthContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
-            if (protectionContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(protectionContainerName));
-            }
-            if (protectionContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectionContainerName));
-            }
-            if (replicatedProtectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(replicatedProtectedItemName));
-            }
-            if (replicatedProtectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicatedProtectedItemName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
+            Argument.AssertNotNullOrEmpty(replicatedProtectedItemName, nameof(replicatedProtectedItemName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateResolveHealthErrorsRequest(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicatedProtectedItemName, content);
             _pipeline.Send(message, cancellationToken);
@@ -2796,58 +1495,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/> or <paramref name="replicatedProtectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> SwitchProviderAsync(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string replicatedProtectedItemName, SwitchProviderContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
-            if (protectionContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(protectionContainerName));
-            }
-            if (protectionContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectionContainerName));
-            }
-            if (replicatedProtectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(replicatedProtectedItemName));
-            }
-            if (replicatedProtectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicatedProtectedItemName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
+            Argument.AssertNotNullOrEmpty(replicatedProtectedItemName, nameof(replicatedProtectedItemName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateSwitchProviderRequest(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicatedProtectedItemName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2874,58 +1528,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/> or <paramref name="replicatedProtectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response SwitchProvider(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string replicatedProtectedItemName, SwitchProviderContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
-            if (protectionContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(protectionContainerName));
-            }
-            if (protectionContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectionContainerName));
-            }
-            if (replicatedProtectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(replicatedProtectedItemName));
-            }
-            if (replicatedProtectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicatedProtectedItemName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
+            Argument.AssertNotNullOrEmpty(replicatedProtectedItemName, nameof(replicatedProtectedItemName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateSwitchProviderRequest(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicatedProtectedItemName, content);
             _pipeline.Send(message, cancellationToken);
@@ -2983,58 +1592,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/> or <paramref name="replicatedProtectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> TestFailoverAsync(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string replicatedProtectedItemName, TestFailoverContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
-            if (protectionContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(protectionContainerName));
-            }
-            if (protectionContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectionContainerName));
-            }
-            if (replicatedProtectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(replicatedProtectedItemName));
-            }
-            if (replicatedProtectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicatedProtectedItemName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
+            Argument.AssertNotNullOrEmpty(replicatedProtectedItemName, nameof(replicatedProtectedItemName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateTestFailoverRequest(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicatedProtectedItemName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -3061,58 +1625,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/> or <paramref name="replicatedProtectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response TestFailover(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string replicatedProtectedItemName, TestFailoverContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
-            if (protectionContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(protectionContainerName));
-            }
-            if (protectionContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectionContainerName));
-            }
-            if (replicatedProtectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(replicatedProtectedItemName));
-            }
-            if (replicatedProtectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicatedProtectedItemName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
+            Argument.AssertNotNullOrEmpty(replicatedProtectedItemName, nameof(replicatedProtectedItemName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateTestFailoverRequest(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicatedProtectedItemName, content);
             _pipeline.Send(message, cancellationToken);
@@ -3170,58 +1689,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/> or <paramref name="replicatedProtectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> TestFailoverCleanupAsync(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string replicatedProtectedItemName, TestFailoverCleanupContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
-            if (protectionContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(protectionContainerName));
-            }
-            if (protectionContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectionContainerName));
-            }
-            if (replicatedProtectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(replicatedProtectedItemName));
-            }
-            if (replicatedProtectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicatedProtectedItemName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
+            Argument.AssertNotNullOrEmpty(replicatedProtectedItemName, nameof(replicatedProtectedItemName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateTestFailoverCleanupRequest(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicatedProtectedItemName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -3248,58 +1722,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/> or <paramref name="replicatedProtectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response TestFailoverCleanup(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string replicatedProtectedItemName, TestFailoverCleanupContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
-            if (protectionContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(protectionContainerName));
-            }
-            if (protectionContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectionContainerName));
-            }
-            if (replicatedProtectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(replicatedProtectedItemName));
-            }
-            if (replicatedProtectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicatedProtectedItemName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
+            Argument.AssertNotNullOrEmpty(replicatedProtectedItemName, nameof(replicatedProtectedItemName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateTestFailoverCleanupRequest(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicatedProtectedItemName, content);
             _pipeline.Send(message, cancellationToken);
@@ -3357,58 +1786,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/> or <paramref name="replicatedProtectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UnplannedFailoverAsync(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string replicatedProtectedItemName, UnplannedFailoverContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
-            if (protectionContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(protectionContainerName));
-            }
-            if (protectionContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectionContainerName));
-            }
-            if (replicatedProtectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(replicatedProtectedItemName));
-            }
-            if (replicatedProtectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicatedProtectedItemName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
+            Argument.AssertNotNullOrEmpty(replicatedProtectedItemName, nameof(replicatedProtectedItemName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateUnplannedFailoverRequest(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicatedProtectedItemName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -3435,58 +1819,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/> or <paramref name="replicatedProtectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response UnplannedFailover(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string replicatedProtectedItemName, UnplannedFailoverContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
-            if (protectionContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(protectionContainerName));
-            }
-            if (protectionContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectionContainerName));
-            }
-            if (replicatedProtectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(replicatedProtectedItemName));
-            }
-            if (replicatedProtectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicatedProtectedItemName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
+            Argument.AssertNotNullOrEmpty(replicatedProtectedItemName, nameof(replicatedProtectedItemName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateUnplannedFailoverRequest(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicatedProtectedItemName, content);
             _pipeline.Send(message, cancellationToken);
@@ -3544,58 +1883,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/> or <paramref name="replicatedProtectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateApplianceAsync(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string replicatedProtectedItemName, UpdateApplianceForReplicationProtectedItemContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
-            if (protectionContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(protectionContainerName));
-            }
-            if (protectionContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectionContainerName));
-            }
-            if (replicatedProtectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(replicatedProtectedItemName));
-            }
-            if (replicatedProtectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicatedProtectedItemName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
+            Argument.AssertNotNullOrEmpty(replicatedProtectedItemName, nameof(replicatedProtectedItemName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateUpdateApplianceRequest(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicatedProtectedItemName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -3622,58 +1916,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/> or <paramref name="replicatedProtectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response UpdateAppliance(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string replicatedProtectedItemName, UpdateApplianceForReplicationProtectedItemContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
-            if (protectionContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(protectionContainerName));
-            }
-            if (protectionContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectionContainerName));
-            }
-            if (replicatedProtectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(replicatedProtectedItemName));
-            }
-            if (replicatedProtectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicatedProtectedItemName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
+            Argument.AssertNotNullOrEmpty(replicatedProtectedItemName, nameof(replicatedProtectedItemName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateUpdateApplianceRequest(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicatedProtectedItemName, content);
             _pipeline.Send(message, cancellationToken);
@@ -3731,58 +1980,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/> or <paramref name="replicatedProtectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateMobilityServiceAsync(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string replicatedProtectedItemName, UpdateMobilityServiceContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
-            if (protectionContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(protectionContainerName));
-            }
-            if (protectionContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectionContainerName));
-            }
-            if (replicatedProtectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(replicatedProtectedItemName));
-            }
-            if (replicatedProtectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicatedProtectedItemName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
+            Argument.AssertNotNullOrEmpty(replicatedProtectedItemName, nameof(replicatedProtectedItemName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateUpdateMobilityServiceRequest(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicatedProtectedItemName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -3809,58 +2013,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="protectionContainerName"/> or <paramref name="replicatedProtectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response UpdateMobilityService(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string replicatedProtectedItemName, UpdateMobilityServiceContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
-            if (protectionContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(protectionContainerName));
-            }
-            if (protectionContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectionContainerName));
-            }
-            if (replicatedProtectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(replicatedProtectedItemName));
-            }
-            if (replicatedProtectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicatedProtectedItemName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
+            Argument.AssertNotNullOrEmpty(replicatedProtectedItemName, nameof(replicatedProtectedItemName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateUpdateMobilityServiceRequest(subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName, replicatedProtectedItemName, content);
             _pipeline.Send(message, cancellationToken);
@@ -3914,30 +2073,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ReplicationProtectedItemListResult>> ListAsync(string subscriptionId, string resourceGroupName, string resourceName, string skipToken = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, resourceName, skipToken, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -3966,30 +2104,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ReplicationProtectedItemListResult> List(string subscriptionId, string resourceGroupName, string resourceName, string skipToken = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, resourceName, skipToken, filter);
             _pipeline.Send(message, cancellationToken);
@@ -4033,50 +2150,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/> or <paramref name="protectionContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ReplicationProtectedItemListResult>> ListByReplicationProtectionContainersNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
-            if (protectionContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(protectionContainerName));
-            }
-            if (protectionContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectionContainerName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
 
             using var message = CreateListByReplicationProtectionContainersNextPageRequest(nextLink, subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -4106,50 +2185,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/> or <paramref name="protectionContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ReplicationProtectedItemListResult> ListByReplicationProtectionContainersNextPage(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
-            if (protectionContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(protectionContainerName));
-            }
-            if (protectionContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectionContainerName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(protectionContainerName, nameof(protectionContainerName));
 
             using var message = CreateListByReplicationProtectionContainersNextPageRequest(nextLink, subscriptionId, resourceGroupName, resourceName, fabricName, protectionContainerName);
             _pipeline.Send(message, cancellationToken);
@@ -4193,34 +2234,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ReplicationProtectedItemListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, string skipToken = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, resourceName, skipToken, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -4250,34 +2267,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ReplicationProtectedItemListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, string skipToken = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, resourceName, skipToken, filter);
             _pipeline.Send(message, cancellationToken);

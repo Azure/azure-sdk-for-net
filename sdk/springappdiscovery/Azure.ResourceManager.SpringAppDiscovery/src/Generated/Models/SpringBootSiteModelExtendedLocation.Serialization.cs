@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             }
 
             writer.WriteStartObject();
-            if (SpringbootsitesModelExtendedLocationType != null)
+            if (Optional.IsDefined(SpringbootsitesModelExtendedLocationType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(SpringbootsitesModelExtendedLocationType);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);

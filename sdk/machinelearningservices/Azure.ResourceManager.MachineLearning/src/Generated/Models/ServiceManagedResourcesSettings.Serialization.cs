@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (CosmosDb != null)
+            if (Optional.IsDefined(CosmosDb))
             {
                 writer.WritePropertyName("cosmosDb"u8);
                 writer.WriteObjectValue(CosmosDb);

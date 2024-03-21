@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Redis.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Message != null)
+            if (options.Format != "W" && Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);

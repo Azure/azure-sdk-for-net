@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (MaxInstances.HasValue)
+            if (Optional.IsDefined(MaxInstances))
             {
                 writer.WritePropertyName("maxInstances"u8);
                 writer.WriteNumberValue(MaxInstances.Value);
             }
-            if (MinInstances.HasValue)
+            if (Optional.IsDefined(MinInstances))
             {
                 writer.WritePropertyName("minInstances"u8);
                 writer.WriteNumberValue(MinInstances.Value);
             }
-            if (PollingInterval.HasValue)
+            if (Optional.IsDefined(PollingInterval))
             {
                 writer.WritePropertyName("pollingInterval"u8);
                 writer.WriteStringValue(PollingInterval.Value, "P");
             }
-            if (TargetUtilizationPercentage.HasValue)
+            if (Optional.IsDefined(TargetUtilizationPercentage))
             {
                 writer.WritePropertyName("targetUtilizationPercentage"u8);
                 writer.WriteNumberValue(TargetUtilizationPercentage.Value);

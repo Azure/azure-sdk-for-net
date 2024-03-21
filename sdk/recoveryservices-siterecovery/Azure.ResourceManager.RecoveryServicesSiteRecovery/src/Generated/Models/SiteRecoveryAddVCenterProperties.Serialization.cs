@@ -27,27 +27,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (FriendlyName != null)
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (IPAddress != null)
+            if (Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress.ToString());
             }
-            if (ProcessServerId.HasValue)
+            if (Optional.IsDefined(ProcessServerId))
             {
                 writer.WritePropertyName("processServerId"u8);
                 writer.WriteStringValue(ProcessServerId.Value);
             }
-            if (Port != null)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteStringValue(Port);
             }
-            if (RunAsAccountId != null)
+            if (Optional.IsDefined(RunAsAccountId))
             {
                 writer.WritePropertyName("runAsAccountId"u8);
                 writer.WriteStringValue(RunAsAccountId);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (!(DaysOfTheMonth is ChangeTrackingList<BackupDay> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DaysOfTheMonth))
             {
                 writer.WritePropertyName("daysOfTheMonth"u8);
                 writer.WriteStartArray();

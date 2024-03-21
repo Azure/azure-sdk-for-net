@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (!(Inputs is ChangeTrackingDictionary<string, MachineLearningJobInput> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Inputs))
             {
                 if (Inputs != null)
                 {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("inputs");
                 }
             }
-            if (!(Jobs is ChangeTrackingDictionary<string, BinaryData> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Jobs))
             {
                 if (Jobs != null)
                 {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("jobs");
                 }
             }
-            if (!(Outputs is ChangeTrackingDictionary<string, MachineLearningJobOutput> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Outputs))
             {
                 if (Outputs != null)
                 {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("outputs");
                 }
             }
-            if (Settings != null)
+            if (Optional.IsDefined(Settings))
             {
                 if (Settings != null)
                 {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("settings");
                 }
             }
-            if (SourceJobId != null)
+            if (Optional.IsDefined(SourceJobId))
             {
                 if (SourceJobId != null)
                 {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("sourceJobId");
                 }
             }
-            if (ComponentId != null)
+            if (Optional.IsDefined(ComponentId))
             {
                 if (ComponentId != null)
                 {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("componentId");
                 }
             }
-            if (ComputeId != null)
+            if (Optional.IsDefined(ComputeId))
             {
                 if (ComputeId != null)
                 {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("computeId");
                 }
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 if (DisplayName != null)
                 {
@@ -159,12 +159,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("displayName");
                 }
             }
-            if (ExperimentName != null)
+            if (Optional.IsDefined(ExperimentName))
             {
                 writer.WritePropertyName("experimentName"u8);
                 writer.WriteStringValue(ExperimentName);
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 if (Identity != null)
                 {
@@ -176,14 +176,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("identity");
                 }
             }
-            if (IsArchived.HasValue)
+            if (Optional.IsDefined(IsArchived))
             {
                 writer.WritePropertyName("isArchived"u8);
                 writer.WriteBooleanValue(IsArchived.Value);
             }
             writer.WritePropertyName("jobType"u8);
             writer.WriteStringValue(JobType.ToString());
-            if (NotificationSetting != null)
+            if (Optional.IsDefined(NotificationSetting))
             {
                 if (NotificationSetting != null)
                 {
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("notificationSetting");
                 }
             }
-            if (!(SecretsConfiguration is ChangeTrackingDictionary<string, SecretConfiguration> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(SecretsConfiguration))
             {
                 if (SecretsConfiguration != null)
                 {
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("secretsConfiguration");
                 }
             }
-            if (!(Services is ChangeTrackingDictionary<string, MachineLearningJobService> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(Services))
             {
                 if (Services != null)
                 {
@@ -231,12 +231,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("services");
                 }
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 if (Description != null)
                 {
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("description");
                 }
             }
-            if (!(Properties is ChangeTrackingDictionary<string, string> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(Properties))
             {
                 if (Properties != null)
                 {
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("properties");
                 }
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection5 && collection5.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 if (Tags != null)
                 {

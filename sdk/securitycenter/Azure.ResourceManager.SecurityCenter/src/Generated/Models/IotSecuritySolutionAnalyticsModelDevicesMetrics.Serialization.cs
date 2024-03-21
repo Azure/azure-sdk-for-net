@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Date.HasValue)
+            if (Optional.IsDefined(Date))
             {
                 writer.WritePropertyName("date"u8);
                 writer.WriteStringValue(Date.Value, "O");
             }
-            if (DevicesMetrics != null)
+            if (Optional.IsDefined(DevicesMetrics))
             {
                 writer.WritePropertyName("devicesMetrics"u8);
                 writer.WriteObjectValue(DevicesMetrics);

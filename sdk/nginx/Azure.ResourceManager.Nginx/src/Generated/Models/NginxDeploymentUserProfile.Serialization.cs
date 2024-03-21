@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Nginx.Models
             }
 
             writer.WriteStartObject();
-            if (PreferredEmail != null)
+            if (Optional.IsDefined(PreferredEmail))
             {
                 writer.WritePropertyName("preferredEmail"u8);
                 writer.WriteStringValue(PreferredEmail);

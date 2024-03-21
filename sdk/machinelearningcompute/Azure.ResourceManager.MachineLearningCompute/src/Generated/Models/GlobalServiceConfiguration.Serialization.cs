@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningCompute.Models
@@ -27,22 +26,22 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             }
 
             writer.WriteStartObject();
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Ssl != null)
+            if (Optional.IsDefined(Ssl))
             {
                 writer.WritePropertyName("ssl"u8);
                 writer.WriteObjectValue(Ssl);
             }
-            if (ServiceAuth != null)
+            if (Optional.IsDefined(ServiceAuth))
             {
                 writer.WritePropertyName("serviceAuth"u8);
                 writer.WriteObjectValue(ServiceAuth);
             }
-            if (AutoScale != null)
+            if (Optional.IsDefined(AutoScale))
             {
                 writer.WritePropertyName("autoScale"u8);
                 writer.WriteObjectValue(AutoScale);

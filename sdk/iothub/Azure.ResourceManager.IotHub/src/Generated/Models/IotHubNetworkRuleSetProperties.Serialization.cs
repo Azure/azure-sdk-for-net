@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.IotHub.Models
             }
 
             writer.WriteStartObject();
-            if (DefaultAction.HasValue)
+            if (Optional.IsDefined(DefaultAction))
             {
                 writer.WritePropertyName("defaultAction"u8);
                 writer.WriteStringValue(DefaultAction.Value.ToString());

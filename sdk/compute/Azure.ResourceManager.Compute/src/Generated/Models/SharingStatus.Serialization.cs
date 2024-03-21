@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && AggregatedState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AggregatedState))
             {
                 writer.WritePropertyName("aggregatedState"u8);
                 writer.WriteStringValue(AggregatedState.Value.ToString());
             }
-            if (!(Summary is ChangeTrackingList<RegionalSharingStatus> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Summary))
             {
                 writer.WritePropertyName("summary"u8);
                 writer.WriteStartArray();

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (IsDefault.HasValue)
+            if (Optional.IsDefined(IsDefault))
             {
                 writer.WritePropertyName("default"u8);
                 writer.WriteBooleanValue(IsDefault.Value);
             }
-            if (KubernetesVersion != null)
+            if (Optional.IsDefined(KubernetesVersion))
             {
                 writer.WritePropertyName("kubernetesVersion"u8);
                 writer.WriteStringValue(KubernetesVersion);
             }
-            if (IsPreview.HasValue)
+            if (Optional.IsDefined(IsPreview))
             {
                 writer.WritePropertyName("isPreview"u8);
                 writer.WriteBooleanValue(IsPreview.Value);

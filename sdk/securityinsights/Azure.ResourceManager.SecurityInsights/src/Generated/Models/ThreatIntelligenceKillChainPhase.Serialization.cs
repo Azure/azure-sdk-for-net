@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (KillChainName != null)
+            if (Optional.IsDefined(KillChainName))
             {
                 writer.WritePropertyName("killChainName"u8);
                 writer.WriteStringValue(KillChainName);
             }
-            if (PhaseName != null)
+            if (Optional.IsDefined(PhaseName))
             {
                 writer.WritePropertyName("phaseName"u8);
                 writer.WriteStringValue(PhaseName);

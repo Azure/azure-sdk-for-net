@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && TenantId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);

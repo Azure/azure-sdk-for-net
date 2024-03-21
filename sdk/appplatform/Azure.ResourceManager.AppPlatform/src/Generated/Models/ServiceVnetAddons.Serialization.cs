@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (IsLogStreamPublicEndpoint.HasValue)
+            if (Optional.IsDefined(IsLogStreamPublicEndpoint))
             {
                 writer.WritePropertyName("logStreamPublicEndpoint"u8);
                 writer.WriteBooleanValue(IsLogStreamPublicEndpoint.Value);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (UserAssignedIdentity != null)
+            if (Optional.IsDefined(UserAssignedIdentity))
             {
                 writer.WritePropertyName("userAssignedIdentity"u8);
 #if NET6_0_OR_GREATER

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Atomic != null)
+            if (Optional.IsDefined(Atomic))
             {
                 writer.WritePropertyName("atomic"u8);
                 writer.WriteStringValue(Atomic);
             }
-            if (Wait != null)
+            if (Optional.IsDefined(Wait))
             {
                 writer.WritePropertyName("wait"u8);
                 writer.WriteStringValue(Wait);
             }
-            if (Timeout != null)
+            if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout);

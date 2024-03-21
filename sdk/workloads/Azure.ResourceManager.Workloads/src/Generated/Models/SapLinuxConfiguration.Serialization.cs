@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (DisablePasswordAuthentication.HasValue)
+            if (Optional.IsDefined(DisablePasswordAuthentication))
             {
                 writer.WritePropertyName("disablePasswordAuthentication"u8);
                 writer.WriteBooleanValue(DisablePasswordAuthentication.Value);
             }
-            if (Ssh != null)
+            if (Optional.IsDefined(Ssh))
             {
                 writer.WritePropertyName("ssh"u8);
                 writer.WriteObjectValue(Ssh);
             }
-            if (SshKeyPair != null)
+            if (Optional.IsDefined(SshKeyPair))
             {
                 writer.WritePropertyName("sshKeyPair"u8);
                 writer.WriteObjectValue(SshKeyPair);

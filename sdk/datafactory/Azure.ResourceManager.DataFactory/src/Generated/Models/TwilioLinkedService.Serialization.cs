@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LinkedServiceType);
-            if (ConnectVia != null)
+            if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
                 writer.WriteObjectValue(ConnectVia);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, EntityParameterSpecification> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(Annotations is ChangeTrackingList<BinaryData> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             IDictionary<string, EntityParameterSpecification> parameters = default;
             IList<BinaryData> annotations = default;
             DataFactoryElement<string> userName = default;
-            DataFactorySecretBaseDefinition password = default;
+            DataFactorySecret password = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("password"u8))
                         {
-                            password = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
+                            password = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                     }

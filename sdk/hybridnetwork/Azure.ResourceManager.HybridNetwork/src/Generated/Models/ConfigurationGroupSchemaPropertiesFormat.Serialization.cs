@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && VersionState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(VersionState))
             {
                 writer.WritePropertyName("versionState"u8);
                 writer.WriteStringValue(VersionState.Value.ToString());
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (SchemaDefinition != null)
+            if (Optional.IsDefined(SchemaDefinition))
             {
                 writer.WritePropertyName("schemaDefinition"u8);
                 writer.WriteStringValue(SchemaDefinition);

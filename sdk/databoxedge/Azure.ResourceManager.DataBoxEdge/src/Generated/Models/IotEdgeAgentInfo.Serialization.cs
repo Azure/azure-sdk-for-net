@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteStringValue(ImageName);
             writer.WritePropertyName("tag"u8);
             writer.WriteStringValue(Tag);
-            if (ImageRepository != null)
+            if (Optional.IsDefined(ImageRepository))
             {
                 writer.WritePropertyName("imageRepository"u8);
                 writer.WriteObjectValue(ImageRepository);

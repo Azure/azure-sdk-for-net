@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             writer.WritePropertyName("contentType"u8);
             writer.WriteStringValue(ContentType);
-            if (SchemaId != null)
+            if (Optional.IsDefined(SchemaId))
             {
                 writer.WritePropertyName("schemaId"u8);
                 writer.WriteStringValue(SchemaId);
             }
-            if (TypeName != null)
+            if (Optional.IsDefined(TypeName))
             {
                 writer.WritePropertyName("typeName"u8);
                 writer.WriteStringValue(TypeName);
             }
-            if (!(FormParameters is ChangeTrackingList<ParameterContract> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(FormParameters))
             {
                 writer.WritePropertyName("formParameters"u8);
                 writer.WriteStartArray();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Examples is ChangeTrackingDictionary<string, ParameterExampleContract> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Examples))
             {
                 writer.WritePropertyName("examples"u8);
                 writer.WriteStartObject();

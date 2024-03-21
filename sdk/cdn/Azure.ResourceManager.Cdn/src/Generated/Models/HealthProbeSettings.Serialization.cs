@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (ProbePath != null)
+            if (Optional.IsDefined(ProbePath))
             {
                 writer.WritePropertyName("probePath"u8);
                 writer.WriteStringValue(ProbePath);
             }
-            if (ProbeRequestType.HasValue)
+            if (Optional.IsDefined(ProbeRequestType))
             {
                 writer.WritePropertyName("probeRequestType"u8);
                 writer.WriteStringValue(ProbeRequestType.Value.ToSerialString());
             }
-            if (ProbeProtocol.HasValue)
+            if (Optional.IsDefined(ProbeProtocol))
             {
                 writer.WritePropertyName("probeProtocol"u8);
                 writer.WriteStringValue(ProbeProtocol.Value.ToSerialString());
             }
-            if (ProbeIntervalInSeconds.HasValue)
+            if (Optional.IsDefined(ProbeIntervalInSeconds))
             {
                 writer.WritePropertyName("probeIntervalInSeconds"u8);
                 writer.WriteNumberValue(ProbeIntervalInSeconds.Value);

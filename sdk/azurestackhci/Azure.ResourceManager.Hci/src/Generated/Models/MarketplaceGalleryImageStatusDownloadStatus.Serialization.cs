@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (DownloadSizeInMB.HasValue)
+            if (Optional.IsDefined(DownloadSizeInMB))
             {
                 writer.WritePropertyName("downloadSizeInMB"u8);
                 writer.WriteNumberValue(DownloadSizeInMB.Value);

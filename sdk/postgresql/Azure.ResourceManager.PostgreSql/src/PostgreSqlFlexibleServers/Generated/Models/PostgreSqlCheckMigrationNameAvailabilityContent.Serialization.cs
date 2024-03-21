@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ResourceType);
-            if (options.Format != "W" && IsNameAvailable.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsNameAvailable))
             {
                 writer.WritePropertyName("nameAvailable"u8);
                 writer.WriteBooleanValue(IsNameAvailable.Value);
             }
-            if (options.Format != "W" && Reason.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Reason))
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason.Value.ToString());
             }
-            if (options.Format != "W" && Message != null)
+            if (options.Format != "W" && Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);

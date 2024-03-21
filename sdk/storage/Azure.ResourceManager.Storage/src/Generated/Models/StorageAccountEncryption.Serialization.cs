@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (Services != null)
+            if (Optional.IsDefined(Services))
             {
                 writer.WritePropertyName("services"u8);
                 writer.WriteObjectValue(Services);
             }
-            if (KeySource.HasValue)
+            if (Optional.IsDefined(KeySource))
             {
                 writer.WritePropertyName("keySource"u8);
                 writer.WriteStringValue(KeySource.Value.ToString());
             }
-            if (RequireInfrastructureEncryption.HasValue)
+            if (Optional.IsDefined(RequireInfrastructureEncryption))
             {
                 writer.WritePropertyName("requireInfrastructureEncryption"u8);
                 writer.WriteBooleanValue(RequireInfrastructureEncryption.Value);
             }
-            if (KeyVaultProperties != null)
+            if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyvaultproperties"u8);
                 writer.WriteObjectValue(KeyVaultProperties);
             }
-            if (EncryptionIdentity != null)
+            if (Optional.IsDefined(EncryptionIdentity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(EncryptionIdentity);

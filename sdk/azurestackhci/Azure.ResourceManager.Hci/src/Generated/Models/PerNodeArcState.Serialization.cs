@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ArcInstance != null)
+            if (options.Format != "W" && Optional.IsDefined(ArcInstance))
             {
                 writer.WritePropertyName("arcInstance"u8);
                 writer.WriteStringValue(ArcInstance);
             }
-            if (options.Format != "W" && State.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());

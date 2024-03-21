@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Timestamp.HasValue)
+            if (Optional.IsDefined(Timestamp))
             {
                 writer.WritePropertyName("timestamp"u8);
                 writer.WriteStringValue(Timestamp.Value, "O");
             }
-            if (ComplianceState != null)
+            if (Optional.IsDefined(ComplianceState))
             {
                 writer.WritePropertyName("complianceState"u8);
                 writer.WriteStringValue(ComplianceState);
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);

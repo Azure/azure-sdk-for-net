@@ -28,22 +28,22 @@ namespace Azure.ResourceManager.SignalR.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Tier.HasValue)
+            if (Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier.Value.ToString());
             }
-            if (options.Format != "W" && Size != null)
+            if (options.Format != "W" && Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteStringValue(Size);
             }
-            if (options.Format != "W" && Family != null)
+            if (options.Format != "W" && Optional.IsDefined(Family))
             {
                 writer.WritePropertyName("family"u8);
                 writer.WriteStringValue(Family);
             }
-            if (Capacity.HasValue)
+            if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);

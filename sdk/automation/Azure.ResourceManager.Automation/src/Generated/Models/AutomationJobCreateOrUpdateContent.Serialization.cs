@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Runbook != null)
+            if (Optional.IsDefined(Runbook))
             {
                 writer.WritePropertyName("runbook"u8);
                 writer.WriteObjectValue(Runbook);
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndObject();
             }
-            if (RunOn != null)
+            if (Optional.IsDefined(RunOn))
             {
                 writer.WritePropertyName("runOn"u8);
                 writer.WriteStringValue(RunOn);

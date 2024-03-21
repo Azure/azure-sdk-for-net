@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Key.HasValue)
+            if (Optional.IsDefined(Key))
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteNumberValue(Key.Value);
             }
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (!(Subnets is ChangeTrackingList<PrivateAccessSubnet> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Subnets))
             {
                 writer.WritePropertyName("subnets"u8);
                 writer.WriteStartArray();

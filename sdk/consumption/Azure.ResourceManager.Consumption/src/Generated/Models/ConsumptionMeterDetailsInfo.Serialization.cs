@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Consumption.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && MeterName != null)
+            if (options.Format != "W" && Optional.IsDefined(MeterName))
             {
                 writer.WritePropertyName("meterName"u8);
                 writer.WriteStringValue(MeterName);
             }
-            if (options.Format != "W" && MeterCategory != null)
+            if (options.Format != "W" && Optional.IsDefined(MeterCategory))
             {
                 writer.WritePropertyName("meterCategory"u8);
                 writer.WriteStringValue(MeterCategory);
             }
-            if (options.Format != "W" && MeterSubCategory != null)
+            if (options.Format != "W" && Optional.IsDefined(MeterSubCategory))
             {
                 writer.WritePropertyName("meterSubCategory"u8);
                 writer.WriteStringValue(MeterSubCategory);
             }
-            if (options.Format != "W" && UnitOfMeasure != null)
+            if (options.Format != "W" && Optional.IsDefined(UnitOfMeasure))
             {
                 writer.WritePropertyName("unitOfMeasure"u8);
                 writer.WriteStringValue(UnitOfMeasure);
             }
-            if (options.Format != "W" && ServiceFamily != null)
+            if (options.Format != "W" && Optional.IsDefined(ServiceFamily))
             {
                 writer.WritePropertyName("serviceFamily"u8);
                 writer.WriteStringValue(ServiceFamily);

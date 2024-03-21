@@ -27,27 +27,27 @@ namespace Azure.ResourceManager.Resources
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Namespace != null)
+            if (Optional.IsDefined(Namespace))
             {
                 writer.WritePropertyName("namespace"u8);
                 writer.WriteStringValue(Namespace);
             }
-            if (options.Format != "W" && RegistrationState != null)
+            if (options.Format != "W" && Optional.IsDefined(RegistrationState))
             {
                 writer.WritePropertyName("registrationState"u8);
                 writer.WriteStringValue(RegistrationState);
             }
-            if (options.Format != "W" && RegistrationPolicy != null)
+            if (options.Format != "W" && Optional.IsDefined(RegistrationPolicy))
             {
                 writer.WritePropertyName("registrationPolicy"u8);
                 writer.WriteStringValue(RegistrationPolicy);
             }
-            if (options.Format != "W" && !(ResourceTypes is ChangeTrackingList<ProviderResourceType> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ResourceTypes))
             {
                 writer.WritePropertyName("resourceTypes"u8);
                 writer.WriteStartArray();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (ProviderAuthorizationConsentState.HasValue)
+            if (Optional.IsDefined(ProviderAuthorizationConsentState))
             {
                 writer.WritePropertyName("providerAuthorizationConsentState"u8);
                 writer.WriteStringValue(ProviderAuthorizationConsentState.Value.ToString());

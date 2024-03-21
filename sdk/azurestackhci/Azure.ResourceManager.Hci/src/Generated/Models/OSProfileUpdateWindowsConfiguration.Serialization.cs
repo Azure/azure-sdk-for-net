@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (ProvisionVmAgent.HasValue)
+            if (Optional.IsDefined(ProvisionVmAgent))
             {
                 writer.WritePropertyName("provisionVMAgent"u8);
                 writer.WriteBooleanValue(ProvisionVmAgent.Value);
             }
-            if (ProvisionVmConfigAgent.HasValue)
+            if (Optional.IsDefined(ProvisionVmConfigAgent))
             {
                 writer.WritePropertyName("provisionVMConfigAgent"u8);
                 writer.WriteBooleanValue(ProvisionVmConfigAgent.Value);

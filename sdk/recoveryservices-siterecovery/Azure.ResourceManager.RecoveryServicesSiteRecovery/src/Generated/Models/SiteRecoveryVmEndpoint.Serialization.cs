@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (EndpointName != null)
+            if (Optional.IsDefined(EndpointName))
             {
                 writer.WritePropertyName("endpointName"u8);
                 writer.WriteStringValue(EndpointName);
             }
-            if (PrivatePort.HasValue)
+            if (Optional.IsDefined(PrivatePort))
             {
                 writer.WritePropertyName("privatePort"u8);
                 writer.WriteNumberValue(PrivatePort.Value);
             }
-            if (PublicPort.HasValue)
+            if (Optional.IsDefined(PublicPort))
             {
                 writer.WritePropertyName("publicPort"u8);
                 writer.WriteNumberValue(PublicPort.Value);
             }
-            if (Protocol != null)
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol);

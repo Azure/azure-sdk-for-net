@@ -27,22 +27,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (ConnectivityState.HasValue)
+            if (Optional.IsDefined(ConnectivityState))
             {
                 writer.WritePropertyName("connectivityState"u8);
                 writer.WriteStringValue(ConnectivityState.Value.ToString());
             }
-            if (DeviceVendor != null)
+            if (Optional.IsDefined(DeviceVendor))
             {
                 writer.WritePropertyName("deviceVendor"u8);
                 writer.WriteStringValue(DeviceVendor);
             }
-            if (DeviceType != null)
+            if (Optional.IsDefined(DeviceType))
             {
                 writer.WritePropertyName("deviceType"u8);
                 writer.WriteStringValue(DeviceType);
             }
-            if (Workspace != null)
+            if (Optional.IsDefined(Workspace))
             {
                 writer.WritePropertyName("workspace"u8);
                 JsonSerializer.Serialize(writer, Workspace);

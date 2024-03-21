@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (KeyVaultProperties != null)
+            if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
                 writer.WriteObjectValue(KeyVaultProperties);
             }
-            if (BillingType.HasValue)
+            if (Optional.IsDefined(BillingType))
             {
                 writer.WritePropertyName("billingType"u8);
                 writer.WriteStringValue(BillingType.Value.ToString());

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             }
 
             writer.WriteStartObject();
-            if (Cert != null)
+            if (Optional.IsDefined(Cert))
             {
                 writer.WritePropertyName("cert"u8);
                 writer.WriteStringValue(Cert);
             }
-            if (LedgerRoleName.HasValue)
+            if (Optional.IsDefined(LedgerRoleName))
             {
                 writer.WritePropertyName("ledgerRoleName"u8);
                 writer.WriteStringValue(LedgerRoleName.Value.ToString());

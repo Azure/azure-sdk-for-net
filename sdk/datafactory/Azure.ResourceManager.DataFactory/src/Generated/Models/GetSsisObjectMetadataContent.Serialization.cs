@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (MetadataPath != null)
+            if (Optional.IsDefined(MetadataPath))
             {
                 writer.WritePropertyName("metadataPath"u8);
                 writer.WriteStringValue(MetadataPath);

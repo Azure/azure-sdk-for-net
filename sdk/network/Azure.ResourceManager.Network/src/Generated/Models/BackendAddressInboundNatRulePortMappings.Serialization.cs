@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (!(InboundNatRulePortMappings is ChangeTrackingList<InboundNatRulePortMapping> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(InboundNatRulePortMappings))
             {
                 writer.WritePropertyName("inboundNatRulePortMappings"u8);
                 writer.WriteStartArray();

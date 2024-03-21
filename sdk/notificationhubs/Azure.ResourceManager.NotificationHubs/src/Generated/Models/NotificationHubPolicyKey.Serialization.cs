@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             }
 
             writer.WriteStartObject();
-            if (PolicyKey != null)
+            if (Optional.IsDefined(PolicyKey))
             {
                 writer.WritePropertyName("policyKey"u8);
                 writer.WriteStringValue(PolicyKey);

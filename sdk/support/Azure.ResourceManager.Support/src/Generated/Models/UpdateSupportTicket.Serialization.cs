@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Support.Models
             }
 
             writer.WriteStartObject();
-            if (Severity.HasValue)
+            if (Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (ContactDetails != null)
+            if (Optional.IsDefined(ContactDetails))
             {
                 writer.WritePropertyName("contactDetails"u8);
                 writer.WriteObjectValue(ContactDetails);
             }
-            if (AdvancedDiagnosticConsent.HasValue)
+            if (Optional.IsDefined(AdvancedDiagnosticConsent))
             {
                 writer.WritePropertyName("advancedDiagnosticConsent"u8);
                 writer.WriteStringValue(AdvancedDiagnosticConsent.Value.ToString());
             }
-            if (!(SecondaryConsent is ChangeTrackingList<SecondaryConsent> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SecondaryConsent))
             {
                 writer.WritePropertyName("secondaryConsent"u8);
                 writer.WriteStartArray();

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             }
 
             writer.WriteStartObject();
-            if (!(Value is ChangeTrackingList<SubResource> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();

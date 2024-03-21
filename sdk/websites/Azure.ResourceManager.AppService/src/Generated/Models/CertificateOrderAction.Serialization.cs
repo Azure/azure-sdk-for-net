@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,19 +47,19 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ActionType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ActionType))
             {
                 writer.WritePropertyName("actionType"u8);
                 writer.WriteStringValue(ActionType.Value.ToSerialString());
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdAt"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");

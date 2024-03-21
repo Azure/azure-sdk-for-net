@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Advisor.Models
             }
 
             writer.WriteStartObject();
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Source != null)
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
-            if (!(Action is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStartObject();
@@ -59,12 +59,12 @@ namespace Azure.ResourceManager.Advisor.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Singular != null)
+            if (Optional.IsDefined(Singular))
             {
                 writer.WritePropertyName("singular"u8);
                 writer.WriteStringValue(Singular);
             }
-            if (Plural != null)
+            if (Optional.IsDefined(Plural))
             {
                 writer.WritePropertyName("plural"u8);
                 writer.WriteStringValue(Plural);

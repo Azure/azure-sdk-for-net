@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (!(Parameters is ChangeTrackingList<RunCommandParameterDefinition> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();

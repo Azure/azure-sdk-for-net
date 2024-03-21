@@ -27,24 +27,24 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (BucketName != null)
+            if (Optional.IsDefined(BucketName))
             {
                 writer.WritePropertyName("bucketName"u8);
                 JsonSerializer.Serialize(writer, BucketName);
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 JsonSerializer.Serialize(writer, Version);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DatasetLocationType);
-            if (FolderPath != null)
+            if (Optional.IsDefined(FolderPath))
             {
                 writer.WritePropertyName("folderPath"u8);
                 JsonSerializer.Serialize(writer, FolderPath);
             }
-            if (FileName != null)
+            if (Optional.IsDefined(FileName))
             {
                 writer.WritePropertyName("fileName"u8);
                 JsonSerializer.Serialize(writer, FileName);

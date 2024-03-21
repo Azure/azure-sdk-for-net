@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -31,7 +30,7 @@ namespace Azure.Communication.JobRouter
             writer.WriteStringValue(ChannelId);
             writer.WritePropertyName("capacityCostPerJob"u8);
             writer.WriteNumberValue(CapacityCostPerJob);
-            if (MaxNumberOfJobs.HasValue)
+            if (Optional.IsDefined(MaxNumberOfJobs))
             {
                 writer.WritePropertyName("maxNumberOfJobs"u8);
                 writer.WriteNumberValue(MaxNumberOfJobs.Value);

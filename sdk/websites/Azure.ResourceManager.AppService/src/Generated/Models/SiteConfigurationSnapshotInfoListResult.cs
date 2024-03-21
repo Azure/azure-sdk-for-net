@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal SiteConfigurationSnapshotInfoListResult(IEnumerable<SiteConfigurationSnapshotInfo> value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }

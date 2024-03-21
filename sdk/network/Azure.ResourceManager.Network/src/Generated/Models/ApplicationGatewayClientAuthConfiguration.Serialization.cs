@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (VerifyClientCertIssuerDN.HasValue)
+            if (Optional.IsDefined(VerifyClientCertIssuerDN))
             {
                 writer.WritePropertyName("verifyClientCertIssuerDN"u8);
                 writer.WriteBooleanValue(VerifyClientCertIssuerDN.Value);
             }
-            if (VerifyClientRevocation.HasValue)
+            if (Optional.IsDefined(VerifyClientRevocation))
             {
                 writer.WritePropertyName("verifyClientRevocation"u8);
                 writer.WriteStringValue(VerifyClientRevocation.Value.ToString());

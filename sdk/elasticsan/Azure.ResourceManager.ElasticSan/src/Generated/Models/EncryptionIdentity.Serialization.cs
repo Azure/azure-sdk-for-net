@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             }
 
             writer.WriteStartObject();
-            if (EncryptionUserAssignedIdentity != null)
+            if (Optional.IsDefined(EncryptionUserAssignedIdentity))
             {
                 writer.WritePropertyName("userAssignedIdentity"u8);
                 writer.WriteStringValue(EncryptionUserAssignedIdentity);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (EarlyTermination != null)
+            if (Optional.IsDefined(EarlyTermination))
             {
                 if (EarlyTermination != null)
                 {

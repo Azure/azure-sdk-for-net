@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (MinApiVersion != null)
+            if (Optional.IsDefined(MinApiVersion))
             {
                 writer.WritePropertyName("minApiVersion"u8);
                 writer.WriteStringValue(MinApiVersion);

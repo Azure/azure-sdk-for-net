@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (PrimaryExtendedLocation != null)
+            if (Optional.IsDefined(PrimaryExtendedLocation))
             {
                 writer.WritePropertyName("primaryExtendedLocation"u8);
                 writer.WriteObjectValue(PrimaryExtendedLocation);
             }
-            if (RecoveryExtendedLocation != null)
+            if (Optional.IsDefined(RecoveryExtendedLocation))
             {
                 writer.WritePropertyName("recoveryExtendedLocation"u8);
                 writer.WriteObjectValue(RecoveryExtendedLocation);

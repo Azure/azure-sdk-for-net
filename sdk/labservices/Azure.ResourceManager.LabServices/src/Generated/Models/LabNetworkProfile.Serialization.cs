@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.LabServices.Models
             }
 
             writer.WriteStartObject();
-            if (SubnetId != null)
+            if (Optional.IsDefined(SubnetId))
             {
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
-            if (LoadBalancerId != null)
+            if (Optional.IsDefined(LoadBalancerId))
             {
                 writer.WritePropertyName("loadBalancerId"u8);
                 writer.WriteStringValue(LoadBalancerId);
             }
-            if (PublicIPId != null)
+            if (Optional.IsDefined(PublicIPId))
             {
                 writer.WritePropertyName("publicIpId"u8);
                 writer.WriteStringValue(PublicIPId);

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Properties != null)
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteObjectValue(Properties);

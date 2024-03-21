@@ -30,19 +30,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Attachments != null)
+            if (Optional.IsDefined(Attachments))
             {
-                if (Attachments != null)
-                {
-                    writer.WritePropertyName("attachments"u8);
-                    writer.WriteObjectValue(Attachments);
-                }
-                else
-                {
-                    writer.WriteNull("attachments");
-                }
+                writer.WritePropertyName("attachments"u8);
+                writer.WriteObjectValue(Attachments);
             }
-            if (!(Outputs is ChangeTrackingList<NotebookCellOutputItem> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Outputs))
             {
                 writer.WritePropertyName("outputs"u8);
                 writer.WriteStartArray();
@@ -99,7 +92,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        attachments = null;
                         continue;
                     }
                     attachments = property.Value.GetObject();

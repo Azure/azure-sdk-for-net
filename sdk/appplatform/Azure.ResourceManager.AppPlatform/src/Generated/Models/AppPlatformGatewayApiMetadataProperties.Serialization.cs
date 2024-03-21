@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Title != null)
+            if (Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Documentation != null)
+            if (Optional.IsDefined(Documentation))
             {
                 writer.WritePropertyName("documentation"u8);
                 writer.WriteStringValue(Documentation);
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (ServerUri != null)
+            if (Optional.IsDefined(ServerUri))
             {
                 writer.WritePropertyName("serverUrl"u8);
                 writer.WriteStringValue(ServerUri.AbsoluteUri);

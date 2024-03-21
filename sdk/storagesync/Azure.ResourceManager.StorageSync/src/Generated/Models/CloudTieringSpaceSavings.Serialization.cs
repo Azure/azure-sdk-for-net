@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && LastUpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedTimestamp"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && VolumeSizeInBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(VolumeSizeInBytes))
             {
                 writer.WritePropertyName("volumeSizeBytes"u8);
                 writer.WriteNumberValue(VolumeSizeInBytes.Value);
             }
-            if (options.Format != "W" && CloudTotalSizeInBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CloudTotalSizeInBytes))
             {
                 writer.WritePropertyName("totalSizeCloudBytes"u8);
                 writer.WriteNumberValue(CloudTotalSizeInBytes.Value);
             }
-            if (options.Format != "W" && CachedSizeInBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CachedSizeInBytes))
             {
                 writer.WritePropertyName("cachedSizeBytes"u8);
                 writer.WriteNumberValue(CachedSizeInBytes.Value);
             }
-            if (options.Format != "W" && SpaceSavingsPercent.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SpaceSavingsPercent))
             {
                 writer.WritePropertyName("spaceSavingsPercent"u8);
                 writer.WriteNumberValue(SpaceSavingsPercent.Value);
             }
-            if (options.Format != "W" && SpaceSavingsInBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SpaceSavingsInBytes))
             {
                 writer.WritePropertyName("spaceSavingsBytes"u8);
                 writer.WriteNumberValue(SpaceSavingsInBytes.Value);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
             }
 
             writer.WriteStartObject();
-            if (OrchestratorSpecificConnectionDetails != null)
+            if (Optional.IsDefined(OrchestratorSpecificConnectionDetails))
             {
                 writer.WritePropertyName("orchestratorSpecificConnectionDetails"u8);
                 writer.WriteObjectValue(OrchestratorSpecificConnectionDetails);

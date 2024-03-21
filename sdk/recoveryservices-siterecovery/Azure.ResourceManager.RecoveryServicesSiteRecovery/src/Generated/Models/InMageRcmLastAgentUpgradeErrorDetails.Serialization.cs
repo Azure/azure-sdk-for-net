@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ErrorCode != null)
+            if (options.Format != "W" && Optional.IsDefined(ErrorCode))
             {
                 writer.WritePropertyName("errorCode"u8);
                 writer.WriteStringValue(ErrorCode);
             }
-            if (options.Format != "W" && ErrorMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(ErrorMessage))
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
             }
-            if (options.Format != "W" && PossibleCauses != null)
+            if (options.Format != "W" && Optional.IsDefined(PossibleCauses))
             {
                 writer.WritePropertyName("possibleCauses"u8);
                 writer.WriteStringValue(PossibleCauses);
             }
-            if (options.Format != "W" && RecommendedAction != null)
+            if (options.Format != "W" && Optional.IsDefined(RecommendedAction))
             {
                 writer.WritePropertyName("recommendedAction"u8);
                 writer.WriteStringValue(RecommendedAction);
             }
-            if (options.Format != "W" && !(ErrorMessageParameters is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ErrorMessageParameters))
             {
                 writer.WritePropertyName("errorMessageParameters"u8);
                 writer.WriteStartObject();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && !(ErrorTags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ErrorTags))
             {
                 writer.WritePropertyName("errorTags"u8);
                 writer.WriteStartObject();

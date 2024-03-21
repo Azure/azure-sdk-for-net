@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (InstanceType != null)
+            if (Optional.IsDefined(InstanceType))
             {
                 if (InstanceType != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("instanceType");
                 }
             }
-            if (RuntimeVersion != null)
+            if (Optional.IsDefined(RuntimeVersion))
             {
                 writer.WritePropertyName("runtimeVersion"u8);
                 writer.WriteStringValue(RuntimeVersion);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
 
             writer.WriteStartObject();
-            if (MaxPercentDeltaUnhealthyServices.HasValue)
+            if (Optional.IsDefined(MaxPercentDeltaUnhealthyServices))
             {
                 writer.WritePropertyName("maxPercentDeltaUnhealthyServices"u8);
                 writer.WriteNumberValue(MaxPercentDeltaUnhealthyServices.Value);

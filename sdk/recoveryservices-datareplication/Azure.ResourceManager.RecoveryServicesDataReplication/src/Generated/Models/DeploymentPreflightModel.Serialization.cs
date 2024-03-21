@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
 
             writer.WriteStartObject();
-            if (!(Resources is ChangeTrackingList<DeploymentPreflightResourceInfo> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Resources))
             {
                 writer.WritePropertyName("resources"u8);
                 writer.WriteStartArray();

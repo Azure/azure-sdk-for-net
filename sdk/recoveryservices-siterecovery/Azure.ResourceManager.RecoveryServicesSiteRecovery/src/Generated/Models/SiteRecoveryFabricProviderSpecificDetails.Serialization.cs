@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (!(ContainerIds is ChangeTrackingList<ResourceIdentifier> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ContainerIds))
             {
                 writer.WritePropertyName("containerIds"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Zones is ChangeTrackingList<A2AZoneDetails> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ExtendedLocations is ChangeTrackingList<A2AExtendedLocationDetails> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(ExtendedLocations))
             {
                 writer.WritePropertyName("extendedLocations"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(LocationDetails is ChangeTrackingList<A2AFabricSpecificLocationDetails> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(LocationDetails))
             {
                 writer.WritePropertyName("locationDetails"u8);
                 writer.WriteStartArray();

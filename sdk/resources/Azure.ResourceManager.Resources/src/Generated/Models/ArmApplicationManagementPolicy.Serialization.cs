@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Mode.HasValue)
+            if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());

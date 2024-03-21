@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (ClientId != null)
+            if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
-            if (ClientCredential != null)
+            if (Optional.IsDefined(ClientCredential))
             {
                 writer.WritePropertyName("clientCredential"u8);
                 writer.WriteObjectValue(ClientCredential);
             }
-            if (OpenIdConnectConfiguration != null)
+            if (Optional.IsDefined(OpenIdConnectConfiguration))
             {
                 writer.WritePropertyName("openIdConnectConfiguration"u8);
                 writer.WriteObjectValue(OpenIdConnectConfiguration);

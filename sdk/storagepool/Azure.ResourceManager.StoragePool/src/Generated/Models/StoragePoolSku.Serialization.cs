@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Tier != null)
+            if (Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier);

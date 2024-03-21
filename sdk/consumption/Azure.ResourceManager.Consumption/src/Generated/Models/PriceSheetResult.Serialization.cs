@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -28,12 +27,12 @@ namespace Azure.ResourceManager.Consumption.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (options.Format != "W" && !(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -59,14 +58,14 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && !(Pricesheets is ChangeTrackingList<PriceSheetProperties> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Pricesheets))
             {
                 writer.WritePropertyName("pricesheets"u8);
                 writer.WriteStartArray();
@@ -76,12 +75,12 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && NextLink != null)
+            if (options.Format != "W" && Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (options.Format != "W" && Download != null)
+            if (options.Format != "W" && Optional.IsDefined(Download))
             {
                 writer.WritePropertyName("download"u8);
                 writer.WriteObjectValue(Download);

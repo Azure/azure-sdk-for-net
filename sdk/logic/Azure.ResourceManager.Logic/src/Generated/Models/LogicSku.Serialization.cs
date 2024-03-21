@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name.ToString());
-            if (Plan != null)
+            if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
                 writer.WriteObjectValue(Plan);

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (ImageType.HasValue)
+            if (Optional.IsDefined(ImageType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ImageType.Value.ToString());
             }
-            if (Reference != null)
+            if (Optional.IsDefined(Reference))
             {
                 writer.WritePropertyName("reference"u8);
                 writer.WriteStringValue(Reference);

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteStringValue(DeploymentType.ToString());
             writer.WritePropertyName("databaseType"u8);
             writer.WriteStringValue(DatabaseType.ToString());
-            if (HighAvailabilityType.HasValue)
+            if (Optional.IsDefined(HighAvailabilityType))
             {
                 writer.WritePropertyName("highAvailabilityType"u8);
                 writer.WriteStringValue(HighAvailabilityType.Value.ToString());

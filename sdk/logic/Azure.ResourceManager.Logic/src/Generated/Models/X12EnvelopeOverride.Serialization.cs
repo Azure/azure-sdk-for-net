@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStringValue(SenderApplicationId);
             writer.WritePropertyName("receiverApplicationId"u8);
             writer.WriteStringValue(ReceiverApplicationId);
-            if (FunctionalIdentifierCode != null)
+            if (Optional.IsDefined(FunctionalIdentifierCode))
             {
                 writer.WritePropertyName("functionalIdentifierCode"u8);
                 writer.WriteStringValue(FunctionalIdentifierCode);

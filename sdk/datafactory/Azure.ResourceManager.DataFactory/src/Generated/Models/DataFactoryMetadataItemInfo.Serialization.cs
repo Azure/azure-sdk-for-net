@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 JsonSerializer.Serialize(writer, Name);
             }
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 JsonSerializer.Serialize(writer, Value);

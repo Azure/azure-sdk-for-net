@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Mtu.HasValue)
+            if (Optional.IsDefined(Mtu))
             {
                 writer.WritePropertyName("mtu"u8);
                 writer.WriteNumberValue(Mtu.Value);
             }
-            if (VlanId.HasValue)
+            if (Optional.IsDefined(VlanId))
             {
                 writer.WritePropertyName("vlanId"u8);
                 writer.WriteNumberValue(VlanId.Value);
             }
-            if (PeerAsn.HasValue)
+            if (Optional.IsDefined(PeerAsn))
             {
                 writer.WritePropertyName("peerASN"u8);
                 writer.WriteNumberValue(PeerAsn.Value);
             }
-            if (BfdConfiguration != null)
+            if (Optional.IsDefined(BfdConfiguration))
             {
                 writer.WritePropertyName("bfdConfiguration"u8);
                 writer.WriteObjectValue(BfdConfiguration);

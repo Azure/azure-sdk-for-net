@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (!(TargetEntities is ChangeTrackingList<MapperTable> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(TargetEntities))
             {
                 writer.WritePropertyName("targetEntities"u8);
                 writer.WriteStartArray();
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Connection != null)
+            if (Optional.IsDefined(Connection))
             {
                 writer.WritePropertyName("connection"u8);
                 writer.WriteObjectValue(Connection);
             }
-            if (!(DataMapperMappings is ChangeTrackingList<DataMapperMapping> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(DataMapperMappings))
             {
                 writer.WritePropertyName("dataMapperMappings"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Relationships is ChangeTrackingList<BinaryData> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Relationships))
             {
                 writer.WritePropertyName("relationships"u8);
                 writer.WriteStartArray();

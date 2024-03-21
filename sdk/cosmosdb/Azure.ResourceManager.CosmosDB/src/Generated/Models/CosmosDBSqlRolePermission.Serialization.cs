@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (!(DataActions is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DataActions))
             {
                 writer.WritePropertyName("dataActions"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(NotDataActions is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(NotDataActions))
             {
                 writer.WritePropertyName("notDataActions"u8);
                 writer.WriteStartArray();

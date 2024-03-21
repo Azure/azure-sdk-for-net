@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Avs.Models
             }
 
             writer.WriteStartObject();
-            if (SecureValue != null)
+            if (Optional.IsDefined(SecureValue))
             {
                 writer.WritePropertyName("secureValue"u8);
                 writer.WriteStringValue(SecureValue);

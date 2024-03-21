@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStringValue(Attribute.ToString());
             writer.WritePropertyName("filter"u8);
             writer.WriteStringValue(Filter.ToString());
-            if (FilterValue != null)
+            if (Optional.IsDefined(FilterValue))
             {
                 writer.WritePropertyName("filterValue"u8);
                 writer.WriteStringValue(FilterValue);

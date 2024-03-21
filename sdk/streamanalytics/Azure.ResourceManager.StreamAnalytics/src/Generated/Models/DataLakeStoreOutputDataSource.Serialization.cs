@@ -30,47 +30,47 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStringValue(OutputDataSourceType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (RefreshToken != null)
+            if (Optional.IsDefined(RefreshToken))
             {
                 writer.WritePropertyName("refreshToken"u8);
                 writer.WriteStringValue(RefreshToken);
             }
-            if (TokenUserPrincipalName != null)
+            if (Optional.IsDefined(TokenUserPrincipalName))
             {
                 writer.WritePropertyName("tokenUserPrincipalName"u8);
                 writer.WriteStringValue(TokenUserPrincipalName);
             }
-            if (TokenUserDisplayName != null)
+            if (Optional.IsDefined(TokenUserDisplayName))
             {
                 writer.WritePropertyName("tokenUserDisplayName"u8);
                 writer.WriteStringValue(TokenUserDisplayName);
             }
-            if (AccountName != null)
+            if (Optional.IsDefined(AccountName))
             {
                 writer.WritePropertyName("accountName"u8);
                 writer.WriteStringValue(AccountName);
             }
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (FilePathPrefix != null)
+            if (Optional.IsDefined(FilePathPrefix))
             {
                 writer.WritePropertyName("filePathPrefix"u8);
                 writer.WriteStringValue(FilePathPrefix);
             }
-            if (DateFormat != null)
+            if (Optional.IsDefined(DateFormat))
             {
                 writer.WritePropertyName("dateFormat"u8);
                 writer.WriteStringValue(DateFormat);
             }
-            if (TimeFormat != null)
+            if (Optional.IsDefined(TimeFormat))
             {
                 writer.WritePropertyName("timeFormat"u8);
                 writer.WriteStringValue(TimeFormat);
             }
-            if (AuthenticationMode.HasValue)
+            if (Optional.IsDefined(AuthenticationMode))
             {
                 writer.WritePropertyName("authenticationMode"u8);
                 writer.WriteStringValue(AuthenticationMode.Value.ToString());

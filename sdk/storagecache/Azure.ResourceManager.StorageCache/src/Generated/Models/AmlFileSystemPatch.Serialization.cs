@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,17 +39,17 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (EncryptionSettings != null)
+            if (Optional.IsDefined(EncryptionSettings))
             {
                 writer.WritePropertyName("encryptionSettings"u8);
                 writer.WriteObjectValue(EncryptionSettings);
             }
-            if (MaintenanceWindow != null)
+            if (Optional.IsDefined(MaintenanceWindow))
             {
                 writer.WritePropertyName("maintenanceWindow"u8);
                 writer.WriteObjectValue(MaintenanceWindow);
             }
-            if (RootSquashSettings != null)
+            if (Optional.IsDefined(RootSquashSettings))
             {
                 writer.WritePropertyName("rootSquashSettings"u8);
                 writer.WriteObjectValue(RootSquashSettings);

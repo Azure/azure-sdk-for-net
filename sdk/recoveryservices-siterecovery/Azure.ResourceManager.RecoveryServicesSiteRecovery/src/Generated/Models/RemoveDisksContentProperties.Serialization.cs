@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (ProviderSpecificDetails != null)
+            if (Optional.IsDefined(ProviderSpecificDetails))
             {
                 writer.WritePropertyName("providerSpecificDetails"u8);
                 writer.WriteObjectValue(ProviderSpecificDetails);

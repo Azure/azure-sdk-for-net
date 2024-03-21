@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (NotificationSetting != null)
+            if (Optional.IsDefined(NotificationSetting))
             {
                 if (NotificationSetting != null)
                 {

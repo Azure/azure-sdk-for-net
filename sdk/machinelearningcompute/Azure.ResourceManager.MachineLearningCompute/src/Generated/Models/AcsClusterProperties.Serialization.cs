@@ -26,19 +26,19 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ClusterFqdn != null)
+            if (options.Format != "W" && Optional.IsDefined(ClusterFqdn))
             {
                 writer.WritePropertyName("clusterFqdn"u8);
                 writer.WriteStringValue(ClusterFqdn);
             }
             writer.WritePropertyName("orchestratorType"u8);
             writer.WriteStringValue(OrchestratorType.ToString());
-            if (OrchestratorProperties != null)
+            if (Optional.IsDefined(OrchestratorProperties))
             {
                 writer.WritePropertyName("orchestratorProperties"u8);
                 writer.WriteObjectValue(OrchestratorProperties);
             }
-            if (!(SystemServices is ChangeTrackingList<SystemService> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SystemServices))
             {
                 writer.WritePropertyName("systemServices"u8);
                 writer.WriteStartArray();
@@ -48,17 +48,17 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (MasterCount.HasValue)
+            if (Optional.IsDefined(MasterCount))
             {
                 writer.WritePropertyName("masterCount"u8);
                 writer.WriteNumberValue(MasterCount.Value);
             }
-            if (AgentCount.HasValue)
+            if (Optional.IsDefined(AgentCount))
             {
                 writer.WritePropertyName("agentCount"u8);
                 writer.WriteNumberValue(AgentCount.Value);
             }
-            if (AgentVmSize.HasValue)
+            if (Optional.IsDefined(AgentVmSize))
             {
                 writer.WritePropertyName("agentVmSize"u8);
                 writer.WriteStringValue(AgentVmSize.Value.ToString());

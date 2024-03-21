@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (SessionId.HasValue)
+            if (Optional.IsDefined(SessionId))
             {
                 writer.WritePropertyName("sessionId"u8);
                 writer.WriteStringValue(SessionId.Value);
             }
-            if (DataFlow != null)
+            if (Optional.IsDefined(DataFlow))
             {
                 writer.WritePropertyName("dataFlow"u8);
                 writer.WriteObjectValue(DataFlow);
             }
-            if (!(DataFlows is ChangeTrackingList<DataFactoryDataFlowDebugInfo> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DataFlows))
             {
                 writer.WritePropertyName("dataFlows"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Datasets is ChangeTrackingList<DataFactoryDatasetDebugInfo> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Datasets))
             {
                 writer.WritePropertyName("datasets"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(LinkedServices is ChangeTrackingList<DataFactoryLinkedServiceDebugInfo> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(LinkedServices))
             {
                 writer.WritePropertyName("linkedServices"u8);
                 writer.WriteStartArray();
@@ -66,12 +66,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Staging != null)
+            if (Optional.IsDefined(Staging))
             {
                 writer.WritePropertyName("staging"u8);
                 writer.WriteObjectValue(Staging);
             }
-            if (DebugSettings != null)
+            if (Optional.IsDefined(DebugSettings))
             {
                 writer.WritePropertyName("debugSettings"u8);
                 writer.WriteObjectValue(DebugSettings);

@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && State != null)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && ExitCode.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExitCode))
             {
                 writer.WritePropertyName("exitCode"u8);
                 writer.WriteNumberValue(ExitCode.Value);
             }
-            if (options.Format != "W" && FinishOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(FinishOn))
             {
                 writer.WritePropertyName("finishTime"u8);
                 writer.WriteStringValue(FinishOn.Value, "O");
             }
-            if (options.Format != "W" && DetailStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(DetailStatus))
             {
                 writer.WritePropertyName("detailStatus"u8);
                 writer.WriteStringValue(DetailStatus);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && InstanceType != null)
+            if (options.Format != "W" && Optional.IsDefined(InstanceType))
             {
                 writer.WritePropertyName("instanceType"u8);
                 writer.WriteStringValue(InstanceType);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             }
 
             writer.WriteStartObject();
-            if (!(Disks is ChangeTrackingList<VirtualDiskUpdate> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Disks))
             {
                 writer.WritePropertyName("disks"u8);
                 writer.WriteStartArray();

@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && CarrierName != null)
+            if (options.Format != "W" && Optional.IsDefined(CarrierName))
             {
                 writer.WritePropertyName("carrierName"u8);
                 writer.WriteStringValue(CarrierName);
             }
-            if (options.Format != "W" && CarrierDisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(CarrierDisplayName))
             {
                 writer.WritePropertyName("carrierDisplayName"u8);
                 writer.WriteStringValue(CarrierDisplayName);
             }
-            if (options.Format != "W" && TrackingId != null)
+            if (options.Format != "W" && Optional.IsDefined(TrackingId))
             {
                 writer.WritePropertyName("trackingId"u8);
                 writer.WriteStringValue(TrackingId);
             }
-            if (options.Format != "W" && TrackingUri != null)
+            if (options.Format != "W" && Optional.IsDefined(TrackingUri))
             {
                 writer.WritePropertyName("trackingUrl"u8);
                 writer.WriteStringValue(TrackingUri.AbsoluteUri);

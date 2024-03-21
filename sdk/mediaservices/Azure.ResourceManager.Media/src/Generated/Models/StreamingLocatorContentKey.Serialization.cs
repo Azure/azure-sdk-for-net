@@ -28,27 +28,27 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (options.Format != "W" && KeyType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(KeyType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(KeyType.Value.ToString());
             }
-            if (LabelReferenceInStreamingPolicy != null)
+            if (Optional.IsDefined(LabelReferenceInStreamingPolicy))
             {
                 writer.WritePropertyName("labelReferenceInStreamingPolicy"u8);
                 writer.WriteStringValue(LabelReferenceInStreamingPolicy);
             }
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (options.Format != "W" && PolicyName != null)
+            if (options.Format != "W" && Optional.IsDefined(PolicyName))
             {
                 writer.WritePropertyName("policyName"u8);
                 writer.WriteStringValue(PolicyName);
             }
-            if (options.Format != "W" && !(Tracks is ChangeTrackingList<MediaTrackSelection> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Tracks))
             {
                 writer.WritePropertyName("tracks"u8);
                 writer.WriteStartArray();

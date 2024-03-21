@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (KeyData != null)
+            if (Optional.IsDefined(KeyData))
             {
                 writer.WritePropertyName("keyData"u8);
                 writer.WriteStringValue(KeyData);

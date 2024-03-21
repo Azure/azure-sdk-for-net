@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceName != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceName))
             {
                 writer.WritePropertyName("resourceName"u8);
                 writer.WriteStringValue(ResourceName);
             }
-            if (options.Format != "W" && DisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && CurrentValue.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CurrentValue))
             {
                 writer.WritePropertyName("currentValue"u8);
                 writer.WriteNumberValue(CurrentValue.Value);
             }
-            if (options.Format != "W" && Limit.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Limit))
             {
                 writer.WritePropertyName("limit"u8);
                 writer.WriteNumberValue(Limit.Value);
             }
-            if (options.Format != "W" && Unit != null)
+            if (options.Format != "W" && Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit);
             }
-            if (options.Format != "W" && NextResetOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NextResetOn))
             {
                 writer.WritePropertyName("nextResetTime"u8);
                 writer.WriteStringValue(NextResetOn.Value, "O");

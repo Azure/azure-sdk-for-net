@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Synapse.Models;
@@ -67,30 +66,9 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateLinkHubName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SynapsePrivateEndpointConnectionForPrivateLinkHubListResult>> ListAsync(string subscriptionId, string resourceGroupName, string privateLinkHubName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (privateLinkHubName == null)
-            {
-                throw new ArgumentNullException(nameof(privateLinkHubName));
-            }
-            if (privateLinkHubName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateLinkHubName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(privateLinkHubName, nameof(privateLinkHubName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, privateLinkHubName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -117,30 +95,9 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateLinkHubName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SynapsePrivateEndpointConnectionForPrivateLinkHubListResult> List(string subscriptionId, string resourceGroupName, string privateLinkHubName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (privateLinkHubName == null)
-            {
-                throw new ArgumentNullException(nameof(privateLinkHubName));
-            }
-            if (privateLinkHubName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateLinkHubName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(privateLinkHubName, nameof(privateLinkHubName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, privateLinkHubName);
             _pipeline.Send(message, cancellationToken);
@@ -190,38 +147,10 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateLinkHubName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SynapsePrivateEndpointConnectionForPrivateLinkHubData>> GetAsync(string subscriptionId, string resourceGroupName, string privateLinkHubName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (privateLinkHubName == null)
-            {
-                throw new ArgumentNullException(nameof(privateLinkHubName));
-            }
-            if (privateLinkHubName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateLinkHubName));
-            }
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
-            if (privateEndpointConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(privateLinkHubName, nameof(privateLinkHubName));
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, privateLinkHubName, privateEndpointConnectionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -251,38 +180,10 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateLinkHubName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SynapsePrivateEndpointConnectionForPrivateLinkHubData> Get(string subscriptionId, string resourceGroupName, string privateLinkHubName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (privateLinkHubName == null)
-            {
-                throw new ArgumentNullException(nameof(privateLinkHubName));
-            }
-            if (privateLinkHubName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateLinkHubName));
-            }
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
-            if (privateEndpointConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(privateLinkHubName, nameof(privateLinkHubName));
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, privateLinkHubName, privateEndpointConnectionName);
             _pipeline.Send(message, cancellationToken);
@@ -326,34 +227,10 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateLinkHubName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SynapsePrivateEndpointConnectionForPrivateLinkHubListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string privateLinkHubName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (privateLinkHubName == null)
-            {
-                throw new ArgumentNullException(nameof(privateLinkHubName));
-            }
-            if (privateLinkHubName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateLinkHubName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(privateLinkHubName, nameof(privateLinkHubName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, privateLinkHubName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -381,34 +258,10 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateLinkHubName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SynapsePrivateEndpointConnectionForPrivateLinkHubListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string privateLinkHubName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (privateLinkHubName == null)
-            {
-                throw new ArgumentNullException(nameof(privateLinkHubName));
-            }
-            if (privateLinkHubName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateLinkHubName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(privateLinkHubName, nameof(privateLinkHubName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, privateLinkHubName);
             _pipeline.Send(message, cancellationToken);

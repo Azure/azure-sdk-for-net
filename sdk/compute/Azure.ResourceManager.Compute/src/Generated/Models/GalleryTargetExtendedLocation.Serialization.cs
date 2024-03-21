@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (ExtendedLocation != null)
+            if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 writer.WriteObjectValue(ExtendedLocation);
             }
-            if (ExtendedLocationReplicaCount.HasValue)
+            if (Optional.IsDefined(ExtendedLocationReplicaCount))
             {
                 writer.WritePropertyName("extendedLocationReplicaCount"u8);
                 writer.WriteNumberValue(ExtendedLocationReplicaCount.Value);
             }
-            if (GalleryStorageAccountType.HasValue)
+            if (Optional.IsDefined(GalleryStorageAccountType))
             {
                 writer.WritePropertyName("storageAccountType"u8);
                 writer.WriteStringValue(GalleryStorageAccountType.Value.ToString());
             }
-            if (Encryption != null)
+            if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);

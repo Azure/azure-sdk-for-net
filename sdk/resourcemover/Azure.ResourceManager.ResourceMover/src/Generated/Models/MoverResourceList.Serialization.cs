@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ResourceMover;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
@@ -27,7 +26,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             writer.WriteStartObject();
-            if (!(Value is ChangeTrackingList<MoverResourceData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,12 +36,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
                 writer.WriteEndArray();
             }
-            if (NextLink != null)
+            if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (SummaryCollection != null)
+            if (Optional.IsDefined(SummaryCollection))
             {
                 if (SummaryCollection != null)
                 {
@@ -54,7 +53,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     writer.WriteNull("summaryCollection");
                 }
             }
-            if (options.Format != "W" && TotalCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalCount))
             {
                 writer.WritePropertyName("totalCount"u8);
                 writer.WriteNumberValue(TotalCount.Value);

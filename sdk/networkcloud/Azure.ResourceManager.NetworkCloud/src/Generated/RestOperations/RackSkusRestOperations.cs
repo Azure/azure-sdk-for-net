@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.NetworkCloud.Models;
@@ -61,14 +60,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<RackSkuList>> ListBySubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListBySubscriptionRequest(subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -93,14 +85,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<RackSkuList> ListBySubscription(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListBySubscriptionRequest(subscriptionId);
             _pipeline.Send(message, cancellationToken);
@@ -144,22 +129,8 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="rackSkuName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<NetworkCloudRackSkuData>> GetAsync(string subscriptionId, string rackSkuName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (rackSkuName == null)
-            {
-                throw new ArgumentNullException(nameof(rackSkuName));
-            }
-            if (rackSkuName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(rackSkuName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(rackSkuName, nameof(rackSkuName));
 
             using var message = CreateGetRequest(subscriptionId, rackSkuName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -187,22 +158,8 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="rackSkuName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<NetworkCloudRackSkuData> Get(string subscriptionId, string rackSkuName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (rackSkuName == null)
-            {
-                throw new ArgumentNullException(nameof(rackSkuName));
-            }
-            if (rackSkuName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(rackSkuName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(rackSkuName, nameof(rackSkuName));
 
             using var message = CreateGetRequest(subscriptionId, rackSkuName);
             _pipeline.Send(message, cancellationToken);
@@ -244,18 +201,8 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<RackSkuList>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -281,18 +228,8 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<RackSkuList> ListBySubscriptionNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId);
             _pipeline.Send(message, cancellationToken);

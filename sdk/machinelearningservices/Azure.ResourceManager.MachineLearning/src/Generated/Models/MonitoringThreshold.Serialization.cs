@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Value.HasValue)
+            if (Optional.IsDefined(Value))
             {
                 if (Value != null)
                 {

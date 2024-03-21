@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -38,19 +38,19 @@ namespace Azure.ResourceManager.FluidRelay.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Encryption != null)
+            if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);

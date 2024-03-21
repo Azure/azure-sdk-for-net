@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartObject();
             writer.WritePropertyName("sourceType"u8);
             writer.WriteStringValue(SourceType);
-            if (TrackEventsOptions.HasValue)
+            if (Optional.IsDefined(TrackEventsOptions))
             {
                 writer.WritePropertyName("trackEventsOptions"u8);
                 writer.WriteStringValue(TrackEventsOptions.Value.ToString());

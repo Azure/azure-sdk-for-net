@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("password"u8);
             writer.WriteStringValue(Password);
-            if (ElevationLevel.HasValue)
+            if (Optional.IsDefined(ElevationLevel))
             {
                 writer.WritePropertyName("elevationLevel"u8);
                 writer.WriteStringValue(ElevationLevel.Value.ToSerialString());
             }
-            if (LinuxUserConfiguration != null)
+            if (Optional.IsDefined(LinuxUserConfiguration))
             {
                 writer.WritePropertyName("linuxUserConfiguration"u8);
                 writer.WriteObjectValue(LinuxUserConfiguration);
             }
-            if (WindowsUserConfiguration != null)
+            if (Optional.IsDefined(WindowsUserConfiguration))
             {
                 writer.WritePropertyName("windowsUserConfiguration"u8);
                 writer.WriteObjectValue(WindowsUserConfiguration);

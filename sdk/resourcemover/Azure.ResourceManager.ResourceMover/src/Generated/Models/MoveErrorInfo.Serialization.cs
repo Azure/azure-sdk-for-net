@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(InfoMoverResources is ChangeTrackingList<AffectedMoverResourceInfo> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(InfoMoverResources))
             {
                 writer.WritePropertyName("moveResources"u8);
                 writer.WriteStartArray();

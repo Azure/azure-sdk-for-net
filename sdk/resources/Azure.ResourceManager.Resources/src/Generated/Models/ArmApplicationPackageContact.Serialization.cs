@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (ContactName != null)
+            if (Optional.IsDefined(ContactName))
             {
                 writer.WritePropertyName("contactName"u8);
                 writer.WriteStringValue(ContactName);

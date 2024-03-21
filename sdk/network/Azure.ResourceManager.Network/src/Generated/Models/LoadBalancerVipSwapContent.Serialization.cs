@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (!(FrontendIPConfigurations is ChangeTrackingList<LoadBalancerVipSwapRequestFrontendIPConfiguration> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(FrontendIPConfigurations))
             {
                 writer.WritePropertyName("frontendIPConfigurations"u8);
                 writer.WriteStartArray();

@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && FirstStripeName != null)
+            if (options.Format != "W" && Optional.IsDefined(FirstStripeName))
             {
                 writer.WritePropertyName("firstStripeName"u8);
                 writer.WriteStringValue(FirstStripeName);
             }
-            if (options.Format != "W" && NumberOfStripes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NumberOfStripes))
             {
                 writer.WritePropertyName("numberOfStripes"u8);
                 writer.WriteNumberValue(NumberOfStripes.Value);
             }
-            if (options.Format != "W" && BackupSizeInMB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(BackupSizeInMB))
             {
                 writer.WritePropertyName("backupSizeMB"u8);
                 writer.WriteNumberValue(BackupSizeInMB.Value);
             }
-            if (options.Format != "W" && RestoreStartedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RestoreStartedOn))
             {
                 writer.WritePropertyName("restoreStartedTimestampUtc"u8);
                 writer.WriteStringValue(RestoreStartedOn.Value, "O");
             }
-            if (options.Format != "W" && RestoreFinishedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RestoreFinishedOn))
             {
                 writer.WritePropertyName("restoreFinishedTimestampUtc"u8);
                 writer.WriteStringValue(RestoreFinishedOn.Value, "O");

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (PrimaryNetworkId != null)
+            if (Optional.IsDefined(PrimaryNetworkId))
             {
                 writer.WritePropertyName("primaryNetworkId"u8);
                 writer.WriteStringValue(PrimaryNetworkId);

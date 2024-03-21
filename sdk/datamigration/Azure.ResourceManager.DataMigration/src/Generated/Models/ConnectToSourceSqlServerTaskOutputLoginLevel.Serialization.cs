@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && LoginType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LoginType))
             {
                 writer.WritePropertyName("loginType"u8);
                 writer.WriteStringValue(LoginType.Value.ToString());
             }
-            if (options.Format != "W" && DefaultDatabase != null)
+            if (options.Format != "W" && Optional.IsDefined(DefaultDatabase))
             {
                 writer.WritePropertyName("defaultDatabase"u8);
                 writer.WriteStringValue(DefaultDatabase);
             }
-            if (options.Format != "W" && IsEnabled.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (options.Format != "W" && MigrationEligibility != null)
+            if (options.Format != "W" && Optional.IsDefined(MigrationEligibility))
             {
                 writer.WritePropertyName("migrationEligibility"u8);
                 writer.WriteObjectValue(MigrationEligibility);
             }
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);

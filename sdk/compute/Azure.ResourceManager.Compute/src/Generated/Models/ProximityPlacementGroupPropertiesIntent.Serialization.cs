@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (!(VmSizes is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(VmSizes))
             {
                 writer.WritePropertyName("vmSizes"u8);
                 writer.WriteStartArray();

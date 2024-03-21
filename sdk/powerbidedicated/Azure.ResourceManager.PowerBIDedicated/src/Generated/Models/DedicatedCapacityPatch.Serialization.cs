@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             }
 
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -44,22 +44,22 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Administration != null)
+            if (Optional.IsDefined(Administration))
             {
                 writer.WritePropertyName("administration"u8);
                 writer.WriteObjectValue(Administration);
             }
-            if (Mode.HasValue)
+            if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (options.Format != "W" && TenantId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (options.Format != "W" && FriendlyName != null)
+            if (options.Format != "W" && Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);

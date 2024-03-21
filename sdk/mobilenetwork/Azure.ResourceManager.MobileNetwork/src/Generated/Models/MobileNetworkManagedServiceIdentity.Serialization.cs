@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(IdentityType.ToString());
-            if (!(UserAssignedIdentities is ChangeTrackingDictionary<string, UserAssignedIdentity> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(UserAssignedIdentities))
             {
                 writer.WritePropertyName("userAssignedIdentities"u8);
                 writer.WriteStartObject();

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             }
 
             writer.WriteStartObject();
-            if (!(Value is ChangeTrackingList<SignalRServiceUsage> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (NextLink != null)
+            if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);

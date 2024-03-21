@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
@@ -27,37 +26,37 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
 
             writer.WriteStartObject();
-            if (PanETag.HasValue)
+            if (Optional.IsDefined(PanETag))
             {
                 writer.WritePropertyName("panEtag"u8);
                 writer.WriteStringValue(PanETag.Value.ToString());
             }
-            if (NetworkProfile != null)
+            if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
                 writer.WriteObjectValue(NetworkProfile);
             }
-            if (IsPanoramaManaged.HasValue)
+            if (Optional.IsDefined(IsPanoramaManaged))
             {
                 writer.WritePropertyName("isPanoramaManaged"u8);
                 writer.WriteStringValue(IsPanoramaManaged.Value.ToString());
             }
-            if (PanoramaConfig != null)
+            if (Optional.IsDefined(PanoramaConfig))
             {
                 writer.WritePropertyName("panoramaConfig"u8);
                 writer.WriteObjectValue(PanoramaConfig);
             }
-            if (AssociatedRulestack != null)
+            if (Optional.IsDefined(AssociatedRulestack))
             {
                 writer.WritePropertyName("associatedRulestack"u8);
                 writer.WriteObjectValue(AssociatedRulestack);
             }
-            if (DnsSettings != null)
+            if (Optional.IsDefined(DnsSettings))
             {
                 writer.WritePropertyName("dnsSettings"u8);
                 writer.WriteObjectValue(DnsSettings);
             }
-            if (!(FrontEndSettings is ChangeTrackingList<FirewallFrontendSetting> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(FrontEndSettings))
             {
                 writer.WritePropertyName("frontEndSettings"u8);
                 writer.WriteStartArray();
@@ -67,12 +66,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
                 writer.WriteEndArray();
             }
-            if (PlanData != null)
+            if (Optional.IsDefined(PlanData))
             {
                 writer.WritePropertyName("planData"u8);
                 writer.WriteObjectValue(PlanData);
             }
-            if (MarketplaceDetails != null)
+            if (Optional.IsDefined(MarketplaceDetails))
             {
                 writer.WritePropertyName("marketplaceDetails"u8);
                 writer.WriteObjectValue(MarketplaceDetails);

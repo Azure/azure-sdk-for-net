@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStartObject();
             writer.WritePropertyName("directoryServiceOptions"u8);
             writer.WriteStringValue(DirectoryServiceOptions.ToString());
-            if (ActiveDirectoryProperties != null)
+            if (Optional.IsDefined(ActiveDirectoryProperties))
             {
                 writer.WritePropertyName("activeDirectoryProperties"u8);
                 writer.WriteObjectValue(ActiveDirectoryProperties);
             }
-            if (DefaultSharePermission.HasValue)
+            if (Optional.IsDefined(DefaultSharePermission))
             {
                 writer.WritePropertyName("defaultSharePermission"u8);
                 writer.WriteStringValue(DefaultSharePermission.Value.ToString());

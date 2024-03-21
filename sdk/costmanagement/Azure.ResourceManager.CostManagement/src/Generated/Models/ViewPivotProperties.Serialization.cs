@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
 
             writer.WriteStartObject();
-            if (PivotType.HasValue)
+            if (Optional.IsDefined(PivotType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(PivotType.Value.ToString());
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);

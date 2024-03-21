@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (Begin.HasValue)
+            if (Optional.IsDefined(Begin))
             {
                 writer.WritePropertyName("begin"u8);
                 writer.WriteNumberValue(Begin.Value);
             }
-            if (End.HasValue)
+            if (Optional.IsDefined(End))
             {
                 writer.WritePropertyName("end"u8);
                 writer.WriteNumberValue(End.Value);

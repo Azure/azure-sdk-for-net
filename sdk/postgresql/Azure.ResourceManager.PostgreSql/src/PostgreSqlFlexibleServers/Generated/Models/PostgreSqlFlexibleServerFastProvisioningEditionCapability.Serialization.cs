@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && SupportedTier != null)
+            if (options.Format != "W" && Optional.IsDefined(SupportedTier))
             {
                 writer.WritePropertyName("supportedTier"u8);
                 writer.WriteStringValue(SupportedTier);
             }
-            if (options.Format != "W" && SupportedSku != null)
+            if (options.Format != "W" && Optional.IsDefined(SupportedSku))
             {
                 writer.WritePropertyName("supportedSku"u8);
                 writer.WriteStringValue(SupportedSku);
             }
-            if (options.Format != "W" && SupportedStorageGb.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SupportedStorageGb))
             {
                 writer.WritePropertyName("supportedStorageGb"u8);
                 writer.WriteNumberValue(SupportedStorageGb.Value);
             }
-            if (options.Format != "W" && SupportedServerVersions != null)
+            if (options.Format != "W" && Optional.IsDefined(SupportedServerVersions))
             {
                 writer.WritePropertyName("supportedServerVersions"u8);
                 writer.WriteStringValue(SupportedServerVersions);
             }
-            if (options.Format != "W" && ServerCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ServerCount))
             {
                 writer.WritePropertyName("serverCount"u8);
                 writer.WriteNumberValue(ServerCount.Value);
             }
-            if (options.Format != "W" && CapabilityStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CapabilityStatus))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(CapabilityStatus.Value.ToSerialString());
             }
-            if (options.Format != "W" && Reason != null)
+            if (options.Format != "W" && Optional.IsDefined(Reason))
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);

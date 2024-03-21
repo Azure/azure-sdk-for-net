@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (!(MigratedPools is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(MigratedPools))
             {
                 writer.WritePropertyName("migratedPools"u8);
                 writer.WriteStartArray();

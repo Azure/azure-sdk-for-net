@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (FriendlyName != null)
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);

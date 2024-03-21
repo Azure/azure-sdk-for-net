@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Datadog.Models
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (SendingMetrics.HasValue)
+            if (Optional.IsDefined(SendingMetrics))
             {
                 writer.WritePropertyName("sendingMetrics"u8);
                 writer.WriteBooleanValue(SendingMetrics.Value);
             }
-            if (ReasonForMetricsStatus != null)
+            if (Optional.IsDefined(ReasonForMetricsStatus))
             {
                 writer.WritePropertyName("reasonForMetricsStatus"u8);
                 writer.WriteStringValue(ReasonForMetricsStatus);
             }
-            if (SendingLogs.HasValue)
+            if (Optional.IsDefined(SendingLogs))
             {
                 writer.WritePropertyName("sendingLogs"u8);
                 writer.WriteBooleanValue(SendingLogs.Value);
             }
-            if (ReasonForLogsStatus != null)
+            if (Optional.IsDefined(ReasonForLogsStatus))
             {
                 writer.WritePropertyName("reasonForLogsStatus"u8);
                 writer.WriteStringValue(ReasonForLogsStatus);

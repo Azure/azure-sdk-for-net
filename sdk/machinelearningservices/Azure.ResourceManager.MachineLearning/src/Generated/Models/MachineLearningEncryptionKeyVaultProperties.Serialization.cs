@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (IdentityClientId != null)
+            if (Optional.IsDefined(IdentityClientId))
             {
                 writer.WritePropertyName("identityClientId"u8);
                 writer.WriteStringValue(IdentityClientId);

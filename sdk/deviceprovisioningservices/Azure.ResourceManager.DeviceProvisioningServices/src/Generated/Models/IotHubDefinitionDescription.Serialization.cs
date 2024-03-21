@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             }
 
             writer.WriteStartObject();
-            if (ApplyAllocationPolicy.HasValue)
+            if (Optional.IsDefined(ApplyAllocationPolicy))
             {
                 writer.WritePropertyName("applyAllocationPolicy"u8);
                 writer.WriteBooleanValue(ApplyAllocationPolicy.Value);
             }
-            if (AllocationWeight.HasValue)
+            if (Optional.IsDefined(AllocationWeight))
             {
                 writer.WritePropertyName("allocationWeight"u8);
                 writer.WriteNumberValue(AllocationWeight.Value);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && SyncAgentKey != null)
+            if (options.Format != "W" && Optional.IsDefined(SyncAgentKey))
             {
                 writer.WritePropertyName("syncAgentKey"u8);
                 writer.WriteStringValue(SyncAgentKey);

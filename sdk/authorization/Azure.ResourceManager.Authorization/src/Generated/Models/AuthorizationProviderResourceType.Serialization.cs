@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Authorization.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (!(Operations is ChangeTrackingList<AuthorizationProviderOperationInfo> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Operations))
             {
                 writer.WritePropertyName("operations"u8);
                 writer.WriteStartArray();

@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.BotService.Models
             }
 
             writer.WriteStartObject();
-            if (PrimaryEndpointKey != null)
+            if (Optional.IsDefined(PrimaryEndpointKey))
             {
                 writer.WritePropertyName("primaryEndpointKey"u8);
                 writer.WriteStringValue(PrimaryEndpointKey);
             }
-            if (SecondaryEndpointKey != null)
+            if (Optional.IsDefined(SecondaryEndpointKey))
             {
                 writer.WritePropertyName("secondaryEndpointKey"u8);
                 writer.WriteStringValue(SecondaryEndpointKey);
             }
-            if (InstalledVersion != null)
+            if (Optional.IsDefined(InstalledVersion))
             {
                 writer.WritePropertyName("installedVersion"u8);
                 writer.WriteStringValue(InstalledVersion);
             }
-            if (LastStableVersion != null)
+            if (Optional.IsDefined(LastStableVersion))
             {
                 writer.WritePropertyName("lastStableVersion"u8);
                 writer.WriteStringValue(LastStableVersion);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (AzureMonitorAlertSettings != null)
+            if (Optional.IsDefined(AzureMonitorAlertSettings))
             {
                 writer.WritePropertyName("azureMonitorAlertSettings"u8);
                 writer.WriteObjectValue(AzureMonitorAlertSettings);

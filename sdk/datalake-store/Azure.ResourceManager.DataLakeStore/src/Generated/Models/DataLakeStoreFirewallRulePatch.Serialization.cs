@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (StartIPAddress != null)
+            if (Optional.IsDefined(StartIPAddress))
             {
                 writer.WritePropertyName("startIpAddress"u8);
                 writer.WriteStringValue(StartIPAddress.ToString());
             }
-            if (EndIPAddress != null)
+            if (Optional.IsDefined(EndIPAddress))
             {
                 writer.WritePropertyName("endIpAddress"u8);
                 writer.WriteStringValue(EndIPAddress.ToString());

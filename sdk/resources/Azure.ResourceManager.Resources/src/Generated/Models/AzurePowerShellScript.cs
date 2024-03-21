@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -23,10 +22,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <exception cref="ArgumentNullException"> <paramref name="azPowerShellVersion"/> is null. </exception>
         public AzurePowerShellScript(AzureLocation location, TimeSpan retentionInterval, string azPowerShellVersion) : base(location)
         {
-            if (azPowerShellVersion == null)
-            {
-                throw new ArgumentNullException(nameof(azPowerShellVersion));
-            }
+            Argument.AssertNotNull(azPowerShellVersion, nameof(azPowerShellVersion));
 
             SupportingScriptUris = new ChangeTrackingList<Uri>();
             EnvironmentVariables = new ChangeTrackingList<ScriptEnvironmentVariable>();

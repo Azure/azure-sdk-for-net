@@ -27,27 +27,27 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (CompressionProperties != null)
+            if (Optional.IsDefined(CompressionProperties))
             {
                 writer.WritePropertyName("compressionProperties"u8);
                 writer.WriteObjectValue(CompressionProperties);
             }
-            if (ValidationMode != null)
+            if (Optional.IsDefined(ValidationMode))
             {
                 writer.WritePropertyName("validationMode"u8);
                 JsonSerializer.Serialize(writer, ValidationMode);
             }
-            if (DetectDataType != null)
+            if (Optional.IsDefined(DetectDataType))
             {
                 writer.WritePropertyName("detectDataType"u8);
                 JsonSerializer.Serialize(writer, DetectDataType);
             }
-            if (Namespaces != null)
+            if (Optional.IsDefined(Namespaces))
             {
                 writer.WritePropertyName("namespaces"u8);
                 JsonSerializer.Serialize(writer, Namespaces);
             }
-            if (NamespacePrefixes != null)
+            if (Optional.IsDefined(NamespacePrefixes))
             {
                 writer.WritePropertyName("namespacePrefixes"u8);
                 JsonSerializer.Serialize(writer, NamespacePrefixes);

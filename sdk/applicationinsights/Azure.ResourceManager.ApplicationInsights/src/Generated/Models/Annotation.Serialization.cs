@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (AnnotationName != null)
+            if (Optional.IsDefined(AnnotationName))
             {
                 writer.WritePropertyName("AnnotationName"u8);
                 writer.WriteStringValue(AnnotationName);
             }
-            if (Category != null)
+            if (Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("Category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (EventOn.HasValue)
+            if (Optional.IsDefined(EventOn))
             {
                 writer.WritePropertyName("EventTime"u8);
                 writer.WriteStringValue(EventOn.Value, "O");
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("Id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Properties != null)
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("Properties"u8);
                 writer.WriteStringValue(Properties);
             }
-            if (RelatedAnnotation != null)
+            if (Optional.IsDefined(RelatedAnnotation))
             {
                 writer.WritePropertyName("RelatedAnnotation"u8);
                 writer.WriteStringValue(RelatedAnnotation);

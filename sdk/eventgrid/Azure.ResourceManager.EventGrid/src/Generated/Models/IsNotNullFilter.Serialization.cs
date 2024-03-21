@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteStartObject();
             writer.WritePropertyName("operatorType"u8);
             writer.WriteStringValue(OperatorType.ToString());
-            if (Key != null)
+            if (Optional.IsDefined(Key))
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);

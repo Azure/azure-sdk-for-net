@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Convention.HasValue)
+            if (Optional.IsDefined(Convention))
             {
                 writer.WritePropertyName("convention"u8);
                 writer.WriteStringValue(Convention.Value.ToSerialString());
             }
-            if (CustomHostHeaderName != null)
+            if (Optional.IsDefined(CustomHostHeaderName))
             {
                 writer.WritePropertyName("customHostHeaderName"u8);
                 writer.WriteStringValue(CustomHostHeaderName);
             }
-            if (CustomProtoHeaderName != null)
+            if (Optional.IsDefined(CustomProtoHeaderName))
             {
                 writer.WritePropertyName("customProtoHeaderName"u8);
                 writer.WriteStringValue(CustomProtoHeaderName);

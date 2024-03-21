@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);

@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (TaskId != null)
+            if (Optional.IsDefined(TaskId))
             {
                 writer.WritePropertyName("taskId"u8);
                 writer.WriteStringValue(TaskId);
             }
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (EndOn.HasValue)
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (InstanceId != null)
+            if (Optional.IsDefined(InstanceId))
             {
                 writer.WritePropertyName("instanceId"u8);
                 writer.WriteStringValue(InstanceId);
             }
-            if (Duration.HasValue)
+            if (Optional.IsDefined(Duration))
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration.Value, "P");
             }
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (ProgressPercentage.HasValue)
+            if (Optional.IsDefined(ProgressPercentage))
             {
                 writer.WritePropertyName("progressPercentage"u8);
                 writer.WriteNumberValue(ProgressPercentage.Value);
             }
-            if (TaskExecutionDetails != null)
+            if (Optional.IsDefined(TaskExecutionDetails))
             {
                 writer.WritePropertyName("taskExecutionDetails"u8);
                 writer.WriteStringValue(TaskExecutionDetails);

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Hostname != null)
+            if (options.Format != "W" && Optional.IsDefined(Hostname))
             {
                 writer.WritePropertyName("hostname"u8);
                 writer.WriteStringValue(Hostname);
             }
-            if (options.Format != "W" && IPAddress != null)
+            if (options.Format != "W" && Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress);
             }
-            if (options.Format != "W" && Port.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Port))
             {
                 if (Port != null)
                 {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     writer.WriteNull("port");
                 }
             }
-            if (options.Format != "W" && Health.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Health))
             {
                 writer.WritePropertyName("health"u8);
                 writer.WriteStringValue(Health.Value.ToString());

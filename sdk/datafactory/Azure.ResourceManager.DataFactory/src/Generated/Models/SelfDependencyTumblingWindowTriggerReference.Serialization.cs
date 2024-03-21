@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("offset"u8);
             writer.WriteStringValue(Offset);
-            if (Size != null)
+            if (Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteStringValue(Size);

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (OriginalSwaggerUri != null)
+            if (Optional.IsDefined(OriginalSwaggerUri))
             {
                 writer.WritePropertyName("originalSwaggerUrl"u8);
                 writer.WriteStringValue(OriginalSwaggerUri.AbsoluteUri);
             }
-            if (ModifiedSwaggerUri != null)
+            if (Optional.IsDefined(ModifiedSwaggerUri))
             {
                 writer.WritePropertyName("modifiedSwaggerUrl"u8);
                 writer.WriteStringValue(ModifiedSwaggerUri.AbsoluteUri);

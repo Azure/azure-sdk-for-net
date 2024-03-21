@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.IotHub.Models
             writer.WriteStartObject();
             writer.WritePropertyName("filterName"u8);
             writer.WriteStringValue(FilterName);
-            if (Action.HasValue)
+            if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action.Value.ToString());

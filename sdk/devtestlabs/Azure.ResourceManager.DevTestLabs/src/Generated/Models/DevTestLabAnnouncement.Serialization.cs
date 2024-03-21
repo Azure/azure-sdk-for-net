@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Title != null)
+            if (Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Markdown != null)
+            if (Optional.IsDefined(Markdown))
             {
                 writer.WritePropertyName("markdown"u8);
                 writer.WriteStringValue(Markdown);
             }
-            if (Enabled.HasValue)
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteStringValue(Enabled.Value.ToString());
             }
-            if (ExpireOn.HasValue)
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationDate"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (IsExpired.HasValue)
+            if (Optional.IsDefined(IsExpired))
             {
                 writer.WritePropertyName("expired"u8);
                 writer.WriteBooleanValue(IsExpired.Value);
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && UniqueIdentifier.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UniqueIdentifier))
             {
                 writer.WritePropertyName("uniqueIdentifier"u8);
                 writer.WriteStringValue(UniqueIdentifier.Value);

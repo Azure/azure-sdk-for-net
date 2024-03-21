@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(Value is ChangeTrackingList<DataLakeAnalyticsAccountBasic> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Count.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (options.Format != "W" && NextLink != null)
+            if (options.Format != "W" && Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);

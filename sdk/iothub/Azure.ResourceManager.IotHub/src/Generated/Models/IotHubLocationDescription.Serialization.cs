@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.IotHub.Models
             }
 
             writer.WriteStartObject();
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Role.HasValue)
+            if (Optional.IsDefined(Role))
             {
                 writer.WritePropertyName("role"u8);
                 writer.WriteStringValue(Role.Value.ToString());

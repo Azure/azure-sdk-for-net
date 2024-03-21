@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.WebPubSub.Models
             }
 
             writer.WriteStartObject();
-            if (AuthType.HasValue)
+            if (Optional.IsDefined(AuthType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(AuthType.Value.ToString());
             }
-            if (ManagedIdentity != null)
+            if (Optional.IsDefined(ManagedIdentity))
             {
                 writer.WritePropertyName("managedIdentity"u8);
                 writer.WriteObjectValue(ManagedIdentity);

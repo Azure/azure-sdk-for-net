@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (NetworkManager != null)
+            if (Optional.IsDefined(NetworkManager))
             {
                 writer.WritePropertyName("networkManager"u8);
                 JsonSerializer.Serialize(writer, NetworkManager);
             }
-            if (Subnet != null)
+            if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
                 JsonSerializer.Serialize(writer, Subnet);
             }
-            if (NetworkInterface != null)
+            if (Optional.IsDefined(NetworkInterface))
             {
                 writer.WritePropertyName("networkInterface"u8);
                 JsonSerializer.Serialize(writer, NetworkInterface);

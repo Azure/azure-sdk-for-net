@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (ServiceName != null)
+            if (Optional.IsDefined(ServiceName))
             {
                 writer.WritePropertyName("serviceName"u8);
                 writer.WriteStringValue(ServiceName);

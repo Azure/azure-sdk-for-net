@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && State.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());

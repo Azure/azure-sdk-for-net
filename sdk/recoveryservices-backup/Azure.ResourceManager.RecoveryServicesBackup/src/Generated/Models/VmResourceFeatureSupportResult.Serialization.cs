@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (SupportStatus.HasValue)
+            if (Optional.IsDefined(SupportStatus))
             {
                 writer.WritePropertyName("supportStatus"u8);
                 writer.WriteStringValue(SupportStatus.Value.ToString());

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteNumberValue(FrontendPortRangeStart);
             writer.WritePropertyName("frontendPortRangeEnd"u8);
             writer.WriteNumberValue(FrontendPortRangeEnd);
-            if (!(NetworkSecurityGroupRules is ChangeTrackingList<BatchNetworkSecurityGroupRule> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(NetworkSecurityGroupRules))
             {
                 writer.WritePropertyName("networkSecurityGroupRules"u8);
                 writer.WriteStartArray();

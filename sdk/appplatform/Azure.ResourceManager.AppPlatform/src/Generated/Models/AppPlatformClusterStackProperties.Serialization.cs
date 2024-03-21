@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);

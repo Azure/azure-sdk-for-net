@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && UserName != null)
+            if (options.Format != "W" && Optional.IsDefined(UserName))
             {
                 if (UserName != null)
                 {
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("userName");
                 }
             }
-            if (options.Format != "W" && UserOrgId != null)
+            if (options.Format != "W" && Optional.IsDefined(UserOrgId))
             {
                 writer.WritePropertyName("userOrgId"u8);
                 writer.WriteStringValue(UserOrgId);
             }
-            if (options.Format != "W" && UserId != null)
+            if (options.Format != "W" && Optional.IsDefined(UserId))
             {
                 if (UserId != null)
                 {

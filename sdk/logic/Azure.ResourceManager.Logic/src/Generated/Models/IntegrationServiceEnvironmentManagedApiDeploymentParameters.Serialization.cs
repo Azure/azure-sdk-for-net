@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (ContentLinkDefinition != null)
+            if (Optional.IsDefined(ContentLinkDefinition))
             {
                 writer.WritePropertyName("contentLinkDefinition"u8);
                 writer.WriteObjectValue(ContentLinkDefinition);

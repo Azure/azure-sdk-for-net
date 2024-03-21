@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteObjectValue(Name);
             }
-            if (options.Format != "W" && PrimaryAggregationType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PrimaryAggregationType))
             {
                 writer.WritePropertyName("primaryAggregationType"u8);
                 writer.WriteStringValue(PrimaryAggregationType.Value.ToString());
             }
-            if (options.Format != "W" && ResourceUriString != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceUriString))
             {
                 writer.WritePropertyName("resourceUri"u8);
                 writer.WriteStringValue(ResourceUriString);
             }
-            if (options.Format != "W" && Unit.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit.Value.ToString());
             }
-            if (options.Format != "W" && !(MetricAvailabilities is ChangeTrackingList<SqlMetricAvailability> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(MetricAvailabilities))
             {
                 writer.WritePropertyName("metricAvailabilities"u8);
                 writer.WriteStartArray();

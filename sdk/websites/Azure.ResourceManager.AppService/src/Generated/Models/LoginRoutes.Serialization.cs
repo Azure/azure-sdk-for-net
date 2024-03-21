@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (LogoutEndpoint != null)
+            if (Optional.IsDefined(LogoutEndpoint))
             {
                 writer.WritePropertyName("logoutEndpoint"u8);
                 writer.WriteStringValue(LogoutEndpoint);

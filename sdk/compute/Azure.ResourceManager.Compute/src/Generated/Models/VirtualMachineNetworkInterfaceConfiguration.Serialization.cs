@@ -31,47 +31,47 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Primary.HasValue)
+            if (Optional.IsDefined(Primary))
             {
                 writer.WritePropertyName("primary"u8);
                 writer.WriteBooleanValue(Primary.Value);
             }
-            if (DeleteOption.HasValue)
+            if (Optional.IsDefined(DeleteOption))
             {
                 writer.WritePropertyName("deleteOption"u8);
                 writer.WriteStringValue(DeleteOption.Value.ToString());
             }
-            if (EnableAcceleratedNetworking.HasValue)
+            if (Optional.IsDefined(EnableAcceleratedNetworking))
             {
                 writer.WritePropertyName("enableAcceleratedNetworking"u8);
                 writer.WriteBooleanValue(EnableAcceleratedNetworking.Value);
             }
-            if (IsTcpStateTrackingDisabled.HasValue)
+            if (Optional.IsDefined(IsTcpStateTrackingDisabled))
             {
                 writer.WritePropertyName("disableTcpStateTracking"u8);
                 writer.WriteBooleanValue(IsTcpStateTrackingDisabled.Value);
             }
-            if (EnableFpga.HasValue)
+            if (Optional.IsDefined(EnableFpga))
             {
                 writer.WritePropertyName("enableFpga"u8);
                 writer.WriteBooleanValue(EnableFpga.Value);
             }
-            if (EnableIPForwarding.HasValue)
+            if (Optional.IsDefined(EnableIPForwarding))
             {
                 writer.WritePropertyName("enableIPForwarding"u8);
                 writer.WriteBooleanValue(EnableIPForwarding.Value);
             }
-            if (NetworkSecurityGroup != null)
+            if (Optional.IsDefined(NetworkSecurityGroup))
             {
                 writer.WritePropertyName("networkSecurityGroup"u8);
                 JsonSerializer.Serialize(writer, NetworkSecurityGroup);
             }
-            if (DnsSettings != null)
+            if (Optional.IsDefined(DnsSettings))
             {
                 writer.WritePropertyName("dnsSettings"u8);
                 writer.WriteObjectValue(DnsSettings);
             }
-            if (!(IPConfigurations is ChangeTrackingList<VirtualMachineNetworkInterfaceIPConfiguration> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(IPConfigurations))
             {
                 writer.WritePropertyName("ipConfigurations"u8);
                 writer.WriteStartArray();
@@ -81,17 +81,17 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (DscpConfiguration != null)
+            if (Optional.IsDefined(DscpConfiguration))
             {
                 writer.WritePropertyName("dscpConfiguration"u8);
                 JsonSerializer.Serialize(writer, DscpConfiguration);
             }
-            if (AuxiliaryMode.HasValue)
+            if (Optional.IsDefined(AuxiliaryMode))
             {
                 writer.WritePropertyName("auxiliaryMode"u8);
                 writer.WriteStringValue(AuxiliaryMode.Value.ToString());
             }
-            if (AuxiliarySku.HasValue)
+            if (Optional.IsDefined(AuxiliarySku))
             {
                 writer.WritePropertyName("auxiliarySku"u8);
                 writer.WriteStringValue(AuxiliarySku.Value.ToString());

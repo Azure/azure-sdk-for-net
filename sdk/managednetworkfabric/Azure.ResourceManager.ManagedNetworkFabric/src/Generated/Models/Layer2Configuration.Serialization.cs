@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Mtu.HasValue)
+            if (Optional.IsDefined(Mtu))
             {
                 writer.WritePropertyName("mtu"u8);
                 writer.WriteNumberValue(Mtu.Value);
             }
-            if (!(Interfaces is ChangeTrackingList<ResourceIdentifier> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Interfaces))
             {
                 writer.WritePropertyName("interfaces"u8);
                 writer.WriteStartArray();

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && SuccessfullyRolledbackInstanceCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SuccessfullyRolledbackInstanceCount))
             {
                 writer.WritePropertyName("successfullyRolledbackInstanceCount"u8);
                 writer.WriteNumberValue(SuccessfullyRolledbackInstanceCount.Value);
             }
-            if (options.Format != "W" && FailedRolledbackInstanceCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(FailedRolledbackInstanceCount))
             {
                 writer.WritePropertyName("failedRolledbackInstanceCount"u8);
                 writer.WriteNumberValue(FailedRolledbackInstanceCount.Value);
             }
-            if (options.Format != "W" && RollbackError != null)
+            if (options.Format != "W" && Optional.IsDefined(RollbackError))
             {
                 writer.WritePropertyName("rollbackError"u8);
                 writer.WriteObjectValue(RollbackError);

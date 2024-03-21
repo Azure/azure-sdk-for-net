@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (AddressPrefix != null)
+            if (Optional.IsDefined(AddressPrefix))
             {
                 writer.WritePropertyName("addressPrefix"u8);
                 writer.WriteStringValue(AddressPrefix);

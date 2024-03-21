@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStartObject();
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -40,44 +40,44 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AutoStorage != null)
+            if (Optional.IsDefined(AutoStorage))
             {
                 writer.WritePropertyName("autoStorage"u8);
                 writer.WriteObjectValue(AutoStorage);
             }
-            if (PoolAllocationMode.HasValue)
+            if (Optional.IsDefined(PoolAllocationMode))
             {
                 writer.WritePropertyName("poolAllocationMode"u8);
                 writer.WriteStringValue(PoolAllocationMode.Value.ToSerialString());
             }
-            if (KeyVaultReference != null)
+            if (Optional.IsDefined(KeyVaultReference))
             {
                 writer.WritePropertyName("keyVaultReference"u8);
                 writer.WriteObjectValue(KeyVaultReference);
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToSerialString());
             }
-            if (NetworkProfile != null)
+            if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
                 writer.WriteObjectValue(NetworkProfile);
             }
-            if (Encryption != null)
+            if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (!(AllowedAuthenticationModes is ChangeTrackingList<BatchAuthenticationMode> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(AllowedAuthenticationModes))
             {
                 if (AllowedAuthenticationModes != null)
                 {

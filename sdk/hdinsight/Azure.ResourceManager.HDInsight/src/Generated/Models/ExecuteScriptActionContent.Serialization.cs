@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (!(ScriptActions is ChangeTrackingList<RuntimeScriptAction> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ScriptActions))
             {
                 writer.WritePropertyName("scriptActions"u8);
                 writer.WriteStartArray();

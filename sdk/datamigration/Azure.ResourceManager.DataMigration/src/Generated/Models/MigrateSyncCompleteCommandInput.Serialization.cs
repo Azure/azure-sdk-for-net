@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartObject();
             writer.WritePropertyName("databaseName"u8);
             writer.WriteStringValue(DatabaseName);
-            if (CommitTimeStamp.HasValue)
+            if (Optional.IsDefined(CommitTimeStamp))
             {
                 writer.WritePropertyName("commitTimeStamp"u8);
                 writer.WriteStringValue(CommitTimeStamp.Value, "O");

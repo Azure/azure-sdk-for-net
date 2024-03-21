@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Username != null)
+            if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
             }
-            if (RecommendationAction.HasValue)
+            if (Optional.IsDefined(RecommendationAction))
             {
                 writer.WritePropertyName("recommendationAction"u8);
                 writer.WriteStringValue(RecommendationAction.Value.ToString());

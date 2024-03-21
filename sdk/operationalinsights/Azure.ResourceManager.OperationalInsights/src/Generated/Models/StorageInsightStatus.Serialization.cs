@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             writer.WriteStartObject();
             writer.WritePropertyName("state"u8);
             writer.WriteStringValue(State.ToString());
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);

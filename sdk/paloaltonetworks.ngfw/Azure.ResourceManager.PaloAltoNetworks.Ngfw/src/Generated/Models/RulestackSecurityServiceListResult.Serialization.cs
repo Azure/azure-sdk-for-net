@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             writer.WriteStartObject();
             writer.WritePropertyName("value"u8);
             writer.WriteObjectValue(Value);
-            if (NextLink != null)
+            if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);

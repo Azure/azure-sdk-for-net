@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(Appliances is ChangeTrackingList<InMageRcmApplianceDetails> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Appliances))
             {
                 writer.WritePropertyName("appliances"u8);
                 writer.WriteStartArray();

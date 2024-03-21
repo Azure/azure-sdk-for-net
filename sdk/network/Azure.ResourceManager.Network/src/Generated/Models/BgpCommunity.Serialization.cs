@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (ServiceSupportedRegion != null)
+            if (Optional.IsDefined(ServiceSupportedRegion))
             {
                 writer.WritePropertyName("serviceSupportedRegion"u8);
                 writer.WriteStringValue(ServiceSupportedRegion);
             }
-            if (CommunityName != null)
+            if (Optional.IsDefined(CommunityName))
             {
                 writer.WritePropertyName("communityName"u8);
                 writer.WriteStringValue(CommunityName);
             }
-            if (CommunityValue != null)
+            if (Optional.IsDefined(CommunityValue))
             {
                 writer.WritePropertyName("communityValue"u8);
                 writer.WriteStringValue(CommunityValue);
             }
-            if (!(CommunityPrefixes is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CommunityPrefixes))
             {
                 writer.WritePropertyName("communityPrefixes"u8);
                 writer.WriteStartArray();
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IsAuthorizedToUse.HasValue)
+            if (Optional.IsDefined(IsAuthorizedToUse))
             {
                 writer.WritePropertyName("isAuthorizedToUse"u8);
                 writer.WriteBooleanValue(IsAuthorizedToUse.Value);
             }
-            if (ServiceGroup != null)
+            if (Optional.IsDefined(ServiceGroup))
             {
                 writer.WritePropertyName("serviceGroup"u8);
                 writer.WriteStringValue(ServiceGroup);

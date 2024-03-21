@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Age.HasValue)
+            if (Optional.IsDefined(Age))
             {
                 writer.WritePropertyName("age"u8);
                 writer.WriteNumberValue(Age.Value);
             }
-            if (Interface != null)
+            if (Optional.IsDefined(Interface))
             {
                 writer.WritePropertyName("interface"u8);
                 writer.WriteStringValue(Interface);
             }
-            if (IPAddress != null)
+            if (Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress);
             }
-            if (MacAddress != null)
+            if (Optional.IsDefined(MacAddress))
             {
                 writer.WritePropertyName("macAddress"u8);
                 writer.WriteStringValue(MacAddress);

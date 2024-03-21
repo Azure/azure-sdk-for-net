@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (!(TrackSelections is ChangeTrackingList<TrackPropertyCondition> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(TrackSelections))
             {
                 writer.WritePropertyName("trackSelections"u8);
                 writer.WriteStartArray();

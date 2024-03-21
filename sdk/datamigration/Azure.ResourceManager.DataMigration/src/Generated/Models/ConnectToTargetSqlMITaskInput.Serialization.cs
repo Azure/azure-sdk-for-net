@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartObject();
             writer.WritePropertyName("targetConnectionInfo"u8);
             writer.WriteObjectValue(TargetConnectionInfo);
-            if (CollectLogins.HasValue)
+            if (Optional.IsDefined(CollectLogins))
             {
                 writer.WritePropertyName("collectLogins"u8);
                 writer.WriteBooleanValue(CollectLogins.Value);
             }
-            if (CollectAgentJobs.HasValue)
+            if (Optional.IsDefined(CollectAgentJobs))
             {
                 writer.WritePropertyName("collectAgentJobs"u8);
                 writer.WriteBooleanValue(CollectAgentJobs.Value);
             }
-            if (ValidateSsisCatalogOnly.HasValue)
+            if (Optional.IsDefined(ValidateSsisCatalogOnly))
             {
                 writer.WritePropertyName("validateSsisCatalogOnly"u8);
                 writer.WriteBooleanValue(ValidateSsisCatalogOnly.Value);

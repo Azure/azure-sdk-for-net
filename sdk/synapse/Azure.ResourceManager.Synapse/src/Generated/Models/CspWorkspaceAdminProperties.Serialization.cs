@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (InitialWorkspaceAdminObjectId.HasValue)
+            if (Optional.IsDefined(InitialWorkspaceAdminObjectId))
             {
                 writer.WritePropertyName("initialWorkspaceAdminObjectId"u8);
                 writer.WriteStringValue(InitialWorkspaceAdminObjectId.Value);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && VmUri != null)
+            if (options.Format != "W" && Optional.IsDefined(VmUri))
             {
                 writer.WritePropertyName("vmUri"u8);
                 writer.WriteStringValue(VmUri.AbsoluteUri);

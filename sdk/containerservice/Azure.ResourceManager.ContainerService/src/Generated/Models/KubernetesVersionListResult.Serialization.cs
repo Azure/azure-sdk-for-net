@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (!(Values is ChangeTrackingList<KubernetesVersion> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Values))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();

@@ -26,24 +26,24 @@ namespace Azure.ResourceManager.Support.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ContentType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ContentType))
             {
                 writer.WritePropertyName("contentType"u8);
                 writer.WriteStringValue(ContentType.Value.ToString());
             }
-            if (options.Format != "W" && CommunicationDirection.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CommunicationDirection))
             {
                 writer.WritePropertyName("communicationDirection"u8);
                 writer.WriteStringValue(CommunicationDirection.Value.ToString());
             }
-            if (Sender != null)
+            if (Optional.IsDefined(Sender))
             {
                 writer.WritePropertyName("sender"u8);
                 writer.WriteStringValue(Sender);
             }
             writer.WritePropertyName("body"u8);
             writer.WriteStringValue(Body);
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");

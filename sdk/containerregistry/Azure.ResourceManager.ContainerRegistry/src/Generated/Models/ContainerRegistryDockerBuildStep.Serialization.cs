@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (!(ImageNames is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ImageNames))
             {
                 writer.WritePropertyName("imageNames"u8);
                 writer.WriteStartArray();
@@ -36,24 +36,24 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IsPushEnabled.HasValue)
+            if (Optional.IsDefined(IsPushEnabled))
             {
                 writer.WritePropertyName("isPushEnabled"u8);
                 writer.WriteBooleanValue(IsPushEnabled.Value);
             }
-            if (NoCache.HasValue)
+            if (Optional.IsDefined(NoCache))
             {
                 writer.WritePropertyName("noCache"u8);
                 writer.WriteBooleanValue(NoCache.Value);
             }
             writer.WritePropertyName("dockerFilePath"u8);
             writer.WriteStringValue(DockerFilePath);
-            if (Target != null)
+            if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
             }
-            if (!(Arguments is ChangeTrackingList<ContainerRegistryRunArgument> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Arguments))
             {
                 writer.WritePropertyName("arguments"u8);
                 writer.WriteStartArray();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ContainerRegistryTaskStepType.ToString());
-            if (options.Format != "W" && !(BaseImageDependencies is ChangeTrackingList<ContainerRegistryBaseImageDependency> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(BaseImageDependencies))
             {
                 writer.WritePropertyName("baseImageDependencies"u8);
                 writer.WriteStartArray();
@@ -75,12 +75,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ContextPath != null)
+            if (Optional.IsDefined(ContextPath))
             {
                 writer.WritePropertyName("contextPath"u8);
                 writer.WriteStringValue(ContextPath);
             }
-            if (ContextAccessToken != null)
+            if (Optional.IsDefined(ContextAccessToken))
             {
                 writer.WritePropertyName("contextAccessToken"u8);
                 writer.WriteStringValue(ContextAccessToken);

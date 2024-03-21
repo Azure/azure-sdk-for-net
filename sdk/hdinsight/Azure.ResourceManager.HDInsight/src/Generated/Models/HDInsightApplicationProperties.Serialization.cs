@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
@@ -27,12 +26,12 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (ComputeProfile != null)
+            if (Optional.IsDefined(ComputeProfile))
             {
                 writer.WritePropertyName("computeProfile"u8);
                 writer.WriteObjectValue(ComputeProfile);
             }
-            if (!(InstallScriptActions is ChangeTrackingList<RuntimeScriptAction> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(InstallScriptActions))
             {
                 writer.WritePropertyName("installScriptActions"u8);
                 writer.WriteStartArray();
@@ -42,7 +41,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(UninstallScriptActions is ChangeTrackingList<RuntimeScriptAction> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(UninstallScriptActions))
             {
                 writer.WritePropertyName("uninstallScriptActions"u8);
                 writer.WriteStartArray();
@@ -52,7 +51,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(HttpsEndpoints is ChangeTrackingList<HDInsightApplicationHttpsEndpoint> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(HttpsEndpoints))
             {
                 writer.WritePropertyName("httpsEndpoints"u8);
                 writer.WriteStartArray();
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(SshEndpoints is ChangeTrackingList<HDInsightApplicationEndpoint> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(SshEndpoints))
             {
                 writer.WritePropertyName("sshEndpoints"u8);
                 writer.WriteStartArray();
@@ -72,22 +71,22 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (ApplicationType != null)
+            if (Optional.IsDefined(ApplicationType))
             {
                 writer.WritePropertyName("applicationType"u8);
                 writer.WriteStringValue(ApplicationType);
             }
-            if (options.Format != "W" && ApplicationState != null)
+            if (options.Format != "W" && Optional.IsDefined(ApplicationState))
             {
                 writer.WritePropertyName("applicationState"u8);
                 writer.WriteStringValue(ApplicationState);
             }
-            if (!(Errors is ChangeTrackingList<ResponseError> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
@@ -97,17 +96,17 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && MarketplaceIdentifier != null)
+            if (options.Format != "W" && Optional.IsDefined(MarketplaceIdentifier))
             {
                 writer.WritePropertyName("marketplaceIdentifier"u8);
                 writer.WriteStringValue(MarketplaceIdentifier);
             }
-            if (!(PrivateLinkConfigurations is ChangeTrackingList<HDInsightPrivateLinkConfiguration> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(PrivateLinkConfigurations))
             {
                 writer.WritePropertyName("privateLinkConfigurations"u8);
                 writer.WriteStartArray();

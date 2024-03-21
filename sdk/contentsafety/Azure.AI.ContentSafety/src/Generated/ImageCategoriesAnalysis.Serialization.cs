@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.ContentSafety
@@ -29,7 +28,7 @@ namespace Azure.AI.ContentSafety
             writer.WriteStartObject();
             writer.WritePropertyName("category"u8);
             writer.WriteStringValue(Category.ToString());
-            if (Severity.HasValue)
+            if (Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteNumberValue(Severity.Value);

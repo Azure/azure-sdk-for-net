@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (!(Versions is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Versions))
             {
                 writer.WritePropertyName("versions"u8);
                 writer.WriteStartArray();

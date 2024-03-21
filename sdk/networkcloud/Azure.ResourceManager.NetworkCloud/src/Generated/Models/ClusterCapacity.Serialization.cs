@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (AvailableApplianceStorageGB.HasValue)
+            if (Optional.IsDefined(AvailableApplianceStorageGB))
             {
                 writer.WritePropertyName("availableApplianceStorageGB"u8);
                 writer.WriteNumberValue(AvailableApplianceStorageGB.Value);
             }
-            if (AvailableCoreCount.HasValue)
+            if (Optional.IsDefined(AvailableCoreCount))
             {
                 writer.WritePropertyName("availableCoreCount"u8);
                 writer.WriteNumberValue(AvailableCoreCount.Value);
             }
-            if (AvailableHostStorageGB.HasValue)
+            if (Optional.IsDefined(AvailableHostStorageGB))
             {
                 writer.WritePropertyName("availableHostStorageGB"u8);
                 writer.WriteNumberValue(AvailableHostStorageGB.Value);
             }
-            if (AvailableMemoryGB.HasValue)
+            if (Optional.IsDefined(AvailableMemoryGB))
             {
                 writer.WritePropertyName("availableMemoryGB"u8);
                 writer.WriteNumberValue(AvailableMemoryGB.Value);
             }
-            if (TotalApplianceStorageGB.HasValue)
+            if (Optional.IsDefined(TotalApplianceStorageGB))
             {
                 writer.WritePropertyName("totalApplianceStorageGB"u8);
                 writer.WriteNumberValue(TotalApplianceStorageGB.Value);
             }
-            if (TotalCoreCount.HasValue)
+            if (Optional.IsDefined(TotalCoreCount))
             {
                 writer.WritePropertyName("totalCoreCount"u8);
                 writer.WriteNumberValue(TotalCoreCount.Value);
             }
-            if (TotalHostStorageGB.HasValue)
+            if (Optional.IsDefined(TotalHostStorageGB))
             {
                 writer.WritePropertyName("totalHostStorageGB"u8);
                 writer.WriteNumberValue(TotalHostStorageGB.Value);
             }
-            if (TotalMemoryGB.HasValue)
+            if (Optional.IsDefined(TotalMemoryGB))
             {
                 writer.WritePropertyName("totalMemoryGB"u8);
                 writer.WriteNumberValue(TotalMemoryGB.Value);

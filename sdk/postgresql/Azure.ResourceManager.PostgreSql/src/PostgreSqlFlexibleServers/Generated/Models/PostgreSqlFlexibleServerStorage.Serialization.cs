@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (StorageSizeInGB.HasValue)
+            if (Optional.IsDefined(StorageSizeInGB))
             {
                 writer.WritePropertyName("storageSizeGB"u8);
                 writer.WriteNumberValue(StorageSizeInGB.Value);
             }
-            if (AutoGrow.HasValue)
+            if (Optional.IsDefined(AutoGrow))
             {
                 writer.WritePropertyName("autoGrow"u8);
                 writer.WriteStringValue(AutoGrow.Value.ToString());
             }
-            if (Tier.HasValue)
+            if (Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier.Value.ToString());
             }
-            if (options.Format != "W" && Iops.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Iops))
             {
                 writer.WritePropertyName("iops"u8);
                 writer.WriteNumberValue(Iops.Value);

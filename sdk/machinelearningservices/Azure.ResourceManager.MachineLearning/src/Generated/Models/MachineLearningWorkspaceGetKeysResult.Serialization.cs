@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && AppInsightsInstrumentationKey != null)
+            if (options.Format != "W" && Optional.IsDefined(AppInsightsInstrumentationKey))
             {
                 writer.WritePropertyName("appInsightsInstrumentationKey"u8);
                 writer.WriteStringValue(AppInsightsInstrumentationKey);
             }
-            if (ContainerRegistryCredentials != null)
+            if (Optional.IsDefined(ContainerRegistryCredentials))
             {
                 writer.WritePropertyName("containerRegistryCredentials"u8);
                 writer.WriteObjectValue(ContainerRegistryCredentials);
             }
-            if (NotebookAccessKeys != null)
+            if (Optional.IsDefined(NotebookAccessKeys))
             {
                 writer.WritePropertyName("notebookAccessKeys"u8);
                 writer.WriteObjectValue(NotebookAccessKeys);
             }
-            if (options.Format != "W" && UserStorageResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(UserStorageResourceId))
             {
                 writer.WritePropertyName("userStorageArmId"u8);
                 writer.WriteStringValue(UserStorageResourceId);
             }
-            if (options.Format != "W" && UserStorageKey != null)
+            if (options.Format != "W" && Optional.IsDefined(UserStorageKey))
             {
                 writer.WritePropertyName("userStorageKey"u8);
                 writer.WriteStringValue(UserStorageKey);

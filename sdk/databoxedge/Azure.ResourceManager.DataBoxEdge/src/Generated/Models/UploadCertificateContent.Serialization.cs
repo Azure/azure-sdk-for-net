@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AuthenticationType.HasValue)
+            if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType"u8);
                 writer.WriteStringValue(AuthenticationType.Value.ToString());

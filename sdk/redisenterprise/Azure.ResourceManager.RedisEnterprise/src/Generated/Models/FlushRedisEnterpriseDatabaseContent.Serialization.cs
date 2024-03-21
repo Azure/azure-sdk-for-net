@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             }
 
             writer.WriteStartObject();
-            if (!(Ids is ChangeTrackingList<ResourceIdentifier> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Ids))
             {
                 writer.WritePropertyName("ids"u8);
                 writer.WriteStartArray();

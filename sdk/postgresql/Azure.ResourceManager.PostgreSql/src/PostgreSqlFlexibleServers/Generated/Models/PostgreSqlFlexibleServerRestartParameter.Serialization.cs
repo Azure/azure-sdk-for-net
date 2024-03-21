@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (RestartWithFailover.HasValue)
+            if (Optional.IsDefined(RestartWithFailover))
             {
                 writer.WritePropertyName("restartWithFailover"u8);
                 writer.WriteBooleanValue(RestartWithFailover.Value);
             }
-            if (FailoverMode.HasValue)
+            if (Optional.IsDefined(FailoverMode))
             {
                 writer.WritePropertyName("failoverMode"u8);
                 writer.WriteStringValue(FailoverMode.Value.ToString());

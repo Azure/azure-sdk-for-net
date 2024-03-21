@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -31,12 +30,12 @@ namespace Azure.Communication.JobRouter
             writer.WriteStringValue(QueueId);
             writer.WritePropertyName("length"u8);
             writer.WriteNumberValue(Length);
-            if (!(EstimatedWaitTimes is ChangeTrackingDictionary<int, TimeSpan> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(EstimatedWaitTimes))
             {
                 writer.WritePropertyName("estimatedWaitTimeMinutes"u8);
                 WriteEstimatedWaitTimes(writer);
             }
-            if (LongestJobWaitTimeMinutes.HasValue)
+            if (Optional.IsDefined(LongestJobWaitTimeMinutes))
             {
                 writer.WritePropertyName("longestJobWaitTimeMinutes"u8);
                 writer.WriteNumberValue(LongestJobWaitTimeMinutes.Value);

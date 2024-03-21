@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());

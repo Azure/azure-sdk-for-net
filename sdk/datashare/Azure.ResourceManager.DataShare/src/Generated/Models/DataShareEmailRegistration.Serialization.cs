@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.DataShare.Models
             }
 
             writer.WriteStartObject();
-            if (ActivationCode != null)
+            if (Optional.IsDefined(ActivationCode))
             {
                 writer.WritePropertyName("activationCode"u8);
                 writer.WriteStringValue(ActivationCode);
             }
-            if (options.Format != "W" && ActivationExpireOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ActivationExpireOn))
             {
                 writer.WritePropertyName("activationExpirationDate"u8);
                 writer.WriteStringValue(ActivationExpireOn.Value, "O");
             }
-            if (options.Format != "W" && Email != null)
+            if (options.Format != "W" && Optional.IsDefined(Email))
             {
                 writer.WritePropertyName("email"u8);
                 writer.WriteStringValue(Email);
             }
-            if (options.Format != "W" && RegistrationStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RegistrationStatus))
             {
                 writer.WritePropertyName("registrationStatus"u8);
                 writer.WriteStringValue(RegistrationStatus.Value.ToString());
             }
-            if (options.Format != "W" && TenantId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);

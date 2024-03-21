@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ComplianceName != null)
+            if (options.Format != "W" && Optional.IsDefined(ComplianceName))
             {
                 writer.WritePropertyName("complianceName"u8);
                 writer.WriteStringValue(ComplianceName);
             }
-            if (options.Format != "W" && !(Categories is ChangeTrackingList<Category> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Categories))
             {
                 writer.WritePropertyName("categories"u8);
                 writer.WriteStartArray();

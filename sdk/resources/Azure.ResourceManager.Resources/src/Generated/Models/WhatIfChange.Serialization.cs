@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteStringValue(ResourceId);
             writer.WritePropertyName("changeType"u8);
             writer.WriteStringValue(ChangeType.ToSerialString());
-            if (UnsupportedReason != null)
+            if (Optional.IsDefined(UnsupportedReason))
             {
                 writer.WritePropertyName("unsupportedReason"u8);
                 writer.WriteStringValue(UnsupportedReason);
             }
-            if (Before != null)
+            if (Optional.IsDefined(Before))
             {
                 writer.WritePropertyName("before"u8);
 #if NET6_0_OR_GREATER
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
 #endif
             }
-            if (After != null)
+            if (Optional.IsDefined(After))
             {
                 writer.WritePropertyName("after"u8);
 #if NET6_0_OR_GREATER
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
 #endif
             }
-            if (!(Delta is ChangeTrackingList<WhatIfPropertyChange> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Delta))
             {
                 writer.WritePropertyName("delta"u8);
                 writer.WriteStartArray();

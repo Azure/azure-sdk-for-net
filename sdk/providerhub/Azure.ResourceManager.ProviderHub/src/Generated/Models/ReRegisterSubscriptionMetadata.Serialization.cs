@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStartObject();
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(IsEnabled);
-            if (ConcurrencyLimit.HasValue)
+            if (Optional.IsDefined(ConcurrencyLimit))
             {
                 writer.WritePropertyName("concurrencyLimit"u8);
                 writer.WriteNumberValue(ConcurrencyLimit.Value);

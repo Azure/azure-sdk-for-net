@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && OfferName != null)
+            if (options.Format != "W" && Optional.IsDefined(OfferName))
             {
                 writer.WritePropertyName("offerName"u8);
                 writer.WriteStringValue(OfferName);
             }
-            if (options.Format != "W" && ValueInGbps.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ValueInGbps))
             {
                 writer.WritePropertyName("valueInGbps"u8);
                 writer.WriteNumberValue(ValueInGbps.Value);

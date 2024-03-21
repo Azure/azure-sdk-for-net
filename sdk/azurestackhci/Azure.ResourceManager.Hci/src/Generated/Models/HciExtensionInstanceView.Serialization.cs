@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (ExtensionInstanceViewType != null)
+            if (Optional.IsDefined(ExtensionInstanceViewType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ExtensionInstanceViewType);
             }
-            if (TypeHandlerVersion != null)
+            if (Optional.IsDefined(TypeHandlerVersion))
             {
                 writer.WritePropertyName("typeHandlerVersion"u8);
                 writer.WriteStringValue(TypeHandlerVersion);
             }
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);

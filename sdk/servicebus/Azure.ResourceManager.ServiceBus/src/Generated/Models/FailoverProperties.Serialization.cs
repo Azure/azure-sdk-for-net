@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (IsSafeFailover.HasValue)
+            if (Optional.IsDefined(IsSafeFailover))
             {
                 writer.WritePropertyName("IsSafeFailover"u8);
                 writer.WriteBooleanValue(IsSafeFailover.Value);

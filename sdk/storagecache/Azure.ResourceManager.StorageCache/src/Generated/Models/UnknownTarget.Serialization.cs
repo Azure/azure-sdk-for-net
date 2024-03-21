@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
 
             writer.WriteStartObject();
-            if (!(Attributes is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Attributes))
             {
                 writer.WritePropertyName("attributes"u8);
                 writer.WriteStartObject();

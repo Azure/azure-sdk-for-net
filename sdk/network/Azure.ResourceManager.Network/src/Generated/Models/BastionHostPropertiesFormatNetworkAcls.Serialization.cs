@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (!(IPRules is ChangeTrackingList<BastionHostIPRule> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(IPRules))
             {
                 writer.WritePropertyName("ipRules"u8);
                 writer.WriteStartArray();

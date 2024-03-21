@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             }
 
             writer.WriteStartObject();
-            if (IsRServicesEnabled.HasValue)
+            if (Optional.IsDefined(IsRServicesEnabled))
             {
                 writer.WritePropertyName("isRServicesEnabled"u8);
                 writer.WriteBooleanValue(IsRServicesEnabled.Value);

@@ -28,32 +28,32 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (CreatedOn.HasValue)
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (ApiId != null)
+            if (Optional.IsDefined(ApiId))
             {
                 writer.WritePropertyName("apiId"u8);
                 writer.WriteStringValue(ApiId);
             }
-            if (Title != null)
+            if (Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (UserId != null)
+            if (Optional.IsDefined(UserId))
             {
                 writer.WritePropertyName("userId"u8);
                 writer.WriteStringValue(UserId);

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Mode.HasValue)
+            if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (Profile.HasValue)
+            if (Optional.IsDefined(Profile))
             {
                 writer.WritePropertyName("profile"u8);
                 writer.WriteStringValue(Profile.Value.ToString());
             }
-            if (Configuration != null)
+            if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
                 writer.WriteObjectValue(Configuration);

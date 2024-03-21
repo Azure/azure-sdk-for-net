@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (BootDiagnostics != null)
+            if (Optional.IsDefined(BootDiagnostics))
             {
                 writer.WritePropertyName("bootDiagnostics"u8);
                 writer.WriteObjectValue(BootDiagnostics);

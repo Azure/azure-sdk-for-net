@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WriteStartObject();
             writer.WritePropertyName("sst"u8);
             writer.WriteNumberValue(Sst);
-            if (Sd != null)
+            if (Optional.IsDefined(Sd))
             {
                 writer.WritePropertyName("sd"u8);
                 writer.WriteStringValue(Sd);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(Value is ChangeTrackingList<ReservationCatalog> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && NextLink != null)
+            if (options.Format != "W" && Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (TotalItems.HasValue)
+            if (Optional.IsDefined(TotalItems))
             {
                 writer.WritePropertyName("totalItems"u8);
                 writer.WriteNumberValue(TotalItems.Value);

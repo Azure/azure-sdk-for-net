@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (EventType.HasValue)
+            if (Optional.IsDefined(EventType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(EventType.Value.ToString());
             }
-            if (Reason != null)
+            if (Optional.IsDefined(Reason))
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
             }
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (LastSeenOn.HasValue)
+            if (Optional.IsDefined(LastSeenOn))
             {
                 writer.WritePropertyName("lastSeenTime"u8);
                 writer.WriteStringValue(LastSeenOn.Value, "O");

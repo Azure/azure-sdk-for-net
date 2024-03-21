@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Recursive != null)
+            if (Optional.IsDefined(Recursive))
             {
                 writer.WritePropertyName("recursive"u8);
                 JsonSerializer.Serialize(writer, Recursive);
             }
-            if (AdditionalColumns != null)
+            if (Optional.IsDefined(AdditionalColumns))
             {
                 writer.WritePropertyName("additionalColumns"u8);
 #if NET6_0_OR_GREATER
@@ -46,22 +46,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CopySourceType);
-            if (SourceRetryCount != null)
+            if (Optional.IsDefined(SourceRetryCount))
             {
                 writer.WritePropertyName("sourceRetryCount"u8);
                 JsonSerializer.Serialize(writer, SourceRetryCount);
             }
-            if (SourceRetryWait != null)
+            if (Optional.IsDefined(SourceRetryWait))
             {
                 writer.WritePropertyName("sourceRetryWait"u8);
                 JsonSerializer.Serialize(writer, SourceRetryWait);
             }
-            if (MaxConcurrentConnections != null)
+            if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 JsonSerializer.Serialize(writer, MaxConcurrentConnections);
             }
-            if (DisableMetricsCollection != null)
+            if (Optional.IsDefined(DisableMetricsCollection))
             {
                 writer.WritePropertyName("disableMetricsCollection"u8);
                 JsonSerializer.Serialize(writer, DisableMetricsCollection);

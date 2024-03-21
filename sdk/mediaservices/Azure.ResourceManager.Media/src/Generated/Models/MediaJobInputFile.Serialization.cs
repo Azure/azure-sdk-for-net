@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Filename != null)
+            if (Optional.IsDefined(Filename))
             {
                 writer.WritePropertyName("filename"u8);
                 writer.WriteStringValue(Filename);
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
-            if (!(IncludedTracks is ChangeTrackingList<TrackDescriptor> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(IncludedTracks))
             {
                 writer.WritePropertyName("includedTracks"u8);
                 writer.WriteStartArray();

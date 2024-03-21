@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (ProtocolType.HasValue)
+            if (Optional.IsDefined(ProtocolType))
             {
                 writer.WritePropertyName("protocolType"u8);
                 writer.WriteStringValue(ProtocolType.Value.ToString());
             }
-            if (Port.HasValue)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);

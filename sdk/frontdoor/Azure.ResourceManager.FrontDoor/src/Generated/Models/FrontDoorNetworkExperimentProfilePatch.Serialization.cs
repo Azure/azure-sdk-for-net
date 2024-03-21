@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (EnabledState.HasValue)
+            if (Optional.IsDefined(EnabledState))
             {
                 writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToString());

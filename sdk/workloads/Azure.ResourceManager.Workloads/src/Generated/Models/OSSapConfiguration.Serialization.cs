@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (DeployerVmPackages != null)
+            if (Optional.IsDefined(DeployerVmPackages))
             {
                 writer.WritePropertyName("deployerVmPackages"u8);
                 writer.WriteObjectValue(DeployerVmPackages);
             }
-            if (SapFqdn != null)
+            if (Optional.IsDefined(SapFqdn))
             {
                 writer.WritePropertyName("sapFqdn"u8);
                 writer.WriteStringValue(SapFqdn);

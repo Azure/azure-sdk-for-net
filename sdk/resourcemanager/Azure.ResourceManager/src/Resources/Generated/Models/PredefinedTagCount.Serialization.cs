@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (PredefinedTagCountType != null)
+            if (Optional.IsDefined(PredefinedTagCountType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(PredefinedTagCountType);
             }
-            if (Value.HasValue)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteNumberValue(Value.Value);

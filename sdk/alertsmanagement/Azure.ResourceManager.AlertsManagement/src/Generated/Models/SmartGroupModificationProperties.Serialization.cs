@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && SmartGroupId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SmartGroupId))
             {
                 writer.WritePropertyName("smartGroupId"u8);
                 writer.WriteStringValue(SmartGroupId.Value);
             }
-            if (!(Modifications is ChangeTrackingList<SmartGroupModificationItemInfo> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Modifications))
             {
                 writer.WritePropertyName("modifications"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (NextLink != null)
+            if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);

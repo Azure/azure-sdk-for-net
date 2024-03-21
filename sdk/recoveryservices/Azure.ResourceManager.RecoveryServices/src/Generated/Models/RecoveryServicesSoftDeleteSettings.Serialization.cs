@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
 
             writer.WriteStartObject();
-            if (SoftDeleteState.HasValue)
+            if (Optional.IsDefined(SoftDeleteState))
             {
                 writer.WritePropertyName("softDeleteState"u8);
                 writer.WriteStringValue(SoftDeleteState.Value.ToString());
             }
-            if (SoftDeleteRetentionPeriodInDays.HasValue)
+            if (Optional.IsDefined(SoftDeleteRetentionPeriodInDays))
             {
                 writer.WritePropertyName("softDeleteRetentionPeriodInDays"u8);
                 writer.WriteNumberValue(SoftDeleteRetentionPeriodInDays.Value);

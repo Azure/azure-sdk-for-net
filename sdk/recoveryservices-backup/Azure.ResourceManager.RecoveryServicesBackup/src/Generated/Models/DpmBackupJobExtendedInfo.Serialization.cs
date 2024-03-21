@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (!(TasksList is ChangeTrackingList<DpmBackupJobTaskDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(TasksList))
             {
                 writer.WritePropertyName("tasksList"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(PropertyBag is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(PropertyBag))
             {
                 writer.WritePropertyName("propertyBag"u8);
                 writer.WriteStartObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndObject();
             }
-            if (DynamicErrorMessage != null)
+            if (Optional.IsDefined(DynamicErrorMessage))
             {
                 writer.WritePropertyName("dynamicErrorMessage"u8);
                 writer.WriteStringValue(DynamicErrorMessage);

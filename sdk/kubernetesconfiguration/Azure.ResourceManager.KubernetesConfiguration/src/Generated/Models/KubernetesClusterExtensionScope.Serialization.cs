@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (Cluster != null)
+            if (Optional.IsDefined(Cluster))
             {
                 if (Cluster != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("cluster");
                 }
             }
-            if (Namespace != null)
+            if (Optional.IsDefined(Namespace))
             {
                 if (Namespace != null)
                 {

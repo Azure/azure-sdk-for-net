@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (PrivateIPAddressStringValue != null)
+            if (Optional.IsDefined(PrivateIPAddressStringValue))
             {
                 writer.WritePropertyName("privateIpAddress"u8);
                 writer.WriteStringValue(PrivateIPAddressStringValue);
             }
-            if (PrivateIPAllocationMethod != null)
+            if (Optional.IsDefined(PrivateIPAllocationMethod))
             {
                 writer.WritePropertyName("privateIpAllocationMethod"u8);
                 writer.WriteStringValue(PrivateIPAllocationMethod);
             }
-            if (Subnet != null)
+            if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
                 writer.WriteObjectValue(Subnet);
             }
-            if (Zones != null)
+            if (Optional.IsDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStringValue(Zones);

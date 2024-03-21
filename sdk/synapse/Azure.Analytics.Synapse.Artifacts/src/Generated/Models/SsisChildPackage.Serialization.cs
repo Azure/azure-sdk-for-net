@@ -20,14 +20,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("packagePath"u8);
             writer.WriteObjectValue(PackagePath);
-            if (PackageName != null)
+            if (Optional.IsDefined(PackageName))
             {
                 writer.WritePropertyName("packageName"u8);
                 writer.WriteStringValue(PackageName);
             }
             writer.WritePropertyName("packageContent"u8);
             writer.WriteObjectValue(PackageContent);
-            if (PackageLastModifiedDate != null)
+            if (Optional.IsDefined(PackageLastModifiedDate))
             {
                 writer.WritePropertyName("packageLastModifiedDate"u8);
                 writer.WriteStringValue(PackageLastModifiedDate);

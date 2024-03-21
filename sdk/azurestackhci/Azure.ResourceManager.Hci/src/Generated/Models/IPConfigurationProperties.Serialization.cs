@@ -27,22 +27,22 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Gateway != null)
+            if (options.Format != "W" && Optional.IsDefined(Gateway))
             {
                 writer.WritePropertyName("gateway"u8);
                 writer.WriteStringValue(Gateway);
             }
-            if (options.Format != "W" && PrefixLength != null)
+            if (options.Format != "W" && Optional.IsDefined(PrefixLength))
             {
                 writer.WritePropertyName("prefixLength"u8);
                 writer.WriteStringValue(PrefixLength);
             }
-            if (PrivateIPAddress != null)
+            if (Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIPAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress);
             }
-            if (Subnet != null)
+            if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
                 JsonSerializer.Serialize(writer, Subnet);

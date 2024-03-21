@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (Publisher != null)
+            if (Optional.IsDefined(Publisher))
             {
                 writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
             }
-            if (Offer != null)
+            if (Optional.IsDefined(Offer))
             {
                 writer.WritePropertyName("offer"u8);
                 writer.WriteStringValue(Offer);
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteStringValue(Sku);
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);

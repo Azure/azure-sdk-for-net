@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (!(SeedNodes is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SeedNodes))
             {
                 writer.WritePropertyName("seedNodes"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Nodes is ChangeTrackingList<CassandraClusterDataCenterNodeItem> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Nodes))
             {
                 writer.WritePropertyName("nodes"u8);
                 writer.WriteStartArray();

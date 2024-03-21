@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (SourceVmResourceId != null)
+            if (Optional.IsDefined(SourceVmResourceId))
             {
                 writer.WritePropertyName("sourceVirtualMachineResourceId"u8);
                 writer.WriteStringValue(SourceVmResourceId);
             }
-            if (DestinationVmName != null)
+            if (Optional.IsDefined(DestinationVmName))
             {
                 writer.WritePropertyName("destinationVirtualMachineName"u8);
                 writer.WriteStringValue(DestinationVmName);

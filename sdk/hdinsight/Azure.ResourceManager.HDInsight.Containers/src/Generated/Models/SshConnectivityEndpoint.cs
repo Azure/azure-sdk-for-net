@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
         internal SshConnectivityEndpoint(string endpoint)
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             Endpoint = endpoint;
         }

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (LastRevisionApplied.HasValue)
+            if (Optional.IsDefined(LastRevisionApplied))
             {
                 if (LastRevisionApplied != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("lastRevisionApplied");
                 }
             }
-            if (HelmChartRef != null)
+            if (Optional.IsDefined(HelmChartRef))
             {
                 if (HelmChartRef != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("helmChartRef");
                 }
             }
-            if (FailureCount.HasValue)
+            if (Optional.IsDefined(FailureCount))
             {
                 if (FailureCount != null)
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("failureCount");
                 }
             }
-            if (InstallFailureCount.HasValue)
+            if (Optional.IsDefined(InstallFailureCount))
             {
                 if (InstallFailureCount != null)
                 {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("installFailureCount");
                 }
             }
-            if (UpgradeFailureCount.HasValue)
+            if (Optional.IsDefined(UpgradeFailureCount))
             {
                 if (UpgradeFailureCount != null)
                 {

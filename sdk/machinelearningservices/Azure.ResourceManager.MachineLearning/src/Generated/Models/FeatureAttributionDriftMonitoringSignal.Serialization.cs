@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteEndArray();
             writer.WritePropertyName("referenceData"u8);
             writer.WriteObjectValue(ReferenceData);
-            if (Mode.HasValue)
+            if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (!(Properties is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Properties))
             {
                 if (Properties != null)
                 {

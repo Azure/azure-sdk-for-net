@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (ProcessCountPerInstance.HasValue)
+            if (Optional.IsDefined(ProcessCountPerInstance))
             {
                 if (ProcessCountPerInstance != null)
                 {

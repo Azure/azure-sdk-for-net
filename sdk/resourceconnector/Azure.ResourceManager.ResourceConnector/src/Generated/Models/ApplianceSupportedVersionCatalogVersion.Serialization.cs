@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Data != null)
+            if (options.Format != "W" && Optional.IsDefined(Data))
             {
                 writer.WritePropertyName("data"u8);
                 writer.WriteObjectValue(Data);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Namespace != null)
+            if (options.Format != "W" && Optional.IsDefined(Namespace))
             {
                 writer.WritePropertyName("namespace"u8);
                 writer.WriteStringValue(Namespace);

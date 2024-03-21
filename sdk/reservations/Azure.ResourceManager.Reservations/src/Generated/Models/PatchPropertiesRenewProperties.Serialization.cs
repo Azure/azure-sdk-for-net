@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (PurchaseProperties != null)
+            if (Optional.IsDefined(PurchaseProperties))
             {
                 writer.WritePropertyName("purchaseProperties"u8);
                 writer.WriteObjectValue(PurchaseProperties);

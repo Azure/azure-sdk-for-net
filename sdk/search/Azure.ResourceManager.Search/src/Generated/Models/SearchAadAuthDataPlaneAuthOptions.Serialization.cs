@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Search.Models
             }
 
             writer.WriteStartObject();
-            if (ApiKeyOnly != null)
+            if (Optional.IsDefined(ApiKeyOnly))
             {
                 writer.WritePropertyName("apiKeyOnly"u8);
 #if NET6_0_OR_GREATER
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Search.Models
                 }
 #endif
             }
-            if (AadOrApiKey != null)
+            if (Optional.IsDefined(AadOrApiKey))
             {
                 writer.WritePropertyName("aadOrApiKey"u8);
                 writer.WriteObjectValue(AadOrApiKey);

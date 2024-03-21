@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             }
 
             writer.WriteStartObject();
-            if (!(NetworkInterfaces is ChangeTrackingList<NetworkInterfaces> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(NetworkInterfaces))
             {
                 writer.WritePropertyName("networkInterfaces"u8);
                 writer.WriteStartArray();

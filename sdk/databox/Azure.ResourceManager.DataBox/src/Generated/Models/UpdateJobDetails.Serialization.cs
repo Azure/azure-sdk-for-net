@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (ContactDetails != null)
+            if (Optional.IsDefined(ContactDetails))
             {
                 writer.WritePropertyName("contactDetails"u8);
                 writer.WriteObjectValue(ContactDetails);
             }
-            if (ShippingAddress != null)
+            if (Optional.IsDefined(ShippingAddress))
             {
                 writer.WritePropertyName("shippingAddress"u8);
                 writer.WriteObjectValue(ShippingAddress);
             }
-            if (ReverseShippingDetails != null)
+            if (Optional.IsDefined(ReverseShippingDetails))
             {
                 writer.WritePropertyName("reverseShippingDetails"u8);
                 writer.WriteObjectValue(ReverseShippingDetails);
             }
-            if (Preferences != null)
+            if (Optional.IsDefined(Preferences))
             {
                 writer.WritePropertyName("preferences"u8);
                 writer.WriteObjectValue(Preferences);
             }
-            if (KeyEncryptionKey != null)
+            if (Optional.IsDefined(KeyEncryptionKey))
             {
                 writer.WritePropertyName("keyEncryptionKey"u8);
                 writer.WriteObjectValue(KeyEncryptionKey);
             }
-            if (ReturnToCustomerPackageDetails != null)
+            if (Optional.IsDefined(ReturnToCustomerPackageDetails))
             {
                 writer.WritePropertyName("returnToCustomerPackageDetails"u8);
                 writer.WriteObjectValue(ReturnToCustomerPackageDetails);

@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.StoragePool.Models
             }
 
             writer.WriteStartObject();
-            if (ManagedBy != null)
+            if (Optional.IsDefined(ManagedBy))
             {
                 writer.WritePropertyName("managedBy"u8);
                 writer.WriteStringValue(ManagedBy);
             }
-            if (!(ManagedByExtended is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ManagedByExtended))
             {
                 writer.WritePropertyName("managedByExtended"u8);
                 writer.WriteStartArray();
@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(Disks is ChangeTrackingList<WritableSubResource> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Disks))
             {
                 writer.WritePropertyName("disks"u8);
                 writer.WriteStartArray();

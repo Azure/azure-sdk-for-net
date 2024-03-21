@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,37 +39,37 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ForceUpdateTag != null)
+            if (Optional.IsDefined(ForceUpdateTag))
             {
                 writer.WritePropertyName("forceUpdateTag"u8);
                 writer.WriteStringValue(ForceUpdateTag);
             }
-            if (Publisher != null)
+            if (Optional.IsDefined(Publisher))
             {
                 writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
             }
-            if (MachineExtensionUpdatePropertiesType != null)
+            if (Optional.IsDefined(MachineExtensionUpdatePropertiesType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(MachineExtensionUpdatePropertiesType);
             }
-            if (TypeHandlerVersion != null)
+            if (Optional.IsDefined(TypeHandlerVersion))
             {
                 writer.WritePropertyName("typeHandlerVersion"u8);
                 writer.WriteStringValue(TypeHandlerVersion);
             }
-            if (EnableAutomaticUpgrade.HasValue)
+            if (Optional.IsDefined(EnableAutomaticUpgrade))
             {
                 writer.WritePropertyName("enableAutomaticUpgrade"u8);
                 writer.WriteBooleanValue(EnableAutomaticUpgrade.Value);
             }
-            if (AutoUpgradeMinorVersion.HasValue)
+            if (Optional.IsDefined(AutoUpgradeMinorVersion))
             {
                 writer.WritePropertyName("autoUpgradeMinorVersion"u8);
                 writer.WriteBooleanValue(AutoUpgradeMinorVersion.Value);
             }
-            if (!(Settings is ChangeTrackingDictionary<string, BinaryData> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Settings))
             {
                 writer.WritePropertyName("settings"u8);
                 writer.WriteStartObject();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(ProtectedSettings is ChangeTrackingDictionary<string, BinaryData> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(ProtectedSettings))
             {
                 writer.WritePropertyName("protectedSettings"u8);
                 writer.WriteStartObject();

@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (StorageAccountType.HasValue)
+            if (Optional.IsDefined(StorageAccountType))
             {
                 writer.WritePropertyName("storageAccountType"u8);
                 writer.WriteStringValue(StorageAccountType.Value.ToString());
             }
-            if (DiskEncryptionSet != null)
+            if (Optional.IsDefined(DiskEncryptionSet))
             {
                 writer.WritePropertyName("diskEncryptionSet"u8);
                 JsonSerializer.Serialize(writer, DiskEncryptionSet);
             }
-            if (SecurityProfile != null)
+            if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
                 writer.WriteObjectValue(SecurityProfile);

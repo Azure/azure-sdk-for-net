@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && AmlWorkspaceLocation != null)
+            if (options.Format != "W" && Optional.IsDefined(AmlWorkspaceLocation))
             {
                 writer.WritePropertyName("amlWorkspaceLocation"u8);
                 writer.WriteStringValue(AmlWorkspaceLocation);
             }
-            if (options.Format != "W" && UsageType != null)
+            if (options.Format != "W" && Optional.IsDefined(UsageType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(UsageType);
             }
-            if (options.Format != "W" && Unit.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit.Value.ToString());
             }
-            if (options.Format != "W" && CurrentValue.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CurrentValue))
             {
                 writer.WritePropertyName("currentValue"u8);
                 writer.WriteNumberValue(CurrentValue.Value);
             }
-            if (options.Format != "W" && Limit.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Limit))
             {
                 writer.WritePropertyName("limit"u8);
                 writer.WriteNumberValue(Limit.Value);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteObjectValue(Name);

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (AdminUsername != null)
+            if (Optional.IsDefined(AdminUsername))
             {
                 writer.WritePropertyName("adminUsername"u8);
                 writer.WriteStringValue(AdminUsername);
             }
-            if (!(SshPublicKeys is ChangeTrackingList<NetworkCloudSshPublicKey> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SshPublicKeys))
             {
                 writer.WritePropertyName("sshPublicKeys"u8);
                 writer.WriteStartArray();

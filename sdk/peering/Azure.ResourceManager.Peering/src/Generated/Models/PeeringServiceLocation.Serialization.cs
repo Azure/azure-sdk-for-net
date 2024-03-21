@@ -42,24 +42,24 @@ namespace Azure.ResourceManager.Peering.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Country != null)
+            if (Optional.IsDefined(Country))
             {
                 writer.WritePropertyName("country"u8);
                 writer.WriteStringValue(Country);
             }
-            if (State != null)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
-            if (AzureRegion.HasValue)
+            if (Optional.IsDefined(AzureRegion))
             {
                 writer.WritePropertyName("azureRegion"u8);
                 writer.WriteStringValue(AzureRegion.Value);

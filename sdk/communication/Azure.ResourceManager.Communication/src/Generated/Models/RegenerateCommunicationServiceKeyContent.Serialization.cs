@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Communication.Models
             }
 
             writer.WriteStartObject();
-            if (KeyType.HasValue)
+            if (Optional.IsDefined(KeyType))
             {
                 writer.WritePropertyName("keyType"u8);
                 writer.WriteStringValue(KeyType.Value.ToSerialString());

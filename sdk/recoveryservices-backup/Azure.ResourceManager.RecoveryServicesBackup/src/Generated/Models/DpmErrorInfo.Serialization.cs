@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (ErrorString != null)
+            if (Optional.IsDefined(ErrorString))
             {
                 writer.WritePropertyName("errorString"u8);
                 writer.WriteStringValue(ErrorString);
             }
-            if (!(Recommendations is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Recommendations))
             {
                 writer.WritePropertyName("recommendations"u8);
                 writer.WriteStartArray();

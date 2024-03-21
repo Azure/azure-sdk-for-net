@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteStringValue(MappingType.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (IsSecret.HasValue)
+            if (Optional.IsDefined(IsSecret))
             {
                 writer.WritePropertyName("isSecret"u8);
                 writer.WriteBooleanValue(IsSecret.Value);

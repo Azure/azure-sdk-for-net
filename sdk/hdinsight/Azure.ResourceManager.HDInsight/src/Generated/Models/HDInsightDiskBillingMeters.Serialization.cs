@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (DiskRpMeter != null)
+            if (Optional.IsDefined(DiskRpMeter))
             {
                 writer.WritePropertyName("diskRpMeter"u8);
                 writer.WriteStringValue(DiskRpMeter);
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteStringValue(Sku);
             }
-            if (Tier.HasValue)
+            if (Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier.Value.ToString());

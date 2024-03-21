@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DedicatedHostResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string hostName, DedicatedHostData data, CancellationToken cancellationToken = default)
         {
-            if (hostName == null)
-            {
-                throw new ArgumentNullException(nameof(hostName));
-            }
-            if (hostName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hostName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dedicatedHostClientDiagnostics.CreateScope("DedicatedHostCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DedicatedHostResource> CreateOrUpdate(WaitUntil waitUntil, string hostName, DedicatedHostData data, CancellationToken cancellationToken = default)
         {
-            if (hostName == null)
-            {
-                throw new ArgumentNullException(nameof(hostName));
-            }
-            if (hostName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hostName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dedicatedHostClientDiagnostics.CreateScope("DedicatedHostCollection.CreateOrUpdate");
             scope.Start();
@@ -200,14 +178,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
         public virtual async Task<Response<DedicatedHostResource>> GetAsync(string hostName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
-            if (hostName == null)
-            {
-                throw new ArgumentNullException(nameof(hostName));
-            }
-            if (hostName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hostName));
-            }
+            Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
 
             using var scope = _dedicatedHostClientDiagnostics.CreateScope("DedicatedHostCollection.Get");
             scope.Start();
@@ -253,14 +224,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
         public virtual Response<DedicatedHostResource> Get(string hostName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
-            if (hostName == null)
-            {
-                throw new ArgumentNullException(nameof(hostName));
-            }
-            if (hostName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hostName));
-            }
+            Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
 
             using var scope = _dedicatedHostClientDiagnostics.CreateScope("DedicatedHostCollection.Get");
             scope.Start();
@@ -366,14 +330,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string hostName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
-            if (hostName == null)
-            {
-                throw new ArgumentNullException(nameof(hostName));
-            }
-            if (hostName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hostName));
-            }
+            Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
 
             using var scope = _dedicatedHostClientDiagnostics.CreateScope("DedicatedHostCollection.Exists");
             scope.Start();
@@ -417,14 +374,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
         public virtual Response<bool> Exists(string hostName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
-            if (hostName == null)
-            {
-                throw new ArgumentNullException(nameof(hostName));
-            }
-            if (hostName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hostName));
-            }
+            Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
 
             using var scope = _dedicatedHostClientDiagnostics.CreateScope("DedicatedHostCollection.Exists");
             scope.Start();
@@ -468,14 +418,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
         public virtual async Task<NullableResponse<DedicatedHostResource>> GetIfExistsAsync(string hostName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
-            if (hostName == null)
-            {
-                throw new ArgumentNullException(nameof(hostName));
-            }
-            if (hostName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hostName));
-            }
+            Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
 
             using var scope = _dedicatedHostClientDiagnostics.CreateScope("DedicatedHostCollection.GetIfExists");
             scope.Start();
@@ -521,14 +464,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
         public virtual NullableResponse<DedicatedHostResource> GetIfExists(string hostName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
-            if (hostName == null)
-            {
-                throw new ArgumentNullException(nameof(hostName));
-            }
-            if (hostName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hostName));
-            }
+            Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
 
             using var scope = _dedicatedHostClientDiagnostics.CreateScope("DedicatedHostCollection.GetIfExists");
             scope.Start();

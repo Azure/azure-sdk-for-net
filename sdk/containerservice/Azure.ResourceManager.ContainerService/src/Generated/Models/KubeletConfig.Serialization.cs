@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (CpuManagerPolicy != null)
+            if (Optional.IsDefined(CpuManagerPolicy))
             {
                 writer.WritePropertyName("cpuManagerPolicy"u8);
                 writer.WriteStringValue(CpuManagerPolicy);
             }
-            if (IsCpuCfsQuotaEnabled.HasValue)
+            if (Optional.IsDefined(IsCpuCfsQuotaEnabled))
             {
                 writer.WritePropertyName("cpuCfsQuota"u8);
                 writer.WriteBooleanValue(IsCpuCfsQuotaEnabled.Value);
             }
-            if (CpuCfsQuotaPeriod != null)
+            if (Optional.IsDefined(CpuCfsQuotaPeriod))
             {
                 writer.WritePropertyName("cpuCfsQuotaPeriod"u8);
                 writer.WriteStringValue(CpuCfsQuotaPeriod);
             }
-            if (ImageGcHighThreshold.HasValue)
+            if (Optional.IsDefined(ImageGcHighThreshold))
             {
                 writer.WritePropertyName("imageGcHighThreshold"u8);
                 writer.WriteNumberValue(ImageGcHighThreshold.Value);
             }
-            if (ImageGcLowThreshold.HasValue)
+            if (Optional.IsDefined(ImageGcLowThreshold))
             {
                 writer.WritePropertyName("imageGcLowThreshold"u8);
                 writer.WriteNumberValue(ImageGcLowThreshold.Value);
             }
-            if (TopologyManagerPolicy != null)
+            if (Optional.IsDefined(TopologyManagerPolicy))
             {
                 writer.WritePropertyName("topologyManagerPolicy"u8);
                 writer.WriteStringValue(TopologyManagerPolicy);
             }
-            if (!(AllowedUnsafeSysctls is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AllowedUnsafeSysctls))
             {
                 writer.WritePropertyName("allowedUnsafeSysctls"u8);
                 writer.WriteStartArray();
@@ -66,22 +66,22 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (FailStartWithSwapOn.HasValue)
+            if (Optional.IsDefined(FailStartWithSwapOn))
             {
                 writer.WritePropertyName("failSwapOn"u8);
                 writer.WriteBooleanValue(FailStartWithSwapOn.Value);
             }
-            if (ContainerLogMaxSizeInMB.HasValue)
+            if (Optional.IsDefined(ContainerLogMaxSizeInMB))
             {
                 writer.WritePropertyName("containerLogMaxSizeMB"u8);
                 writer.WriteNumberValue(ContainerLogMaxSizeInMB.Value);
             }
-            if (ContainerLogMaxFiles.HasValue)
+            if (Optional.IsDefined(ContainerLogMaxFiles))
             {
                 writer.WritePropertyName("containerLogMaxFiles"u8);
                 writer.WriteNumberValue(ContainerLogMaxFiles.Value);
             }
-            if (PodMaxPids.HasValue)
+            if (Optional.IsDefined(PodMaxPids))
             {
                 writer.WritePropertyName("podMaxPids"u8);
                 writer.WriteNumberValue(PodMaxPids.Value);

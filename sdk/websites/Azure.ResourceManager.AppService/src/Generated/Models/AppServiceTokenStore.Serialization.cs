@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (TokenRefreshExtensionHours.HasValue)
+            if (Optional.IsDefined(TokenRefreshExtensionHours))
             {
                 writer.WritePropertyName("tokenRefreshExtensionHours"u8);
                 writer.WriteNumberValue(TokenRefreshExtensionHours.Value);
             }
-            if (FileSystem != null)
+            if (Optional.IsDefined(FileSystem))
             {
                 writer.WritePropertyName("fileSystem"u8);
                 writer.WriteObjectValue(FileSystem);
             }
-            if (AzureBlobStorage != null)
+            if (Optional.IsDefined(AzureBlobStorage))
             {
                 writer.WritePropertyName("azureBlobStorage"u8);
                 writer.WriteObjectValue(AzureBlobStorage);

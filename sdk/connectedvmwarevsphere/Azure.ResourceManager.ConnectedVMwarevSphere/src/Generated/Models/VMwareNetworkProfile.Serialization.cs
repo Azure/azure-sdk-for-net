@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             }
 
             writer.WriteStartObject();
-            if (!(NetworkInterfaces is ChangeTrackingList<VMwareNetworkInterface> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(NetworkInterfaces))
             {
                 writer.WritePropertyName("networkInterfaces"u8);
                 writer.WriteStartArray();

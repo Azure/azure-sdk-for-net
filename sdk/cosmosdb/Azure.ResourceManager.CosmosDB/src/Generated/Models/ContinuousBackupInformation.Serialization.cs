@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (LatestRestorableTimestamp.HasValue)
+            if (Optional.IsDefined(LatestRestorableTimestamp))
             {
                 writer.WritePropertyName("latestRestorableTimestamp"u8);
                 writer.WriteStringValue(LatestRestorableTimestamp.Value, "O");

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (!(ControlPlaneStatus is ChangeTrackingList<ProvisionedClusterAddonStatusProfile> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ControlPlaneStatus))
             {
                 writer.WritePropertyName("controlPlaneStatus"u8);
                 writer.WriteStartArray();
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && CurrentState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CurrentState))
             {
                 writer.WritePropertyName("currentState"u8);
                 writer.WriteStringValue(CurrentState.Value.ToString());
             }
-            if (ErrorMessage != null)
+            if (Optional.IsDefined(ErrorMessage))
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);

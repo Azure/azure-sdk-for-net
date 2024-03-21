@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && PrimaryAccessKey != null)
+            if (options.Format != "W" && Optional.IsDefined(PrimaryAccessKey))
             {
                 writer.WritePropertyName("primaryAccessKey"u8);
                 writer.WriteStringValue(PrimaryAccessKey);
             }
-            if (options.Format != "W" && SecondaryAccessKey != null)
+            if (options.Format != "W" && Optional.IsDefined(SecondaryAccessKey))
             {
                 writer.WritePropertyName("secondaryAccessKey"u8);
                 writer.WriteStringValue(SecondaryAccessKey);

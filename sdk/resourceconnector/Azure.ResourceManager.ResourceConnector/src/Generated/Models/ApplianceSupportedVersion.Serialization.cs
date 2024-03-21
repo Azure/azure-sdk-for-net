@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Metadata != null)
+            if (options.Format != "W" && Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteObjectValue(Metadata);
             }
-            if (options.Format != "W" && Version != null)
+            if (options.Format != "W" && Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);

@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Health.Insights.ClinicalMatching
@@ -29,12 +28,12 @@ namespace Azure.Health.Insights.ClinicalMatching
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (City != null)
+            if (Optional.IsDefined(City))
             {
                 writer.WritePropertyName("city"u8);
                 writer.WriteStringValue(City);
             }
-            if (State != null)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);

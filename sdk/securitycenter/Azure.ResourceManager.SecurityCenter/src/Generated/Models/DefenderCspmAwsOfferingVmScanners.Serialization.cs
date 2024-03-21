@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Enabled.HasValue)
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(Enabled.Value);
             }
-            if (Configuration != null)
+            if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
                 writer.WriteObjectValue(Configuration);

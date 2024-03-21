@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (OriginResponseTimeoutSeconds.HasValue)
+            if (Optional.IsDefined(OriginResponseTimeoutSeconds))
             {
                 writer.WritePropertyName("originResponseTimeoutSeconds"u8);
                 writer.WriteNumberValue(OriginResponseTimeoutSeconds.Value);

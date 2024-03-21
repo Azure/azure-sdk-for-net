@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
 
             writer.WriteStartObject();
-            if (SolutionId != null)
+            if (Optional.IsDefined(SolutionId))
             {
                 writer.WritePropertyName("solutionId"u8);
                 writer.WriteStringValue(SolutionId);
             }
-            if (Content != null)
+            if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content);
             }
-            if (Title != null)
+            if (Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Confidence.HasValue)
+            if (Optional.IsDefined(Confidence))
             {
                 writer.WritePropertyName("confidence"u8);
                 writer.WriteStringValue(Confidence.Value.ToString());
             }
-            if (Source != null)
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
-            if (ResultType.HasValue)
+            if (Optional.IsDefined(ResultType))
             {
                 writer.WritePropertyName("resultType"u8);
                 writer.WriteStringValue(ResultType.Value.ToString());
             }
-            if (Rank.HasValue)
+            if (Optional.IsDefined(Rank))
             {
                 writer.WritePropertyName("rank"u8);
                 writer.WriteNumberValue(Rank.Value);
             }
-            if (Link != null)
+            if (Optional.IsDefined(Link))
             {
                 writer.WritePropertyName("link"u8);
                 writer.WriteStringValue(Link);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (!(Targets is ChangeTrackingList<BatchDiskEncryptionTarget> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Targets))
             {
                 writer.WritePropertyName("targets"u8);
                 writer.WriteStartArray();

@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Sysctls != null)
+            if (Optional.IsDefined(Sysctls))
             {
                 writer.WritePropertyName("sysctls"u8);
                 writer.WriteObjectValue(Sysctls);
             }
-            if (TransparentHugePageEnabled != null)
+            if (Optional.IsDefined(TransparentHugePageEnabled))
             {
                 writer.WritePropertyName("transparentHugePageEnabled"u8);
                 writer.WriteStringValue(TransparentHugePageEnabled);
             }
-            if (TransparentHugePageDefrag != null)
+            if (Optional.IsDefined(TransparentHugePageDefrag))
             {
                 writer.WritePropertyName("transparentHugePageDefrag"u8);
                 writer.WriteStringValue(TransparentHugePageDefrag);
             }
-            if (SwapFileSizeInMB.HasValue)
+            if (Optional.IsDefined(SwapFileSizeInMB))
             {
                 writer.WritePropertyName("swapFileSizeMB"u8);
                 writer.WriteNumberValue(SwapFileSizeInMB.Value);

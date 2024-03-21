@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (HardwareProfile != null)
+            if (Optional.IsDefined(HardwareProfile))
             {
                 writer.WritePropertyName("hardwareProfile"u8);
                 writer.WriteObjectValue(HardwareProfile);
             }
-            if (StorageProfile != null)
+            if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
                 writer.WriteObjectValue(StorageProfile);
             }
-            if (NetworkProfile != null)
+            if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
                 writer.WriteObjectValue(NetworkProfile);
             }
-            if (OSProfile != null)
+            if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
                 writer.WriteObjectValue(OSProfile);

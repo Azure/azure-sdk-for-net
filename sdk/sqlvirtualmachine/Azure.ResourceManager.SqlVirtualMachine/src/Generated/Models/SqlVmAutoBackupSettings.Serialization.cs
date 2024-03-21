@@ -26,57 +26,57 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             }
 
             writer.WriteStartObject();
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enable"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (IsEncryptionEnabled.HasValue)
+            if (Optional.IsDefined(IsEncryptionEnabled))
             {
                 writer.WritePropertyName("enableEncryption"u8);
                 writer.WriteBooleanValue(IsEncryptionEnabled.Value);
             }
-            if (RetentionPeriodInDays.HasValue)
+            if (Optional.IsDefined(RetentionPeriodInDays))
             {
                 writer.WritePropertyName("retentionPeriod"u8);
                 writer.WriteNumberValue(RetentionPeriodInDays.Value);
             }
-            if (StorageAccountUri != null)
+            if (Optional.IsDefined(StorageAccountUri))
             {
                 writer.WritePropertyName("storageAccountUrl"u8);
                 writer.WriteStringValue(StorageAccountUri.AbsoluteUri);
             }
-            if (StorageContainerName != null)
+            if (Optional.IsDefined(StorageContainerName))
             {
                 writer.WritePropertyName("storageContainerName"u8);
                 writer.WriteStringValue(StorageContainerName);
             }
-            if (StorageAccessKey != null)
+            if (Optional.IsDefined(StorageAccessKey))
             {
                 writer.WritePropertyName("storageAccessKey"u8);
                 writer.WriteStringValue(StorageAccessKey);
             }
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (AreSystemDbsIncludedInBackup.HasValue)
+            if (Optional.IsDefined(AreSystemDbsIncludedInBackup))
             {
                 writer.WritePropertyName("backupSystemDbs"u8);
                 writer.WriteBooleanValue(AreSystemDbsIncludedInBackup.Value);
             }
-            if (BackupScheduleType.HasValue)
+            if (Optional.IsDefined(BackupScheduleType))
             {
                 writer.WritePropertyName("backupScheduleType"u8);
                 writer.WriteStringValue(BackupScheduleType.Value.ToString());
             }
-            if (FullBackupFrequency.HasValue)
+            if (Optional.IsDefined(FullBackupFrequency))
             {
                 writer.WritePropertyName("fullBackupFrequency"u8);
                 writer.WriteStringValue(FullBackupFrequency.Value.ToString());
             }
-            if (!(DaysOfWeek is ChangeTrackingList<SqlVmAutoBackupDayOfWeek> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DaysOfWeek))
             {
                 writer.WritePropertyName("daysOfWeek"u8);
                 writer.WriteStartArray();
@@ -86,17 +86,17 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
                 writer.WriteEndArray();
             }
-            if (FullBackupStartHour.HasValue)
+            if (Optional.IsDefined(FullBackupStartHour))
             {
                 writer.WritePropertyName("fullBackupStartTime"u8);
                 writer.WriteNumberValue(FullBackupStartHour.Value);
             }
-            if (FullBackupWindowHours.HasValue)
+            if (Optional.IsDefined(FullBackupWindowHours))
             {
                 writer.WritePropertyName("fullBackupWindowHours"u8);
                 writer.WriteNumberValue(FullBackupWindowHours.Value);
             }
-            if (LogBackupFrequency.HasValue)
+            if (Optional.IsDefined(LogBackupFrequency))
             {
                 writer.WritePropertyName("logBackupFrequency"u8);
                 writer.WriteNumberValue(LogBackupFrequency.Value);

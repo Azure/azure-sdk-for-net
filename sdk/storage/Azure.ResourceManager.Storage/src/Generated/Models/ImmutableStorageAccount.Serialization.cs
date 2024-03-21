@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (ImmutabilityPolicy != null)
+            if (Optional.IsDefined(ImmutabilityPolicy))
             {
                 writer.WritePropertyName("immutabilityPolicy"u8);
                 writer.WriteObjectValue(ImmutabilityPolicy);

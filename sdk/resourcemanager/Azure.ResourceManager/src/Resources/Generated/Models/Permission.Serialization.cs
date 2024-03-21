@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (!(AllowedActions is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AllowedActions))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(DeniedActions is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(DeniedActions))
             {
                 writer.WritePropertyName("notActions"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(AllowedDataActions is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(AllowedDataActions))
             {
                 writer.WritePropertyName("dataActions"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(DeniedDataActions is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(DeniedDataActions))
             {
                 writer.WritePropertyName("notDataActions"u8);
                 writer.WriteStartArray();

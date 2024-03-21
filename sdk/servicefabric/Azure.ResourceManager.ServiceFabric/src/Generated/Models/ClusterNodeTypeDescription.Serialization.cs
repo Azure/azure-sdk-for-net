@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (!(PlacementProperties is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PlacementProperties))
             {
                 writer.WritePropertyName("placementProperties"u8);
                 writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(Capacities is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Capacities))
             {
                 writer.WritePropertyName("capacities"u8);
                 writer.WriteStartObject();
@@ -54,17 +54,17 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             writer.WriteNumberValue(ClientConnectionEndpointPort);
             writer.WritePropertyName("httpGatewayEndpointPort"u8);
             writer.WriteNumberValue(HttpGatewayEndpointPort);
-            if (DurabilityLevel.HasValue)
+            if (Optional.IsDefined(DurabilityLevel))
             {
                 writer.WritePropertyName("durabilityLevel"u8);
                 writer.WriteStringValue(DurabilityLevel.Value.ToString());
             }
-            if (ApplicationPorts != null)
+            if (Optional.IsDefined(ApplicationPorts))
             {
                 writer.WritePropertyName("applicationPorts"u8);
                 writer.WriteObjectValue(ApplicationPorts);
             }
-            if (EphemeralPorts != null)
+            if (Optional.IsDefined(EphemeralPorts))
             {
                 writer.WritePropertyName("ephemeralPorts"u8);
                 writer.WriteObjectValue(EphemeralPorts);
@@ -73,22 +73,22 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             writer.WriteBooleanValue(IsPrimary);
             writer.WritePropertyName("vmInstanceCount"u8);
             writer.WriteNumberValue(VmInstanceCount);
-            if (ReverseProxyEndpointPort.HasValue)
+            if (Optional.IsDefined(ReverseProxyEndpointPort))
             {
                 writer.WritePropertyName("reverseProxyEndpointPort"u8);
                 writer.WriteNumberValue(ReverseProxyEndpointPort.Value);
             }
-            if (IsStateless.HasValue)
+            if (Optional.IsDefined(IsStateless))
             {
                 writer.WritePropertyName("isStateless"u8);
                 writer.WriteBooleanValue(IsStateless.Value);
             }
-            if (IsMultipleAvailabilityZonesSupported.HasValue)
+            if (Optional.IsDefined(IsMultipleAvailabilityZonesSupported))
             {
                 writer.WritePropertyName("multipleAvailabilityZones"u8);
                 writer.WriteBooleanValue(IsMultipleAvailabilityZonesSupported.Value);
             }
-            if (HttpGatewayTokenAuthEndpointPort.HasValue)
+            if (Optional.IsDefined(HttpGatewayTokenAuthEndpointPort))
             {
                 writer.WritePropertyName("httpGatewayTokenAuthEndpointPort"u8);
                 writer.WriteNumberValue(HttpGatewayTokenAuthEndpointPort.Value);

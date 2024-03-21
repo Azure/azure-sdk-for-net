@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.MySql.Models
             }
 
             writer.WriteStartObject();
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);

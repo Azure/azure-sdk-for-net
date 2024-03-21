@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (Schedule != null)
+            if (Optional.IsDefined(Schedule))
             {
                 writer.WritePropertyName("schedule"u8);
                 writer.WriteStringValue(Schedule);
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());

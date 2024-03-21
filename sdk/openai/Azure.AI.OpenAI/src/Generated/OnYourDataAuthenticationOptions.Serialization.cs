@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -71,13 +70,13 @@ namespace Azure.AI.OpenAI
             {
                 switch (discriminator.GetString())
                 {
-                    case "APIKey": return OnYourDataApiKeyAuthenticationOptions.DeserializeOnYourDataApiKeyAuthenticationOptions(element, options);
-                    case "ConnectionString": return OnYourDataConnectionStringAuthenticationOptions.DeserializeOnYourDataConnectionStringAuthenticationOptions(element, options);
-                    case "KeyAndKeyId": return OnYourDataKeyAndKeyIdAuthenticationOptions.DeserializeOnYourDataKeyAndKeyIdAuthenticationOptions(element, options);
-                    case "EncodedAPIKey": return OnYourDataEncodedApiKeyAuthenticationOptions.DeserializeOnYourDataEncodedApiKeyAuthenticationOptions(element, options);
-                    case "AccessToken": return OnYourDataAccessTokenAuthenticationOptions.DeserializeOnYourDataAccessTokenAuthenticationOptions(element, options);
-                    case "SystemAssignedManagedIdentity": return OnYourDataSystemAssignedManagedIdentityAuthenticationOptions.DeserializeOnYourDataSystemAssignedManagedIdentityAuthenticationOptions(element, options);
-                    case "UserAssignedManagedIdentity": return OnYourDataUserAssignedManagedIdentityAuthenticationOptions.DeserializeOnYourDataUserAssignedManagedIdentityAuthenticationOptions(element, options);
+                    case "access_token": return OnYourDataAccessTokenAuthenticationOptions.DeserializeOnYourDataAccessTokenAuthenticationOptions(element, options);
+                    case "api_key": return OnYourDataApiKeyAuthenticationOptions.DeserializeOnYourDataApiKeyAuthenticationOptions(element, options);
+                    case "connection_string": return OnYourDataConnectionStringAuthenticationOptions.DeserializeOnYourDataConnectionStringAuthenticationOptions(element, options);
+                    case "encoded_api_key": return OnYourDataEncodedApiKeyAuthenticationOptions.DeserializeOnYourDataEncodedApiKeyAuthenticationOptions(element, options);
+                    case "key_and_key_id": return OnYourDataKeyAndKeyIdAuthenticationOptions.DeserializeOnYourDataKeyAndKeyIdAuthenticationOptions(element, options);
+                    case "system_assigned_managed_identity": return OnYourDataSystemAssignedManagedIdentityAuthenticationOptions.DeserializeOnYourDataSystemAssignedManagedIdentityAuthenticationOptions(element, options);
+                    case "user_assigned_managed_identity": return OnYourDataUserAssignedManagedIdentityAuthenticationOptions.DeserializeOnYourDataUserAssignedManagedIdentityAuthenticationOptions(element, options);
                 }
             }
             return UnknownOnYourDataAuthenticationOptions.DeserializeUnknownOnYourDataAuthenticationOptions(element, options);

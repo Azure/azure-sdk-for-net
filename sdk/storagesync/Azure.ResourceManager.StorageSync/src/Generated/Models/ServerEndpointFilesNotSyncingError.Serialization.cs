@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ErrorCode.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ErrorCode))
             {
                 writer.WritePropertyName("errorCode"u8);
                 writer.WriteNumberValue(ErrorCode.Value);
             }
-            if (options.Format != "W" && PersistentCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PersistentCount))
             {
                 writer.WritePropertyName("persistentCount"u8);
                 writer.WriteNumberValue(PersistentCount.Value);
             }
-            if (options.Format != "W" && TransientCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TransientCount))
             {
                 writer.WritePropertyName("transientCount"u8);
                 writer.WriteNumberValue(TransientCount.Value);

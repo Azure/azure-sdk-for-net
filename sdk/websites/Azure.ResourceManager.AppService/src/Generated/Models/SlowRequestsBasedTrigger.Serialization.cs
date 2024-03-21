@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (TimeTaken != null)
+            if (Optional.IsDefined(TimeTaken))
             {
                 writer.WritePropertyName("timeTaken"u8);
                 writer.WriteStringValue(TimeTaken);
             }
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Count.HasValue)
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (TimeInterval != null)
+            if (Optional.IsDefined(TimeInterval))
             {
                 writer.WritePropertyName("timeInterval"u8);
                 writer.WriteStringValue(TimeInterval);

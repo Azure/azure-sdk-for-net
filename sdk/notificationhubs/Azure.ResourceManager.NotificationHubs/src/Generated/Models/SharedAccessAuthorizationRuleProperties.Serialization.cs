@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             }
 
             writer.WriteStartObject();
-            if (!(Rights is ChangeTrackingList<AuthorizationRuleAccessRight> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Rights))
             {
                 writer.WritePropertyName("rights"u8);
                 writer.WriteStartArray();
@@ -36,42 +36,42 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && PrimaryKey != null)
+            if (options.Format != "W" && Optional.IsDefined(PrimaryKey))
             {
                 writer.WritePropertyName("primaryKey"u8);
                 writer.WriteStringValue(PrimaryKey);
             }
-            if (options.Format != "W" && SecondaryKey != null)
+            if (options.Format != "W" && Optional.IsDefined(SecondaryKey))
             {
                 writer.WritePropertyName("secondaryKey"u8);
                 writer.WriteStringValue(SecondaryKey);
             }
-            if (options.Format != "W" && KeyName != null)
+            if (options.Format != "W" && Optional.IsDefined(KeyName))
             {
                 writer.WritePropertyName("keyName"u8);
                 writer.WriteStringValue(KeyName);
             }
-            if (options.Format != "W" && ClaimType != null)
+            if (options.Format != "W" && Optional.IsDefined(ClaimType))
             {
                 writer.WritePropertyName("claimType"u8);
                 writer.WriteStringValue(ClaimType);
             }
-            if (options.Format != "W" && ClaimValue != null)
+            if (options.Format != "W" && Optional.IsDefined(ClaimValue))
             {
                 writer.WritePropertyName("claimValue"u8);
                 writer.WriteStringValue(ClaimValue);
             }
-            if (options.Format != "W" && ModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ModifiedOn))
             {
                 writer.WritePropertyName("modifiedTime"u8);
                 writer.WriteStringValue(ModifiedOn.Value, "O");
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Revision.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Revision))
             {
                 writer.WritePropertyName("revision"u8);
                 writer.WriteNumberValue(Revision.Value);

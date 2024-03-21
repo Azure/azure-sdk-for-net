@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Text != null)
+            if (Optional.IsDefined(Text))
             {
                 writer.WritePropertyName("text"u8);
                 writer.WriteObjectValue(Text);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (AssetName != null)
+            if (Optional.IsDefined(AssetName))
             {
                 if (AssetName != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("assetName");
                 }
             }
-            if (AssetVersion != null)
+            if (Optional.IsDefined(AssetVersion))
             {
                 if (AssetVersion != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("assetVersion");
                 }
             }
-            if (AutoDeleteSetting != null)
+            if (Optional.IsDefined(AutoDeleteSetting))
             {
                 if (AutoDeleteSetting != null)
                 {
@@ -62,12 +62,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("autoDeleteSetting");
                 }
             }
-            if (Mode.HasValue)
+            if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (Uri != null)
+            if (Optional.IsDefined(Uri))
             {
                 if (Uri != null)
                 {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("uri");
                 }
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 if (Description != null)
                 {

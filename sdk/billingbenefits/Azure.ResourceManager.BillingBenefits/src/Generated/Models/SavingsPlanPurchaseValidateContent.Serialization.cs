@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.BillingBenefits;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
@@ -27,7 +26,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             }
 
             writer.WriteStartObject();
-            if (!(Benefits is ChangeTrackingList<BillingBenefitsSavingsPlanOrderAliasData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Benefits))
             {
                 writer.WritePropertyName("benefits"u8);
                 writer.WriteStartArray();

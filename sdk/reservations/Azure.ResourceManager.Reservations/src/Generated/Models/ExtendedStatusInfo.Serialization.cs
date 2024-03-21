@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (StatusCode.HasValue)
+            if (Optional.IsDefined(StatusCode))
             {
                 writer.WritePropertyName("statusCode"u8);
                 writer.WriteStringValue(StatusCode.Value.ToString());
             }
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);

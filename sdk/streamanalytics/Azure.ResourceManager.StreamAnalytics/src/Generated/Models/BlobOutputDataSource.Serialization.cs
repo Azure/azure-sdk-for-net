@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStringValue(OutputDataSourceType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(StorageAccounts is ChangeTrackingList<StreamAnalyticsStorageAccount> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(StorageAccounts))
             {
                 writer.WritePropertyName("storageAccounts"u8);
                 writer.WriteStartArray();
@@ -40,37 +40,37 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Container != null)
+            if (Optional.IsDefined(Container))
             {
                 writer.WritePropertyName("container"u8);
                 writer.WriteStringValue(Container);
             }
-            if (PathPattern != null)
+            if (Optional.IsDefined(PathPattern))
             {
                 writer.WritePropertyName("pathPattern"u8);
                 writer.WriteStringValue(PathPattern);
             }
-            if (DateFormat != null)
+            if (Optional.IsDefined(DateFormat))
             {
                 writer.WritePropertyName("dateFormat"u8);
                 writer.WriteStringValue(DateFormat);
             }
-            if (TimeFormat != null)
+            if (Optional.IsDefined(TimeFormat))
             {
                 writer.WritePropertyName("timeFormat"u8);
                 writer.WriteStringValue(TimeFormat);
             }
-            if (AuthenticationMode.HasValue)
+            if (Optional.IsDefined(AuthenticationMode))
             {
                 writer.WritePropertyName("authenticationMode"u8);
                 writer.WriteStringValue(AuthenticationMode.Value.ToString());
             }
-            if (BlobPathPrefix != null)
+            if (Optional.IsDefined(BlobPathPrefix))
             {
                 writer.WritePropertyName("blobPathPrefix"u8);
                 writer.WriteStringValue(BlobPathPrefix);
             }
-            if (BlobWriteMode.HasValue)
+            if (Optional.IsDefined(BlobWriteMode))
             {
                 writer.WritePropertyName("blobWriteMode"u8);
                 writer.WriteStringValue(BlobWriteMode.Value.ToString());

@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStringValue(EventSerializationType.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (FieldDelimiter != null)
+            if (Optional.IsDefined(FieldDelimiter))
             {
                 writer.WritePropertyName("fieldDelimiter"u8);
                 writer.WriteStringValue(FieldDelimiter);
             }
-            if (Encoding.HasValue)
+            if (Optional.IsDefined(Encoding))
             {
                 writer.WritePropertyName("encoding"u8);
                 writer.WriteStringValue(Encoding.Value.ToString());

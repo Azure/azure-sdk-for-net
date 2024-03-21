@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (!(ScheduleRunTimes is ChangeTrackingList<DateTimeOffset> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ScheduleRunTimes))
             {
                 writer.WritePropertyName("scheduleRunTimes"u8);
                 writer.WriteStartArray();

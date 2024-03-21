@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (!(Columns is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Columns))
             {
                 if (Columns != null)
                 {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("columns");
                 }
             }
-            if (DataContext != null)
+            if (Optional.IsDefined(DataContext))
             {
                 if (DataContext != null)
                 {

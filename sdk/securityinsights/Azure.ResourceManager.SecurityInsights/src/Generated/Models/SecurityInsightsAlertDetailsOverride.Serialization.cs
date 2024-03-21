@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (AlertDisplayNameFormat != null)
+            if (Optional.IsDefined(AlertDisplayNameFormat))
             {
                 writer.WritePropertyName("alertDisplayNameFormat"u8);
                 writer.WriteStringValue(AlertDisplayNameFormat);
             }
-            if (AlertDescriptionFormat != null)
+            if (Optional.IsDefined(AlertDescriptionFormat))
             {
                 writer.WritePropertyName("alertDescriptionFormat"u8);
                 writer.WriteStringValue(AlertDescriptionFormat);
             }
-            if (AlertTacticsColumnName != null)
+            if (Optional.IsDefined(AlertTacticsColumnName))
             {
                 writer.WritePropertyName("alertTacticsColumnName"u8);
                 writer.WriteStringValue(AlertTacticsColumnName);
             }
-            if (AlertSeverityColumnName != null)
+            if (Optional.IsDefined(AlertSeverityColumnName))
             {
                 writer.WritePropertyName("alertSeverityColumnName"u8);
                 writer.WriteStringValue(AlertSeverityColumnName);

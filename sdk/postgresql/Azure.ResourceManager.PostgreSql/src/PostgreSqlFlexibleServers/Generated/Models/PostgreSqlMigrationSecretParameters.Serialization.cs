@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             writer.WriteStartObject();
             writer.WritePropertyName("adminCredentials"u8);
             writer.WriteObjectValue(AdminCredentials);
-            if (SourceServerUsername != null)
+            if (Optional.IsDefined(SourceServerUsername))
             {
                 writer.WritePropertyName("sourceServerUsername"u8);
                 writer.WriteStringValue(SourceServerUsername);
             }
-            if (TargetServerUsername != null)
+            if (Optional.IsDefined(TargetServerUsername))
             {
                 writer.WritePropertyName("targetServerUsername"u8);
                 writer.WriteStringValue(TargetServerUsername);

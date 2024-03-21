@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (PolicyDefinitionId != null)
+            if (Optional.IsDefined(PolicyDefinitionId))
             {
                 writer.WritePropertyName("policyDefinitionId"u8);
                 writer.WriteStringValue(PolicyDefinitionId);
             }
-            if (Parameters != null)
+            if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStringValue(Parameters);

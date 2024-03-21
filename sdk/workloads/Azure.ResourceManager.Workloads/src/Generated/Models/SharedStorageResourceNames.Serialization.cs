@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (SharedStorageAccountName != null)
+            if (Optional.IsDefined(SharedStorageAccountName))
             {
                 writer.WritePropertyName("sharedStorageAccountName"u8);
                 writer.WriteStringValue(SharedStorageAccountName);
             }
-            if (SharedStorageAccountPrivateEndPointName != null)
+            if (Optional.IsDefined(SharedStorageAccountPrivateEndPointName))
             {
                 writer.WritePropertyName("sharedStorageAccountPrivateEndPointName"u8);
                 writer.WriteStringValue(SharedStorageAccountPrivateEndPointName);

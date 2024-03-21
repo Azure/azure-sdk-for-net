@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (CollectionsThroughput.HasValue)
+            if (Optional.IsDefined(CollectionsThroughput))
             {
                 writer.WritePropertyName("collectionsThroughput"u8);
                 writer.WriteNumberValue(CollectionsThroughput.Value);

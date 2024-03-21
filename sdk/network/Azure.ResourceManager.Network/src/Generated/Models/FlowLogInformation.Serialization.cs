@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("targetResourceId"u8);
             writer.WriteStringValue(TargetResourceId);
-            if (FlowAnalyticsConfiguration != null)
+            if (Optional.IsDefined(FlowAnalyticsConfiguration))
             {
                 writer.WritePropertyName("flowAnalyticsConfiguration"u8);
                 writer.WriteObjectValue(FlowAnalyticsConfiguration);
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStringValue(StorageId);
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(Enabled);
-            if (RetentionPolicy != null)
+            if (Optional.IsDefined(RetentionPolicy))
             {
                 writer.WritePropertyName("retentionPolicy"u8);
                 writer.WriteObjectValue(RetentionPolicy);
             }
-            if (Format != null)
+            if (Optional.IsDefined(Format))
             {
                 writer.WritePropertyName("format"u8);
                 writer.WriteObjectValue(Format);

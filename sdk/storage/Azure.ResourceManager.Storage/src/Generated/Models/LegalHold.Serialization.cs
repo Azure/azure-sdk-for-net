@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && HasLegalHold.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(HasLegalHold))
             {
                 writer.WritePropertyName("hasLegalHold"u8);
                 writer.WriteBooleanValue(HasLegalHold.Value);
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (AllowProtectedAppendWritesAll.HasValue)
+            if (Optional.IsDefined(AllowProtectedAppendWritesAll))
             {
                 writer.WritePropertyName("allowProtectedAppendWritesAll"u8);
                 writer.WriteBooleanValue(AllowProtectedAppendWritesAll.Value);

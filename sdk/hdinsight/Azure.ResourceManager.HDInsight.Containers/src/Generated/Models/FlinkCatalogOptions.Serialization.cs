@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
 
             writer.WriteStartObject();
-            if (Hive != null)
+            if (Optional.IsDefined(Hive))
             {
                 writer.WritePropertyName("hive"u8);
                 writer.WriteObjectValue(Hive);

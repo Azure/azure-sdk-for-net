@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (ClientSecret != null)
+            if (Optional.IsDefined(ClientSecret))
             {
                 writer.WritePropertyName("clientSecret"u8);
                 writer.WriteStringValue(ClientSecret);

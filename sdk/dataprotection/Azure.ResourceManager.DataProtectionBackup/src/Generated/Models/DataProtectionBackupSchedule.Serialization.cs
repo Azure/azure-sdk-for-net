@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (TimeZone != null)
+            if (Optional.IsDefined(TimeZone))
             {
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);

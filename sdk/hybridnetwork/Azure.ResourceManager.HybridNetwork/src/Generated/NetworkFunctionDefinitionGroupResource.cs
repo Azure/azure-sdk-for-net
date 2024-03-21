@@ -10,10 +10,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.HybridNetwork.Models;
 
 namespace Azure.ResourceManager.HybridNetwork
@@ -351,10 +349,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
         public virtual async Task<Response<NetworkFunctionDefinitionGroupResource>> UpdateAsync(TagsObject tagsObject, CancellationToken cancellationToken = default)
         {
-            if (tagsObject == null)
-            {
-                throw new ArgumentNullException(nameof(tagsObject));
-            }
+            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
 
             using var scope = _networkFunctionDefinitionGroupClientDiagnostics.CreateScope("NetworkFunctionDefinitionGroupResource.Update");
             scope.Start();
@@ -396,10 +391,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
         public virtual Response<NetworkFunctionDefinitionGroupResource> Update(TagsObject tagsObject, CancellationToken cancellationToken = default)
         {
-            if (tagsObject == null)
-            {
-                throw new ArgumentNullException(nameof(tagsObject));
-            }
+            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
 
             using var scope = _networkFunctionDefinitionGroupClientDiagnostics.CreateScope("NetworkFunctionDefinitionGroupResource.Update");
             scope.Start();
@@ -442,14 +434,8 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<NetworkFunctionDefinitionGroupResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _networkFunctionDefinitionGroupClientDiagnostics.CreateScope("NetworkFunctionDefinitionGroupResource.AddTag");
             scope.Start();
@@ -510,14 +496,8 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<NetworkFunctionDefinitionGroupResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _networkFunctionDefinitionGroupClientDiagnostics.CreateScope("NetworkFunctionDefinitionGroupResource.AddTag");
             scope.Start();
@@ -577,10 +557,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<NetworkFunctionDefinitionGroupResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _networkFunctionDefinitionGroupClientDiagnostics.CreateScope("NetworkFunctionDefinitionGroupResource.SetTags");
             scope.Start();
@@ -637,10 +614,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<NetworkFunctionDefinitionGroupResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _networkFunctionDefinitionGroupClientDiagnostics.CreateScope("NetworkFunctionDefinitionGroupResource.SetTags");
             scope.Start();
@@ -697,10 +671,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<NetworkFunctionDefinitionGroupResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _networkFunctionDefinitionGroupClientDiagnostics.CreateScope("NetworkFunctionDefinitionGroupResource.RemoveTag");
             scope.Start();
@@ -760,10 +731,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<NetworkFunctionDefinitionGroupResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _networkFunctionDefinitionGroupClientDiagnostics.CreateScope("NetworkFunctionDefinitionGroupResource.RemoveTag");
             scope.Start();

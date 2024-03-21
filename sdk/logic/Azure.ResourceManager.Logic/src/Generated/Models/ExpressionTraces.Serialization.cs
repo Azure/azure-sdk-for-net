@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (!(Inputs is ChangeTrackingList<LogicExpressionRoot> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Inputs))
             {
                 writer.WritePropertyName("inputs"u8);
                 writer.WriteStartArray();

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.IotHub.Models
             }
 
             writer.WriteStartObject();
-            if (!(Routes is ChangeTrackingList<IotHubMatchedRoute> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Routes))
             {
                 writer.WritePropertyName("routes"u8);
                 writer.WriteStartArray();

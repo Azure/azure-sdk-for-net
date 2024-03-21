@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (!(Configurations is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Configurations))
             {
                 if (Configurations != null)
                 {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("configurations");
                 }
             }
-            if (EntryScript != null)
+            if (Optional.IsDefined(EntryScript))
             {
                 if (EntryScript != null)
                 {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("entryScript");
                 }
             }
-            if (LivenessRoute != null)
+            if (Optional.IsDefined(LivenessRoute))
             {
                 if (LivenessRoute != null)
                 {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("livenessRoute");
                 }
             }
-            if (ReadinessRoute != null)
+            if (Optional.IsDefined(ReadinessRoute))
             {
                 if (ReadinessRoute != null)
                 {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("readinessRoute");
                 }
             }
-            if (ScoringRoute != null)
+            if (Optional.IsDefined(ScoringRoute))
             {
                 if (ScoringRoute != null)
                 {

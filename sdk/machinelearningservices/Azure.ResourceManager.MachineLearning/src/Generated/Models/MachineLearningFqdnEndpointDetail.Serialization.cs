@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Port.HasValue)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);

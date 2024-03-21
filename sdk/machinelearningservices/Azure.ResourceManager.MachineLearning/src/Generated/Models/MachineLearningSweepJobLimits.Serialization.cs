@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (MaxConcurrentTrials.HasValue)
+            if (Optional.IsDefined(MaxConcurrentTrials))
             {
                 if (MaxConcurrentTrials != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("maxConcurrentTrials");
                 }
             }
-            if (MaxTotalTrials.HasValue)
+            if (Optional.IsDefined(MaxTotalTrials))
             {
                 if (MaxTotalTrials != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("maxTotalTrials");
                 }
             }
-            if (TrialTimeout.HasValue)
+            if (Optional.IsDefined(TrialTimeout))
             {
                 if (TrialTimeout != null)
                 {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("jobLimitsType"u8);
             writer.WriteStringValue(JobLimitsType.ToString());
-            if (Timeout.HasValue)
+            if (Optional.IsDefined(Timeout))
             {
                 if (Timeout != null)
                 {

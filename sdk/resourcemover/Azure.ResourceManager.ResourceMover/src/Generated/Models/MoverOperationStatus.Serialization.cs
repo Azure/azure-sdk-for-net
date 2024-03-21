@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && EndOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (options.Format != "W" && Error != null)
+            if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 if (Error != null)
                 {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     writer.WriteNull("error");
                 }
             }
-            if (options.Format != "W" && Properties != null)
+            if (options.Format != "W" && Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
 #if NET6_0_OR_GREATER

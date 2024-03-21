@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && VaultId != null)
+            if (options.Format != "W" && Optional.IsDefined(VaultId))
             {
                 writer.WritePropertyName("vaultId"u8);
                 writer.WriteStringValue(VaultId);
             }
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (options.Format != "W" && DeletedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DeletedOn))
             {
                 writer.WritePropertyName("deletionDate"u8);
                 writer.WriteStringValue(DeletedOn.Value, "O");
             }
-            if (options.Format != "W" && ScheduledPurgeOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ScheduledPurgeOn))
             {
                 writer.WritePropertyName("scheduledPurgeDate"u8);
                 writer.WriteStringValue(ScheduledPurgeOn.Value, "O");
             }
-            if (options.Format != "W" && !(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && PurgeProtectionEnabled.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PurgeProtectionEnabled))
             {
                 writer.WritePropertyName("purgeProtectionEnabled"u8);
                 writer.WriteBooleanValue(PurgeProtectionEnabled.Value);

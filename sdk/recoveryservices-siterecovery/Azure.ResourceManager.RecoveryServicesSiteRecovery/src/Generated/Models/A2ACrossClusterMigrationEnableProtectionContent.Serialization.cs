@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (FabricObjectId != null)
+            if (Optional.IsDefined(FabricObjectId))
             {
                 writer.WritePropertyName("fabricObjectId"u8);
                 writer.WriteStringValue(FabricObjectId);
             }
-            if (RecoveryContainerId != null)
+            if (Optional.IsDefined(RecoveryContainerId))
             {
                 writer.WritePropertyName("recoveryContainerId"u8);
                 writer.WriteStringValue(RecoveryContainerId);

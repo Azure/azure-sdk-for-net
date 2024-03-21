@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Lun.HasValue)
+            if (Optional.IsDefined(Lun))
             {
                 writer.WritePropertyName("lun"u8);
                 writer.WriteNumberValue(Lun.Value);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);

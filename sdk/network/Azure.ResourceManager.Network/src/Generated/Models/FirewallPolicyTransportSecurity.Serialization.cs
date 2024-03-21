@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (CertificateAuthority != null)
+            if (Optional.IsDefined(CertificateAuthority))
             {
                 writer.WritePropertyName("certificateAuthority"u8);
                 writer.WriteObjectValue(CertificateAuthority);

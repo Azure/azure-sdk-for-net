@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Dynatrace.Models
             }
 
             writer.WriteStartObject();
-            if (EnvironmentId != null)
+            if (Optional.IsDefined(EnvironmentId))
             {
                 writer.WritePropertyName("environmentId"u8);
                 writer.WriteStringValue(EnvironmentId);
             }
-            if (EnvironmentName != null)
+            if (Optional.IsDefined(EnvironmentName))
             {
                 writer.WritePropertyName("environmentName"u8);
                 writer.WriteStringValue(EnvironmentName);
             }
-            if (PlanData != null)
+            if (Optional.IsDefined(PlanData))
             {
                 writer.WritePropertyName("planData"u8);
                 writer.WriteObjectValue(PlanData);

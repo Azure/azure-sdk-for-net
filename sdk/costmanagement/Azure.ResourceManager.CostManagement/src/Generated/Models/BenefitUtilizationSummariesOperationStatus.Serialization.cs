@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Input != null)
+            if (Optional.IsDefined(Input))
             {
                 writer.WritePropertyName("input"u8);
                 writer.WriteObjectValue(Input);
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Properties != null)
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);

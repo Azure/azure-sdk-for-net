@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (KPackVersion != null)
+            if (Optional.IsDefined(KPackVersion))
             {
                 writer.WritePropertyName("kPackVersion"u8);
                 writer.WriteStringValue(KPackVersion);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (ResourceRequests != null)
+            if (Optional.IsDefined(ResourceRequests))
             {
                 writer.WritePropertyName("resourceRequests"u8);
                 writer.WriteObjectValue(ResourceRequests);

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (FileShare != null)
+            if (Optional.IsDefined(FileShare))
             {
                 writer.WritePropertyName("fileShare"u8);
                 writer.WriteObjectValue(FileShare);
             }
-            if (AzureBlob != null)
+            if (Optional.IsDefined(AzureBlob))
             {
                 writer.WritePropertyName("azureBlob"u8);
                 writer.WriteObjectValue(AzureBlob);
             }
-            if (options.Format != "W" && FileStorageType != null)
+            if (options.Format != "W" && Optional.IsDefined(FileStorageType))
             {
                 writer.WritePropertyName("fileStorageType"u8);
                 writer.WriteStringValue(FileStorageType);

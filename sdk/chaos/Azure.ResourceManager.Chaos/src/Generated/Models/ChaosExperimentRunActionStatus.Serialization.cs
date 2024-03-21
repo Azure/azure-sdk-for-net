@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Chaos.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ActionName != null)
+            if (options.Format != "W" && Optional.IsDefined(ActionName))
             {
                 writer.WritePropertyName("actionName"u8);
                 writer.WriteStringValue(ActionName);
             }
-            if (options.Format != "W" && ActionId != null)
+            if (options.Format != "W" && Optional.IsDefined(ActionId))
             {
                 writer.WritePropertyName("actionId"u8);
                 writer.WriteStringValue(ActionId);
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && EndOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (options.Format != "W" && !(Targets is ChangeTrackingList<ExperimentExecutionActionTargetDetailsProperties> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Targets))
             {
                 writer.WritePropertyName("targets"u8);
                 writer.WriteStartArray();

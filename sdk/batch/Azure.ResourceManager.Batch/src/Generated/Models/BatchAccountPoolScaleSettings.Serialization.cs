@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (FixedScale != null)
+            if (Optional.IsDefined(FixedScale))
             {
                 writer.WritePropertyName("fixedScale"u8);
                 writer.WriteObjectValue(FixedScale);
             }
-            if (AutoScale != null)
+            if (Optional.IsDefined(AutoScale))
             {
                 writer.WritePropertyName("autoScale"u8);
                 writer.WriteObjectValue(AutoScale);

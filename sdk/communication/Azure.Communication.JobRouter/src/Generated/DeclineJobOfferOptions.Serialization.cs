@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -27,7 +26,7 @@ namespace Azure.Communication.JobRouter
             }
 
             writer.WriteStartObject();
-            if (RetryOfferAt.HasValue)
+            if (Optional.IsDefined(RetryOfferAt))
             {
                 writer.WritePropertyName("retryOfferAt"u8);
                 writer.WriteStringValue(RetryOfferAt.Value, "O");

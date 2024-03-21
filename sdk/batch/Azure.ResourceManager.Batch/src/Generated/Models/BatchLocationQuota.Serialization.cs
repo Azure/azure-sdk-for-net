@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && AccountQuota.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AccountQuota))
             {
                 writer.WritePropertyName("accountQuota"u8);
                 writer.WriteNumberValue(AccountQuota.Value);

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (VmSku != null)
+            if (Optional.IsDefined(VmSku))
             {
                 writer.WritePropertyName("vmSku"u8);
                 writer.WriteStringValue(VmSku);
             }
-            if (IsAppServerCertified.HasValue)
+            if (Optional.IsDefined(IsAppServerCertified))
             {
                 writer.WritePropertyName("isAppServerCertified"u8);
                 writer.WriteBooleanValue(IsAppServerCertified.Value);
             }
-            if (IsDatabaseCertified.HasValue)
+            if (Optional.IsDefined(IsDatabaseCertified))
             {
                 writer.WritePropertyName("isDatabaseCertified"u8);
                 writer.WriteBooleanValue(IsDatabaseCertified.Value);

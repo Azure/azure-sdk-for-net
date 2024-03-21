@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -49,54 +49,54 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (StorageAccountResourceId != null)
+            if (Optional.IsDefined(StorageAccountResourceId))
             {
                 writer.WritePropertyName("storageAccountResourceId"u8);
                 writer.WriteStringValue(StorageAccountResourceId);
             }
-            if (EventHubResourceId != null)
+            if (Optional.IsDefined(EventHubResourceId))
             {
                 writer.WritePropertyName("eventHubResourceId"u8);
                 writer.WriteStringValue(EventHubResourceId);
             }
-            if (ConsumerGroup != null)
+            if (Optional.IsDefined(ConsumerGroup))
             {
                 writer.WritePropertyName("consumerGroup"u8);
                 writer.WriteStringValue(ConsumerGroup);
             }
-            if (TableName != null)
+            if (Optional.IsDefined(TableName))
             {
                 writer.WritePropertyName("tableName"u8);
                 writer.WriteStringValue(TableName);
             }
-            if (MappingRuleName != null)
+            if (Optional.IsDefined(MappingRuleName))
             {
                 writer.WritePropertyName("mappingRuleName"u8);
                 writer.WriteStringValue(MappingRuleName);
             }
-            if (DataFormat.HasValue)
+            if (Optional.IsDefined(DataFormat))
             {
                 writer.WritePropertyName("dataFormat"u8);
                 writer.WriteStringValue(DataFormat.Value.ToString());
             }
-            if (IgnoreFirstRecord.HasValue)
+            if (Optional.IsDefined(IgnoreFirstRecord))
             {
                 writer.WritePropertyName("ignoreFirstRecord"u8);
                 writer.WriteBooleanValue(IgnoreFirstRecord.Value);
             }
-            if (BlobStorageEventType.HasValue)
+            if (Optional.IsDefined(BlobStorageEventType))
             {
                 writer.WritePropertyName("blobStorageEventType"u8);
                 writer.WriteStringValue(BlobStorageEventType.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());

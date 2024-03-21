@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (ActionType.HasValue)
+            if (Optional.IsDefined(ActionType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ActionType.Value.ToString());
             }
-            if (Source.HasValue)
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source.Value.ToString());

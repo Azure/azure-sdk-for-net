@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);

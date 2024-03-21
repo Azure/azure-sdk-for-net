@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Duration.HasValue)
+            if (Optional.IsDefined(Duration))
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration.Value, "P");

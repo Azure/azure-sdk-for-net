@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             writer.WriteStartObject();
             writer.WritePropertyName("keyName"u8);
             writer.WriteStringValue(KeyName);
-            if (PrimaryKey != null)
+            if (Optional.IsDefined(PrimaryKey))
             {
                 writer.WritePropertyName("primaryKey"u8);
                 writer.WriteStringValue(PrimaryKey);
             }
-            if (SecondaryKey != null)
+            if (Optional.IsDefined(SecondaryKey))
             {
                 writer.WritePropertyName("secondaryKey"u8);
                 writer.WriteStringValue(SecondaryKey);

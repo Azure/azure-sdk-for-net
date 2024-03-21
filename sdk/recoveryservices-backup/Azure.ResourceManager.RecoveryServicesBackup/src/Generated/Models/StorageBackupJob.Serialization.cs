@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Duration.HasValue)
+            if (Optional.IsDefined(Duration))
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration.Value, "P");
             }
-            if (!(ActionsInfo is ChangeTrackingList<JobSupportedAction> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ActionsInfo))
             {
                 writer.WritePropertyName("actionsInfo"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ErrorDetails is ChangeTrackingList<StorageErrorInfo> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ErrorDetails))
             {
                 writer.WritePropertyName("errorDetails"u8);
                 writer.WriteStartArray();
@@ -51,57 +51,57 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (StorageAccountName != null)
+            if (Optional.IsDefined(StorageAccountName))
             {
                 writer.WritePropertyName("storageAccountName"u8);
                 writer.WriteStringValue(StorageAccountName);
             }
-            if (StorageAccountVersion != null)
+            if (Optional.IsDefined(StorageAccountVersion))
             {
                 writer.WritePropertyName("storageAccountVersion"u8);
                 writer.WriteStringValue(StorageAccountVersion);
             }
-            if (ExtendedInfo != null)
+            if (Optional.IsDefined(ExtendedInfo))
             {
                 writer.WritePropertyName("extendedInfo"u8);
                 writer.WriteObjectValue(ExtendedInfo);
             }
-            if (IsUserTriggered.HasValue)
+            if (Optional.IsDefined(IsUserTriggered))
             {
                 writer.WritePropertyName("isUserTriggered"u8);
                 writer.WriteBooleanValue(IsUserTriggered.Value);
             }
-            if (EntityFriendlyName != null)
+            if (Optional.IsDefined(EntityFriendlyName))
             {
                 writer.WritePropertyName("entityFriendlyName"u8);
                 writer.WriteStringValue(EntityFriendlyName);
             }
-            if (BackupManagementType.HasValue)
+            if (Optional.IsDefined(BackupManagementType))
             {
                 writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType.Value.ToString());
             }
-            if (Operation != null)
+            if (Optional.IsDefined(Operation))
             {
                 writer.WritePropertyName("operation"u8);
                 writer.WriteStringValue(Operation);
             }
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (EndOn.HasValue)
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (ActivityId != null)
+            if (Optional.IsDefined(ActivityId))
             {
                 writer.WritePropertyName("activityId"u8);
                 writer.WriteStringValue(ActivityId);

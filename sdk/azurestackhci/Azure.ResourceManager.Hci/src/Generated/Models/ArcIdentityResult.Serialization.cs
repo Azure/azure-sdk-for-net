@@ -28,22 +28,22 @@ namespace Azure.ResourceManager.Hci.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ArcApplicationClientId.HasValue)
+            if (Optional.IsDefined(ArcApplicationClientId))
             {
                 writer.WritePropertyName("arcApplicationClientId"u8);
                 writer.WriteStringValue(ArcApplicationClientId.Value);
             }
-            if (ArcApplicationTenantId.HasValue)
+            if (Optional.IsDefined(ArcApplicationTenantId))
             {
                 writer.WritePropertyName("arcApplicationTenantId"u8);
                 writer.WriteStringValue(ArcApplicationTenantId.Value);
             }
-            if (ArcServicePrincipalObjectId.HasValue)
+            if (Optional.IsDefined(ArcServicePrincipalObjectId))
             {
                 writer.WritePropertyName("arcServicePrincipalObjectId"u8);
                 writer.WriteStringValue(ArcServicePrincipalObjectId.Value);
             }
-            if (ArcApplicationObjectId.HasValue)
+            if (Optional.IsDefined(ArcApplicationObjectId))
             {
                 writer.WritePropertyName("arcApplicationObjectId"u8);
                 writer.WriteStringValue(ArcApplicationObjectId.Value);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (!(Include is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Include))
             {
                 writer.WritePropertyName("include"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Exclude is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Exclude))
             {
                 writer.WritePropertyName("exclude"u8);
                 writer.WriteStartArray();

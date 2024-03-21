@@ -26,19 +26,19 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AddressPrefix != null)
+            if (Optional.IsDefined(AddressPrefix))
             {
                 writer.WritePropertyName("addressPrefix"u8);
                 writer.WriteStringValue(AddressPrefix);
             }
-            if (NextHopIPAddress != null)
+            if (Optional.IsDefined(NextHopIPAddress))
             {
                 writer.WritePropertyName("nextHopIpAddress"u8);
                 writer.WriteStringValue(NextHopIPAddress);

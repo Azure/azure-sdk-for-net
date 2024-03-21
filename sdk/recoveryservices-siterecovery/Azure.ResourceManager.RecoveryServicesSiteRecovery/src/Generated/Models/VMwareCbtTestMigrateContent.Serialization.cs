@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStringValue(RecoveryPointId);
             writer.WritePropertyName("networkId"u8);
             writer.WriteStringValue(NetworkId);
-            if (!(VmNics is ChangeTrackingList<VMwareCbtNicContent> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(VmNics))
             {
                 writer.WritePropertyName("vmNics"u8);
                 writer.WriteStartArray();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (OSUpgradeVersion != null)
+            if (Optional.IsDefined(OSUpgradeVersion))
             {
                 writer.WritePropertyName("osUpgradeVersion"u8);
                 writer.WriteStringValue(OSUpgradeVersion);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (Preference != null)
+            if (Optional.IsDefined(Preference))
             {
                 writer.WritePropertyName("preference"u8);
                 writer.WriteObjectValue(Preference);

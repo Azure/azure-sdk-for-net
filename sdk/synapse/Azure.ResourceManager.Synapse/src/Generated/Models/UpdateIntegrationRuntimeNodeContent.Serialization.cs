@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (ConcurrentJobsLimit.HasValue)
+            if (Optional.IsDefined(ConcurrentJobsLimit))
             {
                 writer.WritePropertyName("concurrentJobsLimit"u8);
                 writer.WriteNumberValue(ConcurrentJobsLimit.Value);

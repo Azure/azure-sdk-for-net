@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (PrimaryZone != null)
+            if (Optional.IsDefined(PrimaryZone))
             {
                 writer.WritePropertyName("primaryZone"u8);
                 writer.WriteStringValue(PrimaryZone);
             }
-            if (RecoveryZone != null)
+            if (Optional.IsDefined(RecoveryZone))
             {
                 writer.WritePropertyName("recoveryZone"u8);
                 writer.WriteStringValue(RecoveryZone);
             }
-            if (PrimaryExtendedLocation != null)
+            if (Optional.IsDefined(PrimaryExtendedLocation))
             {
                 writer.WritePropertyName("primaryExtendedLocation"u8);
                 writer.WriteObjectValue(PrimaryExtendedLocation);
             }
-            if (RecoveryExtendedLocation != null)
+            if (Optional.IsDefined(RecoveryExtendedLocation))
             {
                 writer.WritePropertyName("recoveryExtendedLocation"u8);
                 writer.WriteObjectValue(RecoveryExtendedLocation);

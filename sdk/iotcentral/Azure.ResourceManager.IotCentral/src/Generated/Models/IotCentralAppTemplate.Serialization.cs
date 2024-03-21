@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.IotCentral.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ManifestId != null)
+            if (options.Format != "W" && Optional.IsDefined(ManifestId))
             {
                 writer.WritePropertyName("manifestId"u8);
                 writer.WriteStringValue(ManifestId);
             }
-            if (options.Format != "W" && ManifestVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(ManifestVersion))
             {
                 writer.WritePropertyName("manifestVersion"u8);
                 writer.WriteStringValue(ManifestVersion);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Title != null)
+            if (options.Format != "W" && Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (options.Format != "W" && Order.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Order))
             {
                 writer.WritePropertyName("order"u8);
                 writer.WriteNumberValue(Order.Value);
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Industry != null)
+            if (options.Format != "W" && Optional.IsDefined(Industry))
             {
                 writer.WritePropertyName("industry"u8);
                 writer.WriteStringValue(Industry);
             }
-            if (options.Format != "W" && !(Locations is ChangeTrackingList<IotCentralAppTemplateLocation> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Locations))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();

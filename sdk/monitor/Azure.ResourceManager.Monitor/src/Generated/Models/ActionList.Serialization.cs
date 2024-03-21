@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (!(ActionGroups is ChangeTrackingList<ActivityLogAlertActionGroup> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ActionGroups))
             {
                 writer.WritePropertyName("actionGroups"u8);
                 writer.WriteStartArray();

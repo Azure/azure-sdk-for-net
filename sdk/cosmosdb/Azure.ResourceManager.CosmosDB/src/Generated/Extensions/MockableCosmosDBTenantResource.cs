@@ -8,11 +8,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Mocking
 {
@@ -70,14 +67,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         public virtual async Task<Response<bool>> CheckNameExistsDatabaseAccountAsync(string accountName, CancellationToken cancellationToken = default)
         {
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
             using var scope = CosmosDBAccountDatabaseAccountsClientDiagnostics.CreateScope("MockableCosmosDBTenantResource.CheckNameExistsDatabaseAccount");
             scope.Start();
@@ -120,14 +110,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         public virtual Response<bool> CheckNameExistsDatabaseAccount(string accountName, CancellationToken cancellationToken = default)
         {
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
             using var scope = CosmosDBAccountDatabaseAccountsClientDiagnostics.CreateScope("MockableCosmosDBTenantResource.CheckNameExistsDatabaseAccount");
             scope.Start();

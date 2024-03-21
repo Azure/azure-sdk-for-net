@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -38,14 +38,14 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Details != null)
+            if (Optional.IsDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteObjectValue(Details);

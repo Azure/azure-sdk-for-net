@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
 
             writer.WriteStartObject();
-            if (!(RegisteredFeatures is ChangeTrackingList<CustomerSubscriptionRegisteredFeatures> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(RegisteredFeatures))
             {
                 writer.WritePropertyName("registeredFeatures"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
                 writer.WriteEndArray();
             }
-            if (LocationPlacementId != null)
+            if (Optional.IsDefined(LocationPlacementId))
             {
                 writer.WritePropertyName("locationPlacementId"u8);
                 writer.WriteStringValue(LocationPlacementId);

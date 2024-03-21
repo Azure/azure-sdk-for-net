@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
             }
-            if (CompletionPercent.HasValue)
+            if (Optional.IsDefined(CompletionPercent))
             {
                 writer.WritePropertyName("completionPercent"u8);
                 writer.WriteNumberValue(CompletionPercent.Value);

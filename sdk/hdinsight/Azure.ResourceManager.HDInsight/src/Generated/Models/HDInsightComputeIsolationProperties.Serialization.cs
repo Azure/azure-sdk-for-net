@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (EnableComputeIsolation.HasValue)
+            if (Optional.IsDefined(EnableComputeIsolation))
             {
                 writer.WritePropertyName("enableComputeIsolation"u8);
                 writer.WriteBooleanValue(EnableComputeIsolation.Value);
             }
-            if (HostSku != null)
+            if (Optional.IsDefined(HostSku))
             {
                 writer.WritePropertyName("hostSku"u8);
                 writer.WriteStringValue(HostSku);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
 
             writer.WriteStartObject();
-            if (!(RequestHeaderActions is ChangeTrackingList<RulesEngineHeaderAction> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(RequestHeaderActions))
             {
                 writer.WritePropertyName("requestHeaderActions"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ResponseHeaderActions is ChangeTrackingList<RulesEngineHeaderAction> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ResponseHeaderActions))
             {
                 writer.WritePropertyName("responseHeaderActions"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (RouteConfigurationOverride != null)
+            if (Optional.IsDefined(RouteConfigurationOverride))
             {
                 if (RouteConfigurationOverride != null)
                 {

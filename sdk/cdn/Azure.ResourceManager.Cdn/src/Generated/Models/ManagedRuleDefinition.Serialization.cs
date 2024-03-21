@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && RuleId != null)
+            if (options.Format != "W" && Optional.IsDefined(RuleId))
             {
                 writer.WritePropertyName("ruleId"u8);
                 writer.WriteStringValue(RuleId);
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
 
             writer.WriteStartObject();
-            if (EndpointUri != null)
+            if (Optional.IsDefined(EndpointUri))
             {
                 writer.WritePropertyName("endpointUri"u8);
                 writer.WriteStringValue(EndpointUri.AbsoluteUri);
             }
-            if (!(ExtensionCategories is ChangeTrackingList<ResourceTypeExtensionCategory> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ExtensionCategories))
             {
                 writer.WritePropertyName("extensionCategories"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Timeout.HasValue)
+            if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout.Value, "P");

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (ApplicationId != null)
+            if (Optional.IsDefined(ApplicationId))
             {
                 writer.WritePropertyName("applicationId"u8);
                 writer.WriteStringValue(ApplicationId);
             }
-            if (Certificate != null)
+            if (Optional.IsDefined(Certificate))
             {
                 writer.WritePropertyName("certificate"u8);
                 writer.WriteStringValue(Certificate);
             }
-            if (CertificatePassword != null)
+            if (Optional.IsDefined(CertificatePassword))
             {
                 writer.WritePropertyName("certificatePassword"u8);
                 writer.WriteStringValue(CertificatePassword);

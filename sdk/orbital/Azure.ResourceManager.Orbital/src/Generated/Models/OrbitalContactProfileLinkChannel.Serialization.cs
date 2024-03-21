@@ -34,22 +34,22 @@ namespace Azure.ResourceManager.Orbital.Models
             writer.WriteNumberValue(BandwidthMHz);
             writer.WritePropertyName("endPoint"u8);
             writer.WriteObjectValue(EndPoint);
-            if (ModulationConfiguration != null)
+            if (Optional.IsDefined(ModulationConfiguration))
             {
                 writer.WritePropertyName("modulationConfiguration"u8);
                 writer.WriteStringValue(ModulationConfiguration);
             }
-            if (DemodulationConfiguration != null)
+            if (Optional.IsDefined(DemodulationConfiguration))
             {
                 writer.WritePropertyName("demodulationConfiguration"u8);
                 writer.WriteStringValue(DemodulationConfiguration);
             }
-            if (EncodingConfiguration != null)
+            if (Optional.IsDefined(EncodingConfiguration))
             {
                 writer.WritePropertyName("encodingConfiguration"u8);
                 writer.WriteStringValue(EncodingConfiguration);
             }
-            if (DecodingConfiguration != null)
+            if (Optional.IsDefined(DecodingConfiguration))
             {
                 writer.WritePropertyName("decodingConfiguration"u8);
                 writer.WriteStringValue(DecodingConfiguration);

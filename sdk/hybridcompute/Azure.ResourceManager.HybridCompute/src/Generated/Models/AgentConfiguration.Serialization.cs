@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProxyUri != null)
+            if (options.Format != "W" && Optional.IsDefined(ProxyUri))
             {
                 writer.WritePropertyName("proxyUrl"u8);
                 writer.WriteStringValue(ProxyUri.AbsoluteUri);
             }
-            if (options.Format != "W" && !(IncomingConnectionsPorts is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(IncomingConnectionsPorts))
             {
                 writer.WritePropertyName("incomingConnectionsPorts"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(ExtensionsAllowList is ChangeTrackingList<HybridComputeConfigurationExtension> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ExtensionsAllowList))
             {
                 writer.WritePropertyName("extensionsAllowList"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(ExtensionsBlockList is ChangeTrackingList<HybridComputeConfigurationExtension> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ExtensionsBlockList))
             {
                 writer.WritePropertyName("extensionsBlockList"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(ProxyBypass is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ProxyBypass))
             {
                 writer.WritePropertyName("proxyBypass"u8);
                 writer.WriteStartArray();
@@ -71,17 +71,17 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ExtensionsEnabled != null)
+            if (options.Format != "W" && Optional.IsDefined(ExtensionsEnabled))
             {
                 writer.WritePropertyName("extensionsEnabled"u8);
                 writer.WriteStringValue(ExtensionsEnabled);
             }
-            if (options.Format != "W" && GuestConfigurationEnabled != null)
+            if (options.Format != "W" && Optional.IsDefined(GuestConfigurationEnabled))
             {
                 writer.WritePropertyName("guestConfigurationEnabled"u8);
                 writer.WriteStringValue(GuestConfigurationEnabled);
             }
-            if (options.Format != "W" && ConfigMode.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ConfigMode))
             {
                 writer.WritePropertyName("configMode"u8);
                 writer.WriteStringValue(ConfigMode.Value.ToString());

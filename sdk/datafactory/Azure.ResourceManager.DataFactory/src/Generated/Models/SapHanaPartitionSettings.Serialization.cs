@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (PartitionColumnName != null)
+            if (Optional.IsDefined(PartitionColumnName))
             {
                 writer.WritePropertyName("partitionColumnName"u8);
                 JsonSerializer.Serialize(writer, PartitionColumnName);

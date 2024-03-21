@@ -26,57 +26,57 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && PipelineName != null)
+            if (options.Format != "W" && Optional.IsDefined(PipelineName))
             {
                 writer.WritePropertyName("pipelineName"u8);
                 writer.WriteStringValue(PipelineName);
             }
-            if (options.Format != "W" && PipelineRunId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PipelineRunId))
             {
                 writer.WritePropertyName("pipelineRunId"u8);
                 writer.WriteStringValue(PipelineRunId.Value);
             }
-            if (options.Format != "W" && ActivityName != null)
+            if (options.Format != "W" && Optional.IsDefined(ActivityName))
             {
                 writer.WritePropertyName("activityName"u8);
                 writer.WriteStringValue(ActivityName);
             }
-            if (options.Format != "W" && ActivityType != null)
+            if (options.Format != "W" && Optional.IsDefined(ActivityType))
             {
                 writer.WritePropertyName("activityType"u8);
                 writer.WriteStringValue(ActivityType);
             }
-            if (options.Format != "W" && ActivityRunId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ActivityRunId))
             {
                 writer.WritePropertyName("activityRunId"u8);
                 writer.WriteStringValue(ActivityRunId.Value);
             }
-            if (options.Format != "W" && LinkedServiceName != null)
+            if (options.Format != "W" && Optional.IsDefined(LinkedServiceName))
             {
                 writer.WritePropertyName("linkedServiceName"u8);
                 writer.WriteStringValue(LinkedServiceName);
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("activityRunStart"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && EndOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("activityRunEnd"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (options.Format != "W" && DurationInMs.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DurationInMs))
             {
                 writer.WritePropertyName("durationInMs"u8);
                 writer.WriteNumberValue(DurationInMs.Value);
             }
-            if (options.Format != "W" && Input != null)
+            if (options.Format != "W" && Optional.IsDefined(Input))
             {
                 writer.WritePropertyName("input"u8);
 #if NET6_0_OR_GREATER
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            if (options.Format != "W" && Output != null)
+            if (options.Format != "W" && Optional.IsDefined(Output))
             {
                 writer.WritePropertyName("output"u8);
 #if NET6_0_OR_GREATER
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            if (options.Format != "W" && Error != null)
+            if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
 #if NET6_0_OR_GREATER

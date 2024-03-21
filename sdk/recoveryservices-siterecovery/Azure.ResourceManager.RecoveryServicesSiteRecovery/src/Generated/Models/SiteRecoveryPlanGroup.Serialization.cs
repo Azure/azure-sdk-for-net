@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             writer.WritePropertyName("groupType"u8);
             writer.WriteStringValue(GroupType.ToString());
-            if (!(ReplicationProtectedItems is ChangeTrackingList<RecoveryPlanProtectedItem> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ReplicationProtectedItems))
             {
                 writer.WritePropertyName("replicationProtectedItems"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(StartGroupActions is ChangeTrackingList<RecoveryPlanAction> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(StartGroupActions))
             {
                 writer.WritePropertyName("startGroupActions"u8);
                 writer.WriteStartArray();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(EndGroupActions is ChangeTrackingList<RecoveryPlanAction> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(EndGroupActions))
             {
                 writer.WritePropertyName("endGroupActions"u8);
                 writer.WriteStartArray();

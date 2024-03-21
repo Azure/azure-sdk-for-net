@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (KeyvaultUri != null)
+            if (Optional.IsDefined(KeyvaultUri))
             {
                 writer.WritePropertyName("keyvaultUri"u8);
                 writer.WriteStringValue(KeyvaultUri.AbsoluteUri);
             }
-            if (KeyName != null)
+            if (Optional.IsDefined(KeyName))
             {
                 writer.WritePropertyName("keyName"u8);
                 writer.WriteStringValue(KeyName);
             }
-            if (KeyVersion != null)
+            if (Optional.IsDefined(KeyVersion))
             {
                 writer.WritePropertyName("keyVersion"u8);
                 writer.WriteStringValue(KeyVersion);

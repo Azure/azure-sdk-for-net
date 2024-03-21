@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStringValue(ReferenceType.ToString());
             writer.WritePropertyName("referenceName"u8);
             writer.WriteStringValue(ReferenceName);
-            if (!(Parameters is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();

@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (Id.HasValue)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id.Value);
             }
-            if (Timestamp.HasValue)
+            if (Optional.IsDefined(Timestamp))
             {
                 writer.WritePropertyName("timestamp"u8);
                 writer.WriteStringValue(Timestamp.Value, "O");
             }
-            if (Action != null)
+            if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action);
             }
-            if (Target != null)
+            if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteObjectValue(Target);
             }
-            if (Request != null)
+            if (Optional.IsDefined(Request))
             {
                 writer.WritePropertyName("request"u8);
                 writer.WriteObjectValue(Request);
             }
-            if (Actor != null)
+            if (Optional.IsDefined(Actor))
             {
                 writer.WritePropertyName("actor"u8);
                 writer.WriteObjectValue(Actor);
             }
-            if (Source != null)
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteObjectValue(Source);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (!(AllowedAudiences is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AllowedAudiences))
             {
                 writer.WritePropertyName("allowedAudiences"u8);
                 writer.WriteStartArray();

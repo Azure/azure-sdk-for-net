@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Author != null)
+            if (options.Format != "W" && Optional.IsDefined(Author))
             {
                 writer.WritePropertyName("author"u8);
                 writer.WriteStringValue(Author);
             }
-            if (options.Format != "W" && Category != null)
+            if (options.Format != "W" && Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (options.Format != "W" && !(SupportTopicList is ChangeTrackingList<DetectorSupportTopic> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportTopicList))
             {
                 writer.WritePropertyName("supportTopicList"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(AnalysisType is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AnalysisType))
             {
                 writer.WritePropertyName("analysisType"u8);
                 writer.WriteStartArray();
@@ -71,12 +71,12 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && DetectorType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DetectorType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(DetectorType.Value.ToSerialString());
             }
-            if (options.Format != "W" && Score.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Score))
             {
                 writer.WritePropertyName("score"u8);
                 writer.WriteNumberValue(Score.Value);

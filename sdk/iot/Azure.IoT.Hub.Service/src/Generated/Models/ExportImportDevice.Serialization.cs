@@ -15,47 +15,47 @@ namespace Azure.IoT.Hub.Service.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (ModuleId != null)
+            if (Optional.IsDefined(ModuleId))
             {
                 writer.WritePropertyName("moduleId"u8);
                 writer.WriteStringValue(ModuleId);
             }
-            if (ETag != null)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag);
             }
-            if (ImportMode.HasValue)
+            if (Optional.IsDefined(ImportMode))
             {
                 writer.WritePropertyName("importMode"u8);
                 writer.WriteStringValue(ImportMode.Value.ToString());
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (StatusReason != null)
+            if (Optional.IsDefined(StatusReason))
             {
                 writer.WritePropertyName("statusReason"u8);
                 writer.WriteStringValue(StatusReason);
             }
-            if (Authentication != null)
+            if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
                 writer.WriteObjectValue(Authentication);
             }
-            if (TwinETag != null)
+            if (Optional.IsDefined(TwinETag))
             {
                 writer.WritePropertyName("twinETag"u8);
                 writer.WriteStringValue(TwinETag);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, object> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -71,17 +71,17 @@ namespace Azure.IoT.Hub.Service.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Properties != null)
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (Capabilities != null)
+            if (Optional.IsDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteObjectValue(Capabilities);
             }
-            if (DeviceScope != null)
+            if (Optional.IsDefined(DeviceScope))
             {
                 writer.WritePropertyName("deviceScope"u8);
                 writer.WriteStringValue(DeviceScope);

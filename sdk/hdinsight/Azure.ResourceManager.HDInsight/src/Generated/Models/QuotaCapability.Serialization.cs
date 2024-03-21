@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (CoresUsed.HasValue)
+            if (Optional.IsDefined(CoresUsed))
             {
                 writer.WritePropertyName("coresUsed"u8);
                 writer.WriteNumberValue(CoresUsed.Value);
             }
-            if (MaxCoresAllowed.HasValue)
+            if (Optional.IsDefined(MaxCoresAllowed))
             {
                 writer.WritePropertyName("maxCoresAllowed"u8);
                 writer.WriteNumberValue(MaxCoresAllowed.Value);
             }
-            if (!(RegionalQuotas is ChangeTrackingList<RegionalQuotaCapability> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(RegionalQuotas))
             {
                 writer.WritePropertyName("regionalQuotas"u8);
                 writer.WriteStartArray();

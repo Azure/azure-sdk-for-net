@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (TransportProtocol.HasValue)
+            if (Optional.IsDefined(TransportProtocol))
             {
                 writer.WritePropertyName("transportProtocol"u8);
                 writer.WriteStringValue(TransportProtocol.Value.ToString());
             }
-            if (FrontendPort.HasValue)
+            if (Optional.IsDefined(FrontendPort))
             {
                 writer.WritePropertyName("frontendPort"u8);
                 writer.WriteNumberValue(FrontendPort.Value);
             }
-            if (BackendPort.HasValue)
+            if (Optional.IsDefined(BackendPort))
             {
                 writer.WritePropertyName("backendPort"u8);
                 writer.WriteNumberValue(BackendPort.Value);

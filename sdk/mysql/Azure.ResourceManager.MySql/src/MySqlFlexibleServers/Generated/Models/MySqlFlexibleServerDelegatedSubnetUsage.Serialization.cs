@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && SubnetName != null)
+            if (options.Format != "W" && Optional.IsDefined(SubnetName))
             {
                 writer.WritePropertyName("subnetName"u8);
                 writer.WriteStringValue(SubnetName);
             }
-            if (options.Format != "W" && Usage.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Usage))
             {
                 writer.WritePropertyName("usage"u8);
                 writer.WriteNumberValue(Usage.Value);

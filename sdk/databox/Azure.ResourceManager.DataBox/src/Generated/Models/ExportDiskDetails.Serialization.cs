@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ManifestFile != null)
+            if (options.Format != "W" && Optional.IsDefined(ManifestFile))
             {
                 writer.WritePropertyName("manifestFile"u8);
                 writer.WriteStringValue(ManifestFile);
             }
-            if (options.Format != "W" && ManifestHash != null)
+            if (options.Format != "W" && Optional.IsDefined(ManifestHash))
             {
                 writer.WritePropertyName("manifestHash"u8);
                 writer.WriteStringValue(ManifestHash);
             }
-            if (options.Format != "W" && BackupManifestCloudPath != null)
+            if (options.Format != "W" && Optional.IsDefined(BackupManifestCloudPath))
             {
                 writer.WritePropertyName("backupManifestCloudPath"u8);
                 writer.WriteStringValue(BackupManifestCloudPath);

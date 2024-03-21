@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (FriendlyName != null)
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (!(RecoveryPointDataStoresDetails is ChangeTrackingList<RecoveryPointDataStoreDetail> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(RecoveryPointDataStoresDetails))
             {
                 writer.WritePropertyName("recoveryPointDataStoresDetails"u8);
                 writer.WriteStartArray();
@@ -43,42 +43,42 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             writer.WritePropertyName("recoveryPointTime"u8);
             writer.WriteStringValue(RecoverOn, "O");
-            if (PolicyName != null)
+            if (Optional.IsDefined(PolicyName))
             {
                 writer.WritePropertyName("policyName"u8);
                 writer.WriteStringValue(PolicyName);
             }
-            if (PolicyVersion != null)
+            if (Optional.IsDefined(PolicyVersion))
             {
                 writer.WritePropertyName("policyVersion"u8);
                 writer.WriteStringValue(PolicyVersion);
             }
-            if (RecoveryPointId != null)
+            if (Optional.IsDefined(RecoveryPointId))
             {
                 writer.WritePropertyName("recoveryPointId"u8);
                 writer.WriteStringValue(RecoveryPointId);
             }
-            if (RecoveryPointType != null)
+            if (Optional.IsDefined(RecoveryPointType))
             {
                 writer.WritePropertyName("recoveryPointType"u8);
                 writer.WriteStringValue(RecoveryPointType);
             }
-            if (RetentionTagName != null)
+            if (Optional.IsDefined(RetentionTagName))
             {
                 writer.WritePropertyName("retentionTagName"u8);
                 writer.WriteStringValue(RetentionTagName);
             }
-            if (RetentionTagVersion != null)
+            if (Optional.IsDefined(RetentionTagVersion))
             {
                 writer.WritePropertyName("retentionTagVersion"u8);
                 writer.WriteStringValue(RetentionTagVersion);
             }
-            if (options.Format != "W" && ExpireOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expiryTime"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (RecoveryPointState.HasValue)
+            if (Optional.IsDefined(RecoveryPointState))
             {
                 writer.WritePropertyName("recoveryPointState"u8);
                 writer.WriteStringValue(RecoveryPointState.Value.ToString());

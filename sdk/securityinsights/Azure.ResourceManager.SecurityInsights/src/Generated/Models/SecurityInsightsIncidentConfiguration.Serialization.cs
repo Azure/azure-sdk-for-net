@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteStartObject();
             writer.WritePropertyName("createIncident"u8);
             writer.WriteBooleanValue(IsIncidentCreated);
-            if (GroupingConfiguration != null)
+            if (Optional.IsDefined(GroupingConfiguration))
             {
                 writer.WritePropertyName("groupingConfiguration"u8);
                 writer.WriteObjectValue(GroupingConfiguration);

@@ -28,27 +28,27 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (UserName != null)
+            if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
                 writer.WriteStringValue(UserName);
             }
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (DatabaseName != null)
+            if (Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (CustomData != null)
+            if (Optional.IsDefined(CustomData))
             {
                 writer.WritePropertyName("customData"u8);
                 writer.WriteStringValue(CustomData);
             }
-            if (!(Roles is ChangeTrackingList<MongoDBRole> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Roles))
             {
                 writer.WritePropertyName("roles"u8);
                 writer.WriteStartArray();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Mechanisms != null)
+            if (Optional.IsDefined(Mechanisms))
             {
                 writer.WritePropertyName("mechanisms"u8);
                 writer.WriteStringValue(Mechanisms);

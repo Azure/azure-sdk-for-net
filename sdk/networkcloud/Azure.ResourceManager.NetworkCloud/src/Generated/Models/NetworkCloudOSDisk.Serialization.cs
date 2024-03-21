@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (CreateOption.HasValue)
+            if (Optional.IsDefined(CreateOption))
             {
                 writer.WritePropertyName("createOption"u8);
                 writer.WriteStringValue(CreateOption.Value.ToString());
             }
-            if (DeleteOption.HasValue)
+            if (Optional.IsDefined(DeleteOption))
             {
                 writer.WritePropertyName("deleteOption"u8);
                 writer.WriteStringValue(DeleteOption.Value.ToString());

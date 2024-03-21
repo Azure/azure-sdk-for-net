@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (TargetEntityName != null)
+            if (Optional.IsDefined(TargetEntityName))
             {
                 writer.WritePropertyName("targetEntityName"u8);
                 writer.WriteStringValue(TargetEntityName);
             }
-            if (SourceEntityName != null)
+            if (Optional.IsDefined(SourceEntityName))
             {
                 writer.WritePropertyName("sourceEntityName"u8);
                 writer.WriteStringValue(SourceEntityName);
             }
-            if (SourceConnectionReference != null)
+            if (Optional.IsDefined(SourceConnectionReference))
             {
                 writer.WritePropertyName("sourceConnectionReference"u8);
                 writer.WriteObjectValue(SourceConnectionReference);
             }
-            if (AttributeMappingInfo != null)
+            if (Optional.IsDefined(AttributeMappingInfo))
             {
                 writer.WritePropertyName("attributeMappingInfo"u8);
                 writer.WriteObjectValue(AttributeMappingInfo);
             }
-            if (SourceDenormalizeInfo != null)
+            if (Optional.IsDefined(SourceDenormalizeInfo))
             {
                 writer.WritePropertyName("sourceDenormalizeInfo"u8);
 #if NET6_0_OR_GREATER

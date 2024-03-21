@@ -27,22 +27,22 @@ namespace Azure.ResourceManager.TrafficManager.Models
             }
 
             writer.WriteStartObject();
-            if (SourceIP != null)
+            if (Optional.IsDefined(SourceIP))
             {
                 writer.WritePropertyName("sourceIp"u8);
                 writer.WriteStringValue(SourceIP.ToString());
             }
-            if (Latitude.HasValue)
+            if (Optional.IsDefined(Latitude))
             {
                 writer.WritePropertyName("latitude"u8);
                 writer.WriteNumberValue(Latitude.Value);
             }
-            if (Longitude.HasValue)
+            if (Optional.IsDefined(Longitude))
             {
                 writer.WritePropertyName("longitude"u8);
                 writer.WriteNumberValue(Longitude.Value);
             }
-            if (!(QueryExperiences is ChangeTrackingList<TrafficManagerHeatMapQueryExperience> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(QueryExperiences))
             {
                 writer.WritePropertyName("queryExperiences"u8);
                 writer.WriteStartArray();

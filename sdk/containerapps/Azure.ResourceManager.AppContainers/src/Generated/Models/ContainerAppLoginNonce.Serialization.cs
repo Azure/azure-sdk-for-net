@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (ValidateNonce.HasValue)
+            if (Optional.IsDefined(ValidateNonce))
             {
                 writer.WritePropertyName("validateNonce"u8);
                 writer.WriteBooleanValue(ValidateNonce.Value);
             }
-            if (NonceExpirationInterval != null)
+            if (Optional.IsDefined(NonceExpirationInterval))
             {
                 writer.WritePropertyName("nonceExpirationInterval"u8);
                 writer.WriteStringValue(NonceExpirationInterval);

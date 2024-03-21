@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -52,10 +51,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <exception cref="ArgumentNullException"> <paramref name="canary"/> is null. </exception>
         public CustomRolloutSpecification(TrafficRegions canary)
         {
-            if (canary == null)
-            {
-                throw new ArgumentNullException(nameof(canary));
-            }
+            Argument.AssertNotNull(canary, nameof(canary));
 
             Canary = canary;
             ResourceTypeRegistrations = new ChangeTrackingList<ResourceTypeRegistrationData>();

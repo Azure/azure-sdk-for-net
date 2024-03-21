@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
@@ -27,17 +26,17 @@ namespace Azure.AI.AnomalyDetector
             }
 
             writer.WriteStartObject();
-            if (Variable != null)
+            if (Optional.IsDefined(Variable))
             {
                 writer.WritePropertyName("variable"u8);
                 writer.WriteStringValue(Variable);
             }
-            if (ContributionScore.HasValue)
+            if (Optional.IsDefined(ContributionScore))
             {
                 writer.WritePropertyName("contributionScore"u8);
                 writer.WriteNumberValue(ContributionScore.Value);
             }
-            if (CorrelationChanges != null)
+            if (Optional.IsDefined(CorrelationChanges))
             {
                 writer.WritePropertyName("correlationChanges"u8);
                 writer.WriteObjectValue(CorrelationChanges);

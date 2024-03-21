@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Kusto.Models
             }
 
             writer.WriteStartObject();
-            if (SuspensionStartOn.HasValue)
+            if (Optional.IsDefined(SuspensionStartOn))
             {
                 writer.WritePropertyName("suspensionStartDate"u8);
                 writer.WriteStringValue(SuspensionStartOn.Value, "O");

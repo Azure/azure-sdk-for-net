@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -27,12 +26,12 @@ namespace Azure.Communication.JobRouter
             }
 
             writer.WriteStartObject();
-            if (Note != null)
+            if (Optional.IsDefined(Note))
             {
                 writer.WritePropertyName("note"u8);
                 writer.WriteStringValue(Note);
             }
-            if (DispositionCode != null)
+            if (Optional.IsDefined(DispositionCode))
             {
                 writer.WritePropertyName("dispositionCode"u8);
                 writer.WriteStringValue(DispositionCode);

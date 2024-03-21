@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -28,69 +27,69 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (FrontendIPConfiguration != null)
+            if (Optional.IsDefined(FrontendIPConfiguration))
             {
                 writer.WritePropertyName("frontendIPConfiguration"u8);
                 JsonSerializer.Serialize(writer, FrontendIPConfiguration);
             }
-            if (FrontendPort != null)
+            if (Optional.IsDefined(FrontendPort))
             {
                 writer.WritePropertyName("frontendPort"u8);
                 JsonSerializer.Serialize(writer, FrontendPort);
             }
-            if (Protocol.HasValue)
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (HostName != null)
+            if (Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (SslCertificate != null)
+            if (Optional.IsDefined(SslCertificate))
             {
                 writer.WritePropertyName("sslCertificate"u8);
                 JsonSerializer.Serialize(writer, SslCertificate);
             }
-            if (SslProfile != null)
+            if (Optional.IsDefined(SslProfile))
             {
                 writer.WritePropertyName("sslProfile"u8);
                 JsonSerializer.Serialize(writer, SslProfile);
             }
-            if (RequireServerNameIndication.HasValue)
+            if (Optional.IsDefined(RequireServerNameIndication))
             {
                 writer.WritePropertyName("requireServerNameIndication"u8);
                 writer.WriteBooleanValue(RequireServerNameIndication.Value);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (!(CustomErrorConfigurations is ChangeTrackingList<ApplicationGatewayCustomError> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CustomErrorConfigurations))
             {
                 writer.WritePropertyName("customErrorConfigurations"u8);
                 writer.WriteStartArray();
@@ -100,12 +99,12 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (FirewallPolicy != null)
+            if (Optional.IsDefined(FirewallPolicy))
             {
                 writer.WritePropertyName("firewallPolicy"u8);
                 JsonSerializer.Serialize(writer, FirewallPolicy);
             }
-            if (!(HostNames is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(HostNames))
             {
                 writer.WritePropertyName("hostNames"u8);
                 writer.WriteStartArray();

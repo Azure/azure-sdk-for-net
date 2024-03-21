@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             }
 
             writer.WriteStartObject();
-            if (Resource != null)
+            if (Optional.IsDefined(Resource))
             {
                 writer.WritePropertyName("resource"u8);
                 writer.WriteStringValue(Resource);

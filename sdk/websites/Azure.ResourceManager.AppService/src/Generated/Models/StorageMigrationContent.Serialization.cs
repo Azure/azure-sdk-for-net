@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,29 +47,29 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AzurefilesConnectionString != null)
+            if (Optional.IsDefined(AzurefilesConnectionString))
             {
                 writer.WritePropertyName("azurefilesConnectionString"u8);
                 writer.WriteStringValue(AzurefilesConnectionString);
             }
-            if (AzurefilesShare != null)
+            if (Optional.IsDefined(AzurefilesShare))
             {
                 writer.WritePropertyName("azurefilesShare"u8);
                 writer.WriteStringValue(AzurefilesShare);
             }
-            if (SwitchSiteAfterMigration.HasValue)
+            if (Optional.IsDefined(SwitchSiteAfterMigration))
             {
                 writer.WritePropertyName("switchSiteAfterMigration"u8);
                 writer.WriteBooleanValue(SwitchSiteAfterMigration.Value);
             }
-            if (BlockWriteAccessToSite.HasValue)
+            if (Optional.IsDefined(BlockWriteAccessToSite))
             {
                 writer.WritePropertyName("blockWriteAccessToSite"u8);
                 writer.WriteBooleanValue(BlockWriteAccessToSite.Value);

@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
@@ -27,7 +26,7 @@ namespace Azure.AI.AnomalyDetector
             }
 
             writer.WriteStartObject();
-            if (Timestamp.HasValue)
+            if (Optional.IsDefined(Timestamp))
             {
                 writer.WritePropertyName("timestamp"u8);
                 writer.WriteStringValue(Timestamp.Value, "O");

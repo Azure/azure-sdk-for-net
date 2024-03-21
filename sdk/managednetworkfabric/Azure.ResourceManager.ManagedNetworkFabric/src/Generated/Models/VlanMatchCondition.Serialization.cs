@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (!(Vlans is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Vlans))
             {
                 writer.WritePropertyName("vlans"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(InnerVlans is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(InnerVlans))
             {
                 writer.WritePropertyName("innerVlans"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(VlanGroupNames is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(VlanGroupNames))
             {
                 writer.WritePropertyName("vlanGroupNames"u8);
                 writer.WriteStartArray();

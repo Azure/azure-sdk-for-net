@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
 
             writer.WriteStartObject();
-            if (IsDefaultValidationEnabled.HasValue)
+            if (Optional.IsDefined(IsDefaultValidationEnabled))
             {
                 writer.WritePropertyName("enableDefaultValidation"u8);
                 writer.WriteBooleanValue(IsDefaultValidationEnabled.Value);
             }
-            if (!(ResourceTypesWithCustomValidation is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ResourceTypesWithCustomValidation))
             {
                 writer.WritePropertyName("resourceTypesWithCustomValidation"u8);
                 writer.WriteStartArray();

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (VmName != null)
+            if (Optional.IsDefined(VmName))
             {
                 writer.WritePropertyName("vmName"u8);
                 writer.WriteStringValue(VmName);
             }
-            if (CloudName != null)
+            if (Optional.IsDefined(CloudName))
             {
                 writer.WritePropertyName("cloudName"u8);
                 writer.WriteStringValue(CloudName);
             }
-            if (!(Details is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ErrorIds is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ErrorIds))
             {
                 writer.WritePropertyName("errorIds"u8);
                 writer.WriteStartArray();

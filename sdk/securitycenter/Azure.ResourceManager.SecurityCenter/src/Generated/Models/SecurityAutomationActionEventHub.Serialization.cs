@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (EventHubResourceId != null)
+            if (Optional.IsDefined(EventHubResourceId))
             {
                 writer.WritePropertyName("eventHubResourceId"u8);
                 writer.WriteStringValue(EventHubResourceId);
             }
-            if (options.Format != "W" && SasPolicyName != null)
+            if (options.Format != "W" && Optional.IsDefined(SasPolicyName))
             {
                 writer.WritePropertyName("sasPolicyName"u8);
                 writer.WriteStringValue(SasPolicyName);
             }
-            if (ConnectionString != null)
+            if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
                 writer.WriteStringValue(ConnectionString);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (Placement.HasValue)
+            if (Optional.IsDefined(Placement))
             {
                 writer.WritePropertyName("placement"u8);
                 writer.WriteStringValue(Placement.Value.ToString());

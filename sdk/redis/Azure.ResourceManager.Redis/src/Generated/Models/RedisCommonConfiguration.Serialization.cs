@@ -26,92 +26,92 @@ namespace Azure.ResourceManager.Redis.Models
             }
 
             writer.WriteStartObject();
-            if (IsRdbBackupEnabled.HasValue)
+            if (Optional.IsDefined(IsRdbBackupEnabled))
             {
                 writer.WritePropertyName("rdb-backup-enabled"u8);
                 writer.WriteBooleanValue(IsRdbBackupEnabled.Value);
             }
-            if (RdbBackupFrequency != null)
+            if (Optional.IsDefined(RdbBackupFrequency))
             {
                 writer.WritePropertyName("rdb-backup-frequency"u8);
                 writer.WriteStringValue(RdbBackupFrequency);
             }
-            if (RdbBackupMaxSnapshotCount.HasValue)
+            if (Optional.IsDefined(RdbBackupMaxSnapshotCount))
             {
                 writer.WritePropertyName("rdb-backup-max-snapshot-count"u8);
                 WriteRdbBackupMaxSnapshotCount(writer);
             }
-            if (RdbStorageConnectionString != null)
+            if (Optional.IsDefined(RdbStorageConnectionString))
             {
                 writer.WritePropertyName("rdb-storage-connection-string"u8);
                 writer.WriteStringValue(RdbStorageConnectionString);
             }
-            if (IsAofBackupEnabled.HasValue)
+            if (Optional.IsDefined(IsAofBackupEnabled))
             {
                 writer.WritePropertyName("aof-backup-enabled"u8);
                 writer.WriteBooleanValue(IsAofBackupEnabled.Value);
             }
-            if (AofStorageConnectionString0 != null)
+            if (Optional.IsDefined(AofStorageConnectionString0))
             {
                 writer.WritePropertyName("aof-storage-connection-string-0"u8);
                 writer.WriteStringValue(AofStorageConnectionString0);
             }
-            if (AofStorageConnectionString1 != null)
+            if (Optional.IsDefined(AofStorageConnectionString1))
             {
                 writer.WritePropertyName("aof-storage-connection-string-1"u8);
                 writer.WriteStringValue(AofStorageConnectionString1);
             }
-            if (MaxFragmentationMemoryReserved != null)
+            if (Optional.IsDefined(MaxFragmentationMemoryReserved))
             {
                 writer.WritePropertyName("maxfragmentationmemory-reserved"u8);
                 writer.WriteStringValue(MaxFragmentationMemoryReserved);
             }
-            if (MaxMemoryPolicy != null)
+            if (Optional.IsDefined(MaxMemoryPolicy))
             {
                 writer.WritePropertyName("maxmemory-policy"u8);
                 writer.WriteStringValue(MaxMemoryPolicy);
             }
-            if (MaxMemoryReserved != null)
+            if (Optional.IsDefined(MaxMemoryReserved))
             {
                 writer.WritePropertyName("maxmemory-reserved"u8);
                 writer.WriteStringValue(MaxMemoryReserved);
             }
-            if (MaxMemoryDelta != null)
+            if (Optional.IsDefined(MaxMemoryDelta))
             {
                 writer.WritePropertyName("maxmemory-delta"u8);
                 writer.WriteStringValue(MaxMemoryDelta);
             }
-            if (options.Format != "W" && MaxClients != null)
+            if (options.Format != "W" && Optional.IsDefined(MaxClients))
             {
                 writer.WritePropertyName("maxclients"u8);
                 writer.WriteStringValue(MaxClients);
             }
-            if (options.Format != "W" && PreferredDataArchiveAuthMethod != null)
+            if (options.Format != "W" && Optional.IsDefined(PreferredDataArchiveAuthMethod))
             {
                 writer.WritePropertyName("preferred-data-archive-auth-method"u8);
                 writer.WriteStringValue(PreferredDataArchiveAuthMethod);
             }
-            if (PreferredDataPersistenceAuthMethod != null)
+            if (Optional.IsDefined(PreferredDataPersistenceAuthMethod))
             {
                 writer.WritePropertyName("preferred-data-persistence-auth-method"u8);
                 writer.WriteStringValue(PreferredDataPersistenceAuthMethod);
             }
-            if (options.Format != "W" && ZonalConfiguration != null)
+            if (options.Format != "W" && Optional.IsDefined(ZonalConfiguration))
             {
                 writer.WritePropertyName("zonal-configuration"u8);
                 writer.WriteStringValue(ZonalConfiguration);
             }
-            if (AuthNotRequired != null)
+            if (Optional.IsDefined(AuthNotRequired))
             {
                 writer.WritePropertyName("authnotrequired"u8);
                 writer.WriteStringValue(AuthNotRequired);
             }
-            if (StorageSubscriptionId != null)
+            if (Optional.IsDefined(StorageSubscriptionId))
             {
                 writer.WritePropertyName("storage-subscription-id"u8);
                 writer.WriteStringValue(StorageSubscriptionId);
             }
-            if (IsAadEnabled != null)
+            if (Optional.IsDefined(IsAadEnabled))
             {
                 writer.WritePropertyName("aad-enabled"u8);
                 writer.WriteStringValue(IsAadEnabled);

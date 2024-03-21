@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.HDInsight.Containers
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <exception cref="ArgumentNullException"> <paramref name="clusterPoolName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<HDInsightClusterPoolResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string clusterPoolName, HDInsightClusterPoolData data, CancellationToken cancellationToken = default)
         {
-            if (clusterPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterPoolName));
-            }
-            if (clusterPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterPoolName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(clusterPoolName, nameof(clusterPoolName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _hdInsightClusterPoolClusterPoolsClientDiagnostics.CreateScope("HDInsightClusterPoolCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <exception cref="ArgumentNullException"> <paramref name="clusterPoolName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<HDInsightClusterPoolResource> CreateOrUpdate(WaitUntil waitUntil, string clusterPoolName, HDInsightClusterPoolData data, CancellationToken cancellationToken = default)
         {
-            if (clusterPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterPoolName));
-            }
-            if (clusterPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterPoolName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(clusterPoolName, nameof(clusterPoolName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _hdInsightClusterPoolClusterPoolsClientDiagnostics.CreateScope("HDInsightClusterPoolCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <exception cref="ArgumentNullException"> <paramref name="clusterPoolName"/> is null. </exception>
         public virtual async Task<Response<HDInsightClusterPoolResource>> GetAsync(string clusterPoolName, CancellationToken cancellationToken = default)
         {
-            if (clusterPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterPoolName));
-            }
-            if (clusterPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(clusterPoolName, nameof(clusterPoolName));
 
             using var scope = _hdInsightClusterPoolClusterPoolsClientDiagnostics.CreateScope("HDInsightClusterPoolCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <exception cref="ArgumentNullException"> <paramref name="clusterPoolName"/> is null. </exception>
         public virtual Response<HDInsightClusterPoolResource> Get(string clusterPoolName, CancellationToken cancellationToken = default)
         {
-            if (clusterPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterPoolName));
-            }
-            if (clusterPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(clusterPoolName, nameof(clusterPoolName));
 
             using var scope = _hdInsightClusterPoolClusterPoolsClientDiagnostics.CreateScope("HDInsightClusterPoolCollection.Get");
             scope.Start();
@@ -363,14 +327,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <exception cref="ArgumentNullException"> <paramref name="clusterPoolName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string clusterPoolName, CancellationToken cancellationToken = default)
         {
-            if (clusterPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterPoolName));
-            }
-            if (clusterPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(clusterPoolName, nameof(clusterPoolName));
 
             using var scope = _hdInsightClusterPoolClusterPoolsClientDiagnostics.CreateScope("HDInsightClusterPoolCollection.Exists");
             scope.Start();
@@ -413,14 +370,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <exception cref="ArgumentNullException"> <paramref name="clusterPoolName"/> is null. </exception>
         public virtual Response<bool> Exists(string clusterPoolName, CancellationToken cancellationToken = default)
         {
-            if (clusterPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterPoolName));
-            }
-            if (clusterPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(clusterPoolName, nameof(clusterPoolName));
 
             using var scope = _hdInsightClusterPoolClusterPoolsClientDiagnostics.CreateScope("HDInsightClusterPoolCollection.Exists");
             scope.Start();
@@ -463,14 +413,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <exception cref="ArgumentNullException"> <paramref name="clusterPoolName"/> is null. </exception>
         public virtual async Task<NullableResponse<HDInsightClusterPoolResource>> GetIfExistsAsync(string clusterPoolName, CancellationToken cancellationToken = default)
         {
-            if (clusterPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterPoolName));
-            }
-            if (clusterPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(clusterPoolName, nameof(clusterPoolName));
 
             using var scope = _hdInsightClusterPoolClusterPoolsClientDiagnostics.CreateScope("HDInsightClusterPoolCollection.GetIfExists");
             scope.Start();
@@ -515,14 +458,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <exception cref="ArgumentNullException"> <paramref name="clusterPoolName"/> is null. </exception>
         public virtual NullableResponse<HDInsightClusterPoolResource> GetIfExists(string clusterPoolName, CancellationToken cancellationToken = default)
         {
-            if (clusterPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterPoolName));
-            }
-            if (clusterPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(clusterPoolName, nameof(clusterPoolName));
 
             using var scope = _hdInsightClusterPoolClusterPoolsClientDiagnostics.CreateScope("HDInsightClusterPoolCollection.GetIfExists");
             scope.Start();

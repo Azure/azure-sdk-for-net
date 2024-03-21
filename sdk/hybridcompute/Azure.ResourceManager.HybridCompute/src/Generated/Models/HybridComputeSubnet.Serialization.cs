@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
 
             writer.WriteStartObject();
-            if (AddressPrefix != null)
+            if (Optional.IsDefined(AddressPrefix))
             {
                 writer.WritePropertyName("addressPrefix"u8);
                 writer.WriteStringValue(AddressPrefix);

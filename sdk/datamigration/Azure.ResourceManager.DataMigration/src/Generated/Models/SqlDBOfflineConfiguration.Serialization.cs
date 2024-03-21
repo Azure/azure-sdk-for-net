@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Offline.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Offline))
             {
                 writer.WritePropertyName("offline"u8);
                 writer.WriteBooleanValue(Offline.Value);

@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Purview.Models
             }
 
             writer.WriteStartObject();
-            if (AccountName != null)
+            if (Optional.IsDefined(AccountName))
             {
                 writer.WritePropertyName("accountName"u8);
                 writer.WriteStringValue(AccountName);
             }
-            if (ResourceGroupName != null)
+            if (Optional.IsDefined(ResourceGroupName))
             {
                 writer.WritePropertyName("resourceGroupName"u8);
                 writer.WriteStringValue(ResourceGroupName);
             }
-            if (Scope != null)
+            if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (ScopeTenantId.HasValue)
+            if (Optional.IsDefined(ScopeTenantId))
             {
                 writer.WritePropertyName("scopeTenantId"u8);
                 writer.WriteStringValue(ScopeTenantId.Value);
             }
-            if (ScopeType.HasValue)
+            if (Optional.IsDefined(ScopeType))
             {
                 writer.WritePropertyName("scopeType"u8);
                 writer.WriteStringValue(ScopeType.Value.ToString());
             }
-            if (SubscriptionId != null)
+            if (Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);

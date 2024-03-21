@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,34 +47,34 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Domain != null)
+            if (Optional.IsDefined(Domain))
             {
                 writer.WritePropertyName("domain"u8);
                 writer.WriteStringValue(Domain);
             }
-            if (Provider != null)
+            if (Optional.IsDefined(Provider))
             {
                 writer.WritePropertyName("provider"u8);
                 writer.WriteStringValue(Provider);
             }
-            if (UserDetails != null)
+            if (Optional.IsDefined(UserDetails))
             {
                 writer.WritePropertyName("userDetails"u8);
                 writer.WriteStringValue(UserDetails);
             }
-            if (Roles != null)
+            if (Optional.IsDefined(Roles))
             {
                 writer.WritePropertyName("roles"u8);
                 writer.WriteStringValue(Roles);
             }
-            if (NumHoursToExpiration.HasValue)
+            if (Optional.IsDefined(NumHoursToExpiration))
             {
                 writer.WritePropertyName("numHoursToExpiration"u8);
                 writer.WriteNumberValue(NumHoursToExpiration.Value);

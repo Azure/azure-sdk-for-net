@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (FilterData != null)
+            if (Optional.IsDefined(FilterData))
             {
                 writer.WritePropertyName("filterData"u8);
                 writer.WriteStringValue(FilterData);
             }
-            if (!(LinkConnectionNames is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(LinkConnectionNames))
             {
                 writer.WritePropertyName("linkConnectionNames"u8);
                 writer.WriteStartArray();

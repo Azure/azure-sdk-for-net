@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (!(RampUpRules is ChangeTrackingList<RampUpRule> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(RampUpRules))
             {
                 writer.WritePropertyName("rampUpRules"u8);
                 writer.WriteStartArray();

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (!(AvailabilityZonePairs is ChangeTrackingList<SapAvailabilityZonePair> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AvailabilityZonePairs))
             {
                 writer.WritePropertyName("availabilityZonePairs"u8);
                 writer.WriteStartArray();

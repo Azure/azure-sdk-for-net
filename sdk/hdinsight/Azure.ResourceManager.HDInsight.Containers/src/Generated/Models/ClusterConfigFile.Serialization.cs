@@ -28,22 +28,22 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStartObject();
             writer.WritePropertyName("fileName"u8);
             writer.WriteStringValue(FileName);
-            if (Content != null)
+            if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content);
             }
-            if (Encoding.HasValue)
+            if (Optional.IsDefined(Encoding))
             {
                 writer.WritePropertyName("encoding"u8);
                 writer.WriteStringValue(Encoding.Value.ToString());
             }
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (!(Values is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Values))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartObject();

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,17 +39,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Annotation != null)
+            if (Optional.IsDefined(Annotation))
             {
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
             }
-            if (PollingType.HasValue)
+            if (Optional.IsDefined(PollingType))
             {
                 writer.WritePropertyName("pollingType"u8);
                 writer.WriteStringValue(PollingType.Value.ToString());
             }
-            if (!(Destinations is ChangeTrackingList<NetworkTapPatchableParametersDestinationsItem> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Destinations))
             {
                 writer.WritePropertyName("destinations"u8);
                 writer.WriteStartArray();

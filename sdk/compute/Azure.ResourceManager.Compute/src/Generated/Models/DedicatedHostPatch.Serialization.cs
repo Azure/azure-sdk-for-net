@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -45,22 +45,22 @@ namespace Azure.ResourceManager.Compute.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PlatformFaultDomain.HasValue)
+            if (Optional.IsDefined(PlatformFaultDomain))
             {
                 writer.WritePropertyName("platformFaultDomain"u8);
                 writer.WriteNumberValue(PlatformFaultDomain.Value);
             }
-            if (AutoReplaceOnFailure.HasValue)
+            if (Optional.IsDefined(AutoReplaceOnFailure))
             {
                 writer.WritePropertyName("autoReplaceOnFailure"u8);
                 writer.WriteBooleanValue(AutoReplaceOnFailure.Value);
             }
-            if (options.Format != "W" && HostId != null)
+            if (options.Format != "W" && Optional.IsDefined(HostId))
             {
                 writer.WritePropertyName("hostId"u8);
                 writer.WriteStringValue(HostId);
             }
-            if (options.Format != "W" && !(VirtualMachines is ChangeTrackingList<SubResource> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(VirtualMachines))
             {
                 writer.WritePropertyName("virtualMachines"u8);
                 writer.WriteStartArray();
@@ -70,27 +70,27 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (LicenseType.HasValue)
+            if (Optional.IsDefined(LicenseType))
             {
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType.Value.ToSerialString());
             }
-            if (options.Format != "W" && ProvisioningOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningOn))
             {
                 writer.WritePropertyName("provisioningTime"u8);
                 writer.WriteStringValue(ProvisioningOn.Value, "O");
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && InstanceView != null)
+            if (options.Format != "W" && Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
                 writer.WriteObjectValue(InstanceView);
             }
-            if (options.Format != "W" && TimeCreated.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TimeCreated))
             {
                 writer.WritePropertyName("timeCreated"u8);
                 writer.WriteStringValue(TimeCreated.Value, "O");

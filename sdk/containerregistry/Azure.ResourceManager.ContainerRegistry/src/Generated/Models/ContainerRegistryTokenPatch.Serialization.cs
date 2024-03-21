@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ScopeMapId != null)
+            if (Optional.IsDefined(ScopeMapId))
             {
                 writer.WritePropertyName("scopeMapId"u8);
                 writer.WriteStringValue(ScopeMapId);
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Credentials != null)
+            if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
                 writer.WriteObjectValue(Credentials);

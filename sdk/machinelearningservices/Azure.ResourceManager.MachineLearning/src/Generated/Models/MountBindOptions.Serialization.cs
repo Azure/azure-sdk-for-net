@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Propagation != null)
+            if (Optional.IsDefined(Propagation))
             {
                 if (Propagation != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("propagation");
                 }
             }
-            if (DoesCreateHostPath.HasValue)
+            if (Optional.IsDefined(DoesCreateHostPath))
             {
                 if (DoesCreateHostPath != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("createHostPath");
                 }
             }
-            if (Selinux != null)
+            if (Optional.IsDefined(Selinux))
             {
                 if (Selinux != null)
                 {

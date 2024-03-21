@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             }
 
             writer.WriteStartObject();
-            if (StorageAccountName != null)
+            if (Optional.IsDefined(StorageAccountName))
             {
                 writer.WritePropertyName("storageAccountName"u8);
                 writer.WriteStringValue(StorageAccountName);

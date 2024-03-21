@@ -19,17 +19,17 @@ namespace Azure.Search.Documents.Models
             writer.WriteStartObject();
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Context != null)
+            if (Optional.IsDefined(Context))
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteStringValue(Context);

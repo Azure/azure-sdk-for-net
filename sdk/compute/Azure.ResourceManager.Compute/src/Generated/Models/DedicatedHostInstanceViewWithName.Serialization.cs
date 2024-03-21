@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && AssetId != null)
+            if (options.Format != "W" && Optional.IsDefined(AssetId))
             {
                 writer.WritePropertyName("assetId"u8);
                 writer.WriteStringValue(AssetId);
             }
-            if (AvailableCapacity != null)
+            if (Optional.IsDefined(AvailableCapacity))
             {
                 writer.WritePropertyName("availableCapacity"u8);
                 writer.WriteObjectValue(AvailableCapacity);
             }
-            if (!(Statuses is ChangeTrackingList<InstanceViewStatus> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Statuses))
             {
                 writer.WritePropertyName("statuses"u8);
                 writer.WriteStartArray();

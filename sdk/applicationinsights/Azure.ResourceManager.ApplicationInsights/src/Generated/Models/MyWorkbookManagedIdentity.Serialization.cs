@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (UserAssignedIdentities != null)
+            if (Optional.IsDefined(UserAssignedIdentities))
             {
                 writer.WritePropertyName("userAssignedIdentities"u8);
                 writer.WriteObjectValue(UserAssignedIdentities);
             }
-            if (IdentityType.HasValue)
+            if (Optional.IsDefined(IdentityType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(IdentityType.Value.ToString());

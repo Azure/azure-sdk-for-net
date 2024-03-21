@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (TimeZone != null)
+            if (Optional.IsDefined(TimeZone))
             {
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);

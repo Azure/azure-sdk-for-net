@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             writer.WriteStartObject();
             writer.WritePropertyName("expression"u8);
             writer.WriteStringValue(Expression);
-            if (Options != null)
+            if (Optional.IsDefined(Options))
             {
                 writer.WritePropertyName("options"u8);
                 writer.WriteObjectValue(Options);

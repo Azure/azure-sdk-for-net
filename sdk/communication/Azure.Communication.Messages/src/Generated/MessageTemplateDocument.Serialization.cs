@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Communication.Messages
@@ -29,12 +28,12 @@ namespace Azure.Communication.Messages
             writer.WriteStartObject();
             writer.WritePropertyName("url"u8);
             writer.WriteStringValue(Uri.AbsoluteUri);
-            if (Caption != null)
+            if (Optional.IsDefined(Caption))
             {
                 writer.WritePropertyName("caption"u8);
                 writer.WriteStringValue(Caption);
             }
-            if (FileName != null)
+            if (Optional.IsDefined(FileName))
             {
                 writer.WritePropertyName("fileName"u8);
                 writer.WriteStringValue(FileName);

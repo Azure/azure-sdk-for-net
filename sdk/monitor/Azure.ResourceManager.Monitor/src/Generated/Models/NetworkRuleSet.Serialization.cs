@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());

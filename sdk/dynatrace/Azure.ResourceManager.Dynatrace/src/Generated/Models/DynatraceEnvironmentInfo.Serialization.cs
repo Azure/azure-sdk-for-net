@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Dynatrace.Models
             }
 
             writer.WriteStartObject();
-            if (EnvironmentId != null)
+            if (Optional.IsDefined(EnvironmentId))
             {
                 writer.WritePropertyName("environmentId"u8);
                 writer.WriteStringValue(EnvironmentId);
             }
-            if (IngestionKey != null)
+            if (Optional.IsDefined(IngestionKey))
             {
                 writer.WritePropertyName("ingestionKey"u8);
                 writer.WriteStringValue(IngestionKey);
             }
-            if (LogsIngestionEndpoint != null)
+            if (Optional.IsDefined(LogsIngestionEndpoint))
             {
                 writer.WritePropertyName("logsIngestionEndpoint"u8);
                 writer.WriteStringValue(LogsIngestionEndpoint.AbsoluteUri);
             }
-            if (LandingUri != null)
+            if (Optional.IsDefined(LandingUri))
             {
                 writer.WritePropertyName("landingURL"u8);
                 writer.WriteStringValue(LandingUri.AbsoluteUri);

@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Monitor
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MetricAlertResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string ruleName, MetricAlertData data, CancellationToken cancellationToken = default)
         {
-            if (ruleName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleName));
-            }
-            if (ruleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _metricAlertClientDiagnostics.CreateScope("MetricAlertCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MetricAlertResource> CreateOrUpdate(WaitUntil waitUntil, string ruleName, MetricAlertData data, CancellationToken cancellationToken = default)
         {
-            if (ruleName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleName));
-            }
-            if (ruleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _metricAlertClientDiagnostics.CreateScope("MetricAlertCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         public virtual async Task<Response<MetricAlertResource>> GetAsync(string ruleName, CancellationToken cancellationToken = default)
         {
-            if (ruleName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleName));
-            }
-            if (ruleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
             using var scope = _metricAlertClientDiagnostics.CreateScope("MetricAlertCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         public virtual Response<MetricAlertResource> Get(string ruleName, CancellationToken cancellationToken = default)
         {
-            if (ruleName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleName));
-            }
-            if (ruleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
             using var scope = _metricAlertClientDiagnostics.CreateScope("MetricAlertCollection.Get");
             scope.Start();
@@ -361,14 +325,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string ruleName, CancellationToken cancellationToken = default)
         {
-            if (ruleName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleName));
-            }
-            if (ruleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
             using var scope = _metricAlertClientDiagnostics.CreateScope("MetricAlertCollection.Exists");
             scope.Start();
@@ -411,14 +368,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         public virtual Response<bool> Exists(string ruleName, CancellationToken cancellationToken = default)
         {
-            if (ruleName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleName));
-            }
-            if (ruleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
             using var scope = _metricAlertClientDiagnostics.CreateScope("MetricAlertCollection.Exists");
             scope.Start();
@@ -461,14 +411,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         public virtual async Task<NullableResponse<MetricAlertResource>> GetIfExistsAsync(string ruleName, CancellationToken cancellationToken = default)
         {
-            if (ruleName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleName));
-            }
-            if (ruleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
             using var scope = _metricAlertClientDiagnostics.CreateScope("MetricAlertCollection.GetIfExists");
             scope.Start();
@@ -513,14 +456,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         public virtual NullableResponse<MetricAlertResource> GetIfExists(string ruleName, CancellationToken cancellationToken = default)
         {
-            if (ruleName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleName));
-            }
-            if (ruleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
             using var scope = _metricAlertClientDiagnostics.CreateScope("MetricAlertCollection.GetIfExists");
             scope.Start();

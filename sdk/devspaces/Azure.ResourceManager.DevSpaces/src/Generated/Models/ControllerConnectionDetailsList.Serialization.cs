@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
             }
 
             writer.WriteStartObject();
-            if (!(ConnectionDetailsList is ChangeTrackingList<ControllerConnectionDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ConnectionDetailsList))
             {
                 writer.WritePropertyName("connectionDetailsList"u8);
                 writer.WriteStartArray();

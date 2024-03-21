@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
@@ -29,12 +28,12 @@ namespace Azure.AI.AnomalyDetector
             writer.WriteStartObject();
             writer.WritePropertyName("timestamp"u8);
             writer.WriteStringValue(Timestamp, "O");
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteObjectValue(Value);
             }
-            if (!(Errors is ChangeTrackingList<ErrorResponse> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();

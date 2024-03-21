@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Code != null)
+            if (Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);

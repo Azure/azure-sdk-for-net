@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (OperationId != null)
+            if (Optional.IsDefined(OperationId))
             {
                 writer.WritePropertyName("operationId"u8);
                 writer.WriteStringValue(OperationId);
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());

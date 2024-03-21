@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (CentralServerVmId != null)
+            if (Optional.IsDefined(CentralServerVmId))
             {
                 writer.WritePropertyName("centralServerVmId"u8);
                 writer.WriteStringValue(CentralServerVmId);
             }
-            if (ManagedRgStorageAccountName != null)
+            if (Optional.IsDefined(ManagedRgStorageAccountName))
             {
                 writer.WritePropertyName("managedRgStorageAccountName"u8);
                 writer.WriteStringValue(ManagedRgStorageAccountName);
             }
-            if (options.Format != "W" && AppLocation.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AppLocation))
             {
                 writer.WritePropertyName("appLocation"u8);
                 writer.WriteStringValue(AppLocation.Value);

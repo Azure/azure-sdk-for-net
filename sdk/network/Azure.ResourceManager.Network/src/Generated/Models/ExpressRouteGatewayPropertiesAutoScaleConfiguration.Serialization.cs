@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Bounds != null)
+            if (Optional.IsDefined(Bounds))
             {
                 writer.WritePropertyName("bounds"u8);
                 writer.WriteObjectValue(Bounds);

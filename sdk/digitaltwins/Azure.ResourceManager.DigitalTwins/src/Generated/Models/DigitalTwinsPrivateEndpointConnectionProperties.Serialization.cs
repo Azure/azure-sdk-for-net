@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 if (ProvisioningState != null)
                 {
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     writer.WriteNull("provisioningState");
                 }
             }
-            if (PrivateEndpoint != null)
+            if (Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
                 JsonSerializer.Serialize(writer, PrivateEndpoint);
             }
-            if (!(GroupIds is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(GroupIds))
             {
                 writer.WritePropertyName("groupIds"u8);
                 writer.WriteStartArray();
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 }
                 writer.WriteEndArray();
             }
-            if (PrivateLinkServiceConnectionState != null)
+            if (Optional.IsDefined(PrivateLinkServiceConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
                 writer.WriteObjectValue(PrivateLinkServiceConnectionState);

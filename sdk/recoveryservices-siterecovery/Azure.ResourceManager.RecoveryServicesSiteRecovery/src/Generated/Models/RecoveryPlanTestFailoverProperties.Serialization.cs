@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStringValue(FailoverDirection.ToString());
             writer.WritePropertyName("networkType"u8);
             writer.WriteStringValue(NetworkType);
-            if (NetworkId != null)
+            if (Optional.IsDefined(NetworkId))
             {
                 writer.WritePropertyName("networkId"u8);
                 writer.WriteStringValue(NetworkId);
             }
-            if (!(ProviderSpecificDetails is ChangeTrackingList<RecoveryPlanProviderSpecificFailoverContent> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ProviderSpecificDetails))
             {
                 writer.WritePropertyName("providerSpecificDetails"u8);
                 writer.WriteStartArray();

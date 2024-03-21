@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.BotService;
 
 namespace Azure.ResourceManager.BotService.Models
 {
@@ -27,12 +26,12 @@ namespace Azure.ResourceManager.BotService.Models
             }
 
             writer.WriteStartObject();
-            if (NextLink != null)
+            if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (options.Format != "W" && !(Value is ChangeTrackingList<BotData> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();

@@ -26,19 +26,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (EncodedCertificate != null)
+            if (Optional.IsDefined(EncodedCertificate))
             {
                 writer.WritePropertyName("encodedCertificate"u8);
                 writer.WriteStringValue(EncodedCertificate);
             }
-            if (CertificatePassword != null)
+            if (Optional.IsDefined(CertificatePassword))
             {
                 writer.WritePropertyName("certificatePassword"u8);
                 writer.WriteStringValue(CertificatePassword);
             }
             writer.WritePropertyName("storeName"u8);
             writer.WriteStringValue(StoreName.ToString());
-            if (Certificate != null)
+            if (Optional.IsDefined(Certificate))
             {
                 writer.WritePropertyName("certificate"u8);
                 writer.WriteObjectValue(Certificate);

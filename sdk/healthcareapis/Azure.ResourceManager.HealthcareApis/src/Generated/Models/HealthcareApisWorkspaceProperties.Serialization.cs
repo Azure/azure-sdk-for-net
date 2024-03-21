@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.HealthcareApis;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
@@ -27,12 +26,12 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<HealthcareApisPrivateEndpointConnectionData> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -42,7 +41,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
                 writer.WriteEndArray();
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());

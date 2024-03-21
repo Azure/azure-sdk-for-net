@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (!(Value is ChangeTrackingList<GuestConfigurationAssignmentReport> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();

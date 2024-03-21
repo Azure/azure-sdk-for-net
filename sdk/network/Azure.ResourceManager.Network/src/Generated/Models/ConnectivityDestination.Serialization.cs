@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Address != null)
+            if (Optional.IsDefined(Address))
             {
                 writer.WritePropertyName("address"u8);
                 writer.WriteStringValue(Address);
             }
-            if (Port.HasValue)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);

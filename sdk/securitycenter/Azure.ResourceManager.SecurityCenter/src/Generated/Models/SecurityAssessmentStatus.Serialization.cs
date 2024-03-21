@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartObject();
             writer.WritePropertyName("code"u8);
             writer.WriteStringValue(Code.ToString());
-            if (Cause != null)
+            if (Optional.IsDefined(Cause))
             {
                 writer.WritePropertyName("cause"u8);
                 writer.WriteStringValue(Cause);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Lun != null)
+            if (Optional.IsDefined(Lun))
             {
                 writer.WritePropertyName("lun"u8);
                 writer.WriteStringValue(Lun);
             }
-            if (StorageType.HasValue)
+            if (Optional.IsDefined(StorageType))
             {
                 writer.WritePropertyName("storageType"u8);
                 writer.WriteStringValue(StorageType.Value.ToString());

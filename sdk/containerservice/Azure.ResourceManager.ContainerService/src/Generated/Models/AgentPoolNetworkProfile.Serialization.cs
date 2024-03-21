@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (!(NodePublicIPTags is ChangeTrackingList<ContainerServiceIPTag> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(NodePublicIPTags))
             {
                 writer.WritePropertyName("nodePublicIPTags"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(AllowedHostPorts is ChangeTrackingList<AgentPoolNetworkPortRange> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(AllowedHostPorts))
             {
                 writer.WritePropertyName("allowedHostPorts"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ApplicationSecurityGroups is ChangeTrackingList<ResourceIdentifier> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(ApplicationSecurityGroups))
             {
                 writer.WritePropertyName("applicationSecurityGroups"u8);
                 writer.WriteStartArray();

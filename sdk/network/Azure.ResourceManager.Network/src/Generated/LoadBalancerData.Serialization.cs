@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -29,42 +28,42 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (ExtendedLocation != null)
+            if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 JsonSerializer.Serialize(writer, ExtendedLocation);
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -77,7 +76,7 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(FrontendIPConfigurations is ChangeTrackingList<FrontendIPConfigurationData> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(FrontendIPConfigurations))
             {
                 writer.WritePropertyName("frontendIPConfigurations"u8);
                 writer.WriteStartArray();
@@ -87,7 +86,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (!(BackendAddressPools is ChangeTrackingList<BackendAddressPoolData> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(BackendAddressPools))
             {
                 writer.WritePropertyName("backendAddressPools"u8);
                 writer.WriteStartArray();
@@ -97,7 +96,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (!(LoadBalancingRules is ChangeTrackingList<LoadBalancingRuleData> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(LoadBalancingRules))
             {
                 writer.WritePropertyName("loadBalancingRules"u8);
                 writer.WriteStartArray();
@@ -107,7 +106,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (!(Probes is ChangeTrackingList<ProbeData> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(Probes))
             {
                 writer.WritePropertyName("probes"u8);
                 writer.WriteStartArray();
@@ -117,7 +116,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (!(InboundNatRules is ChangeTrackingList<InboundNatRuleData> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(InboundNatRules))
             {
                 writer.WritePropertyName("inboundNatRules"u8);
                 writer.WriteStartArray();
@@ -127,7 +126,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (!(InboundNatPools is ChangeTrackingList<LoadBalancerInboundNatPool> collection5 && collection5.IsUndefined))
+            if (Optional.IsCollectionDefined(InboundNatPools))
             {
                 writer.WritePropertyName("inboundNatPools"u8);
                 writer.WriteStartArray();
@@ -137,7 +136,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (!(OutboundRules is ChangeTrackingList<OutboundRuleData> collection6 && collection6.IsUndefined))
+            if (Optional.IsCollectionDefined(OutboundRules))
             {
                 writer.WritePropertyName("outboundRules"u8);
                 writer.WriteStartArray();
@@ -147,12 +146,12 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ResourceGuid.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
             {
                 writer.WritePropertyName("resourceGuid"u8);
                 writer.WriteStringValue(ResourceGuid.Value);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());

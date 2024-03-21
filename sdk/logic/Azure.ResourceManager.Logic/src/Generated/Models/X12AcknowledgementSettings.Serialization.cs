@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteBooleanValue(BatchTechnicalAcknowledgement);
             writer.WritePropertyName("needFunctionalAcknowledgement"u8);
             writer.WriteBooleanValue(NeedFunctionalAcknowledgement);
-            if (FunctionalAcknowledgementVersion != null)
+            if (Optional.IsDefined(FunctionalAcknowledgementVersion))
             {
                 writer.WritePropertyName("functionalAcknowledgementVersion"u8);
                 writer.WriteStringValue(FunctionalAcknowledgementVersion);
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteBooleanValue(BatchFunctionalAcknowledgement);
             writer.WritePropertyName("needImplementationAcknowledgement"u8);
             writer.WriteBooleanValue(NeedImplementationAcknowledgement);
-            if (ImplementationAcknowledgementVersion != null)
+            if (Optional.IsDefined(ImplementationAcknowledgementVersion))
             {
                 writer.WritePropertyName("implementationAcknowledgementVersion"u8);
                 writer.WriteStringValue(ImplementationAcknowledgementVersion);
@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteBooleanValue(NeedLoopForValidMessages);
             writer.WritePropertyName("sendSynchronousAcknowledgement"u8);
             writer.WriteBooleanValue(SendSynchronousAcknowledgement);
-            if (AcknowledgementControlNumberPrefix != null)
+            if (Optional.IsDefined(AcknowledgementControlNumberPrefix))
             {
                 writer.WritePropertyName("acknowledgementControlNumberPrefix"u8);
                 writer.WriteStringValue(AcknowledgementControlNumberPrefix);
             }
-            if (AcknowledgementControlNumberSuffix != null)
+            if (Optional.IsDefined(AcknowledgementControlNumberSuffix))
             {
                 writer.WritePropertyName("acknowledgementControlNumberSuffix"u8);
                 writer.WriteStringValue(AcknowledgementControlNumberSuffix);

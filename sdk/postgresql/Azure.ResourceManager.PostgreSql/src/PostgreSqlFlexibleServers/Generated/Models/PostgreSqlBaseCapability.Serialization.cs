@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && CapabilityStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CapabilityStatus))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(CapabilityStatus.Value.ToSerialString());
             }
-            if (options.Format != "W" && Reason != null)
+            if (options.Format != "W" && Optional.IsDefined(Reason))
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);

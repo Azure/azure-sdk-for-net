@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Nginx.Models
             }
 
             writer.WriteStartObject();
-            if (SubnetId != null)
+            if (Optional.IsDefined(SubnetId))
             {
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);

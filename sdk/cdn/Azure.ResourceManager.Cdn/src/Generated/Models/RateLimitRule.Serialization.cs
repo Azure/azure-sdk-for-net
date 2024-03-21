@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteNumberValue(RateLimitDurationInMinutes);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (EnabledState.HasValue)
+            if (Optional.IsDefined(EnabledState))
             {
                 writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToString());

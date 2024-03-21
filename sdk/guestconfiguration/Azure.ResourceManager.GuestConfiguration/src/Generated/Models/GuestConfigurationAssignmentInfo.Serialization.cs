@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Configuration != null)
+            if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
                 writer.WriteObjectValue(Configuration);

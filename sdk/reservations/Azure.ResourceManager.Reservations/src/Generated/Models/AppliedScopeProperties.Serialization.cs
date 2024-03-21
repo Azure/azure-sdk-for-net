@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (ManagementGroupId != null)
+            if (Optional.IsDefined(ManagementGroupId))
             {
                 writer.WritePropertyName("managementGroupId"u8);
                 writer.WriteStringValue(ManagementGroupId);
             }
-            if (SubscriptionId != null)
+            if (Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (ResourceGroupId != null)
+            if (Optional.IsDefined(ResourceGroupId))
             {
                 writer.WritePropertyName("resourceGroupId"u8);
                 writer.WriteStringValue(ResourceGroupId);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);

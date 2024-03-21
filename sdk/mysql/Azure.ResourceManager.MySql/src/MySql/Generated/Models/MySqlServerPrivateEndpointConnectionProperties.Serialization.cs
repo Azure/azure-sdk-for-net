@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.MySql.Models
             }
 
             writer.WriteStartObject();
-            if (PrivateEndpoint != null)
+            if (Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
                 JsonSerializer.Serialize(writer, PrivateEndpoint);
             }
-            if (PrivateLinkServiceConnectionState != null)
+            if (Optional.IsDefined(PrivateLinkServiceConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
                 writer.WriteObjectValue(PrivateLinkServiceConnectionState);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());

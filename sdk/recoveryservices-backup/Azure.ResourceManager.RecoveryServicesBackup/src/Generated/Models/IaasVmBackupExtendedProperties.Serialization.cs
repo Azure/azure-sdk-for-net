@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (DiskExclusionProperties != null)
+            if (Optional.IsDefined(DiskExclusionProperties))
             {
                 writer.WritePropertyName("diskExclusionProperties"u8);
                 writer.WriteObjectValue(DiskExclusionProperties);
             }
-            if (LinuxVmApplicationName != null)
+            if (Optional.IsDefined(LinuxVmApplicationName))
             {
                 writer.WritePropertyName("linuxVmApplicationName"u8);
                 writer.WriteStringValue(LinuxVmApplicationName);

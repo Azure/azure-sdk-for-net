@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             }
 
             writer.WriteStartObject();
-            if (KeyVaultKeyUri != null)
+            if (Optional.IsDefined(KeyVaultKeyUri))
             {
                 writer.WritePropertyName("keyVaultKeyUri"u8);
                 writer.WriteStringValue(KeyVaultKeyUri.AbsoluteUri);
             }
-            if (UserAssignedIdentity != null)
+            if (Optional.IsDefined(UserAssignedIdentity))
             {
                 writer.WritePropertyName("userAssignedIdentity"u8);
                 writer.WriteStringValue(UserAssignedIdentity);

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
 
             writer.WriteStartObject();
-            if (DirectoryPath != null)
+            if (Optional.IsDefined(DirectoryPath))
             {
                 writer.WritePropertyName("directoryPath"u8);
                 writer.WriteStringValue(DirectoryPath);
             }
-            if (ChangeDetectionMode.HasValue)
+            if (Optional.IsDefined(ChangeDetectionMode))
             {
                 writer.WritePropertyName("changeDetectionMode"u8);
                 writer.WriteStringValue(ChangeDetectionMode.Value.ToString());
             }
-            if (!(Paths is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Paths))
             {
                 writer.WritePropertyName("paths"u8);
                 writer.WriteStartArray();

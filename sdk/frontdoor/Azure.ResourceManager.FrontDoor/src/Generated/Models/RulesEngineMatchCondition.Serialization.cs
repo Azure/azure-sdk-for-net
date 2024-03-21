@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
             writer.WriteStartObject();
             writer.WritePropertyName("rulesEngineMatchVariable"u8);
             writer.WriteStringValue(RulesEngineMatchVariable.ToString());
-            if (Selector != null)
+            if (Optional.IsDefined(Selector))
             {
                 writer.WritePropertyName("selector"u8);
                 writer.WriteStringValue(Selector);
             }
             writer.WritePropertyName("rulesEngineOperator"u8);
             writer.WriteStringValue(RulesEngineOperator.ToString());
-            if (IsNegateCondition.HasValue)
+            if (Optional.IsDefined(IsNegateCondition))
             {
                 writer.WritePropertyName("negateCondition"u8);
                 writer.WriteBooleanValue(IsNegateCondition.Value);
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (!(Transforms is ChangeTrackingList<RulesEngineMatchTransform> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Transforms))
             {
                 writer.WritePropertyName("transforms"u8);
                 writer.WriteStartArray();

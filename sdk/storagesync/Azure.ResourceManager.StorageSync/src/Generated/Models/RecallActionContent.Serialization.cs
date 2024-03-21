@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
 
             writer.WriteStartObject();
-            if (Pattern != null)
+            if (Optional.IsDefined(Pattern))
             {
                 writer.WritePropertyName("pattern"u8);
                 writer.WriteStringValue(Pattern);
             }
-            if (RecallPath != null)
+            if (Optional.IsDefined(RecallPath))
             {
                 writer.WritePropertyName("recallPath"u8);
                 writer.WriteStringValue(RecallPath);

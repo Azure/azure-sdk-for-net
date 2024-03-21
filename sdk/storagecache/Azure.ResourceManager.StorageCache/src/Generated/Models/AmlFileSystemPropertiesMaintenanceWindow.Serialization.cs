@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
 
             writer.WriteStartObject();
-            if (DayOfWeek.HasValue)
+            if (Optional.IsDefined(DayOfWeek))
             {
                 writer.WritePropertyName("dayOfWeek"u8);
                 writer.WriteStringValue(DayOfWeek.Value.ToSerialString());
             }
-            if (TimeOfDayUTC != null)
+            if (Optional.IsDefined(TimeOfDayUTC))
             {
                 writer.WritePropertyName("timeOfDayUTC"u8);
                 writer.WriteStringValue(TimeOfDayUTC);

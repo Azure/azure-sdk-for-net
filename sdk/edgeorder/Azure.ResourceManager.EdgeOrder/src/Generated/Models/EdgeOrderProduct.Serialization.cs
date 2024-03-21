@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && DisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteObjectValue(Description);
             }
-            if (options.Format != "W" && !(ImageInformation is ChangeTrackingList<EdgeOrderProductImageInformation> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ImageInformation))
             {
                 writer.WritePropertyName("imageInformation"u8);
                 writer.WriteStartArray();
@@ -48,22 +48,22 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && CostInformation != null)
+            if (options.Format != "W" && Optional.IsDefined(CostInformation))
             {
                 writer.WritePropertyName("costInformation"u8);
                 writer.WriteObjectValue(CostInformation);
             }
-            if (options.Format != "W" && AvailabilityInformation != null)
+            if (options.Format != "W" && Optional.IsDefined(AvailabilityInformation))
             {
                 writer.WritePropertyName("availabilityInformation"u8);
                 writer.WriteObjectValue(AvailabilityInformation);
             }
-            if (options.Format != "W" && HierarchyInformation != null)
+            if (options.Format != "W" && Optional.IsDefined(HierarchyInformation))
             {
                 writer.WritePropertyName("hierarchyInformation"u8);
                 writer.WriteObjectValue(HierarchyInformation);
             }
-            if (options.Format != "W" && !(FilterableProperties is ChangeTrackingList<FilterableProperty> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(FilterableProperties))
             {
                 writer.WritePropertyName("filterableProperties"u8);
                 writer.WriteStartArray();
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(Configurations is ChangeTrackingList<ProductConfiguration> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Configurations))
             {
                 writer.WritePropertyName("configurations"u8);
                 writer.WriteStartArray();

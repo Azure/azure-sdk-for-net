@@ -27,22 +27,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (BlobWriterOverwriteFiles != null)
+            if (Optional.IsDefined(BlobWriterOverwriteFiles))
             {
                 writer.WritePropertyName("blobWriterOverwriteFiles"u8);
                 JsonSerializer.Serialize(writer, BlobWriterOverwriteFiles);
             }
-            if (BlobWriterDateTimeFormat != null)
+            if (Optional.IsDefined(BlobWriterDateTimeFormat))
             {
                 writer.WritePropertyName("blobWriterDateTimeFormat"u8);
                 JsonSerializer.Serialize(writer, BlobWriterDateTimeFormat);
             }
-            if (BlobWriterAddHeader != null)
+            if (Optional.IsDefined(BlobWriterAddHeader))
             {
                 writer.WritePropertyName("blobWriterAddHeader"u8);
                 JsonSerializer.Serialize(writer, BlobWriterAddHeader);
             }
-            if (CopyBehavior != null)
+            if (Optional.IsDefined(CopyBehavior))
             {
                 writer.WritePropertyName("copyBehavior"u8);
 #if NET6_0_OR_GREATER
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            if (!(Metadata is ChangeTrackingList<DataFactoryMetadataItemInfo> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartArray();
@@ -66,32 +66,32 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CopySinkType);
-            if (WriteBatchSize != null)
+            if (Optional.IsDefined(WriteBatchSize))
             {
                 writer.WritePropertyName("writeBatchSize"u8);
                 JsonSerializer.Serialize(writer, WriteBatchSize);
             }
-            if (WriteBatchTimeout != null)
+            if (Optional.IsDefined(WriteBatchTimeout))
             {
                 writer.WritePropertyName("writeBatchTimeout"u8);
                 JsonSerializer.Serialize(writer, WriteBatchTimeout);
             }
-            if (SinkRetryCount != null)
+            if (Optional.IsDefined(SinkRetryCount))
             {
                 writer.WritePropertyName("sinkRetryCount"u8);
                 JsonSerializer.Serialize(writer, SinkRetryCount);
             }
-            if (SinkRetryWait != null)
+            if (Optional.IsDefined(SinkRetryWait))
             {
                 writer.WritePropertyName("sinkRetryWait"u8);
                 JsonSerializer.Serialize(writer, SinkRetryWait);
             }
-            if (MaxConcurrentConnections != null)
+            if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 JsonSerializer.Serialize(writer, MaxConcurrentConnections);
             }
-            if (DisableMetricsCollection != null)
+            if (Optional.IsDefined(DisableMetricsCollection))
             {
                 writer.WritePropertyName("disableMetricsCollection"u8);
                 JsonSerializer.Serialize(writer, DisableMetricsCollection);

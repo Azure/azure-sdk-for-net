@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStringValue(MatchVariable.ToString());
             writer.WritePropertyName("selectorMatchOperator"u8);
             writer.WriteStringValue(SelectorMatchOperator.ToString());
-            if (Selector != null)
+            if (Optional.IsDefined(Selector))
             {
                 writer.WritePropertyName("selector"u8);
                 writer.WriteStringValue(Selector);
             }
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());

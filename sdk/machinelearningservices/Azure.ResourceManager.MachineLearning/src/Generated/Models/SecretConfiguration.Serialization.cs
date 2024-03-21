@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Uri != null)
+            if (Optional.IsDefined(Uri))
             {
                 if (Uri != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("uri");
                 }
             }
-            if (WorkspaceSecretName != null)
+            if (Optional.IsDefined(WorkspaceSecretName))
             {
                 if (WorkspaceSecretName != null)
                 {

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (RedirectUri != null)
+            if (Optional.IsDefined(RedirectUri))
             {
                 writer.WritePropertyName("redirectUri"u8);
                 writer.WriteStringValue(RedirectUri.AbsoluteUri);

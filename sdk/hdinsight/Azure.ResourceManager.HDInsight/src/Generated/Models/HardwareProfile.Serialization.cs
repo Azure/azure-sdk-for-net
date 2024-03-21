@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (VmSize != null)
+            if (Optional.IsDefined(VmSize))
             {
                 writer.WritePropertyName("vmSize"u8);
                 writer.WriteStringValue(VmSize);

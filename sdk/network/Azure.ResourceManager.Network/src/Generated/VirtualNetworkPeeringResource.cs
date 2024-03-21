@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -283,10 +281,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<VirtualNetworkPeeringResource>> UpdateAsync(WaitUntil waitUntil, VirtualNetworkPeeringData data, SyncRemoteAddressSpace? syncRemoteAddressSpace = null, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _virtualNetworkPeeringClientDiagnostics.CreateScope("VirtualNetworkPeeringResource.Update");
             scope.Start();
@@ -333,10 +328,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<VirtualNetworkPeeringResource> Update(WaitUntil waitUntil, VirtualNetworkPeeringData data, SyncRemoteAddressSpace? syncRemoteAddressSpace = null, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _virtualNetworkPeeringClientDiagnostics.CreateScope("VirtualNetworkPeeringResource.Update");
             scope.Start();

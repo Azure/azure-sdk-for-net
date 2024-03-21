@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
 
             writer.WriteStartObject();
-            if (MonitoringSummary != null)
+            if (Optional.IsDefined(MonitoringSummary))
             {
                 writer.WritePropertyName("monitoringSummary"u8);
                 writer.WriteObjectValue(MonitoringSummary);
             }
-            if (JobsSummary != null)
+            if (Optional.IsDefined(JobsSummary))
             {
                 writer.WritePropertyName("jobsSummary"u8);
                 writer.WriteObjectValue(JobsSummary);
             }
-            if (ProtectedItemCount.HasValue)
+            if (Optional.IsDefined(ProtectedItemCount))
             {
                 writer.WritePropertyName("protectedItemCount"u8);
                 writer.WriteNumberValue(ProtectedItemCount.Value);
             }
-            if (RecoveryPlanCount.HasValue)
+            if (Optional.IsDefined(RecoveryPlanCount))
             {
                 writer.WritePropertyName("recoveryPlanCount"u8);
                 writer.WriteNumberValue(RecoveryPlanCount.Value);
             }
-            if (RegisteredServersCount.HasValue)
+            if (Optional.IsDefined(RegisteredServersCount))
             {
                 writer.WritePropertyName("registeredServersCount"u8);
                 writer.WriteNumberValue(RegisteredServersCount.Value);
             }
-            if (RecoveryServicesProviderAuthType.HasValue)
+            if (Optional.IsDefined(RecoveryServicesProviderAuthType))
             {
                 writer.WritePropertyName("recoveryServicesProviderAuthType"u8);
                 writer.WriteNumberValue(RecoveryServicesProviderAuthType.Value);

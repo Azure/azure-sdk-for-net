@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Communication;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -23,10 +22,7 @@ namespace Azure.Communication.CallAutomation
         /// <exception cref="ArgumentNullException"> <paramref name="targetParticipants"/> is null. </exception>
         public UnmuteParticipantsRequestInternal(IEnumerable<CommunicationIdentifierModel> targetParticipants)
         {
-            if (targetParticipants == null)
-            {
-                throw new ArgumentNullException(nameof(targetParticipants));
-            }
+            Argument.AssertNotNull(targetParticipants, nameof(targetParticipants));
 
             TargetParticipants = targetParticipants.ToList();
         }

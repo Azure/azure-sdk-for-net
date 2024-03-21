@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(KeyType.ToString());
-            if (KeyVaultProperties != null)
+            if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
                 writer.WriteObjectValue(KeyVaultProperties);
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);

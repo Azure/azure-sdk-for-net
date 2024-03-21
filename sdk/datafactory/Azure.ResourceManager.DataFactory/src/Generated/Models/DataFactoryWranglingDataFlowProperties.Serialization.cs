@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DataFlowType);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Annotations is ChangeTrackingList<BinaryData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -55,14 +55,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Folder != null)
+            if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
                 writer.WriteObjectValue(Folder);
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (!(Sources is ChangeTrackingList<PowerQuerySource> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Sources))
             {
                 writer.WritePropertyName("sources"u8);
                 writer.WriteStartArray();
@@ -72,12 +72,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Script != null)
+            if (Optional.IsDefined(Script))
             {
                 writer.WritePropertyName("script"u8);
                 writer.WriteStringValue(Script);
             }
-            if (DocumentLocale != null)
+            if (Optional.IsDefined(DocumentLocale))
             {
                 writer.WritePropertyName("documentLocale"u8);
                 writer.WriteStringValue(DocumentLocale);

@@ -16,67 +16,67 @@ namespace Azure.IoT.Hub.Service.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (DeviceId != null)
+            if (Optional.IsDefined(DeviceId))
             {
                 writer.WritePropertyName("deviceId"u8);
                 writer.WriteStringValue(DeviceId);
             }
-            if (GenerationId != null)
+            if (Optional.IsDefined(GenerationId))
             {
                 writer.WritePropertyName("generationId"u8);
                 writer.WriteStringValue(GenerationId);
             }
-            if (Etag != null)
+            if (Optional.IsDefined(Etag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(Etag);
             }
-            if (ConnectionState.HasValue)
+            if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("connectionState"u8);
                 writer.WriteStringValue(ConnectionState.Value.ToString());
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (StatusReason != null)
+            if (Optional.IsDefined(StatusReason))
             {
                 writer.WritePropertyName("statusReason"u8);
                 writer.WriteStringValue(StatusReason);
             }
-            if (ConnectionStateUpdatedTime.HasValue)
+            if (Optional.IsDefined(ConnectionStateUpdatedTime))
             {
                 writer.WritePropertyName("connectionStateUpdatedTime"u8);
                 writer.WriteStringValue(ConnectionStateUpdatedTime.Value, "O");
             }
-            if (StatusUpdatedTime.HasValue)
+            if (Optional.IsDefined(StatusUpdatedTime))
             {
                 writer.WritePropertyName("statusUpdatedTime"u8);
                 writer.WriteStringValue(StatusUpdatedTime.Value, "O");
             }
-            if (LastActivityTime.HasValue)
+            if (Optional.IsDefined(LastActivityTime))
             {
                 writer.WritePropertyName("lastActivityTime"u8);
                 writer.WriteStringValue(LastActivityTime.Value, "O");
             }
-            if (CloudToDeviceMessageCount.HasValue)
+            if (Optional.IsDefined(CloudToDeviceMessageCount))
             {
                 writer.WritePropertyName("cloudToDeviceMessageCount"u8);
                 writer.WriteNumberValue(CloudToDeviceMessageCount.Value);
             }
-            if (Authentication != null)
+            if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
                 writer.WriteObjectValue(Authentication);
             }
-            if (Capabilities != null)
+            if (Optional.IsDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteObjectValue(Capabilities);
             }
-            if (DeviceScope != null)
+            if (Optional.IsDefined(DeviceScope))
             {
                 writer.WritePropertyName("deviceScope"u8);
                 writer.WriteStringValue(DeviceScope);

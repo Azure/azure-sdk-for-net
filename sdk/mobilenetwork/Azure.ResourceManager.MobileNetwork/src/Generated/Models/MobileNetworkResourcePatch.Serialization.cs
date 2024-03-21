@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (UserAssignedIdentity != null)
+            if (Optional.IsDefined(UserAssignedIdentity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(UserAssignedIdentity);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();

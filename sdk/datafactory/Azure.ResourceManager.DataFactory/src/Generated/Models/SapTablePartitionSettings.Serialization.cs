@@ -27,22 +27,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (PartitionColumnName != null)
+            if (Optional.IsDefined(PartitionColumnName))
             {
                 writer.WritePropertyName("partitionColumnName"u8);
                 JsonSerializer.Serialize(writer, PartitionColumnName);
             }
-            if (PartitionUpperBound != null)
+            if (Optional.IsDefined(PartitionUpperBound))
             {
                 writer.WritePropertyName("partitionUpperBound"u8);
                 JsonSerializer.Serialize(writer, PartitionUpperBound);
             }
-            if (PartitionLowerBound != null)
+            if (Optional.IsDefined(PartitionLowerBound))
             {
                 writer.WritePropertyName("partitionLowerBound"u8);
                 JsonSerializer.Serialize(writer, PartitionLowerBound);
             }
-            if (MaxPartitionsNumber != null)
+            if (Optional.IsDefined(MaxPartitionsNumber))
             {
                 writer.WritePropertyName("maxPartitionsNumber"u8);
                 JsonSerializer.Serialize(writer, MaxPartitionsNumber);

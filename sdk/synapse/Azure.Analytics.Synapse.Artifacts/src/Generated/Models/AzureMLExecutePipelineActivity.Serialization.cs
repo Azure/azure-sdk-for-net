@@ -19,12 +19,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (LinkedServiceName != null)
+            if (Optional.IsDefined(LinkedServiceName))
             {
                 writer.WritePropertyName("linkedServiceName"u8);
                 writer.WriteObjectValue(LinkedServiceName);
             }
-            if (Policy != null)
+            if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
                 writer.WriteObjectValue(Policy);
@@ -33,22 +33,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (OnInactiveMarkAs.HasValue)
+            if (Optional.IsDefined(OnInactiveMarkAs))
             {
                 writer.WritePropertyName("onInactiveMarkAs"u8);
                 writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
             }
-            if (!(DependsOn is ChangeTrackingList<ActivityDependency> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
@@ -58,7 +58,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(UserProperties is ChangeTrackingList<UserProperty> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(UserProperties))
             {
                 writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
@@ -72,22 +72,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("mlPipelineId"u8);
             writer.WriteObjectValue(MlPipelineId);
-            if (ExperimentName != null)
+            if (Optional.IsDefined(ExperimentName))
             {
                 writer.WritePropertyName("experimentName"u8);
                 writer.WriteObjectValue(ExperimentName);
             }
-            if (MlPipelineParameters != null)
+            if (Optional.IsDefined(MlPipelineParameters))
             {
                 writer.WritePropertyName("mlPipelineParameters"u8);
                 writer.WriteObjectValue(MlPipelineParameters);
             }
-            if (MlParentRunId != null)
+            if (Optional.IsDefined(MlParentRunId))
             {
                 writer.WritePropertyName("mlParentRunId"u8);
                 writer.WriteObjectValue(MlParentRunId);
             }
-            if (ContinueOnStepFailure != null)
+            if (Optional.IsDefined(ContinueOnStepFailure))
             {
                 writer.WritePropertyName("continueOnStepFailure"u8);
                 writer.WriteObjectValue(ContinueOnStepFailure);

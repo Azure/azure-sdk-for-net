@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && IsActive.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsActive))
             {
                 writer.WritePropertyName("isActive"u8);
                 writer.WriteBooleanValue(IsActive.Value);

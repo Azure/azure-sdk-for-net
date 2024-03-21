@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (SubscriptionId != null)
+            if (Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (AccountName != null)
+            if (Optional.IsDefined(AccountName))
             {
                 writer.WritePropertyName("accountName"u8);
                 writer.WriteStringValue(AccountName);

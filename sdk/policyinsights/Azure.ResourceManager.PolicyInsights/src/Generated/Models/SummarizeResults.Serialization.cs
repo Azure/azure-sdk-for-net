@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
 
             writer.WriteStartObject();
-            if (ODataContext != null)
+            if (Optional.IsDefined(ODataContext))
             {
                 writer.WritePropertyName("@odata.context"u8);
                 writer.WriteStringValue(ODataContext);
             }
-            if (ODataCount.HasValue)
+            if (Optional.IsDefined(ODataCount))
             {
                 writer.WritePropertyName("@odata.count"u8);
                 writer.WriteNumberValue(ODataCount.Value);
             }
-            if (!(Value is ChangeTrackingList<PolicySummary> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();

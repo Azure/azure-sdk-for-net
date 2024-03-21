@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (DatasetLanguage != null)
+            if (Optional.IsDefined(DatasetLanguage))
             {
                 if (DatasetLanguage != null)
                 {

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SignalR.Models
             }
 
             writer.WriteStartObject();
-            if (!(Allow is ChangeTrackingList<SignalRRequestType> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Allow))
             {
                 writer.WritePropertyName("allow"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Deny is ChangeTrackingList<SignalRRequestType> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Deny))
             {
                 writer.WritePropertyName("deny"u8);
                 writer.WriteStartArray();

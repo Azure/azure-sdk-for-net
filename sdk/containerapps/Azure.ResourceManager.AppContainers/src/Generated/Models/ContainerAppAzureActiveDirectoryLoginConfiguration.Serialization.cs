@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (!(LoginParameters is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(LoginParameters))
             {
                 writer.WritePropertyName("loginParameters"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IsWwwAuthenticationDisabled.HasValue)
+            if (Optional.IsDefined(IsWwwAuthenticationDisabled))
             {
                 writer.WritePropertyName("disableWWWAuthenticate"u8);
                 writer.WriteBooleanValue(IsWwwAuthenticationDisabled.Value);

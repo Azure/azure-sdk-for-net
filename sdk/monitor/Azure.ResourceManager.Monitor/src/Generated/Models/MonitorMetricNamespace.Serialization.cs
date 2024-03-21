@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Classification.HasValue)
+            if (Optional.IsDefined(Classification))
             {
                 writer.WritePropertyName("classification"u8);
                 writer.WriteStringValue(Classification.Value.ToString());
             }
-            if (Properties != null)
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);

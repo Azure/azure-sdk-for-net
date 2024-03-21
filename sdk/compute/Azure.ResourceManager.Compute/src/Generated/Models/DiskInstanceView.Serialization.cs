@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (!(EncryptionSettings is ChangeTrackingList<DiskEncryptionSettings> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(EncryptionSettings))
             {
                 writer.WritePropertyName("encryptionSettings"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Statuses is ChangeTrackingList<InstanceViewStatus> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Statuses))
             {
                 writer.WritePropertyName("statuses"u8);
                 writer.WriteStartArray();

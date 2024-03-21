@@ -26,44 +26,44 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (VirtualMachineId != null)
+            if (Optional.IsDefined(VirtualMachineId))
             {
                 writer.WritePropertyName("virtualMachineId"u8);
                 writer.WriteStringValue(VirtualMachineId);
             }
-            if (VirtualMachineVersion != null)
+            if (Optional.IsDefined(VirtualMachineVersion))
             {
                 writer.WritePropertyName("virtualMachineVersion"u8);
                 writer.WriteStringValue(VirtualMachineVersion);
             }
-            if (ResourceGroup != null)
+            if (Optional.IsDefined(ResourceGroup))
             {
                 writer.WritePropertyName("resourceGroup"u8);
                 writer.WriteStringValue(ResourceGroup);
             }
-            if (FriendlyName != null)
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (BackupManagementType.HasValue)
+            if (Optional.IsDefined(BackupManagementType))
             {
                 writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType.Value.ToString());
             }
-            if (RegistrationStatus != null)
+            if (Optional.IsDefined(RegistrationStatus))
             {
                 writer.WritePropertyName("registrationStatus"u8);
                 writer.WriteStringValue(RegistrationStatus);
             }
-            if (HealthStatus != null)
+            if (Optional.IsDefined(HealthStatus))
             {
                 writer.WritePropertyName("healthStatus"u8);
                 writer.WriteStringValue(HealthStatus);
             }
             writer.WritePropertyName("containerType"u8);
             writer.WriteStringValue(ContainerType.ToSerialString());
-            if (ProtectableObjectType != null)
+            if (Optional.IsDefined(ProtectableObjectType))
             {
                 writer.WritePropertyName("protectableObjectType"u8);
                 writer.WriteStringValue(ProtectableObjectType);

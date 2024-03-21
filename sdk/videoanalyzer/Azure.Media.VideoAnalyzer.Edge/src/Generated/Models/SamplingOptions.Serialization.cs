@@ -15,12 +15,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (SkipSamplesWithoutAnnotation != null)
+            if (Optional.IsDefined(SkipSamplesWithoutAnnotation))
             {
                 writer.WritePropertyName("skipSamplesWithoutAnnotation"u8);
                 writer.WriteStringValue(SkipSamplesWithoutAnnotation);
             }
-            if (MaximumSamplesPerSecond != null)
+            if (Optional.IsDefined(MaximumSamplesPerSecond))
             {
                 writer.WritePropertyName("maximumSamplesPerSecond"u8);
                 writer.WriteStringValue(MaximumSamplesPerSecond);

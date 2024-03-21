@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (VmDiskType.HasValue)
+            if (Optional.IsDefined(VmDiskType))
             {
                 writer.WritePropertyName("vmDiskType"u8);
                 writer.WriteStringValue(VmDiskType.Value.ToString());

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && VnetId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(VnetId))
             {
                 writer.WritePropertyName("vnetid"u8);
                 writer.WriteStringValue(VnetId.Value);
             }
-            if (options.Format != "W" && Subnetname != null)
+            if (options.Format != "W" && Optional.IsDefined(Subnetname))
             {
                 writer.WritePropertyName("subnetname"u8);
                 writer.WriteStringValue(Subnetname);
             }
-            if (SubnetResourceId != null)
+            if (Optional.IsDefined(SubnetResourceId))
             {
                 writer.WritePropertyName("subnetResourceId"u8);
                 writer.WriteStringValue(SubnetResourceId);

@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && NodeId != null)
+            if (options.Format != "W" && Optional.IsDefined(NodeId))
             {
                 writer.WritePropertyName("nodeId"u8);
                 writer.WriteStringValue(NodeId);
             }
-            if (options.Format != "W" && PrivateIPAddress != null)
+            if (options.Format != "W" && Optional.IsDefined(PrivateIPAddress))
             {
                 if (PrivateIPAddress != null)
                 {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("privateIpAddress");
                 }
             }
-            if (options.Format != "W" && PublicIPAddress != null)
+            if (options.Format != "W" && Optional.IsDefined(PublicIPAddress))
             {
                 if (PublicIPAddress != null)
                 {
@@ -56,17 +56,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("publicIpAddress");
                 }
             }
-            if (options.Format != "W" && Port.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (options.Format != "W" && NodeState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NodeState))
             {
                 writer.WritePropertyName("nodeState"u8);
                 writer.WriteStringValue(NodeState.Value.ToString());
             }
-            if (options.Format != "W" && RunId != null)
+            if (options.Format != "W" && Optional.IsDefined(RunId))
             {
                 if (RunId != null)
                 {

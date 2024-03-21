@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Kusto.Models
             }
 
             writer.WriteStartObject();
-            if (!(Value is ChangeTrackingList<KustoLanguageExtension> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();

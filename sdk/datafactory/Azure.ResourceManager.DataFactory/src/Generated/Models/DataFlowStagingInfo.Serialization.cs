@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (LinkedService != null)
+            if (Optional.IsDefined(LinkedService))
             {
                 writer.WritePropertyName("linkedService"u8);
                 JsonSerializer.Serialize(writer, LinkedService);
             }
-            if (FolderPath != null)
+            if (Optional.IsDefined(FolderPath))
             {
                 writer.WritePropertyName("folderPath"u8);
                 JsonSerializer.Serialize(writer, FolderPath);

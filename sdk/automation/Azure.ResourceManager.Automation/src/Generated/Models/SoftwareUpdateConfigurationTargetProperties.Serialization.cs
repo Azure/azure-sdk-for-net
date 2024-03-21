@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (!(AzureQueries is ChangeTrackingList<AzureQueryProperties> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AzureQueries))
             {
                 writer.WritePropertyName("azureQueries"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(NonAzureQueries is ChangeTrackingList<NonAzureQueryProperties> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(NonAzureQueries))
             {
                 writer.WritePropertyName("nonAzureQueries"u8);
                 writer.WriteStartArray();

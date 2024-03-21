@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (ArtifactStore != null)
+            if (Optional.IsDefined(ArtifactStore))
             {
                 writer.WritePropertyName("artifactStore"u8);
                 JsonSerializer.Serialize(writer, ArtifactStore);

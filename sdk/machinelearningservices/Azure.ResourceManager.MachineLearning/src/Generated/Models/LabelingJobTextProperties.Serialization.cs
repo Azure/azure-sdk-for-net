@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (AnnotationType.HasValue)
+            if (Optional.IsDefined(AnnotationType))
             {
                 writer.WritePropertyName("annotationType"u8);
                 writer.WriteStringValue(AnnotationType.Value.ToString());

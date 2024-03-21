@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (IsCustomerInitiatedMaintenanceAllowed.HasValue)
+            if (Optional.IsDefined(IsCustomerInitiatedMaintenanceAllowed))
             {
                 writer.WritePropertyName("isCustomerInitiatedMaintenanceAllowed"u8);
                 writer.WriteBooleanValue(IsCustomerInitiatedMaintenanceAllowed.Value);
             }
-            if (PreMaintenanceWindowStartOn.HasValue)
+            if (Optional.IsDefined(PreMaintenanceWindowStartOn))
             {
                 writer.WritePropertyName("preMaintenanceWindowStartTime"u8);
                 writer.WriteStringValue(PreMaintenanceWindowStartOn.Value, "O");
             }
-            if (PreMaintenanceWindowEndOn.HasValue)
+            if (Optional.IsDefined(PreMaintenanceWindowEndOn))
             {
                 writer.WritePropertyName("preMaintenanceWindowEndTime"u8);
                 writer.WriteStringValue(PreMaintenanceWindowEndOn.Value, "O");
             }
-            if (MaintenanceWindowStartOn.HasValue)
+            if (Optional.IsDefined(MaintenanceWindowStartOn))
             {
                 writer.WritePropertyName("maintenanceWindowStartTime"u8);
                 writer.WriteStringValue(MaintenanceWindowStartOn.Value, "O");
             }
-            if (MaintenanceWindowEndOn.HasValue)
+            if (Optional.IsDefined(MaintenanceWindowEndOn))
             {
                 writer.WritePropertyName("maintenanceWindowEndTime"u8);
                 writer.WriteStringValue(MaintenanceWindowEndOn.Value, "O");
             }
-            if (LastOperationResultCode.HasValue)
+            if (Optional.IsDefined(LastOperationResultCode))
             {
                 writer.WritePropertyName("lastOperationResultCode"u8);
                 writer.WriteStringValue(LastOperationResultCode.Value.ToSerialString());
             }
-            if (LastOperationMessage != null)
+            if (Optional.IsDefined(LastOperationMessage))
             {
                 writer.WritePropertyName("lastOperationMessage"u8);
                 writer.WriteStringValue(LastOperationMessage);

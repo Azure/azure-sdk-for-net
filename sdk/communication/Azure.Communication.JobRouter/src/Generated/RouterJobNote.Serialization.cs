@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -29,7 +28,7 @@ namespace Azure.Communication.JobRouter
             writer.WriteStartObject();
             writer.WritePropertyName("message"u8);
             writer.WriteStringValue(Message);
-            if (AddedAt.HasValue)
+            if (Optional.IsDefined(AddedAt))
             {
                 writer.WritePropertyName("addedAt"u8);
                 writer.WriteStringValue(AddedAt.Value, "O");

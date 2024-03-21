@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             }
 
             writer.WriteStartObject();
-            if (EventStartOn.HasValue)
+            if (Optional.IsDefined(EventStartOn))
             {
                 writer.WritePropertyName("eventStartTime"u8);
                 writer.WriteStringValue(EventStartOn.Value, "O");
             }
-            if (EventStatusLastModifiedOn.HasValue)
+            if (Optional.IsDefined(EventStatusLastModifiedOn))
             {
                 writer.WritePropertyName("eventStatusLastModifiedTime"u8);
                 writer.WriteStringValue(EventStatusLastModifiedOn.Value, "O");
             }
-            if (CorrelationId != null)
+            if (Optional.IsDefined(CorrelationId))
             {
                 writer.WritePropertyName("correlationId"u8);
                 writer.WriteStringValue(CorrelationId);
             }
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
             }
-            if (IncidentProperties != null)
+            if (Optional.IsDefined(IncidentProperties))
             {
                 writer.WritePropertyName("incidentProperties"u8);
                 writer.WriteObjectValue(IncidentProperties);

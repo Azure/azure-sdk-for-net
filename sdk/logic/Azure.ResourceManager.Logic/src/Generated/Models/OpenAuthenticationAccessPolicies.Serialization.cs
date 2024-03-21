@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (!(AccessPolicies is ChangeTrackingDictionary<string, OpenAuthenticationAccessPolicy> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AccessPolicies))
             {
                 writer.WritePropertyName("policies"u8);
                 writer.WriteStartObject();

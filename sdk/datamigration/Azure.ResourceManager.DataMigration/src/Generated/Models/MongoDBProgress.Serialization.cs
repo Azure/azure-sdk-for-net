@@ -44,22 +44,22 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteNumberValue(EventsPending);
             writer.WritePropertyName("eventsReplayed"u8);
             writer.WriteNumberValue(EventsReplayed);
-            if (LastEventOn.HasValue)
+            if (Optional.IsDefined(LastEventOn))
             {
                 writer.WritePropertyName("lastEventTime"u8);
                 writer.WriteStringValue(LastEventOn.Value, "O");
             }
-            if (LastReplayOn.HasValue)
+            if (Optional.IsDefined(LastReplayOn))
             {
                 writer.WritePropertyName("lastReplayTime"u8);
                 writer.WriteStringValue(LastReplayOn.Value, "O");
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (QualifiedName != null)
+            if (Optional.IsDefined(QualifiedName))
             {
                 writer.WritePropertyName("qualifiedName"u8);
                 writer.WriteStringValue(QualifiedName);
@@ -114,9 +114,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "Collection": return MongoDBCollectionProgress.DeserializeMongoDBCollectionProgress(element, options);
                     case "Database": return MongoDBDatabaseProgress.DeserializeMongoDBDatabaseProgress(element, options);
                     case "Migration": return MongoDBMigrationProgress.DeserializeMongoDBMigrationProgress(element, options);
-                    case "Collection": return MongoDBCollectionProgress.DeserializeMongoDBCollectionProgress(element, options);
                 }
             }
             return UnknownMongoDBProgress.DeserializeUnknownMongoDBProgress(element, options);

@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -28,54 +27,54 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PrivateIPAddress != null)
+            if (Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIPAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress);
             }
-            if (PrivateIPAllocationMethod.HasValue)
+            if (Optional.IsDefined(PrivateIPAllocationMethod))
             {
                 writer.WritePropertyName("privateIPAllocationMethod"u8);
                 writer.WriteStringValue(PrivateIPAllocationMethod.Value.ToString());
             }
-            if (Subnet != null)
+            if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
                 JsonSerializer.Serialize(writer, Subnet);
             }
-            if (PublicIPAddress != null)
+            if (Optional.IsDefined(PublicIPAddress))
             {
                 writer.WritePropertyName("publicIPAddress"u8);
                 JsonSerializer.Serialize(writer, PublicIPAddress);
             }
-            if (PrivateLinkConfiguration != null)
+            if (Optional.IsDefined(PrivateLinkConfiguration))
             {
                 writer.WritePropertyName("privateLinkConfiguration"u8);
                 JsonSerializer.Serialize(writer, PrivateLinkConfiguration);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());

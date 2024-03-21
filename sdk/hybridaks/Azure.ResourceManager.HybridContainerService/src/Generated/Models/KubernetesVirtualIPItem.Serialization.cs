@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (EndIP != null)
+            if (Optional.IsDefined(EndIP))
             {
                 writer.WritePropertyName("endIP"u8);
                 writer.WriteStringValue(EndIP);
             }
-            if (StartIP != null)
+            if (Optional.IsDefined(StartIP))
             {
                 writer.WritePropertyName("startIP"u8);
                 writer.WriteStringValue(StartIP);

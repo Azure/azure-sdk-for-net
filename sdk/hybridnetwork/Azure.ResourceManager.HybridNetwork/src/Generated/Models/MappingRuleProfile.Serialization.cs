@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (ApplicationEnablement.HasValue)
+            if (Optional.IsDefined(ApplicationEnablement))
             {
                 writer.WritePropertyName("applicationEnablement"u8);
                 writer.WriteStringValue(ApplicationEnablement.Value.ToString());

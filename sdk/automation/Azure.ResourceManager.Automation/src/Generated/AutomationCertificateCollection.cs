@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Automation.Models;
 
 namespace Azure.ResourceManager.Automation
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<AutomationCertificateResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string certificateName, AutomationCertificateCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-            if (certificateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _automationCertificateCertificateClientDiagnostics.CreateScope("AutomationCertificateCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<AutomationCertificateResource> CreateOrUpdate(WaitUntil waitUntil, string certificateName, AutomationCertificateCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-            if (certificateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _automationCertificateCertificateClientDiagnostics.CreateScope("AutomationCertificateCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
         public virtual async Task<Response<AutomationCertificateResource>> GetAsync(string certificateName, CancellationToken cancellationToken = default)
         {
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-            if (certificateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
-            }
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using var scope = _automationCertificateCertificateClientDiagnostics.CreateScope("AutomationCertificateCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
         public virtual Response<AutomationCertificateResource> Get(string certificateName, CancellationToken cancellationToken = default)
         {
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-            if (certificateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
-            }
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using var scope = _automationCertificateCertificateClientDiagnostics.CreateScope("AutomationCertificateCollection.Get");
             scope.Start();
@@ -363,14 +327,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string certificateName, CancellationToken cancellationToken = default)
         {
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-            if (certificateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
-            }
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using var scope = _automationCertificateCertificateClientDiagnostics.CreateScope("AutomationCertificateCollection.Exists");
             scope.Start();
@@ -413,14 +370,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
         public virtual Response<bool> Exists(string certificateName, CancellationToken cancellationToken = default)
         {
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-            if (certificateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
-            }
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using var scope = _automationCertificateCertificateClientDiagnostics.CreateScope("AutomationCertificateCollection.Exists");
             scope.Start();
@@ -463,14 +413,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
         public virtual async Task<NullableResponse<AutomationCertificateResource>> GetIfExistsAsync(string certificateName, CancellationToken cancellationToken = default)
         {
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-            if (certificateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
-            }
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using var scope = _automationCertificateCertificateClientDiagnostics.CreateScope("AutomationCertificateCollection.GetIfExists");
             scope.Start();
@@ -515,14 +458,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
         public virtual NullableResponse<AutomationCertificateResource> GetIfExists(string certificateName, CancellationToken cancellationToken = default)
         {
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-            if (certificateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
-            }
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using var scope = _automationCertificateCertificateClientDiagnostics.CreateScope("AutomationCertificateCollection.GetIfExists");
             scope.Start();

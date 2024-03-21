@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Key != null)
+            if (Optional.IsDefined(Key))
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);

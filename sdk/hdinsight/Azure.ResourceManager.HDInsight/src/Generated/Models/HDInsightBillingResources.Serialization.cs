@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Region.HasValue)
+            if (Optional.IsDefined(Region))
             {
                 writer.WritePropertyName("region"u8);
                 writer.WriteStringValue(Region.Value);
             }
-            if (!(BillingMeters is ChangeTrackingList<HDInsightBillingMeters> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(BillingMeters))
             {
                 writer.WritePropertyName("billingMeters"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(DiskBillingMeters is ChangeTrackingList<HDInsightDiskBillingMeters> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(DiskBillingMeters))
             {
                 writer.WritePropertyName("diskBillingMeters"u8);
                 writer.WriteStartArray();

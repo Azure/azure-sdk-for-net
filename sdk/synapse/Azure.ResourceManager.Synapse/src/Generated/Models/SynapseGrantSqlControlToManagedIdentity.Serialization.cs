@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (DesiredState.HasValue)
+            if (Optional.IsDefined(DesiredState))
             {
                 writer.WritePropertyName("desiredState"u8);
                 writer.WriteStringValue(DesiredState.Value.ToSerialString());
             }
-            if (options.Format != "W" && ActualState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ActualState))
             {
                 writer.WritePropertyName("actualState"u8);
                 writer.WriteStringValue(ActualState.Value.ToSerialString());

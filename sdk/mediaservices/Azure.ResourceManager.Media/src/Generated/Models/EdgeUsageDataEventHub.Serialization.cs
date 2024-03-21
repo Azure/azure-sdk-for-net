@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Namespace != null)
+            if (Optional.IsDefined(Namespace))
             {
                 writer.WritePropertyName("namespace"u8);
                 writer.WriteStringValue(Namespace);
             }
-            if (Token != null)
+            if (Optional.IsDefined(Token))
             {
                 writer.WritePropertyName("token"u8);
                 writer.WriteStringValue(Token);

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Query != null)
+            if (Optional.IsDefined(Query))
             {
                 writer.WritePropertyName("query"u8);
                 writer.WriteStringValue(Query);
             }
-            if (!(Results is ChangeTrackingList<QueryUtterancesResult> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Results))
             {
                 writer.WritePropertyName("results"u8);
                 writer.WriteStartArray();

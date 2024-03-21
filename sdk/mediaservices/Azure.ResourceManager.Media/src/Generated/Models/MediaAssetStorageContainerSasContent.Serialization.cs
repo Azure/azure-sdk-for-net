@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Permissions.HasValue)
+            if (Optional.IsDefined(Permissions))
             {
                 writer.WritePropertyName("permissions"u8);
                 writer.WriteStringValue(Permissions.Value.ToString());
             }
-            if (ExpireOn.HasValue)
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expiryTime"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");

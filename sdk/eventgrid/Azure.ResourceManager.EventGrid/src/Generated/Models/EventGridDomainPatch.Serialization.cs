@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -38,24 +38,24 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (!(InboundIPRules is ChangeTrackingList<EventGridInboundIPRule> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(InboundIPRules))
             {
                 writer.WritePropertyName("inboundIpRules"u8);
                 writer.WriteStartArray();
@@ -65,32 +65,32 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 writer.WriteEndArray();
             }
-            if (MinimumTlsVersionAllowed.HasValue)
+            if (Optional.IsDefined(MinimumTlsVersionAllowed))
             {
                 writer.WritePropertyName("minimumTlsVersionAllowed"u8);
                 writer.WriteStringValue(MinimumTlsVersionAllowed.Value.ToString());
             }
-            if (IsLocalAuthDisabled.HasValue)
+            if (Optional.IsDefined(IsLocalAuthDisabled))
             {
                 writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(IsLocalAuthDisabled.Value);
             }
-            if (AutoCreateTopicWithFirstSubscription.HasValue)
+            if (Optional.IsDefined(AutoCreateTopicWithFirstSubscription))
             {
                 writer.WritePropertyName("autoCreateTopicWithFirstSubscription"u8);
                 writer.WriteBooleanValue(AutoCreateTopicWithFirstSubscription.Value);
             }
-            if (AutoDeleteTopicWithLastSubscription.HasValue)
+            if (Optional.IsDefined(AutoDeleteTopicWithLastSubscription))
             {
                 writer.WritePropertyName("autoDeleteTopicWithLastSubscription"u8);
                 writer.WriteBooleanValue(AutoDeleteTopicWithLastSubscription.Value);
             }
-            if (DataResidencyBoundary.HasValue)
+            if (Optional.IsDefined(DataResidencyBoundary))
             {
                 writer.WritePropertyName("dataResidencyBoundary"u8);
                 writer.WriteStringValue(DataResidencyBoundary.Value.ToString());
             }
-            if (EventTypeInfo != null)
+            if (Optional.IsDefined(EventTypeInfo))
             {
                 writer.WritePropertyName("eventTypeInfo"u8);
                 writer.WriteObjectValue(EventTypeInfo);

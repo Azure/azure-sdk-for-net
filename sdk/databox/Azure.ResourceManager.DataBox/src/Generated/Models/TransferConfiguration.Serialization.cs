@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStartObject();
             writer.WritePropertyName("transferConfigurationType"u8);
             writer.WriteStringValue(TransferConfigurationType.ToSerialString());
-            if (TransferFilterDetails != null)
+            if (Optional.IsDefined(TransferFilterDetails))
             {
                 writer.WritePropertyName("transferFilterDetails"u8);
                 writer.WriteObjectValue(TransferFilterDetails);
             }
-            if (TransferAllDetails != null)
+            if (Optional.IsDefined(TransferAllDetails))
             {
                 writer.WritePropertyName("transferAllDetails"u8);
                 writer.WriteObjectValue(TransferAllDetails);

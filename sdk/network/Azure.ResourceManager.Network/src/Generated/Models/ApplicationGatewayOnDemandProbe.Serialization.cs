@@ -27,42 +27,42 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Protocol.HasValue)
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (Host != null)
+            if (Optional.IsDefined(Host))
             {
                 writer.WritePropertyName("host"u8);
                 writer.WriteStringValue(Host);
             }
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Timeout.HasValue)
+            if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteNumberValue(Timeout.Value);
             }
-            if (PickHostNameFromBackendHttpSettings.HasValue)
+            if (Optional.IsDefined(PickHostNameFromBackendHttpSettings))
             {
                 writer.WritePropertyName("pickHostNameFromBackendHttpSettings"u8);
                 writer.WriteBooleanValue(PickHostNameFromBackendHttpSettings.Value);
             }
-            if (Match != null)
+            if (Optional.IsDefined(Match))
             {
                 writer.WritePropertyName("match"u8);
                 writer.WriteObjectValue(Match);
             }
-            if (BackendAddressPool != null)
+            if (Optional.IsDefined(BackendAddressPool))
             {
                 writer.WritePropertyName("backendAddressPool"u8);
                 JsonSerializer.Serialize(writer, BackendAddressPool);
             }
-            if (BackendHttpSettings != null)
+            if (Optional.IsDefined(BackendHttpSettings))
             {
                 writer.WritePropertyName("backendHttpSettings"u8);
                 JsonSerializer.Serialize(writer, BackendHttpSettings);

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Image != null)
+            if (Optional.IsDefined(Image))
             {
                 writer.WritePropertyName("image"u8);
                 writer.WriteStringValue(Image);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (!(Command is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Command))
             {
                 writer.WritePropertyName("command"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Args is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Args))
             {
                 writer.WritePropertyName("args"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Env is ChangeTrackingList<ContainerAppEnvironmentVariable> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Env))
             {
                 writer.WritePropertyName("env"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Resources != null)
+            if (Optional.IsDefined(Resources))
             {
                 writer.WritePropertyName("resources"u8);
                 writer.WriteObjectValue(Resources);

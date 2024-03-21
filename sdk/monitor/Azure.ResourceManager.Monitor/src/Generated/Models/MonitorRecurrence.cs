@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="schedule"/> is null. </exception>
         public MonitorRecurrence(RecurrenceFrequency frequency, RecurrentSchedule schedule)
         {
-            if (schedule == null)
-            {
-                throw new ArgumentNullException(nameof(schedule));
-            }
+            Argument.AssertNotNull(schedule, nameof(schedule));
 
             Frequency = frequency;
             Schedule = schedule;

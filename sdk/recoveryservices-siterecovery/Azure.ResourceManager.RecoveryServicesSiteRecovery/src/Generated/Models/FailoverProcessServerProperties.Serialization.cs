@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (ContainerName != null)
+            if (Optional.IsDefined(ContainerName))
             {
                 writer.WritePropertyName("containerName"u8);
                 writer.WriteStringValue(ContainerName);
             }
-            if (SourceProcessServerId.HasValue)
+            if (Optional.IsDefined(SourceProcessServerId))
             {
                 writer.WritePropertyName("sourceProcessServerId"u8);
                 writer.WriteStringValue(SourceProcessServerId.Value);
             }
-            if (TargetProcessServerId.HasValue)
+            if (Optional.IsDefined(TargetProcessServerId))
             {
                 writer.WritePropertyName("targetProcessServerId"u8);
                 writer.WriteStringValue(TargetProcessServerId.Value);
             }
-            if (!(VmsToMigrate is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(VmsToMigrate))
             {
                 writer.WritePropertyName("vmsToMigrate"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (UpdateType != null)
+            if (Optional.IsDefined(UpdateType))
             {
                 writer.WritePropertyName("updateType"u8);
                 writer.WriteStringValue(UpdateType);

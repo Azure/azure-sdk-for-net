@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStringValue(StagingStorageAccountId);
             writer.WritePropertyName("dataAccountType"u8);
             writer.WriteStringValue(DataAccountType.ToSerialString());
-            if (SharePassword != null)
+            if (Optional.IsDefined(SharePassword))
             {
                 writer.WritePropertyName("sharePassword"u8);
                 writer.WriteStringValue(SharePassword);

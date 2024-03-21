@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (AgentVersion != null)
+            if (Optional.IsDefined(AgentVersion))
             {
                 writer.WritePropertyName("agentVersion"u8);
                 writer.WriteStringValue(AgentVersion);
             }
-            if (AgentConfiguration != null)
+            if (Optional.IsDefined(AgentConfiguration))
             {
                 writer.WritePropertyName("agentConfiguration"u8);
 #if NET6_0_OR_GREATER
@@ -43,17 +43,17 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
 #endif
             }
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (VmSize != null)
+            if (Optional.IsDefined(VmSize))
             {
                 writer.WritePropertyName("vmSize"u8);
                 writer.WriteStringValue(VmSize);
             }
-            if (!(SupportedTaskTypes is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SupportedTaskTypes))
             {
                 writer.WritePropertyName("supportedTaskTypes"u8);
                 writer.WriteStartArray();

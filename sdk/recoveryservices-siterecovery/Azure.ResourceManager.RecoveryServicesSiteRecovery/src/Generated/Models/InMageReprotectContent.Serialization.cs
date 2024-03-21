@@ -32,24 +32,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStringValue(ProcessServerId);
             writer.WritePropertyName("retentionDrive"u8);
             writer.WriteStringValue(RetentionDrive);
-            if (RunAsAccountId != null)
+            if (Optional.IsDefined(RunAsAccountId))
             {
                 writer.WritePropertyName("runAsAccountId"u8);
                 writer.WriteStringValue(RunAsAccountId);
             }
-            if (DatastoreName != null)
+            if (Optional.IsDefined(DatastoreName))
             {
                 writer.WritePropertyName("datastoreName"u8);
                 writer.WriteStringValue(DatastoreName);
             }
-            if (DiskExclusionContent != null)
+            if (Optional.IsDefined(DiskExclusionContent))
             {
                 writer.WritePropertyName("diskExclusionInput"u8);
                 writer.WriteObjectValue(DiskExclusionContent);
             }
             writer.WritePropertyName("profileId"u8);
             writer.WriteStringValue(ProfileId);
-            if (!(DisksToInclude is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DisksToInclude))
             {
                 writer.WritePropertyName("disksToInclude"u8);
                 writer.WriteStartArray();

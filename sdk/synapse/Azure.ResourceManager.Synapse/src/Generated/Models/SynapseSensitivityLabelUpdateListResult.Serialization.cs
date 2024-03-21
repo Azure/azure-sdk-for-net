@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (!(Operations is ChangeTrackingList<SynapseSensitivityLabelUpdate> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Operations))
             {
                 writer.WritePropertyName("operations"u8);
                 writer.WriteStartArray();

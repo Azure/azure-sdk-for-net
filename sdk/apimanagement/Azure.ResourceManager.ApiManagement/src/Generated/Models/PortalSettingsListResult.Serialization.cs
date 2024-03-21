@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (!(Value is ChangeTrackingList<PortalSettingsContractData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Count.HasValue)
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);

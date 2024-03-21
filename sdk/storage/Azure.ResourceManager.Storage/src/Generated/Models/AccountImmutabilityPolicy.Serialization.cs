@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (ImmutabilityPeriodSinceCreationInDays.HasValue)
+            if (Optional.IsDefined(ImmutabilityPeriodSinceCreationInDays))
             {
                 writer.WritePropertyName("immutabilityPeriodSinceCreationInDays"u8);
                 writer.WriteNumberValue(ImmutabilityPeriodSinceCreationInDays.Value);
             }
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (AllowProtectedAppendWrites.HasValue)
+            if (Optional.IsDefined(AllowProtectedAppendWrites))
             {
                 writer.WritePropertyName("allowProtectedAppendWrites"u8);
                 writer.WriteBooleanValue(AllowProtectedAppendWrites.Value);

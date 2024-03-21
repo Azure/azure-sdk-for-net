@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);

@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Asn.HasValue)
+            if (Optional.IsDefined(Asn))
             {
                 writer.WritePropertyName("asn"u8);
                 writer.WriteNumberValue(Asn.Value);
             }
-            if (BgpPeeringAddress != null)
+            if (Optional.IsDefined(BgpPeeringAddress))
             {
                 writer.WritePropertyName("bgpPeeringAddress"u8);
                 writer.WriteStringValue(BgpPeeringAddress);
             }
-            if (PeerWeight.HasValue)
+            if (Optional.IsDefined(PeerWeight))
             {
                 writer.WritePropertyName("peerWeight"u8);
                 writer.WriteNumberValue(PeerWeight.Value);
             }
-            if (!(BgpPeeringAddresses is ChangeTrackingList<NetworkIPConfigurationBgpPeeringAddress> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(BgpPeeringAddresses))
             {
                 writer.WritePropertyName("bgpPeeringAddresses"u8);
                 writer.WriteStartArray();

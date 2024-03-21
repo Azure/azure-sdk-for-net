@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (ErrorDetail != null)
+            if (Optional.IsDefined(ErrorDetail))
             {
                 writer.WritePropertyName("errorDetail"u8);
                 writer.WriteObjectValue(ErrorDetail);
             }
-            if (!(InquiryDetails is ChangeTrackingList<WorkloadInquiryDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(InquiryDetails))
             {
                 writer.WritePropertyName("inquiryDetails"u8);
                 writer.WriteStartArray();

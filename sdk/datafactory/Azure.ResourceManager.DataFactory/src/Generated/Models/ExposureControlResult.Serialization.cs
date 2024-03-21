@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && FeatureName != null)
+            if (options.Format != "W" && Optional.IsDefined(FeatureName))
             {
                 writer.WritePropertyName("featureName"u8);
                 writer.WriteStringValue(FeatureName);
             }
-            if (options.Format != "W" && Value != null)
+            if (options.Format != "W" && Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);

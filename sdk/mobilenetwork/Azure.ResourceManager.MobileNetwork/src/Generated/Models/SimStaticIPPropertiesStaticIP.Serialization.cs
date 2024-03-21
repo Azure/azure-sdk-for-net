@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (IPv4Address != null)
+            if (Optional.IsDefined(IPv4Address))
             {
                 writer.WritePropertyName("ipv4Address"u8);
                 writer.WriteStringValue(IPv4Address);

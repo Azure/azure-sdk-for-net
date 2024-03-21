@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SecurityCenter.Models;
@@ -29,17 +28,17 @@ namespace Azure.ResourceManager.SecurityCenter
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -67,24 +66,24 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (!(Scopes is ChangeTrackingList<SecurityAutomationScope> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Scopes))
             {
                 writer.WritePropertyName("scopes"u8);
                 writer.WriteStartArray();
@@ -94,7 +93,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (!(Sources is ChangeTrackingList<SecurityAutomationSource> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Sources))
             {
                 writer.WritePropertyName("sources"u8);
                 writer.WriteStartArray();
@@ -104,7 +103,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (!(Actions is ChangeTrackingList<SecurityAutomationAction> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(Actions))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();

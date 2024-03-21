@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && PublicIPAddress != null)
+            if (options.Format != "W" && Optional.IsDefined(PublicIPAddress))
             {
                 writer.WritePropertyName("publicIpAddress"u8);
                 writer.WriteStringValue(PublicIPAddress);
             }
-            if (options.Format != "W" && PrivateIPAddress != null)
+            if (options.Format != "W" && Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIpAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress);
             }
-            if (options.Format != "W" && InstanceName != null)
+            if (options.Format != "W" && Optional.IsDefined(InstanceName))
             {
                 writer.WritePropertyName("instanceName"u8);
                 writer.WriteStringValue(InstanceName);

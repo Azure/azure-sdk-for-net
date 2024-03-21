@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (!(PolicyErrors is ChangeTrackingList<ExchangePolicyError> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PolicyErrors))
             {
                 if (PolicyErrors != null)
                 {

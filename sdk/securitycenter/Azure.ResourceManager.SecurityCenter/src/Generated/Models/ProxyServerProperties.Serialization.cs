@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (IP != null)
+            if (Optional.IsDefined(IP))
             {
                 writer.WritePropertyName("ip"u8);
                 writer.WriteStringValue(IP);
             }
-            if (Port != null)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteStringValue(Port);

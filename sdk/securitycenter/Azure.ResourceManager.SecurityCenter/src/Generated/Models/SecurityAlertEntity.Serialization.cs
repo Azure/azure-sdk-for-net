@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && AlertEntityType != null)
+            if (options.Format != "W" && Optional.IsDefined(AlertEntityType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(AlertEntityType);

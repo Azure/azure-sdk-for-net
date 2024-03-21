@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteBooleanValue(NeedLoopForValidMessages);
             writer.WritePropertyName("sendSynchronousAcknowledgement"u8);
             writer.WriteBooleanValue(SendSynchronousAcknowledgement);
-            if (AcknowledgementControlNumberPrefix != null)
+            if (Optional.IsDefined(AcknowledgementControlNumberPrefix))
             {
                 writer.WritePropertyName("acknowledgementControlNumberPrefix"u8);
                 writer.WriteStringValue(AcknowledgementControlNumberPrefix);
             }
-            if (AcknowledgementControlNumberSuffix != null)
+            if (Optional.IsDefined(AcknowledgementControlNumberSuffix))
             {
                 writer.WritePropertyName("acknowledgementControlNumberSuffix"u8);
                 writer.WriteStringValue(AcknowledgementControlNumberSuffix);

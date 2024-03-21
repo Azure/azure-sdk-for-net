@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (DetailLevel != null)
+            if (Optional.IsDefined(DetailLevel))
             {
                 writer.WritePropertyName("detailLevel"u8);
                 writer.WriteStringValue(DetailLevel);

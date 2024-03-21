@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (ActionConfiguration != null)
+            if (Optional.IsDefined(ActionConfiguration))
             {
                 writer.WritePropertyName("actionConfiguration"u8);
                 writer.WriteObjectValue(ActionConfiguration);

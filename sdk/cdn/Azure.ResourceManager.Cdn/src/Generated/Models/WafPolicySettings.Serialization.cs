@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (EnabledState.HasValue)
+            if (Optional.IsDefined(EnabledState))
             {
                 writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToString());
             }
-            if (Mode.HasValue)
+            if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (DefaultRedirectUri != null)
+            if (Optional.IsDefined(DefaultRedirectUri))
             {
                 writer.WritePropertyName("defaultRedirectUrl"u8);
                 writer.WriteStringValue(DefaultRedirectUri.AbsoluteUri);
             }
-            if (DefaultCustomBlockResponseStatusCode.HasValue)
+            if (Optional.IsDefined(DefaultCustomBlockResponseStatusCode))
             {
                 if (DefaultCustomBlockResponseStatusCode != null)
                 {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     writer.WriteNull("defaultCustomBlockResponseStatusCode");
                 }
             }
-            if (DefaultCustomBlockResponseBody != null)
+            if (Optional.IsDefined(DefaultCustomBlockResponseBody))
             {
                 if (DefaultCustomBlockResponseBody != null)
                 {

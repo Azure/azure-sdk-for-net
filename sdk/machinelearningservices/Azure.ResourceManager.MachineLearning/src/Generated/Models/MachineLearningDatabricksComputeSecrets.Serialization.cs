@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (DatabricksAccessToken != null)
+            if (Optional.IsDefined(DatabricksAccessToken))
             {
                 writer.WritePropertyName("databricksAccessToken"u8);
                 writer.WriteStringValue(DatabricksAccessToken);

@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (HelmArtifactProfile != null)
+            if (Optional.IsDefined(HelmArtifactProfile))
             {
                 writer.WritePropertyName("helmArtifactProfile"u8);
                 writer.WriteObjectValue(HelmArtifactProfile);
             }
-            if (ArtifactStore != null)
+            if (Optional.IsDefined(ArtifactStore))
             {
                 writer.WritePropertyName("artifactStore"u8);
                 JsonSerializer.Serialize(writer, ArtifactStore);

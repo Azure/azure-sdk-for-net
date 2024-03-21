@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.ContentSafety
@@ -29,7 +28,7 @@ namespace Azure.AI.ContentSafety
             writer.WriteStartObject();
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
-            if (!(Categories is ChangeTrackingList<TextCategory> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Categories))
             {
                 writer.WritePropertyName("categories"u8);
                 writer.WriteStartArray();
@@ -39,7 +38,7 @@ namespace Azure.AI.ContentSafety
                 }
                 writer.WriteEndArray();
             }
-            if (!(BlocklistNames is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(BlocklistNames))
             {
                 writer.WritePropertyName("blocklistNames"u8);
                 writer.WriteStartArray();
@@ -49,12 +48,12 @@ namespace Azure.AI.ContentSafety
                 }
                 writer.WriteEndArray();
             }
-            if (HaltOnBlocklistHit.HasValue)
+            if (Optional.IsDefined(HaltOnBlocklistHit))
             {
                 writer.WritePropertyName("haltOnBlocklistHit"u8);
                 writer.WriteBooleanValue(HaltOnBlocklistHit.Value);
             }
-            if (OutputType.HasValue)
+            if (Optional.IsDefined(OutputType))
             {
                 writer.WritePropertyName("outputType"u8);
                 writer.WriteStringValue(OutputType.Value.ToString());

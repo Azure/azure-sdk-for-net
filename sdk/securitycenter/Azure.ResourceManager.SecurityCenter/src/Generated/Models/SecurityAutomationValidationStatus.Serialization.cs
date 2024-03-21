@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (IsValid.HasValue)
+            if (Optional.IsDefined(IsValid))
             {
                 writer.WritePropertyName("isValid"u8);
                 writer.WriteBooleanValue(IsValid.Value);
             }
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);

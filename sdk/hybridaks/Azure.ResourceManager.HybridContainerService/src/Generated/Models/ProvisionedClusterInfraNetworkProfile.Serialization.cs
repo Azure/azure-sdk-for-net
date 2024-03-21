@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (!(VnetSubnetIds is ChangeTrackingList<ResourceIdentifier> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(VnetSubnetIds))
             {
                 writer.WritePropertyName("vnetSubnetIds"u8);
                 writer.WriteStartArray();

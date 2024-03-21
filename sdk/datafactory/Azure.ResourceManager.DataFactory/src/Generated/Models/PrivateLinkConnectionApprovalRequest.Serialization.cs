@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (PrivateLinkServiceConnectionState != null)
+            if (Optional.IsDefined(PrivateLinkServiceConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
                 writer.WriteObjectValue(PrivateLinkServiceConnectionState);
             }
-            if (PrivateEndpoint != null)
+            if (Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
                 JsonSerializer.Serialize(writer, PrivateEndpoint);

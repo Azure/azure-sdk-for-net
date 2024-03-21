@@ -29,24 +29,24 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (IdleTimeoutInMinutes.HasValue)
+            if (Optional.IsDefined(IdleTimeoutInMinutes))
             {
                 writer.WritePropertyName("idleTimeoutInMinutes"u8);
                 writer.WriteNumberValue(IdleTimeoutInMinutes.Value);
             }
-            if (DnsSettings != null)
+            if (Optional.IsDefined(DnsSettings))
             {
                 writer.WritePropertyName("dnsSettings"u8);
                 writer.WriteObjectValue(DnsSettings);
             }
-            if (!(IPTags is ChangeTrackingList<VirtualMachineScaleSetIPTag> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(IPTags))
             {
                 writer.WritePropertyName("ipTags"u8);
                 writer.WriteStartArray();
@@ -56,17 +56,17 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (PublicIPPrefix != null)
+            if (Optional.IsDefined(PublicIPPrefix))
             {
                 writer.WritePropertyName("publicIPPrefix"u8);
                 JsonSerializer.Serialize(writer, PublicIPPrefix);
             }
-            if (PublicIPAddressVersion.HasValue)
+            if (Optional.IsDefined(PublicIPAddressVersion))
             {
                 writer.WritePropertyName("publicIPAddressVersion"u8);
                 writer.WriteStringValue(PublicIPAddressVersion.Value.ToString());
             }
-            if (DeleteOption.HasValue)
+            if (Optional.IsDefined(DeleteOption))
             {
                 writer.WritePropertyName("deleteOption"u8);
                 writer.WriteStringValue(DeleteOption.Value.ToString());

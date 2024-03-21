@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
 
             writer.WriteStartObject();
-            if (ClientId.HasValue)
+            if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId.Value);
             }
-            if (ObjectId.HasValue)
+            if (Optional.IsDefined(ObjectId))
             {
                 writer.WritePropertyName("objectId"u8);
                 writer.WriteStringValue(ObjectId.Value);

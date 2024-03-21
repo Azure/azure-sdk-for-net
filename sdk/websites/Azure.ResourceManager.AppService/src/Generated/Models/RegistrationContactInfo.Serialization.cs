@@ -26,19 +26,19 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (AddressMailing != null)
+            if (Optional.IsDefined(AddressMailing))
             {
                 writer.WritePropertyName("addressMailing"u8);
                 writer.WriteObjectValue(AddressMailing);
             }
             writer.WritePropertyName("email"u8);
             writer.WriteStringValue(Email);
-            if (Fax != null)
+            if (Optional.IsDefined(Fax))
             {
                 writer.WritePropertyName("fax"u8);
                 writer.WriteStringValue(Fax);
             }
-            if (JobTitle != null)
+            if (Optional.IsDefined(JobTitle))
             {
                 writer.WritePropertyName("jobTitle"u8);
                 writer.WriteStringValue(JobTitle);
@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStringValue(NameFirst);
             writer.WritePropertyName("nameLast"u8);
             writer.WriteStringValue(NameLast);
-            if (NameMiddle != null)
+            if (Optional.IsDefined(NameMiddle))
             {
                 writer.WritePropertyName("nameMiddle"u8);
                 writer.WriteStringValue(NameMiddle);
             }
-            if (Organization != null)
+            if (Optional.IsDefined(Organization))
             {
                 writer.WritePropertyName("organization"u8);
                 writer.WriteStringValue(Organization);

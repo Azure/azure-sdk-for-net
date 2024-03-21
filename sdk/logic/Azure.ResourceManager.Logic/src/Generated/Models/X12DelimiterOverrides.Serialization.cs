@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (ProtocolVersion != null)
+            if (Optional.IsDefined(ProtocolVersion))
             {
                 writer.WritePropertyName("protocolVersion"u8);
                 writer.WriteStringValue(ProtocolVersion);
             }
-            if (MessageId != null)
+            if (Optional.IsDefined(MessageId))
             {
                 writer.WritePropertyName("messageId"u8);
                 writer.WriteStringValue(MessageId);
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteNumberValue(ReplaceCharacter);
             writer.WritePropertyName("replaceSeparatorsInPayload"u8);
             writer.WriteBooleanValue(ReplaceSeparatorsInPayload);
-            if (TargetNamespace != null)
+            if (Optional.IsDefined(TargetNamespace))
             {
                 writer.WritePropertyName("targetNamespace"u8);
                 writer.WriteStringValue(TargetNamespace);

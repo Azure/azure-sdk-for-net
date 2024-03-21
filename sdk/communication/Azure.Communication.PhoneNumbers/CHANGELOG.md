@@ -39,7 +39,7 @@
 ## 1.2.0-beta.1 (2023-08-08)
 
 ### Features Added
-- Added custom page sizes to PurchasedPhoneNumbers, Countries, Localities, AreaCodes and Offerings. 
+- Added custom page sizes to PurchasedPhoneNumbers, Countries, Localities, AreaCodes and Offerings.
 
 ## 1.1.0 (2023-03-28)
 
@@ -51,7 +51,7 @@
 - Adds support for Azure Communication Services Phone Numbers Browse API Methods.
 
 ### Features Added
-- Added support for API version `2022-12-01`, giving users the ability to: 
+- Added support for API version `2022-12-01`, giving users the ability to:
   - Get all supported countries
   - Get all supported localities given a country code.
   - Get all Toll-Free area codes from a given country code.

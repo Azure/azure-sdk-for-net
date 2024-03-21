@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(OrdererEndpoints is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(OrdererEndpoints))
             {
                 writer.WritePropertyName("ordererEndpoints"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(StorageEndpoints is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(StorageEndpoints))
             {
                 writer.WritePropertyName("storageEndpoints"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(ServiceEndpoints is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ServiceEndpoints))
             {
                 writer.WritePropertyName("serviceEndpoints"u8);
                 writer.WriteStartArray();

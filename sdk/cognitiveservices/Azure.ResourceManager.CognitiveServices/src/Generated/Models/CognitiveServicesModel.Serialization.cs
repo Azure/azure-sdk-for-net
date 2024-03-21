@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             writer.WriteStartObject();
-            if (Model != null)
+            if (Optional.IsDefined(Model))
             {
                 writer.WritePropertyName("model"u8);
                 writer.WriteObjectValue(Model);
             }
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (SkuName != null)
+            if (Optional.IsDefined(SkuName))
             {
                 writer.WritePropertyName("skuName"u8);
                 writer.WriteStringValue(SkuName);

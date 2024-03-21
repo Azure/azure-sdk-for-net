@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (DesiredState.HasValue)
+            if (Optional.IsDefined(DesiredState))
             {
                 writer.WritePropertyName("desiredState"u8);
                 writer.WriteStringValue(DesiredState.Value.ToSerialString());
             }
-            if (options.Format != "W" && ActualState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ActualState))
             {
                 writer.WritePropertyName("actualState"u8);
                 writer.WriteStringValue(ActualState.Value.ToSerialString());
             }
-            if (options.Format != "W" && ReasonCode.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ReasonCode))
             {
                 writer.WritePropertyName("reasonCode"u8);
                 writer.WriteNumberValue(ReasonCode.Value);
             }
-            if (options.Format != "W" && ReasonDesc.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ReasonDesc))
             {
                 writer.WritePropertyName("reasonDesc"u8);
                 writer.WriteStringValue(ReasonDesc.Value.ToSerialString());

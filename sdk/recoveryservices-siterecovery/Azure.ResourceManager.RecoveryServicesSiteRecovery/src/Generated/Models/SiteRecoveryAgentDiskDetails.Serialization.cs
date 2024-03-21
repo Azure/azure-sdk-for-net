@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && DiskId != null)
+            if (options.Format != "W" && Optional.IsDefined(DiskId))
             {
                 writer.WritePropertyName("diskId"u8);
                 writer.WriteStringValue(DiskId);
             }
-            if (options.Format != "W" && DiskName != null)
+            if (options.Format != "W" && Optional.IsDefined(DiskName))
             {
                 writer.WritePropertyName("diskName"u8);
                 writer.WriteStringValue(DiskName);
             }
-            if (options.Format != "W" && IsOSDisk != null)
+            if (options.Format != "W" && Optional.IsDefined(IsOSDisk))
             {
                 writer.WritePropertyName("isOSDisk"u8);
                 writer.WriteStringValue(IsOSDisk);
             }
-            if (options.Format != "W" && CapacityInBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CapacityInBytes))
             {
                 writer.WritePropertyName("capacityInBytes"u8);
                 writer.WriteNumberValue(CapacityInBytes.Value);
             }
-            if (options.Format != "W" && LunId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LunId))
             {
                 writer.WritePropertyName("lunId"u8);
                 writer.WriteNumberValue(LunId.Value);

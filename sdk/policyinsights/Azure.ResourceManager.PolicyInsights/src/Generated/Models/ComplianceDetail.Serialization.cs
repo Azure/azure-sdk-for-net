@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
 
             writer.WriteStartObject();
-            if (ComplianceState != null)
+            if (Optional.IsDefined(ComplianceState))
             {
                 writer.WritePropertyName("complianceState"u8);
                 writer.WriteStringValue(ComplianceState);
             }
-            if (Count.HasValue)
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);

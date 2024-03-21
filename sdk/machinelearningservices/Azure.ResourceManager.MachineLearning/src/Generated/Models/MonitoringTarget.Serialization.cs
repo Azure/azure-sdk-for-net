@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (DeploymentId != null)
+            if (Optional.IsDefined(DeploymentId))
             {
                 if (DeploymentId != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("deploymentId");
                 }
             }
-            if (ModelId != null)
+            if (Optional.IsDefined(ModelId))
             {
                 if (ModelId != null)
                 {

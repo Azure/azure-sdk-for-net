@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             }
 
             writer.WriteStartObject();
-            if (!(Value is ChangeTrackingList<RedisEnterprisePrivateLinkResource> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();

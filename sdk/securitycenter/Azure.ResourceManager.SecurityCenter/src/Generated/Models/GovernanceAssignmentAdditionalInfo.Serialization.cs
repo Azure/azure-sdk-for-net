@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (TicketNumber.HasValue)
+            if (Optional.IsDefined(TicketNumber))
             {
                 writer.WritePropertyName("ticketNumber"u8);
                 writer.WriteNumberValue(TicketNumber.Value);
             }
-            if (TicketLink != null)
+            if (Optional.IsDefined(TicketLink))
             {
                 writer.WritePropertyName("ticketLink"u8);
                 writer.WriteStringValue(TicketLink);
             }
-            if (TicketStatus != null)
+            if (Optional.IsDefined(TicketStatus))
             {
                 writer.WritePropertyName("ticketStatus"u8);
                 writer.WriteStringValue(TicketStatus);

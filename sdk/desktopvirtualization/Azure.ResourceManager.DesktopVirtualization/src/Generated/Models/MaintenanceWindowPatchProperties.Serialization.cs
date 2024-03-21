@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
 
             writer.WriteStartObject();
-            if (Hour.HasValue)
+            if (Optional.IsDefined(Hour))
             {
                 writer.WritePropertyName("hour"u8);
                 writer.WriteNumberValue(Hour.Value);
             }
-            if (DayOfWeek.HasValue)
+            if (Optional.IsDefined(DayOfWeek))
             {
                 writer.WritePropertyName("dayOfWeek"u8);
                 writer.WriteStringValue(DayOfWeek.Value.ToSerialString());

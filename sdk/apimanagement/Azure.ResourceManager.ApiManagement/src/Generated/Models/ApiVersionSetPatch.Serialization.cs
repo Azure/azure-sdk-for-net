@@ -28,27 +28,27 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (VersionQueryName != null)
+            if (Optional.IsDefined(VersionQueryName))
             {
                 writer.WritePropertyName("versionQueryName"u8);
                 writer.WriteStringValue(VersionQueryName);
             }
-            if (VersionHeaderName != null)
+            if (Optional.IsDefined(VersionHeaderName))
             {
                 writer.WritePropertyName("versionHeaderName"u8);
                 writer.WriteStringValue(VersionHeaderName);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (VersioningScheme.HasValue)
+            if (Optional.IsDefined(VersioningScheme))
             {
                 writer.WritePropertyName("versioningScheme"u8);
                 writer.WriteStringValue(VersioningScheme.Value.ToString());

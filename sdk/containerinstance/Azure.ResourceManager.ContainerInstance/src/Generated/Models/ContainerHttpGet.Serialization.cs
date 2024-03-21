@@ -26,19 +26,19 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
 
             writer.WriteStartObject();
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
             writer.WritePropertyName("port"u8);
             writer.WriteNumberValue(Port);
-            if (Scheme.HasValue)
+            if (Optional.IsDefined(Scheme))
             {
                 writer.WritePropertyName("scheme"u8);
                 writer.WriteStringValue(Scheme.Value.ToString());
             }
-            if (!(HttpHeaders is ChangeTrackingList<ContainerHttpHeader> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(HttpHeaders))
             {
                 writer.WritePropertyName("httpHeaders"u8);
                 writer.WriteStartArray();

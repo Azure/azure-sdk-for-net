@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             writer.WriteStartObject();
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("moveResourceId"u8);
                 writer.WriteStringValue(ResourceId);

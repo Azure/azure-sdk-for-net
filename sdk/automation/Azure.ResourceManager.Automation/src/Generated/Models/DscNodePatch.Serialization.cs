@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (NodeId != null)
+            if (Optional.IsDefined(NodeId))
             {
                 writer.WritePropertyName("nodeId"u8);
                 writer.WriteStringValue(NodeId);
             }
-            if (Properties != null)
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);

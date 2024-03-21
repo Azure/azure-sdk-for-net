@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(ErrorDetails is ChangeTrackingList<DataBoxEdgeJobErrorItem> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ErrorDetails))
             {
                 writer.WritePropertyName("errorDetails"u8);
                 writer.WriteStartArray();
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Code != null)
+            if (options.Format != "W" && Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (options.Format != "W" && Message != null)
+            if (options.Format != "W" && Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);

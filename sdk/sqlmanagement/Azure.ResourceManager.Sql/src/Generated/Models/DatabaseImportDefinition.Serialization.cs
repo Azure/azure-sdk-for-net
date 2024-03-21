@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (DatabaseName != null)
+            if (Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (Edition != null)
+            if (Optional.IsDefined(Edition))
             {
                 writer.WritePropertyName("edition"u8);
                 writer.WriteStringValue(Edition);
             }
-            if (ServiceObjectiveName != null)
+            if (Optional.IsDefined(ServiceObjectiveName))
             {
                 writer.WritePropertyName("serviceObjectiveName"u8);
                 writer.WriteStringValue(ServiceObjectiveName);
             }
-            if (MaxSizeBytes != null)
+            if (Optional.IsDefined(MaxSizeBytes))
             {
                 writer.WritePropertyName("maxSizeBytes"u8);
                 writer.WriteStringValue(MaxSizeBytes);
@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.Sql.Models
             writer.WriteStringValue(AdministratorLogin);
             writer.WritePropertyName("administratorLoginPassword"u8);
             writer.WriteStringValue(AdministratorLoginPassword);
-            if (AuthenticationType != null)
+            if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType"u8);
                 writer.WriteStringValue(AuthenticationType);
             }
-            if (NetworkIsolation != null)
+            if (Optional.IsDefined(NetworkIsolation))
             {
                 writer.WritePropertyName("networkIsolation"u8);
                 writer.WriteObjectValue(NetworkIsolation);

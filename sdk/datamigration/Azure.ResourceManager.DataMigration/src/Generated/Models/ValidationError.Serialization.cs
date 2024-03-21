@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (Text != null)
+            if (Optional.IsDefined(Text))
             {
                 writer.WritePropertyName("text"u8);
                 writer.WriteStringValue(Text);
             }
-            if (Severity.HasValue)
+            if (Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());

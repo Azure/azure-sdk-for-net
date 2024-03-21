@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (TemplateParameters != null)
+            if (Optional.IsDefined(TemplateParameters))
             {
                 writer.WritePropertyName("templateParameters"u8);
                 writer.WriteStringValue(TemplateParameters);

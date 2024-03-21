@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (Count.HasValue)
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteStringValue(EndpointType.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);

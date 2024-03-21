@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Logbase != null)
+            if (Optional.IsDefined(Logbase))
             {
                 if (Logbase != null)
                 {
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("logbase");
                 }
             }
-            if (Rule.HasValue)
+            if (Optional.IsDefined(Rule))
             {
                 writer.WritePropertyName("rule"u8);
                 writer.WriteStringValue(Rule.Value.ToString());
             }
-            if (Seed.HasValue)
+            if (Optional.IsDefined(Seed))
             {
                 if (Seed != null)
                 {

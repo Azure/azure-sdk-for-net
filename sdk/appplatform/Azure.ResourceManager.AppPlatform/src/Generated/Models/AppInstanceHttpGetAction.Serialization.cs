@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Scheme.HasValue)
+            if (Optional.IsDefined(Scheme))
             {
                 writer.WritePropertyName("scheme"u8);
                 writer.WriteStringValue(Scheme.Value.ToString());

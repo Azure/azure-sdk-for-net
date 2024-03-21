@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Resources
             }
 
             writer.WriteStartObject();
-            if (Plan != null)
+            if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
                 JsonSerializer.Serialize(writer, Plan);
             }
-            if (Properties != null)
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
 #if NET6_0_OR_GREATER
@@ -45,47 +45,47 @@ namespace Azure.ResourceManager.Resources
                 }
 #endif
             }
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (ManagedBy != null)
+            if (Optional.IsDefined(ManagedBy))
             {
                 writer.WritePropertyName("managedBy"u8);
                 writer.WriteStringValue(ManagedBy);
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && ChangedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ChangedOn))
             {
                 writer.WritePropertyName("changedTime"u8);
                 writer.WriteStringValue(ChangedOn.Value, "O");
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (ExtendedLocation != null)
+            if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 JsonSerializer.Serialize(writer, ExtendedLocation);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Resources
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);

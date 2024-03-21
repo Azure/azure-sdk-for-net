@@ -26,47 +26,47 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
 
             writer.WriteStartObject();
-            if (QuestionId != null)
+            if (Optional.IsDefined(QuestionId))
             {
                 writer.WritePropertyName("questionId"u8);
                 writer.WriteStringValue(QuestionId);
             }
-            if (QuestionType != null)
+            if (Optional.IsDefined(QuestionType))
             {
                 writer.WritePropertyName("questionType"u8);
                 writer.WriteStringValue(QuestionType);
             }
-            if (QuestionContent != null)
+            if (Optional.IsDefined(QuestionContent))
             {
                 writer.WritePropertyName("questionContent"u8);
                 writer.WriteStringValue(QuestionContent);
             }
-            if (QuestionContentType.HasValue)
+            if (Optional.IsDefined(QuestionContentType))
             {
                 writer.WritePropertyName("questionContentType"u8);
                 writer.WriteStringValue(QuestionContentType.Value.ToString());
             }
-            if (ResponseHint != null)
+            if (Optional.IsDefined(ResponseHint))
             {
                 writer.WritePropertyName("responseHint"u8);
                 writer.WriteStringValue(ResponseHint);
             }
-            if (RecommendedOption != null)
+            if (Optional.IsDefined(RecommendedOption))
             {
                 writer.WritePropertyName("recommendedOption"u8);
                 writer.WriteStringValue(RecommendedOption);
             }
-            if (SelectedOptionValue != null)
+            if (Optional.IsDefined(SelectedOptionValue))
             {
                 writer.WritePropertyName("selectedOptionValue"u8);
                 writer.WriteStringValue(SelectedOptionValue);
             }
-            if (ResponseValidationProperties != null)
+            if (Optional.IsDefined(ResponseValidationProperties))
             {
                 writer.WritePropertyName("responseValidationProperties"u8);
                 writer.WriteObjectValue(ResponseValidationProperties);
             }
-            if (!(ResponseOptions is ChangeTrackingList<ResponseConfig> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ResponseOptions))
             {
                 writer.WritePropertyName("responseOptions"u8);
                 writer.WriteStartArray();

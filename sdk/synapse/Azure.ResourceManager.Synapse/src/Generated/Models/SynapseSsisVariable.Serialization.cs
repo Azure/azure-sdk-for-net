@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (Id.HasValue)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteNumberValue(Id.Value);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (DataType != null)
+            if (Optional.IsDefined(DataType))
             {
                 writer.WritePropertyName("dataType"u8);
                 writer.WriteStringValue(DataType);
             }
-            if (IsSensitive.HasValue)
+            if (Optional.IsDefined(IsSensitive))
             {
                 writer.WritePropertyName("sensitive"u8);
                 writer.WriteBooleanValue(IsSensitive.Value);
             }
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (SensitiveValue != null)
+            if (Optional.IsDefined(SensitiveValue))
             {
                 writer.WritePropertyName("sensitiveValue"u8);
                 writer.WriteStringValue(SensitiveValue);

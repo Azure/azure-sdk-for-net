@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DesktopVirtualization.Models;
 using Azure.ResourceManager.Models;
@@ -29,37 +28,37 @@ namespace Azure.ResourceManager.DesktopVirtualization
             }
 
             writer.WriteStartObject();
-            if (ManagedBy != null)
+            if (Optional.IsDefined(ManagedBy))
             {
                 writer.WritePropertyName("managedBy"u8);
                 writer.WriteStringValue(ManagedBy);
             }
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Plan != null)
+            if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
                 JsonSerializer.Serialize(writer, Plan);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -87,68 +86,68 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ObjectId != null)
+            if (options.Format != "W" && Optional.IsDefined(ObjectId))
             {
                 writer.WritePropertyName("objectId"u8);
                 writer.WriteStringValue(ObjectId);
             }
-            if (FriendlyName != null)
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("hostPoolType"u8);
             writer.WriteStringValue(HostPoolType.ToString());
-            if (PersonalDesktopAssignmentType.HasValue)
+            if (Optional.IsDefined(PersonalDesktopAssignmentType))
             {
                 writer.WritePropertyName("personalDesktopAssignmentType"u8);
                 writer.WriteStringValue(PersonalDesktopAssignmentType.Value.ToString());
             }
-            if (CustomRdpProperty != null)
+            if (Optional.IsDefined(CustomRdpProperty))
             {
                 writer.WritePropertyName("customRdpProperty"u8);
                 writer.WriteStringValue(CustomRdpProperty);
             }
-            if (MaxSessionLimit.HasValue)
+            if (Optional.IsDefined(MaxSessionLimit))
             {
                 writer.WritePropertyName("maxSessionLimit"u8);
                 writer.WriteNumberValue(MaxSessionLimit.Value);
             }
             writer.WritePropertyName("loadBalancerType"u8);
             writer.WriteStringValue(LoadBalancerType.ToString());
-            if (Ring.HasValue)
+            if (Optional.IsDefined(Ring))
             {
                 writer.WritePropertyName("ring"u8);
                 writer.WriteNumberValue(Ring.Value);
             }
-            if (IsValidationEnvironment.HasValue)
+            if (Optional.IsDefined(IsValidationEnvironment))
             {
                 writer.WritePropertyName("validationEnvironment"u8);
                 writer.WriteBooleanValue(IsValidationEnvironment.Value);
             }
-            if (RegistrationInfo != null)
+            if (Optional.IsDefined(RegistrationInfo))
             {
                 writer.WritePropertyName("registrationInfo"u8);
                 writer.WriteObjectValue(RegistrationInfo);
             }
-            if (VmTemplate != null)
+            if (Optional.IsDefined(VmTemplate))
             {
                 writer.WritePropertyName("vmTemplate"u8);
                 writer.WriteStringValue(VmTemplate);
             }
-            if (options.Format != "W" && !(ApplicationGroupReferences is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ApplicationGroupReferences))
             {
                 writer.WritePropertyName("applicationGroupReferences"u8);
                 writer.WriteStartArray();
@@ -158,49 +157,49 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 }
                 writer.WriteEndArray();
             }
-            if (SsoAdfsAuthority != null)
+            if (Optional.IsDefined(SsoAdfsAuthority))
             {
                 writer.WritePropertyName("ssoadfsAuthority"u8);
                 writer.WriteStringValue(SsoAdfsAuthority);
             }
-            if (SsoClientId != null)
+            if (Optional.IsDefined(SsoClientId))
             {
                 writer.WritePropertyName("ssoClientId"u8);
                 writer.WriteStringValue(SsoClientId);
             }
-            if (SsoClientSecretKeyVaultPath != null)
+            if (Optional.IsDefined(SsoClientSecretKeyVaultPath))
             {
                 writer.WritePropertyName("ssoClientSecretKeyVaultPath"u8);
                 writer.WriteStringValue(SsoClientSecretKeyVaultPath);
             }
-            if (SsoSecretType.HasValue)
+            if (Optional.IsDefined(SsoSecretType))
             {
                 writer.WritePropertyName("ssoSecretType"u8);
                 writer.WriteStringValue(SsoSecretType.Value.ToString());
             }
             writer.WritePropertyName("preferredAppGroupType"u8);
             writer.WriteStringValue(PreferredAppGroupType.ToString());
-            if (StartVmOnConnect.HasValue)
+            if (Optional.IsDefined(StartVmOnConnect))
             {
                 writer.WritePropertyName("startVMOnConnect"u8);
                 writer.WriteBooleanValue(StartVmOnConnect.Value);
             }
-            if (options.Format != "W" && IsCloudPCResource.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsCloudPCResource))
             {
                 writer.WritePropertyName("cloudPcResource"u8);
                 writer.WriteBooleanValue(IsCloudPCResource.Value);
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (AgentUpdate != null)
+            if (Optional.IsDefined(AgentUpdate))
             {
                 writer.WritePropertyName("agentUpdate"u8);
                 writer.WriteObjectValue(AgentUpdate);
             }
-            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<DesktopVirtualizationPrivateEndpointConnection> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Registration != null)
+            if (Optional.IsDefined(Registration))
             {
                 writer.WritePropertyName("registration"u8);
                 writer.WriteObjectValue(Registration);

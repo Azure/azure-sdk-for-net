@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (FeatureWindowEnd.HasValue)
+            if (Optional.IsDefined(FeatureWindowEnd))
             {
                 if (FeatureWindowEnd != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("featureWindowEnd");
                 }
             }
-            if (FeatureWindowStart.HasValue)
+            if (Optional.IsDefined(FeatureWindowStart))
             {
                 if (FeatureWindowStart != null)
                 {

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && PrincipalId != null)
+            if (options.Format != "W" && Optional.IsDefined(PrincipalId))
             {
                 writer.WritePropertyName("principalId"u8);
                 writer.WriteStringValue(PrincipalId);
             }
-            if (UserAssignedIdentity != null)
+            if (Optional.IsDefined(UserAssignedIdentity))
             {
                 writer.WritePropertyName("userAssignedIdentity"u8);
                 writer.WriteStringValue(UserAssignedIdentity);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Avs.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(Hosts is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Hosts))
             {
                 writer.WritePropertyName("hosts"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Zone != null)
+            if (options.Format != "W" && Optional.IsDefined(Zone))
             {
                 writer.WritePropertyName("zone"u8);
                 writer.WriteStringValue(Zone);

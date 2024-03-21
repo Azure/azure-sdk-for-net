@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Scope.HasValue)
+            if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope.Value.ToString());

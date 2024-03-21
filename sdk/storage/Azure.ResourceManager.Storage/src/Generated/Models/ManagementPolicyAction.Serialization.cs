@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (BaseBlob != null)
+            if (Optional.IsDefined(BaseBlob))
             {
                 writer.WritePropertyName("baseBlob"u8);
                 writer.WriteObjectValue(BaseBlob);
             }
-            if (Snapshot != null)
+            if (Optional.IsDefined(Snapshot))
             {
                 writer.WritePropertyName("snapshot"u8);
                 writer.WriteObjectValue(Snapshot);
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteObjectValue(Version);

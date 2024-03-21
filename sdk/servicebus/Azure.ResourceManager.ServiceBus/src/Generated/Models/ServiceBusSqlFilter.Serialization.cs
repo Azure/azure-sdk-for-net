@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ServiceBus.Models
             }
 
             writer.WriteStartObject();
-            if (SqlExpression != null)
+            if (Optional.IsDefined(SqlExpression))
             {
                 writer.WritePropertyName("sqlExpression"u8);
                 writer.WriteStringValue(SqlExpression);
             }
-            if (CompatibilityLevel.HasValue)
+            if (Optional.IsDefined(CompatibilityLevel))
             {
                 writer.WritePropertyName("compatibilityLevel"u8);
                 writer.WriteNumberValue(CompatibilityLevel.Value);
             }
-            if (RequiresPreprocessing.HasValue)
+            if (Optional.IsDefined(RequiresPreprocessing))
             {
                 writer.WritePropertyName("requiresPreprocessing"u8);
                 writer.WriteBooleanValue(RequiresPreprocessing.Value);

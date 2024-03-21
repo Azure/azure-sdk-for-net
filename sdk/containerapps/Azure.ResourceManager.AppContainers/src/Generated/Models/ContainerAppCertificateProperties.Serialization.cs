@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (options.Format != "W" && SubjectName != null)
+            if (options.Format != "W" && Optional.IsDefined(SubjectName))
             {
                 writer.WritePropertyName("subjectName"u8);
                 writer.WriteStringValue(SubjectName);
             }
-            if (options.Format != "W" && !(SubjectAlternativeNames is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SubjectAlternativeNames))
             {
                 writer.WritePropertyName("subjectAlternativeNames"u8);
                 writer.WriteStartArray();
@@ -51,37 +51,37 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteBase64StringValue(Value, "D");
             }
-            if (options.Format != "W" && Issuer != null)
+            if (options.Format != "W" && Optional.IsDefined(Issuer))
             {
                 writer.WritePropertyName("issuer"u8);
                 writer.WriteStringValue(Issuer);
             }
-            if (options.Format != "W" && IssueOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IssueOn))
             {
                 writer.WritePropertyName("issueDate"u8);
                 writer.WriteStringValue(IssueOn.Value, "O");
             }
-            if (options.Format != "W" && ExpireOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationDate"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (options.Format != "W" && Thumbprint != null)
+            if (options.Format != "W" && Optional.IsDefined(Thumbprint))
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(Thumbprint);
             }
-            if (options.Format != "W" && IsValid.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsValid))
             {
                 writer.WritePropertyName("valid"u8);
                 writer.WriteBooleanValue(IsValid.Value);
             }
-            if (options.Format != "W" && PublicKeyHash != null)
+            if (options.Format != "W" && Optional.IsDefined(PublicKeyHash))
             {
                 writer.WritePropertyName("publicKeyHash"u8);
                 writer.WriteStringValue(PublicKeyHash);

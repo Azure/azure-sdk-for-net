@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (ServiceId != null)
+            if (Optional.IsDefined(ServiceId))
             {
                 writer.WritePropertyName("serviceId"u8);
                 writer.WriteStringValue(ServiceId);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);

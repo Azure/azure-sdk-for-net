@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Logic.Models;
 using Azure.ResourceManager.Resources;
 
@@ -361,10 +359,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<IntegrationServiceEnvironmentResource>> UpdateAsync(WaitUntil waitUntil, IntegrationServiceEnvironmentData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _integrationServiceEnvironmentClientDiagnostics.CreateScope("IntegrationServiceEnvironmentResource.Update");
             scope.Start();
@@ -410,10 +405,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<IntegrationServiceEnvironmentResource> Update(WaitUntil waitUntil, IntegrationServiceEnvironmentData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _integrationServiceEnvironmentClientDiagnostics.CreateScope("IntegrationServiceEnvironmentResource.Update");
             scope.Start();
@@ -655,14 +647,8 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<IntegrationServiceEnvironmentResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _integrationServiceEnvironmentClientDiagnostics.CreateScope("IntegrationServiceEnvironmentResource.AddTag");
             scope.Start();
@@ -723,14 +709,8 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<IntegrationServiceEnvironmentResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _integrationServiceEnvironmentClientDiagnostics.CreateScope("IntegrationServiceEnvironmentResource.AddTag");
             scope.Start();
@@ -790,10 +770,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<IntegrationServiceEnvironmentResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _integrationServiceEnvironmentClientDiagnostics.CreateScope("IntegrationServiceEnvironmentResource.SetTags");
             scope.Start();
@@ -850,10 +827,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<IntegrationServiceEnvironmentResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _integrationServiceEnvironmentClientDiagnostics.CreateScope("IntegrationServiceEnvironmentResource.SetTags");
             scope.Start();
@@ -910,10 +884,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<IntegrationServiceEnvironmentResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _integrationServiceEnvironmentClientDiagnostics.CreateScope("IntegrationServiceEnvironmentResource.RemoveTag");
             scope.Start();
@@ -973,10 +944,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<IntegrationServiceEnvironmentResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _integrationServiceEnvironmentClientDiagnostics.CreateScope("IntegrationServiceEnvironmentResource.RemoveTag");
             scope.Start();

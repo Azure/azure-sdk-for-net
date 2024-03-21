@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStringValue(Code.ToString());
             writer.WritePropertyName("message"u8);
             writer.WriteStringValue(Message);
-            if (!(Details is ChangeTrackingList<IntegrationServiceErrorInfo> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartArray();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 writer.WriteEndArray();
             }
-            if (InnerError != null)
+            if (Optional.IsDefined(InnerError))
             {
                 writer.WritePropertyName("innerError"u8);
 #if NET6_0_OR_GREATER

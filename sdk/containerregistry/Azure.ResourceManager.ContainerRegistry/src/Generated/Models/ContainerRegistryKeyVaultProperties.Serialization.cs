@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (KeyIdentifier != null)
+            if (Optional.IsDefined(KeyIdentifier))
             {
                 writer.WritePropertyName("keyIdentifier"u8);
                 writer.WriteStringValue(KeyIdentifier);
             }
-            if (options.Format != "W" && VersionedKeyIdentifier != null)
+            if (options.Format != "W" && Optional.IsDefined(VersionedKeyIdentifier))
             {
                 writer.WritePropertyName("versionedKeyIdentifier"u8);
                 writer.WriteStringValue(VersionedKeyIdentifier);
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteStringValue(Identity);
             }
-            if (options.Format != "W" && IsKeyRotationEnabled.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsKeyRotationEnabled))
             {
                 writer.WritePropertyName("keyRotationEnabled"u8);
                 writer.WriteBooleanValue(IsKeyRotationEnabled.Value);
             }
-            if (options.Format != "W" && LastKeyRotationTimestamp.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastKeyRotationTimestamp))
             {
                 writer.WritePropertyName("lastKeyRotationTimestamp"u8);
                 writer.WriteStringValue(LastKeyRotationTimestamp.Value, "O");

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
 
             writer.WriteStartObject();
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (ScopeId != null)
+            if (Optional.IsDefined(ScopeId))
             {
                 writer.WritePropertyName("scopeId"u8);
                 writer.WriteStringValue(ScopeId);

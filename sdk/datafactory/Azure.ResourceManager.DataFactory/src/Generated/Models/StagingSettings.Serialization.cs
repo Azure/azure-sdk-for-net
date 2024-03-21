@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("linkedServiceName"u8);
             JsonSerializer.Serialize(writer, LinkedServiceName);
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 JsonSerializer.Serialize(writer, Path);
             }
-            if (EnableCompression != null)
+            if (Optional.IsDefined(EnableCompression))
             {
                 writer.WritePropertyName("enableCompression"u8);
                 JsonSerializer.Serialize(writer, EnableCompression);

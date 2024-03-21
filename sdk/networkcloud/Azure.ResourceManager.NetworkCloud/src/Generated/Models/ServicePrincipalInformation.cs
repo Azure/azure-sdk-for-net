@@ -52,18 +52,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/>, <paramref name="principalId"/> or <paramref name="tenantId"/> is null. </exception>
         public ServicePrincipalInformation(string applicationId, string principalId, string tenantId)
         {
-            if (applicationId == null)
-            {
-                throw new ArgumentNullException(nameof(applicationId));
-            }
-            if (principalId == null)
-            {
-                throw new ArgumentNullException(nameof(principalId));
-            }
-            if (tenantId == null)
-            {
-                throw new ArgumentNullException(nameof(tenantId));
-            }
+            Argument.AssertNotNull(applicationId, nameof(applicationId));
+            Argument.AssertNotNull(principalId, nameof(principalId));
+            Argument.AssertNotNull(tenantId, nameof(tenantId));
 
             ApplicationId = applicationId;
             PrincipalId = principalId;

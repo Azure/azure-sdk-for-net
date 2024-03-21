@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (DBName != null)
+            if (Optional.IsDefined(DBName))
             {
                 writer.WritePropertyName("db"u8);
                 writer.WriteStringValue(DBName);
             }
-            if (Collection != null)
+            if (Optional.IsDefined(Collection))
             {
                 writer.WritePropertyName("collection"u8);
                 writer.WriteStringValue(Collection);

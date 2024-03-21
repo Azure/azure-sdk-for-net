@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (QueryStringCachingBehavior.HasValue)
+            if (Optional.IsDefined(QueryStringCachingBehavior))
             {
                 writer.WritePropertyName("queryStringCachingBehavior"u8);
                 writer.WriteStringValue(QueryStringCachingBehavior.Value.ToString());
             }
-            if (QueryParameters != null)
+            if (Optional.IsDefined(QueryParameters))
             {
                 writer.WritePropertyName("queryParameters"u8);
                 writer.WriteStringValue(QueryParameters);
             }
-            if (CompressionSettings != null)
+            if (Optional.IsDefined(CompressionSettings))
             {
                 writer.WritePropertyName("compressionSettings"u8);
                 writer.WriteObjectValue(CompressionSettings);

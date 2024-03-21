@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (EmailNotificationSetting != null)
+            if (Optional.IsDefined(EmailNotificationSetting))
             {
                 if (EmailNotificationSetting != null)
                 {

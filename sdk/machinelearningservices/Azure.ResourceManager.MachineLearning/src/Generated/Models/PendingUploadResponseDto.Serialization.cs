@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (BlobReferenceForConsumption != null)
+            if (Optional.IsDefined(BlobReferenceForConsumption))
             {
                 if (BlobReferenceForConsumption != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("blobReferenceForConsumption");
                 }
             }
-            if (PendingUploadId != null)
+            if (Optional.IsDefined(PendingUploadId))
             {
                 if (PendingUploadId != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("pendingUploadId");
                 }
             }
-            if (PendingUploadType.HasValue)
+            if (Optional.IsDefined(PendingUploadType))
             {
                 writer.WritePropertyName("pendingUploadType"u8);
                 writer.WriteStringValue(PendingUploadType.Value.ToString());

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Category != null)
+            if (options.Format != "W" && Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (options.Format != "W" && !(Endpoints is ChangeTrackingList<ManagedInstanceEndpointDependency> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Endpoints))
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();

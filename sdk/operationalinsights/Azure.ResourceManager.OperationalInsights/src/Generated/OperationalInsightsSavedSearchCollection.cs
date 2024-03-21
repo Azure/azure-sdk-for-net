@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="savedSearchId"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<OperationalInsightsSavedSearchResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string savedSearchId, OperationalInsightsSavedSearchData data, CancellationToken cancellationToken = default)
         {
-            if (savedSearchId == null)
-            {
-                throw new ArgumentNullException(nameof(savedSearchId));
-            }
-            if (savedSearchId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(savedSearchId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(savedSearchId, nameof(savedSearchId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _operationalInsightsSavedSearchSavedSearchesClientDiagnostics.CreateScope("OperationalInsightsSavedSearchCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="savedSearchId"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<OperationalInsightsSavedSearchResource> CreateOrUpdate(WaitUntil waitUntil, string savedSearchId, OperationalInsightsSavedSearchData data, CancellationToken cancellationToken = default)
         {
-            if (savedSearchId == null)
-            {
-                throw new ArgumentNullException(nameof(savedSearchId));
-            }
-            if (savedSearchId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(savedSearchId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(savedSearchId, nameof(savedSearchId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _operationalInsightsSavedSearchSavedSearchesClientDiagnostics.CreateScope("OperationalInsightsSavedSearchCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="savedSearchId"/> is null. </exception>
         public virtual async Task<Response<OperationalInsightsSavedSearchResource>> GetAsync(string savedSearchId, CancellationToken cancellationToken = default)
         {
-            if (savedSearchId == null)
-            {
-                throw new ArgumentNullException(nameof(savedSearchId));
-            }
-            if (savedSearchId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(savedSearchId));
-            }
+            Argument.AssertNotNullOrEmpty(savedSearchId, nameof(savedSearchId));
 
             using var scope = _operationalInsightsSavedSearchSavedSearchesClientDiagnostics.CreateScope("OperationalInsightsSavedSearchCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="savedSearchId"/> is null. </exception>
         public virtual Response<OperationalInsightsSavedSearchResource> Get(string savedSearchId, CancellationToken cancellationToken = default)
         {
-            if (savedSearchId == null)
-            {
-                throw new ArgumentNullException(nameof(savedSearchId));
-            }
-            if (savedSearchId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(savedSearchId));
-            }
+            Argument.AssertNotNullOrEmpty(savedSearchId, nameof(savedSearchId));
 
             using var scope = _operationalInsightsSavedSearchSavedSearchesClientDiagnostics.CreateScope("OperationalInsightsSavedSearchCollection.Get");
             scope.Start();
@@ -360,14 +324,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="savedSearchId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string savedSearchId, CancellationToken cancellationToken = default)
         {
-            if (savedSearchId == null)
-            {
-                throw new ArgumentNullException(nameof(savedSearchId));
-            }
-            if (savedSearchId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(savedSearchId));
-            }
+            Argument.AssertNotNullOrEmpty(savedSearchId, nameof(savedSearchId));
 
             using var scope = _operationalInsightsSavedSearchSavedSearchesClientDiagnostics.CreateScope("OperationalInsightsSavedSearchCollection.Exists");
             scope.Start();
@@ -410,14 +367,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="savedSearchId"/> is null. </exception>
         public virtual Response<bool> Exists(string savedSearchId, CancellationToken cancellationToken = default)
         {
-            if (savedSearchId == null)
-            {
-                throw new ArgumentNullException(nameof(savedSearchId));
-            }
-            if (savedSearchId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(savedSearchId));
-            }
+            Argument.AssertNotNullOrEmpty(savedSearchId, nameof(savedSearchId));
 
             using var scope = _operationalInsightsSavedSearchSavedSearchesClientDiagnostics.CreateScope("OperationalInsightsSavedSearchCollection.Exists");
             scope.Start();
@@ -460,14 +410,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="savedSearchId"/> is null. </exception>
         public virtual async Task<NullableResponse<OperationalInsightsSavedSearchResource>> GetIfExistsAsync(string savedSearchId, CancellationToken cancellationToken = default)
         {
-            if (savedSearchId == null)
-            {
-                throw new ArgumentNullException(nameof(savedSearchId));
-            }
-            if (savedSearchId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(savedSearchId));
-            }
+            Argument.AssertNotNullOrEmpty(savedSearchId, nameof(savedSearchId));
 
             using var scope = _operationalInsightsSavedSearchSavedSearchesClientDiagnostics.CreateScope("OperationalInsightsSavedSearchCollection.GetIfExists");
             scope.Start();
@@ -512,14 +455,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="savedSearchId"/> is null. </exception>
         public virtual NullableResponse<OperationalInsightsSavedSearchResource> GetIfExists(string savedSearchId, CancellationToken cancellationToken = default)
         {
-            if (savedSearchId == null)
-            {
-                throw new ArgumentNullException(nameof(savedSearchId));
-            }
-            if (savedSearchId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(savedSearchId));
-            }
+            Argument.AssertNotNullOrEmpty(savedSearchId, nameof(savedSearchId));
 
             using var scope = _operationalInsightsSavedSearchSavedSearchesClientDiagnostics.CreateScope("OperationalInsightsSavedSearchCollection.GetIfExists");
             scope.Start();

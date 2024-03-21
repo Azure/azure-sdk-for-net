@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -37,19 +37,19 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
                 writer.WriteEndObject();
             }
-            if (ZoneRedundant.HasValue)
+            if (Optional.IsDefined(ZoneRedundant))
             {
                 writer.WritePropertyName("zoneRedundant"u8);
                 writer.WriteStringValue(ZoneRedundant.Value.ToString());
             }
             writer.WritePropertyName("resourceType"u8);
             writer.WriteStringValue(ResourceType);
-            if (TargetResourceName != null)
+            if (Optional.IsDefined(TargetResourceName))
             {
                 writer.WritePropertyName("targetResourceName"u8);
                 writer.WriteStringValue(TargetResourceName);
             }
-            if (TargetResourceGroupName != null)
+            if (Optional.IsDefined(TargetResourceGroupName))
             {
                 writer.WritePropertyName("targetResourceGroupName"u8);
                 writer.WriteStringValue(TargetResourceGroupName);

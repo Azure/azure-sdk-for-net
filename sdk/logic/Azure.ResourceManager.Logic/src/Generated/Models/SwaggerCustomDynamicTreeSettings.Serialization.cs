@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (CanSelectParentNodes.HasValue)
+            if (Optional.IsDefined(CanSelectParentNodes))
             {
                 writer.WritePropertyName("CanSelectParentNodes"u8);
                 writer.WriteBooleanValue(CanSelectParentNodes.Value);
             }
-            if (CanSelectLeafNodes.HasValue)
+            if (Optional.IsDefined(CanSelectLeafNodes))
             {
                 writer.WritePropertyName("CanSelectLeafNodes"u8);
                 writer.WriteBooleanValue(CanSelectLeafNodes.Value);

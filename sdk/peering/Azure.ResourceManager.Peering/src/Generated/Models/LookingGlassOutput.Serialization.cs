@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Peering.Models
             }
 
             writer.WriteStartObject();
-            if (Command.HasValue)
+            if (Optional.IsDefined(Command))
             {
                 writer.WritePropertyName("command"u8);
                 writer.WriteStringValue(Command.Value.ToString());
             }
-            if (Output != null)
+            if (Optional.IsDefined(Output))
             {
                 writer.WritePropertyName("output"u8);
                 writer.WriteStringValue(Output);

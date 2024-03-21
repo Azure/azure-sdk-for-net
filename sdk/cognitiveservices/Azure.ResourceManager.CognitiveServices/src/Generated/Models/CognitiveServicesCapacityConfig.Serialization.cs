@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             writer.WriteStartObject();
-            if (Minimum.HasValue)
+            if (Optional.IsDefined(Minimum))
             {
                 writer.WritePropertyName("minimum"u8);
                 writer.WriteNumberValue(Minimum.Value);
             }
-            if (Maximum.HasValue)
+            if (Optional.IsDefined(Maximum))
             {
                 writer.WritePropertyName("maximum"u8);
                 writer.WriteNumberValue(Maximum.Value);
             }
-            if (Step.HasValue)
+            if (Optional.IsDefined(Step))
             {
                 writer.WritePropertyName("step"u8);
                 writer.WriteNumberValue(Step.Value);
             }
-            if (Default.HasValue)
+            if (Optional.IsDefined(Default))
             {
                 writer.WritePropertyName("default"u8);
                 writer.WriteNumberValue(Default.Value);

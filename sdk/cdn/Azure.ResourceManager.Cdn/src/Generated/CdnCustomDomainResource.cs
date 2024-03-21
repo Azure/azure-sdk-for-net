@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Cdn.Models;
 
 namespace Azure.ResourceManager.Cdn
@@ -283,10 +281,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<CdnCustomDomainResource>> UpdateAsync(WaitUntil waitUntil, CdnCustomDomainCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomainResource.Update");
             scope.Start();
@@ -332,10 +327,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<CdnCustomDomainResource> Update(WaitUntil waitUntil, CdnCustomDomainCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _cdnCustomDomainClientDiagnostics.CreateScope("CdnCustomDomainResource.Update");
             scope.Start();

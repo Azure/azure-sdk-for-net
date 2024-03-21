@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (!(Rules is ChangeTrackingList<CustomRule> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Rules))
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();

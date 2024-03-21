@@ -26,24 +26,24 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Cost.HasValue)
+            if (Optional.IsDefined(Cost))
             {
                 writer.WritePropertyName("cost"u8);
                 writer.WriteNumberValue(Cost.Value);
             }
             writer.WritePropertyName("timespan"u8);
             writer.WriteStringValue(Timespan);
-            if (Interval.HasValue)
+            if (Optional.IsDefined(Interval))
             {
                 writer.WritePropertyName("interval"u8);
                 writer.WriteStringValue(Interval.Value, "P");
             }
-            if (Namespace != null)
+            if (Optional.IsDefined(Namespace))
             {
                 writer.WritePropertyName("namespace"u8);
                 writer.WriteStringValue(Namespace);
             }
-            if (Resourceregion != null)
+            if (Optional.IsDefined(Resourceregion))
             {
                 writer.WritePropertyName("resourceregion"u8);
                 writer.WriteStringValue(Resourceregion);

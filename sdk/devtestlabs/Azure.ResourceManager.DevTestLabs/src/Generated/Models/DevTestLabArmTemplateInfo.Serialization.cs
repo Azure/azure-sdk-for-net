@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Template != null)
+            if (Optional.IsDefined(Template))
             {
                 writer.WritePropertyName("template"u8);
 #if NET6_0_OR_GREATER
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
 #endif
             }
-            if (Parameters != null)
+            if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
 #if NET6_0_OR_GREATER

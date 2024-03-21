@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (BreakOutCategories != null)
+            if (Optional.IsDefined(BreakOutCategories))
             {
                 writer.WritePropertyName("breakOutCategories"u8);
                 writer.WriteObjectValue(BreakOutCategories);

@@ -28,22 +28,22 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Weight.HasValue)
+            if (Optional.IsDefined(Weight))
             {
                 writer.WritePropertyName("weight"u8);
                 writer.WriteStringValue(Weight.Value.ToString());
             }
-            if (PrimaryDefaultLoad.HasValue)
+            if (Optional.IsDefined(PrimaryDefaultLoad))
             {
                 writer.WritePropertyName("primaryDefaultLoad"u8);
                 writer.WriteNumberValue(PrimaryDefaultLoad.Value);
             }
-            if (SecondaryDefaultLoad.HasValue)
+            if (Optional.IsDefined(SecondaryDefaultLoad))
             {
                 writer.WritePropertyName("secondaryDefaultLoad"u8);
                 writer.WriteNumberValue(SecondaryDefaultLoad.Value);
             }
-            if (DefaultLoad.HasValue)
+            if (Optional.IsDefined(DefaultLoad))
             {
                 writer.WritePropertyName("defaultLoad"u8);
                 writer.WriteNumberValue(DefaultLoad.Value);

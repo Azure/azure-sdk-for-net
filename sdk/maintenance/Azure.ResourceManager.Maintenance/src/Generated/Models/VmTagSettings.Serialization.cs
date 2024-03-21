@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, IList<string>> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                 }
                 writer.WriteEndObject();
             }
-            if (FilterOperator.HasValue)
+            if (Optional.IsDefined(FilterOperator))
             {
                 writer.WritePropertyName("filterOperator"u8);
                 writer.WriteStringValue(FilterOperator.Value.ToSerialString());

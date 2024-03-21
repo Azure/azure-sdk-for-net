@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (VaultUri != null)
+            if (Optional.IsDefined(VaultUri))
             {
                 writer.WritePropertyName("vaultUri"u8);
                 writer.WriteStringValue(VaultUri.AbsoluteUri);
             }
-            if (KeyName != null)
+            if (Optional.IsDefined(KeyName))
             {
                 writer.WritePropertyName("keyName"u8);
                 writer.WriteStringValue(KeyName);
             }
-            if (KeyVersion != null)
+            if (Optional.IsDefined(KeyVersion))
             {
                 writer.WritePropertyName("keyVersion"u8);
                 writer.WriteStringValue(KeyVersion);

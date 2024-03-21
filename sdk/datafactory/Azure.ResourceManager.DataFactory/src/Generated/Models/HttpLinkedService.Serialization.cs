@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LinkedServiceType);
-            if (ConnectVia != null)
+            if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
                 writer.WriteObjectValue(ConnectVia);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, EntityParameterSpecification> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(Annotations is ChangeTrackingList<BinaryData> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -76,42 +76,42 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("url"u8);
             JsonSerializer.Serialize(writer, Uri);
-            if (AuthenticationType.HasValue)
+            if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType"u8);
                 writer.WriteStringValue(AuthenticationType.Value.ToString());
             }
-            if (UserName != null)
+            if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
                 JsonSerializer.Serialize(writer, UserName);
             }
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 JsonSerializer.Serialize(writer, Password);
             }
-            if (AuthHeaders != null)
+            if (Optional.IsDefined(AuthHeaders))
             {
                 writer.WritePropertyName("authHeaders"u8);
                 JsonSerializer.Serialize(writer, AuthHeaders);
             }
-            if (EmbeddedCertData != null)
+            if (Optional.IsDefined(EmbeddedCertData))
             {
                 writer.WritePropertyName("embeddedCertData"u8);
                 JsonSerializer.Serialize(writer, EmbeddedCertData);
             }
-            if (CertThumbprint != null)
+            if (Optional.IsDefined(CertThumbprint))
             {
                 writer.WritePropertyName("certThumbprint"u8);
                 JsonSerializer.Serialize(writer, CertThumbprint);
             }
-            if (EncryptedCredential != null)
+            if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteStringValue(EncryptedCredential);
             }
-            if (EnableServerCertificateValidation != null)
+            if (Optional.IsDefined(EnableServerCertificateValidation))
             {
                 writer.WritePropertyName("enableServerCertificateValidation"u8);
                 JsonSerializer.Serialize(writer, EnableServerCertificateValidation);
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> url = default;
             HttpAuthenticationType? authenticationType = default;
             DataFactoryElement<string> userName = default;
-            DataFactorySecretBaseDefinition password = default;
+            DataFactorySecret password = default;
             DataFactoryElement<IDictionary<string, string>> authHeaders = default;
             DataFactoryElement<string> embeddedCertData = default;
             DataFactoryElement<string> certThumbprint = default;
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
+                            password = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("authHeaders"u8))

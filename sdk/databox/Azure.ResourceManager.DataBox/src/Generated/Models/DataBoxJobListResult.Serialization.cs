@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -27,7 +26,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (!(Value is ChangeTrackingList<DataBoxJobData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +36,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (NextLink != null)
+            if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);

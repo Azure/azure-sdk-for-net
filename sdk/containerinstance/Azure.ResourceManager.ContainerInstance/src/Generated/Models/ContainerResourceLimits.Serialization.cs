@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
 
             writer.WriteStartObject();
-            if (MemoryInGB.HasValue)
+            if (Optional.IsDefined(MemoryInGB))
             {
                 writer.WritePropertyName("memoryInGB"u8);
                 writer.WriteNumberValue(MemoryInGB.Value);
             }
-            if (Cpu.HasValue)
+            if (Optional.IsDefined(Cpu))
             {
                 writer.WritePropertyName("cpu"u8);
                 writer.WriteNumberValue(Cpu.Value);
             }
-            if (Gpu != null)
+            if (Optional.IsDefined(Gpu))
             {
                 writer.WritePropertyName("gpu"u8);
                 writer.WriteObjectValue(Gpu);

@@ -30,19 +30,19 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("namespace"u8);
             writer.WriteStringValue(Namespace);
-            if (BindingSelector != null)
+            if (Optional.IsDefined(BindingSelector))
             {
                 writer.WritePropertyName("bindingSelector"u8);
                 writer.WriteStringValue(BindingSelector);
             }
             writer.WritePropertyName("identity"u8);
             writer.WriteObjectValue(Identity);
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningInfo != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningInfo))
             {
                 writer.WritePropertyName("provisioningInfo"u8);
                 writer.WriteObjectValue(ProvisioningInfo);

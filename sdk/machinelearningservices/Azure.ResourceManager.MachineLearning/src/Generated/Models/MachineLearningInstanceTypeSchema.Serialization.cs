@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (!(NodeSelector is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(NodeSelector))
             {
                 if (NodeSelector != null)
                 {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("nodeSelector");
                 }
             }
-            if (Resources != null)
+            if (Optional.IsDefined(Resources))
             {
                 writer.WritePropertyName("resources"u8);
                 writer.WriteObjectValue(Resources);

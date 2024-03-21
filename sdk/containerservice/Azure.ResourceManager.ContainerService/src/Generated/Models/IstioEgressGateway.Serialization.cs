@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WriteStartObject();
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(IsEnabled);
-            if (!(NodeSelector is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(NodeSelector))
             {
                 writer.WritePropertyName("nodeSelector"u8);
                 writer.WriteStartObject();

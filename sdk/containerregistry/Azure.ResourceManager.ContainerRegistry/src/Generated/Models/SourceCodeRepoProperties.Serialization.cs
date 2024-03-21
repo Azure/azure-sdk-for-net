@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStringValue(SourceControlType.ToString());
             writer.WritePropertyName("repositoryUrl"u8);
             writer.WriteStringValue(RepositoryUri.AbsoluteUri);
-            if (Branch != null)
+            if (Optional.IsDefined(Branch))
             {
                 writer.WritePropertyName("branch"u8);
                 writer.WriteStringValue(Branch);
             }
-            if (SourceControlAuthProperties != null)
+            if (Optional.IsDefined(SourceControlAuthProperties))
             {
                 writer.WritePropertyName("sourceControlAuthProperties"u8);
                 writer.WriteObjectValue(SourceControlAuthProperties);

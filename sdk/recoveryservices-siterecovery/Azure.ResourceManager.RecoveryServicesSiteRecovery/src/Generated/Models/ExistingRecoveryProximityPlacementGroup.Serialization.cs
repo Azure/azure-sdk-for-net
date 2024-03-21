@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (RecoveryProximityPlacementGroupId != null)
+            if (Optional.IsDefined(RecoveryProximityPlacementGroupId))
             {
                 writer.WritePropertyName("recoveryProximityPlacementGroupId"u8);
                 writer.WriteStringValue(RecoveryProximityPlacementGroupId);

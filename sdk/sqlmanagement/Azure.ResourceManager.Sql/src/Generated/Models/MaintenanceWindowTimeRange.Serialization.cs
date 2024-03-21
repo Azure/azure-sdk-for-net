@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (DayOfWeek.HasValue)
+            if (Optional.IsDefined(DayOfWeek))
             {
                 writer.WritePropertyName("dayOfWeek"u8);
                 writer.WriteStringValue(DayOfWeek.Value.ToString());
             }
-            if (StartTime != null)
+            if (Optional.IsDefined(StartTime))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartTime);
             }
-            if (Duration.HasValue)
+            if (Optional.IsDefined(Duration))
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration.Value, "P");

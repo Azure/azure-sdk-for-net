@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (EncodingType.HasValue)
+            if (Optional.IsDefined(EncodingType))
             {
                 writer.WritePropertyName("encodingType"u8);
                 writer.WriteStringValue(EncodingType.Value.ToString());
             }
-            if (PresetName != null)
+            if (Optional.IsDefined(PresetName))
             {
                 writer.WritePropertyName("presetName"u8);
                 writer.WriteStringValue(PresetName);
             }
-            if (StretchMode.HasValue)
+            if (Optional.IsDefined(StretchMode))
             {
                 if (StretchMode != null)
                 {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Media.Models
                     writer.WriteNull("stretchMode");
                 }
             }
-            if (KeyFrameInterval.HasValue)
+            if (Optional.IsDefined(KeyFrameInterval))
             {
                 if (KeyFrameInterval != null)
                 {

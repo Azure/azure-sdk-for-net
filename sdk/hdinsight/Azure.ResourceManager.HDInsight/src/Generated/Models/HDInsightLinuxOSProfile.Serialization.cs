@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Username != null)
+            if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
             }
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (SshProfile != null)
+            if (Optional.IsDefined(SshProfile))
             {
                 writer.WritePropertyName("sshProfile"u8);
                 writer.WriteObjectValue(SshProfile);

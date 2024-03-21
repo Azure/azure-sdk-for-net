@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             }
 
             writer.WriteStartObject();
-            if (!(Settings is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Settings))
             {
                 writer.WritePropertyName("settings"u8);
                 writer.WriteStartObject();

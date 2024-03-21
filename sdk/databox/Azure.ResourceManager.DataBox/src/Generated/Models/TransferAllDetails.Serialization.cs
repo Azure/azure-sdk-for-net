@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStartObject();
             writer.WritePropertyName("dataAccountType"u8);
             writer.WriteStringValue(DataAccountType.ToSerialString());
-            if (TransferAllBlobs.HasValue)
+            if (Optional.IsDefined(TransferAllBlobs))
             {
                 writer.WritePropertyName("transferAllBlobs"u8);
                 writer.WriteBooleanValue(TransferAllBlobs.Value);
             }
-            if (TransferAllFiles.HasValue)
+            if (Optional.IsDefined(TransferAllFiles))
             {
                 writer.WritePropertyName("transferAllFiles"u8);
                 writer.WriteBooleanValue(TransferAllFiles.Value);

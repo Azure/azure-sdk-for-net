@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(SubscriptionIds is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SubscriptionIds))
             {
                 writer.WritePropertyName("subscriptionIds"u8);
                 writer.WriteStartArray();

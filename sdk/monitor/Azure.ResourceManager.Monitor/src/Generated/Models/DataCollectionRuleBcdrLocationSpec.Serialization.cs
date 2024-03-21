@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (ProvisioningStatus.HasValue)
+            if (Optional.IsDefined(ProvisioningStatus))
             {
                 writer.WritePropertyName("provisioningStatus"u8);
                 writer.WriteStringValue(ProvisioningStatus.Value.ToString());

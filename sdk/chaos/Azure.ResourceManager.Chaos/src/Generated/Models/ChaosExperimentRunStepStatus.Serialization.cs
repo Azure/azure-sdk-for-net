@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Chaos.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && StepName != null)
+            if (options.Format != "W" && Optional.IsDefined(StepName))
             {
                 writer.WritePropertyName("stepName"u8);
                 writer.WriteStringValue(StepName);
             }
-            if (options.Format != "W" && StepId != null)
+            if (options.Format != "W" && Optional.IsDefined(StepId))
             {
                 writer.WritePropertyName("stepId"u8);
                 writer.WriteStringValue(StepId);
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && !(Branches is ChangeTrackingList<ChaosExperimentRunBranchStatus> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Branches))
             {
                 writer.WritePropertyName("branches"u8);
                 writer.WriteStartArray();

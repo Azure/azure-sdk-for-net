@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (Metric != null)
+            if (Optional.IsDefined(Metric))
             {
                 writer.WritePropertyName("metric"u8);
                 writer.WriteStringValue(Metric);
             }
-            if (Unit.HasValue)
+            if (Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit.Value.ToString());
             }
-            if (!(Groups is ChangeTrackingList<WafMetricsResponseSeriesPropertiesItemsItem> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Groups))
             {
                 if (Groups != null)
                 {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     writer.WriteNull("groups");
                 }
             }
-            if (!(Data is ChangeTrackingList<Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Data))
             {
                 writer.WritePropertyName("data"u8);
                 writer.WriteStartArray();

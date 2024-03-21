@@ -28,27 +28,27 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             writer.WriteStartObject();
             writer.WritePropertyName("relay"u8);
             writer.WriteStartObject();
-            if (NamespaceName != null)
+            if (Optional.IsDefined(NamespaceName))
             {
                 writer.WritePropertyName("namespaceName"u8);
                 writer.WriteStringValue(NamespaceName);
             }
-            if (NamespaceNameSuffix != null)
+            if (Optional.IsDefined(NamespaceNameSuffix))
             {
                 writer.WritePropertyName("namespaceNameSuffix"u8);
                 writer.WriteStringValue(NamespaceNameSuffix);
             }
-            if (HybridConnectionName != null)
+            if (Optional.IsDefined(HybridConnectionName))
             {
                 writer.WritePropertyName("hybridConnectionName"u8);
                 writer.WriteStringValue(HybridConnectionName);
             }
-            if (options.Format != "W" && AccessKey != null)
+            if (options.Format != "W" && Optional.IsDefined(AccessKey))
             {
                 writer.WritePropertyName("accessKey"u8);
                 writer.WriteStringValue(AccessKey);
             }
-            if (ExpiresOn.HasValue)
+            if (Optional.IsDefined(ExpiresOn))
             {
                 writer.WritePropertyName("expiresOn"u8);
                 writer.WriteNumberValue(ExpiresOn.Value);

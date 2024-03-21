@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
             }
-            if (options.Format != "W" && WaitDurationInSeconds.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(WaitDurationInSeconds))
             {
                 writer.WritePropertyName("waitDurationInSeconds"u8);
                 writer.WriteNumberValue(WaitDurationInSeconds.Value);

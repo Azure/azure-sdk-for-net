@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (!(BlobPrefixList is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(BlobPrefixList))
             {
                 writer.WritePropertyName("blobPrefixList"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(BlobPathList is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(BlobPathList))
             {
                 writer.WritePropertyName("blobPathList"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ContainerList is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(ContainerList))
             {
                 writer.WritePropertyName("containerList"u8);
                 writer.WriteStartArray();

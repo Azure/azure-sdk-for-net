@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Peering.Models
             }
 
             writer.WriteStartObject();
-            if (PeeringServiceLocation != null)
+            if (Optional.IsDefined(PeeringServiceLocation))
             {
                 writer.WritePropertyName("peeringServiceLocation"u8);
                 writer.WriteStringValue(PeeringServiceLocation);
             }
-            if (PeeringServiceProvider != null)
+            if (Optional.IsDefined(PeeringServiceProvider))
             {
                 writer.WritePropertyName("peeringServiceProvider"u8);
                 writer.WriteStringValue(PeeringServiceProvider);

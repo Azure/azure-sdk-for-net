@@ -10,10 +10,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.CosmosDB.Models;
 
 namespace Azure.ResourceManager.CosmosDB
@@ -283,10 +281,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<GraphResourceGetResultResource>> UpdateAsync(WaitUntil waitUntil, GraphResourceGetResultCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _graphResourceGetResultGraphResourcesClientDiagnostics.CreateScope("GraphResourceGetResultResource.Update");
             scope.Start();
@@ -332,10 +327,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<GraphResourceGetResultResource> Update(WaitUntil waitUntil, GraphResourceGetResultCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _graphResourceGetResultGraphResourcesClientDiagnostics.CreateScope("GraphResourceGetResultResource.Update");
             scope.Start();
@@ -381,14 +373,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<GraphResourceGetResultResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _graphResourceGetResultGraphResourcesClientDiagnostics.CreateScope("GraphResourceGetResultResource.AddTag");
             scope.Start();
@@ -449,14 +435,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<GraphResourceGetResultResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _graphResourceGetResultGraphResourcesClientDiagnostics.CreateScope("GraphResourceGetResultResource.AddTag");
             scope.Start();
@@ -516,10 +496,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<GraphResourceGetResultResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _graphResourceGetResultGraphResourcesClientDiagnostics.CreateScope("GraphResourceGetResultResource.SetTags");
             scope.Start();
@@ -576,10 +553,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<GraphResourceGetResultResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _graphResourceGetResultGraphResourcesClientDiagnostics.CreateScope("GraphResourceGetResultResource.SetTags");
             scope.Start();
@@ -636,10 +610,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<GraphResourceGetResultResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _graphResourceGetResultGraphResourcesClientDiagnostics.CreateScope("GraphResourceGetResultResource.RemoveTag");
             scope.Start();
@@ -699,10 +670,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<GraphResourceGetResultResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _graphResourceGetResultGraphResourcesClientDiagnostics.CreateScope("GraphResourceGetResultResource.RemoveTag");
             scope.Start();

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             }
 
             writer.WriteStartObject();
-            if (HttpsProxy != null)
+            if (Optional.IsDefined(HttpsProxy))
             {
                 writer.WritePropertyName("httpsProxy"u8);
                 writer.WriteStringValue(HttpsProxy);

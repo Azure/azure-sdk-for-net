@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (MaxDeliveryCount.HasValue)
+            if (Optional.IsDefined(MaxDeliveryCount))
             {
                 writer.WritePropertyName("maxDeliveryCount"u8);
                 writer.WriteNumberValue(MaxDeliveryCount.Value);
             }
-            if (EventTimeToLive != null)
+            if (Optional.IsDefined(EventTimeToLive))
             {
                 writer.WritePropertyName("eventTimeToLive"u8);
                 writer.WriteStringValue(EventTimeToLive);
             }
-            if (DeadLetterDestinationWithResourceIdentity != null)
+            if (Optional.IsDefined(DeadLetterDestinationWithResourceIdentity))
             {
                 writer.WritePropertyName("deadLetterDestinationWithResourceIdentity"u8);
                 writer.WriteObjectValue(DeadLetterDestinationWithResourceIdentity);
             }
-            if (DeliveryWithResourceIdentity != null)
+            if (Optional.IsDefined(DeliveryWithResourceIdentity))
             {
                 writer.WritePropertyName("deliveryWithResourceIdentity"u8);
                 writer.WriteObjectValue(DeliveryWithResourceIdentity);

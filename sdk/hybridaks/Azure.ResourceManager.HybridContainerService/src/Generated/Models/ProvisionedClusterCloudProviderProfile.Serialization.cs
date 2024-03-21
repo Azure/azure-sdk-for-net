@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (InfraNetworkProfile != null)
+            if (Optional.IsDefined(InfraNetworkProfile))
             {
                 writer.WritePropertyName("infraNetworkProfile"u8);
                 writer.WriteObjectValue(InfraNetworkProfile);

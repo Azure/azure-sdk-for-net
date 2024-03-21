@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (ReplicaCompletionCount.HasValue)
+            if (Optional.IsDefined(ReplicaCompletionCount))
             {
                 writer.WritePropertyName("replicaCompletionCount"u8);
                 writer.WriteNumberValue(ReplicaCompletionCount.Value);
             }
             writer.WritePropertyName("cronExpression"u8);
             writer.WriteStringValue(CronExpression);
-            if (Parallelism.HasValue)
+            if (Optional.IsDefined(Parallelism))
             {
                 writer.WritePropertyName("parallelism"u8);
                 writer.WriteNumberValue(Parallelism.Value);

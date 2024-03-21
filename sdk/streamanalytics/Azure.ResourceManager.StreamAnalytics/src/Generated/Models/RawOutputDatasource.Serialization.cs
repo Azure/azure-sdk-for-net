@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStringValue(OutputDataSourceType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PayloadUri != null)
+            if (Optional.IsDefined(PayloadUri))
             {
                 writer.WritePropertyName("payloadUri"u8);
                 writer.WriteStringValue(PayloadUri.AbsoluteUri);

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (SsisStoreType.HasValue)
+            if (Optional.IsDefined(SsisStoreType))
             {
                 writer.WritePropertyName("ssisStoreType"u8);
                 writer.WriteStringValue(SsisStoreType.Value.ToString());
             }
-            if (ProjectOverwriteOption.HasValue)
+            if (Optional.IsDefined(ProjectOverwriteOption))
             {
                 writer.WritePropertyName("projectOverwriteOption"u8);
                 writer.WriteStringValue(ProjectOverwriteOption.Value.ToString());
             }
-            if (EnvironmentOverwriteOption.HasValue)
+            if (Optional.IsDefined(EnvironmentOverwriteOption))
             {
                 writer.WritePropertyName("environmentOverwriteOption"u8);
                 writer.WriteStringValue(EnvironmentOverwriteOption.Value.ToString());

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (ServiceUri != null)
+            if (Optional.IsDefined(ServiceUri))
             {
                 writer.WritePropertyName("serviceUrl"u8);
                 writer.WriteStringValue(ServiceUri.AbsoluteUri);

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStringValue(FunctionBindingType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Script != null)
+            if (Optional.IsDefined(Script))
             {
                 writer.WritePropertyName("script"u8);
                 writer.WriteStringValue(Script);

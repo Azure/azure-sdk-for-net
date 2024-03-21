@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (ResourceGroupId != null)
+            if (Optional.IsDefined(ResourceGroupId))
             {
                 writer.WritePropertyName("resourceGroupId"u8);
                 writer.WriteStringValue(ResourceGroupId);

@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteBooleanValue(RolloverInterchangeControlNumber);
             writer.WritePropertyName("enableDefaultGroupHeaders"u8);
             writer.WriteBooleanValue(EnableDefaultGroupHeaders);
-            if (FunctionalGroupId != null)
+            if (Optional.IsDefined(FunctionalGroupId))
             {
                 writer.WritePropertyName("functionalGroupId"u8);
                 writer.WriteStringValue(FunctionalGroupId);
@@ -65,12 +65,12 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteNumberValue(TransactionSetControlNumberUpperBound);
             writer.WritePropertyName("rolloverTransactionSetControlNumber"u8);
             writer.WriteBooleanValue(RolloverTransactionSetControlNumber);
-            if (TransactionSetControlNumberPrefix != null)
+            if (Optional.IsDefined(TransactionSetControlNumberPrefix))
             {
                 writer.WritePropertyName("transactionSetControlNumberPrefix"u8);
                 writer.WriteStringValue(TransactionSetControlNumberPrefix);
             }
-            if (TransactionSetControlNumberSuffix != null)
+            if (Optional.IsDefined(TransactionSetControlNumberSuffix))
             {
                 writer.WritePropertyName("transactionSetControlNumberSuffix"u8);
                 writer.WriteStringValue(TransactionSetControlNumberSuffix);

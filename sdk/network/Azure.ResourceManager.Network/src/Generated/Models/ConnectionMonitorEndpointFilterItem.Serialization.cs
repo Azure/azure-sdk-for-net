@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (ItemType.HasValue)
+            if (Optional.IsDefined(ItemType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ItemType.Value.ToString());
             }
-            if (Address != null)
+            if (Optional.IsDefined(Address))
             {
                 writer.WritePropertyName("address"u8);
                 writer.WriteStringValue(Address);

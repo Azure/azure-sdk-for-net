@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.StorageMover.Models
             }
 
             writer.WriteStartObject();
-            if (Credentials != null)
+            if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
                 writer.WriteObjectValue(Credentials);
             }
             writer.WritePropertyName("endpointType"u8);
             writer.WriteStringValue(EndpointType.ToString());
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);

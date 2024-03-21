@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStringValue(Direction.ToString());
             writer.WritePropertyName("detailLevel"u8);
             writer.WriteStringValue(DetailLevel.ToString());
-            if (HiddenPropertyPaths != null)
+            if (Optional.IsDefined(HiddenPropertyPaths))
             {
                 writer.WritePropertyName("hiddenPropertyPaths"u8);
                 writer.WriteObjectValue(HiddenPropertyPaths);

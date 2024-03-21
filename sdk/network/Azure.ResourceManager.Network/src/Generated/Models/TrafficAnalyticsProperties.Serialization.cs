@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (TrafficAnalyticsConfiguration != null)
+            if (Optional.IsDefined(TrafficAnalyticsConfiguration))
             {
                 writer.WritePropertyName("networkWatcherFlowAnalyticsConfiguration"u8);
                 writer.WriteObjectValue(TrafficAnalyticsConfiguration);

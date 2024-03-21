@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (!(SensitiveInfoTypesIds is ChangeTrackingList<Guid> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SensitiveInfoTypesIds))
             {
                 writer.WritePropertyName("sensitiveInfoTypesIds"u8);
                 writer.WriteStartArray();
@@ -36,17 +36,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (SensitivityThresholdLabelOrder.HasValue)
+            if (Optional.IsDefined(SensitivityThresholdLabelOrder))
             {
                 writer.WritePropertyName("sensitivityThresholdLabelOrder"u8);
                 writer.WriteNumberValue(SensitivityThresholdLabelOrder.Value);
             }
-            if (SensitivityThresholdLabelId.HasValue)
+            if (Optional.IsDefined(SensitivityThresholdLabelId))
             {
                 writer.WritePropertyName("sensitivityThresholdLabelId"u8);
                 writer.WriteStringValue(SensitivityThresholdLabelId.Value);
             }
-            if (MipInformation != null)
+            if (Optional.IsDefined(MipInformation))
             {
                 writer.WritePropertyName("mipInformation"u8);
                 writer.WriteObjectValue(MipInformation);

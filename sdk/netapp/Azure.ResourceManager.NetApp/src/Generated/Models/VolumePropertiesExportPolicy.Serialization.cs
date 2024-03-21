@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (!(Rules is ChangeTrackingList<NetAppVolumeExportPolicyRule> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Rules))
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();

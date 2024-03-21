@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.WebPubSub.Models
             }
 
             writer.WriteStartObject();
-            if (NameAvailable.HasValue)
+            if (Optional.IsDefined(NameAvailable))
             {
                 writer.WritePropertyName("nameAvailable"u8);
                 writer.WriteBooleanValue(NameAvailable.Value);
             }
-            if (Reason != null)
+            if (Optional.IsDefined(Reason))
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
             }
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);

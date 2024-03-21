@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (HelmMappingRuleProfile != null)
+            if (Optional.IsDefined(HelmMappingRuleProfile))
             {
                 writer.WritePropertyName("helmMappingRuleProfile"u8);
                 writer.WriteObjectValue(HelmMappingRuleProfile);
             }
-            if (ApplicationEnablement.HasValue)
+            if (Optional.IsDefined(ApplicationEnablement))
             {
                 writer.WritePropertyName("applicationEnablement"u8);
                 writer.WriteStringValue(ApplicationEnablement.Value.ToString());

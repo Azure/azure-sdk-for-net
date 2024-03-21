@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (ServerVersion.HasValue)
+            if (Optional.IsDefined(ServerVersion))
             {
                 writer.WritePropertyName("serverVersion"u8);
                 writer.WriteStringValue(ServerVersion.Value.ToString());

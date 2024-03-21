@@ -30,14 +30,14 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("startTime"u8);
             writer.WriteStringValue(StartOn, "O");
-            if (ExpireOn.HasValue)
+            if (Optional.IsDefined(ExpireOn))
             {
                 if (ExpireOn != null)
                 {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Automation.Models
                     writer.WriteNull("expiryTime");
                 }
             }
-            if (Interval != null)
+            if (Optional.IsDefined(Interval))
             {
                 writer.WritePropertyName("interval"u8);
 #if NET6_0_OR_GREATER
@@ -63,12 +63,12 @@ namespace Azure.ResourceManager.Automation.Models
             }
             writer.WritePropertyName("frequency"u8);
             writer.WriteStringValue(Frequency.ToString());
-            if (TimeZone != null)
+            if (Optional.IsDefined(TimeZone))
             {
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
-            if (AdvancedSchedule != null)
+            if (Optional.IsDefined(AdvancedSchedule))
             {
                 writer.WritePropertyName("advancedSchedule"u8);
                 writer.WriteObjectValue(AdvancedSchedule);

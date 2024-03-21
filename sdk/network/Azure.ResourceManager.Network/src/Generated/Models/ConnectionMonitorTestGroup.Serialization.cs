@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Disable.HasValue)
+            if (Optional.IsDefined(Disable))
             {
                 writer.WritePropertyName("disable"u8);
                 writer.WriteBooleanValue(Disable.Value);

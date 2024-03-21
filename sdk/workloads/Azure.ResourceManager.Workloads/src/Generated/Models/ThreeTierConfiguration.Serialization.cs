@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (NetworkConfiguration != null)
+            if (Optional.IsDefined(NetworkConfiguration))
             {
                 writer.WritePropertyName("networkConfiguration"u8);
                 writer.WriteObjectValue(NetworkConfiguration);
@@ -37,17 +37,17 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteObjectValue(ApplicationServer);
             writer.WritePropertyName("databaseServer"u8);
             writer.WriteObjectValue(DatabaseServer);
-            if (HighAvailabilityConfig != null)
+            if (Optional.IsDefined(HighAvailabilityConfig))
             {
                 writer.WritePropertyName("highAvailabilityConfig"u8);
                 writer.WriteObjectValue(HighAvailabilityConfig);
             }
-            if (StorageConfiguration != null)
+            if (Optional.IsDefined(StorageConfiguration))
             {
                 writer.WritePropertyName("storageConfiguration"u8);
                 writer.WriteObjectValue(StorageConfiguration);
             }
-            if (CustomResourceNames != null)
+            if (Optional.IsDefined(CustomResourceNames))
             {
                 writer.WritePropertyName("customResourceNames"u8);
                 writer.WriteObjectValue(CustomResourceNames);

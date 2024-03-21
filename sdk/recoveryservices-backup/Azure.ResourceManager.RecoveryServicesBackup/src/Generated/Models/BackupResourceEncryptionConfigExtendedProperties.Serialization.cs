@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (UserAssignedIdentity != null)
+            if (Optional.IsDefined(UserAssignedIdentity))
             {
                 writer.WritePropertyName("userAssignedIdentity"u8);
                 writer.WriteStringValue(UserAssignedIdentity);
             }
-            if (UseSystemAssignedIdentity.HasValue)
+            if (Optional.IsDefined(UseSystemAssignedIdentity))
             {
                 writer.WritePropertyName("useSystemAssignedIdentity"u8);
                 writer.WriteBooleanValue(UseSystemAssignedIdentity.Value);
             }
-            if (EncryptionAtRestType.HasValue)
+            if (Optional.IsDefined(EncryptionAtRestType))
             {
                 writer.WritePropertyName("encryptionAtRestType"u8);
                 writer.WriteStringValue(EncryptionAtRestType.Value.ToString());
             }
-            if (KeyUri != null)
+            if (Optional.IsDefined(KeyUri))
             {
                 writer.WritePropertyName("keyUri"u8);
                 writer.WriteStringValue(KeyUri.AbsoluteUri);
             }
-            if (SubscriptionId != null)
+            if (Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (LastUpdateStatus.HasValue)
+            if (Optional.IsDefined(LastUpdateStatus))
             {
                 writer.WritePropertyName("lastUpdateStatus"u8);
                 writer.WriteStringValue(LastUpdateStatus.Value.ToString());
             }
-            if (InfrastructureEncryptionState.HasValue)
+            if (Optional.IsDefined(InfrastructureEncryptionState))
             {
                 writer.WritePropertyName("infrastructureEncryptionState"u8);
                 writer.WriteStringValue(InfrastructureEncryptionState.Value.ToString());

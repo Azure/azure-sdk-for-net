@@ -18,7 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (RunId != null)
+            if (Optional.IsDefined(RunId))
             {
                 writer.WritePropertyName("runId"u8);
                 writer.WriteStringValue(RunId);

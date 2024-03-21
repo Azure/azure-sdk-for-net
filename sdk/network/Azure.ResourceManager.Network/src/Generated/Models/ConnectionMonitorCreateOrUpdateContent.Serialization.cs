@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -44,27 +44,27 @@ namespace Azure.ResourceManager.Network.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Source != null)
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteObjectValue(Source);
             }
-            if (Destination != null)
+            if (Optional.IsDefined(Destination))
             {
                 writer.WritePropertyName("destination"u8);
                 writer.WriteObjectValue(Destination);
             }
-            if (AutoStart.HasValue)
+            if (Optional.IsDefined(AutoStart))
             {
                 writer.WritePropertyName("autoStart"u8);
                 writer.WriteBooleanValue(AutoStart.Value);
             }
-            if (MonitoringIntervalInSeconds.HasValue)
+            if (Optional.IsDefined(MonitoringIntervalInSeconds))
             {
                 writer.WritePropertyName("monitoringIntervalInSeconds"u8);
                 writer.WriteNumberValue(MonitoringIntervalInSeconds.Value);
             }
-            if (!(Endpoints is ChangeTrackingList<ConnectionMonitorEndpoint> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Endpoints))
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(TestConfigurations is ChangeTrackingList<ConnectionMonitorTestConfiguration> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(TestConfigurations))
             {
                 writer.WritePropertyName("testConfigurations"u8);
                 writer.WriteStartArray();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(TestGroups is ChangeTrackingList<ConnectionMonitorTestGroup> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(TestGroups))
             {
                 writer.WritePropertyName("testGroups"u8);
                 writer.WriteStartArray();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Outputs is ChangeTrackingList<ConnectionMonitorOutput> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(Outputs))
             {
                 writer.WritePropertyName("outputs"u8);
                 writer.WriteStartArray();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Notes != null)
+            if (Optional.IsDefined(Notes))
             {
                 writer.WritePropertyName("notes"u8);
                 writer.WriteStringValue(Notes);

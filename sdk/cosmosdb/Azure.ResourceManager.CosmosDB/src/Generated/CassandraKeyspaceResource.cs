@@ -10,10 +10,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.CosmosDB.Models;
 
 namespace Azure.ResourceManager.CosmosDB
@@ -428,10 +426,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<CassandraKeyspaceResource>> UpdateAsync(WaitUntil waitUntil, CassandraKeyspaceCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _cassandraKeyspaceCassandraResourcesClientDiagnostics.CreateScope("CassandraKeyspaceResource.Update");
             scope.Start();
@@ -477,10 +472,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<CassandraKeyspaceResource> Update(WaitUntil waitUntil, CassandraKeyspaceCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _cassandraKeyspaceCassandraResourcesClientDiagnostics.CreateScope("CassandraKeyspaceResource.Update");
             scope.Start();
@@ -526,14 +518,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<CassandraKeyspaceResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _cassandraKeyspaceCassandraResourcesClientDiagnostics.CreateScope("CassandraKeyspaceResource.AddTag");
             scope.Start();
@@ -594,14 +580,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<CassandraKeyspaceResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _cassandraKeyspaceCassandraResourcesClientDiagnostics.CreateScope("CassandraKeyspaceResource.AddTag");
             scope.Start();
@@ -661,10 +641,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<CassandraKeyspaceResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _cassandraKeyspaceCassandraResourcesClientDiagnostics.CreateScope("CassandraKeyspaceResource.SetTags");
             scope.Start();
@@ -721,10 +698,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<CassandraKeyspaceResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _cassandraKeyspaceCassandraResourcesClientDiagnostics.CreateScope("CassandraKeyspaceResource.SetTags");
             scope.Start();
@@ -781,10 +755,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<CassandraKeyspaceResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _cassandraKeyspaceCassandraResourcesClientDiagnostics.CreateScope("CassandraKeyspaceResource.RemoveTag");
             scope.Start();
@@ -844,10 +815,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<CassandraKeyspaceResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _cassandraKeyspaceCassandraResourcesClientDiagnostics.CreateScope("CassandraKeyspaceResource.RemoveTag");
             scope.Start();

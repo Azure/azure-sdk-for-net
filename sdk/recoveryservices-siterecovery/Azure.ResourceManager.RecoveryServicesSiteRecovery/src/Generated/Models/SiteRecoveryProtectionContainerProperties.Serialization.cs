@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (FabricFriendlyName != null)
+            if (Optional.IsDefined(FabricFriendlyName))
             {
                 writer.WritePropertyName("fabricFriendlyName"u8);
                 writer.WriteStringValue(FabricFriendlyName);
             }
-            if (FriendlyName != null)
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (FabricType != null)
+            if (Optional.IsDefined(FabricType))
             {
                 writer.WritePropertyName("fabricType"u8);
                 writer.WriteStringValue(FabricType);
             }
-            if (ProtectedItemCount.HasValue)
+            if (Optional.IsDefined(ProtectedItemCount))
             {
                 writer.WritePropertyName("protectedItemCount"u8);
                 writer.WriteNumberValue(ProtectedItemCount.Value);
             }
-            if (PairingStatus != null)
+            if (Optional.IsDefined(PairingStatus))
             {
                 writer.WritePropertyName("pairingStatus"u8);
                 writer.WriteStringValue(PairingStatus);
             }
-            if (Role != null)
+            if (Optional.IsDefined(Role))
             {
                 writer.WritePropertyName("role"u8);
                 writer.WriteStringValue(Role);
             }
-            if (FabricSpecificDetails != null)
+            if (Optional.IsDefined(FabricSpecificDetails))
             {
                 writer.WritePropertyName("fabricSpecificDetails"u8);
                 writer.WriteObjectValue(FabricSpecificDetails);

@@ -26,52 +26,52 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && InstallationActivityId != null)
+            if (options.Format != "W" && Optional.IsDefined(InstallationActivityId))
             {
                 writer.WritePropertyName("installationActivityId"u8);
                 writer.WriteStringValue(InstallationActivityId);
             }
-            if (options.Format != "W" && RebootStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RebootStatus))
             {
                 writer.WritePropertyName("rebootStatus"u8);
                 writer.WriteStringValue(RebootStatus.Value.ToString());
             }
-            if (options.Format != "W" && MaintenanceWindowExceeded.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MaintenanceWindowExceeded))
             {
                 writer.WritePropertyName("maintenanceWindowExceeded"u8);
                 writer.WriteBooleanValue(MaintenanceWindowExceeded.Value);
             }
-            if (options.Format != "W" && ExcludedPatchCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExcludedPatchCount))
             {
                 writer.WritePropertyName("excludedPatchCount"u8);
                 writer.WriteNumberValue(ExcludedPatchCount.Value);
             }
-            if (options.Format != "W" && NotSelectedPatchCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NotSelectedPatchCount))
             {
                 writer.WritePropertyName("notSelectedPatchCount"u8);
                 writer.WriteNumberValue(NotSelectedPatchCount.Value);
             }
-            if (options.Format != "W" && PendingPatchCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PendingPatchCount))
             {
                 writer.WritePropertyName("pendingPatchCount"u8);
                 writer.WriteNumberValue(PendingPatchCount.Value);
             }
-            if (options.Format != "W" && InstalledPatchCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(InstalledPatchCount))
             {
                 writer.WritePropertyName("installedPatchCount"u8);
                 writer.WriteNumberValue(InstalledPatchCount.Value);
             }
-            if (options.Format != "W" && FailedPatchCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(FailedPatchCount))
             {
                 writer.WritePropertyName("failedPatchCount"u8);
                 writer.WriteNumberValue(FailedPatchCount.Value);
             }
-            if (options.Format != "W" && !(Patches is ChangeTrackingList<PatchInstallationDetail> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Patches))
             {
                 writer.WritePropertyName("patches"u8);
                 writer.WriteStartArray();
@@ -81,12 +81,12 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startDateTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Error != null)
+            if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);

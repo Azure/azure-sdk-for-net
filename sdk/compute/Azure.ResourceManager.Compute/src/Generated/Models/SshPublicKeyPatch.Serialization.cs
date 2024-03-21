@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PublicKey != null)
+            if (Optional.IsDefined(PublicKey))
             {
                 writer.WritePropertyName("publicKey"u8);
                 writer.WriteStringValue(PublicKey);

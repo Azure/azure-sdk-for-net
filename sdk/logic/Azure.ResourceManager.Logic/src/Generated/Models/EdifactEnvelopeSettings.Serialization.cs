@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (GroupAssociationAssignedCode != null)
+            if (Optional.IsDefined(GroupAssociationAssignedCode))
             {
                 writer.WritePropertyName("groupAssociationAssignedCode"u8);
                 writer.WriteStringValue(GroupAssociationAssignedCode);
             }
-            if (CommunicationAgreementId != null)
+            if (Optional.IsDefined(CommunicationAgreementId))
             {
                 writer.WritePropertyName("communicationAgreementId"u8);
                 writer.WriteStringValue(CommunicationAgreementId);
@@ -42,22 +42,22 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteBooleanValue(CreateGroupingSegments);
             writer.WritePropertyName("enableDefaultGroupHeaders"u8);
             writer.WriteBooleanValue(EnableDefaultGroupHeaders);
-            if (RecipientReferencePasswordValue != null)
+            if (Optional.IsDefined(RecipientReferencePasswordValue))
             {
                 writer.WritePropertyName("recipientReferencePasswordValue"u8);
                 writer.WriteStringValue(RecipientReferencePasswordValue);
             }
-            if (RecipientReferencePasswordQualifier != null)
+            if (Optional.IsDefined(RecipientReferencePasswordQualifier))
             {
                 writer.WritePropertyName("recipientReferencePasswordQualifier"u8);
                 writer.WriteStringValue(RecipientReferencePasswordQualifier);
             }
-            if (ApplicationReferenceId != null)
+            if (Optional.IsDefined(ApplicationReferenceId))
             {
                 writer.WritePropertyName("applicationReferenceId"u8);
                 writer.WriteStringValue(ApplicationReferenceId);
             }
-            if (ProcessingPriorityCode != null)
+            if (Optional.IsDefined(ProcessingPriorityCode))
             {
                 writer.WritePropertyName("processingPriorityCode"u8);
                 writer.WriteStringValue(ProcessingPriorityCode);
@@ -68,42 +68,42 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteNumberValue(InterchangeControlNumberUpperBound);
             writer.WritePropertyName("rolloverInterchangeControlNumber"u8);
             writer.WriteBooleanValue(RolloverInterchangeControlNumber);
-            if (InterchangeControlNumberPrefix != null)
+            if (Optional.IsDefined(InterchangeControlNumberPrefix))
             {
                 writer.WritePropertyName("interchangeControlNumberPrefix"u8);
                 writer.WriteStringValue(InterchangeControlNumberPrefix);
             }
-            if (InterchangeControlNumberSuffix != null)
+            if (Optional.IsDefined(InterchangeControlNumberSuffix))
             {
                 writer.WritePropertyName("interchangeControlNumberSuffix"u8);
                 writer.WriteStringValue(InterchangeControlNumberSuffix);
             }
-            if (SenderReverseRoutingAddress != null)
+            if (Optional.IsDefined(SenderReverseRoutingAddress))
             {
                 writer.WritePropertyName("senderReverseRoutingAddress"u8);
                 writer.WriteStringValue(SenderReverseRoutingAddress);
             }
-            if (ReceiverReverseRoutingAddress != null)
+            if (Optional.IsDefined(ReceiverReverseRoutingAddress))
             {
                 writer.WritePropertyName("receiverReverseRoutingAddress"u8);
                 writer.WriteStringValue(ReceiverReverseRoutingAddress);
             }
-            if (FunctionalGroupId != null)
+            if (Optional.IsDefined(FunctionalGroupId))
             {
                 writer.WritePropertyName("functionalGroupId"u8);
                 writer.WriteStringValue(FunctionalGroupId);
             }
-            if (GroupControllingAgencyCode != null)
+            if (Optional.IsDefined(GroupControllingAgencyCode))
             {
                 writer.WritePropertyName("groupControllingAgencyCode"u8);
                 writer.WriteStringValue(GroupControllingAgencyCode);
             }
-            if (GroupMessageVersion != null)
+            if (Optional.IsDefined(GroupMessageVersion))
             {
                 writer.WritePropertyName("groupMessageVersion"u8);
                 writer.WriteStringValue(GroupMessageVersion);
             }
-            if (GroupMessageRelease != null)
+            if (Optional.IsDefined(GroupMessageRelease))
             {
                 writer.WritePropertyName("groupMessageRelease"u8);
                 writer.WriteStringValue(GroupMessageRelease);
@@ -114,49 +114,49 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteNumberValue(GroupControlNumberUpperBound);
             writer.WritePropertyName("rolloverGroupControlNumber"u8);
             writer.WriteBooleanValue(RolloverGroupControlNumber);
-            if (GroupControlNumberPrefix != null)
+            if (Optional.IsDefined(GroupControlNumberPrefix))
             {
                 writer.WritePropertyName("groupControlNumberPrefix"u8);
                 writer.WriteStringValue(GroupControlNumberPrefix);
             }
-            if (GroupControlNumberSuffix != null)
+            if (Optional.IsDefined(GroupControlNumberSuffix))
             {
                 writer.WritePropertyName("groupControlNumberSuffix"u8);
                 writer.WriteStringValue(GroupControlNumberSuffix);
             }
-            if (GroupApplicationReceiverQualifier != null)
+            if (Optional.IsDefined(GroupApplicationReceiverQualifier))
             {
                 writer.WritePropertyName("groupApplicationReceiverQualifier"u8);
                 writer.WriteStringValue(GroupApplicationReceiverQualifier);
             }
-            if (GroupApplicationReceiverId != null)
+            if (Optional.IsDefined(GroupApplicationReceiverId))
             {
                 writer.WritePropertyName("groupApplicationReceiverId"u8);
                 writer.WriteStringValue(GroupApplicationReceiverId);
             }
-            if (GroupApplicationSenderQualifier != null)
+            if (Optional.IsDefined(GroupApplicationSenderQualifier))
             {
                 writer.WritePropertyName("groupApplicationSenderQualifier"u8);
                 writer.WriteStringValue(GroupApplicationSenderQualifier);
             }
-            if (GroupApplicationSenderId != null)
+            if (Optional.IsDefined(GroupApplicationSenderId))
             {
                 writer.WritePropertyName("groupApplicationSenderId"u8);
                 writer.WriteStringValue(GroupApplicationSenderId);
             }
-            if (GroupApplicationPassword != null)
+            if (Optional.IsDefined(GroupApplicationPassword))
             {
                 writer.WritePropertyName("groupApplicationPassword"u8);
                 writer.WriteStringValue(GroupApplicationPassword);
             }
             writer.WritePropertyName("overwriteExistingTransactionSetControlNumber"u8);
             writer.WriteBooleanValue(OverwriteExistingTransactionSetControlNumber);
-            if (TransactionSetControlNumberPrefix != null)
+            if (Optional.IsDefined(TransactionSetControlNumberPrefix))
             {
                 writer.WritePropertyName("transactionSetControlNumberPrefix"u8);
                 writer.WriteStringValue(TransactionSetControlNumberPrefix);
             }
-            if (TransactionSetControlNumberSuffix != null)
+            if (Optional.IsDefined(TransactionSetControlNumberSuffix))
             {
                 writer.WritePropertyName("transactionSetControlNumberSuffix"u8);
                 writer.WriteStringValue(TransactionSetControlNumberSuffix);
@@ -169,22 +169,22 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteBooleanValue(RolloverTransactionSetControlNumber);
             writer.WritePropertyName("isTestInterchange"u8);
             writer.WriteBooleanValue(IsTestInterchange);
-            if (SenderInternalIdentification != null)
+            if (Optional.IsDefined(SenderInternalIdentification))
             {
                 writer.WritePropertyName("senderInternalIdentification"u8);
                 writer.WriteStringValue(SenderInternalIdentification);
             }
-            if (SenderInternalSubIdentification != null)
+            if (Optional.IsDefined(SenderInternalSubIdentification))
             {
                 writer.WritePropertyName("senderInternalSubIdentification"u8);
                 writer.WriteStringValue(SenderInternalSubIdentification);
             }
-            if (ReceiverInternalIdentification != null)
+            if (Optional.IsDefined(ReceiverInternalIdentification))
             {
                 writer.WritePropertyName("receiverInternalIdentification"u8);
                 writer.WriteStringValue(ReceiverInternalIdentification);
             }
-            if (ReceiverInternalSubIdentification != null)
+            if (Optional.IsDefined(ReceiverInternalSubIdentification))
             {
                 writer.WritePropertyName("receiverInternalSubIdentification"u8);
                 writer.WriteStringValue(ReceiverInternalSubIdentification);

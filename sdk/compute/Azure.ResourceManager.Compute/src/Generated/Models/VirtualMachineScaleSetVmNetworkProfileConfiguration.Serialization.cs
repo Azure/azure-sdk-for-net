@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (!(NetworkInterfaceConfigurations is ChangeTrackingList<VirtualMachineScaleSetNetworkConfiguration> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(NetworkInterfaceConfigurations))
             {
                 writer.WritePropertyName("networkInterfaceConfigurations"u8);
                 writer.WriteStartArray();

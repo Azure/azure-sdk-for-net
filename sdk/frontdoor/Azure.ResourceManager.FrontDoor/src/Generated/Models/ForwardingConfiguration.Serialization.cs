@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
 
             writer.WriteStartObject();
-            if (CustomForwardingPath != null)
+            if (Optional.IsDefined(CustomForwardingPath))
             {
                 writer.WritePropertyName("customForwardingPath"u8);
                 writer.WriteStringValue(CustomForwardingPath);
             }
-            if (ForwardingProtocol.HasValue)
+            if (Optional.IsDefined(ForwardingProtocol))
             {
                 writer.WritePropertyName("forwardingProtocol"u8);
                 writer.WriteStringValue(ForwardingProtocol.Value.ToString());
             }
-            if (CacheConfiguration != null)
+            if (Optional.IsDefined(CacheConfiguration))
             {
                 if (CacheConfiguration != null)
                 {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     writer.WriteNull("cacheConfiguration");
                 }
             }
-            if (BackendPool != null)
+            if (Optional.IsDefined(BackendPool))
             {
                 writer.WritePropertyName("backendPool"u8);
                 JsonSerializer.Serialize(writer, BackendPool);

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (EncapsulationType.HasValue)
+            if (Optional.IsDefined(EncapsulationType))
             {
                 writer.WritePropertyName("encapsulationType"u8);
                 writer.WriteStringValue(EncapsulationType.Value.ToString());
             }
-            if (PortCondition != null)
+            if (Optional.IsDefined(PortCondition))
             {
                 writer.WritePropertyName("portCondition"u8);
                 writer.WriteObjectValue(PortCondition);
             }
-            if (!(ProtocolTypes is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ProtocolTypes))
             {
                 writer.WritePropertyName("protocolTypes"u8);
                 writer.WriteStartArray();
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (VlanMatchCondition != null)
+            if (Optional.IsDefined(VlanMatchCondition))
             {
                 writer.WritePropertyName("vlanMatchCondition"u8);
                 writer.WriteObjectValue(VlanMatchCondition);
             }
-            if (IPCondition != null)
+            if (Optional.IsDefined(IPCondition))
             {
                 writer.WritePropertyName("ipCondition"u8);
                 writer.WriteObjectValue(IPCondition);

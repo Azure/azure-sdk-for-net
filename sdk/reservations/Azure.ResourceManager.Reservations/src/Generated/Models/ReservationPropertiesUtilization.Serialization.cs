@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Trend != null)
+            if (options.Format != "W" && Optional.IsDefined(Trend))
             {
                 writer.WritePropertyName("trend"u8);
                 writer.WriteStringValue(Trend);
             }
-            if (!(Aggregates is ChangeTrackingList<ReservationUtilizationAggregates> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Aggregates))
             {
                 writer.WritePropertyName("aggregates"u8);
                 writer.WriteStartArray();

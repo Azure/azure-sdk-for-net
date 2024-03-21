@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (ExpireOn.HasValue)
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expiryDate"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());

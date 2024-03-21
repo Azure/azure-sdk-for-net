@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (!(Emails is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Emails))
             {
                 writer.WritePropertyName("emails"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Users is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Users))
             {
                 writer.WritePropertyName("users"u8);
                 writer.WriteStartArray();

@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Cap.HasValue)
+            if (Optional.IsDefined(Cap))
             {
                 writer.WritePropertyName("Cap"u8);
                 writer.WriteNumberValue(Cap.Value);
             }
-            if (options.Format != "W" && ResetTime.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResetTime))
             {
                 writer.WritePropertyName("ResetTime"u8);
                 writer.WriteNumberValue(ResetTime.Value);
             }
-            if (WarningThreshold.HasValue)
+            if (Optional.IsDefined(WarningThreshold))
             {
                 writer.WritePropertyName("WarningThreshold"u8);
                 writer.WriteNumberValue(WarningThreshold.Value);
             }
-            if (IsStopSendNotificationWhenHitThreshold.HasValue)
+            if (Optional.IsDefined(IsStopSendNotificationWhenHitThreshold))
             {
                 writer.WritePropertyName("StopSendNotificationWhenHitThreshold"u8);
                 writer.WriteBooleanValue(IsStopSendNotificationWhenHitThreshold.Value);
             }
-            if (IsStopSendNotificationWhenHitCap.HasValue)
+            if (Optional.IsDefined(IsStopSendNotificationWhenHitCap))
             {
                 writer.WritePropertyName("StopSendNotificationWhenHitCap"u8);
                 writer.WriteBooleanValue(IsStopSendNotificationWhenHitCap.Value);
             }
-            if (options.Format != "W" && MaxHistoryCap.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MaxHistoryCap))
             {
                 writer.WritePropertyName("MaxHistoryCap"u8);
                 writer.WriteNumberValue(MaxHistoryCap.Value);

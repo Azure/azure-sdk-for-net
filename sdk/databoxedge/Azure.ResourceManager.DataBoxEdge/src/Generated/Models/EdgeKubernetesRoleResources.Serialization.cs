@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (Storage != null)
+            if (Optional.IsDefined(Storage))
             {
                 writer.WritePropertyName("storage"u8);
                 writer.WriteObjectValue(Storage);
             }
             writer.WritePropertyName("compute"u8);
             writer.WriteObjectValue(Compute);
-            if (options.Format != "W" && Network != null)
+            if (options.Format != "W" && Optional.IsDefined(Network))
             {
                 writer.WritePropertyName("network"u8);
                 writer.WriteObjectValue(Network);

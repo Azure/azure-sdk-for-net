@@ -26,47 +26,47 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (FriendlyName != null)
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (TestVmName != null)
+            if (Optional.IsDefined(TestVmName))
             {
                 writer.WritePropertyName("testVmName"u8);
                 writer.WriteStringValue(TestVmName);
             }
-            if (TestVmFriendlyName != null)
+            if (Optional.IsDefined(TestVmFriendlyName))
             {
                 writer.WritePropertyName("testVmFriendlyName"u8);
                 writer.WriteStringValue(TestVmFriendlyName);
             }
-            if (NetworkConnectionStatus != null)
+            if (Optional.IsDefined(NetworkConnectionStatus))
             {
                 writer.WritePropertyName("networkConnectionStatus"u8);
                 writer.WriteStringValue(NetworkConnectionStatus);
             }
-            if (NetworkFriendlyName != null)
+            if (Optional.IsDefined(NetworkFriendlyName))
             {
                 writer.WritePropertyName("networkFriendlyName"u8);
                 writer.WriteStringValue(NetworkFriendlyName);
             }
-            if (Subnet != null)
+            if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
                 writer.WriteStringValue(Subnet);
             }
-            if (RecoveryPointId != null)
+            if (Optional.IsDefined(RecoveryPointId))
             {
                 writer.WritePropertyName("recoveryPointId"u8);
                 writer.WriteStringValue(RecoveryPointId);
             }
-            if (RecoveryPointOn.HasValue)
+            if (Optional.IsDefined(RecoveryPointOn))
             {
                 writer.WritePropertyName("recoveryPointTime"u8);
                 writer.WriteStringValue(RecoveryPointOn.Value, "O");

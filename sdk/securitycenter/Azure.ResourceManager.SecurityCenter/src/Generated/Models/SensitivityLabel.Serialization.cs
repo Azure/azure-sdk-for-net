@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Rank.HasValue)
+            if (Optional.IsDefined(Rank))
             {
                 writer.WritePropertyName("rank"u8);
                 writer.WriteStringValue(Rank.Value.ToSerialString());
             }
-            if (Order.HasValue)
+            if (Optional.IsDefined(Order))
             {
                 writer.WritePropertyName("order"u8);
                 writer.WriteNumberValue(Order.Value);
             }
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);

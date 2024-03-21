@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (SasUri != null)
+            if (Optional.IsDefined(SasUri))
             {
                 writer.WritePropertyName("sasUrl"u8);
                 writer.WriteStringValue(SasUri.AbsoluteUri);
             }
-            if (!(LinkConnectionNames is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(LinkConnectionNames))
             {
                 writer.WritePropertyName("linkConnectionNames"u8);
                 writer.WriteStartArray();

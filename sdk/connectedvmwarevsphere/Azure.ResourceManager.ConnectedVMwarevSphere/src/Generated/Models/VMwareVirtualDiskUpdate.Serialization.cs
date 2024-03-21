@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (DiskSizeGB.HasValue)
+            if (Optional.IsDefined(DiskSizeGB))
             {
                 writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
-            if (DeviceKey.HasValue)
+            if (Optional.IsDefined(DeviceKey))
             {
                 writer.WritePropertyName("deviceKey"u8);
                 writer.WriteNumberValue(DeviceKey.Value);
             }
-            if (DiskMode.HasValue)
+            if (Optional.IsDefined(DiskMode))
             {
                 writer.WritePropertyName("diskMode"u8);
                 writer.WriteStringValue(DiskMode.Value.ToString());
             }
-            if (ControllerKey.HasValue)
+            if (Optional.IsDefined(ControllerKey))
             {
                 writer.WritePropertyName("controllerKey"u8);
                 writer.WriteNumberValue(ControllerKey.Value);
             }
-            if (UnitNumber.HasValue)
+            if (Optional.IsDefined(UnitNumber))
             {
                 writer.WritePropertyName("unitNumber"u8);
                 writer.WriteNumberValue(UnitNumber.Value);
             }
-            if (DeviceName != null)
+            if (Optional.IsDefined(DeviceName))
             {
                 writer.WritePropertyName("deviceName"u8);
                 writer.WriteStringValue(DeviceName);
             }
-            if (DiskType.HasValue)
+            if (Optional.IsDefined(DiskType))
             {
                 writer.WritePropertyName("diskType"u8);
                 writer.WriteStringValue(DiskType.Value.ToString());

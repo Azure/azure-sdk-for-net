@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && PercentComplete.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PercentComplete))
             {
                 writer.WritePropertyName("percentComplete"u8);
                 writer.WriteNumberValue(PercentComplete.Value);
             }
-            if (options.Format != "W" && NumberOfUpdatesToInstall.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NumberOfUpdatesToInstall))
             {
                 writer.WritePropertyName("numberOfUpdatesToInstall"u8);
                 writer.WriteNumberValue(NumberOfUpdatesToInstall.Value);
             }
-            if (options.Format != "W" && NumberOfUpdatesInstalled.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NumberOfUpdatesInstalled))
             {
                 writer.WritePropertyName("numberOfUpdatesInstalled"u8);
                 writer.WriteNumberValue(NumberOfUpdatesInstalled.Value);

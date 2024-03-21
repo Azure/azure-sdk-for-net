@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Exceptiontype != null)
+            if (Optional.IsDefined(Exceptiontype))
             {
                 writer.WritePropertyName("exceptiontype"u8);
                 writer.WriteStringValue(Exceptiontype);
             }
-            if (Errordetail != null)
+            if (Optional.IsDefined(Errordetail))
             {
                 writer.WritePropertyName("errordetail"u8);
                 writer.WriteStringValue(Errordetail);

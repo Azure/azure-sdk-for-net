@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             writer.WriteStartObject();
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (IdentityClientId.HasValue)
+            if (Optional.IsDefined(IdentityClientId))
             {
                 writer.WritePropertyName("identityClientId"u8);
                 writer.WriteStringValue(IdentityClientId.Value);

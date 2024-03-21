@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             writer.WriteStartObject();
-            if (Count.HasValue)
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Item != null)
+            if (Optional.IsDefined(Item))
             {
                 writer.WritePropertyName("item"u8);
                 writer.WriteStringValue(Item);

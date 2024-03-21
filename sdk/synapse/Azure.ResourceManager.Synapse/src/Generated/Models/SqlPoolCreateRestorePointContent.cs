@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointLabel"/> is null. </exception>
         public SqlPoolCreateRestorePointContent(string restorePointLabel)
         {
-            if (restorePointLabel == null)
-            {
-                throw new ArgumentNullException(nameof(restorePointLabel));
-            }
+            Argument.AssertNotNull(restorePointLabel, nameof(restorePointLabel));
 
             RestorePointLabel = restorePointLabel;
         }

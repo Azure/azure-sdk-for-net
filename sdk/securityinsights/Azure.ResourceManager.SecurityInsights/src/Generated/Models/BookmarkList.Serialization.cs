@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -27,7 +26,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && NextLink != null)
+            if (options.Format != "W" && Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);

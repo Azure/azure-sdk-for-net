@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStartObject();
             writer.WritePropertyName("sourceDataStoreType"u8);
             writer.WriteStringValue(SourceDataStoreType.ToString());
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (EndOn.HasValue)
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (AuthorizedIPRanges != null)
+            if (Optional.IsDefined(AuthorizedIPRanges))
             {
                 writer.WritePropertyName("authorizedIPRanges"u8);
                 writer.WriteStringValue(AuthorizedIPRanges);

@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -27,12 +26,12 @@ namespace Azure.Communication.JobRouter
             }
 
             writer.WriteStartObject();
-            if (BatchSize.HasValue)
+            if (Optional.IsDefined(BatchSize))
             {
                 writer.WritePropertyName("batchSize"u8);
                 writer.WriteNumberValue(BatchSize.Value);
             }
-            if (!(ScoringParameters is ChangeTrackingList<ScoringRuleParameterSelector> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ScoringParameters))
             {
                 writer.WritePropertyName("scoringParameters"u8);
                 writer.WriteStartArray();
@@ -42,12 +41,12 @@ namespace Azure.Communication.JobRouter
                 }
                 writer.WriteEndArray();
             }
-            if (IsBatchScoringEnabled.HasValue)
+            if (Optional.IsDefined(IsBatchScoringEnabled))
             {
                 writer.WritePropertyName("isBatchScoringEnabled"u8);
                 writer.WriteBooleanValue(IsBatchScoringEnabled.Value);
             }
-            if (DescendingOrder.HasValue)
+            if (Optional.IsDefined(DescendingOrder))
             {
                 writer.WritePropertyName("descendingOrder"u8);
                 writer.WriteBooleanValue(DescendingOrder.Value);

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (Key1.HasValue)
+            if (Optional.IsDefined(Key1))
             {
                 writer.WritePropertyName("key1"u8);
                 writer.WriteStringValue(Key1.Value, "O");
             }
-            if (Key2.HasValue)
+            if (Optional.IsDefined(Key2))
             {
                 writer.WritePropertyName("key2"u8);
                 writer.WriteStringValue(Key2.Value, "O");

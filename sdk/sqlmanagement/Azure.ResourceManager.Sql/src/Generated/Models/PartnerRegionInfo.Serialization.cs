@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (options.Format != "W" && ReplicationRole.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ReplicationRole))
             {
                 writer.WritePropertyName("replicationRole"u8);
                 writer.WriteStringValue(ReplicationRole.Value.ToString());

@@ -11,10 +11,8 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Authorization.Models;
 
 namespace Azure.ResourceManager.Authorization
@@ -72,14 +70,8 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<RoleAssignmentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string roleAssignmentName, RoleAssignmentCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (roleAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(roleAssignmentName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(roleAssignmentName, nameof(roleAssignmentName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _roleAssignmentClientDiagnostics.CreateScope("RoleAssignmentCollection.CreateOrUpdate");
             scope.Start();
@@ -126,14 +118,8 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<RoleAssignmentResource> CreateOrUpdate(WaitUntil waitUntil, string roleAssignmentName, RoleAssignmentCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (roleAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(roleAssignmentName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(roleAssignmentName, nameof(roleAssignmentName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _roleAssignmentClientDiagnostics.CreateScope("RoleAssignmentCollection.CreateOrUpdate");
             scope.Start();
@@ -179,10 +165,7 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentName"/> is null. </exception>
         public virtual async Task<Response<RoleAssignmentResource>> GetAsync(string roleAssignmentName, string tenantId = null, CancellationToken cancellationToken = default)
         {
-            if (roleAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(roleAssignmentName));
-            }
+            Argument.AssertNotNull(roleAssignmentName, nameof(roleAssignmentName));
 
             using var scope = _roleAssignmentClientDiagnostics.CreateScope("RoleAssignmentCollection.Get");
             scope.Start();
@@ -227,10 +210,7 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentName"/> is null. </exception>
         public virtual Response<RoleAssignmentResource> Get(string roleAssignmentName, string tenantId = null, CancellationToken cancellationToken = default)
         {
-            if (roleAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(roleAssignmentName));
-            }
+            Argument.AssertNotNull(roleAssignmentName, nameof(roleAssignmentName));
 
             using var scope = _roleAssignmentClientDiagnostics.CreateScope("RoleAssignmentCollection.Get");
             scope.Start();
@@ -341,10 +321,7 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string roleAssignmentName, string tenantId = null, CancellationToken cancellationToken = default)
         {
-            if (roleAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(roleAssignmentName));
-            }
+            Argument.AssertNotNull(roleAssignmentName, nameof(roleAssignmentName));
 
             using var scope = _roleAssignmentClientDiagnostics.CreateScope("RoleAssignmentCollection.Exists");
             scope.Start();
@@ -387,10 +364,7 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentName"/> is null. </exception>
         public virtual Response<bool> Exists(string roleAssignmentName, string tenantId = null, CancellationToken cancellationToken = default)
         {
-            if (roleAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(roleAssignmentName));
-            }
+            Argument.AssertNotNull(roleAssignmentName, nameof(roleAssignmentName));
 
             using var scope = _roleAssignmentClientDiagnostics.CreateScope("RoleAssignmentCollection.Exists");
             scope.Start();
@@ -433,10 +407,7 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentName"/> is null. </exception>
         public virtual async Task<NullableResponse<RoleAssignmentResource>> GetIfExistsAsync(string roleAssignmentName, string tenantId = null, CancellationToken cancellationToken = default)
         {
-            if (roleAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(roleAssignmentName));
-            }
+            Argument.AssertNotNull(roleAssignmentName, nameof(roleAssignmentName));
 
             using var scope = _roleAssignmentClientDiagnostics.CreateScope("RoleAssignmentCollection.GetIfExists");
             scope.Start();
@@ -481,10 +452,7 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentName"/> is null. </exception>
         public virtual NullableResponse<RoleAssignmentResource> GetIfExists(string roleAssignmentName, string tenantId = null, CancellationToken cancellationToken = default)
         {
-            if (roleAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(roleAssignmentName));
-            }
+            Argument.AssertNotNull(roleAssignmentName, nameof(roleAssignmentName));
 
             using var scope = _roleAssignmentClientDiagnostics.CreateScope("RoleAssignmentCollection.GetIfExists");
             scope.Start();

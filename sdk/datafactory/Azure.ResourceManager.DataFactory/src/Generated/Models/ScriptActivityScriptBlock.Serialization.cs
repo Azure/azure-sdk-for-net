@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             JsonSerializer.Serialize(writer, Text);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ScriptType.ToString());
-            if (!(Parameters is ChangeTrackingList<ScriptActivityParameter> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();

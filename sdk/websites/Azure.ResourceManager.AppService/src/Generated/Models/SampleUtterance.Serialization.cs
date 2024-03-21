@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Text != null)
+            if (Optional.IsDefined(Text))
             {
                 writer.WritePropertyName("text"u8);
                 writer.WriteStringValue(Text);
             }
-            if (!(Links is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Links))
             {
                 writer.WritePropertyName("links"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Qid != null)
+            if (Optional.IsDefined(Qid))
             {
                 writer.WritePropertyName("qid"u8);
                 writer.WriteStringValue(Qid);

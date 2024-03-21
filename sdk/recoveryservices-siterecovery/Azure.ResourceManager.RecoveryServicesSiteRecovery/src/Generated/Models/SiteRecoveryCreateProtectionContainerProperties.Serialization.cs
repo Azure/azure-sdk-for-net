@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (!(ProviderSpecificContent is ChangeTrackingList<ReplicationProviderSpecificContainerCreationContent> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ProviderSpecificContent))
             {
                 writer.WritePropertyName("providerSpecificInput"u8);
                 writer.WriteStartArray();

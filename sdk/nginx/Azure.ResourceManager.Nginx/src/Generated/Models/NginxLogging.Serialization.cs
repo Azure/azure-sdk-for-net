@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Nginx.Models
             }
 
             writer.WriteStartObject();
-            if (StorageAccount != null)
+            if (Optional.IsDefined(StorageAccount))
             {
                 writer.WritePropertyName("storageAccount"u8);
                 writer.WriteObjectValue(StorageAccount);

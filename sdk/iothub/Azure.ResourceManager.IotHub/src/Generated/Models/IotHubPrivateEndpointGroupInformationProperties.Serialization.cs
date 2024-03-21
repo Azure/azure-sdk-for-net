@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.IotHub.Models
             }
 
             writer.WriteStartObject();
-            if (GroupId != null)
+            if (Optional.IsDefined(GroupId))
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
-            if (!(RequiredMembers is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(RequiredMembers))
             {
                 writer.WritePropertyName("requiredMembers"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(RequiredDnsZoneNames is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(RequiredDnsZoneNames))
             {
                 writer.WritePropertyName("requiredZoneNames"u8);
                 writer.WriteStartArray();

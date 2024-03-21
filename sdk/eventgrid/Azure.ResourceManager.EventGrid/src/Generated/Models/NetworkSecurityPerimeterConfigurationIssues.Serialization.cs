@@ -26,29 +26,29 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (IssueType.HasValue)
+            if (Optional.IsDefined(IssueType))
             {
                 writer.WritePropertyName("issueType"u8);
                 writer.WriteStringValue(IssueType.Value.ToString());
             }
-            if (Severity.HasValue)
+            if (Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(SuggestedResourceIds is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SuggestedResourceIds))
             {
                 writer.WritePropertyName("suggestedResourceIds"u8);
                 writer.WriteStartArray();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(SuggestedAccessRules is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(SuggestedAccessRules))
             {
                 writer.WritePropertyName("suggestedAccessRules"u8);
                 writer.WriteStartArray();

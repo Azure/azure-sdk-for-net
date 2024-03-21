@@ -28,21 +28,21 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStartObject();
             writer.WritePropertyName("storage"u8);
             writer.WriteObjectValue(Storage);
-            if (NumReplicas.HasValue)
+            if (Optional.IsDefined(NumReplicas))
             {
                 writer.WritePropertyName("numReplicas"u8);
                 writer.WriteNumberValue(NumReplicas.Value);
             }
             writer.WritePropertyName("jobManager"u8);
             writer.WriteObjectValue(JobManager);
-            if (HistoryServer != null)
+            if (Optional.IsDefined(HistoryServer))
             {
                 writer.WritePropertyName("historyServer"u8);
                 writer.WriteObjectValue(HistoryServer);
             }
             writer.WritePropertyName("taskManager"u8);
             writer.WriteObjectValue(TaskManager);
-            if (CatalogOptions != null)
+            if (Optional.IsDefined(CatalogOptions))
             {
                 writer.WritePropertyName("catalogOptions"u8);
                 writer.WriteObjectValue(CatalogOptions);

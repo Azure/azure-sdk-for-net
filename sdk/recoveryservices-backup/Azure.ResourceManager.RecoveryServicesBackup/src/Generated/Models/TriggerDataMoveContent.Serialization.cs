@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStringValue(DataMoveLevel.ToString());
             writer.WritePropertyName("correlationId"u8);
             writer.WriteStringValue(CorrelationId);
-            if (!(SourceContainerArmIds is ChangeTrackingList<ResourceIdentifier> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SourceContainerArmIds))
             {
                 writer.WritePropertyName("sourceContainerArmIds"u8);
                 writer.WriteStartArray();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (DoesPauseGC.HasValue)
+            if (Optional.IsDefined(DoesPauseGC))
             {
                 writer.WritePropertyName("pauseGC"u8);
                 writer.WriteBooleanValue(DoesPauseGC.Value);

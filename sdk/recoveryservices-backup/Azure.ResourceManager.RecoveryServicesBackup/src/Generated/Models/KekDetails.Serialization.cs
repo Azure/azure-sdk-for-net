@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (KeyUri != null)
+            if (Optional.IsDefined(KeyUri))
             {
                 writer.WritePropertyName("keyUrl"u8);
                 writer.WriteStringValue(KeyUri.AbsoluteUri);
             }
-            if (KeyVaultId != null)
+            if (Optional.IsDefined(KeyVaultId))
             {
                 writer.WritePropertyName("keyVaultId"u8);
                 writer.WriteStringValue(KeyVaultId);
             }
-            if (KeyBackupData != null)
+            if (Optional.IsDefined(KeyBackupData))
             {
                 writer.WritePropertyName("keyBackupData"u8);
                 writer.WriteStringValue(KeyBackupData);

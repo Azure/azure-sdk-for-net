@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WriteStartObject();
             writer.WritePropertyName("certificateUrl"u8);
             writer.WriteStringValue(CertificateUri.AbsoluteUri);
-            if (options.Format != "W" && Provisioning != null)
+            if (options.Format != "W" && Optional.IsDefined(Provisioning))
             {
                 writer.WritePropertyName("provisioning"u8);
                 writer.WriteObjectValue(Provisioning);

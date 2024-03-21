@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (SourceLocation != null)
+            if (Optional.IsDefined(SourceLocation))
             {
                 writer.WritePropertyName("sourceLocation"u8);
                 writer.WriteObjectValue(SourceLocation);
             }
-            if (TargetLocation != null)
+            if (Optional.IsDefined(TargetLocation))
             {
                 writer.WritePropertyName("targetLocation"u8);
                 writer.WriteObjectValue(TargetLocation);

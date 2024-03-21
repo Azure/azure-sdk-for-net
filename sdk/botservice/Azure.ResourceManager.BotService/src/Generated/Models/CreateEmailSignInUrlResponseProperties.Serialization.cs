@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.BotService.Models
             }
 
             writer.WriteStartObject();
-            if (Uri != null)
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);

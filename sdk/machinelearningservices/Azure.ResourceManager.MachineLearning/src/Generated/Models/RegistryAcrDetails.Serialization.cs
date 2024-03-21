@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (SystemCreatedAcrAccount != null)
+            if (Optional.IsDefined(SystemCreatedAcrAccount))
             {
                 if (SystemCreatedAcrAccount != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("systemCreatedAcrAccount");
                 }
             }
-            if (UserCreatedAcrAccount != null)
+            if (Optional.IsDefined(UserCreatedAcrAccount))
             {
                 if (UserCreatedAcrAccount != null)
                 {

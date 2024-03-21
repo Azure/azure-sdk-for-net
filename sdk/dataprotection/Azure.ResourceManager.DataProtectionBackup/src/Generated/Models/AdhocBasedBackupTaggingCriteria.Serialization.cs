@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (TagInfo != null)
+            if (Optional.IsDefined(TagInfo))
             {
                 writer.WritePropertyName("tagInfo"u8);
                 writer.WriteObjectValue(TagInfo);

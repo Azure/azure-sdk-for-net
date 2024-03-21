@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Exe != null)
+            if (Optional.IsDefined(Exe))
             {
                 writer.WritePropertyName("exe"u8);
                 writer.WriteStringValue(Exe);
             }
-            if (Parameters != null)
+            if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStringValue(Parameters);

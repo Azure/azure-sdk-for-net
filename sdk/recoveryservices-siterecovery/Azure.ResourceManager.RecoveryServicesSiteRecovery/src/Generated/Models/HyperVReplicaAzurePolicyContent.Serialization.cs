@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (RecoveryPointHistoryDuration.HasValue)
+            if (Optional.IsDefined(RecoveryPointHistoryDuration))
             {
                 writer.WritePropertyName("recoveryPointHistoryDuration"u8);
                 writer.WriteNumberValue(RecoveryPointHistoryDuration.Value);
             }
-            if (ApplicationConsistentSnapshotFrequencyInHours.HasValue)
+            if (Optional.IsDefined(ApplicationConsistentSnapshotFrequencyInHours))
             {
                 writer.WritePropertyName("applicationConsistentSnapshotFrequencyInHours"u8);
                 writer.WriteNumberValue(ApplicationConsistentSnapshotFrequencyInHours.Value);
             }
-            if (ReplicationInterval.HasValue)
+            if (Optional.IsDefined(ReplicationInterval))
             {
                 writer.WritePropertyName("replicationInterval"u8);
                 writer.WriteNumberValue(ReplicationInterval.Value);
             }
-            if (OnlineReplicationStartTime != null)
+            if (Optional.IsDefined(OnlineReplicationStartTime))
             {
                 writer.WritePropertyName("onlineReplicationStartTime"u8);
                 writer.WriteStringValue(OnlineReplicationStartTime);
             }
-            if (!(StorageAccounts is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(StorageAccounts))
             {
                 writer.WritePropertyName("storageAccounts"u8);
                 writer.WriteStartArray();

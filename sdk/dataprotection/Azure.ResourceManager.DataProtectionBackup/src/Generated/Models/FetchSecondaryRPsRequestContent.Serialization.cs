@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (SourceRegion.HasValue)
+            if (Optional.IsDefined(SourceRegion))
             {
                 writer.WritePropertyName("sourceRegion"u8);
                 writer.WriteStringValue(SourceRegion.Value);
             }
-            if (SourceBackupInstanceId != null)
+            if (Optional.IsDefined(SourceBackupInstanceId))
             {
                 writer.WritePropertyName("sourceBackupInstanceId"u8);
                 writer.WriteStringValue(SourceBackupInstanceId);

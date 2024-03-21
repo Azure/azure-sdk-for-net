@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (WorkspaceResourceId != null)
+            if (Optional.IsDefined(WorkspaceResourceId))
             {
                 writer.WritePropertyName("workspaceResourceId"u8);
                 writer.WriteStringValue(WorkspaceResourceId);

@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && UpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("time"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (Content != null)
+            if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content);
             }
-            if (Filename != null)
+            if (Optional.IsDefined(Filename))
             {
                 writer.WritePropertyName("filename"u8);
                 writer.WriteStringValue(Filename);
             }
-            if (ConfigurationType.HasValue)
+            if (Optional.IsDefined(ConfigurationType))
             {
                 writer.WritePropertyName("configurationType"u8);
                 writer.WriteStringValue(ConfigurationType.Value.ToString());

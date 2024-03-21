@@ -42,19 +42,19 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Charset != null)
+            if (Optional.IsDefined(Charset))
             {
                 writer.WritePropertyName("charset"u8);
                 writer.WriteStringValue(Charset);
             }
-            if (Collation != null)
+            if (Optional.IsDefined(Collation))
             {
                 writer.WritePropertyName("collation"u8);
                 writer.WriteStringValue(Collation);

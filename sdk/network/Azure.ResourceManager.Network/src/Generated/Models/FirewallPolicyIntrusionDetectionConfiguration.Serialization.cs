@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (!(SignatureOverrides is ChangeTrackingList<FirewallPolicyIntrusionDetectionSignatureSpecification> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SignatureOverrides))
             {
                 writer.WritePropertyName("signatureOverrides"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(BypassTrafficSettings is ChangeTrackingList<FirewallPolicyIntrusionDetectionBypassTrafficSpecifications> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(BypassTrafficSettings))
             {
                 writer.WritePropertyName("bypassTrafficSettings"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(PrivateRanges is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(PrivateRanges))
             {
                 writer.WritePropertyName("privateRanges"u8);
                 writer.WriteStartArray();

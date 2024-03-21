@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (VhdName != null)
+            if (Optional.IsDefined(VhdName))
             {
                 writer.WritePropertyName("vhdName"u8);
                 writer.WriteStringValue(VhdName);
             }
-            if (VhdVersion != null)
+            if (Optional.IsDefined(VhdVersion))
             {
                 writer.WritePropertyName("vhdVersion"u8);
                 writer.WriteStringValue(VhdVersion);

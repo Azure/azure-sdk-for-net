@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Storage.Models;
@@ -29,7 +28,7 @@ namespace Azure.ResourceManager.Storage
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -49,29 +48,29 @@ namespace Azure.ResourceManager.Storage
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ImmutabilityPeriodSinceCreationInDays.HasValue)
+            if (Optional.IsDefined(ImmutabilityPeriodSinceCreationInDays))
             {
                 writer.WritePropertyName("immutabilityPeriodSinceCreationInDays"u8);
                 writer.WriteNumberValue(ImmutabilityPeriodSinceCreationInDays.Value);
             }
-            if (options.Format != "W" && State.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (AllowProtectedAppendWrites.HasValue)
+            if (Optional.IsDefined(AllowProtectedAppendWrites))
             {
                 writer.WritePropertyName("allowProtectedAppendWrites"u8);
                 writer.WriteBooleanValue(AllowProtectedAppendWrites.Value);
             }
-            if (AllowProtectedAppendWritesAll.HasValue)
+            if (Optional.IsDefined(AllowProtectedAppendWritesAll))
             {
                 writer.WritePropertyName("allowProtectedAppendWritesAll"u8);
                 writer.WriteBooleanValue(AllowProtectedAppendWritesAll.Value);

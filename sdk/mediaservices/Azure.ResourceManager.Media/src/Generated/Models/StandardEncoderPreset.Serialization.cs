@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (!(ExperimentalOptions is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ExperimentalOptions))
             {
                 writer.WritePropertyName("experimentalOptions"u8);
                 writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Filters != null)
+            if (Optional.IsDefined(Filters))
             {
                 writer.WritePropertyName("filters"u8);
                 writer.WriteObjectValue(Filters);

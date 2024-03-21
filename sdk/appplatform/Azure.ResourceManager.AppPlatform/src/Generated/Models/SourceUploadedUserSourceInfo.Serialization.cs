@@ -26,24 +26,24 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (ArtifactSelector != null)
+            if (Optional.IsDefined(ArtifactSelector))
             {
                 writer.WritePropertyName("artifactSelector"u8);
                 writer.WriteStringValue(ArtifactSelector);
             }
-            if (RuntimeVersion != null)
+            if (Optional.IsDefined(RuntimeVersion))
             {
                 writer.WritePropertyName("runtimeVersion"u8);
                 writer.WriteStringValue(RuntimeVersion);
             }
-            if (RelativePath != null)
+            if (Optional.IsDefined(RelativePath))
             {
                 writer.WritePropertyName("relativePath"u8);
                 writer.WriteStringValue(RelativePath);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(UserSourceInfoType);
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);

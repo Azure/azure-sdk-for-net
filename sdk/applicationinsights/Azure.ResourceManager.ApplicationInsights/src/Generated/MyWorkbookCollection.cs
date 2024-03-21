@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ApplicationInsights.Models;
 using Azure.ResourceManager.Resources;
 
@@ -84,18 +82,8 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MyWorkbookResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string resourceName, MyWorkbookData data, string sourceId = null, CancellationToken cancellationToken = default)
         {
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _myWorkbookClientDiagnostics.CreateScope("MyWorkbookCollection.CreateOrUpdate");
             scope.Start();
@@ -144,18 +132,8 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MyWorkbookResource> CreateOrUpdate(WaitUntil waitUntil, string resourceName, MyWorkbookData data, string sourceId = null, CancellationToken cancellationToken = default)
         {
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _myWorkbookClientDiagnostics.CreateScope("MyWorkbookCollection.CreateOrUpdate");
             scope.Start();
@@ -201,14 +179,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public virtual async Task<Response<MyWorkbookResource>> GetAsync(string resourceName, CancellationToken cancellationToken = default)
         {
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             using var scope = _myWorkbookClientDiagnostics.CreateScope("MyWorkbookCollection.Get");
             scope.Start();
@@ -253,14 +224,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public virtual Response<MyWorkbookResource> Get(string resourceName, CancellationToken cancellationToken = default)
         {
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             using var scope = _myWorkbookClientDiagnostics.CreateScope("MyWorkbookCollection.Get");
             scope.Start();
@@ -373,14 +337,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string resourceName, CancellationToken cancellationToken = default)
         {
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             using var scope = _myWorkbookClientDiagnostics.CreateScope("MyWorkbookCollection.Exists");
             scope.Start();
@@ -423,14 +380,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public virtual Response<bool> Exists(string resourceName, CancellationToken cancellationToken = default)
         {
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             using var scope = _myWorkbookClientDiagnostics.CreateScope("MyWorkbookCollection.Exists");
             scope.Start();
@@ -473,14 +423,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public virtual async Task<NullableResponse<MyWorkbookResource>> GetIfExistsAsync(string resourceName, CancellationToken cancellationToken = default)
         {
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             using var scope = _myWorkbookClientDiagnostics.CreateScope("MyWorkbookCollection.GetIfExists");
             scope.Start();
@@ -525,14 +468,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public virtual NullableResponse<MyWorkbookResource> GetIfExists(string resourceName, CancellationToken cancellationToken = default)
         {
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             using var scope = _myWorkbookClientDiagnostics.CreateScope("MyWorkbookCollection.GetIfExists");
             scope.Start();

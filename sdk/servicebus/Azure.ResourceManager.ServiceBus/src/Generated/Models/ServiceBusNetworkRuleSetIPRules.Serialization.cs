@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ServiceBus.Models
             }
 
             writer.WriteStartObject();
-            if (IPMask != null)
+            if (Optional.IsDefined(IPMask))
             {
                 writer.WritePropertyName("ipMask"u8);
                 writer.WriteStringValue(IPMask);
             }
-            if (Action.HasValue)
+            if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action.Value.ToString());

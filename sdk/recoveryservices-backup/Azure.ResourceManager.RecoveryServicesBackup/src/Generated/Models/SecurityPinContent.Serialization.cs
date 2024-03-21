@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (!(ResourceGuardOperationRequests is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ResourceGuardOperationRequests))
             {
                 writer.WritePropertyName("resourceGuardOperationRequests"u8);
                 writer.WriteStartArray();

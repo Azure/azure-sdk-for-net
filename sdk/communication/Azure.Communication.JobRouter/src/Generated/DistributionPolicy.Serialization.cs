@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -37,17 +36,17 @@ namespace Azure.Communication.JobRouter
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (OfferExpiresAfter.HasValue)
+            if (Optional.IsDefined(OfferExpiresAfter))
             {
                 writer.WritePropertyName("offerExpiresAfterSeconds"u8);
                 WriteOfferExpiresAfter(writer);
             }
-            if (Mode != null)
+            if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteObjectValue(Mode);

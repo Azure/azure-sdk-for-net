@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (SubnetId != null)
+            if (Optional.IsDefined(SubnetId))
             {
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);

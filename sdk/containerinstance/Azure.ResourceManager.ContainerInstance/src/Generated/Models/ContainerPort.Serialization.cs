@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
 
             writer.WriteStartObject();
-            if (Protocol.HasValue)
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());

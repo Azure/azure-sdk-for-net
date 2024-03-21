@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (VmResourceId != null)
+            if (Optional.IsDefined(VmResourceId))
             {
                 writer.WritePropertyName("vmResourceId"u8);
                 writer.WriteStringValue(VmResourceId);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(Conditions is ChangeTrackingList<StreamingJobDiagnosticCondition> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Conditions))
             {
                 writer.WritePropertyName("conditions"u8);
                 writer.WriteStartArray();

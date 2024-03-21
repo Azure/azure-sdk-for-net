@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (!(RequiredFeatures is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(RequiredFeatures))
             {
                 writer.WritePropertyName("requiredFeatures"u8);
                 writer.WriteStartArray();

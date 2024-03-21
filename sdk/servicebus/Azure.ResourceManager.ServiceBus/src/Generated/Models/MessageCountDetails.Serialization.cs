@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.ServiceBus.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ActiveMessageCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ActiveMessageCount))
             {
                 writer.WritePropertyName("activeMessageCount"u8);
                 writer.WriteNumberValue(ActiveMessageCount.Value);
             }
-            if (options.Format != "W" && DeadLetterMessageCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DeadLetterMessageCount))
             {
                 writer.WritePropertyName("deadLetterMessageCount"u8);
                 writer.WriteNumberValue(DeadLetterMessageCount.Value);
             }
-            if (options.Format != "W" && ScheduledMessageCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ScheduledMessageCount))
             {
                 writer.WritePropertyName("scheduledMessageCount"u8);
                 writer.WriteNumberValue(ScheduledMessageCount.Value);
             }
-            if (options.Format != "W" && TransferMessageCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TransferMessageCount))
             {
                 writer.WritePropertyName("transferMessageCount"u8);
                 writer.WriteNumberValue(TransferMessageCount.Value);
             }
-            if (options.Format != "W" && TransferDeadLetterMessageCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TransferDeadLetterMessageCount))
             {
                 writer.WritePropertyName("transferDeadLetterMessageCount"u8);
                 writer.WriteNumberValue(TransferDeadLetterMessageCount.Value);

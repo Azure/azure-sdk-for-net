@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (CustomKeysAcquisitionUriTemplate != null)
+            if (Optional.IsDefined(CustomKeysAcquisitionUriTemplate))
             {
                 writer.WritePropertyName("customKeysAcquisitionUrlTemplate"u8);
                 writer.WriteStringValue(CustomKeysAcquisitionUriTemplate);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (ApiPrefix != null)
+            if (Optional.IsDefined(ApiPrefix))
             {
                 writer.WritePropertyName("apiPrefix"u8);
                 writer.WriteStringValue(ApiPrefix);

@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SecurityInsights.Models;
@@ -29,7 +28,7 @@ namespace Azure.ResourceManager.SecurityInsights
             }
 
             writer.WriteStartObject();
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -49,29 +48,29 @@ namespace Azure.ResourceManager.SecurityInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdTimeUtc"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && LastModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedTimeUtc"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && Author != null)
+            if (options.Format != "W" && Optional.IsDefined(Author))
             {
                 writer.WritePropertyName("author"u8);
                 writer.WriteObjectValue(Author);

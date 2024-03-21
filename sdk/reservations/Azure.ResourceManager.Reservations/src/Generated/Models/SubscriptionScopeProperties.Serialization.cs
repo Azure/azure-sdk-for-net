@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (!(Scopes is ChangeTrackingList<ScopeProperties> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Scopes))
             {
                 writer.WritePropertyName("scopes"u8);
                 writer.WriteStartArray();

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(Value is ChangeTrackingList<WorkItemConfiguration> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();

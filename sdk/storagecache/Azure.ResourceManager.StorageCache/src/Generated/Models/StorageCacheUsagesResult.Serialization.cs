@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && NextLink != null)
+            if (options.Format != "W" && Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (options.Format != "W" && !(Value is ChangeTrackingList<StorageCacheUsage> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();

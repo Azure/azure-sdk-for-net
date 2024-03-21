@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && RuleGroupName != null)
+            if (options.Format != "W" && Optional.IsDefined(RuleGroupName))
             {
                 writer.WritePropertyName("ruleGroupName"u8);
                 writer.WriteStringValue(RuleGroupName);
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && !(Rules is ChangeTrackingList<ManagedRuleDefinition> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Rules))
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();

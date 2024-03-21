@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (WindowsServerSubscription.HasValue)
+            if (Optional.IsDefined(WindowsServerSubscription))
             {
                 writer.WritePropertyName("windowsServerSubscription"u8);
                 writer.WriteStringValue(WindowsServerSubscription.Value.ToString());
             }
-            if (DiagnosticLevel.HasValue)
+            if (Optional.IsDefined(DiagnosticLevel))
             {
                 writer.WritePropertyName("diagnosticLevel"u8);
                 writer.WriteStringValue(DiagnosticLevel.Value.ToString());

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (!(InstallDependsOn is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(InstallDependsOn))
             {
                 writer.WritePropertyName("installDependsOn"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(UninstallDependsOn is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(UninstallDependsOn))
             {
                 writer.WritePropertyName("uninstallDependsOn"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(UpdateDependsOn is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(UpdateDependsOn))
             {
                 writer.WritePropertyName("updateDependsOn"u8);
                 writer.WriteStartArray();

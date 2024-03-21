@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             }
 
             writer.WriteStartObject();
-            if (ImpactedRegion != null)
+            if (Optional.IsDefined(ImpactedRegion))
             {
                 writer.WritePropertyName("impactedRegion"u8);
                 writer.WriteStringValue(ImpactedRegion);
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (!(ImpactedSubscriptions is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ImpactedSubscriptions))
             {
                 writer.WritePropertyName("impactedSubscriptions"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ImpactedTenants is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ImpactedTenants))
             {
                 writer.WritePropertyName("impactedTenants"u8);
                 writer.WriteStartArray();
@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
                 writer.WriteEndArray();
             }
-            if (LastUpdateOn.HasValue)
+            if (Optional.IsDefined(LastUpdateOn))
             {
                 writer.WritePropertyName("lastUpdateTime"u8);
                 writer.WriteStringValue(LastUpdateOn.Value, "O");
             }
-            if (!(Updates is ChangeTrackingList<ResourceHealthEventUpdate> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Updates))
             {
                 writer.WritePropertyName("updates"u8);
                 writer.WriteStartArray();

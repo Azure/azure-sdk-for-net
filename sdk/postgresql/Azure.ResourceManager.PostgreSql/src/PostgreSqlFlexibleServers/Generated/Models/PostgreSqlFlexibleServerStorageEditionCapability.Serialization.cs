@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && DefaultStorageSizeMb.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DefaultStorageSizeMb))
             {
                 writer.WritePropertyName("defaultStorageSizeMb"u8);
                 writer.WriteNumberValue(DefaultStorageSizeMb.Value);
             }
-            if (options.Format != "W" && !(SupportedStorageCapabilities is ChangeTrackingList<PostgreSqlFlexibleServerStorageCapability> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedStorageCapabilities))
             {
                 writer.WritePropertyName("supportedStorageMb"u8);
                 writer.WriteStartArray();
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && CapabilityStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CapabilityStatus))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(CapabilityStatus.Value.ToSerialString());
             }
-            if (options.Format != "W" && Reason != null)
+            if (options.Format != "W" && Optional.IsDefined(Reason))
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);

@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (SubscriptionId != null)
+            if (Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (DataFactoryName != null)
+            if (Optional.IsDefined(DataFactoryName))
             {
                 writer.WritePropertyName("dataFactoryName"u8);
                 writer.WriteStringValue(DataFactoryName);
             }
-            if (DataFactoryLocation.HasValue)
+            if (Optional.IsDefined(DataFactoryLocation))
             {
                 writer.WritePropertyName("dataFactoryLocation"u8);
                 writer.WriteStringValue(DataFactoryLocation.Value);

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
 
             writer.WriteStartObject();
-            if (StorageCapacityTiB.HasValue)
+            if (Optional.IsDefined(StorageCapacityTiB))
             {
                 writer.WritePropertyName("storageCapacityTiB"u8);
                 writer.WriteNumberValue(StorageCapacityTiB.Value);
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
@@ -57,10 +56,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         public PreRulestackRuleData(string ruleName)
         {
-            if (ruleName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleName));
-            }
+            Argument.AssertNotNull(ruleName, nameof(ruleName));
 
             RuleName = ruleName;
             Applications = new ChangeTrackingList<string>();

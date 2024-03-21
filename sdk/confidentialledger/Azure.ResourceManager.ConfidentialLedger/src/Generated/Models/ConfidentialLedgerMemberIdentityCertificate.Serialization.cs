@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             }
 
             writer.WriteStartObject();
-            if (Certificate != null)
+            if (Optional.IsDefined(Certificate))
             {
                 writer.WritePropertyName("certificate"u8);
                 writer.WriteStringValue(Certificate);
             }
-            if (Encryptionkey != null)
+            if (Optional.IsDefined(Encryptionkey))
             {
                 writer.WritePropertyName("encryptionkey"u8);
                 writer.WriteStringValue(Encryptionkey);
             }
-            if (Tags != null)
+            if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
 #if NET6_0_OR_GREATER

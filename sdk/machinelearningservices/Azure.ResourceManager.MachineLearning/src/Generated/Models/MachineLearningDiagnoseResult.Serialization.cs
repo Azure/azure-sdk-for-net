@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Code != null)
+            if (options.Format != "W" && Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (options.Format != "W" && Level.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Level))
             {
                 writer.WritePropertyName("level"u8);
                 writer.WriteStringValue(Level.Value.ToString());
             }
-            if (options.Format != "W" && Message != null)
+            if (options.Format != "W" && Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);

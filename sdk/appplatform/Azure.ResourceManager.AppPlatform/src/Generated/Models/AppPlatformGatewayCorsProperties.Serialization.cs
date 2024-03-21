@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (!(AllowedOrigins is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AllowedOrigins))
             {
                 writer.WritePropertyName("allowedOrigins"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(AllowedMethods is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(AllowedMethods))
             {
                 writer.WritePropertyName("allowedMethods"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(AllowedHeaders is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(AllowedHeaders))
             {
                 writer.WritePropertyName("allowedHeaders"u8);
                 writer.WriteStartArray();
@@ -56,17 +56,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (MaxAge.HasValue)
+            if (Optional.IsDefined(MaxAge))
             {
                 writer.WritePropertyName("maxAge"u8);
                 writer.WriteNumberValue(MaxAge.Value);
             }
-            if (AreCredentialsAllowed.HasValue)
+            if (Optional.IsDefined(AreCredentialsAllowed))
             {
                 writer.WritePropertyName("allowCredentials"u8);
                 writer.WriteBooleanValue(AreCredentialsAllowed.Value);
             }
-            if (!(ExposedHeaders is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(ExposedHeaders))
             {
                 writer.WritePropertyName("exposedHeaders"u8);
                 writer.WriteStartArray();

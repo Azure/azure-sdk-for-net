@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (ImmutableSubscriptionId != null)
+            if (Optional.IsDefined(ImmutableSubscriptionId))
             {
                 writer.WritePropertyName("immutableSubscriptionId"u8);
                 writer.WriteStringValue(ImmutableSubscriptionId);
             }
-            if (ImmutableResourceId != null)
+            if (Optional.IsDefined(ImmutableResourceId))
             {
                 writer.WritePropertyName("immutableResourceId"u8);
                 writer.WriteStringValue(ImmutableResourceId);
             }
-            if (VnetTrafficTag != null)
+            if (Optional.IsDefined(VnetTrafficTag))
             {
                 writer.WritePropertyName("vnetTrafficTag"u8);
                 writer.WriteStringValue(VnetTrafficTag);
             }
-            if (!(ManualPrivateLinkServiceConnections is ChangeTrackingList<DeviceUpdatePrivateLinkServiceConnection> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ManualPrivateLinkServiceConnections))
             {
                 writer.WritePropertyName("manualPrivateLinkServiceConnections"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(PrivateLinkServiceConnections is ChangeTrackingList<DeviceUpdatePrivateLinkServiceConnection> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(PrivateLinkServiceConnections))
             {
                 writer.WritePropertyName("privateLinkServiceConnections"u8);
                 writer.WriteStartArray();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(PrivateLinkServiceProxies is ChangeTrackingList<DeviceUpdatePrivateLinkServiceProxy> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(PrivateLinkServiceProxies))
             {
                 writer.WritePropertyName("privateLinkServiceProxies"u8);
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ConnectionDetails is ChangeTrackingList<DeviceUpdatePrivateEndpointConnectionDetails> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(ConnectionDetails))
             {
                 writer.WritePropertyName("connectionDetails"u8);
                 writer.WriteStartArray();

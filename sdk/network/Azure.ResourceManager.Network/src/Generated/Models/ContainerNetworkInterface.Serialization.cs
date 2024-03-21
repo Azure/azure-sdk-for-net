@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -28,39 +27,39 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ContainerNetworkInterfaceConfiguration != null)
+            if (options.Format != "W" && Optional.IsDefined(ContainerNetworkInterfaceConfiguration))
             {
                 writer.WritePropertyName("containerNetworkInterfaceConfiguration"u8);
                 writer.WriteObjectValue(ContainerNetworkInterfaceConfiguration);
             }
-            if (Container != null)
+            if (Optional.IsDefined(Container))
             {
                 writer.WritePropertyName("container"u8);
                 JsonSerializer.Serialize(writer, Container);
             }
-            if (options.Format != "W" && !(IPConfigurations is ChangeTrackingList<ContainerNetworkInterfaceIPConfiguration> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(IPConfigurations))
             {
                 writer.WritePropertyName("ipConfigurations"u8);
                 writer.WriteStartArray();
@@ -70,7 +69,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());

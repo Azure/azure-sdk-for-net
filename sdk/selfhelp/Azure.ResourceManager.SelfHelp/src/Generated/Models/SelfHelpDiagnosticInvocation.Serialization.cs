@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
 
             writer.WriteStartObject();
-            if (SolutionId != null)
+            if (Optional.IsDefined(SolutionId))
             {
                 writer.WritePropertyName("solutionId"u8);
                 writer.WriteStringValue(SolutionId);
             }
-            if (!(AdditionalParameters is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AdditionalParameters))
             {
                 writer.WritePropertyName("additionalParameters"u8);
                 writer.WriteStartObject();

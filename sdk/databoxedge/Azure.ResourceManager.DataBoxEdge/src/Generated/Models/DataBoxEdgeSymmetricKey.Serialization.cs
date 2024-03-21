@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (ConnectionString != null)
+            if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
                 writer.WriteObjectValue(ConnectionString);

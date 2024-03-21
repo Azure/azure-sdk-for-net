@@ -28,27 +28,27 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Tier != null)
+            if (Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier);
             }
-            if (Size != null)
+            if (Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteStringValue(Size);
             }
-            if (Family != null)
+            if (Optional.IsDefined(Family))
             {
                 writer.WritePropertyName("family"u8);
                 writer.WriteStringValue(Family);
             }
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (!(Locations is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Locations))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(LocationInfo is ChangeTrackingList<ResourceTypeSkuLocationInfo> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(LocationInfo))
             {
                 writer.WritePropertyName("locationInfo"u8);
                 writer.WriteStartArray();
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(RequiredQuotaIds is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(RequiredQuotaIds))
             {
                 writer.WritePropertyName("requiredQuotaIds"u8);
                 writer.WriteStartArray();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(RequiredFeatures is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(RequiredFeatures))
             {
                 writer.WritePropertyName("requiredFeatures"u8);
                 writer.WriteStartArray();
@@ -88,12 +88,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Capacity != null)
+            if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteObjectValue(Capacity);
             }
-            if (!(Costs is ChangeTrackingList<ResourceTypeSkuCost> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(Costs))
             {
                 writer.WritePropertyName("costs"u8);
                 writer.WriteStartArray();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Capabilities is ChangeTrackingList<ResourceSkuCapability> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartArray();

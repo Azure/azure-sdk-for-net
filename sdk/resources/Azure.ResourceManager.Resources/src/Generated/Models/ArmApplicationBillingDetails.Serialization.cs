@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (ResourceUsageId != null)
+            if (Optional.IsDefined(ResourceUsageId))
             {
                 writer.WritePropertyName("resourceUsageId"u8);
                 writer.WriteStringValue(ResourceUsageId);

@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Avs.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ClusterSize.HasValue)
+            if (Optional.IsDefined(ClusterSize))
             {
                 writer.WritePropertyName("clusterSize"u8);
                 writer.WriteNumberValue(ClusterSize.Value);
             }
-            if (!(Hosts is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Hosts))
             {
                 writer.WritePropertyName("hosts"u8);
                 writer.WriteStartArray();

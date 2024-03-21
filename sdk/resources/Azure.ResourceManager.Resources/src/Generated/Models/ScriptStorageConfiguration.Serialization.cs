@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (StorageAccountName != null)
+            if (Optional.IsDefined(StorageAccountName))
             {
                 writer.WritePropertyName("storageAccountName"u8);
                 writer.WriteStringValue(StorageAccountName);
             }
-            if (StorageAccountKey != null)
+            if (Optional.IsDefined(StorageAccountKey))
             {
                 writer.WritePropertyName("storageAccountKey"u8);
                 writer.WriteStringValue(StorageAccountKey);

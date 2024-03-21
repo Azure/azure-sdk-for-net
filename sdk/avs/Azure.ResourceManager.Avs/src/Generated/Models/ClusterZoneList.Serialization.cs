@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Avs.Models
             }
 
             writer.WriteStartObject();
-            if (!(Zones is ChangeTrackingList<AvsClusterZone> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();

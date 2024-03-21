@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SignalR.Models
             }
 
             writer.WriteStartObject();
-            if (!(Categories is ChangeTrackingList<SignalRResourceLogCategory> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Categories))
             {
                 writer.WritePropertyName("categories"u8);
                 writer.WriteStartArray();

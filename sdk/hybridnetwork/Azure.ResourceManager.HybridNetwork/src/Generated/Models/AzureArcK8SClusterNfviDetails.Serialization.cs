@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (CustomLocationReference != null)
+            if (Optional.IsDefined(CustomLocationReference))
             {
                 writer.WritePropertyName("customLocationReference"u8);
                 JsonSerializer.Serialize(writer, CustomLocationReference);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);

@@ -22,7 +22,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("referenceName"u8);
             writer.WriteStringValue(ReferenceName);
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);

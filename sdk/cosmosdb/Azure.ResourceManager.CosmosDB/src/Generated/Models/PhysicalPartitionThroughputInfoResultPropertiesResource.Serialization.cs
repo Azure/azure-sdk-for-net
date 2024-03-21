@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (!(PhysicalPartitionThroughputInfo is ChangeTrackingList<PhysicalPartitionThroughputInfoResource> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PhysicalPartitionThroughputInfo))
             {
                 writer.WritePropertyName("physicalPartitionThroughputInfo"u8);
                 writer.WriteStartArray();

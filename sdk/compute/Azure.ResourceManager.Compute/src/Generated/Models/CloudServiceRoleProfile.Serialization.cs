@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (!(Roles is ChangeTrackingList<CloudServiceRoleProfileProperties> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Roles))
             {
                 writer.WritePropertyName("roles"u8);
                 writer.WriteStartArray();

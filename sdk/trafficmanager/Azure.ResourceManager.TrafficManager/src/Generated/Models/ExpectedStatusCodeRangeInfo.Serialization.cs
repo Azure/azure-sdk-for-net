@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.TrafficManager.Models
             }
 
             writer.WriteStartObject();
-            if (Min.HasValue)
+            if (Optional.IsDefined(Min))
             {
                 writer.WritePropertyName("min"u8);
                 writer.WriteNumberValue(Min.Value);
             }
-            if (Max.HasValue)
+            if (Optional.IsDefined(Max))
             {
                 writer.WritePropertyName("max"u8);
                 writer.WriteNumberValue(Max.Value);

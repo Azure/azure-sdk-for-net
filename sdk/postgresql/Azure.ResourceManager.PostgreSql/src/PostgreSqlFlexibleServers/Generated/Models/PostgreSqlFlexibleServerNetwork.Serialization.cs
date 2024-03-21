@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && PublicNetworkAccess.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (DelegatedSubnetResourceId != null)
+            if (Optional.IsDefined(DelegatedSubnetResourceId))
             {
                 writer.WritePropertyName("delegatedSubnetResourceId"u8);
                 writer.WriteStringValue(DelegatedSubnetResourceId);
             }
-            if (PrivateDnsZoneArmResourceId != null)
+            if (Optional.IsDefined(PrivateDnsZoneArmResourceId))
             {
                 writer.WritePropertyName("privateDnsZoneArmResourceId"u8);
                 writer.WriteStringValue(PrivateDnsZoneArmResourceId);

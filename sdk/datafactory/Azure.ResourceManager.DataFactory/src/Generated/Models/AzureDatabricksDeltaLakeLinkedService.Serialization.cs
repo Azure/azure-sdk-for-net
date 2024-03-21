@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LinkedServiceType);
-            if (ConnectVia != null)
+            if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
                 writer.WriteObjectValue(ConnectVia);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, EntityParameterSpecification> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(Annotations is ChangeTrackingList<BinaryData> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -76,27 +76,27 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("domain"u8);
             JsonSerializer.Serialize(writer, Domain);
-            if (AccessToken != null)
+            if (Optional.IsDefined(AccessToken))
             {
                 writer.WritePropertyName("accessToken"u8);
                 JsonSerializer.Serialize(writer, AccessToken);
             }
-            if (ClusterId != null)
+            if (Optional.IsDefined(ClusterId))
             {
                 writer.WritePropertyName("clusterId"u8);
                 JsonSerializer.Serialize(writer, ClusterId);
             }
-            if (EncryptedCredential != null)
+            if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteStringValue(EncryptedCredential);
             }
-            if (Credential != null)
+            if (Optional.IsDefined(Credential))
             {
                 writer.WritePropertyName("credential"u8);
                 writer.WriteObjectValue(Credential);
             }
-            if (WorkspaceResourceId != null)
+            if (Optional.IsDefined(WorkspaceResourceId))
             {
                 writer.WritePropertyName("workspaceResourceId"u8);
                 JsonSerializer.Serialize(writer, WorkspaceResourceId);
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             IDictionary<string, EntityParameterSpecification> parameters = default;
             IList<BinaryData> annotations = default;
             DataFactoryElement<string> domain = default;
-            DataFactorySecretBaseDefinition accessToken = default;
+            DataFactorySecret accessToken = default;
             DataFactoryElement<string> clusterId = default;
             string encryptedCredential = default;
             DataFactoryCredentialReference credential = default;
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            accessToken = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
+                            accessToken = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("clusterId"u8))

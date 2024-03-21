@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && JobName != null)
+            if (options.Format != "W" && Optional.IsDefined(JobName))
             {
                 writer.WritePropertyName("jobName"u8);
                 writer.WriteStringValue(JobName);
             }
-            if (options.Format != "W" && JobSecrets != null)
+            if (options.Format != "W" && Optional.IsDefined(JobSecrets))
             {
                 writer.WritePropertyName("jobSecrets"u8);
                 writer.WriteObjectValue(JobSecrets);

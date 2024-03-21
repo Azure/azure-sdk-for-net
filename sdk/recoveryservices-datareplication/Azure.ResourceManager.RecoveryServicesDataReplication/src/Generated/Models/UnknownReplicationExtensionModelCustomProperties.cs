@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
-    /// <summary> The UnknownReplicationExtensionModelCustomProperties. </summary>
+    /// <summary> Unknown version of ReplicationExtensionModelCustomProperties. </summary>
     internal partial class UnknownReplicationExtensionModelCustomProperties : ReplicationExtensionModelCustomProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownReplicationExtensionModelCustomProperties"/>. </summary>

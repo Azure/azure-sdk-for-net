@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStringValue(EventOn, "O");
             writer.WritePropertyName("recordType"u8);
             writer.WriteStringValue(RecordType.ToString());
-            if (Record != null)
+            if (Optional.IsDefined(Record))
             {
                 writer.WritePropertyName("record"u8);
 #if NET6_0_OR_GREATER
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
 #endif
             }
-            if (Error != null)
+            if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);

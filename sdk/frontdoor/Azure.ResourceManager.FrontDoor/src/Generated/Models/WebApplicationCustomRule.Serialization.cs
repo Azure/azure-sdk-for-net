@@ -26,26 +26,26 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("priority"u8);
             writer.WriteNumberValue(Priority);
-            if (EnabledState.HasValue)
+            if (Optional.IsDefined(EnabledState))
             {
                 writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToString());
             }
             writer.WritePropertyName("ruleType"u8);
             writer.WriteStringValue(RuleType.ToString());
-            if (RateLimitDurationInMinutes.HasValue)
+            if (Optional.IsDefined(RateLimitDurationInMinutes))
             {
                 writer.WritePropertyName("rateLimitDurationInMinutes"u8);
                 writer.WriteNumberValue(RateLimitDurationInMinutes.Value);
             }
-            if (RateLimitThreshold.HasValue)
+            if (Optional.IsDefined(RateLimitThreshold))
             {
                 writer.WritePropertyName("rateLimitThreshold"u8);
                 writer.WriteNumberValue(RateLimitThreshold.Value);

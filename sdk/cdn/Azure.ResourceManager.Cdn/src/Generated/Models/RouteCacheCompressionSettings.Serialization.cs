@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (!(ContentTypesToCompress is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ContentTypesToCompress))
             {
                 writer.WritePropertyName("contentTypesToCompress"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IsCompressionEnabled.HasValue)
+            if (Optional.IsDefined(IsCompressionEnabled))
             {
                 writer.WritePropertyName("isCompressionEnabled"u8);
                 writer.WriteBooleanValue(IsCompressionEnabled.Value);

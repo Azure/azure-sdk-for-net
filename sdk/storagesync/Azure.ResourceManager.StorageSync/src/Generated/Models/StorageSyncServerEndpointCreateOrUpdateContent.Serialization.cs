@@ -42,64 +42,64 @@ namespace Azure.ResourceManager.StorageSync.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ServerLocalPath != null)
+            if (Optional.IsDefined(ServerLocalPath))
             {
                 writer.WritePropertyName("serverLocalPath"u8);
                 writer.WriteStringValue(ServerLocalPath);
             }
-            if (CloudTiering.HasValue)
+            if (Optional.IsDefined(CloudTiering))
             {
                 writer.WritePropertyName("cloudTiering"u8);
                 writer.WriteStringValue(CloudTiering.Value.ToString());
             }
-            if (VolumeFreeSpacePercent.HasValue)
+            if (Optional.IsDefined(VolumeFreeSpacePercent))
             {
                 writer.WritePropertyName("volumeFreeSpacePercent"u8);
                 writer.WriteNumberValue(VolumeFreeSpacePercent.Value);
             }
-            if (TierFilesOlderThanDays.HasValue)
+            if (Optional.IsDefined(TierFilesOlderThanDays))
             {
                 writer.WritePropertyName("tierFilesOlderThanDays"u8);
                 writer.WriteNumberValue(TierFilesOlderThanDays.Value);
             }
-            if (FriendlyName != null)
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (ServerResourceId != null)
+            if (Optional.IsDefined(ServerResourceId))
             {
                 writer.WritePropertyName("serverResourceId"u8);
                 writer.WriteStringValue(ServerResourceId);
             }
-            if (OfflineDataTransfer.HasValue)
+            if (Optional.IsDefined(OfflineDataTransfer))
             {
                 writer.WritePropertyName("offlineDataTransfer"u8);
                 writer.WriteStringValue(OfflineDataTransfer.Value.ToString());
             }
-            if (OfflineDataTransferShareName != null)
+            if (Optional.IsDefined(OfflineDataTransferShareName))
             {
                 writer.WritePropertyName("offlineDataTransferShareName"u8);
                 writer.WriteStringValue(OfflineDataTransferShareName);
             }
-            if (InitialDownloadPolicy.HasValue)
+            if (Optional.IsDefined(InitialDownloadPolicy))
             {
                 writer.WritePropertyName("initialDownloadPolicy"u8);
                 writer.WriteStringValue(InitialDownloadPolicy.Value.ToString());
             }
-            if (LocalCacheMode.HasValue)
+            if (Optional.IsDefined(LocalCacheMode))
             {
                 writer.WritePropertyName("localCacheMode"u8);
                 writer.WriteStringValue(LocalCacheMode.Value.ToString());
             }
-            if (InitialUploadPolicy.HasValue)
+            if (Optional.IsDefined(InitialUploadPolicy))
             {
                 writer.WritePropertyName("initialUploadPolicy"u8);
                 writer.WriteStringValue(InitialUploadPolicy.Value.ToString());

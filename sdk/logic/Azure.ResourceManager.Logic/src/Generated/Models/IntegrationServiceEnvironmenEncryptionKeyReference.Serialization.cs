@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (KeyVault != null)
+            if (Optional.IsDefined(KeyVault))
             {
                 writer.WritePropertyName("keyVault"u8);
                 writer.WriteObjectValue(KeyVault);
             }
-            if (KeyName != null)
+            if (Optional.IsDefined(KeyName))
             {
                 writer.WritePropertyName("keyName"u8);
                 writer.WriteStringValue(KeyName);
             }
-            if (KeyVersion != null)
+            if (Optional.IsDefined(KeyVersion))
             {
                 writer.WritePropertyName("keyVersion"u8);
                 writer.WriteStringValue(KeyVersion);

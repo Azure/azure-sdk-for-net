@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LinkedServiceType);
-            if (ConnectVia != null)
+            if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
                 writer.WriteObjectValue(ConnectVia);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, EntityParameterSpecification> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(Annotations is ChangeTrackingList<BinaryData> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (ConnectionProperties != null)
+            if (Optional.IsDefined(ConnectionProperties))
             {
                 writer.WritePropertyName("connectionProperties"u8);
 #if NET6_0_OR_GREATER
@@ -86,32 +86,32 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            if (Endpoint != null)
+            if (Optional.IsDefined(Endpoint))
             {
                 writer.WritePropertyName("endpoint"u8);
                 JsonSerializer.Serialize(writer, Endpoint);
             }
-            if (AccessToken != null)
+            if (Optional.IsDefined(AccessToken))
             {
                 writer.WritePropertyName("accessToken"u8);
                 JsonSerializer.Serialize(writer, AccessToken);
             }
-            if (UseEncryptedEndpoints != null)
+            if (Optional.IsDefined(UseEncryptedEndpoints))
             {
                 writer.WritePropertyName("useEncryptedEndpoints"u8);
                 JsonSerializer.Serialize(writer, UseEncryptedEndpoints);
             }
-            if (UseHostVerification != null)
+            if (Optional.IsDefined(UseHostVerification))
             {
                 writer.WritePropertyName("useHostVerification"u8);
                 JsonSerializer.Serialize(writer, UseHostVerification);
             }
-            if (UsePeerVerification != null)
+            if (Optional.IsDefined(UsePeerVerification))
             {
                 writer.WritePropertyName("usePeerVerification"u8);
                 JsonSerializer.Serialize(writer, UsePeerVerification);
             }
-            if (EncryptedCredential != null)
+            if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteStringValue(EncryptedCredential);
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             IList<BinaryData> annotations = default;
             BinaryData connectionProperties = default;
             DataFactoryElement<string> endpoint = default;
-            DataFactorySecretBaseDefinition accessToken = default;
+            DataFactorySecret accessToken = default;
             DataFactoryElement<bool> useEncryptedEndpoints = default;
             DataFactoryElement<bool> useHostVerification = default;
             DataFactoryElement<bool> usePeerVerification = default;
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            accessToken = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
+                            accessToken = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("useEncryptedEndpoints"u8))

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStartObject();
             writer.WritePropertyName("keyVaultResourceId"u8);
             writer.WriteStringValue(KeyVaultResourceId);
-            if (!(Secrets is ChangeTrackingList<ClusterSecretReference> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Secrets))
             {
                 writer.WritePropertyName("secrets"u8);
                 writer.WriteStartArray();

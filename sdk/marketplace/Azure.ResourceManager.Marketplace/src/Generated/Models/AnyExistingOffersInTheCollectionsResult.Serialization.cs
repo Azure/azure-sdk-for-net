@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             }
 
             writer.WriteStartObject();
-            if (Value.HasValue)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteBooleanValue(Value.Value);

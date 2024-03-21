@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (VmSizeProperties != null)
+            if (Optional.IsDefined(VmSizeProperties))
             {
                 writer.WritePropertyName("vmSizeProperties"u8);
                 writer.WriteObjectValue(VmSizeProperties);

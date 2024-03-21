@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Synapse.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(RuntimeType.ToString());
-            if (options.Format != "W" && DataFactoryName != null)
+            if (options.Format != "W" && Optional.IsDefined(DataFactoryName))
             {
                 writer.WritePropertyName("dataFactoryName"u8);
                 writer.WriteStringValue(DataFactoryName);
             }
-            if (options.Format != "W" && State.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());

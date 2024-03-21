@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (!(Resources is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Resources))
             {
                 writer.WritePropertyName("resources"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Options != null)
+            if (Optional.IsDefined(Options))
             {
                 writer.WritePropertyName("options"u8);
                 writer.WriteStringValue(Options);

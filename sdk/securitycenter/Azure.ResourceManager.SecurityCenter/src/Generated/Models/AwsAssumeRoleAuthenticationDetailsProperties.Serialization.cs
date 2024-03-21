@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && AccountId != null)
+            if (options.Format != "W" && Optional.IsDefined(AccountId))
             {
                 writer.WritePropertyName("accountId"u8);
                 writer.WriteStringValue(AccountId);
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStringValue(AwsAssumeRoleArn);
             writer.WritePropertyName("awsExternalId"u8);
             writer.WriteStringValue(AwsExternalId);
-            if (options.Format != "W" && AuthenticationProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AuthenticationProvisioningState))
             {
                 writer.WritePropertyName("authenticationProvisioningState"u8);
                 writer.WriteStringValue(AuthenticationProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && !(GrantedPermissions is ChangeTrackingList<SecurityCenterCloudPermission> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(GrantedPermissions))
             {
                 writer.WritePropertyName("grantedPermissions"u8);
                 writer.WriteStartArray();

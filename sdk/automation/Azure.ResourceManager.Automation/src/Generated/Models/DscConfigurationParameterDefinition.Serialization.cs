@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (DscConfigurationParameterType != null)
+            if (Optional.IsDefined(DscConfigurationParameterType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(DscConfigurationParameterType);
             }
-            if (IsMandatory.HasValue)
+            if (Optional.IsDefined(IsMandatory))
             {
                 writer.WritePropertyName("isMandatory"u8);
                 writer.WriteBooleanValue(IsMandatory.Value);
             }
-            if (Position.HasValue)
+            if (Optional.IsDefined(Position))
             {
                 writer.WritePropertyName("position"u8);
                 writer.WriteNumberValue(Position.Value);
             }
-            if (DefaultValue != null)
+            if (Optional.IsDefined(DefaultValue))
             {
                 writer.WritePropertyName("defaultValue"u8);
                 writer.WriteStringValue(DefaultValue);

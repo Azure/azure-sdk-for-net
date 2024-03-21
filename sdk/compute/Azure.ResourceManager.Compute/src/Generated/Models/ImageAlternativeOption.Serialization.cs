@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (AlternativeType.HasValue)
+            if (Optional.IsDefined(AlternativeType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(AlternativeType.Value.ToString());
             }
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);

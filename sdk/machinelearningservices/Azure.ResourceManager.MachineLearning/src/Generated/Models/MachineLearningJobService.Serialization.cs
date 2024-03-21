@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Endpoint != null)
+            if (Optional.IsDefined(Endpoint))
             {
                 if (Endpoint != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("endpoint");
                 }
             }
-            if (options.Format != "W" && ErrorMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(ErrorMessage))
             {
                 if (ErrorMessage != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("errorMessage");
                 }
             }
-            if (JobServiceType != null)
+            if (Optional.IsDefined(JobServiceType))
             {
                 if (JobServiceType != null)
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("jobServiceType");
                 }
             }
-            if (Nodes != null)
+            if (Optional.IsDefined(Nodes))
             {
                 if (Nodes != null)
                 {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("nodes");
                 }
             }
-            if (Port.HasValue)
+            if (Optional.IsDefined(Port))
             {
                 if (Port != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("port");
                 }
             }
-            if (!(Properties is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Properties))
             {
                 if (Properties != null)
                 {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("properties");
                 }
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 if (Status != null)
                 {

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
 
             writer.WriteStartObject();
-            if (CrossSubscriptionRestoreState.HasValue)
+            if (Optional.IsDefined(CrossSubscriptionRestoreState))
             {
                 writer.WritePropertyName("crossSubscriptionRestoreState"u8);
                 writer.WriteStringValue(CrossSubscriptionRestoreState.Value.ToString());

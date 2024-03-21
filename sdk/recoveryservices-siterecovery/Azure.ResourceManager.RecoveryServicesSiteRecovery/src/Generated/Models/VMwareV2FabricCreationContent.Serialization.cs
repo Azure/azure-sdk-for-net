@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (VMwareSiteId != null)
+            if (Optional.IsDefined(VMwareSiteId))
             {
                 writer.WritePropertyName("vmwareSiteId"u8);
                 writer.WriteStringValue(VMwareSiteId);
             }
-            if (PhysicalSiteId != null)
+            if (Optional.IsDefined(PhysicalSiteId))
             {
                 writer.WritePropertyName("physicalSiteId"u8);
                 writer.WriteStringValue(PhysicalSiteId);

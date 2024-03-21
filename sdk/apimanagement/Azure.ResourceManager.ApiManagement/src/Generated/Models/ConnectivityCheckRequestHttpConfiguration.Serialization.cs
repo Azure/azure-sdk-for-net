@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Method.HasValue)
+            if (Optional.IsDefined(Method))
             {
                 writer.WritePropertyName("method"u8);
                 writer.WriteStringValue(Method.Value.ToString());
             }
-            if (!(ValidStatusCodes is ChangeTrackingList<long> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ValidStatusCodes))
             {
                 writer.WritePropertyName("validStatusCodes"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Headers is ChangeTrackingList<HttpHeaderConfiguration> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Headers))
             {
                 writer.WritePropertyName("headers"u8);
                 writer.WriteStartArray();

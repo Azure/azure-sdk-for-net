@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (!(Landscape is ChangeTrackingList<SapLandscapeMonitorSidMapping> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Landscape))
             {
                 writer.WritePropertyName("landscape"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(SapApplication is ChangeTrackingList<SapLandscapeMonitorSidMapping> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(SapApplication))
             {
                 writer.WritePropertyName("sapApplication"u8);
                 writer.WriteStartArray();

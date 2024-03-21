@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (EventType != null)
+            if (Optional.IsDefined(EventType))
             {
                 if (EventType != null)
                 {

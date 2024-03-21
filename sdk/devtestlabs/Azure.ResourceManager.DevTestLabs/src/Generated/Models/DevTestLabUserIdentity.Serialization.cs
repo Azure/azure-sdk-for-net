@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (PrincipalName != null)
+            if (Optional.IsDefined(PrincipalName))
             {
                 writer.WritePropertyName("principalName"u8);
                 writer.WriteStringValue(PrincipalName);
             }
-            if (PrincipalId != null)
+            if (Optional.IsDefined(PrincipalId))
             {
                 writer.WritePropertyName("principalId"u8);
                 writer.WriteStringValue(PrincipalId);
             }
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (ObjectId != null)
+            if (Optional.IsDefined(ObjectId))
             {
                 writer.WritePropertyName("objectId"u8);
                 writer.WriteStringValue(ObjectId);
             }
-            if (AppId != null)
+            if (Optional.IsDefined(AppId))
             {
                 writer.WritePropertyName("appId"u8);
                 writer.WriteStringValue(AppId);

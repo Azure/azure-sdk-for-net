@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             writer.WriteStartObject();
             writer.WritePropertyName("azureUserName"u8);
             writer.WriteStringValue(AzureUserName);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);

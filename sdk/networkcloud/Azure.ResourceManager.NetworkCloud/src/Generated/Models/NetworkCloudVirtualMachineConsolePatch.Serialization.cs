@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,17 +39,17 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Enabled.HasValue)
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteStringValue(Enabled.Value.ToString());
             }
-            if (ExpireOn.HasValue)
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expiration"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (SshPublicKey != null)
+            if (Optional.IsDefined(SshPublicKey))
             {
                 writer.WritePropertyName("sshPublicKey"u8);
                 writer.WriteObjectValue(SshPublicKey);

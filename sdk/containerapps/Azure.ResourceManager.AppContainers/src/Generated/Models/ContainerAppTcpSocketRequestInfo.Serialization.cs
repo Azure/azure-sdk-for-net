@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Host != null)
+            if (Optional.IsDefined(Host))
             {
                 writer.WritePropertyName("host"u8);
                 writer.WriteStringValue(Host);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (!(StreamingPaths is ChangeTrackingList<StreamingPath> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(StreamingPaths))
             {
                 writer.WritePropertyName("streamingPaths"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(DownloadPaths is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(DownloadPaths))
             {
                 writer.WritePropertyName("downloadPaths"u8);
                 writer.WriteStartArray();

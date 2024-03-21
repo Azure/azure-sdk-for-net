@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Peering.Models
             }
 
             writer.WriteStartObject();
-            if (Role.HasValue)
+            if (Optional.IsDefined(Role))
             {
                 writer.WritePropertyName("role"u8);
                 writer.WriteStringValue(Role.Value.ToString());
             }
-            if (Email != null)
+            if (Optional.IsDefined(Email))
             {
                 writer.WritePropertyName("email"u8);
                 writer.WriteStringValue(Email);
             }
-            if (Phone != null)
+            if (Optional.IsDefined(Phone))
             {
                 writer.WritePropertyName("phone"u8);
                 writer.WriteStringValue(Phone);

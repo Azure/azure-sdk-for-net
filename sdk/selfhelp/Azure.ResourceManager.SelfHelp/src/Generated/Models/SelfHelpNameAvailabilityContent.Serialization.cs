@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
 
             writer.WriteStartObject();
-            if (ResourceName != null)
+            if (Optional.IsDefined(ResourceName))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(ResourceName);
             }
-            if (ResourceType.HasValue)
+            if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);

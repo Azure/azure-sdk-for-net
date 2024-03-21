@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ResourceProviderNamespace != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceProviderNamespace))
             {
                 writer.WritePropertyName("resourceProviderNamespace"u8);
                 writer.WriteStringValue(ResourceProviderNamespace);

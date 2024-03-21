@@ -30,28 +30,28 @@ namespace Azure.ResourceManager.LabServices.Models
             writer.WriteStringValue(CreateOption.ToSerialString());
             writer.WritePropertyName("imageReference"u8);
             writer.WriteObjectValue(ImageReference);
-            if (options.Format != "W" && OSType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToSerialString());
             }
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
-            if (AdditionalCapabilities != null)
+            if (Optional.IsDefined(AdditionalCapabilities))
             {
                 writer.WritePropertyName("additionalCapabilities"u8);
                 writer.WriteObjectValue(AdditionalCapabilities);
             }
             writer.WritePropertyName("usageQuota"u8);
             writer.WriteStringValue(UsageQuota, "P");
-            if (UseSharedPassword.HasValue)
+            if (Optional.IsDefined(UseSharedPassword))
             {
                 writer.WritePropertyName("useSharedPassword"u8);
                 writer.WriteStringValue(UseSharedPassword.Value.ToSerialString());
             }
             writer.WritePropertyName("adminUser"u8);
             writer.WriteObjectValue(AdminUser);
-            if (NonAdminUser != null)
+            if (Optional.IsDefined(NonAdminUser))
             {
                 writer.WritePropertyName("nonAdminUser"u8);
                 writer.WriteObjectValue(NonAdminUser);

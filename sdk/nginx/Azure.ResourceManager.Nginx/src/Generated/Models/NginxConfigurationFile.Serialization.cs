@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Nginx.Models
             }
 
             writer.WriteStartObject();
-            if (Content != null)
+            if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content);
             }
-            if (VirtualPath != null)
+            if (Optional.IsDefined(VirtualPath))
             {
                 writer.WritePropertyName("virtualPath"u8);
                 writer.WriteStringValue(VirtualPath);

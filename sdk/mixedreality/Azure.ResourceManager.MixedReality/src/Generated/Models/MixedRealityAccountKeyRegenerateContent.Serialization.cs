@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MixedReality.Models
             }
 
             writer.WriteStartObject();
-            if (Serial.HasValue)
+            if (Optional.IsDefined(Serial))
             {
                 writer.WritePropertyName("serial"u8);
                 writer.WriteNumberValue((int)Serial.Value);

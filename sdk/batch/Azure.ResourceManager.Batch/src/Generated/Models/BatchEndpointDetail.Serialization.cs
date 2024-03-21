@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Port.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);

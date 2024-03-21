@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (CurrentImageVersion != null)
+            if (Optional.IsDefined(CurrentImageVersion))
             {
                 writer.WritePropertyName("currentImageVersion"u8);
                 writer.WriteStringValue(CurrentImageVersion);
             }
-            if (LatestImageVersion != null)
+            if (Optional.IsDefined(LatestImageVersion))
             {
                 writer.WritePropertyName("latestImageVersion"u8);
                 writer.WriteStringValue(LatestImageVersion);
             }
-            if (IsLatestOSImageVersion.HasValue)
+            if (Optional.IsDefined(IsLatestOSImageVersion))
             {
                 writer.WritePropertyName("isLatestOsImageVersion"u8);
                 writer.WriteBooleanValue(IsLatestOSImageVersion.Value);

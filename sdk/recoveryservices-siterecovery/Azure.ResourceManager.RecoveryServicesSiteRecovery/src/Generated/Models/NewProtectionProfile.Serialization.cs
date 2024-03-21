@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             writer.WritePropertyName("policyName"u8);
             writer.WriteStringValue(PolicyName);
-            if (RecoveryPointHistory.HasValue)
+            if (Optional.IsDefined(RecoveryPointHistory))
             {
                 writer.WritePropertyName("recoveryPointHistory"u8);
                 writer.WriteNumberValue(RecoveryPointHistory.Value);
             }
-            if (CrashConsistentFrequencyInMinutes.HasValue)
+            if (Optional.IsDefined(CrashConsistentFrequencyInMinutes))
             {
                 writer.WritePropertyName("crashConsistentFrequencyInMinutes"u8);
                 writer.WriteNumberValue(CrashConsistentFrequencyInMinutes.Value);
             }
-            if (AppConsistentFrequencyInMinutes.HasValue)
+            if (Optional.IsDefined(AppConsistentFrequencyInMinutes))
             {
                 writer.WritePropertyName("appConsistentFrequencyInMinutes"u8);
                 writer.WriteNumberValue(AppConsistentFrequencyInMinutes.Value);

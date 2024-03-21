@@ -28,22 +28,22 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (IsRequired.HasValue)
+            if (Optional.IsDefined(IsRequired))
             {
                 writer.WritePropertyName("required"u8);
                 writer.WriteBooleanValue(IsRequired.Value);
             }
-            if (ParameterType.HasValue)
+            if (Optional.IsDefined(ParameterType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ParameterType.Value.ToSerialString());
             }
-            if (DefaultValue != null)
+            if (Optional.IsDefined(DefaultValue))
             {
                 writer.WritePropertyName("defaultValue"u8);
                 writer.WriteStringValue(DefaultValue);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);

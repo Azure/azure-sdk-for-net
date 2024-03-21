@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             writer.WritePropertyName("performShutdown"u8);
             writer.WriteStringValue(PerformShutdown);
-            if (RecoveryPointId != null)
+            if (Optional.IsDefined(RecoveryPointId))
             {
                 writer.WritePropertyName("recoveryPointId"u8);
                 writer.WriteStringValue(RecoveryPointId);

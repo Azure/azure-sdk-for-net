@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (LinuxProfile != null)
+            if (Optional.IsDefined(LinuxProfile))
             {
                 writer.WritePropertyName("linuxOperatingSystemProfile"u8);
                 writer.WriteObjectValue(LinuxProfile);

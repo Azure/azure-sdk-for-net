@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.LabServices.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartArray();

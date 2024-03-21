@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && SchemaName != null)
+            if (options.Format != "W" && Optional.IsDefined(SchemaName))
             {
                 writer.WritePropertyName("schemaName"u8);
                 writer.WriteStringValue(SchemaName);
             }
-            if (options.Format != "W" && !(Tables is ChangeTrackingList<DatabaseTable> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Tables))
             {
                 writer.WritePropertyName("tables"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(ValidationErrors is ChangeTrackingList<ReportableException> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ValidationErrors))
             {
                 writer.WritePropertyName("validationErrors"u8);
                 writer.WriteStartArray();

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (NetworkStatus != null)
+            if (Optional.IsDefined(NetworkStatus))
             {
                 writer.WritePropertyName("networkStatus"u8);
                 writer.WriteObjectValue(NetworkStatus);

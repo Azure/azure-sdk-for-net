@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (!(DiskRestorePoints is ChangeTrackingList<DiskRestorePointInstanceView> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DiskRestorePoints))
             {
                 writer.WritePropertyName("diskRestorePoints"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Statuses is ChangeTrackingList<InstanceViewStatus> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Statuses))
             {
                 writer.WritePropertyName("statuses"u8);
                 writer.WriteStartArray();

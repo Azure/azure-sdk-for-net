@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Synapse.Models;
@@ -31,12 +30,12 @@ namespace Azure.ResourceManager.Synapse
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -64,59 +63,59 @@ namespace Azure.ResourceManager.Synapse
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && State.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Uri != null)
+            if (options.Format != "W" && Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (options.Format != "W" && DataIngestionUri != null)
+            if (options.Format != "W" && Optional.IsDefined(DataIngestionUri))
             {
                 writer.WritePropertyName("dataIngestionUri"u8);
                 writer.WriteStringValue(DataIngestionUri.AbsoluteUri);
             }
-            if (options.Format != "W" && StateReason != null)
+            if (options.Format != "W" && Optional.IsDefined(StateReason))
             {
                 writer.WritePropertyName("stateReason"u8);
                 writer.WriteStringValue(StateReason);
             }
-            if (OptimizedAutoscale != null)
+            if (Optional.IsDefined(OptimizedAutoscale))
             {
                 writer.WritePropertyName("optimizedAutoscale"u8);
                 writer.WriteObjectValue(OptimizedAutoscale);
             }
-            if (EnableStreamingIngest.HasValue)
+            if (Optional.IsDefined(EnableStreamingIngest))
             {
                 writer.WritePropertyName("enableStreamingIngest"u8);
                 writer.WriteBooleanValue(EnableStreamingIngest.Value);
             }
-            if (EnablePurge.HasValue)
+            if (Optional.IsDefined(EnablePurge))
             {
                 writer.WritePropertyName("enablePurge"u8);
                 writer.WriteBooleanValue(EnablePurge.Value);
             }
-            if (options.Format != "W" && LanguageExtensions != null)
+            if (options.Format != "W" && Optional.IsDefined(LanguageExtensions))
             {
                 writer.WritePropertyName("languageExtensions"u8);
                 writer.WriteObjectValue(LanguageExtensions);
             }
-            if (WorkspaceUid.HasValue)
+            if (Optional.IsDefined(WorkspaceUid))
             {
                 writer.WritePropertyName("workspaceUID"u8);
                 writer.WriteStringValue(WorkspaceUid.Value);

@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Dynatrace.Models
             }
 
             writer.WriteStartObject();
-            if (UserId != null)
+            if (Optional.IsDefined(UserId))
             {
                 writer.WritePropertyName("userId"u8);
                 writer.WriteStringValue(UserId);
             }
-            if (AccountInfo != null)
+            if (Optional.IsDefined(AccountInfo))
             {
                 writer.WritePropertyName("accountInfo"u8);
                 writer.WriteObjectValue(AccountInfo);
             }
-            if (EnvironmentInfo != null)
+            if (Optional.IsDefined(EnvironmentInfo))
             {
                 writer.WritePropertyName("environmentInfo"u8);
                 writer.WriteObjectValue(EnvironmentInfo);
             }
-            if (SingleSignOnProperties != null)
+            if (Optional.IsDefined(SingleSignOnProperties))
             {
                 writer.WritePropertyName("singleSignOnProperties"u8);
                 writer.WriteObjectValue(SingleSignOnProperties);

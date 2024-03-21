@@ -27,22 +27,22 @@ namespace Azure.ResourceManager.StoragePool.Models
             }
 
             writer.WriteStartObject();
-            if (IPAddress != null)
+            if (Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress.ToString());
             }
-            if (Port.HasValue)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (LatencyInMs.HasValue)
+            if (Optional.IsDefined(LatencyInMs))
             {
                 writer.WritePropertyName("latency"u8);
                 writer.WriteNumberValue(LatencyInMs.Value);
             }
-            if (IsAccessible.HasValue)
+            if (Optional.IsDefined(IsAccessible))
             {
                 writer.WritePropertyName("isAccessible"u8);
                 writer.WriteBooleanValue(IsAccessible.Value);

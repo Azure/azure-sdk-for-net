@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(CapacityReservations is ChangeTrackingList<CapacityReservationInstanceViewWithName> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(CapacityReservations))
             {
                 writer.WritePropertyName("capacityReservations"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(SharedSubscriptionIds is ChangeTrackingList<SubResource> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SharedSubscriptionIds))
             {
                 writer.WritePropertyName("sharedSubscriptionIds"u8);
                 writer.WriteStartArray();

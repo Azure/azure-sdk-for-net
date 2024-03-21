@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
 
             writer.WriteStartObject();
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Address != null)
+            if (Optional.IsDefined(Address))
             {
                 writer.WritePropertyName("address"u8);
                 writer.WriteStringValue(Address);

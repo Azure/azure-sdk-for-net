@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Username != null)
+            if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
             }
-            if (AcrToken != null)
+            if (Optional.IsDefined(AcrToken))
             {
                 writer.WritePropertyName("acrToken"u8);
                 writer.WriteStringValue(AcrToken);
             }
-            if (AcrServerUri != null)
+            if (Optional.IsDefined(AcrServerUri))
             {
                 writer.WritePropertyName("acrServerUrl"u8);
                 writer.WriteStringValue(AcrServerUri.AbsoluteUri);
             }
-            if (!(Repositories is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Repositories))
             {
                 writer.WritePropertyName("repositories"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Expiry.HasValue)
+            if (Optional.IsDefined(Expiry))
             {
                 writer.WritePropertyName("expiry"u8);
                 writer.WriteStringValue(Expiry.Value, "O");

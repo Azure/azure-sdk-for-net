@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Consumption.Models
             }
 
             writer.WriteStartObject();
-            if (Dimensions != null)
+            if (Optional.IsDefined(Dimensions))
             {
                 writer.WritePropertyName("dimensions"u8);
                 writer.WriteObjectValue(Dimensions);
             }
-            if (Tags != null)
+            if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteObjectValue(Tags);

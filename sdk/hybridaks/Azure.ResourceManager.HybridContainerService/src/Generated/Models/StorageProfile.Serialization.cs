@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (SmbCsiDriver != null)
+            if (Optional.IsDefined(SmbCsiDriver))
             {
                 writer.WritePropertyName("smbCsiDriver"u8);
                 writer.WriteObjectValue(SmbCsiDriver);
             }
-            if (NfsCsiDriver != null)
+            if (Optional.IsDefined(NfsCsiDriver))
             {
                 writer.WritePropertyName("nfsCsiDriver"u8);
                 writer.WriteObjectValue(NfsCsiDriver);

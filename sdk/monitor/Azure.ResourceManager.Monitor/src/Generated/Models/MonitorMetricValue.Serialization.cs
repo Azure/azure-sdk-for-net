@@ -28,27 +28,27 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartObject();
             writer.WritePropertyName("timeStamp"u8);
             writer.WriteStringValue(TimeStamp, "O");
-            if (Average.HasValue)
+            if (Optional.IsDefined(Average))
             {
                 writer.WritePropertyName("average"u8);
                 writer.WriteNumberValue(Average.Value);
             }
-            if (Minimum.HasValue)
+            if (Optional.IsDefined(Minimum))
             {
                 writer.WritePropertyName("minimum"u8);
                 writer.WriteNumberValue(Minimum.Value);
             }
-            if (Maximum.HasValue)
+            if (Optional.IsDefined(Maximum))
             {
                 writer.WritePropertyName("maximum"u8);
                 writer.WriteNumberValue(Maximum.Value);
             }
-            if (Total.HasValue)
+            if (Optional.IsDefined(Total))
             {
                 writer.WritePropertyName("total"u8);
                 writer.WriteNumberValue(Total.Value);
             }
-            if (Count.HasValue)
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);

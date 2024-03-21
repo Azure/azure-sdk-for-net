@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
 
             writer.WriteStartObject();
-            if (!(Cidrs is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Cidrs))
             {
                 writer.WritePropertyName("cidrs"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Countries is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Countries))
             {
                 writer.WritePropertyName("countries"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Feeds is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Feeds))
             {
                 writer.WritePropertyName("feeds"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(PrefixLists is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(PrefixLists))
             {
                 writer.WritePropertyName("prefixLists"u8);
                 writer.WriteStartArray();

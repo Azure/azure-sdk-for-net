@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (!(DnsServers is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DnsServers))
             {
                 writer.WritePropertyName("dnsServers"u8);
                 writer.WriteStartArray();

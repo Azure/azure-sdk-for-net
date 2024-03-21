@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Port.HasValue)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (Region != null)
+            if (Optional.IsDefined(Region))
             {
                 writer.WritePropertyName("region"u8);
                 writer.WriteStringValue(Region);

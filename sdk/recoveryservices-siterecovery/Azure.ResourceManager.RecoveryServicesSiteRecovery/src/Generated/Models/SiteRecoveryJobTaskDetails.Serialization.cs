@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (JobTask != null)
+            if (Optional.IsDefined(JobTask))
             {
                 writer.WritePropertyName("jobTask"u8);
                 writer.WriteObjectValue(JobTask);

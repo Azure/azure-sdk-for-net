@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
 using Azure.ResourceManager.Resources;
 
@@ -367,10 +365,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<SiteRecoveryJobResource>> ResumeAsync(WaitUntil waitUntil, ReplicationResumeJobContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _siteRecoveryJobReplicationJobsClientDiagnostics.CreateScope("SiteRecoveryJobResource.Resume");
             scope.Start();
@@ -416,10 +411,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<SiteRecoveryJobResource> Resume(WaitUntil waitUntil, ReplicationResumeJobContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _siteRecoveryJobReplicationJobsClientDiagnostics.CreateScope("SiteRecoveryJobResource.Resume");
             scope.Start();
@@ -465,10 +457,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<SiteRecoveryJobResource>> ExportAsync(WaitUntil waitUntil, SiteRecoveryJobQueryContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _siteRecoveryJobReplicationJobsClientDiagnostics.CreateScope("SiteRecoveryJobResource.Export");
             scope.Start();
@@ -514,10 +503,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<SiteRecoveryJobResource> Export(WaitUntil waitUntil, SiteRecoveryJobQueryContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _siteRecoveryJobReplicationJobsClientDiagnostics.CreateScope("SiteRecoveryJobResource.Export");
             scope.Start();

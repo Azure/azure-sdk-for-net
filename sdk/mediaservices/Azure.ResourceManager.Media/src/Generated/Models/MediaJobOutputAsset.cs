@@ -18,10 +18,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <exception cref="ArgumentNullException"> <paramref name="assetName"/> is null. </exception>
         public MediaJobOutputAsset(string assetName)
         {
-            if (assetName == null)
-            {
-                throw new ArgumentNullException(nameof(assetName));
-            }
+            Argument.AssertNotNull(assetName, nameof(assetName));
 
             AssetName = assetName;
             OdataType = "#Microsoft.Media.JobOutputAsset";

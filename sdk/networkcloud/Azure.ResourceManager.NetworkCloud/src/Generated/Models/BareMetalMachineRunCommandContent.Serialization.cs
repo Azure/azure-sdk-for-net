@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (!(Arguments is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Arguments))
             {
                 writer.WritePropertyName("arguments"u8);
                 writer.WriteStartArray();

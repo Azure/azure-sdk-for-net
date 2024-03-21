@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (!(Dimensions is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Dimensions))
             {
                 writer.WritePropertyName("dimensions"u8);
                 writer.WriteStartObject();
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Timestamp.HasValue)
+            if (Optional.IsDefined(Timestamp))
             {
                 writer.WritePropertyName("timestamp"u8);
                 writer.WriteStringValue(Timestamp.Value, "O");

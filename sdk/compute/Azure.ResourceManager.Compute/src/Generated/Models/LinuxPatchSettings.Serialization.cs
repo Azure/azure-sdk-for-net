@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (PatchMode.HasValue)
+            if (Optional.IsDefined(PatchMode))
             {
                 writer.WritePropertyName("patchMode"u8);
                 writer.WriteStringValue(PatchMode.Value.ToString());
             }
-            if (AssessmentMode.HasValue)
+            if (Optional.IsDefined(AssessmentMode))
             {
                 writer.WritePropertyName("assessmentMode"u8);
                 writer.WriteStringValue(AssessmentMode.Value.ToString());
             }
-            if (AutomaticByPlatformSettings != null)
+            if (Optional.IsDefined(AutomaticByPlatformSettings))
             {
                 writer.WritePropertyName("automaticByPlatformSettings"u8);
                 writer.WriteObjectValue(AutomaticByPlatformSettings);

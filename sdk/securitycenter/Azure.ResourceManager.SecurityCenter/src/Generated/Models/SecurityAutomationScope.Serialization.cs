@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (ScopePath != null)
+            if (Optional.IsDefined(ScopePath))
             {
                 writer.WritePropertyName("scopePath"u8);
                 writer.WriteStringValue(ScopePath);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
 
             writer.WriteStartObject();
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 if (Value != null)
                 {

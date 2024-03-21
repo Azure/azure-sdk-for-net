@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (IsEncrypted.HasValue)
+            if (Optional.IsDefined(IsEncrypted))
             {
                 writer.WritePropertyName("isEncrypted"u8);
                 writer.WriteBooleanValue(IsEncrypted.Value);
             }
-            if (IsOptional.HasValue)
+            if (Optional.IsDefined(IsOptional))
             {
                 writer.WritePropertyName("isOptional"u8);
                 writer.WriteBooleanValue(IsOptional.Value);

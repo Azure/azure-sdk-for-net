@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
@@ -33,7 +32,7 @@ namespace Azure.AI.AnomalyDetector
             writer.WriteStringValue(CreatedTime, "O");
             writer.WritePropertyName("lastUpdatedTime"u8);
             writer.WriteStringValue(LastUpdatedTime, "O");
-            if (ModelInfo != null)
+            if (Optional.IsDefined(ModelInfo))
             {
                 writer.WritePropertyName("modelInfo"u8);
                 writer.WriteObjectValue(ModelInfo);

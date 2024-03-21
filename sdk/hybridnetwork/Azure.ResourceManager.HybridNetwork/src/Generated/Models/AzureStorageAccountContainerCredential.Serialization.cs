@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (ContainerName != null)
+            if (Optional.IsDefined(ContainerName))
             {
                 writer.WritePropertyName("containerName"u8);
                 writer.WriteStringValue(ContainerName);
             }
-            if (ContainerSasUri != null)
+            if (Optional.IsDefined(ContainerSasUri))
             {
                 writer.WritePropertyName("containerSasUri"u8);
                 writer.WriteStringValue(ContainerSasUri.AbsoluteUri);

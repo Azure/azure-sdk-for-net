@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (!(ProtectedItemDetails is ChangeTrackingList<FailoverReplicationProtectedItemDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ProtectedItemDetails))
             {
                 writer.WritePropertyName("protectedItemDetails"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
-            if (!(AffectedObjectDetails is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(AffectedObjectDetails))
             {
                 writer.WritePropertyName("affectedObjectDetails"u8);
                 writer.WriteStartObject();

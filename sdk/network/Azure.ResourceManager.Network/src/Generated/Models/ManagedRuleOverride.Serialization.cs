@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("ruleId"u8);
             writer.WriteStringValue(RuleId);
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Action.HasValue)
+            if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action.Value.ToString());

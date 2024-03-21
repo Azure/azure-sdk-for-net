@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (StartTimestamp.HasValue)
+            if (Optional.IsDefined(StartTimestamp))
             {
                 writer.WritePropertyName("startTimestamp"u8);
                 writer.WriteNumberValue(StartTimestamp.Value);
             }
-            if (EndTimestamp.HasValue)
+            if (Optional.IsDefined(EndTimestamp))
             {
                 writer.WritePropertyName("endTimestamp"u8);
                 writer.WriteNumberValue(EndTimestamp.Value);
             }
-            if (PresentationWindowDuration.HasValue)
+            if (Optional.IsDefined(PresentationWindowDuration))
             {
                 writer.WritePropertyName("presentationWindowDuration"u8);
                 writer.WriteNumberValue(PresentationWindowDuration.Value);
             }
-            if (LiveBackoffDuration.HasValue)
+            if (Optional.IsDefined(LiveBackoffDuration))
             {
                 writer.WritePropertyName("liveBackoffDuration"u8);
                 writer.WriteNumberValue(LiveBackoffDuration.Value);
             }
-            if (Timescale.HasValue)
+            if (Optional.IsDefined(Timescale))
             {
                 writer.WritePropertyName("timescale"u8);
                 writer.WriteNumberValue(Timescale.Value);
             }
-            if (ForceEndTimestamp.HasValue)
+            if (Optional.IsDefined(ForceEndTimestamp))
             {
                 writer.WritePropertyName("forceEndTimestamp"u8);
                 writer.WriteBooleanValue(ForceEndTimestamp.Value);

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (Code != null)
+            if (Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (!(Details is ChangeTrackingList<ODataError> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartArray();

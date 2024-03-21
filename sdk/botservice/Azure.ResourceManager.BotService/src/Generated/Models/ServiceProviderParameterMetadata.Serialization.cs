@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.BotService.Models
             }
 
             writer.WriteStartObject();
-            if (Constraints != null)
+            if (Optional.IsDefined(Constraints))
             {
                 writer.WritePropertyName("constraints"u8);
                 writer.WriteObjectValue(Constraints);

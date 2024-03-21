@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (SourceResourceId != null)
+            if (Optional.IsDefined(SourceResourceId))
             {
                 writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);

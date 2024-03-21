@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (EndOn.HasValue)
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Code != null)
+            if (Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (!(Results is ChangeTrackingList<TroubleshootingDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Results))
             {
                 writer.WritePropertyName("results"u8);
                 writer.WriteStartArray();

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (FragmentsPerTsSegment.HasValue)
+            if (Optional.IsDefined(FragmentsPerTsSegment))
             {
                 writer.WritePropertyName("fragmentsPerTsSegment"u8);
                 writer.WriteNumberValue(FragmentsPerTsSegment.Value);

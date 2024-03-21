@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && !(Members is ChangeTrackingList<MemberUpdateStatus> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Members))
             {
                 writer.WritePropertyName("members"u8);
                 writer.WriteStartArray();

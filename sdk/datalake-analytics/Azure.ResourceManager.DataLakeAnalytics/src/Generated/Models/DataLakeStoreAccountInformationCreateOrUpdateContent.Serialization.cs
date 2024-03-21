@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Suffix != null)
+            if (Optional.IsDefined(Suffix))
             {
                 writer.WritePropertyName("suffix"u8);
                 writer.WriteStringValue(Suffix);

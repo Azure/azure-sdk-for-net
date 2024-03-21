@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (LogLevel != null)
+            if (Optional.IsDefined(LogLevel))
             {
                 writer.WritePropertyName("logLevel"u8);
                 JsonSerializer.Serialize(writer, LogLevel);
             }
-            if (EnableReliableLogging != null)
+            if (Optional.IsDefined(EnableReliableLogging))
             {
                 writer.WritePropertyName("enableReliableLogging"u8);
                 JsonSerializer.Serialize(writer, EnableReliableLogging);

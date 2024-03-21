@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (PrimaryKekCertificatePfx != null)
+            if (Optional.IsDefined(PrimaryKekCertificatePfx))
             {
                 writer.WritePropertyName("primaryKekCertificatePfx"u8);
                 writer.WriteStringValue(PrimaryKekCertificatePfx);
             }
-            if (SecondaryKekCertificatePfx != null)
+            if (Optional.IsDefined(SecondaryKekCertificatePfx))
             {
                 writer.WritePropertyName("secondaryKekCertificatePfx"u8);
                 writer.WriteStringValue(SecondaryKekCertificatePfx);
             }
-            if (RecoveryPointId != null)
+            if (Optional.IsDefined(RecoveryPointId))
             {
                 writer.WritePropertyName("recoveryPointId"u8);
                 writer.WriteStringValue(RecoveryPointId);
             }
-            if (OSUpgradeVersion != null)
+            if (Optional.IsDefined(OSUpgradeVersion))
             {
                 writer.WritePropertyName("osUpgradeVersion"u8);
                 writer.WriteStringValue(OSUpgradeVersion);

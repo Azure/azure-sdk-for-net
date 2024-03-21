@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (Limit.HasValue)
+            if (Optional.IsDefined(Limit))
             {
                 writer.WritePropertyName("limit"u8);
                 writer.WriteNumberValue(Limit.Value);
             }
-            if (options.Format != "W" && CurrentValue.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CurrentValue))
             {
                 writer.WritePropertyName("currentValue"u8);
                 writer.WriteNumberValue(CurrentValue.Value);
             }
-            if (Unit != null)
+            if (Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit);
             }
-            if (ResourceName != null)
+            if (Optional.IsDefined(ResourceName))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteObjectValue(ResourceName);
             }
-            if (ResourceTypeName.HasValue)
+            if (Optional.IsDefined(ResourceTypeName))
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceTypeName.Value.ToString());
             }
-            if (options.Format != "W" && QuotaPeriod != null)
+            if (options.Format != "W" && Optional.IsDefined(QuotaPeriod))
             {
                 writer.WritePropertyName("quotaPeriod"u8);
                 writer.WriteStringValue(QuotaPeriod);
             }
-            if (Properties != null)
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
 #if NET6_0_OR_GREATER

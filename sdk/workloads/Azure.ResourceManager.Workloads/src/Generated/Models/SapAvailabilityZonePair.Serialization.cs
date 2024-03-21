@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (ZoneA.HasValue)
+            if (Optional.IsDefined(ZoneA))
             {
                 writer.WritePropertyName("zoneA"u8);
                 writer.WriteNumberValue(ZoneA.Value);
             }
-            if (ZoneB.HasValue)
+            if (Optional.IsDefined(ZoneB))
             {
                 writer.WritePropertyName("zoneB"u8);
                 writer.WriteNumberValue(ZoneB.Value);

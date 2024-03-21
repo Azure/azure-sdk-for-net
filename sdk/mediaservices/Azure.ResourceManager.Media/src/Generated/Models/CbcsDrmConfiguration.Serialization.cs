@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (FairPlay != null)
+            if (Optional.IsDefined(FairPlay))
             {
                 writer.WritePropertyName("fairPlay"u8);
                 writer.WriteObjectValue(FairPlay);
             }
-            if (PlayReady != null)
+            if (Optional.IsDefined(PlayReady))
             {
                 writer.WritePropertyName("playReady"u8);
                 writer.WriteObjectValue(PlayReady);
             }
-            if (Widevine != null)
+            if (Optional.IsDefined(Widevine))
             {
                 writer.WritePropertyName("widevine"u8);
                 writer.WriteObjectValue(Widevine);

@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
@@ -29,7 +28,7 @@ namespace Azure.AI.AnomalyDetector
             writer.WriteStartObject();
             writer.WritePropertyName("dataSource"u8);
             writer.WriteStringValue(DataSource.AbsoluteUri);
-            if (TopContributorCount.HasValue)
+            if (Optional.IsDefined(TopContributorCount))
             {
                 writer.WritePropertyName("topContributorCount"u8);
                 writer.WriteNumberValue(TopContributorCount.Value);

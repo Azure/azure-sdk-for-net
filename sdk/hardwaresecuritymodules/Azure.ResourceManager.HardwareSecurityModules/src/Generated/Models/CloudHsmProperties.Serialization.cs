@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             }
 
             writer.WriteStartObject();
-            if (Fqdn != null)
+            if (Optional.IsDefined(Fqdn))
             {
                 writer.WritePropertyName("fqdn"u8);
                 writer.WriteStringValue(Fqdn);
             }
-            if (State != null)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
-            if (StateMessage != null)
+            if (Optional.IsDefined(StateMessage))
             {
                 writer.WritePropertyName("stateMessage"u8);
                 writer.WriteStringValue(StateMessage);

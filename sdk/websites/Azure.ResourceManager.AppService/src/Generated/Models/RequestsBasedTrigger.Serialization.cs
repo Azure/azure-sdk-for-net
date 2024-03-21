@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Count.HasValue)
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (TimeInterval != null)
+            if (Optional.IsDefined(TimeInterval))
             {
                 writer.WritePropertyName("timeInterval"u8);
                 writer.WriteStringValue(TimeInterval);

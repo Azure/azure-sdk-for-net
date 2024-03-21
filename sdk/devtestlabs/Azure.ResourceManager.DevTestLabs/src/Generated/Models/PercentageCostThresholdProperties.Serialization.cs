@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (ThresholdValue.HasValue)
+            if (Optional.IsDefined(ThresholdValue))
             {
                 writer.WritePropertyName("thresholdValue"u8);
                 writer.WriteNumberValue(ThresholdValue.Value);

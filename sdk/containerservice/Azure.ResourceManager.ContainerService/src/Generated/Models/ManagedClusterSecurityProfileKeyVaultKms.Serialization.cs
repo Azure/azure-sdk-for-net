@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (KeyId != null)
+            if (Optional.IsDefined(KeyId))
             {
                 writer.WritePropertyName("keyId"u8);
                 writer.WriteStringValue(KeyId);
             }
-            if (KeyVaultNetworkAccess.HasValue)
+            if (Optional.IsDefined(KeyVaultNetworkAccess))
             {
                 writer.WritePropertyName("keyVaultNetworkAccess"u8);
                 writer.WriteStringValue(KeyVaultNetworkAccess.Value.ToString());
             }
-            if (KeyVaultResourceId != null)
+            if (Optional.IsDefined(KeyVaultResourceId))
             {
                 writer.WritePropertyName("keyVaultResourceId"u8);
                 writer.WriteStringValue(KeyVaultResourceId);

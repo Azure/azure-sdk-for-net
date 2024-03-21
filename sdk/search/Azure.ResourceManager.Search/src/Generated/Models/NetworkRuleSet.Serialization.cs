@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Search.Models
             }
 
             writer.WriteStartObject();
-            if (!(IPRules is ChangeTrackingList<SearchServiceIPRule> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(IPRules))
             {
                 writer.WritePropertyName("ipRules"u8);
                 writer.WriteStartArray();

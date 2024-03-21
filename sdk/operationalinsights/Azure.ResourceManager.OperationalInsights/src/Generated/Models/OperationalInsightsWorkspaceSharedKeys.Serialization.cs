@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
 
             writer.WriteStartObject();
-            if (PrimarySharedKey != null)
+            if (Optional.IsDefined(PrimarySharedKey))
             {
                 writer.WritePropertyName("primarySharedKey"u8);
                 writer.WriteStringValue(PrimarySharedKey);
             }
-            if (SecondarySharedKey != null)
+            if (Optional.IsDefined(SecondarySharedKey))
             {
                 writer.WritePropertyName("secondarySharedKey"u8);
                 writer.WriteStringValue(SecondarySharedKey);

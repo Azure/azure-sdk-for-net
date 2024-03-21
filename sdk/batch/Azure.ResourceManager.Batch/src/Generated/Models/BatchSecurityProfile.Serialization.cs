@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (SecurityType.HasValue)
+            if (Optional.IsDefined(SecurityType))
             {
                 writer.WritePropertyName("securityType"u8);
                 writer.WriteStringValue(SecurityType.Value.ToString());
             }
-            if (EncryptionAtHost.HasValue)
+            if (Optional.IsDefined(EncryptionAtHost))
             {
                 writer.WritePropertyName("encryptionAtHost"u8);
                 writer.WriteBooleanValue(EncryptionAtHost.Value);
             }
-            if (UefiSettings != null)
+            if (Optional.IsDefined(UefiSettings))
             {
                 writer.WritePropertyName("uefiSettings"u8);
                 writer.WriteObjectValue(UefiSettings);

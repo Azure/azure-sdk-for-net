@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             }
 
             writer.WriteStartObject();
-            if (Subnet != null)
+            if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
                 JsonSerializer.Serialize(writer, Subnet);
             }
-            if (!(NetworkInterfaces is ChangeTrackingList<NetworkInterface> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(NetworkInterfaces))
             {
                 writer.WritePropertyName("networkInterfaces"u8);
                 writer.WriteStartArray();

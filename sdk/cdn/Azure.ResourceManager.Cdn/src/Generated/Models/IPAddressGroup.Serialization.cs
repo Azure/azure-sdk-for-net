@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (DeliveryRegion != null)
+            if (Optional.IsDefined(DeliveryRegion))
             {
                 writer.WritePropertyName("deliveryRegion"u8);
                 writer.WriteStringValue(DeliveryRegion);
             }
-            if (!(IPv4Addresses is ChangeTrackingList<CidrIPAddress> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(IPv4Addresses))
             {
                 writer.WritePropertyName("ipv4Addresses"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(IPv6Addresses is ChangeTrackingList<CidrIPAddress> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(IPv6Addresses))
             {
                 writer.WritePropertyName("ipv6Addresses"u8);
                 writer.WriteStartArray();

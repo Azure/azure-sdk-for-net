@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (Category != null)
+            if (Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (!(Endpoints is ChangeTrackingList<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Endpoints))
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();

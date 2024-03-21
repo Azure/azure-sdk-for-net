@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Capacity.HasValue)
+            if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);

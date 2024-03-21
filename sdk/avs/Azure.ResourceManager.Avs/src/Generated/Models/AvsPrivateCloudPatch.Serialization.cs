@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Avs.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -38,24 +38,24 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ManagementCluster != null)
+            if (Optional.IsDefined(ManagementCluster))
             {
                 writer.WritePropertyName("managementCluster"u8);
                 writer.WriteObjectValue(ManagementCluster);
             }
-            if (Internet.HasValue)
+            if (Optional.IsDefined(Internet))
             {
                 writer.WritePropertyName("internet"u8);
                 writer.WriteStringValue(Internet.Value.ToString());
             }
-            if (!(IdentitySources is ChangeTrackingList<SingleSignOnIdentitySource> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(IdentitySources))
             {
                 writer.WritePropertyName("identitySources"u8);
                 writer.WriteStartArray();
@@ -65,17 +65,17 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Availability != null)
+            if (Optional.IsDefined(Availability))
             {
                 writer.WritePropertyName("availability"u8);
                 writer.WriteObjectValue(Availability);
             }
-            if (Encryption != null)
+            if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (!(ExtendedNetworkBlocks is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(ExtendedNetworkBlocks))
             {
                 writer.WritePropertyName("extendedNetworkBlocks"u8);
                 writer.WriteStartArray();

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (ValidationKey != null)
+            if (Optional.IsDefined(ValidationKey))
             {
                 writer.WritePropertyName("validationKey"u8);
                 writer.WriteStringValue(ValidationKey);

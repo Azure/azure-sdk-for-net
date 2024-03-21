@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
 
             writer.WriteStartObject();
-            if (!(EvaluatedExpressions is ChangeTrackingList<ExpressionEvaluationDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(EvaluatedExpressions))
             {
                 writer.WritePropertyName("evaluatedExpressions"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IfNotExistsDetails != null)
+            if (Optional.IsDefined(IfNotExistsDetails))
             {
                 writer.WritePropertyName("ifNotExistsDetails"u8);
                 writer.WriteObjectValue(IfNotExistsDetails);

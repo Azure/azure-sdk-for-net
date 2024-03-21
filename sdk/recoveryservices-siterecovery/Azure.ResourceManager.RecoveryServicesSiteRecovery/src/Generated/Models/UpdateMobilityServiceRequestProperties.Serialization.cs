@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (RunAsAccountId != null)
+            if (Optional.IsDefined(RunAsAccountId))
             {
                 writer.WritePropertyName("runAsAccountId"u8);
                 writer.WriteStringValue(RunAsAccountId);

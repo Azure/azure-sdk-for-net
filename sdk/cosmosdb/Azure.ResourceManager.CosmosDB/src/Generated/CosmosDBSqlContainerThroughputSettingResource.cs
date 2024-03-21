@@ -10,10 +10,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.CosmosDB.Models;
 
 namespace Azure.ResourceManager.CosmosDB
@@ -200,10 +198,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<CosmosDBSqlContainerThroughputSettingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, ThroughputSettingsUpdateData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.CreateOrUpdate");
             scope.Start();
@@ -249,10 +244,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<CosmosDBSqlContainerThroughputSettingResource> CreateOrUpdate(WaitUntil waitUntil, ThroughputSettingsUpdateData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.CreateOrUpdate");
             scope.Start();
@@ -466,10 +458,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="retrieveThroughputParameters"/> is null. </exception>
         public virtual async Task<ArmOperation<PhysicalPartitionThroughputInfoResult>> SqlContainerRetrieveThroughputDistributionAsync(WaitUntil waitUntil, RetrieveThroughputParameters retrieveThroughputParameters, CancellationToken cancellationToken = default)
         {
-            if (retrieveThroughputParameters == null)
-            {
-                throw new ArgumentNullException(nameof(retrieveThroughputParameters));
-            }
+            Argument.AssertNotNull(retrieveThroughputParameters, nameof(retrieveThroughputParameters));
 
             using var scope = _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.SqlContainerRetrieveThroughputDistribution");
             scope.Start();
@@ -515,10 +504,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="retrieveThroughputParameters"/> is null. </exception>
         public virtual ArmOperation<PhysicalPartitionThroughputInfoResult> SqlContainerRetrieveThroughputDistribution(WaitUntil waitUntil, RetrieveThroughputParameters retrieveThroughputParameters, CancellationToken cancellationToken = default)
         {
-            if (retrieveThroughputParameters == null)
-            {
-                throw new ArgumentNullException(nameof(retrieveThroughputParameters));
-            }
+            Argument.AssertNotNull(retrieveThroughputParameters, nameof(retrieveThroughputParameters));
 
             using var scope = _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.SqlContainerRetrieveThroughputDistribution");
             scope.Start();
@@ -564,10 +550,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="redistributeThroughputParameters"/> is null. </exception>
         public virtual async Task<ArmOperation<PhysicalPartitionThroughputInfoResult>> SqlContainerRedistributeThroughputAsync(WaitUntil waitUntil, RedistributeThroughputParameters redistributeThroughputParameters, CancellationToken cancellationToken = default)
         {
-            if (redistributeThroughputParameters == null)
-            {
-                throw new ArgumentNullException(nameof(redistributeThroughputParameters));
-            }
+            Argument.AssertNotNull(redistributeThroughputParameters, nameof(redistributeThroughputParameters));
 
             using var scope = _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.SqlContainerRedistributeThroughput");
             scope.Start();
@@ -613,10 +596,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="redistributeThroughputParameters"/> is null. </exception>
         public virtual ArmOperation<PhysicalPartitionThroughputInfoResult> SqlContainerRedistributeThroughput(WaitUntil waitUntil, RedistributeThroughputParameters redistributeThroughputParameters, CancellationToken cancellationToken = default)
         {
-            if (redistributeThroughputParameters == null)
-            {
-                throw new ArgumentNullException(nameof(redistributeThroughputParameters));
-            }
+            Argument.AssertNotNull(redistributeThroughputParameters, nameof(redistributeThroughputParameters));
 
             using var scope = _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.SqlContainerRedistributeThroughput");
             scope.Start();
@@ -662,14 +642,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<CosmosDBSqlContainerThroughputSettingResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.AddTag");
             scope.Start();
@@ -730,14 +704,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<CosmosDBSqlContainerThroughputSettingResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.AddTag");
             scope.Start();
@@ -797,10 +765,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<CosmosDBSqlContainerThroughputSettingResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.SetTags");
             scope.Start();
@@ -857,10 +822,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<CosmosDBSqlContainerThroughputSettingResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.SetTags");
             scope.Start();
@@ -917,10 +879,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<CosmosDBSqlContainerThroughputSettingResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.RemoveTag");
             scope.Start();
@@ -980,10 +939,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<CosmosDBSqlContainerThroughputSettingResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.RemoveTag");
             scope.Start();

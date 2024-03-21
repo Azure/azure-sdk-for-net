@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (OverrideSettings != null)
+            if (Optional.IsDefined(OverrideSettings))
             {
                 writer.WritePropertyName("overrideSettings"u8);
                 writer.WriteObjectValue(OverrideSettings);

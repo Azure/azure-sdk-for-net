@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (PartitionNames != null)
+            if (Optional.IsDefined(PartitionNames))
             {
                 writer.WritePropertyName("partitionNames"u8);
 #if NET6_0_OR_GREATER
@@ -39,17 +39,17 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            if (PartitionColumnName != null)
+            if (Optional.IsDefined(PartitionColumnName))
             {
                 writer.WritePropertyName("partitionColumnName"u8);
                 JsonSerializer.Serialize(writer, PartitionColumnName);
             }
-            if (PartitionUpperBound != null)
+            if (Optional.IsDefined(PartitionUpperBound))
             {
                 writer.WritePropertyName("partitionUpperBound"u8);
                 JsonSerializer.Serialize(writer, PartitionUpperBound);
             }
-            if (PartitionLowerBound != null)
+            if (Optional.IsDefined(PartitionLowerBound))
             {
                 writer.WritePropertyName("partitionLowerBound"u8);
                 JsonSerializer.Serialize(writer, PartitionLowerBound);

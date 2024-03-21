@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Connection != null)
+            if (Optional.IsDefined(Connection))
             {
                 if (Connection != null)
                 {

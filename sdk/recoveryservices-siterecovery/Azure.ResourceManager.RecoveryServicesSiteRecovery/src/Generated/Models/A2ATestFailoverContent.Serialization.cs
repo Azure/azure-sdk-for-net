@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (RecoveryPointId != null)
+            if (Optional.IsDefined(RecoveryPointId))
             {
                 writer.WritePropertyName("recoveryPointId"u8);
                 writer.WriteStringValue(RecoveryPointId);
             }
-            if (CloudServiceCreationOption != null)
+            if (Optional.IsDefined(CloudServiceCreationOption))
             {
                 writer.WritePropertyName("cloudServiceCreationOption"u8);
                 writer.WriteStringValue(CloudServiceCreationOption);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (!(Inputs is ChangeTrackingList<MediaJobInputBasicProperties> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Inputs))
             {
                 writer.WritePropertyName("inputs"u8);
                 writer.WriteStartArray();

@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Kusto.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Uri != null)
+            if (options.Format != "W" && Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (options.Format != "W" && DataIngestionUri != null)
+            if (options.Format != "W" && Optional.IsDefined(DataIngestionUri))
             {
                 writer.WritePropertyName("dataIngestionUri"u8);
                 writer.WriteStringValue(DataIngestionUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Role.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Role))
             {
                 writer.WritePropertyName("role"u8);
                 writer.WriteStringValue(Role.Value.ToString());

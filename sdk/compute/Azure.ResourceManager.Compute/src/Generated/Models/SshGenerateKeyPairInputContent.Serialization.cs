@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (EncryptionType.HasValue)
+            if (Optional.IsDefined(EncryptionType))
             {
                 writer.WritePropertyName("encryptionType"u8);
                 writer.WriteStringValue(EncryptionType.Value.ToString());

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (UltraSsdEnabled.HasValue)
+            if (Optional.IsDefined(UltraSsdEnabled))
             {
                 writer.WritePropertyName("ultraSSDEnabled"u8);
                 writer.WriteBooleanValue(UltraSsdEnabled.Value);

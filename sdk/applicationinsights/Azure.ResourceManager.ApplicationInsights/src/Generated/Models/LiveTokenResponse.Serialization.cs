@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && LiveToken != null)
+            if (options.Format != "W" && Optional.IsDefined(LiveToken))
             {
                 writer.WritePropertyName("liveToken"u8);
                 writer.WriteStringValue(LiveToken);

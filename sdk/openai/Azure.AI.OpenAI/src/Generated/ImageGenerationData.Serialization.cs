@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -27,20 +26,30 @@ namespace Azure.AI.OpenAI
             }
 
             writer.WriteStartObject();
-            if (Url != null)
+            if (Optional.IsDefined(Url))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Url.AbsoluteUri);
             }
-            if (Base64Data != null)
+            if (Optional.IsDefined(Base64Data))
             {
                 writer.WritePropertyName("b64_json"u8);
                 writer.WriteStringValue(Base64Data);
             }
-            if (RevisedPrompt != null)
+            if (Optional.IsDefined(ContentFilterResults))
+            {
+                writer.WritePropertyName("content_filter_results"u8);
+                writer.WriteObjectValue(ContentFilterResults);
+            }
+            if (Optional.IsDefined(RevisedPrompt))
             {
                 writer.WritePropertyName("revised_prompt"u8);
                 writer.WriteStringValue(RevisedPrompt);
+            }
+            if (Optional.IsDefined(PromptFilterResults))
+            {
+                writer.WritePropertyName("prompt_filter_results"u8);
+                writer.WriteObjectValue(PromptFilterResults);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -82,7 +91,9 @@ namespace Azure.AI.OpenAI
             }
             Uri url = default;
             string b64Json = default;
+            ImageGenerationContentFilterResults contentFilterResults = default;
             string revisedPrompt = default;
+            ImageGenerationPromptFilterResults promptFilterResults = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,9 +112,27 @@ namespace Azure.AI.OpenAI
                     b64Json = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("content_filter_results"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    contentFilterResults = ImageGenerationContentFilterResults.DeserializeImageGenerationContentFilterResults(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("revised_prompt"u8))
                 {
                     revisedPrompt = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("prompt_filter_results"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    promptFilterResults = ImageGenerationPromptFilterResults.DeserializeImageGenerationPromptFilterResults(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -112,7 +141,13 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImageGenerationData(url, b64Json, revisedPrompt, serializedAdditionalRawData);
+            return new ImageGenerationData(
+                url,
+                b64Json,
+                contentFilterResults,
+                revisedPrompt,
+                promptFilterResults,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ImageGenerationData>.Write(ModelReaderWriterOptions options)

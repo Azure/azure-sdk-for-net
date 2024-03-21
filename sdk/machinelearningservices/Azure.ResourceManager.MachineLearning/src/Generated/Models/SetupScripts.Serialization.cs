@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Scripts != null)
+            if (Optional.IsDefined(Scripts))
             {
                 writer.WritePropertyName("scripts"u8);
                 writer.WriteObjectValue(Scripts);

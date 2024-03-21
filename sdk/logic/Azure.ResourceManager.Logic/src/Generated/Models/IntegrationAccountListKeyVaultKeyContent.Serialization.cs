@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartObject();
             writer.WritePropertyName("keyVault"u8);
             writer.WriteObjectValue(KeyVault);
-            if (SkipToken != null)
+            if (Optional.IsDefined(SkipToken))
             {
                 writer.WritePropertyName("skipToken"u8);
                 writer.WriteStringValue(SkipToken);

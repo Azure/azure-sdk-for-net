@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (AllowInboundEnabled.HasValue)
+            if (Optional.IsDefined(AllowInboundEnabled))
             {
                 writer.WritePropertyName("allowInboundEnabled"u8);
                 writer.WriteBooleanValue(AllowInboundEnabled.Value);
             }
-            if (AllowOutboundEnabled.HasValue)
+            if (Optional.IsDefined(AllowOutboundEnabled))
             {
                 writer.WritePropertyName("allowOutboundEnabled"u8);
                 writer.WriteBooleanValue(AllowOutboundEnabled.Value);
             }
-            if (Authentication != null)
+            if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
                 writer.WriteStringValue(Authentication);

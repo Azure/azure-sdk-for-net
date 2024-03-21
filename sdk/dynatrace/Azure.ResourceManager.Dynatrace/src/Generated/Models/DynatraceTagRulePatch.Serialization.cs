@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Dynatrace.Models
             }
 
             writer.WriteStartObject();
-            if (LogRules != null)
+            if (Optional.IsDefined(LogRules))
             {
                 writer.WritePropertyName("logRules"u8);
                 writer.WriteObjectValue(LogRules);
             }
-            if (MetricRules != null)
+            if (Optional.IsDefined(MetricRules))
             {
                 writer.WritePropertyName("metricRules"u8);
                 writer.WriteObjectValue(MetricRules);

@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Monitor.Models;
@@ -64,22 +63,8 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MonitorWorkspaceResourceListResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -105,22 +90,8 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MonitorWorkspaceResourceListResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
@@ -162,14 +133,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MonitorWorkspaceResourceListResult>> ListBySubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListBySubscriptionRequest(subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -194,14 +158,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MonitorWorkspaceResourceListResult> ListBySubscription(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListBySubscriptionRequest(subscriptionId);
             _pipeline.Send(message, cancellationToken);
@@ -248,30 +205,9 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="azureMonitorWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MonitorWorkspaceResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string azureMonitorWorkspaceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (azureMonitorWorkspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(azureMonitorWorkspaceName));
-            }
-            if (azureMonitorWorkspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureMonitorWorkspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(azureMonitorWorkspaceName, nameof(azureMonitorWorkspaceName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, azureMonitorWorkspaceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -300,30 +236,9 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="azureMonitorWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MonitorWorkspaceResourceData> Get(string subscriptionId, string resourceGroupName, string azureMonitorWorkspaceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (azureMonitorWorkspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(azureMonitorWorkspaceName));
-            }
-            if (azureMonitorWorkspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureMonitorWorkspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(azureMonitorWorkspaceName, nameof(azureMonitorWorkspaceName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, azureMonitorWorkspaceName);
             _pipeline.Send(message, cancellationToken);
@@ -377,34 +292,10 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="azureMonitorWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MonitorWorkspaceResourceData>> CreateAsync(string subscriptionId, string resourceGroupName, string azureMonitorWorkspaceName, MonitorWorkspaceResourceData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (azureMonitorWorkspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(azureMonitorWorkspaceName));
-            }
-            if (azureMonitorWorkspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureMonitorWorkspaceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(azureMonitorWorkspaceName, nameof(azureMonitorWorkspaceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, azureMonitorWorkspaceName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -433,34 +324,10 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="azureMonitorWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MonitorWorkspaceResourceData> Create(string subscriptionId, string resourceGroupName, string azureMonitorWorkspaceName, MonitorWorkspaceResourceData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (azureMonitorWorkspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(azureMonitorWorkspaceName));
-            }
-            if (azureMonitorWorkspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureMonitorWorkspaceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(azureMonitorWorkspaceName, nameof(azureMonitorWorkspaceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, azureMonitorWorkspaceName, data);
             _pipeline.Send(message, cancellationToken);
@@ -513,34 +380,10 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="azureMonitorWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MonitorWorkspaceResourceData>> UpdateAsync(string subscriptionId, string resourceGroupName, string azureMonitorWorkspaceName, MonitorWorkspaceResourcePatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (azureMonitorWorkspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(azureMonitorWorkspaceName));
-            }
-            if (azureMonitorWorkspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureMonitorWorkspaceName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(azureMonitorWorkspaceName, nameof(azureMonitorWorkspaceName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, azureMonitorWorkspaceName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -568,34 +411,10 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="azureMonitorWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MonitorWorkspaceResourceData> Update(string subscriptionId, string resourceGroupName, string azureMonitorWorkspaceName, MonitorWorkspaceResourcePatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (azureMonitorWorkspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(azureMonitorWorkspaceName));
-            }
-            if (azureMonitorWorkspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureMonitorWorkspaceName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(azureMonitorWorkspaceName, nameof(azureMonitorWorkspaceName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, azureMonitorWorkspaceName, patch);
             _pipeline.Send(message, cancellationToken);
@@ -642,30 +461,9 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="azureMonitorWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string azureMonitorWorkspaceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (azureMonitorWorkspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(azureMonitorWorkspaceName));
-            }
-            if (azureMonitorWorkspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureMonitorWorkspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(azureMonitorWorkspaceName, nameof(azureMonitorWorkspaceName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, azureMonitorWorkspaceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -688,30 +486,9 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="azureMonitorWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string azureMonitorWorkspaceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (azureMonitorWorkspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(azureMonitorWorkspaceName));
-            }
-            if (azureMonitorWorkspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureMonitorWorkspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(azureMonitorWorkspaceName, nameof(azureMonitorWorkspaceName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, azureMonitorWorkspaceName);
             _pipeline.Send(message, cancellationToken);
@@ -748,26 +525,9 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MonitorWorkspaceResourceListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -794,26 +554,9 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MonitorWorkspaceResourceListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
@@ -853,18 +596,8 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MonitorWorkspaceResourceListResult>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -890,18 +623,8 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MonitorWorkspaceResourceListResult> ListBySubscriptionNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId);
             _pipeline.Send(message, cancellationToken);

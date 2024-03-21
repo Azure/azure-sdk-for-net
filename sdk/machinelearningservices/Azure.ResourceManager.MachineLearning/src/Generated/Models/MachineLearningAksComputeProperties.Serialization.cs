@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (ClusterFqdn != null)
+            if (Optional.IsDefined(ClusterFqdn))
             {
                 if (ClusterFqdn != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("clusterFqdn");
                 }
             }
-            if (options.Format != "W" && !(SystemServices is ChangeTrackingList<MachineLearningComputeSystemService> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SystemServices))
             {
                 if (SystemServices != null)
                 {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("systemServices");
                 }
             }
-            if (AgentCount.HasValue)
+            if (Optional.IsDefined(AgentCount))
             {
                 if (AgentCount != null)
                 {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("agentCount");
                 }
             }
-            if (AgentVmSize != null)
+            if (Optional.IsDefined(AgentVmSize))
             {
                 if (AgentVmSize != null)
                 {
@@ -79,12 +79,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("agentVmSize");
                 }
             }
-            if (ClusterPurpose.HasValue)
+            if (Optional.IsDefined(ClusterPurpose))
             {
                 writer.WritePropertyName("clusterPurpose"u8);
                 writer.WriteStringValue(ClusterPurpose.Value.ToString());
             }
-            if (SslConfiguration != null)
+            if (Optional.IsDefined(SslConfiguration))
             {
                 if (SslConfiguration != null)
                 {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("sslConfiguration");
                 }
             }
-            if (AksNetworkingConfiguration != null)
+            if (Optional.IsDefined(AksNetworkingConfiguration))
             {
                 if (AksNetworkingConfiguration != null)
                 {
@@ -108,12 +108,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("aksNetworkingConfiguration");
                 }
             }
-            if (LoadBalancerType.HasValue)
+            if (Optional.IsDefined(LoadBalancerType))
             {
                 writer.WritePropertyName("loadBalancerType"u8);
                 writer.WriteStringValue(LoadBalancerType.Value.ToString());
             }
-            if (LoadBalancerSubnet != null)
+            if (Optional.IsDefined(LoadBalancerSubnet))
             {
                 if (LoadBalancerSubnet != null)
                 {

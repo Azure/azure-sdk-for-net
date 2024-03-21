@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             }
 
             writer.WriteStartObject();
-            if (ServicePrincipal != null)
+            if (Optional.IsDefined(ServicePrincipal))
             {
                 writer.WritePropertyName("servicePrincipal"u8);
                 writer.WriteObjectValue(ServicePrincipal);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (IsWorkloadIdentityEnabled.HasValue)
+            if (Optional.IsDefined(IsWorkloadIdentityEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsWorkloadIdentityEnabled.Value);

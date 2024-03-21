@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             }
 
             writer.WriteStartObject();
-            if (Name.HasValue)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name.Value.ToString());

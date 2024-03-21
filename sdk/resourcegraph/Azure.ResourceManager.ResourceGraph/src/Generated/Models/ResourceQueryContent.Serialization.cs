@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             }
 
             writer.WriteStartObject();
-            if (!(Subscriptions is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Subscriptions))
             {
                 writer.WritePropertyName("subscriptions"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ManagementGroups is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ManagementGroups))
             {
                 writer.WritePropertyName("managementGroups"u8);
                 writer.WriteStartArray();
@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             }
             writer.WritePropertyName("query"u8);
             writer.WriteStringValue(Query);
-            if (Options != null)
+            if (Optional.IsDefined(Options))
             {
                 writer.WritePropertyName("options"u8);
                 writer.WriteObjectValue(Options);
             }
-            if (!(Facets is ChangeTrackingList<FacetRequest> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Facets))
             {
                 writer.WritePropertyName("facets"u8);
                 writer.WriteStartArray();

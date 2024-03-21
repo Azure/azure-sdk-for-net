@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (!(DataDisks is ChangeTrackingList<WritableSubResource> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DataDisks))
             {
                 writer.WritePropertyName("dataDisks"u8);
                 writer.WriteStartArray();

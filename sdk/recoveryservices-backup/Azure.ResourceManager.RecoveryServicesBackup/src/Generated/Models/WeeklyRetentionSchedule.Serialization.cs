@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (!(DaysOfTheWeek is ChangeTrackingList<BackupDayOfWeek> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DaysOfTheWeek))
             {
                 writer.WritePropertyName("daysOfTheWeek"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(RetentionTimes is ChangeTrackingList<DateTimeOffset> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(RetentionTimes))
             {
                 writer.WritePropertyName("retentionTimes"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (RetentionDuration != null)
+            if (Optional.IsDefined(RetentionDuration))
             {
                 writer.WritePropertyName("retentionDuration"u8);
                 writer.WriteObjectValue(RetentionDuration);

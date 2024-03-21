@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (AdminPassword != null)
+            if (Optional.IsDefined(AdminPassword))
             {
                 writer.WritePropertyName("adminPassword"u8);
                 writer.WriteStringValue(AdminPassword);
             }
-            if (AdminUsername != null)
+            if (Optional.IsDefined(AdminUsername))
             {
                 writer.WritePropertyName("adminUsername"u8);
                 writer.WriteStringValue(AdminUsername);
             }
-            if (ComputerName != null)
+            if (Optional.IsDefined(ComputerName))
             {
                 writer.WritePropertyName("computerName"u8);
                 writer.WriteStringValue(ComputerName);
             }
-            if (LinuxConfiguration != null)
+            if (Optional.IsDefined(LinuxConfiguration))
             {
                 writer.WritePropertyName("linuxConfiguration"u8);
                 writer.WriteObjectValue(LinuxConfiguration);
             }
-            if (WindowsConfiguration != null)
+            if (Optional.IsDefined(WindowsConfiguration))
             {
                 writer.WritePropertyName("windowsConfiguration"u8);
                 writer.WriteObjectValue(WindowsConfiguration);

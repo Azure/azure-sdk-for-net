@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStringValue(FunctionName);
             writer.WritePropertyName("httpTriggerUrl"u8);
             writer.WriteStringValue(HttpTriggerUri.AbsoluteUri);
-            if (UseCommonAlertSchema.HasValue)
+            if (Optional.IsDefined(UseCommonAlertSchema))
             {
                 writer.WritePropertyName("useCommonAlertSchema"u8);
                 writer.WriteBooleanValue(UseCommonAlertSchema.Value);

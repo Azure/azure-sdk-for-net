@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (PreprocessingComponentId != null)
+            if (Optional.IsDefined(PreprocessingComponentId))
             {
                 if (PreprocessingComponentId != null)
                 {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStringValue(WindowEnd, "O");
             writer.WritePropertyName("windowStart"u8);
             writer.WriteStringValue(WindowStart, "O");
-            if (!(Columns is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Columns))
             {
                 if (Columns != null)
                 {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("columns");
                 }
             }
-            if (DataContext != null)
+            if (Optional.IsDefined(DataContext))
             {
                 if (DataContext != null)
                 {

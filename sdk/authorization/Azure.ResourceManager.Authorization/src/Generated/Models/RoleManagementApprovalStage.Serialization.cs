@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Authorization.Models
             }
 
             writer.WriteStartObject();
-            if (ApprovalStageTimeOutInDays.HasValue)
+            if (Optional.IsDefined(ApprovalStageTimeOutInDays))
             {
                 writer.WritePropertyName("approvalStageTimeOutInDays"u8);
                 writer.WriteNumberValue(ApprovalStageTimeOutInDays.Value);
             }
-            if (IsApproverJustificationRequired.HasValue)
+            if (Optional.IsDefined(IsApproverJustificationRequired))
             {
                 writer.WritePropertyName("isApproverJustificationRequired"u8);
                 writer.WriteBooleanValue(IsApproverJustificationRequired.Value);
             }
-            if (EscalationTimeInMinutes.HasValue)
+            if (Optional.IsDefined(EscalationTimeInMinutes))
             {
                 writer.WritePropertyName("escalationTimeInMinutes"u8);
                 writer.WriteNumberValue(EscalationTimeInMinutes.Value);
             }
-            if (!(PrimaryApprovers is ChangeTrackingList<RoleManagementUserInfo> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PrimaryApprovers))
             {
                 writer.WritePropertyName("primaryApprovers"u8);
                 writer.WriteStartArray();
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IsEscalationEnabled.HasValue)
+            if (Optional.IsDefined(IsEscalationEnabled))
             {
                 writer.WritePropertyName("isEscalationEnabled"u8);
                 writer.WriteBooleanValue(IsEscalationEnabled.Value);
             }
-            if (!(EscalationApprovers is ChangeTrackingList<RoleManagementUserInfo> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(EscalationApprovers))
             {
                 writer.WritePropertyName("escalationApprovers"u8);
                 writer.WriteStartArray();

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Date.HasValue)
+            if (Optional.IsDefined(Date))
             {
                 writer.WritePropertyName("date"u8);
                 writer.WriteNumberValue(Date.Value);
             }
-            if (IsLast.HasValue)
+            if (Optional.IsDefined(IsLast))
             {
                 writer.WritePropertyName("isLast"u8);
                 writer.WriteBooleanValue(IsLast.Value);

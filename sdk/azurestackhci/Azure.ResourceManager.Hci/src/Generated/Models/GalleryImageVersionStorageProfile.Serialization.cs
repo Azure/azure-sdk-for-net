@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (OSDiskImage != null)
+            if (Optional.IsDefined(OSDiskImage))
             {
                 writer.WritePropertyName("osDiskImage"u8);
                 writer.WriteObjectValue(OSDiskImage);

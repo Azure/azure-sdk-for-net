@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.LargeInstance.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (OfferingType != null)
+            if (Optional.IsDefined(OfferingType))
             {
                 writer.WritePropertyName("offeringType"u8);
                 writer.WriteStringValue(OfferingType);
             }
-            if (StorageType != null)
+            if (Optional.IsDefined(StorageType))
             {
                 writer.WritePropertyName("storageType"u8);
                 writer.WriteStringValue(StorageType);
             }
-            if (Generation != null)
+            if (Optional.IsDefined(Generation))
             {
                 writer.WritePropertyName("generation"u8);
                 writer.WriteStringValue(Generation);
             }
-            if (HardwareType.HasValue)
+            if (Optional.IsDefined(HardwareType))
             {
                 writer.WritePropertyName("hardwareType"u8);
                 writer.WriteStringValue(HardwareType.Value.ToString());
             }
-            if (WorkloadType != null)
+            if (Optional.IsDefined(WorkloadType))
             {
                 writer.WritePropertyName("workloadType"u8);
                 writer.WriteStringValue(WorkloadType);
             }
-            if (StorageBillingProperties != null)
+            if (Optional.IsDefined(StorageBillingProperties))
             {
                 writer.WritePropertyName("storageBillingProperties"u8);
                 writer.WriteObjectValue(StorageBillingProperties);

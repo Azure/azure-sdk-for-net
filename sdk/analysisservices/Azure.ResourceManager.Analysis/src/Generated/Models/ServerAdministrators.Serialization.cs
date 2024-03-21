@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Analysis.Models
             }
 
             writer.WriteStartObject();
-            if (!(AsAdministratorIdentities is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AsAdministratorIdentities))
             {
                 writer.WritePropertyName("members"u8);
                 writer.WriteStartArray();

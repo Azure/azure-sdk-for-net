@@ -28,39 +28,39 @@ namespace Azure.ResourceManager.IotHub.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (SubscriptionId != null)
+            if (Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (ResourceGroup != null)
+            if (Optional.IsDefined(ResourceGroup))
             {
                 writer.WritePropertyName("resourceGroup"u8);
                 writer.WriteStringValue(ResourceGroup);
             }
             writer.WritePropertyName("endpointUri"u8);
             writer.WriteStringValue(EndpointUri.AbsoluteUri);
-            if (AuthenticationType.HasValue)
+            if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType"u8);
                 writer.WriteStringValue(AuthenticationType.Value.ToString());
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
             }
-            if (PrimaryKey != null)
+            if (Optional.IsDefined(PrimaryKey))
             {
                 writer.WritePropertyName("primaryKey"u8);
                 writer.WriteStringValue(PrimaryKey);
             }
-            if (SecondaryKey != null)
+            if (Optional.IsDefined(SecondaryKey))
             {
                 writer.WritePropertyName("secondaryKey"u8);
                 writer.WriteStringValue(SecondaryKey);
@@ -69,12 +69,12 @@ namespace Azure.ResourceManager.IotHub.Models
             writer.WriteStringValue(DatabaseName);
             writer.WritePropertyName("containerName"u8);
             writer.WriteStringValue(ContainerName);
-            if (PartitionKeyName != null)
+            if (Optional.IsDefined(PartitionKeyName))
             {
                 writer.WritePropertyName("partitionKeyName"u8);
                 writer.WriteStringValue(PartitionKeyName);
             }
-            if (PartitionKeyTemplate != null)
+            if (Optional.IsDefined(PartitionKeyTemplate))
             {
                 writer.WritePropertyName("partitionKeyTemplate"u8);
                 writer.WriteStringValue(PartitionKeyTemplate);

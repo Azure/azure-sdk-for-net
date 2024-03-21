@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteNumberValue(Status.Value);
             }
-            if (SubStatus.HasValue)
+            if (Optional.IsDefined(SubStatus))
             {
                 writer.WritePropertyName("subStatus"u8);
                 writer.WriteNumberValue(SubStatus.Value);
             }
-            if (Win32Status.HasValue)
+            if (Optional.IsDefined(Win32Status))
             {
                 writer.WritePropertyName("win32Status"u8);
                 writer.WriteNumberValue(Win32Status.Value);
             }
-            if (Count.HasValue)
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (TimeInterval != null)
+            if (Optional.IsDefined(TimeInterval))
             {
                 writer.WritePropertyName("timeInterval"u8);
                 writer.WriteStringValue(TimeInterval);
             }
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);

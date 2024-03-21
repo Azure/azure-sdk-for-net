@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (PropertyName.HasValue)
+            if (Optional.IsDefined(PropertyName))
             {
                 writer.WritePropertyName("propertyName"u8);
                 writer.WriteStringValue(PropertyName.Value.ToString());
             }
-            if (Operator.HasValue)
+            if (Optional.IsDefined(Operator))
             {
                 writer.WritePropertyName("operator"u8);
                 writer.WriteStringValue(Operator.Value.ToString());
             }
-            if (!(PropertyValues is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PropertyValues))
             {
                 writer.WritePropertyName("propertyValues"u8);
                 writer.WriteStartArray();

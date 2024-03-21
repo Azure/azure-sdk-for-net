@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             }
 
             writer.WriteStartObject();
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (MinReplicas.HasValue)
+            if (Optional.IsDefined(MinReplicas))
             {
                 writer.WritePropertyName("minReplicas"u8);
                 writer.WriteNumberValue(MinReplicas.Value);
             }
-            if (MaxReplicas.HasValue)
+            if (Optional.IsDefined(MaxReplicas))
             {
                 writer.WritePropertyName("maxReplicas"u8);
                 writer.WriteNumberValue(MaxReplicas.Value);
             }
-            if (TargetUtilization.HasValue)
+            if (Optional.IsDefined(TargetUtilization))
             {
                 writer.WritePropertyName("targetUtilization"u8);
                 writer.WriteNumberValue(TargetUtilization.Value);
             }
-            if (RefreshPeriodInSeconds.HasValue)
+            if (Optional.IsDefined(RefreshPeriodInSeconds))
             {
                 writer.WritePropertyName("refreshPeriodInSeconds"u8);
                 writer.WriteNumberValue(RefreshPeriodInSeconds.Value);

@@ -26,34 +26,34 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (CiemDiscovery != null)
+            if (Optional.IsDefined(CiemDiscovery))
             {
                 writer.WritePropertyName("ciemDiscovery"u8);
                 writer.WriteObjectValue(CiemDiscovery);
             }
-            if (VmScanners != null)
+            if (Optional.IsDefined(VmScanners))
             {
                 writer.WritePropertyName("vmScanners"u8);
                 writer.WriteObjectValue(VmScanners);
             }
-            if (DataSensitivityDiscovery != null)
+            if (Optional.IsDefined(DataSensitivityDiscovery))
             {
                 writer.WritePropertyName("dataSensitivityDiscovery"u8);
                 writer.WriteObjectValue(DataSensitivityDiscovery);
             }
-            if (MdcContainersImageAssessment != null)
+            if (Optional.IsDefined(MdcContainersImageAssessment))
             {
                 writer.WritePropertyName("mdcContainersImageAssessment"u8);
                 writer.WriteObjectValue(MdcContainersImageAssessment);
             }
-            if (MdcContainersAgentlessDiscoveryK8S != null)
+            if (Optional.IsDefined(MdcContainersAgentlessDiscoveryK8S))
             {
                 writer.WritePropertyName("mdcContainersAgentlessDiscoveryK8s"u8);
                 writer.WriteObjectValue(MdcContainersAgentlessDiscoveryK8S);
             }
             writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);

@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ErsVersion.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ErsVersion))
             {
                 writer.WritePropertyName("ersVersion"u8);
                 writer.WriteStringValue(ErsVersion.Value.ToString());
             }
-            if (options.Format != "W" && InstanceNo != null)
+            if (options.Format != "W" && Optional.IsDefined(InstanceNo))
             {
                 writer.WritePropertyName("instanceNo"u8);
                 writer.WriteStringValue(InstanceNo);
             }
-            if (options.Format != "W" && Hostname != null)
+            if (options.Format != "W" && Optional.IsDefined(Hostname))
             {
                 writer.WritePropertyName("hostname"u8);
                 writer.WriteStringValue(Hostname);
             }
-            if (options.Format != "W" && KernelVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(KernelVersion))
             {
                 writer.WritePropertyName("kernelVersion"u8);
                 writer.WriteStringValue(KernelVersion);
             }
-            if (options.Format != "W" && KernelPatch != null)
+            if (options.Format != "W" && Optional.IsDefined(KernelPatch))
             {
                 writer.WritePropertyName("kernelPatch"u8);
                 writer.WriteStringValue(KernelPatch);
             }
-            if (options.Format != "W" && IPAddress != null)
+            if (options.Format != "W" && Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress);
             }
-            if (options.Format != "W" && Health.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Health))
             {
                 writer.WritePropertyName("health"u8);
                 writer.WriteStringValue(Health.Value.ToString());

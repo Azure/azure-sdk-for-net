@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Billing.Models
             }
 
             writer.WriteStartObject();
-            if (Code.HasValue)
+            if (Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code.Value.ToString());
             }
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Details != null)
+            if (Optional.IsDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStringValue(Details);

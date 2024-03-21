@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Dns.Models
             }
 
             writer.WriteStartObject();
-            if (Flags.HasValue)
+            if (Optional.IsDefined(Flags))
             {
                 writer.WritePropertyName("flags"u8);
                 writer.WriteNumberValue(Flags.Value);
             }
-            if (Tag != null)
+            if (Optional.IsDefined(Tag))
             {
                 writer.WritePropertyName("tag"u8);
                 writer.WriteStringValue(Tag);
             }
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);

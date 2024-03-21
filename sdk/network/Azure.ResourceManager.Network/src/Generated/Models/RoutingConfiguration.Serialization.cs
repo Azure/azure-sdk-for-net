@@ -27,27 +27,27 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (AssociatedRouteTable != null)
+            if (Optional.IsDefined(AssociatedRouteTable))
             {
                 writer.WritePropertyName("associatedRouteTable"u8);
                 JsonSerializer.Serialize(writer, AssociatedRouteTable);
             }
-            if (PropagatedRouteTables != null)
+            if (Optional.IsDefined(PropagatedRouteTables))
             {
                 writer.WritePropertyName("propagatedRouteTables"u8);
                 writer.WriteObjectValue(PropagatedRouteTables);
             }
-            if (VnetRoutes != null)
+            if (Optional.IsDefined(VnetRoutes))
             {
                 writer.WritePropertyName("vnetRoutes"u8);
                 writer.WriteObjectValue(VnetRoutes);
             }
-            if (InboundRouteMap != null)
+            if (Optional.IsDefined(InboundRouteMap))
             {
                 writer.WritePropertyName("inboundRouteMap"u8);
                 JsonSerializer.Serialize(writer, InboundRouteMap);
             }
-            if (OutboundRouteMap != null)
+            if (Optional.IsDefined(OutboundRouteMap))
             {
                 writer.WritePropertyName("outboundRouteMap"u8);
                 JsonSerializer.Serialize(writer, OutboundRouteMap);

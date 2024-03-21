@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (ReservationOrder != null)
+            if (Optional.IsDefined(ReservationOrder))
             {
                 writer.WritePropertyName("reservationOrder"u8);
                 writer.WriteObjectValue(ReservationOrder);
             }
-            if (!(Reservations is ChangeTrackingList<ChangeDirectoryResult> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Reservations))
             {
                 writer.WritePropertyName("reservations"u8);
                 writer.WriteStartArray();

@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (FileMissing != null)
+            if (Optional.IsDefined(FileMissing))
             {
                 writer.WritePropertyName("fileMissing"u8);
                 JsonSerializer.Serialize(writer, FileMissing);
             }
-            if (DataInconsistency != null)
+            if (Optional.IsDefined(DataInconsistency))
             {
                 writer.WritePropertyName("dataInconsistency"u8);
                 JsonSerializer.Serialize(writer, DataInconsistency);

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
 
             writer.WriteStartObject();
-            if (LastOutputEventOn.HasValue)
+            if (Optional.IsDefined(LastOutputEventOn))
             {
                 writer.WritePropertyName("lastOutputEventTime"u8);
                 writer.WriteStringValue(LastOutputEventOn.Value, "O");
             }
-            if (LastUpdatedOn.HasValue)
+            if (Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdateTime"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");

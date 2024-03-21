@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Dns.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(TargetResources is ChangeTrackingList<WritableSubResource> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(TargetResources))
             {
                 writer.WritePropertyName("targetResources"u8);
                 writer.WriteStartArray();

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (ClientId.HasValue)
+            if (Optional.IsDefined(ClientId))
             {
                 if (ClientId != null)
                 {

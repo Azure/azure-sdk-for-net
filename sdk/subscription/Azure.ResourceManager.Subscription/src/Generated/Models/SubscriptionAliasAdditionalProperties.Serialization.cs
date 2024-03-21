@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Subscription.Models
             }
 
             writer.WriteStartObject();
-            if (ManagementGroupId != null)
+            if (Optional.IsDefined(ManagementGroupId))
             {
                 writer.WritePropertyName("managementGroupId"u8);
                 writer.WriteStringValue(ManagementGroupId);
             }
-            if (SubscriptionTenantId.HasValue)
+            if (Optional.IsDefined(SubscriptionTenantId))
             {
                 writer.WritePropertyName("subscriptionTenantId"u8);
                 writer.WriteStringValue(SubscriptionTenantId.Value);
             }
-            if (SubscriptionOwnerId != null)
+            if (Optional.IsDefined(SubscriptionOwnerId))
             {
                 writer.WritePropertyName("subscriptionOwnerId"u8);
                 writer.WriteStringValue(SubscriptionOwnerId);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();

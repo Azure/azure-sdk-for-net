@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (FilterName != null)
+            if (Optional.IsDefined(FilterName))
             {
                 writer.WritePropertyName("filterName"u8);
                 writer.WriteStringValue(FilterName);

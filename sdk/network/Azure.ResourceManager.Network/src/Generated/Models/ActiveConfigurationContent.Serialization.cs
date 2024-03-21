@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (!(Regions is ChangeTrackingList<AzureLocation> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Regions))
             {
                 writer.WritePropertyName("regions"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (SkipToken != null)
+            if (Optional.IsDefined(SkipToken))
             {
                 writer.WritePropertyName("skipToken"u8);
                 writer.WriteStringValue(SkipToken);

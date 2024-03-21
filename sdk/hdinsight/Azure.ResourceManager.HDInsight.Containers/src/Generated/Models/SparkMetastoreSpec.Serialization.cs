@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStringValue(DBPasswordSecretName);
             writer.WritePropertyName("keyVaultId"u8);
             writer.WriteStringValue(KeyVaultId);
-            if (ThriftUriString != null)
+            if (Optional.IsDefined(ThriftUriString))
             {
                 writer.WritePropertyName("thriftUrl"u8);
                 writer.WriteStringValue(ThriftUriString);

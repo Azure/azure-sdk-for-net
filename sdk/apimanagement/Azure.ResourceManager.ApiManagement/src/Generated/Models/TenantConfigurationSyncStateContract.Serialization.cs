@@ -42,49 +42,49 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Branch != null)
+            if (Optional.IsDefined(Branch))
             {
                 writer.WritePropertyName("branch"u8);
                 writer.WriteStringValue(Branch);
             }
-            if (CommitId != null)
+            if (Optional.IsDefined(CommitId))
             {
                 writer.WritePropertyName("commitId"u8);
                 writer.WriteStringValue(CommitId);
             }
-            if (IsExported.HasValue)
+            if (Optional.IsDefined(IsExported))
             {
                 writer.WritePropertyName("isExport"u8);
                 writer.WriteBooleanValue(IsExported.Value);
             }
-            if (IsSynced.HasValue)
+            if (Optional.IsDefined(IsSynced))
             {
                 writer.WritePropertyName("isSynced"u8);
                 writer.WriteBooleanValue(IsSynced.Value);
             }
-            if (IsGitEnabled.HasValue)
+            if (Optional.IsDefined(IsGitEnabled))
             {
                 writer.WritePropertyName("isGitEnabled"u8);
                 writer.WriteBooleanValue(IsGitEnabled.Value);
             }
-            if (SyncOn.HasValue)
+            if (Optional.IsDefined(SyncOn))
             {
                 writer.WritePropertyName("syncDate"u8);
                 writer.WriteStringValue(SyncOn.Value, "O");
             }
-            if (ConfigurationChangeOn.HasValue)
+            if (Optional.IsDefined(ConfigurationChangeOn))
             {
                 writer.WritePropertyName("configurationChangeDate"u8);
                 writer.WriteStringValue(ConfigurationChangeOn.Value, "O");
             }
-            if (LastOperationId != null)
+            if (Optional.IsDefined(LastOperationId))
             {
                 writer.WritePropertyName("lastOperationId"u8);
                 writer.WriteStringValue(LastOperationId);

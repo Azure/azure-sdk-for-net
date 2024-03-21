@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ManagedNetwork;
 
 namespace Azure.ResourceManager.ManagedNetwork.Models
 {
@@ -27,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(Groups is ChangeTrackingList<ManagedNetworkGroupData> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Groups))
             {
                 writer.WritePropertyName("groups"u8);
                 writer.WriteStartArray();
@@ -37,7 +36,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(Peerings is ChangeTrackingList<ManagedNetworkPeeringPolicyData> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Peerings))
             {
                 writer.WritePropertyName("peerings"u8);
                 writer.WriteStartArray();

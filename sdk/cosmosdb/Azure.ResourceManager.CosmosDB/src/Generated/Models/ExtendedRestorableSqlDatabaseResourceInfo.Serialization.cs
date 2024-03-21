@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Rid != null)
+            if (options.Format != "W" && Optional.IsDefined(Rid))
             {
                 writer.WritePropertyName("_rid"u8);
                 writer.WriteStringValue(Rid);
             }
-            if (options.Format != "W" && OperationType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(OperationType))
             {
                 writer.WritePropertyName("operationType"u8);
                 writer.WriteStringValue(OperationType.Value.ToString());
             }
-            if (options.Format != "W" && EventTimestamp != null)
+            if (options.Format != "W" && Optional.IsDefined(EventTimestamp))
             {
                 writer.WritePropertyName("eventTimestamp"u8);
                 writer.WriteStringValue(EventTimestamp);
             }
-            if (options.Format != "W" && DatabaseName != null)
+            if (options.Format != "W" && Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("ownerId"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (options.Format != "W" && DatabaseId != null)
+            if (options.Format != "W" && Optional.IsDefined(DatabaseId))
             {
                 writer.WritePropertyName("ownerResourceId"u8);
                 writer.WriteStringValue(DatabaseId);
             }
-            if (Database != null)
+            if (Optional.IsDefined(Database))
             {
                 writer.WritePropertyName("database"u8);
                 writer.WriteObjectValue(Database);

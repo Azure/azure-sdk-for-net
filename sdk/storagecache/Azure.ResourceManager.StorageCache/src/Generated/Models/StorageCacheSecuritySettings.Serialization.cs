@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
 
             writer.WriteStartObject();
-            if (!(AccessPolicies is ChangeTrackingList<NfsAccessPolicy> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AccessPolicies))
             {
                 writer.WritePropertyName("accessPolicies"u8);
                 writer.WriteStartArray();

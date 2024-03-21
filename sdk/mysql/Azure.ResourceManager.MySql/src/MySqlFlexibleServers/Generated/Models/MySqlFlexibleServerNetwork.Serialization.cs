@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (DelegatedSubnetResourceId != null)
+            if (Optional.IsDefined(DelegatedSubnetResourceId))
             {
                 writer.WritePropertyName("delegatedSubnetResourceId"u8);
                 writer.WriteStringValue(DelegatedSubnetResourceId);
             }
-            if (PrivateDnsZoneResourceId != null)
+            if (Optional.IsDefined(PrivateDnsZoneResourceId))
             {
                 writer.WritePropertyName("privateDnsZoneResourceId"u8);
                 writer.WriteStringValue(PrivateDnsZoneResourceId);

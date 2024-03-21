@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (DriverPackageName != null)
+            if (Optional.IsDefined(DriverPackageName))
             {
                 writer.WritePropertyName("driverPackageName"u8);
                 writer.WriteStringValue(DriverPackageName);

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (!(Activities is ChangeTrackingList<PipelineActivity> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Activities))
             {
                 writer.WritePropertyName("activities"u8);
                 writer.WriteStartArray();

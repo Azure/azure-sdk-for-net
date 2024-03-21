@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (!(BackendAddressPools is ChangeTrackingList<ApplicationGatewayBackendHealthPool> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(BackendAddressPools))
             {
                 writer.WritePropertyName("backendAddressPools"u8);
                 writer.WriteStartArray();

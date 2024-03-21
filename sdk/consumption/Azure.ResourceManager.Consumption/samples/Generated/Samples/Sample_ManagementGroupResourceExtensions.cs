@@ -9,8 +9,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Consumption;
 using Azure.ResourceManager.Consumption.Models;
 using Azure.ResourceManager.ManagementGroups;
 

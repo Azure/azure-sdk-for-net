@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.HealthcareApis.Models;
 using Azure.ResourceManager.Models;
@@ -29,18 +28,18 @@ namespace Azure.ResourceManager.HealthcareApis
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -68,24 +67,24 @@ namespace Azure.ResourceManager.HealthcareApis
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (IngestionEndpointConfiguration != null)
+            if (Optional.IsDefined(IngestionEndpointConfiguration))
             {
                 writer.WritePropertyName("ingestionEndpointConfiguration"u8);
                 writer.WriteObjectValue(IngestionEndpointConfiguration);
             }
-            if (DeviceMapping != null)
+            if (Optional.IsDefined(DeviceMapping))
             {
                 writer.WritePropertyName("deviceMapping"u8);
                 writer.WriteObjectValue(DeviceMapping);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Capacity != null)
+            if (Optional.IsDefined(Capacity))
             {
                 if (Capacity != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("capacity");
                 }
             }
-            if (options.Format != "W" && ResourceType != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 if (ResourceType != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("resourceType");
                 }
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 if (Sku != null)
                 {

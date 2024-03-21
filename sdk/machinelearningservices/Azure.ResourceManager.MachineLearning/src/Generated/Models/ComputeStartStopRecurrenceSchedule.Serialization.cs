@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Frequency.HasValue)
+            if (Optional.IsDefined(Frequency))
             {
                 writer.WritePropertyName("frequency"u8);
                 writer.WriteStringValue(Frequency.Value.ToString());
             }
-            if (Interval.HasValue)
+            if (Optional.IsDefined(Interval))
             {
                 writer.WritePropertyName("interval"u8);
                 writer.WriteNumberValue(Interval.Value);
             }
-            if (StartTime != null)
+            if (Optional.IsDefined(StartTime))
             {
                 if (StartTime != null)
                 {
@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("startTime");
                 }
             }
-            if (TimeZone != null)
+            if (Optional.IsDefined(TimeZone))
             {
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
-            if (Schedule != null)
+            if (Optional.IsDefined(Schedule))
             {
                 writer.WritePropertyName("schedule"u8);
                 writer.WriteObjectValue(Schedule);

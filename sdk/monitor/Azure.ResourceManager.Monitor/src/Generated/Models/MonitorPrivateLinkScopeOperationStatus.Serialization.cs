@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
@@ -27,17 +26,17 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 if (StartOn != null)
                 {
@@ -49,7 +48,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     writer.WriteNull("startTime");
                 }
             }
-            if (EndOn.HasValue)
+            if (Optional.IsDefined(EndOn))
             {
                 if (EndOn != null)
                 {
@@ -61,12 +60,12 @@ namespace Azure.ResourceManager.Monitor.Models
                     writer.WriteNull("endTime");
                 }
             }
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Error != null)
+            if (Optional.IsDefined(Error))
             {
                 if (Error != null)
                 {

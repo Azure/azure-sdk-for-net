@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && CustomDomainVerificationId != null)
+            if (options.Format != "W" && Optional.IsDefined(CustomDomainVerificationId))
             {
                 writer.WritePropertyName("customDomainVerificationId"u8);
                 writer.WriteStringValue(CustomDomainVerificationId);
             }
-            if (DnsSuffix != null)
+            if (Optional.IsDefined(DnsSuffix))
             {
                 writer.WritePropertyName("dnsSuffix"u8);
                 writer.WriteStringValue(DnsSuffix);
             }
-            if (CertificateValue != null)
+            if (Optional.IsDefined(CertificateValue))
             {
                 writer.WritePropertyName("certificateValue"u8);
                 writer.WriteBase64StringValue(CertificateValue, "D");
             }
-            if (CertificatePassword != null)
+            if (Optional.IsDefined(CertificatePassword))
             {
                 writer.WritePropertyName("certificatePassword"u8);
                 writer.WriteStringValue(CertificatePassword);
             }
-            if (options.Format != "W" && ExpireOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationDate"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (options.Format != "W" && Thumbprint != null)
+            if (options.Format != "W" && Optional.IsDefined(Thumbprint))
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(Thumbprint);
             }
-            if (options.Format != "W" && SubjectName != null)
+            if (options.Format != "W" && Optional.IsDefined(SubjectName))
             {
                 writer.WritePropertyName("subjectName"u8);
                 writer.WriteStringValue(SubjectName);

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (ClientId != null)
+            if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
-            if (ObjectId != null)
+            if (Optional.IsDefined(ObjectId))
             {
                 writer.WritePropertyName("objectId"u8);
                 writer.WriteStringValue(ObjectId);

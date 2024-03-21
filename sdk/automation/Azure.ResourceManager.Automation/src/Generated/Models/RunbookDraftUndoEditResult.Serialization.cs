@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (StatusCode.HasValue)
+            if (Optional.IsDefined(StatusCode))
             {
                 writer.WritePropertyName("statusCode"u8);
                 writer.WriteStringValue(StatusCode.Value.ToString());
             }
-            if (RequestId != null)
+            if (Optional.IsDefined(RequestId))
             {
                 writer.WritePropertyName("requestId"u8);
                 writer.WriteStringValue(RequestId);

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             }
 
             writer.WriteStartObject();
-            if (DiskCount.HasValue)
+            if (Optional.IsDefined(DiskCount))
             {
                 writer.WritePropertyName("diskCount"u8);
                 writer.WriteNumberValue(DiskCount.Value);
             }
-            if (StartingDeviceId.HasValue)
+            if (Optional.IsDefined(StartingDeviceId))
             {
                 writer.WritePropertyName("startingDeviceId"u8);
                 writer.WriteNumberValue(StartingDeviceId.Value);
             }
-            if (DiskConfigurationType.HasValue)
+            if (Optional.IsDefined(DiskConfigurationType))
             {
                 writer.WritePropertyName("diskConfigurationType"u8);
                 writer.WriteStringValue(DiskConfigurationType.Value.ToString());

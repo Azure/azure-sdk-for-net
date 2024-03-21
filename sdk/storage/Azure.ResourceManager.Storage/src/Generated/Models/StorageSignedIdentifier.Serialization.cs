@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (AccessPolicy != null)
+            if (Optional.IsDefined(AccessPolicy))
             {
                 writer.WritePropertyName("accessPolicy"u8);
                 writer.WriteObjectValue(AccessPolicy);

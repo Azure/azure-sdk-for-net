@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (!(AssetContainerSasUris is ChangeTrackingList<Uri> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AssetContainerSasUris))
             {
                 writer.WritePropertyName("assetContainerSasUrls"u8);
                 writer.WriteStartArray();

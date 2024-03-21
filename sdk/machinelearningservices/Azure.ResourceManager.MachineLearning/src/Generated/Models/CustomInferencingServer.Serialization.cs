@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (InferenceConfiguration != null)
+            if (Optional.IsDefined(InferenceConfiguration))
             {
                 if (InferenceConfiguration != null)
                 {

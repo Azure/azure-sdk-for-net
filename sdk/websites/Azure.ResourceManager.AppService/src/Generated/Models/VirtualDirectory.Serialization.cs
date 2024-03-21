@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (VirtualPath != null)
+            if (Optional.IsDefined(VirtualPath))
             {
                 writer.WritePropertyName("virtualPath"u8);
                 writer.WriteStringValue(VirtualPath);
             }
-            if (PhysicalPath != null)
+            if (Optional.IsDefined(PhysicalPath))
             {
                 writer.WritePropertyName("physicalPath"u8);
                 writer.WriteStringValue(PhysicalPath);

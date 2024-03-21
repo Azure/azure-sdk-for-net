@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(TargetCollections is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(TargetCollections))
             {
                 writer.WritePropertyName("targetCollections"u8);
                 writer.WriteStartArray();
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Operation != null)
+            if (Optional.IsDefined(Operation))
             {
                 writer.WritePropertyName("operation"u8);
                 writer.WriteStringValue(Operation);
             }
-            if (!(OfferIdsList is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(OfferIdsList))
             {
                 writer.WritePropertyName("offerIdsList"u8);
                 writer.WriteStartArray();

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -19,10 +18,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <exception cref="ArgumentNullException"> <paramref name="storedProcedureName"/> is null. </exception>
         public ExtendedCosmosDBSqlStoredProcedureResourceInfo(string storedProcedureName) : base(storedProcedureName)
         {
-            if (storedProcedureName == null)
-            {
-                throw new ArgumentNullException(nameof(storedProcedureName));
-            }
+            Argument.AssertNotNull(storedProcedureName, nameof(storedProcedureName));
         }
 
         /// <summary> Initializes a new instance of <see cref="ExtendedCosmosDBSqlStoredProcedureResourceInfo"/>. </summary>

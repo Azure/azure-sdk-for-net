@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Code != null)
+            if (Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (TimeStampUtc.HasValue)
+            if (Optional.IsDefined(TimeStampUtc))
             {
                 writer.WritePropertyName("timeStampUtc"u8);
                 writer.WriteStringValue(TimeStampUtc.Value, "O");

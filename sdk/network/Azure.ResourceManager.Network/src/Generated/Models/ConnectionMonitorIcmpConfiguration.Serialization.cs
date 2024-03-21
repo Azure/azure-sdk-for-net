@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (DisableTraceRoute.HasValue)
+            if (Optional.IsDefined(DisableTraceRoute))
             {
                 writer.WritePropertyName("disableTraceRoute"u8);
                 writer.WriteBooleanValue(DisableTraceRoute.Value);

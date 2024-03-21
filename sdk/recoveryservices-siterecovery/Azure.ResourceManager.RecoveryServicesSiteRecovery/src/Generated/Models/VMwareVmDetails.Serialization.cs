@@ -27,47 +27,47 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (AgentGeneratedId != null)
+            if (Optional.IsDefined(AgentGeneratedId))
             {
                 writer.WritePropertyName("agentGeneratedId"u8);
                 writer.WriteStringValue(AgentGeneratedId);
             }
-            if (AgentInstalled != null)
+            if (Optional.IsDefined(AgentInstalled))
             {
                 writer.WritePropertyName("agentInstalled"u8);
                 writer.WriteStringValue(AgentInstalled);
             }
-            if (OSType != null)
+            if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType);
             }
-            if (AgentVersion != null)
+            if (Optional.IsDefined(AgentVersion))
             {
                 writer.WritePropertyName("agentVersion"u8);
                 writer.WriteStringValue(AgentVersion);
             }
-            if (IPAddress != null)
+            if (Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress.ToString());
             }
-            if (PoweredOn != null)
+            if (Optional.IsDefined(PoweredOn))
             {
                 writer.WritePropertyName("poweredOn"u8);
                 writer.WriteStringValue(PoweredOn);
             }
-            if (VCenterInfrastructureId != null)
+            if (Optional.IsDefined(VCenterInfrastructureId))
             {
                 writer.WritePropertyName("vCenterInfrastructureId"u8);
                 writer.WriteStringValue(VCenterInfrastructureId);
             }
-            if (DiscoveryType != null)
+            if (Optional.IsDefined(DiscoveryType))
             {
                 writer.WritePropertyName("discoveryType"u8);
                 writer.WriteStringValue(DiscoveryType);
             }
-            if (!(DiskDetails is ChangeTrackingList<InMageDiskDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DiskDetails))
             {
                 writer.WritePropertyName("diskDetails"u8);
                 writer.WriteStartArray();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ValidationErrors is ChangeTrackingList<SiteRecoveryHealthError> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ValidationErrors))
             {
                 writer.WritePropertyName("validationErrors"u8);
                 writer.WriteStartArray();

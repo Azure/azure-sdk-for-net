@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStartObject();
             writer.WritePropertyName("query"u8);
             writer.WriteStringValue(Query);
-            if (!(Inputs is ChangeTrackingList<StreamAnalyticsQueryInput> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Inputs))
             {
                 writer.WritePropertyName("inputs"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Functions is ChangeTrackingList<StreamAnalyticsQueryFunction> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Functions))
             {
                 writer.WritePropertyName("functions"u8);
                 writer.WriteStartArray();
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
             writer.WritePropertyName("jobType"u8);
             writer.WriteStringValue(JobType.ToString());
-            if (CompatibilityLevel.HasValue)
+            if (Optional.IsDefined(CompatibilityLevel))
             {
                 writer.WritePropertyName("compatibilityLevel"u8);
                 writer.WriteStringValue(CompatibilityLevel.Value.ToString());

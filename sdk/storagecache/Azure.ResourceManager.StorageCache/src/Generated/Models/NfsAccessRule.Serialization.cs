@@ -28,34 +28,34 @@ namespace Azure.ResourceManager.StorageCache.Models
             writer.WriteStartObject();
             writer.WritePropertyName("scope"u8);
             writer.WriteStringValue(Scope.ToString());
-            if (Filter != null)
+            if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteStringValue(Filter);
             }
             writer.WritePropertyName("access"u8);
             writer.WriteStringValue(Access.ToString());
-            if (AllowSuid.HasValue)
+            if (Optional.IsDefined(AllowSuid))
             {
                 writer.WritePropertyName("suid"u8);
                 writer.WriteBooleanValue(AllowSuid.Value);
             }
-            if (AllowSubmountAccess.HasValue)
+            if (Optional.IsDefined(AllowSubmountAccess))
             {
                 writer.WritePropertyName("submountAccess"u8);
                 writer.WriteBooleanValue(AllowSubmountAccess.Value);
             }
-            if (EnableRootSquash.HasValue)
+            if (Optional.IsDefined(EnableRootSquash))
             {
                 writer.WritePropertyName("rootSquash"u8);
                 writer.WriteBooleanValue(EnableRootSquash.Value);
             }
-            if (AnonymousUID != null)
+            if (Optional.IsDefined(AnonymousUID))
             {
                 writer.WritePropertyName("anonymousUID"u8);
                 writer.WriteStringValue(AnonymousUID);
             }
-            if (AnonymousGID != null)
+            if (Optional.IsDefined(AnonymousGID))
             {
                 writer.WritePropertyName("anonymousGID"u8);
                 writer.WriteStringValue(AnonymousGID);

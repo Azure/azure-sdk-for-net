@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (!(ResourceIds is ChangeTrackingList<ResourceIdentifier> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ResourceIds))
             {
                 writer.WritePropertyName("resourceIds"u8);
                 writer.WriteStartArray();

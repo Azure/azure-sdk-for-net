@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Days.HasValue)
+            if (Optional.IsDefined(Days))
             {
                 writer.WritePropertyName("days"u8);
                 writer.WriteNumberValue(Days.Value);
             }
-            if (AllowPermanentDelete.HasValue)
+            if (Optional.IsDefined(AllowPermanentDelete))
             {
                 writer.WritePropertyName("allowPermanentDelete"u8);
                 writer.WriteBooleanValue(AllowPermanentDelete.Value);

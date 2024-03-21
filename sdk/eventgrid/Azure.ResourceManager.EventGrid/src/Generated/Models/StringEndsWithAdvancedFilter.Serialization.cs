@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (!(Values is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Values))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
             writer.WritePropertyName("operatorType"u8);
             writer.WriteStringValue(OperatorType.ToString());
-            if (Key != null)
+            if (Optional.IsDefined(Key))
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);

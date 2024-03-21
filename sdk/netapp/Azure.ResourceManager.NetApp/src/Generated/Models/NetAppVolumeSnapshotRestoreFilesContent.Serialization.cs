@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (DestinationPath != null)
+            if (Optional.IsDefined(DestinationPath))
             {
                 writer.WritePropertyName("destinationPath"u8);
                 writer.WriteStringValue(DestinationPath);

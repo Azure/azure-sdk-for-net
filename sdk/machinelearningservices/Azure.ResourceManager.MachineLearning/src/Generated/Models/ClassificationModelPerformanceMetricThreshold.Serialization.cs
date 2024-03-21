@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStringValue(Metric.ToString());
             writer.WritePropertyName("modelType"u8);
             writer.WriteStringValue(ModelType.ToString());
-            if (Threshold != null)
+            if (Optional.IsDefined(Threshold))
             {
                 if (Threshold != null)
                 {

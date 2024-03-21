@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (ExpireAfterSeconds.HasValue)
+            if (Optional.IsDefined(ExpireAfterSeconds))
             {
                 writer.WritePropertyName("expireAfterSeconds"u8);
                 writer.WriteNumberValue(ExpireAfterSeconds.Value);
             }
-            if (IsUnique.HasValue)
+            if (Optional.IsDefined(IsUnique))
             {
                 writer.WritePropertyName("unique"u8);
                 writer.WriteBooleanValue(IsUnique.Value);

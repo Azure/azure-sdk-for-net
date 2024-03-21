@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Thumbprint != null)
+            if (Optional.IsDefined(Thumbprint))
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(Thumbprint);

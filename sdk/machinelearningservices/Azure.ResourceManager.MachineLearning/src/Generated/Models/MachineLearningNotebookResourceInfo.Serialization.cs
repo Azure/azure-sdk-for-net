@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Fqdn != null)
+            if (Optional.IsDefined(Fqdn))
             {
                 writer.WritePropertyName("fqdn"u8);
                 writer.WriteStringValue(Fqdn);
             }
-            if (IsPrivateLinkEnabled.HasValue)
+            if (Optional.IsDefined(IsPrivateLinkEnabled))
             {
                 writer.WritePropertyName("isPrivateLinkEnabled"u8);
                 writer.WriteBooleanValue(IsPrivateLinkEnabled.Value);
             }
-            if (NotebookPreparationError != null)
+            if (Optional.IsDefined(NotebookPreparationError))
             {
                 writer.WritePropertyName("notebookPreparationError"u8);
                 writer.WriteObjectValue(NotebookPreparationError);
             }
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);

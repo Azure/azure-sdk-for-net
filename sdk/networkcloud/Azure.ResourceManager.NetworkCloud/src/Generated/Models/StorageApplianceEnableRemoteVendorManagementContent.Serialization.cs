@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (!(SupportEndpoints is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SupportEndpoints))
             {
                 writer.WritePropertyName("supportEndpoints"u8);
                 writer.WriteStartArray();

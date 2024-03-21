@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             writer.WriteStartObject();
             writer.WritePropertyName("from"u8);
             writer.WriteStringValue(From, "O");
-            if (To.HasValue)
+            if (Optional.IsDefined(To))
             {
                 writer.WritePropertyName("to"u8);
                 writer.WriteStringValue(To.Value, "O");

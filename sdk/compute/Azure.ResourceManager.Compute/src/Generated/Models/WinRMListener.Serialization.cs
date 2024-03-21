@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Protocol.HasValue)
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToSerialString());
             }
-            if (CertificateUri != null)
+            if (Optional.IsDefined(CertificateUri))
             {
                 writer.WritePropertyName("certificateUrl"u8);
                 writer.WriteStringValue(CertificateUri.AbsoluteUri);

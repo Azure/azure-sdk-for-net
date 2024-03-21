@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (TargetNamespace != null)
+            if (Optional.IsDefined(TargetNamespace))
             {
                 writer.WritePropertyName("targetNamespace"u8);
                 writer.WriteStringValue(TargetNamespace);

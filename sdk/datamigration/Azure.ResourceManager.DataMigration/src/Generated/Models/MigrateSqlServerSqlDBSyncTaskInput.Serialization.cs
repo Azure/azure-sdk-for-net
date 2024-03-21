@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (ValidationOptions != null)
+            if (Optional.IsDefined(ValidationOptions))
             {
                 writer.WritePropertyName("validationOptions"u8);
                 writer.WriteObjectValue(ValidationOptions);

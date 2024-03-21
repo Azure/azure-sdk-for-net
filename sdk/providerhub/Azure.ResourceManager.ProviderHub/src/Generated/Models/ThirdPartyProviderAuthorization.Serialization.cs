@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
 
             writer.WriteStartObject();
-            if (!(Authorizations is ChangeTrackingList<LightHouseAuthorization> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Authorizations))
             {
                 writer.WritePropertyName("authorizations"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ManagedByTenantId != null)
+            if (Optional.IsDefined(ManagedByTenantId))
             {
                 writer.WritePropertyName("managedByTenantId"u8);
                 writer.WriteStringValue(ManagedByTenantId);

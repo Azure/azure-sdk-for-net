@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (!(FailedObjects is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(FailedObjects))
             {
                 writer.WritePropertyName("failedObjects"u8);
                 writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndObject();
             }
-            if (ValidationErrors != null)
+            if (Optional.IsDefined(ValidationErrors))
             {
                 writer.WritePropertyName("validationErrors"u8);
                 writer.WriteObjectValue(ValidationErrors);

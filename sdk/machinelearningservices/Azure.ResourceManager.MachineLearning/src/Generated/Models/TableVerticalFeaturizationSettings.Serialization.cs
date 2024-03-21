@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (!(BlockedTransformers is ChangeTrackingList<BlockedTransformer> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(BlockedTransformers))
             {
                 if (BlockedTransformers != null)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("blockedTransformers");
                 }
             }
-            if (!(ColumnNameAndTypes is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ColumnNameAndTypes))
             {
                 if (ColumnNameAndTypes != null)
                 {
@@ -61,17 +61,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("columnNameAndTypes");
                 }
             }
-            if (EnableDnnFeaturization.HasValue)
+            if (Optional.IsDefined(EnableDnnFeaturization))
             {
                 writer.WritePropertyName("enableDnnFeaturization"u8);
                 writer.WriteBooleanValue(EnableDnnFeaturization.Value);
             }
-            if (Mode.HasValue)
+            if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (!(TransformerParams is ChangeTrackingDictionary<string, IList<ColumnTransformer>> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(TransformerParams))
             {
                 if (TransformerParams != null)
                 {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("transformerParams");
                 }
             }
-            if (DatasetLanguage != null)
+            if (Optional.IsDefined(DatasetLanguage))
             {
                 if (DatasetLanguage != null)
                 {

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (!(VolumeOptions is ChangeTrackingList<InMageVolumeExclusionOptions> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(VolumeOptions))
             {
                 writer.WritePropertyName("volumeOptions"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(DiskSignatureOptions is ChangeTrackingList<InMageDiskSignatureExclusionOptions> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(DiskSignatureOptions))
             {
                 writer.WritePropertyName("diskSignatureOptions"u8);
                 writer.WriteStartArray();

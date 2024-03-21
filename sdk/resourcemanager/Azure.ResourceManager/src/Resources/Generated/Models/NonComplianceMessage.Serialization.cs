@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteStartObject();
             writer.WritePropertyName("message"u8);
             writer.WriteStringValue(Message);
-            if (PolicyDefinitionReferenceId != null)
+            if (Optional.IsDefined(PolicyDefinitionReferenceId))
             {
                 writer.WritePropertyName("policyDefinitionReferenceId"u8);
                 writer.WriteStringValue(PolicyDefinitionReferenceId);

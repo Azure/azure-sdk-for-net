@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             writer.WriteStringValue(KeyName);
             writer.WritePropertyName("keyVersion"u8);
             writer.WriteStringValue(KeyVersion);
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteStringValue(Identity);

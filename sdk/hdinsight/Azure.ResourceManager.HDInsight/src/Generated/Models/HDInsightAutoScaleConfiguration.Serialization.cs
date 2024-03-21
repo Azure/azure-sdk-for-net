@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Capacity != null)
+            if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteObjectValue(Capacity);
             }
-            if (Recurrence != null)
+            if (Optional.IsDefined(Recurrence))
             {
                 writer.WritePropertyName("recurrence"u8);
                 writer.WriteObjectValue(Recurrence);

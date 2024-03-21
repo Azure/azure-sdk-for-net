@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             writer.WriteStartObject();
-            if (Count.HasValue)
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (RenewalPeriod.HasValue)
+            if (Optional.IsDefined(RenewalPeriod))
             {
                 writer.WritePropertyName("renewalPeriod"u8);
                 writer.WriteNumberValue(RenewalPeriod.Value);
             }
-            if (!(Rules is ChangeTrackingList<ServiceAccountThrottlingRule> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Rules))
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();

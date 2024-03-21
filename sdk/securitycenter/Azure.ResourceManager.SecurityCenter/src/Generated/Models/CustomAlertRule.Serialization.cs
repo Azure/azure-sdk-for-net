@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && DisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -82,6 +82,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "ActiveConnectionsNotInAllowedRange": return ActiveConnectionsNotInAllowedRange.DeserializeActiveConnectionsNotInAllowedRange(element, options);
                     case "AllowlistCustomAlertRule": return AllowlistCustomAlertRule.DeserializeAllowlistCustomAlertRule(element, options);
                     case "AmqpC2DMessagesNotInAllowedRange": return AmqpC2DMessagesNotInAllowedRange.DeserializeAmqpC2DMessagesNotInAllowedRange(element, options);
                     case "AmqpC2DRejectedMessagesNotInAllowedRange": return AmqpC2DRejectedMessagesNotInAllowedRange.DeserializeAmqpC2DRejectedMessagesNotInAllowedRange(element, options);
@@ -102,11 +103,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     case "MqttD2CMessagesNotInAllowedRange": return MqttD2CMessagesNotInAllowedRange.DeserializeMqttD2CMessagesNotInAllowedRange(element, options);
                     case "ProcessNotAllowed": return ProcessNotAllowed.DeserializeProcessNotAllowed(element, options);
                     case "QueuePurgesNotInAllowedRange": return QueuePurgesNotInAllowedRange.DeserializeQueuePurgesNotInAllowedRange(element, options);
+                    case "ThresholdCustomAlertRule": return ThresholdCustomAlertRule.DeserializeThresholdCustomAlertRule(element, options);
+                    case "TimeWindowCustomAlertRule": return TimeWindowCustomAlertRule.DeserializeTimeWindowCustomAlertRule(element, options);
                     case "TwinUpdatesNotInAllowedRange": return TwinUpdatesNotInAllowedRange.DeserializeTwinUpdatesNotInAllowedRange(element, options);
                     case "UnauthorizedOperationsNotInAllowedRange": return UnauthorizedOperationsNotInAllowedRange.DeserializeUnauthorizedOperationsNotInAllowedRange(element, options);
-                    case "ActiveConnectionsNotInAllowedRange": return ActiveConnectionsNotInAllowedRange.DeserializeActiveConnectionsNotInAllowedRange(element, options);
-                    case "TimeWindowCustomAlertRule": return TimeWindowCustomAlertRule.DeserializeTimeWindowCustomAlertRule(element, options);
-                    case "ThresholdCustomAlertRule": return ThresholdCustomAlertRule.DeserializeThresholdCustomAlertRule(element, options);
                 }
             }
             return UnknownCustomAlertRule.DeserializeUnknownCustomAlertRule(element, options);

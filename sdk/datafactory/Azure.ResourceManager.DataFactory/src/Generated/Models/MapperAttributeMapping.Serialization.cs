@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (MappingType.HasValue)
+            if (Optional.IsDefined(MappingType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(MappingType.Value.ToString());
             }
-            if (FunctionName != null)
+            if (Optional.IsDefined(FunctionName))
             {
                 writer.WritePropertyName("functionName"u8);
                 writer.WriteStringValue(FunctionName);
             }
-            if (Expression != null)
+            if (Optional.IsDefined(Expression))
             {
                 writer.WritePropertyName("expression"u8);
                 writer.WriteStringValue(Expression);
             }
-            if (AttributeReference != null)
+            if (Optional.IsDefined(AttributeReference))
             {
                 writer.WritePropertyName("attributeReference"u8);
                 writer.WriteObjectValue(AttributeReference);
             }
-            if (!(AttributeReferences is ChangeTrackingList<MapperAttributeReference> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AttributeReferences))
             {
                 writer.WritePropertyName("attributeReferences"u8);
                 writer.WriteStartArray();

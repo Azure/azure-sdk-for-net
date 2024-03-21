@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
 
             writer.WriteStartObject();
-            if (Rows.HasValue)
+            if (Optional.IsDefined(Rows))
             {
                 writer.WritePropertyName("rows"u8);
                 writer.WriteNumberValue(Rows.Value);
             }
-            if (Cols.HasValue)
+            if (Optional.IsDefined(Cols))
             {
                 writer.WritePropertyName("cols"u8);
                 writer.WriteNumberValue(Cols.Value);

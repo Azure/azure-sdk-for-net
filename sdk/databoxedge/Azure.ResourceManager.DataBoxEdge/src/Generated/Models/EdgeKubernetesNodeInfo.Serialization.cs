@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && NodeType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NodeType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(NodeType.Value.ToString());
             }
-            if (!(IPConfiguration is ChangeTrackingList<EdgeKubernetesIPConfiguration> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(IPConfiguration))
             {
                 writer.WritePropertyName("ipConfiguration"u8);
                 writer.WriteStartArray();

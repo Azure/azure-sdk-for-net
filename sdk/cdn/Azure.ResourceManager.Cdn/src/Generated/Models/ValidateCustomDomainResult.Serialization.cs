@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && IsCustomDomainValid.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsCustomDomainValid))
             {
                 writer.WritePropertyName("customDomainValidated"u8);
                 writer.WriteBooleanValue(IsCustomDomainValid.Value);
             }
-            if (options.Format != "W" && Reason != null)
+            if (options.Format != "W" && Optional.IsDefined(Reason))
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
             }
-            if (options.Format != "W" && Message != null)
+            if (options.Format != "W" && Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Purview.Models
             }
 
             writer.WriteStartObject();
-            if (PrivateEndpointId != null)
+            if (Optional.IsDefined(PrivateEndpointId))
             {
                 writer.WritePropertyName("privateEndpointId"u8);
                 writer.WriteStringValue(PrivateEndpointId);
             }
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,19 +47,19 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ExpiresOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExpiresOn))
             {
                 writer.WritePropertyName("expiresOn"u8);
                 writer.WriteStringValue(ExpiresOn.Value, "O");
             }
-            if (options.Format != "W" && InvitationUri != null)
+            if (options.Format != "W" && Optional.IsDefined(InvitationUri))
             {
                 writer.WritePropertyName("invitationUrl"u8);
                 writer.WriteStringValue(InvitationUri.AbsoluteUri);

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.WebPubSub.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Enabled != null)
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteStringValue(Enabled);

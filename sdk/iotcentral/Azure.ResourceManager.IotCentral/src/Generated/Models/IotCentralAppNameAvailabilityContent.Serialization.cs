@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.IotCentral.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (ResourceType != null)
+            if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);

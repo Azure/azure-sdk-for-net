@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Metadata != null)
+            if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteObjectValue(Metadata);
             }
-            if (!(Dataset is ChangeTrackingList<ContainerAppDiagnosticsDataApiResult> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Dataset))
             {
                 writer.WritePropertyName("dataset"u8);
                 writer.WriteStartArray();
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
             }
-            if (DataProviderMetadata != null)
+            if (Optional.IsDefined(DataProviderMetadata))
             {
                 writer.WritePropertyName("dataProviderMetadata"u8);
                 writer.WriteObjectValue(DataProviderMetadata);

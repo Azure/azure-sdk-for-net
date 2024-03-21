@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             writer.WritePropertyName("jobLimitsType"u8);
             writer.WriteStringValue(JobLimitsType.ToString());
-            if (Timeout.HasValue)
+            if (Optional.IsDefined(Timeout))
             {
                 if (Timeout != null)
                 {
@@ -82,8 +82,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Sweep": return MachineLearningSweepJobLimits.DeserializeMachineLearningSweepJobLimits(element, options);
                     case "Command": return MachineLearningCommandJobLimits.DeserializeMachineLearningCommandJobLimits(element, options);
+                    case "Sweep": return MachineLearningSweepJobLimits.DeserializeMachineLearningSweepJobLimits(element, options);
                 }
             }
             return UnknownJobLimits.DeserializeUnknownJobLimits(element, options);

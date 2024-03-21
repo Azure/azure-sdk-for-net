@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (WorkspaceId != null)
+            if (Optional.IsDefined(WorkspaceId))
             {
                 writer.WritePropertyName("workspaceId"u8);
                 writer.WriteStringValue(WorkspaceId);
             }
-            if (LinkConnectionName != null)
+            if (Optional.IsDefined(LinkConnectionName))
             {
                 writer.WritePropertyName("linkConnectionName"u8);
                 writer.WriteStringValue(LinkConnectionName);

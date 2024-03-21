@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStringValue(TargetRegion);
             writer.WritePropertyName("dataMoveLevel"u8);
             writer.WriteStringValue(DataMoveLevel.ToString());
-            if (!(SourceContainerArmIds is ChangeTrackingList<ResourceIdentifier> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SourceContainerArmIds))
             {
                 writer.WritePropertyName("sourceContainerArmIds"u8);
                 writer.WriteStartArray();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IgnoreMoved.HasValue)
+            if (Optional.IsDefined(IgnoreMoved))
             {
                 writer.WritePropertyName("ignoreMoved"u8);
                 writer.WriteBooleanValue(IgnoreMoved.Value);

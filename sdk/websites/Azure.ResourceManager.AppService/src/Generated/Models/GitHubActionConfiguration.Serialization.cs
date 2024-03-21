@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (CodeConfiguration != null)
+            if (Optional.IsDefined(CodeConfiguration))
             {
                 writer.WritePropertyName("codeConfiguration"u8);
                 writer.WriteObjectValue(CodeConfiguration);
             }
-            if (ContainerConfiguration != null)
+            if (Optional.IsDefined(ContainerConfiguration))
             {
                 writer.WritePropertyName("containerConfiguration"u8);
                 writer.WriteObjectValue(ContainerConfiguration);
             }
-            if (IsLinux.HasValue)
+            if (Optional.IsDefined(IsLinux))
             {
                 writer.WritePropertyName("isLinux"u8);
                 writer.WriteBooleanValue(IsLinux.Value);
             }
-            if (GenerateWorkflowFile.HasValue)
+            if (Optional.IsDefined(GenerateWorkflowFile))
             {
                 writer.WritePropertyName("generateWorkflowFile"u8);
                 writer.WriteBooleanValue(GenerateWorkflowFile.Value);

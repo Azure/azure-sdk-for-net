@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ClientRequestId != null)
+            if (options.Format != "W" && Optional.IsDefined(ClientRequestId))
             {
                 writer.WritePropertyName("clientRequestId"u8);
                 writer.WriteStringValue(ClientRequestId);
             }
-            if (!(Errors is ChangeTrackingList<ReplicationEligibilityResultErrorInfo> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();

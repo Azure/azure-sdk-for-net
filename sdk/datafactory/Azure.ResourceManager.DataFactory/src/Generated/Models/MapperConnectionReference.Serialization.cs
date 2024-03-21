@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (ConnectionName != null)
+            if (Optional.IsDefined(ConnectionName))
             {
                 writer.WritePropertyName("connectionName"u8);
                 writer.WriteStringValue(ConnectionName);
             }
-            if (ConnectionType.HasValue)
+            if (Optional.IsDefined(ConnectionType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ConnectionType.Value.ToString());

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStringValue(Direction.ToSerialString());
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ScaleType.ToSerialString());
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);

@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStartObject();
             writer.WritePropertyName("certificateType"u8);
             writer.WriteStringValue(CertificateType.ToString());
-            if (MinimumTlsVersion.HasValue)
+            if (Optional.IsDefined(MinimumTlsVersion))
             {
                 writer.WritePropertyName("minimumTlsVersion"u8);
                 writer.WriteStringValue(MinimumTlsVersion.Value.ToSerialString());
             }
-            if (Secret != null)
+            if (Optional.IsDefined(Secret))
             {
                 if (Secret != null)
                 {

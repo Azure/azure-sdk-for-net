@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.IotCentral.Models
             }
 
             writer.WriteStartObject();
-            if (ApplyToDevices.HasValue)
+            if (Optional.IsDefined(ApplyToDevices))
             {
                 writer.WritePropertyName("applyToDevices"u8);
                 writer.WriteBooleanValue(ApplyToDevices.Value);
             }
-            if (ApplyToIotCentral.HasValue)
+            if (Optional.IsDefined(ApplyToIotCentral))
             {
                 writer.WritePropertyName("applyToIoTCentral"u8);
                 writer.WriteBooleanValue(ApplyToIotCentral.Value);
             }
-            if (DefaultAction.HasValue)
+            if (Optional.IsDefined(DefaultAction))
             {
                 writer.WritePropertyName("defaultAction"u8);
                 writer.WriteStringValue(DefaultAction.Value.ToString());
             }
-            if (!(IPRules is ChangeTrackingList<IotCentralNetworkRuleSetIPRule> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(IPRules))
             {
                 writer.WritePropertyName("ipRules"u8);
                 writer.WriteStartArray();

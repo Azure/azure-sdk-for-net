@@ -26,24 +26,24 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
 
             writer.WriteStartObject();
-            if (DisplayInfo != null)
+            if (Optional.IsDefined(DisplayInfo))
             {
                 writer.WritePropertyName("displayInfo"u8);
                 writer.WriteObjectValue(DisplayInfo);
             }
             writer.WritePropertyName("hierarchyInformation"u8);
             writer.WriteObjectValue(HierarchyInformation);
-            if (options.Format != "W" && Count.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (options.Format != "W" && ProductDoubleEncryptionStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProductDoubleEncryptionStatus))
             {
                 writer.WritePropertyName("productDoubleEncryptionStatus"u8);
                 writer.WriteStringValue(ProductDoubleEncryptionStatus.Value.ToString());
             }
-            if (options.Format != "W" && !(DeviceDetails is ChangeTrackingList<EdgeOrderProductDeviceDetails> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(DeviceDetails))
             {
                 writer.WritePropertyName("deviceDetails"u8);
                 writer.WriteStartArray();

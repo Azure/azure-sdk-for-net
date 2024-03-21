@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (LastCommittedOn.HasValue)
+            if (Optional.IsDefined(LastCommittedOn))
             {
                 writer.WritePropertyName("lastCommitted"u8);
                 writer.WriteStringValue(LastCommittedOn.Value, "O");
             }
-            if (LastModifiedOn.HasValue)
+            if (Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModified"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");

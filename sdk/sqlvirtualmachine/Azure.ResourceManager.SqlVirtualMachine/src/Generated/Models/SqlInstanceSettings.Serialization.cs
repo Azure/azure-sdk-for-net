@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             }
 
             writer.WriteStartObject();
-            if (Collation != null)
+            if (Optional.IsDefined(Collation))
             {
                 writer.WritePropertyName("collation"u8);
                 writer.WriteStringValue(Collation);
             }
-            if (MaxDop.HasValue)
+            if (Optional.IsDefined(MaxDop))
             {
                 writer.WritePropertyName("maxDop"u8);
                 writer.WriteNumberValue(MaxDop.Value);
             }
-            if (IsOptimizeForAdHocWorkloadsEnabled.HasValue)
+            if (Optional.IsDefined(IsOptimizeForAdHocWorkloadsEnabled))
             {
                 writer.WritePropertyName("isOptimizeForAdHocWorkloadsEnabled"u8);
                 writer.WriteBooleanValue(IsOptimizeForAdHocWorkloadsEnabled.Value);
             }
-            if (MinServerMemoryInMB.HasValue)
+            if (Optional.IsDefined(MinServerMemoryInMB))
             {
                 writer.WritePropertyName("minServerMemoryMB"u8);
                 writer.WriteNumberValue(MinServerMemoryInMB.Value);
             }
-            if (MaxServerMemoryInMB.HasValue)
+            if (Optional.IsDefined(MaxServerMemoryInMB))
             {
                 writer.WritePropertyName("maxServerMemoryMB"u8);
                 writer.WriteNumberValue(MaxServerMemoryInMB.Value);
             }
-            if (IsLpimEnabled.HasValue)
+            if (Optional.IsDefined(IsLpimEnabled))
             {
                 writer.WritePropertyName("isLpimEnabled"u8);
                 writer.WriteBooleanValue(IsLpimEnabled.Value);
             }
-            if (IsIfiEnabled.HasValue)
+            if (Optional.IsDefined(IsIfiEnabled))
             {
                 writer.WritePropertyName("isIfiEnabled"u8);
                 writer.WriteBooleanValue(IsIfiEnabled.Value);

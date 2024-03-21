@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
             writer.WriteNumberValue(EndpointId);
             writer.WritePropertyName("queryCount"u8);
             writer.WriteNumberValue(QueryCount);
-            if (Latency.HasValue)
+            if (Optional.IsDefined(Latency))
             {
                 writer.WritePropertyName("latency"u8);
                 writer.WriteNumberValue(Latency.Value);

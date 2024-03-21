@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (!(AllOf is ChangeTrackingList<MultiMetricCriteria> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AllOf))
             {
                 writer.WritePropertyName("allOf"u8);
                 writer.WriteStartArray();

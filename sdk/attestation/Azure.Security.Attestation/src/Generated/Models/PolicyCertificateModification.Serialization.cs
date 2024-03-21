@@ -18,7 +18,7 @@ namespace Azure.Security.Attestation
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (InternalPolicyCertificate != null)
+            if (Optional.IsDefined(InternalPolicyCertificate))
             {
                 writer.WritePropertyName("policyCertificate"u8);
                 writer.WriteObjectValue(InternalPolicyCertificate);

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Target.HasValue)
+            if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteNumberValue(Target.Value);
             }
-            if (!(CostThresholds is ChangeTrackingList<DevTestLabCostThreshold> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CostThresholds))
             {
                 writer.WritePropertyName("costThresholds"u8);
                 writer.WriteStartArray();
@@ -46,17 +46,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
                 writer.WriteEndArray();
             }
-            if (CycleStartOn.HasValue)
+            if (Optional.IsDefined(CycleStartOn))
             {
                 writer.WritePropertyName("cycleStartDateTime"u8);
                 writer.WriteStringValue(CycleStartOn.Value, "O");
             }
-            if (CycleEndOn.HasValue)
+            if (Optional.IsDefined(CycleEndOn))
             {
                 writer.WritePropertyName("cycleEndDateTime"u8);
                 writer.WriteStringValue(CycleEndOn.Value, "O");
             }
-            if (CycleType.HasValue)
+            if (Optional.IsDefined(CycleType))
             {
                 writer.WritePropertyName("cycleType"u8);
                 writer.WriteStringValue(CycleType.Value.ToString());

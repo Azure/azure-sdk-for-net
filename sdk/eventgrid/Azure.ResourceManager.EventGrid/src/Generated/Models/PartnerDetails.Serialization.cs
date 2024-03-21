@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (LongDescription != null)
+            if (Optional.IsDefined(LongDescription))
             {
                 writer.WritePropertyName("longDescription"u8);
                 writer.WriteStringValue(LongDescription);
             }
-            if (SetupUri != null)
+            if (Optional.IsDefined(SetupUri))
             {
                 writer.WritePropertyName("setupUri"u8);
                 writer.WriteStringValue(SetupUri.AbsoluteUri);

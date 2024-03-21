@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (JobTier.HasValue)
+            if (Optional.IsDefined(JobTier))
             {
                 writer.WritePropertyName("jobTier"u8);
                 writer.WriteStringValue(JobTier.Value.ToString());
             }
-            if (Priority.HasValue)
+            if (Optional.IsDefined(Priority))
             {
                 if (Priority != null)
                 {

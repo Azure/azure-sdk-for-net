@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Health.Insights.ClinicalMatching
@@ -36,7 +35,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (!(NeededClinicalInfo is ChangeTrackingList<ExtendedClinicalCodedElement> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(NeededClinicalInfo))
             {
                 writer.WritePropertyName("neededClinicalInfo"u8);
                 writer.WriteStartArray();

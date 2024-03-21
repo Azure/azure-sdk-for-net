@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(Schema is ChangeTrackingList<MapperTableSchema> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
                 writer.WriteStartArray();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(DslConnectorProperties is ChangeTrackingList<MapperDslConnectorProperties> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(DslConnectorProperties))
             {
                 writer.WritePropertyName("dslConnectorProperties"u8);
                 writer.WriteStartArray();

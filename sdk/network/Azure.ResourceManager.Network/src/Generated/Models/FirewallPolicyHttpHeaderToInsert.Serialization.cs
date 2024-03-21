@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (HeaderName != null)
+            if (Optional.IsDefined(HeaderName))
             {
                 writer.WritePropertyName("headerName"u8);
                 writer.WriteStringValue(HeaderName);
             }
-            if (HeaderValue != null)
+            if (Optional.IsDefined(HeaderValue))
             {
                 writer.WritePropertyName("headerValue"u8);
                 writer.WriteStringValue(HeaderValue);

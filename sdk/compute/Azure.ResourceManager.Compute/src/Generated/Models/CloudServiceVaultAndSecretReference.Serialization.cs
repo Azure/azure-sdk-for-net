@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (SourceVault != null)
+            if (Optional.IsDefined(SourceVault))
             {
                 writer.WritePropertyName("sourceVault"u8);
                 JsonSerializer.Serialize(writer, SourceVault);
             }
-            if (SecretUri != null)
+            if (Optional.IsDefined(SecretUri))
             {
                 writer.WritePropertyName("secretUrl"u8);
                 writer.WriteStringValue(SecretUri.AbsoluteUri);

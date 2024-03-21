@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (VmAgent != null)
+            if (Optional.IsDefined(VmAgent))
             {
                 writer.WritePropertyName("vmAgent"u8);
                 writer.WriteObjectValue(VmAgent);

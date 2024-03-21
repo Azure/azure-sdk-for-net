@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
 
             writer.WriteStartObject();
-            if (CcePolicy != null)
+            if (Optional.IsDefined(CcePolicy))
             {
                 writer.WritePropertyName("ccePolicy"u8);
                 writer.WriteStringValue(CcePolicy);

@@ -19,44 +19,44 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (RequestMethod != null)
+            if (Optional.IsDefined(RequestMethod))
             {
                 writer.WritePropertyName("requestMethod"u8);
                 writer.WriteObjectValue(RequestMethod);
             }
-            if (RequestBody != null)
+            if (Optional.IsDefined(RequestBody))
             {
                 writer.WritePropertyName("requestBody"u8);
                 writer.WriteObjectValue(RequestBody);
             }
-            if (AdditionalHeaders != null)
+            if (Optional.IsDefined(AdditionalHeaders))
             {
                 writer.WritePropertyName("additionalHeaders"u8);
                 writer.WriteObjectValue(AdditionalHeaders);
             }
-            if (RequestTimeout != null)
+            if (Optional.IsDefined(RequestTimeout))
             {
                 writer.WritePropertyName("requestTimeout"u8);
                 writer.WriteObjectValue(RequestTimeout);
             }
-            if (EnablePartitionDiscovery != null)
+            if (Optional.IsDefined(EnablePartitionDiscovery))
             {
                 writer.WritePropertyName("enablePartitionDiscovery"u8);
                 writer.WriteObjectValue(EnablePartitionDiscovery);
             }
-            if (PartitionRootPath != null)
+            if (Optional.IsDefined(PartitionRootPath))
             {
                 writer.WritePropertyName("partitionRootPath"u8);
                 writer.WriteObjectValue(PartitionRootPath);
             }
-            if (AdditionalColumns != null)
+            if (Optional.IsDefined(AdditionalColumns))
             {
                 writer.WritePropertyName("additionalColumns"u8);
                 writer.WriteObjectValue(AdditionalColumns);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (MaxConcurrentConnections != null)
+            if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 writer.WriteObjectValue(MaxConcurrentConnections);

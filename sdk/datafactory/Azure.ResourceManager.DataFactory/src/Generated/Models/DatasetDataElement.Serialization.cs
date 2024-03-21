@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (ColumnName != null)
+            if (Optional.IsDefined(ColumnName))
             {
                 writer.WritePropertyName("name"u8);
                 JsonSerializer.Serialize(writer, ColumnName);
             }
-            if (ColumnType != null)
+            if (Optional.IsDefined(ColumnType))
             {
                 writer.WritePropertyName("type"u8);
                 JsonSerializer.Serialize(writer, ColumnType);

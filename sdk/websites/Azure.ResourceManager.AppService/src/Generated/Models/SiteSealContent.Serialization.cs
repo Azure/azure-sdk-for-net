@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (IsLightTheme.HasValue)
+            if (Optional.IsDefined(IsLightTheme))
             {
                 writer.WritePropertyName("lightTheme"u8);
                 writer.WriteBooleanValue(IsLightTheme.Value);
             }
-            if (Locale != null)
+            if (Optional.IsDefined(Locale))
             {
                 writer.WritePropertyName("locale"u8);
                 writer.WriteStringValue(Locale);

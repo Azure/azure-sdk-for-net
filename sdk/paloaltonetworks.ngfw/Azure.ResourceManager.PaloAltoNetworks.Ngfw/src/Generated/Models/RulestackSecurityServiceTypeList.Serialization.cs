@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
 
             writer.WriteStartObject();
-            if (SecurityServicesTypeListType != null)
+            if (Optional.IsDefined(SecurityServicesTypeListType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(SecurityServicesTypeListType);

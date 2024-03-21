@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             }
 
             writer.WriteStartObject();
-            if (IsNameAvailable.HasValue)
+            if (Optional.IsDefined(IsNameAvailable))
             {
                 writer.WritePropertyName("nameAvailable"u8);
                 writer.WriteBooleanValue(IsNameAvailable.Value);
             }
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 if (Message != null)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     writer.WriteNull("message");
                 }
             }
-            if (Reason.HasValue)
+            if (Optional.IsDefined(Reason))
             {
                 if (Reason != null)
                 {

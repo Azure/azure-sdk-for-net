@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(DatabaseName);
-            if (RestoreParameters != null)
+            if (Optional.IsDefined(RestoreParameters))
             {
                 writer.WritePropertyName("restoreParameters"u8);
                 writer.WriteObjectValue(RestoreParameters);
             }
-            if (CreateMode.HasValue)
+            if (Optional.IsDefined(CreateMode))
             {
                 writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToString());

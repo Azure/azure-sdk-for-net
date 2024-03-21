@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             writer.WriteStartObject();
             writer.WritePropertyName("resourceId"u8);
             writer.WriteStringValue(ResourceId);
-            if (LoadTrustStore.HasValue)
+            if (Optional.IsDefined(LoadTrustStore))
             {
                 writer.WritePropertyName("loadTrustStore"u8);
                 writer.WriteBooleanValue(LoadTrustStore.Value);

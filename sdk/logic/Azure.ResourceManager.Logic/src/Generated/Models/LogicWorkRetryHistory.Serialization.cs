@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (EndOn.HasValue)
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Code != null)
+            if (Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (ClientRequestId != null)
+            if (Optional.IsDefined(ClientRequestId))
             {
                 writer.WritePropertyName("clientRequestId"u8);
                 writer.WriteStringValue(ClientRequestId);
             }
-            if (ServiceRequestId != null)
+            if (Optional.IsDefined(ServiceRequestId))
             {
                 writer.WritePropertyName("serviceRequestId"u8);
                 writer.WriteStringValue(ServiceRequestId);
             }
-            if (Error != null)
+            if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);

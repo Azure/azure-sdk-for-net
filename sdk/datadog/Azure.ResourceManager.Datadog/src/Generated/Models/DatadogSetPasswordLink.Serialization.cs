@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Datadog.Models
             }
 
             writer.WriteStartObject();
-            if (SetPasswordLink != null)
+            if (Optional.IsDefined(SetPasswordLink))
             {
                 writer.WritePropertyName("setPasswordLink"u8);
                 writer.WriteStringValue(SetPasswordLink);

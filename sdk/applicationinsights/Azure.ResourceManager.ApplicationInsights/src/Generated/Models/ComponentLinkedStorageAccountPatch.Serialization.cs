@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (LinkedStorageAccount != null)
+            if (Optional.IsDefined(LinkedStorageAccount))
             {
                 writer.WritePropertyName("linkedStorageAccount"u8);
                 writer.WriteStringValue(LinkedStorageAccount);

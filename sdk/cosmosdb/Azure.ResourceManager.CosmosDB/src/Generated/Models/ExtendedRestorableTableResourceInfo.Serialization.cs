@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Rid != null)
+            if (options.Format != "W" && Optional.IsDefined(Rid))
             {
                 writer.WritePropertyName("_rid"u8);
                 writer.WriteStringValue(Rid);
             }
-            if (options.Format != "W" && OperationType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(OperationType))
             {
                 writer.WritePropertyName("operationType"u8);
                 writer.WriteStringValue(OperationType.Value.ToString());
             }
-            if (options.Format != "W" && EventTimestamp != null)
+            if (options.Format != "W" && Optional.IsDefined(EventTimestamp))
             {
                 writer.WritePropertyName("eventTimestamp"u8);
                 writer.WriteStringValue(EventTimestamp);
             }
-            if (options.Format != "W" && TableName != null)
+            if (options.Format != "W" && Optional.IsDefined(TableName))
             {
                 writer.WritePropertyName("ownerId"u8);
                 writer.WriteStringValue(TableName);
             }
-            if (options.Format != "W" && TableId != null)
+            if (options.Format != "W" && Optional.IsDefined(TableId))
             {
                 writer.WritePropertyName("ownerResourceId"u8);
                 writer.WriteStringValue(TableId);

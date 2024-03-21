@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -28,69 +27,69 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (FrontendIPConfiguration != null)
+            if (Optional.IsDefined(FrontendIPConfiguration))
             {
                 writer.WritePropertyName("frontendIPConfiguration"u8);
                 JsonSerializer.Serialize(writer, FrontendIPConfiguration);
             }
-            if (Protocol.HasValue)
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (FrontendPortRangeStart.HasValue)
+            if (Optional.IsDefined(FrontendPortRangeStart))
             {
                 writer.WritePropertyName("frontendPortRangeStart"u8);
                 writer.WriteNumberValue(FrontendPortRangeStart.Value);
             }
-            if (FrontendPortRangeEnd.HasValue)
+            if (Optional.IsDefined(FrontendPortRangeEnd))
             {
                 writer.WritePropertyName("frontendPortRangeEnd"u8);
                 writer.WriteNumberValue(FrontendPortRangeEnd.Value);
             }
-            if (BackendPort.HasValue)
+            if (Optional.IsDefined(BackendPort))
             {
                 writer.WritePropertyName("backendPort"u8);
                 writer.WriteNumberValue(BackendPort.Value);
             }
-            if (IdleTimeoutInMinutes.HasValue)
+            if (Optional.IsDefined(IdleTimeoutInMinutes))
             {
                 writer.WritePropertyName("idleTimeoutInMinutes"u8);
                 writer.WriteNumberValue(IdleTimeoutInMinutes.Value);
             }
-            if (EnableFloatingIP.HasValue)
+            if (Optional.IsDefined(EnableFloatingIP))
             {
                 writer.WritePropertyName("enableFloatingIP"u8);
                 writer.WriteBooleanValue(EnableFloatingIP.Value);
             }
-            if (EnableTcpReset.HasValue)
+            if (Optional.IsDefined(EnableTcpReset))
             {
                 writer.WritePropertyName("enableTcpReset"u8);
                 writer.WriteBooleanValue(EnableTcpReset.Value);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());

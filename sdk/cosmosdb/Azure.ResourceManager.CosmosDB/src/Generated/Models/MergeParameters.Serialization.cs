@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (IsDryRun.HasValue)
+            if (Optional.IsDefined(IsDryRun))
             {
                 writer.WritePropertyName("isDryRun"u8);
                 writer.WriteBooleanValue(IsDryRun.Value);

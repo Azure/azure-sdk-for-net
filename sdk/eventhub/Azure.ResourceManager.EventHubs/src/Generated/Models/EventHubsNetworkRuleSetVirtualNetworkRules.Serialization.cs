@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.EventHubs.Models
             }
 
             writer.WriteStartObject();
-            if (Subnet != null)
+            if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
                 JsonSerializer.Serialize(writer, Subnet);
             }
-            if (IgnoreMissingVnetServiceEndpoint.HasValue)
+            if (Optional.IsDefined(IgnoreMissingVnetServiceEndpoint))
             {
                 writer.WritePropertyName("ignoreMissingVnetServiceEndpoint"u8);
                 writer.WriteBooleanValue(IgnoreMissingVnetServiceEndpoint.Value);

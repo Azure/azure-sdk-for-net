@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (!(ActionGroups is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ActionGroups))
             {
                 writer.WritePropertyName("actionGroups"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(CustomProperties is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(CustomProperties))
             {
                 writer.WritePropertyName("customProperties"u8);
                 writer.WriteStartObject();

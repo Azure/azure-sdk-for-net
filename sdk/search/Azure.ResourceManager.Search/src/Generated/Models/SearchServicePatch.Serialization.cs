@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Search;
 
 namespace Azure.ResourceManager.Search.Models
 {
@@ -28,17 +27,17 @@ namespace Azure.ResourceManager.Search.Models
             }
 
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -66,59 +65,59 @@ namespace Azure.ResourceManager.Search.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ReplicaCount.HasValue)
+            if (Optional.IsDefined(ReplicaCount))
             {
                 writer.WritePropertyName("replicaCount"u8);
                 writer.WriteNumberValue(ReplicaCount.Value);
             }
-            if (PartitionCount.HasValue)
+            if (Optional.IsDefined(PartitionCount))
             {
                 writer.WritePropertyName("partitionCount"u8);
                 writer.WriteNumberValue(PartitionCount.Value);
             }
-            if (HostingMode.HasValue)
+            if (Optional.IsDefined(HostingMode))
             {
                 writer.WritePropertyName("hostingMode"u8);
                 writer.WriteStringValue(HostingMode.Value.ToSerialString());
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToSerialString());
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (options.Format != "W" && StatusDetails != null)
+            if (options.Format != "W" && Optional.IsDefined(StatusDetails))
             {
                 writer.WritePropertyName("statusDetails"u8);
                 writer.WriteStringValue(StatusDetails);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
             }
-            if (NetworkRuleSet != null)
+            if (Optional.IsDefined(NetworkRuleSet))
             {
                 writer.WritePropertyName("networkRuleSet"u8);
                 writer.WriteObjectValue(NetworkRuleSet);
             }
-            if (EncryptionWithCmk != null)
+            if (Optional.IsDefined(EncryptionWithCmk))
             {
                 writer.WritePropertyName("encryptionWithCmk"u8);
                 writer.WriteObjectValue(EncryptionWithCmk);
             }
-            if (IsLocalAuthDisabled.HasValue)
+            if (Optional.IsDefined(IsLocalAuthDisabled))
             {
                 if (IsLocalAuthDisabled != null)
                 {
@@ -130,12 +129,12 @@ namespace Azure.ResourceManager.Search.Models
                     writer.WriteNull("disableLocalAuth");
                 }
             }
-            if (AuthOptions != null)
+            if (Optional.IsDefined(AuthOptions))
             {
                 writer.WritePropertyName("authOptions"u8);
                 writer.WriteObjectValue(AuthOptions);
             }
-            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<SearchPrivateEndpointConnectionData> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -145,7 +144,7 @@ namespace Azure.ResourceManager.Search.Models
                 }
                 writer.WriteEndArray();
             }
-            if (SemanticSearch.HasValue)
+            if (Optional.IsDefined(SemanticSearch))
             {
                 if (SemanticSearch != null)
                 {
@@ -157,7 +156,7 @@ namespace Azure.ResourceManager.Search.Models
                     writer.WriteNull("semanticSearch");
                 }
             }
-            if (options.Format != "W" && !(SharedPrivateLinkResources is ChangeTrackingList<SharedSearchServicePrivateLinkResourceData> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SharedPrivateLinkResources))
             {
                 writer.WritePropertyName("sharedPrivateLinkResources"u8);
                 writer.WriteStartArray();

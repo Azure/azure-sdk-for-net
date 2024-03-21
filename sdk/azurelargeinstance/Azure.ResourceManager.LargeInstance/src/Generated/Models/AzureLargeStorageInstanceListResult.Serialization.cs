@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.LargeInstance;
 
 namespace Azure.ResourceManager.LargeInstance.Models
 {
@@ -34,7 +33,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (NextLink != null)
+            if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink.AbsoluteUri);

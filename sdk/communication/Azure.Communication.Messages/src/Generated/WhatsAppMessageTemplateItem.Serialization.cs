@@ -9,8 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
-using Azure.Communication.Messages;
 using Azure.Core;
 
 namespace Azure.Communication.Messages.Models.Channels
@@ -28,7 +26,7 @@ namespace Azure.Communication.Messages.Models.Channels
             }
 
             writer.WriteStartObject();
-            if (Content != null)
+            if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
 #if NET6_0_OR_GREATER

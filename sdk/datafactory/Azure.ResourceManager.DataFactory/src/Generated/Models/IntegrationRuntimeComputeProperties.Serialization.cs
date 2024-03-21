@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (NodeSize != null)
+            if (Optional.IsDefined(NodeSize))
             {
                 writer.WritePropertyName("nodeSize"u8);
                 writer.WriteStringValue(NodeSize);
             }
-            if (NumberOfNodes.HasValue)
+            if (Optional.IsDefined(NumberOfNodes))
             {
                 writer.WritePropertyName("numberOfNodes"u8);
                 writer.WriteNumberValue(NumberOfNodes.Value);
             }
-            if (MaxParallelExecutionsPerNode.HasValue)
+            if (Optional.IsDefined(MaxParallelExecutionsPerNode))
             {
                 writer.WritePropertyName("maxParallelExecutionsPerNode"u8);
                 writer.WriteNumberValue(MaxParallelExecutionsPerNode.Value);
             }
-            if (DataFlowProperties != null)
+            if (Optional.IsDefined(DataFlowProperties))
             {
                 writer.WritePropertyName("dataFlowProperties"u8);
                 writer.WriteObjectValue(DataFlowProperties);
             }
-            if (VnetProperties != null)
+            if (Optional.IsDefined(VnetProperties))
             {
                 writer.WritePropertyName("vNetProperties"u8);
                 writer.WriteObjectValue(VnetProperties);
             }
-            if (CopyComputeScaleProperties != null)
+            if (Optional.IsDefined(CopyComputeScaleProperties))
             {
                 writer.WritePropertyName("copyComputeScaleProperties"u8);
                 writer.WriteObjectValue(CopyComputeScaleProperties);
             }
-            if (PipelineExternalComputeScaleProperties != null)
+            if (Optional.IsDefined(PipelineExternalComputeScaleProperties))
             {
                 writer.WritePropertyName("pipelineExternalComputeScaleProperties"u8);
                 writer.WriteObjectValue(PipelineExternalComputeScaleProperties);

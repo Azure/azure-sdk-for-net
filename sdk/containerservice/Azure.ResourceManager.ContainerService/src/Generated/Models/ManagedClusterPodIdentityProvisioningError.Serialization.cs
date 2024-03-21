@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
@@ -27,7 +26,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (ErrorDetail != null)
+            if (Optional.IsDefined(ErrorDetail))
             {
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, ErrorDetail);

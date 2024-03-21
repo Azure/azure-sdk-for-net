@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Port.HasValue)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (Identifier.HasValue)
+            if (Optional.IsDefined(Identifier))
             {
                 writer.WritePropertyName("identifier"u8);
                 writer.WriteNumberValue(Identifier.Value);
             }
-            if (Protocol.HasValue)
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (InterfaceType.HasValue)
+            if (Optional.IsDefined(InterfaceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(InterfaceType.Value.ToString());

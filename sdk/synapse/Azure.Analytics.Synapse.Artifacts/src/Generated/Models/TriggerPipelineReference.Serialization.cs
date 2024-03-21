@@ -19,12 +19,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (PipelineReference != null)
+            if (Optional.IsDefined(PipelineReference))
             {
                 writer.WritePropertyName("pipelineReference"u8);
                 writer.WriteObjectValue(PipelineReference);
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, object> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();

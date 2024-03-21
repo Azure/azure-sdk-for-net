@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Chaos.Models
             writer.WriteStringValue(SelectorType.ToString());
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (Filter != null)
+            if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteObjectValue(Filter);

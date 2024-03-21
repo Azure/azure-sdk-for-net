@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && AccountName != null)
+            if (options.Format != "W" && Optional.IsDefined(AccountName))
             {
                 writer.WritePropertyName("accountName"u8);
                 writer.WriteStringValue(AccountName);
             }
-            if (options.Format != "W" && DataAccountType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DataAccountType))
             {
                 writer.WritePropertyName("dataAccountType"u8);
                 writer.WriteStringValue(DataAccountType.Value.ToSerialString());
             }
-            if (options.Format != "W" && AccountConnectionString != null)
+            if (options.Format != "W" && Optional.IsDefined(AccountConnectionString))
             {
                 writer.WritePropertyName("accountConnectionString"u8);
                 writer.WriteStringValue(AccountConnectionString);
             }
-            if (options.Format != "W" && !(ShareCredentialDetails is ChangeTrackingList<ShareCredentialDetails> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ShareCredentialDetails))
             {
                 writer.WritePropertyName("shareCredentialDetails"u8);
                 writer.WriteStartArray();

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (!(GroupIdsForLdapUser is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(GroupIdsForLdapUser))
             {
                 writer.WritePropertyName("groupIdsForLdapUser"u8);
                 writer.WriteStartArray();

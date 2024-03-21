@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (ModifiedPath != null)
+            if (Optional.IsDefined(ModifiedPath))
             {
                 writer.WritePropertyName("modifiedPath"u8);
                 writer.WriteStringValue(ModifiedPath);
             }
-            if (ModifiedQueryString != null)
+            if (Optional.IsDefined(ModifiedQueryString))
             {
                 writer.WritePropertyName("modifiedQueryString"u8);
                 writer.WriteStringValue(ModifiedQueryString);
             }
-            if (Reroute.HasValue)
+            if (Optional.IsDefined(Reroute))
             {
                 writer.WritePropertyName("reroute"u8);
                 writer.WriteBooleanValue(Reroute.Value);

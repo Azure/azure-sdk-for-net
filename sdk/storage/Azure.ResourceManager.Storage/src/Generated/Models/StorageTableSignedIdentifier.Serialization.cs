@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (AccessPolicy != null)
+            if (Optional.IsDefined(AccessPolicy))
             {
                 writer.WritePropertyName("accessPolicy"u8);
                 writer.WriteObjectValue(AccessPolicy);

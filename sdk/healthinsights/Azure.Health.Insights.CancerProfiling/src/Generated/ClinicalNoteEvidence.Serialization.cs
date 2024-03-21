@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Health.Insights.CancerProfiling
@@ -29,7 +28,7 @@ namespace Azure.Health.Insights.CancerProfiling
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (Text != null)
+            if (Optional.IsDefined(Text))
             {
                 writer.WritePropertyName("text"u8);
                 writer.WriteStringValue(Text);

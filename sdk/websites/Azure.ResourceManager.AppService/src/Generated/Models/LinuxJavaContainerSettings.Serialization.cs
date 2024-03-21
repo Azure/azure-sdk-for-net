@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Java11Runtime != null)
+            if (options.Format != "W" && Optional.IsDefined(Java11Runtime))
             {
                 writer.WritePropertyName("java11Runtime"u8);
                 writer.WriteStringValue(Java11Runtime);
             }
-            if (options.Format != "W" && Java8Runtime != null)
+            if (options.Format != "W" && Optional.IsDefined(Java8Runtime))
             {
                 writer.WritePropertyName("java8Runtime"u8);
                 writer.WriteStringValue(Java8Runtime);
             }
-            if (options.Format != "W" && IsPreview.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsPreview))
             {
                 writer.WritePropertyName("isPreview"u8);
                 writer.WriteBooleanValue(IsPreview.Value);
             }
-            if (options.Format != "W" && IsDeprecated.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsDeprecated))
             {
                 writer.WritePropertyName("isDeprecated"u8);
                 writer.WriteBooleanValue(IsDeprecated.Value);
             }
-            if (options.Format != "W" && IsHidden.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsHidden))
             {
                 writer.WritePropertyName("isHidden"u8);
                 writer.WriteBooleanValue(IsHidden.Value);
             }
-            if (options.Format != "W" && EndOfLifeOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndOfLifeOn))
             {
                 writer.WritePropertyName("endOfLifeDate"u8);
                 writer.WriteStringValue(EndOfLifeOn.Value, "O");
             }
-            if (options.Format != "W" && IsAutoUpdate.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsAutoUpdate))
             {
                 writer.WritePropertyName("isAutoUpdate"u8);
                 writer.WriteBooleanValue(IsAutoUpdate.Value);
             }
-            if (options.Format != "W" && IsEarlyAccess.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsEarlyAccess))
             {
                 writer.WritePropertyName("isEarlyAccess"u8);
                 writer.WriteBooleanValue(IsEarlyAccess.Value);

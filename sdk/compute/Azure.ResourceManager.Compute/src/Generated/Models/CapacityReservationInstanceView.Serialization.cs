@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (UtilizationInfo != null)
+            if (Optional.IsDefined(UtilizationInfo))
             {
                 writer.WritePropertyName("utilizationInfo"u8);
                 writer.WriteObjectValue(UtilizationInfo);
             }
-            if (!(Statuses is ChangeTrackingList<InstanceViewStatus> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Statuses))
             {
                 writer.WritePropertyName("statuses"u8);
                 writer.WriteStartArray();

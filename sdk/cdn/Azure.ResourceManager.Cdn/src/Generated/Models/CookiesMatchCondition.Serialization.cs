@@ -28,19 +28,19 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStartObject();
             writer.WritePropertyName("typeName"u8);
             writer.WriteStringValue(ConditionType.ToString());
-            if (Selector != null)
+            if (Optional.IsDefined(Selector))
             {
                 writer.WritePropertyName("selector"u8);
                 writer.WriteStringValue(Selector);
             }
             writer.WritePropertyName("operator"u8);
             writer.WriteStringValue(CookiesOperator.ToString());
-            if (NegateCondition.HasValue)
+            if (Optional.IsDefined(NegateCondition))
             {
                 writer.WritePropertyName("negateCondition"u8);
                 writer.WriteBooleanValue(NegateCondition.Value);
             }
-            if (!(MatchValues is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(MatchValues))
             {
                 writer.WritePropertyName("matchValues"u8);
                 writer.WriteStartArray();
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Transforms is ChangeTrackingList<PreTransformCategory> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Transforms))
             {
                 writer.WritePropertyName("transforms"u8);
                 writer.WriteStartArray();

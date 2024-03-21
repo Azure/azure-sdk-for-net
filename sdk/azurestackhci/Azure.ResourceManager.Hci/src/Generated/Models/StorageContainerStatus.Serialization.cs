@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (ErrorCode != null)
+            if (Optional.IsDefined(ErrorCode))
             {
                 writer.WritePropertyName("errorCode"u8);
                 writer.WriteStringValue(ErrorCode);
             }
-            if (ErrorMessage != null)
+            if (Optional.IsDefined(ErrorMessage))
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
             }
-            if (AvailableSizeMB.HasValue)
+            if (Optional.IsDefined(AvailableSizeMB))
             {
                 writer.WritePropertyName("availableSizeMB"u8);
                 writer.WriteNumberValue(AvailableSizeMB.Value);
             }
-            if (ContainerSizeMB.HasValue)
+            if (Optional.IsDefined(ContainerSizeMB))
             {
                 writer.WritePropertyName("containerSizeMB"u8);
                 writer.WriteNumberValue(ContainerSizeMB.Value);
             }
-            if (ProvisioningStatus != null)
+            if (Optional.IsDefined(ProvisioningStatus))
             {
                 writer.WritePropertyName("provisioningStatus"u8);
                 writer.WriteObjectValue(ProvisioningStatus);

@@ -26,97 +26,97 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Severity.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (options.Format != "W" && SignalType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SignalType))
             {
                 writer.WritePropertyName("signalType"u8);
                 writer.WriteStringValue(SignalType.Value.ToString());
             }
-            if (options.Format != "W" && AlertState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AlertState))
             {
                 writer.WritePropertyName("alertState"u8);
                 writer.WriteStringValue(AlertState.Value.ToString());
             }
-            if (options.Format != "W" && MonitorCondition.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MonitorCondition))
             {
                 writer.WritePropertyName("monitorCondition"u8);
                 writer.WriteStringValue(MonitorCondition.Value.ToString());
             }
-            if (TargetResource != null)
+            if (Optional.IsDefined(TargetResource))
             {
                 writer.WritePropertyName("targetResource"u8);
                 writer.WriteStringValue(TargetResource);
             }
-            if (TargetResourceName != null)
+            if (Optional.IsDefined(TargetResourceName))
             {
                 writer.WritePropertyName("targetResourceName"u8);
                 writer.WriteStringValue(TargetResourceName);
             }
-            if (TargetResourceGroup != null)
+            if (Optional.IsDefined(TargetResourceGroup))
             {
                 writer.WritePropertyName("targetResourceGroup"u8);
                 writer.WriteStringValue(TargetResourceGroup);
             }
-            if (TargetResourceType != null)
+            if (Optional.IsDefined(TargetResourceType))
             {
                 writer.WritePropertyName("targetResourceType"u8);
                 writer.WriteStringValue(TargetResourceType);
             }
-            if (options.Format != "W" && MonitorService.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MonitorService))
             {
                 writer.WritePropertyName("monitorService"u8);
                 writer.WriteStringValue(MonitorService.Value.ToString());
             }
-            if (options.Format != "W" && AlertRule != null)
+            if (options.Format != "W" && Optional.IsDefined(AlertRule))
             {
                 writer.WritePropertyName("alertRule"u8);
                 writer.WriteStringValue(AlertRule);
             }
-            if (options.Format != "W" && SourceCreatedId != null)
+            if (options.Format != "W" && Optional.IsDefined(SourceCreatedId))
             {
                 writer.WritePropertyName("sourceCreatedId"u8);
                 writer.WriteStringValue(SourceCreatedId);
             }
-            if (options.Format != "W" && SmartGroupId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SmartGroupId))
             {
                 writer.WritePropertyName("smartGroupId"u8);
                 writer.WriteStringValue(SmartGroupId.Value);
             }
-            if (options.Format != "W" && SmartGroupingReason != null)
+            if (options.Format != "W" && Optional.IsDefined(SmartGroupingReason))
             {
                 writer.WritePropertyName("smartGroupingReason"u8);
                 writer.WriteStringValue(SmartGroupingReason);
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startDateTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && LastModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedDateTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (options.Format != "W" && MonitorConditionResolvedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MonitorConditionResolvedOn))
             {
                 writer.WritePropertyName("monitorConditionResolvedDateTime"u8);
                 writer.WriteStringValue(MonitorConditionResolvedOn.Value, "O");
             }
-            if (options.Format != "W" && LastModifiedBy != null)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedBy))
             {
                 writer.WritePropertyName("lastModifiedUserName"u8);
                 writer.WriteStringValue(LastModifiedBy);
             }
-            if (ActionStatus != null)
+            if (Optional.IsDefined(ActionStatus))
             {
                 writer.WritePropertyName("actionStatus"u8);
                 writer.WriteObjectValue(ActionStatus);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);

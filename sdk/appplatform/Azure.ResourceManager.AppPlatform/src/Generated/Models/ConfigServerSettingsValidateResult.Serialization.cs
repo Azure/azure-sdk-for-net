@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (IsValid.HasValue)
+            if (Optional.IsDefined(IsValid))
             {
                 writer.WritePropertyName("isValid"u8);
                 writer.WriteBooleanValue(IsValid.Value);
             }
-            if (!(Details is ChangeTrackingList<ConfigServerSettingsErrorRecord> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartArray();

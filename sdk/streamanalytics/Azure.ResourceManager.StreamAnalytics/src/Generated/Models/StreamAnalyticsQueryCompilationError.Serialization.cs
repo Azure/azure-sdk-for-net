@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Message != null)
+            if (options.Format != "W" && Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && StartLine.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartLine))
             {
                 writer.WritePropertyName("startLine"u8);
                 writer.WriteNumberValue(StartLine.Value);
             }
-            if (options.Format != "W" && StartColumn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartColumn))
             {
                 writer.WritePropertyName("startColumn"u8);
                 writer.WriteNumberValue(StartColumn.Value);
             }
-            if (options.Format != "W" && EndLine.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndLine))
             {
                 writer.WritePropertyName("endLine"u8);
                 writer.WriteNumberValue(EndLine.Value);
             }
-            if (options.Format != "W" && EndColumn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndColumn))
             {
                 writer.WritePropertyName("endColumn"u8);
                 writer.WriteNumberValue(EndColumn.Value);
             }
-            if (options.Format != "W" && IsGlobal.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsGlobal))
             {
                 writer.WritePropertyName("isGlobal"u8);
                 writer.WriteBooleanValue(IsGlobal.Value);

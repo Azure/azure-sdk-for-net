@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (ProtectFromScaleIn.HasValue)
+            if (Optional.IsDefined(ProtectFromScaleIn))
             {
                 writer.WritePropertyName("protectFromScaleIn"u8);
                 writer.WriteBooleanValue(ProtectFromScaleIn.Value);
             }
-            if (ProtectFromScaleSetActions.HasValue)
+            if (Optional.IsDefined(ProtectFromScaleSetActions))
             {
                 writer.WritePropertyName("protectFromScaleSetActions"u8);
                 writer.WriteBooleanValue(ProtectFromScaleSetActions.Value);

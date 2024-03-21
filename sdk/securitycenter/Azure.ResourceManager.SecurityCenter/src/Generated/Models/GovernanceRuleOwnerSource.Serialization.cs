@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (SourceType.HasValue)
+            if (Optional.IsDefined(SourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(SourceType.Value.ToString());
             }
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);

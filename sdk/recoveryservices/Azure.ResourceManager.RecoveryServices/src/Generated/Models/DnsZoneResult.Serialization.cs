@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
 
             writer.WriteStartObject();
-            if (!(RequiredZoneNames is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(RequiredZoneNames))
             {
                 writer.WritePropertyName("requiredZoneNames"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (SubResource.HasValue)
+            if (Optional.IsDefined(SubResource))
             {
                 writer.WritePropertyName("subResource"u8);
                 writer.WriteStringValue(SubResource.Value.ToString());

@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Health.Insights.CancerProfiling
@@ -27,17 +26,17 @@ namespace Azure.Health.Insights.CancerProfiling
             }
 
             writer.WriteStartObject();
-            if (Sex.HasValue)
+            if (Optional.IsDefined(Sex))
             {
                 writer.WritePropertyName("sex"u8);
                 writer.WriteStringValue(Sex.Value.ToString());
             }
-            if (BirthDate.HasValue)
+            if (Optional.IsDefined(BirthDate))
             {
                 writer.WritePropertyName("birthDate"u8);
                 writer.WriteStringValue(BirthDate.Value, "D");
             }
-            if (!(ClinicalInfo is ChangeTrackingList<ClinicalCodedElement> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ClinicalInfo))
             {
                 writer.WritePropertyName("clinicalInfo"u8);
                 writer.WriteStartArray();

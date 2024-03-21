@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteObjectValue(Source);
             writer.WritePropertyName("destination"u8);
             writer.WriteObjectValue(Destination);
-            if (PreferredIPVersion.HasValue)
+            if (Optional.IsDefined(PreferredIPVersion))
             {
                 writer.WritePropertyName("preferredIPVersion"u8);
                 writer.WriteStringValue(PreferredIPVersion.Value.ToString());
             }
-            if (Protocol.HasValue)
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (ProtocolConfiguration != null)
+            if (Optional.IsDefined(ProtocolConfiguration))
             {
                 writer.WritePropertyName("protocolConfiguration"u8);
                 writer.WriteObjectValue(ProtocolConfiguration);

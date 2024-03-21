@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Method.HasValue)
+            if (Optional.IsDefined(Method))
             {
                 writer.WritePropertyName("method"u8);
                 writer.WriteStringValue(Method.Value.ToString());
             }
-            if (!(Headers is ChangeTrackingList<NetworkWatcherHttpHeader> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Headers))
             {
                 writer.WritePropertyName("headers"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ValidStatusCodes is ChangeTrackingList<int> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ValidStatusCodes))
             {
                 writer.WritePropertyName("validStatusCodes"u8);
                 writer.WriteStartArray();

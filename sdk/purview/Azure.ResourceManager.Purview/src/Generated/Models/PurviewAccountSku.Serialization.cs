@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Purview.Models
             }
 
             writer.WriteStartObject();
-            if (Capacity.HasValue)
+            if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);
             }
-            if (Name.HasValue)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name.Value.ToString());

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             }
 
             writer.WriteStartObject();
-            if (!(AzureResourceIds is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AzureResourceIds))
             {
                 writer.WritePropertyName("azureResourceIds"u8);
                 writer.WriteStartArray();

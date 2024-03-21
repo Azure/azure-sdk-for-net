@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (EncodedTaskContent != null)
+            if (Optional.IsDefined(EncodedTaskContent))
             {
                 writer.WritePropertyName("encodedTaskContent"u8);
                 writer.WriteStringValue(EncodedTaskContent);
             }
-            if (EncodedValuesContent != null)
+            if (Optional.IsDefined(EncodedValuesContent))
             {
                 writer.WritePropertyName("encodedValuesContent"u8);
                 writer.WriteStringValue(EncodedValuesContent);
             }
-            if (!(Values is ChangeTrackingList<ContainerRegistryTaskOverridableValue> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Values))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(StepType.ToString());
-            if (ContextPath != null)
+            if (Optional.IsDefined(ContextPath))
             {
                 writer.WritePropertyName("contextPath"u8);
                 writer.WriteStringValue(ContextPath);
             }
-            if (ContextAccessToken != null)
+            if (Optional.IsDefined(ContextAccessToken))
             {
                 writer.WritePropertyName("contextAccessToken"u8);
                 writer.WriteStringValue(ContextAccessToken);

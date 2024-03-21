@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ScaleUnit != null)
+            if (options.Format != "W" && Optional.IsDefined(ScaleUnit))
             {
                 writer.WritePropertyName("scaleUnit"u8);
                 writer.WriteStringValue(ScaleUnit);
             }
-            if (options.Format != "W" && InstanceCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(InstanceCount))
             {
                 writer.WritePropertyName("instanceCount"u8);
                 writer.WriteNumberValue(InstanceCount.Value);

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (IsSecureBootEnabled.HasValue)
+            if (Optional.IsDefined(IsSecureBootEnabled))
             {
                 writer.WritePropertyName("secureBootEnabled"u8);
                 writer.WriteBooleanValue(IsSecureBootEnabled.Value);
             }
-            if (IsVTpmEnabled.HasValue)
+            if (Optional.IsDefined(IsVTpmEnabled))
             {
                 writer.WritePropertyName("vTpmEnabled"u8);
                 writer.WriteBooleanValue(IsVTpmEnabled.Value);

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (OSVhdId != null)
+            if (Optional.IsDefined(OSVhdId))
             {
                 writer.WritePropertyName("osVhdId"u8);
                 writer.WriteStringValue(OSVhdId);
             }
-            if (OSType != null)
+            if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType);
             }
-            if (VhdName != null)
+            if (Optional.IsDefined(VhdName))
             {
                 writer.WritePropertyName("vhdName"u8);
                 writer.WriteStringValue(VhdName);

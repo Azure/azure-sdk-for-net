@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (IsGlobal.HasValue)
+            if (Optional.IsDefined(IsGlobal))
             {
                 writer.WritePropertyName("isGlobal"u8);
                 writer.WriteBooleanValue(IsGlobal.Value);

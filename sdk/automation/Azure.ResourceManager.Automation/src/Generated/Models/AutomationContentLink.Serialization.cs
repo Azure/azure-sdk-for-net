@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Uri != null)
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (ContentHash != null)
+            if (Optional.IsDefined(ContentHash))
             {
                 writer.WritePropertyName("contentHash"u8);
                 writer.WriteObjectValue(ContentHash);
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             }
 
             writer.WriteStartObject();
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
 #if NET6_0_OR_GREATER
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
 #endif
             }
-            if (Reference != null)
+            if (Optional.IsDefined(Reference))
             {
                 writer.WritePropertyName("reference"u8);
                 writer.WriteObjectValue(Reference);

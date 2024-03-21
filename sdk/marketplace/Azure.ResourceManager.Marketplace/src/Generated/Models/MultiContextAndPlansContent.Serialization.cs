@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
@@ -29,17 +28,17 @@ namespace Azure.ResourceManager.Marketplace.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (OfferId != null)
+            if (Optional.IsDefined(OfferId))
             {
                 writer.WritePropertyName("offerId"u8);
                 writer.WriteStringValue(OfferId);
             }
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (!(PlansContext is ChangeTrackingList<ContextAndPlansDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PlansContext))
             {
                 writer.WritePropertyName("plansContext"u8);
                 writer.WriteStartArray();

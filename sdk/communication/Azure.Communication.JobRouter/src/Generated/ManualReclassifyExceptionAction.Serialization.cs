@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -27,17 +26,17 @@ namespace Azure.Communication.JobRouter
             }
 
             writer.WriteStartObject();
-            if (QueueId != null)
+            if (Optional.IsDefined(QueueId))
             {
                 writer.WritePropertyName("queueId"u8);
                 writer.WriteStringValue(QueueId);
             }
-            if (Priority.HasValue)
+            if (Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
-            if (!(WorkerSelectors is ChangeTrackingList<RouterWorkerSelector> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(WorkerSelectors))
             {
                 writer.WritePropertyName("workerSelectors"u8);
                 writer.WriteStartArray();
@@ -47,7 +46,7 @@ namespace Azure.Communication.JobRouter
                 }
                 writer.WriteEndArray();
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);

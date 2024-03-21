@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             }
 
             writer.WriteStartObject();
-            if (IsValid.HasValue)
+            if (Optional.IsDefined(IsValid))
             {
                 writer.WritePropertyName("valid"u8);
                 writer.WriteBooleanValue(IsValid.Value);
             }
-            if (ReasonCode != null)
+            if (Optional.IsDefined(ReasonCode))
             {
                 writer.WritePropertyName("reasonCode"u8);
                 writer.WriteStringValue(ReasonCode);
             }
-            if (Reason != null)
+            if (Optional.IsDefined(Reason))
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);

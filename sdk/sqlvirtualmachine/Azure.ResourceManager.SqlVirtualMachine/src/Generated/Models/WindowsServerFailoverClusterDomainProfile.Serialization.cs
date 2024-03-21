@@ -26,47 +26,47 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             }
 
             writer.WriteStartObject();
-            if (DomainFqdn != null)
+            if (Optional.IsDefined(DomainFqdn))
             {
                 writer.WritePropertyName("domainFqdn"u8);
                 writer.WriteStringValue(DomainFqdn);
             }
-            if (OrganizationalUnitPath != null)
+            if (Optional.IsDefined(OrganizationalUnitPath))
             {
                 writer.WritePropertyName("ouPath"u8);
                 writer.WriteStringValue(OrganizationalUnitPath);
             }
-            if (ClusterBootstrapAccount != null)
+            if (Optional.IsDefined(ClusterBootstrapAccount))
             {
                 writer.WritePropertyName("clusterBootstrapAccount"u8);
                 writer.WriteStringValue(ClusterBootstrapAccount);
             }
-            if (ClusterOperatorAccount != null)
+            if (Optional.IsDefined(ClusterOperatorAccount))
             {
                 writer.WritePropertyName("clusterOperatorAccount"u8);
                 writer.WriteStringValue(ClusterOperatorAccount);
             }
-            if (SqlServiceAccount != null)
+            if (Optional.IsDefined(SqlServiceAccount))
             {
                 writer.WritePropertyName("sqlServiceAccount"u8);
                 writer.WriteStringValue(SqlServiceAccount);
             }
-            if (FileShareWitnessPath != null)
+            if (Optional.IsDefined(FileShareWitnessPath))
             {
                 writer.WritePropertyName("fileShareWitnessPath"u8);
                 writer.WriteStringValue(FileShareWitnessPath);
             }
-            if (StorageAccountUri != null)
+            if (Optional.IsDefined(StorageAccountUri))
             {
                 writer.WritePropertyName("storageAccountUrl"u8);
                 writer.WriteStringValue(StorageAccountUri.AbsoluteUri);
             }
-            if (StorageAccountPrimaryKey != null)
+            if (Optional.IsDefined(StorageAccountPrimaryKey))
             {
                 writer.WritePropertyName("storageAccountPrimaryKey"u8);
                 writer.WriteStringValue(StorageAccountPrimaryKey);
             }
-            if (ClusterSubnetType.HasValue)
+            if (Optional.IsDefined(ClusterSubnetType))
             {
                 writer.WritePropertyName("clusterSubnetType"u8);
                 writer.WriteStringValue(ClusterSubnetType.Value.ToString());

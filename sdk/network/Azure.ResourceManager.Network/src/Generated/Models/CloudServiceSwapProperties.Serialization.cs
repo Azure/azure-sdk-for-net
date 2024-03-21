@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (SlotType.HasValue)
+            if (Optional.IsDefined(SlotType))
             {
                 writer.WritePropertyName("slotType"u8);
                 writer.WriteStringValue(SlotType.Value.ToSerialString());

@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -27,7 +26,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (!(Value is ChangeTrackingList<MediaTransformData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +36,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 writer.WriteEndArray();
             }
-            if (OdataNextLink != null)
+            if (Optional.IsDefined(OdataNextLink))
             {
                 writer.WritePropertyName("@odata.nextLink"u8);
                 writer.WriteStringValue(OdataNextLink);

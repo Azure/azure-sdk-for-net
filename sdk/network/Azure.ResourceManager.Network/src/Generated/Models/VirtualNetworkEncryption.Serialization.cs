@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(IsEnabled);
-            if (Enforcement.HasValue)
+            if (Optional.IsDefined(Enforcement))
             {
                 writer.WritePropertyName("enforcement"u8);
                 writer.WriteStringValue(Enforcement.Value.ToString());

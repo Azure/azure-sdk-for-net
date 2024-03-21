@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (MappingType.HasValue)
+            if (Optional.IsDefined(MappingType))
             {
                 writer.WritePropertyName("mappingType"u8);
                 writer.WriteStringValue(MappingType.Value.ToString());
             }
-            if (SourceLogicalName != null)
+            if (Optional.IsDefined(SourceLogicalName))
             {
                 writer.WritePropertyName("sourceLogicalName"u8);
                 writer.WriteStringValue(SourceLogicalName);
             }
-            if (SourcePath != null)
+            if (Optional.IsDefined(SourcePath))
             {
                 writer.WritePropertyName("sourcePath"u8);
                 writer.WriteStringValue(SourcePath);
             }
-            if (TargetPath != null)
+            if (Optional.IsDefined(TargetPath))
             {
                 writer.WritePropertyName("targetPath"u8);
                 writer.WriteStringValue(TargetPath);

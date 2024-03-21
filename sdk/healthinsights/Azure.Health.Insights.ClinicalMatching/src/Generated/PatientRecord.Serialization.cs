@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Health.Insights.ClinicalMatching
@@ -29,12 +28,12 @@ namespace Azure.Health.Insights.ClinicalMatching
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (Info != null)
+            if (Optional.IsDefined(Info))
             {
                 writer.WritePropertyName("info"u8);
                 writer.WriteObjectValue(Info);
             }
-            if (!(Data is ChangeTrackingList<PatientDocument> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Data))
             {
                 writer.WritePropertyName("data"u8);
                 writer.WriteStartArray();

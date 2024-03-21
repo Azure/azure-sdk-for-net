@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Grafana.Models
             }
 
             writer.WriteStartObject();
-            if (MarketplacePlanId != null)
+            if (Optional.IsDefined(MarketplacePlanId))
             {
                 writer.WritePropertyName("marketplacePlanId"u8);
                 writer.WriteStringValue(MarketplacePlanId);
             }
-            if (MarketplaceAutoRenew.HasValue)
+            if (Optional.IsDefined(MarketplaceAutoRenew))
             {
                 writer.WritePropertyName("marketplaceAutoRenew"u8);
                 writer.WriteStringValue(MarketplaceAutoRenew.Value.ToString());

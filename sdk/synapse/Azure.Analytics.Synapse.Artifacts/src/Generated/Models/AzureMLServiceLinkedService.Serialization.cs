@@ -21,17 +21,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (ConnectVia != null)
+            if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
                 writer.WriteObjectValue(ConnectVia);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, ParameterSpecification> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(Annotations is ChangeTrackingList<object> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -65,27 +65,27 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteObjectValue(ResourceGroupName);
             writer.WritePropertyName("mlWorkspaceName"u8);
             writer.WriteObjectValue(MlWorkspaceName);
-            if (Authentication != null)
+            if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
                 writer.WriteObjectValue(Authentication);
             }
-            if (ServicePrincipalId != null)
+            if (Optional.IsDefined(ServicePrincipalId))
             {
                 writer.WritePropertyName("servicePrincipalId"u8);
                 writer.WriteObjectValue(ServicePrincipalId);
             }
-            if (ServicePrincipalKey != null)
+            if (Optional.IsDefined(ServicePrincipalKey))
             {
                 writer.WritePropertyName("servicePrincipalKey"u8);
                 writer.WriteObjectValue(ServicePrincipalKey);
             }
-            if (Tenant != null)
+            if (Optional.IsDefined(Tenant))
             {
                 writer.WritePropertyName("tenant"u8);
                 writer.WriteObjectValue(Tenant);
             }
-            if (EncryptedCredential != null)
+            if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteObjectValue(EncryptedCredential);

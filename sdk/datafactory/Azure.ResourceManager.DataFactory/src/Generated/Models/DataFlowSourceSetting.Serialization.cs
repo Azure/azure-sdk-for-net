@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (SourceName != null)
+            if (Optional.IsDefined(SourceName))
             {
                 writer.WritePropertyName("sourceName"u8);
                 writer.WriteStringValue(SourceName);
             }
-            if (RowLimit.HasValue)
+            if (Optional.IsDefined(RowLimit))
             {
                 writer.WritePropertyName("rowLimit"u8);
                 writer.WriteNumberValue(RowLimit.Value);

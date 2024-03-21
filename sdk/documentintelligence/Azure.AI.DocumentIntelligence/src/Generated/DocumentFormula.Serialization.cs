@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
@@ -31,7 +30,7 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
-            if (!(Polygon is ChangeTrackingList<float> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Polygon))
             {
                 writer.WritePropertyName("polygon"u8);
                 writer.WriteStartArray();

@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Protocol.HasValue)
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (LocalIPAddress != null)
+            if (Optional.IsDefined(LocalIPAddress))
             {
                 writer.WritePropertyName("localIPAddress"u8);
                 writer.WriteStringValue(LocalIPAddress);
             }
-            if (RemoteIPAddress != null)
+            if (Optional.IsDefined(RemoteIPAddress))
             {
                 writer.WritePropertyName("remoteIPAddress"u8);
                 writer.WriteStringValue(RemoteIPAddress);
             }
-            if (LocalPort != null)
+            if (Optional.IsDefined(LocalPort))
             {
                 writer.WritePropertyName("localPort"u8);
                 writer.WriteStringValue(LocalPort);
             }
-            if (RemotePort != null)
+            if (Optional.IsDefined(RemotePort))
             {
                 writer.WritePropertyName("remotePort"u8);
                 writer.WriteStringValue(RemotePort);

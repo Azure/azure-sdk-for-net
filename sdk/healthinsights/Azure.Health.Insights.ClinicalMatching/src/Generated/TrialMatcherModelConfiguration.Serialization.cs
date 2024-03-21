@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Health.Insights.ClinicalMatching
@@ -27,12 +26,12 @@ namespace Azure.Health.Insights.ClinicalMatching
             }
 
             writer.WriteStartObject();
-            if (Verbose.HasValue)
+            if (Optional.IsDefined(Verbose))
             {
                 writer.WritePropertyName("verbose"u8);
                 writer.WriteBooleanValue(Verbose.Value);
             }
-            if (IncludeEvidence.HasValue)
+            if (Optional.IsDefined(IncludeEvidence))
             {
                 writer.WritePropertyName("includeEvidence"u8);
                 writer.WriteBooleanValue(IncludeEvidence.Value);

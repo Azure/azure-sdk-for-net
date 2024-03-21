@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (AlertNotificationSetting != null)
+            if (Optional.IsDefined(AlertNotificationSetting))
             {
                 if (AlertNotificationSetting != null)
                 {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("computeConfiguration"u8);
             writer.WriteObjectValue(ComputeConfiguration);
-            if (MonitoringTarget != null)
+            if (Optional.IsDefined(MonitoringTarget))
             {
                 if (MonitoringTarget != null)
                 {

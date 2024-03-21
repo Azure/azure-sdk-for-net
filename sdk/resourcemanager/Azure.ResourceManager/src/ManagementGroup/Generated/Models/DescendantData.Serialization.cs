@@ -42,14 +42,14 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 if (DisplayName != null)
                 {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     writer.WriteNull("displayName");
                 }
             }
-            if (Parent != null)
+            if (Optional.IsDefined(Parent))
             {
                 if (Parent != null)
                 {

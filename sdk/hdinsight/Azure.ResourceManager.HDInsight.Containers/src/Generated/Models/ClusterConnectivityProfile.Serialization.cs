@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WritePropertyName("web"u8);
                 writer.WriteObjectValue(Web);
             }
-            if (!(Ssh is ChangeTrackingList<SshConnectivityEndpoint> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Ssh))
             {
                 writer.WritePropertyName("ssh"u8);
                 writer.WriteStartArray();

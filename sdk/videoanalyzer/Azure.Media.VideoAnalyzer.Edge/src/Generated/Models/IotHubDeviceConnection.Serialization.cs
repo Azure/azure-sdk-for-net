@@ -17,7 +17,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartObject();
             writer.WritePropertyName("deviceId"u8);
             writer.WriteStringValue(DeviceId);
-            if (Credentials != null)
+            if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
                 writer.WriteObjectValue(Credentials);

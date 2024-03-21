@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStringValue(EventHubNameSpace);
             writer.WritePropertyName("eventHubName"u8);
             writer.WriteStringValue(EventHubName);
-            if (UseCommonAlertSchema.HasValue)
+            if (Optional.IsDefined(UseCommonAlertSchema))
             {
                 writer.WritePropertyName("useCommonAlertSchema"u8);
                 writer.WriteBooleanValue(UseCommonAlertSchema.Value);
             }
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);

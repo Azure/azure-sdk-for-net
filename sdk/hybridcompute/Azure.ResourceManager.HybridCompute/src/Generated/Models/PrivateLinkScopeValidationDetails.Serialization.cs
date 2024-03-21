@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (!(ConnectionDetails is ChangeTrackingList<HybridComputeConnectionDetail> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ConnectionDetails))
             {
                 writer.WritePropertyName("connectionDetails"u8);
                 writer.WriteStartArray();

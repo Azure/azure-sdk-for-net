@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (EnabledProtocols != null)
+            if (Optional.IsDefined(EnabledProtocols))
             {
                 writer.WritePropertyName("enabledProtocols"u8);
                 writer.WriteObjectValue(EnabledProtocols);
             }
-            if (!(ClearTracks is ChangeTrackingList<MediaTrackSelection> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ClearTracks))
             {
                 writer.WritePropertyName("clearTracks"u8);
                 writer.WriteStartArray();
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ContentKeys != null)
+            if (Optional.IsDefined(ContentKeys))
             {
                 writer.WritePropertyName("contentKeys"u8);
                 writer.WriteObjectValue(ContentKeys);
             }
-            if (CustomKeyAcquisitionUriTemplate != null)
+            if (Optional.IsDefined(CustomKeyAcquisitionUriTemplate))
             {
                 writer.WritePropertyName("customKeyAcquisitionUrlTemplate"u8);
                 writer.WriteStringValue(CustomKeyAcquisitionUriTemplate);

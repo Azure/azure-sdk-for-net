@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (options.Format != "W" && TimeStamp.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TimeStamp))
             {
                 writer.WritePropertyName("timeStamp"u8);
                 writer.WriteStringValue(TimeStamp.Value, "O");
             }
-            if (options.Format != "W" && MigrationState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MigrationState))
             {
                 writer.WritePropertyName("migrationState"u8);
                 writer.WriteStringValue(MigrationState.Value.ToString());

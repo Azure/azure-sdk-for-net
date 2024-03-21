@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (!(ClassificationsToInclude is ChangeTrackingList<VmGuestPatchClassificationForWindows> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ClassificationsToInclude))
             {
                 writer.WritePropertyName("classificationsToInclude"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(KbNumbersToInclude is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(KbNumbersToInclude))
             {
                 writer.WritePropertyName("kbNumbersToInclude"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(KbNumbersToExclude is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(KbNumbersToExclude))
             {
                 writer.WritePropertyName("kbNumbersToExclude"u8);
                 writer.WriteStartArray();
@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ExcludeKbsRequiringReboot.HasValue)
+            if (Optional.IsDefined(ExcludeKbsRequiringReboot))
             {
                 writer.WritePropertyName("excludeKbsRequiringReboot"u8);
                 writer.WriteBooleanValue(ExcludeKbsRequiringReboot.Value);
             }
-            if (MaxPatchPublishOn.HasValue)
+            if (Optional.IsDefined(MaxPatchPublishOn))
             {
                 writer.WritePropertyName("maxPatchPublishDate"u8);
                 writer.WriteStringValue(MaxPatchPublishOn.Value, "O");

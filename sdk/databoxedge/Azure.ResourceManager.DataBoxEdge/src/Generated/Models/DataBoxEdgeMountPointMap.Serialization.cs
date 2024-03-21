@@ -28,22 +28,22 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteStartObject();
             writer.WritePropertyName("shareId"u8);
             writer.WriteStringValue(ShareId);
-            if (options.Format != "W" && RoleId != null)
+            if (options.Format != "W" && Optional.IsDefined(RoleId))
             {
                 writer.WritePropertyName("roleId"u8);
                 writer.WriteStringValue(RoleId);
             }
-            if (options.Format != "W" && MountPoint != null)
+            if (options.Format != "W" && Optional.IsDefined(MountPoint))
             {
                 writer.WritePropertyName("mountPoint"u8);
                 writer.WriteStringValue(MountPoint);
             }
-            if (options.Format != "W" && MountType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MountType))
             {
                 writer.WritePropertyName("mountType"u8);
                 writer.WriteStringValue(MountType.Value.ToString());
             }
-            if (options.Format != "W" && RoleType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RoleType))
             {
                 writer.WritePropertyName("roleType"u8);
                 writer.WriteStringValue(RoleType.Value.ToString());

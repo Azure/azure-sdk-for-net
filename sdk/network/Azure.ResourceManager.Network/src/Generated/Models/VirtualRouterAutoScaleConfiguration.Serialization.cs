@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (MinCapacity.HasValue)
+            if (Optional.IsDefined(MinCapacity))
             {
                 writer.WritePropertyName("minCapacity"u8);
                 writer.WriteNumberValue(MinCapacity.Value);

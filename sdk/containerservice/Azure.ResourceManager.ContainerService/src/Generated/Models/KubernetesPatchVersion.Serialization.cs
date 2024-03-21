@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (!(Upgrades is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Upgrades))
             {
                 writer.WritePropertyName("upgrades"u8);
                 writer.WriteStartArray();

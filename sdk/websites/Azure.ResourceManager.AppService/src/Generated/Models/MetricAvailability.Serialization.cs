@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (TimeGrain != null)
+            if (Optional.IsDefined(TimeGrain))
             {
                 writer.WritePropertyName("timeGrain"u8);
                 writer.WriteStringValue(TimeGrain);
             }
-            if (BlobDuration.HasValue)
+            if (Optional.IsDefined(BlobDuration))
             {
                 writer.WritePropertyName("blobDuration"u8);
                 writer.WriteStringValue(BlobDuration.Value, "P");

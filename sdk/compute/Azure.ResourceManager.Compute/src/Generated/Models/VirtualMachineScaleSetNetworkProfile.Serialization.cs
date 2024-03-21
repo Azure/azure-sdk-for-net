@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (HealthProbe != null)
+            if (Optional.IsDefined(HealthProbe))
             {
                 writer.WritePropertyName("healthProbe"u8);
                 JsonSerializer.Serialize(writer, HealthProbe);
             }
-            if (!(NetworkInterfaceConfigurations is ChangeTrackingList<VirtualMachineScaleSetNetworkConfiguration> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(NetworkInterfaceConfigurations))
             {
                 writer.WritePropertyName("networkInterfaceConfigurations"u8);
                 writer.WriteStartArray();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (NetworkApiVersion.HasValue)
+            if (Optional.IsDefined(NetworkApiVersion))
             {
                 writer.WritePropertyName("networkApiVersion"u8);
                 writer.WriteStringValue(NetworkApiVersion.Value.ToString());

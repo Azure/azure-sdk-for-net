@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Enabled.HasValue)
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(Enabled.Value);
             }
-            if (WorkspaceId != null)
+            if (Optional.IsDefined(WorkspaceId))
             {
                 writer.WritePropertyName("workspaceId"u8);
                 writer.WriteStringValue(WorkspaceId);
             }
-            if (WorkspaceRegion != null)
+            if (Optional.IsDefined(WorkspaceRegion))
             {
                 writer.WritePropertyName("workspaceRegion"u8);
                 writer.WriteStringValue(WorkspaceRegion);
             }
-            if (WorkspaceResourceId != null)
+            if (Optional.IsDefined(WorkspaceResourceId))
             {
                 writer.WritePropertyName("workspaceResourceId"u8);
                 writer.WriteStringValue(WorkspaceResourceId);
             }
-            if (TrafficAnalyticsIntervalInMinutes.HasValue)
+            if (Optional.IsDefined(TrafficAnalyticsIntervalInMinutes))
             {
                 writer.WritePropertyName("trafficAnalyticsInterval"u8);
                 writer.WriteNumberValue(TrafficAnalyticsIntervalInMinutes.Value);

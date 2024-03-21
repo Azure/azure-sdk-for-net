@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Support.Models
             }
 
             writer.WriteStartObject();
-            if (FirstName != null)
+            if (Optional.IsDefined(FirstName))
             {
                 writer.WritePropertyName("firstName"u8);
                 writer.WriteStringValue(FirstName);
             }
-            if (LastName != null)
+            if (Optional.IsDefined(LastName))
             {
                 writer.WritePropertyName("lastName"u8);
                 writer.WriteStringValue(LastName);
             }
-            if (PreferredContactMethod.HasValue)
+            if (Optional.IsDefined(PreferredContactMethod))
             {
                 writer.WritePropertyName("preferredContactMethod"u8);
                 writer.WriteStringValue(PreferredContactMethod.Value.ToString());
             }
-            if (PrimaryEmailAddress != null)
+            if (Optional.IsDefined(PrimaryEmailAddress))
             {
                 writer.WritePropertyName("primaryEmailAddress"u8);
                 writer.WriteStringValue(PrimaryEmailAddress);
             }
-            if (!(AdditionalEmailAddresses is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AdditionalEmailAddresses))
             {
                 writer.WritePropertyName("additionalEmailAddresses"u8);
                 writer.WriteStartArray();
@@ -56,22 +56,22 @@ namespace Azure.ResourceManager.Support.Models
                 }
                 writer.WriteEndArray();
             }
-            if (PhoneNumber != null)
+            if (Optional.IsDefined(PhoneNumber))
             {
                 writer.WritePropertyName("phoneNumber"u8);
                 writer.WriteStringValue(PhoneNumber);
             }
-            if (PreferredTimeZone != null)
+            if (Optional.IsDefined(PreferredTimeZone))
             {
                 writer.WritePropertyName("preferredTimeZone"u8);
                 writer.WriteStringValue(PreferredTimeZone);
             }
-            if (Country != null)
+            if (Optional.IsDefined(Country))
             {
                 writer.WritePropertyName("country"u8);
                 writer.WriteStringValue(Country);
             }
-            if (PreferredSupportLanguage != null)
+            if (Optional.IsDefined(PreferredSupportLanguage))
             {
                 writer.WritePropertyName("preferredSupportLanguage"u8);
                 writer.WriteStringValue(PreferredSupportLanguage);

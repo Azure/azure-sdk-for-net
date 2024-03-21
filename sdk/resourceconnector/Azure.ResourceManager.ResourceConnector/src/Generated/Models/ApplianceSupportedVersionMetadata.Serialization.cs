@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && CatalogVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(CatalogVersion))
             {
                 writer.WritePropertyName("catalogVersion"u8);
                 writer.WriteObjectValue(CatalogVersion);

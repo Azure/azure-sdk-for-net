@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStartObject();
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToSerialString());
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && ActionRequired != null)
+            if (options.Format != "W" && Optional.IsDefined(ActionRequired))
             {
                 writer.WritePropertyName("actionsRequired"u8);
                 writer.WriteStringValue(ActionRequired);

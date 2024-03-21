@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteStringValue(SapBitsStorageAccountId);
             writer.WritePropertyName("softwareVersion"u8);
             writer.WriteStringValue(SoftwareVersion);
-            if (HighAvailabilitySoftwareConfiguration != null)
+            if (Optional.IsDefined(HighAvailabilitySoftwareConfiguration))
             {
                 writer.WritePropertyName("highAvailabilitySoftwareConfiguration"u8);
                 writer.WriteObjectValue(HighAvailabilitySoftwareConfiguration);

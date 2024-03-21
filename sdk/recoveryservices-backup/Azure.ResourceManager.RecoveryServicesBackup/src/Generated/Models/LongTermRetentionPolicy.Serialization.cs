@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (DailySchedule != null)
+            if (Optional.IsDefined(DailySchedule))
             {
                 writer.WritePropertyName("dailySchedule"u8);
                 writer.WriteObjectValue(DailySchedule);
             }
-            if (WeeklySchedule != null)
+            if (Optional.IsDefined(WeeklySchedule))
             {
                 writer.WritePropertyName("weeklySchedule"u8);
                 writer.WriteObjectValue(WeeklySchedule);
             }
-            if (MonthlySchedule != null)
+            if (Optional.IsDefined(MonthlySchedule))
             {
                 writer.WritePropertyName("monthlySchedule"u8);
                 writer.WriteObjectValue(MonthlySchedule);
             }
-            if (YearlySchedule != null)
+            if (Optional.IsDefined(YearlySchedule))
             {
                 writer.WritePropertyName("yearlySchedule"u8);
                 writer.WriteObjectValue(YearlySchedule);

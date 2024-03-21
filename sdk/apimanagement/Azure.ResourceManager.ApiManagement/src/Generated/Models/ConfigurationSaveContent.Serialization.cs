@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Branch != null)
+            if (Optional.IsDefined(Branch))
             {
                 writer.WritePropertyName("branch"u8);
                 writer.WriteStringValue(Branch);
             }
-            if (ForceUpdate.HasValue)
+            if (Optional.IsDefined(ForceUpdate))
             {
                 writer.WritePropertyName("force"u8);
                 writer.WriteBooleanValue(ForceUpdate.Value);

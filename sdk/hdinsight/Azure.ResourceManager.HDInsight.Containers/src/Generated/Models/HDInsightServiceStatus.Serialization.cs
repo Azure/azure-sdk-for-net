@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStringValue(Kind);
             writer.WritePropertyName("ready"u8);
             writer.WriteStringValue(Ready);
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);

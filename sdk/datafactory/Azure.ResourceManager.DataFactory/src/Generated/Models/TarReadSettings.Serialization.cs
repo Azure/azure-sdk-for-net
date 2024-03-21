@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (PreserveCompressionFileNameAsFolder != null)
+            if (Optional.IsDefined(PreserveCompressionFileNameAsFolder))
             {
                 writer.WritePropertyName("preserveCompressionFileNameAsFolder"u8);
                 JsonSerializer.Serialize(writer, PreserveCompressionFileNameAsFolder);

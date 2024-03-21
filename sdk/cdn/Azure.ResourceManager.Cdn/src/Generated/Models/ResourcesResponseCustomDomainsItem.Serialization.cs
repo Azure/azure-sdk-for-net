@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (EndpointId != null)
+            if (Optional.IsDefined(EndpointId))
             {
                 writer.WritePropertyName("endpointId"u8);
                 writer.WriteStringValue(EndpointId);
             }
-            if (History.HasValue)
+            if (Optional.IsDefined(History))
             {
                 writer.WritePropertyName("history"u8);
                 writer.WriteBooleanValue(History.Value);

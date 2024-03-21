@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (IsPasswordAuthenticationDisabled.HasValue)
+            if (Optional.IsDefined(IsPasswordAuthenticationDisabled))
             {
                 writer.WritePropertyName("disablePasswordAuthentication"u8);
                 writer.WriteBooleanValue(IsPasswordAuthenticationDisabled.Value);
             }
-            if (Ssh != null)
+            if (Optional.IsDefined(Ssh))
             {
                 writer.WritePropertyName("ssh"u8);
                 writer.WriteObjectValue(Ssh);
             }
-            if (ProvisionVmAgent.HasValue)
+            if (Optional.IsDefined(ProvisionVmAgent))
             {
                 writer.WritePropertyName("provisionVMAgent"u8);
                 writer.WriteBooleanValue(ProvisionVmAgent.Value);
             }
-            if (PatchSettings != null)
+            if (Optional.IsDefined(PatchSettings))
             {
                 writer.WritePropertyName("patchSettings"u8);
                 writer.WriteObjectValue(PatchSettings);
             }
-            if (IsVmAgentPlatformUpdatesEnabled.HasValue)
+            if (Optional.IsDefined(IsVmAgentPlatformUpdatesEnabled))
             {
                 writer.WritePropertyName("enableVMAgentPlatformUpdates"u8);
                 writer.WriteBooleanValue(IsVmAgentPlatformUpdatesEnabled.Value);

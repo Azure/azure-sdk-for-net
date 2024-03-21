@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (SnapshotsToKeep.HasValue)
+            if (Optional.IsDefined(SnapshotsToKeep))
             {
                 writer.WritePropertyName("snapshotsToKeep"u8);
                 writer.WriteNumberValue(SnapshotsToKeep.Value);
             }
-            if (DaysOfMonth != null)
+            if (Optional.IsDefined(DaysOfMonth))
             {
                 writer.WritePropertyName("daysOfMonth"u8);
                 writer.WriteStringValue(DaysOfMonth);
             }
-            if (Hour.HasValue)
+            if (Optional.IsDefined(Hour))
             {
                 writer.WritePropertyName("hour"u8);
                 writer.WriteNumberValue(Hour.Value);
             }
-            if (Minute.HasValue)
+            if (Optional.IsDefined(Minute))
             {
                 writer.WritePropertyName("minute"u8);
                 writer.WriteNumberValue(Minute.Value);
             }
-            if (UsedBytes.HasValue)
+            if (Optional.IsDefined(UsedBytes))
             {
                 writer.WritePropertyName("usedBytes"u8);
                 writer.WriteNumberValue(UsedBytes.Value);

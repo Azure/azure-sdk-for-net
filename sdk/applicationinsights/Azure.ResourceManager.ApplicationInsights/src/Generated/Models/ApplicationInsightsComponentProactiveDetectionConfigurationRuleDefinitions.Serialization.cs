@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("Name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("DisplayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("Description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (HelpUri != null)
+            if (Optional.IsDefined(HelpUri))
             {
                 writer.WritePropertyName("HelpUrl"u8);
                 writer.WriteStringValue(HelpUri.AbsoluteUri);
             }
-            if (IsHidden.HasValue)
+            if (Optional.IsDefined(IsHidden))
             {
                 writer.WritePropertyName("IsHidden"u8);
                 writer.WriteBooleanValue(IsHidden.Value);
             }
-            if (IsEnabledByDefault.HasValue)
+            if (Optional.IsDefined(IsEnabledByDefault))
             {
                 writer.WritePropertyName("IsEnabledByDefault"u8);
                 writer.WriteBooleanValue(IsEnabledByDefault.Value);
             }
-            if (IsInPreview.HasValue)
+            if (Optional.IsDefined(IsInPreview))
             {
                 writer.WritePropertyName("IsInPreview"u8);
                 writer.WriteBooleanValue(IsInPreview.Value);
             }
-            if (SupportsEmailNotifications.HasValue)
+            if (Optional.IsDefined(SupportsEmailNotifications))
             {
                 writer.WritePropertyName("SupportsEmailNotifications"u8);
                 writer.WriteBooleanValue(SupportsEmailNotifications.Value);

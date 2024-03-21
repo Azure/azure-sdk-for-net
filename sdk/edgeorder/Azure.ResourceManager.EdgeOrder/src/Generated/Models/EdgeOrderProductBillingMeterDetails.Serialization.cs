@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && MeterDetails != null)
+            if (options.Format != "W" && Optional.IsDefined(MeterDetails))
             {
                 writer.WritePropertyName("meterDetails"u8);
                 writer.WriteObjectValue(MeterDetails);
             }
-            if (options.Format != "W" && MeteringType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MeteringType))
             {
                 writer.WritePropertyName("meteringType"u8);
                 writer.WriteStringValue(MeteringType.Value.ToString());
             }
-            if (options.Format != "W" && Frequency != null)
+            if (options.Format != "W" && Optional.IsDefined(Frequency))
             {
                 writer.WritePropertyName("frequency"u8);
                 writer.WriteStringValue(Frequency);

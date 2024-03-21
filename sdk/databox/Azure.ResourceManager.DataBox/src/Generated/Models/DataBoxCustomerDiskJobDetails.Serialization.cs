@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (!(ImportDiskDetails is ChangeTrackingDictionary<string, ImportDiskDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ImportDiskDetails))
             {
                 writer.WritePropertyName("importDiskDetailsCollection"u8);
                 writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && !(ExportDiskDetails is ChangeTrackingDictionary<string, ExportDiskDetails> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ExportDiskDetails))
             {
                 writer.WritePropertyName("exportDiskDetailsCollection"u8);
                 writer.WriteStartObject();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && !(CopyProgress is ChangeTrackingList<DataBoxCustomerDiskCopyProgress> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(CopyProgress))
             {
                 writer.WritePropertyName("copyProgress"u8);
                 writer.WriteStartArray();
@@ -58,19 +58,19 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && DeliverToDataCenterPackageDetails != null)
+            if (options.Format != "W" && Optional.IsDefined(DeliverToDataCenterPackageDetails))
             {
                 writer.WritePropertyName("deliverToDcPackageDetails"u8);
                 writer.WriteObjectValue(DeliverToDataCenterPackageDetails);
             }
             writer.WritePropertyName("returnToCustomerPackageDetails"u8);
             writer.WriteObjectValue(ReturnToCustomerPackageDetails);
-            if (EnableManifestBackup.HasValue)
+            if (Optional.IsDefined(EnableManifestBackup))
             {
                 writer.WritePropertyName("enableManifestBackup"u8);
                 writer.WriteBooleanValue(EnableManifestBackup.Value);
             }
-            if (options.Format != "W" && !(JobStages is ChangeTrackingList<DataBoxJobStage> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(JobStages))
             {
                 writer.WritePropertyName("jobStages"u8);
                 writer.WriteStartArray();
@@ -82,22 +82,22 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             writer.WritePropertyName("contactDetails"u8);
             writer.WriteObjectValue(ContactDetails);
-            if (ShippingAddress != null)
+            if (Optional.IsDefined(ShippingAddress))
             {
                 writer.WritePropertyName("shippingAddress"u8);
                 writer.WriteObjectValue(ShippingAddress);
             }
-            if (options.Format != "W" && DeliveryPackage != null)
+            if (options.Format != "W" && Optional.IsDefined(DeliveryPackage))
             {
                 writer.WritePropertyName("deliveryPackage"u8);
                 writer.WriteObjectValue(DeliveryPackage);
             }
-            if (options.Format != "W" && ReturnPackage != null)
+            if (options.Format != "W" && Optional.IsDefined(ReturnPackage))
             {
                 writer.WritePropertyName("returnPackage"u8);
                 writer.WriteObjectValue(ReturnPackage);
             }
-            if (!(DataImportDetails is ChangeTrackingList<DataImportDetails> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(DataImportDetails))
             {
                 writer.WritePropertyName("dataImportDetails"u8);
                 writer.WriteStartArray();
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(DataExportDetails is ChangeTrackingList<DataExportDetails> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(DataExportDetails))
             {
                 writer.WritePropertyName("dataExportDetails"u8);
                 writer.WriteStartArray();
@@ -119,17 +119,17 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             writer.WritePropertyName("jobDetailsType"u8);
             writer.WriteStringValue(JobDetailsType.ToSerialString());
-            if (Preferences != null)
+            if (Optional.IsDefined(Preferences))
             {
                 writer.WritePropertyName("preferences"u8);
                 writer.WriteObjectValue(Preferences);
             }
-            if (ReverseShippingDetails != null)
+            if (Optional.IsDefined(ReverseShippingDetails))
             {
                 writer.WritePropertyName("reverseShippingDetails"u8);
                 writer.WriteObjectValue(ReverseShippingDetails);
             }
-            if (options.Format != "W" && !(CopyLogDetails is ChangeTrackingList<CopyLogDetails> collection5 && collection5.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(CopyLogDetails))
             {
                 writer.WritePropertyName("copyLogDetails"u8);
                 writer.WriteStartArray();
@@ -139,32 +139,32 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ReverseShipmentLabelSasKey != null)
+            if (options.Format != "W" && Optional.IsDefined(ReverseShipmentLabelSasKey))
             {
                 writer.WritePropertyName("reverseShipmentLabelSasKey"u8);
                 writer.WriteStringValue(ReverseShipmentLabelSasKey);
             }
-            if (options.Format != "W" && ChainOfCustodySasKey != null)
+            if (options.Format != "W" && Optional.IsDefined(ChainOfCustodySasKey))
             {
                 writer.WritePropertyName("chainOfCustodySasKey"u8);
                 writer.WriteStringValue(ChainOfCustodySasKey);
             }
-            if (options.Format != "W" && DeviceErasureDetails != null)
+            if (options.Format != "W" && Optional.IsDefined(DeviceErasureDetails))
             {
                 writer.WritePropertyName("deviceErasureDetails"u8);
                 writer.WriteObjectValue(DeviceErasureDetails);
             }
-            if (KeyEncryptionKey != null)
+            if (Optional.IsDefined(KeyEncryptionKey))
             {
                 writer.WritePropertyName("keyEncryptionKey"u8);
                 writer.WriteObjectValue(KeyEncryptionKey);
             }
-            if (ExpectedDataSizeInTerabytes.HasValue)
+            if (Optional.IsDefined(ExpectedDataSizeInTerabytes))
             {
                 writer.WritePropertyName("expectedDataSizeInTeraBytes"u8);
                 writer.WriteNumberValue(ExpectedDataSizeInTerabytes.Value);
             }
-            if (options.Format != "W" && !(Actions is ChangeTrackingList<CustomerResolutionCode> collection6 && collection6.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Actions))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
@@ -174,17 +174,17 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && LastMitigationActionOnJob != null)
+            if (options.Format != "W" && Optional.IsDefined(LastMitigationActionOnJob))
             {
                 writer.WritePropertyName("lastMitigationActionOnJob"u8);
                 writer.WriteObjectValue(LastMitigationActionOnJob);
             }
-            if (options.Format != "W" && DataCenterAddress != null)
+            if (options.Format != "W" && Optional.IsDefined(DataCenterAddress))
             {
                 writer.WritePropertyName("datacenterAddress"u8);
                 writer.WriteObjectValue(DataCenterAddress);
             }
-            if (options.Format != "W" && DataCenterCode.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DataCenterCode))
             {
                 writer.WritePropertyName("dataCenterCode"u8);
                 writer.WriteStringValue(DataCenterCode.Value.ToString());

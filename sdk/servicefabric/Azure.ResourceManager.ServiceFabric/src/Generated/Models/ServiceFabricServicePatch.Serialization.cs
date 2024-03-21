@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -28,12 +27,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -61,19 +60,19 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PlacementConstraints != null)
+            if (Optional.IsDefined(PlacementConstraints))
             {
                 writer.WritePropertyName("placementConstraints"u8);
                 writer.WriteStringValue(PlacementConstraints);
             }
-            if (!(CorrelationScheme is ChangeTrackingList<ServiceCorrelationDescription> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(CorrelationScheme))
             {
                 writer.WritePropertyName("correlationScheme"u8);
                 writer.WriteStartArray();
@@ -83,7 +82,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ServiceLoadMetrics is ChangeTrackingList<ServiceLoadMetricDescription> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(ServiceLoadMetrics))
             {
                 writer.WritePropertyName("serviceLoadMetrics"u8);
                 writer.WriteStartArray();
@@ -93,7 +92,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ServicePlacementPolicies is ChangeTrackingList<ServicePlacementPolicyDescription> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(ServicePlacementPolicies))
             {
                 writer.WritePropertyName("servicePlacementPolicies"u8);
                 writer.WriteStartArray();
@@ -103,12 +102,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (DefaultMoveCost.HasValue)
+            if (Optional.IsDefined(DefaultMoveCost))
             {
                 writer.WritePropertyName("defaultMoveCost"u8);
                 writer.WriteStringValue(DefaultMoveCost.Value.ToString());
             }
-            if (ServiceKind.HasValue)
+            if (Optional.IsDefined(ServiceKind))
             {
                 writer.WritePropertyName("serviceKind"u8);
                 writer.WriteStringValue(ServiceKind.Value.ToString());

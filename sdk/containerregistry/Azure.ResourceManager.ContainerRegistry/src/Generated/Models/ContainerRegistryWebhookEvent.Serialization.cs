@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (EventRequestMessage != null)
+            if (Optional.IsDefined(EventRequestMessage))
             {
                 writer.WritePropertyName("eventRequestMessage"u8);
                 writer.WriteObjectValue(EventRequestMessage);
             }
-            if (EventResponseMessage != null)
+            if (Optional.IsDefined(EventResponseMessage))
             {
                 writer.WritePropertyName("eventResponseMessage"u8);
                 writer.WriteObjectValue(EventResponseMessage);
             }
-            if (Id.HasValue)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id.Value);

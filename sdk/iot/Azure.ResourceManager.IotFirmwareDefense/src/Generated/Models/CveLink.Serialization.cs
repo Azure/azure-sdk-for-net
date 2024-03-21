@@ -26,19 +26,19 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
 
             writer.WriteStartObject();
-            if (Href != null)
+            if (Optional.IsDefined(Href))
             {
                 if (Href != null)
                 {
                     writer.WritePropertyName("href"u8);
-                    writer.WriteStringValue(Href);
+                    writer.WriteStringValue(Href.AbsoluteUri);
                 }
                 else
                 {
                     writer.WriteNull("href");
                 }
             }
-            if (Label != null)
+            if (Optional.IsDefined(Label))
             {
                 if (Label != null)
                 {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            string href = default;
+            Uri href = default;
             string label = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                         href = null;
                         continue;
                     }
-                    href = property.Value.GetString();
+                    href = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("label"u8))

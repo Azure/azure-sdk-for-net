@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (BackupIntervalInMinutes.HasValue)
+            if (Optional.IsDefined(BackupIntervalInMinutes))
             {
                 writer.WritePropertyName("backupIntervalInMinutes"u8);
                 writer.WriteNumberValue(BackupIntervalInMinutes.Value);
             }
-            if (BackupRetentionIntervalInHours.HasValue)
+            if (Optional.IsDefined(BackupRetentionIntervalInHours))
             {
                 writer.WritePropertyName("backupRetentionIntervalInHours"u8);
                 writer.WriteNumberValue(BackupRetentionIntervalInHours.Value);
             }
-            if (BackupStorageRedundancy.HasValue)
+            if (Optional.IsDefined(BackupStorageRedundancy))
             {
                 writer.WritePropertyName("backupStorageRedundancy"u8);
                 writer.WriteStringValue(BackupStorageRedundancy.Value.ToString());

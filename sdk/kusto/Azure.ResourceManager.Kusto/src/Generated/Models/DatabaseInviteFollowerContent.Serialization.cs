@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Kusto.Models
             writer.WriteStartObject();
             writer.WritePropertyName("inviteeEmail"u8);
             writer.WriteStringValue(InviteeEmail);
-            if (TableLevelSharingProperties != null)
+            if (Optional.IsDefined(TableLevelSharingProperties))
             {
                 writer.WritePropertyName("tableLevelSharingProperties"u8);
                 writer.WriteObjectValue(TableLevelSharingProperties);

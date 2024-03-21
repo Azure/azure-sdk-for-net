@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             }
 
             writer.WriteStartObject();
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Code != null)
+            if (Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);

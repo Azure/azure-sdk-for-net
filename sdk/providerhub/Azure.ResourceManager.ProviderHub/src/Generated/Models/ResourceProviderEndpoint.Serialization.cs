@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
 
             writer.WriteStartObject();
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (!(ApiVersions is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ApiVersions))
             {
                 writer.WritePropertyName("apiVersions"u8);
                 writer.WriteStartArray();
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (EndpointUri != null)
+            if (Optional.IsDefined(EndpointUri))
             {
                 writer.WritePropertyName("endpointUri"u8);
                 writer.WriteStringValue(EndpointUri.AbsoluteUri);
             }
-            if (!(Locations is ChangeTrackingList<AzureLocation> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Locations))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(RequiredFeatures is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(RequiredFeatures))
             {
                 writer.WritePropertyName("requiredFeatures"u8);
                 writer.WriteStartArray();
@@ -66,12 +66,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (FeaturesRule != null)
+            if (Optional.IsDefined(FeaturesRule))
             {
                 writer.WritePropertyName("featuresRule"u8);
                 writer.WriteObjectValue(FeaturesRule);
             }
-            if (Timeout.HasValue)
+            if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout.Value, "P");

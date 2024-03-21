@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (SystemCreatedStorageAccount != null)
+            if (Optional.IsDefined(SystemCreatedStorageAccount))
             {
                 if (SystemCreatedStorageAccount != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("systemCreatedStorageAccount");
                 }
             }
-            if (UserCreatedStorageAccount != null)
+            if (Optional.IsDefined(UserCreatedStorageAccount))
             {
                 if (UserCreatedStorageAccount != null)
                 {

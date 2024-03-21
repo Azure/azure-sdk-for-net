@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (!(Columns is ChangeTrackingList<DataColumnDefinition> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Columns))
             {
                 writer.WritePropertyName("columns"u8);
                 writer.WriteStartArray();

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (!(LoadBalancerConfigurations is ChangeTrackingList<CloudServiceLoadBalancerConfiguration> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(LoadBalancerConfigurations))
             {
                 writer.WritePropertyName("loadBalancerConfigurations"u8);
                 writer.WriteStartArray();
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (SlotType.HasValue)
+            if (Optional.IsDefined(SlotType))
             {
                 writer.WritePropertyName("slotType"u8);
                 writer.WriteStringValue(SlotType.Value.ToString());
             }
-            if (SwappableCloudService != null)
+            if (Optional.IsDefined(SwappableCloudService))
             {
                 writer.WritePropertyName("swappableCloudService"u8);
                 JsonSerializer.Serialize(writer, SwappableCloudService);

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DevTestLabs
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,24 +56,24 @@ namespace Azure.ResourceManager.DevTestLabs
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (TargetCost != null)
+            if (Optional.IsDefined(TargetCost))
             {
                 writer.WritePropertyName("targetCost"u8);
                 writer.WriteObjectValue(TargetCost);
             }
-            if (options.Format != "W" && LabCostSummary != null)
+            if (options.Format != "W" && Optional.IsDefined(LabCostSummary))
             {
                 writer.WritePropertyName("labCostSummary"u8);
                 writer.WriteObjectValue(LabCostSummary);
             }
-            if (options.Format != "W" && !(LabCostDetails is ChangeTrackingList<DevTestLabCostDetails> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(LabCostDetails))
             {
                 writer.WritePropertyName("labCostDetails"u8);
                 writer.WriteStartArray();
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(ResourceCosts is ChangeTrackingList<DevTestLabResourceCost> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ResourceCosts))
             {
                 writer.WritePropertyName("resourceCosts"u8);
                 writer.WriteStartArray();
@@ -93,32 +93,32 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
                 writer.WriteEndArray();
             }
-            if (CurrencyCode != null)
+            if (Optional.IsDefined(CurrencyCode))
             {
                 writer.WritePropertyName("currencyCode"u8);
                 writer.WriteStringValue(CurrencyCode);
             }
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startDateTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (EndOn.HasValue)
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endDateTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (CreatedOn.HasValue)
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && UniqueIdentifier.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UniqueIdentifier))
             {
                 writer.WritePropertyName("uniqueIdentifier"u8);
                 writer.WriteStringValue(UniqueIdentifier.Value);

@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (CaptureStartOn.HasValue)
+            if (Optional.IsDefined(CaptureStartOn))
             {
                 writer.WritePropertyName("captureStartTime"u8);
                 writer.WriteStringValue(CaptureStartOn.Value, "O");
             }
-            if (PacketCaptureStatus.HasValue)
+            if (Optional.IsDefined(PacketCaptureStatus))
             {
                 writer.WritePropertyName("packetCaptureStatus"u8);
                 writer.WriteStringValue(PacketCaptureStatus.Value.ToString());
             }
-            if (StopReason != null)
+            if (Optional.IsDefined(StopReason))
             {
                 writer.WritePropertyName("stopReason"u8);
                 writer.WriteStringValue(StopReason);
             }
-            if (!(PacketCaptureError is ChangeTrackingList<PcError> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PacketCaptureError))
             {
                 writer.WritePropertyName("packetCaptureError"u8);
                 writer.WriteStartArray();

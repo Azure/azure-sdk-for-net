@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (WorkloadInquiryDetailsType != null)
+            if (Optional.IsDefined(WorkloadInquiryDetailsType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(WorkloadInquiryDetailsType);
             }
-            if (ItemCount.HasValue)
+            if (Optional.IsDefined(ItemCount))
             {
                 writer.WritePropertyName("itemCount"u8);
                 writer.WriteNumberValue(ItemCount.Value);
             }
-            if (InquiryValidation != null)
+            if (Optional.IsDefined(InquiryValidation))
             {
                 writer.WritePropertyName("inquiryValidation"u8);
                 writer.WriteObjectValue(InquiryValidation);

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
 
             writer.WriteStartObject();
-            if (ImageExists.HasValue)
+            if (Optional.IsDefined(ImageExists))
             {
                 writer.WritePropertyName("imageExists"u8);
                 writer.WriteBooleanValue(ImageExists.Value);
             }
-            if (ContentUri != null)
+            if (Optional.IsDefined(ContentUri))
             {
                 writer.WritePropertyName("contentUrl"u8);
                 writer.WriteStringValue(ContentUri.AbsoluteUri);
             }
-            if (RelativePath != null)
+            if (Optional.IsDefined(RelativePath))
             {
                 writer.WritePropertyName("relativePath"u8);
                 writer.WriteStringValue(RelativePath);

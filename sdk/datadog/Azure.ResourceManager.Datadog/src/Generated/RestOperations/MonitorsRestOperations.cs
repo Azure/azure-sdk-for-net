@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Datadog.Models;
@@ -67,30 +66,9 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DatadogApiKeyListResponse>> ListApiKeysAsync(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
             using var message = CreateListApiKeysRequest(subscriptionId, resourceGroupName, monitorName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -117,30 +95,9 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DatadogApiKeyListResponse> ListApiKeys(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
             using var message = CreateListApiKeysRequest(subscriptionId, resourceGroupName, monitorName);
             _pipeline.Send(message, cancellationToken);
@@ -188,30 +145,9 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DatadogApiKey>> GetDefaultKeyAsync(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
             using var message = CreateGetDefaultKeyRequest(subscriptionId, resourceGroupName, monitorName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -238,30 +174,9 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DatadogApiKey> GetDefaultKey(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
             using var message = CreateGetDefaultKeyRequest(subscriptionId, resourceGroupName, monitorName);
             _pipeline.Send(message, cancellationToken);
@@ -317,30 +232,9 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> SetDefaultKeyAsync(string subscriptionId, string resourceGroupName, string monitorName, DatadogApiKey body = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
             using var message = CreateSetDefaultKeyRequest(subscriptionId, resourceGroupName, monitorName, body);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -363,30 +257,9 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response SetDefaultKey(string subscriptionId, string resourceGroupName, string monitorName, DatadogApiKey body = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
             using var message = CreateSetDefaultKeyRequest(subscriptionId, resourceGroupName, monitorName, body);
             _pipeline.Send(message, cancellationToken);
@@ -429,30 +302,9 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DatadogHostListResponse>> ListHostsAsync(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
             using var message = CreateListHostsRequest(subscriptionId, resourceGroupName, monitorName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -479,30 +331,9 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DatadogHostListResponse> ListHosts(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
             using var message = CreateListHostsRequest(subscriptionId, resourceGroupName, monitorName);
             _pipeline.Send(message, cancellationToken);
@@ -550,30 +381,9 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<LinkedResourceListResponse>> ListLinkedResourcesAsync(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
             using var message = CreateListLinkedResourcesRequest(subscriptionId, resourceGroupName, monitorName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -600,30 +410,9 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<LinkedResourceListResponse> ListLinkedResources(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
             using var message = CreateListLinkedResourcesRequest(subscriptionId, resourceGroupName, monitorName);
             _pipeline.Send(message, cancellationToken);
@@ -671,30 +460,9 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MonitoredResourceListResponse>> ListMonitoredResourcesAsync(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
             using var message = CreateListMonitoredResourcesRequest(subscriptionId, resourceGroupName, monitorName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -721,30 +489,9 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MonitoredResourceListResponse> ListMonitoredResources(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
             using var message = CreateListMonitoredResourcesRequest(subscriptionId, resourceGroupName, monitorName);
             _pipeline.Send(message, cancellationToken);
@@ -786,14 +533,7 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DatadogMonitorResourceListResponse>> ListAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListRequest(subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -818,14 +558,7 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DatadogMonitorResourceListResponse> List(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListRequest(subscriptionId);
             _pipeline.Send(message, cancellationToken);
@@ -870,22 +603,8 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DatadogMonitorResourceListResponse>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -911,22 +630,8 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DatadogMonitorResourceListResponse> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
@@ -973,30 +678,9 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DatadogMonitorResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, monitorName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1025,30 +709,9 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DatadogMonitorResourceData> Get(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, monitorName);
             _pipeline.Send(message, cancellationToken);
@@ -1102,34 +765,10 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string monitorName, DatadogMonitorResourceData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, monitorName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1153,34 +792,10 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Create(string subscriptionId, string resourceGroupName, string monitorName, DatadogMonitorResourceData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, monitorName, data);
             _pipeline.Send(message, cancellationToken);
@@ -1228,34 +843,10 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string monitorName, DatadogMonitorResourcePatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, monitorName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1279,34 +870,10 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Update(string subscriptionId, string resourceGroupName, string monitorName, DatadogMonitorResourcePatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, monitorName, patch);
             _pipeline.Send(message, cancellationToken);
@@ -1349,30 +916,9 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, monitorName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1396,30 +942,9 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, monitorName);
             _pipeline.Send(message, cancellationToken);
@@ -1464,30 +989,9 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DatadogSetPasswordLink>> RefreshSetPasswordLinkAsync(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
             using var message = CreateRefreshSetPasswordLinkRequest(subscriptionId, resourceGroupName, monitorName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1514,30 +1018,9 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DatadogSetPasswordLink> RefreshSetPasswordLink(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
             using var message = CreateRefreshSetPasswordLinkRequest(subscriptionId, resourceGroupName, monitorName);
             _pipeline.Send(message, cancellationToken);
@@ -1579,34 +1062,10 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DatadogApiKeyListResponse>> ListApiKeysNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
             using var message = CreateListApiKeysNextPageRequest(nextLink, subscriptionId, resourceGroupName, monitorName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1634,34 +1093,10 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DatadogApiKeyListResponse> ListApiKeysNextPage(string nextLink, string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
             using var message = CreateListApiKeysNextPageRequest(nextLink, subscriptionId, resourceGroupName, monitorName);
             _pipeline.Send(message, cancellationToken);
@@ -1703,34 +1138,10 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DatadogHostListResponse>> ListHostsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
             using var message = CreateListHostsNextPageRequest(nextLink, subscriptionId, resourceGroupName, monitorName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1758,34 +1169,10 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DatadogHostListResponse> ListHostsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
             using var message = CreateListHostsNextPageRequest(nextLink, subscriptionId, resourceGroupName, monitorName);
             _pipeline.Send(message, cancellationToken);
@@ -1827,34 +1214,10 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<LinkedResourceListResponse>> ListLinkedResourcesNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
             using var message = CreateListLinkedResourcesNextPageRequest(nextLink, subscriptionId, resourceGroupName, monitorName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1882,34 +1245,10 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<LinkedResourceListResponse> ListLinkedResourcesNextPage(string nextLink, string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
             using var message = CreateListLinkedResourcesNextPageRequest(nextLink, subscriptionId, resourceGroupName, monitorName);
             _pipeline.Send(message, cancellationToken);
@@ -1951,34 +1290,10 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MonitoredResourceListResponse>> ListMonitoredResourcesNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
             using var message = CreateListMonitoredResourcesNextPageRequest(nextLink, subscriptionId, resourceGroupName, monitorName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2006,34 +1321,10 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MonitoredResourceListResponse> ListMonitoredResourcesNextPage(string nextLink, string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
             using var message = CreateListMonitoredResourcesNextPageRequest(nextLink, subscriptionId, resourceGroupName, monitorName);
             _pipeline.Send(message, cancellationToken);
@@ -2073,18 +1364,8 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DatadogMonitorResourceListResponse>> ListNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2110,18 +1391,8 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DatadogMonitorResourceListResponse> ListNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId);
             _pipeline.Send(message, cancellationToken);
@@ -2162,26 +1433,9 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DatadogMonitorResourceListResponse>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2208,26 +1462,9 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DatadogMonitorResourceListResponse> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName);
             _pipeline.Send(message, cancellationToken);

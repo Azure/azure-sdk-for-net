@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
 
             writer.WriteStartObject();
-            if (ServerCertificate != null)
+            if (Optional.IsDefined(ServerCertificate))
             {
                 writer.WritePropertyName("serverCertificate"u8);
 #if NET6_0_OR_GREATER

@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -27,22 +26,22 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (!(Errors is ChangeTrackingList<ResponseError> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
@@ -52,22 +51,22 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (CreatedOn.HasValue)
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (ModifiedOn.HasValue)
+            if (Optional.IsDefined(ModifiedOn))
             {
                 writer.WritePropertyName("modifiedTime"u8);
                 writer.WriteStringValue(ModifiedOn.Value, "O");
             }
-            if (ExpireOn.HasValue)
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationTime"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (GeoMasterOperationId.HasValue)
+            if (Optional.IsDefined(GeoMasterOperationId))
             {
                 writer.WritePropertyName("geoMasterOperationId"u8);
                 writer.WriteStringValue(GeoMasterOperationId.Value);

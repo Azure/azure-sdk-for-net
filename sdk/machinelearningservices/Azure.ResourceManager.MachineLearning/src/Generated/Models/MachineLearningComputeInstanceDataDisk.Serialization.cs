@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Caching.HasValue)
+            if (Optional.IsDefined(Caching))
             {
                 writer.WritePropertyName("caching"u8);
                 writer.WriteStringValue(Caching.Value.ToString());
             }
-            if (DiskSizeGB.HasValue)
+            if (Optional.IsDefined(DiskSizeGB))
             {
                 writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
-            if (Lun.HasValue)
+            if (Optional.IsDefined(Lun))
             {
                 writer.WritePropertyName("lun"u8);
                 writer.WriteNumberValue(Lun.Value);
             }
-            if (StorageAccountType.HasValue)
+            if (Optional.IsDefined(StorageAccountType))
             {
                 writer.WritePropertyName("storageAccountType"u8);
                 writer.WriteStringValue(StorageAccountType.Value.ToString());

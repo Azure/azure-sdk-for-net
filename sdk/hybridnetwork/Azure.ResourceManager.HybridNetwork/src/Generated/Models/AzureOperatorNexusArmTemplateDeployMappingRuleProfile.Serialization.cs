@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (TemplateMappingRuleProfile != null)
+            if (Optional.IsDefined(TemplateMappingRuleProfile))
             {
                 writer.WritePropertyName("templateMappingRuleProfile"u8);
                 writer.WriteObjectValue(TemplateMappingRuleProfile);
             }
-            if (ApplicationEnablement.HasValue)
+            if (Optional.IsDefined(ApplicationEnablement))
             {
                 writer.WritePropertyName("applicationEnablement"u8);
                 writer.WriteStringValue(ApplicationEnablement.Value.ToString());

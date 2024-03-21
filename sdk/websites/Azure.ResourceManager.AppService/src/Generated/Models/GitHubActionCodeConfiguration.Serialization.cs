@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (RuntimeStack != null)
+            if (Optional.IsDefined(RuntimeStack))
             {
                 writer.WritePropertyName("runtimeStack"u8);
                 writer.WriteStringValue(RuntimeStack);
             }
-            if (RuntimeVersion != null)
+            if (Optional.IsDefined(RuntimeVersion))
             {
                 writer.WritePropertyName("runtimeVersion"u8);
                 writer.WriteStringValue(RuntimeVersion);

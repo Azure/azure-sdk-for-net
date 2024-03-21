@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && SubscriptionId != null)
+            if (options.Format != "W" && Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (options.Format != "W" && DataFactoryName != null)
+            if (options.Format != "W" && Optional.IsDefined(DataFactoryName))
             {
                 writer.WritePropertyName("dataFactoryName"u8);
                 writer.WriteStringValue(DataFactoryName);
             }
-            if (options.Format != "W" && DataFactoryLocation.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DataFactoryLocation))
             {
                 writer.WritePropertyName("dataFactoryLocation"u8);
                 writer.WriteStringValue(DataFactoryLocation.Value);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");

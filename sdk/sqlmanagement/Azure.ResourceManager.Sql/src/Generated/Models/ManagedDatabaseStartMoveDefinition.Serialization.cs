@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Sql.Models
             writer.WriteStartObject();
             writer.WritePropertyName("destinationManagedDatabaseId"u8);
             writer.WriteStringValue(DestinationManagedDatabaseId);
-            if (OperationMode.HasValue)
+            if (Optional.IsDefined(OperationMode))
             {
                 writer.WritePropertyName("operationMode"u8);
                 writer.WriteStringValue(OperationMode.Value.ToString());

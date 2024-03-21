@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Version != null)
+            if (options.Format != "W" && Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (options.Format != "W" && LatestVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(LatestVersion))
             {
                 writer.WritePropertyName("latestVersion"u8);
                 writer.WriteStringValue(LatestVersion);
             }
-            if (options.Format != "W" && DriverVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(DriverVersion))
             {
                 writer.WritePropertyName("driverVersion"u8);
                 writer.WriteStringValue(DriverVersion);
             }
-            if (options.Format != "W" && LatestUpgradableVersionWithoutReboot != null)
+            if (options.Format != "W" && Optional.IsDefined(LatestUpgradableVersionWithoutReboot))
             {
                 writer.WritePropertyName("latestUpgradableVersionWithoutReboot"u8);
                 writer.WriteStringValue(LatestUpgradableVersionWithoutReboot);
             }
-            if (options.Format != "W" && AgentVersionExpireOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AgentVersionExpireOn))
             {
                 writer.WritePropertyName("agentVersionExpiryDate"u8);
                 writer.WriteStringValue(AgentVersionExpireOn.Value, "O");
             }
-            if (options.Format != "W" && DriverVersionExpireOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DriverVersionExpireOn))
             {
                 writer.WritePropertyName("driverVersionExpiryDate"u8);
                 writer.WriteStringValue(DriverVersionExpireOn.Value, "O");
             }
-            if (options.Format != "W" && LastHeartbeatReceivedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastHeartbeatReceivedOn))
             {
                 writer.WritePropertyName("lastHeartbeatUtc"u8);
                 writer.WriteStringValue(LastHeartbeatReceivedOn.Value, "O");
             }
-            if (options.Format != "W" && !(ReasonsBlockingUpgrade is ChangeTrackingList<AgentUpgradeBlockedReason> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ReasonsBlockingUpgrade))
             {
                 writer.WritePropertyName("reasonsBlockingUpgrade"u8);
                 writer.WriteStartArray();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && IsUpgradeable != null)
+            if (options.Format != "W" && Optional.IsDefined(IsUpgradeable))
             {
                 writer.WritePropertyName("isUpgradeable"u8);
                 writer.WriteStringValue(IsUpgradeable);

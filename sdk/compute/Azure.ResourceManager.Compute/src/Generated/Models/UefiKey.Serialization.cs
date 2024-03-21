@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (KeyType.HasValue)
+            if (Optional.IsDefined(KeyType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(KeyType.Value.ToString());
             }
-            if (!(Value is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();

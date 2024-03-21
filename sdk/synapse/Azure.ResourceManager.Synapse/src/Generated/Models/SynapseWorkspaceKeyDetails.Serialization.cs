@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (KeyVaultUri != null)
+            if (Optional.IsDefined(KeyVaultUri))
             {
                 writer.WritePropertyName("keyVaultUrl"u8);
                 writer.WriteStringValue(KeyVaultUri.AbsoluteUri);

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && TargetServerVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(TargetServerVersion))
             {
                 writer.WritePropertyName("targetServerVersion"u8);
                 writer.WriteStringValue(TargetServerVersion);
             }
-            if (options.Format != "W" && !(Databases is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Databases))
             {
                 writer.WritePropertyName("databases"u8);
                 writer.WriteStartArray();
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && TargetServerBrandVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(TargetServerBrandVersion))
             {
                 writer.WritePropertyName("targetServerBrandVersion"u8);
                 writer.WriteStringValue(TargetServerBrandVersion);
             }
-            if (options.Format != "W" && !(ValidationErrors is ChangeTrackingList<ReportableException> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ValidationErrors))
             {
                 writer.WritePropertyName("validationErrors"u8);
                 writer.WriteStartArray();

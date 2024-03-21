@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(Results is ChangeTrackingList<NetworkConfigurationDiagnosticResult> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Results))
             {
                 writer.WritePropertyName("results"u8);
                 writer.WriteStartArray();

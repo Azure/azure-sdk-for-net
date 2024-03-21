@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (BackupRetentionDays.HasValue)
+            if (Optional.IsDefined(BackupRetentionDays))
             {
                 writer.WritePropertyName("backupRetentionDays"u8);
                 writer.WriteNumberValue(BackupRetentionDays.Value);
             }
-            if (GeoRedundantBackup.HasValue)
+            if (Optional.IsDefined(GeoRedundantBackup))
             {
                 writer.WritePropertyName("geoRedundantBackup"u8);
                 writer.WriteStringValue(GeoRedundantBackup.Value.ToString());
             }
-            if (options.Format != "W" && EarliestRestoreOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EarliestRestoreOn))
             {
                 writer.WritePropertyName("earliestRestoreDate"u8);
                 writer.WriteStringValue(EarliestRestoreOn.Value, "O");

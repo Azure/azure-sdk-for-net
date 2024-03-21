@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (DependencyType.HasValue)
+            if (Optional.IsDefined(DependencyType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(DependencyType.Value.ToString());
             }
-            if (Registry != null)
+            if (Optional.IsDefined(Registry))
             {
                 writer.WritePropertyName("registry"u8);
                 writer.WriteStringValue(Registry);
             }
-            if (Repository != null)
+            if (Optional.IsDefined(Repository))
             {
                 writer.WritePropertyName("repository"u8);
                 writer.WriteStringValue(Repository);
             }
-            if (Tag != null)
+            if (Optional.IsDefined(Tag))
             {
                 writer.WritePropertyName("tag"u8);
                 writer.WriteStringValue(Tag);
             }
-            if (Digest != null)
+            if (Optional.IsDefined(Digest))
             {
                 writer.WritePropertyName("digest"u8);
                 writer.WriteStringValue(Digest);

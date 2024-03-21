@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Uri != null)
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (RelativePath != null)
+            if (Optional.IsDefined(RelativePath))
             {
                 writer.WritePropertyName("relativePath"u8);
                 writer.WriteStringValue(RelativePath);
             }
-            if (ContentVersion != null)
+            if (Optional.IsDefined(ContentVersion))
             {
                 writer.WritePropertyName("contentVersion"u8);
                 writer.WriteStringValue(ContentVersion);
             }
-            if (QueryString != null)
+            if (Optional.IsDefined(QueryString))
             {
                 writer.WritePropertyName("queryString"u8);
                 writer.WriteStringValue(QueryString);

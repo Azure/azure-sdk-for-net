@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (CommitOn.HasValue)
+            if (Optional.IsDefined(CommitOn))
             {
                 writer.WritePropertyName("commitTime"u8);
                 writer.WriteStringValue(CommitOn.Value, "O");
             }
-            if (Region != null)
+            if (Optional.IsDefined(Region))
             {
                 writer.WritePropertyName("region"u8);
                 writer.WriteStringValue(Region);
             }
-            if (DeploymentState.HasValue)
+            if (Optional.IsDefined(DeploymentState))
             {
                 writer.WritePropertyName("deploymentStatus"u8);
                 writer.WriteStringValue(DeploymentState.Value.ToString());
             }
-            if (!(ConfigurationIds is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ConfigurationIds))
             {
                 writer.WritePropertyName("configurationIds"u8);
                 writer.WriteStartArray();
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (DeploymentType.HasValue)
+            if (Optional.IsDefined(DeploymentType))
             {
                 writer.WritePropertyName("deploymentType"u8);
                 writer.WriteStringValue(DeploymentType.Value.ToString());
             }
-            if (ErrorMessage != null)
+            if (Optional.IsDefined(ErrorMessage))
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);

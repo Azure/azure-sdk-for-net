@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (AzureFile != null)
+            if (Optional.IsDefined(AzureFile))
             {
                 writer.WritePropertyName("azureFile"u8);
                 writer.WriteObjectValue(AzureFile);

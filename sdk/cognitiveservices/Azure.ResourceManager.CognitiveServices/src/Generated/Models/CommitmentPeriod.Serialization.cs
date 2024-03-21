@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             writer.WriteStartObject();
-            if (Tier != null)
+            if (Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier);
             }
-            if (Count.HasValue)
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (options.Format != "W" && Quota != null)
+            if (options.Format != "W" && Optional.IsDefined(Quota))
             {
                 writer.WritePropertyName("quota"u8);
                 writer.WriteObjectValue(Quota);
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startDate"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && EndOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endDate"u8);
                 writer.WriteStringValue(EndOn.Value, "O");

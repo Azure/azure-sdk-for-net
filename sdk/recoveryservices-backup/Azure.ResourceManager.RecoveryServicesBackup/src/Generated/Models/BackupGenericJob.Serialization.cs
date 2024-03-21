@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (EntityFriendlyName != null)
+            if (Optional.IsDefined(EntityFriendlyName))
             {
                 writer.WritePropertyName("entityFriendlyName"u8);
                 writer.WriteStringValue(EntityFriendlyName);
             }
-            if (BackupManagementType.HasValue)
+            if (Optional.IsDefined(BackupManagementType))
             {
                 writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType.Value.ToString());
             }
-            if (Operation != null)
+            if (Optional.IsDefined(Operation))
             {
                 writer.WritePropertyName("operation"u8);
                 writer.WriteStringValue(Operation);
             }
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (EndOn.HasValue)
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (ActivityId != null)
+            if (Optional.IsDefined(ActivityId))
             {
                 writer.WritePropertyName("activityId"u8);
                 writer.WriteStringValue(ActivityId);

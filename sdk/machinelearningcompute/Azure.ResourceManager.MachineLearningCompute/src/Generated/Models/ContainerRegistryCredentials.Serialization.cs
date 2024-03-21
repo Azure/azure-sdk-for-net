@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && LoginServer != null)
+            if (options.Format != "W" && Optional.IsDefined(LoginServer))
             {
                 writer.WritePropertyName("loginServer"u8);
                 writer.WriteStringValue(LoginServer);
             }
-            if (options.Format != "W" && Password != null)
+            if (options.Format != "W" && Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (options.Format != "W" && Password2 != null)
+            if (options.Format != "W" && Optional.IsDefined(Password2))
             {
                 writer.WritePropertyName("password2"u8);
                 writer.WriteStringValue(Password2);
             }
-            if (options.Format != "W" && Username != null)
+            if (options.Format != "W" && Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);

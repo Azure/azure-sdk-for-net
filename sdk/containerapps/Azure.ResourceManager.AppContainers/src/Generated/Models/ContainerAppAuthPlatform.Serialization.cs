@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (RuntimeVersion != null)
+            if (Optional.IsDefined(RuntimeVersion))
             {
                 writer.WritePropertyName("runtimeVersion"u8);
                 writer.WriteStringValue(RuntimeVersion);

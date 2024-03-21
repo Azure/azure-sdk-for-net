@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Maps.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.Maps.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (StorageUnits.HasValue)
+            if (Optional.IsDefined(StorageUnits))
             {
                 writer.WritePropertyName("storageUnits"u8);
                 writer.WriteNumberValue(StorageUnits.Value);

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (OSName != null)
+            if (Optional.IsDefined(OSName))
             {
                 writer.WritePropertyName("osName"u8);
                 writer.WriteStringValue(OSName);
             }
-            if (OSType != null)
+            if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType);
             }
-            if (!(OSVersions is ChangeTrackingList<SiteRecoveryOSVersionWrapper> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(OSVersions))
             {
                 writer.WritePropertyName("osVersions"u8);
                 writer.WriteStartArray();

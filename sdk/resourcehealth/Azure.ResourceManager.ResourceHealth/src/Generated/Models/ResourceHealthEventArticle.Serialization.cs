@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             }
 
             writer.WriteStartObject();
-            if (ArticleContent != null)
+            if (Optional.IsDefined(ArticleContent))
             {
                 writer.WritePropertyName("articleContent"u8);
                 writer.WriteStringValue(ArticleContent);
             }
-            if (ArticleId != null)
+            if (Optional.IsDefined(ArticleId))
             {
                 writer.WritePropertyName("articleId"u8);
                 writer.WriteStringValue(ArticleId);
             }
-            if (Parameters != null)
+            if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
 #if NET6_0_OR_GREATER

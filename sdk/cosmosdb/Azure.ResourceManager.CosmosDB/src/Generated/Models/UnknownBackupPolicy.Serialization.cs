@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(BackupPolicyType.ToString());
-            if (MigrationState != null)
+            if (Optional.IsDefined(MigrationState))
             {
                 writer.WritePropertyName("migrationState"u8);
                 writer.WriteObjectValue(MigrationState);

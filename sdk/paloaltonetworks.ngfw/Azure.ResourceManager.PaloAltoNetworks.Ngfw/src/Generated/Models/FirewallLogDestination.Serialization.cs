@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
 
             writer.WriteStartObject();
-            if (StorageConfiguration != null)
+            if (Optional.IsDefined(StorageConfiguration))
             {
                 writer.WritePropertyName("storageConfigurations"u8);
                 writer.WriteObjectValue(StorageConfiguration);
             }
-            if (EventHubConfiguration != null)
+            if (Optional.IsDefined(EventHubConfiguration))
             {
                 writer.WritePropertyName("eventHubConfigurations"u8);
                 writer.WriteObjectValue(EventHubConfiguration);
             }
-            if (MonitorConfiguration != null)
+            if (Optional.IsDefined(MonitorConfiguration))
             {
                 writer.WritePropertyName("monitorConfigurations"u8);
                 writer.WriteObjectValue(MonitorConfiguration);

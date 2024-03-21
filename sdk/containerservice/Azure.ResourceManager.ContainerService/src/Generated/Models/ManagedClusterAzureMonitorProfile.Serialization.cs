@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Metrics != null)
+            if (Optional.IsDefined(Metrics))
             {
                 writer.WritePropertyName("metrics"u8);
                 writer.WriteObjectValue(Metrics);

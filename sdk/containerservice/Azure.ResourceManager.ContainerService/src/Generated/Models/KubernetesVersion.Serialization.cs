@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Capabilities != null)
+            if (Optional.IsDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteObjectValue(Capabilities);
             }
-            if (IsPreview.HasValue)
+            if (Optional.IsDefined(IsPreview))
             {
                 writer.WritePropertyName("isPreview"u8);
                 writer.WriteBooleanValue(IsPreview.Value);
             }
-            if (!(PatchVersions is ChangeTrackingDictionary<string, KubernetesPatchVersion> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PatchVersions))
             {
                 writer.WritePropertyName("patchVersions"u8);
                 writer.WriteStartObject();

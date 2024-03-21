@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (DiskControllerTypes != null)
+            if (Optional.IsDefined(DiskControllerTypes))
             {
                 writer.WritePropertyName("diskControllerTypes"u8);
                 writer.WriteStringValue(DiskControllerTypes);
             }
-            if (AcceleratedNetwork.HasValue)
+            if (Optional.IsDefined(AcceleratedNetwork))
             {
                 writer.WritePropertyName("acceleratedNetwork"u8);
                 writer.WriteBooleanValue(AcceleratedNetwork.Value);
             }
-            if (Architecture.HasValue)
+            if (Optional.IsDefined(Architecture))
             {
                 writer.WritePropertyName("architecture"u8);
                 writer.WriteStringValue(Architecture.Value.ToString());

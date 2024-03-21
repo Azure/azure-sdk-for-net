@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (ResourceUri != null)
+            if (Optional.IsDefined(ResourceUri))
             {
                 writer.WritePropertyName("resourceUri"u8);
                 writer.WriteStringValue(ResourceUri.AbsoluteUri);
             }
-            if (ConnectionType != null)
+            if (Optional.IsDefined(ConnectionType))
             {
                 writer.WritePropertyName("connectionType"u8);
                 writer.WriteStringValue(ConnectionType);

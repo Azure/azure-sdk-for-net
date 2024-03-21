@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartObject();
             writer.WritePropertyName("partnerName"u8);
             writer.WriteStringValue(PartnerName);
-            if (ProductName != null)
+            if (Optional.IsDefined(ProductName))
             {
                 writer.WritePropertyName("productName"u8);
                 writer.WriteStringValue(ProductName);

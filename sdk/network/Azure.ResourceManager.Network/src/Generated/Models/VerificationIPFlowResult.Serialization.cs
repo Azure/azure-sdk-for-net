@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Access.HasValue)
+            if (Optional.IsDefined(Access))
             {
                 writer.WritePropertyName("access"u8);
                 writer.WriteStringValue(Access.Value.ToString());
             }
-            if (RuleName != null)
+            if (Optional.IsDefined(RuleName))
             {
                 writer.WritePropertyName("ruleName"u8);
                 writer.WriteStringValue(RuleName);

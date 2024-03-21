@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ComputerName != null)
+            if (options.Format != "W" && Optional.IsDefined(ComputerName))
             {
                 writer.WritePropertyName("computerName"u8);
                 writer.WriteStringValue(ComputerName);
             }
-            if (WindowsConfiguration != null)
+            if (Optional.IsDefined(WindowsConfiguration))
             {
                 writer.WritePropertyName("windowsConfiguration"u8);
                 writer.WriteObjectValue(WindowsConfiguration);
             }
-            if (LinuxConfiguration != null)
+            if (Optional.IsDefined(LinuxConfiguration))
             {
                 writer.WritePropertyName("linuxConfiguration"u8);
                 writer.WriteObjectValue(LinuxConfiguration);

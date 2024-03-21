@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (PolicyId != null)
+            if (Optional.IsDefined(PolicyId))
             {
                 writer.WritePropertyName("policyId"u8);
                 writer.WriteStringValue(PolicyId);
             }
-            if (ProtectableItemId != null)
+            if (Optional.IsDefined(ProtectableItemId))
             {
                 writer.WritePropertyName("protectableItemId"u8);
                 writer.WriteStringValue(ProtectableItemId);
             }
-            if (ProviderSpecificDetails != null)
+            if (Optional.IsDefined(ProviderSpecificDetails))
             {
                 writer.WritePropertyName("providerSpecificDetails"u8);
                 writer.WriteObjectValue(ProviderSpecificDetails);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (!(Streams is ChangeTrackingList<DataCollectionRuleKnownPrometheusForwarderDataSourceStream> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Streams))
             {
                 writer.WritePropertyName("streams"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(LabelIncludeFilter is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(LabelIncludeFilter))
             {
                 writer.WritePropertyName("labelIncludeFilter"u8);
                 writer.WriteStartObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);

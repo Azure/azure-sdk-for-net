@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (Days.HasValue)
+            if (Optional.IsDefined(Days))
             {
                 writer.WritePropertyName("days"u8);
                 writer.WriteNumberValue(Days.Value);
             }
-            if (options.Format != "W" && LastUpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedTime"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());

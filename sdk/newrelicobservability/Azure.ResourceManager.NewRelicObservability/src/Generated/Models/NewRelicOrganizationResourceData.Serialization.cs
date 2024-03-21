@@ -42,24 +42,24 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (OrganizationId != null)
+            if (Optional.IsDefined(OrganizationId))
             {
                 writer.WritePropertyName("organizationId"u8);
                 writer.WriteStringValue(OrganizationId);
             }
-            if (OrganizationName != null)
+            if (Optional.IsDefined(OrganizationName))
             {
                 writer.WritePropertyName("organizationName"u8);
                 writer.WriteStringValue(OrganizationName);
             }
-            if (BillingSource.HasValue)
+            if (Optional.IsDefined(BillingSource))
             {
                 writer.WritePropertyName("billingSource"u8);
                 writer.WriteStringValue(BillingSource.Value.ToString());

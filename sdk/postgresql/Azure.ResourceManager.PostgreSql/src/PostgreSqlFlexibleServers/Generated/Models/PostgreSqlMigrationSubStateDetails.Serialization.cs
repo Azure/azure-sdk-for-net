@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && CurrentSubState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CurrentSubState))
             {
                 writer.WritePropertyName("currentSubState"u8);
                 writer.WriteStringValue(CurrentSubState.Value.ToString());

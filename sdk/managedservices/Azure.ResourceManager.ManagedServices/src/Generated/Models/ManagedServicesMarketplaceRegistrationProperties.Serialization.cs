@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (!(EligibleAuthorizations is ChangeTrackingList<ManagedServicesEligibleAuthorization> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(EligibleAuthorizations))
             {
                 writer.WritePropertyName("eligibleAuthorizations"u8);
                 writer.WriteStartArray();
@@ -45,17 +45,17 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (OfferDisplayName != null)
+            if (Optional.IsDefined(OfferDisplayName))
             {
                 writer.WritePropertyName("offerDisplayName"u8);
                 writer.WriteStringValue(OfferDisplayName);
             }
-            if (PublisherDisplayName != null)
+            if (Optional.IsDefined(PublisherDisplayName))
             {
                 writer.WritePropertyName("publisherDisplayName"u8);
                 writer.WriteStringValue(PublisherDisplayName);
             }
-            if (PlanDisplayName != null)
+            if (Optional.IsDefined(PlanDisplayName))
             {
                 writer.WritePropertyName("planDisplayName"u8);
                 writer.WriteStringValue(PlanDisplayName);

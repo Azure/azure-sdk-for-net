@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);

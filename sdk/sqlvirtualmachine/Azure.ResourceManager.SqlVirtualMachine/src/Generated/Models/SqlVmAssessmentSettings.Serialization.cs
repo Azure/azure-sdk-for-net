@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             }
 
             writer.WriteStartObject();
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enable"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (RunImmediately.HasValue)
+            if (Optional.IsDefined(RunImmediately))
             {
                 writer.WritePropertyName("runImmediately"u8);
                 writer.WriteBooleanValue(RunImmediately.Value);
             }
-            if (Schedule != null)
+            if (Optional.IsDefined(Schedule))
             {
                 writer.WritePropertyName("schedule"u8);
                 writer.WriteObjectValue(Schedule);

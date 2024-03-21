@@ -42,29 +42,29 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (TimeStamp.HasValue)
+            if (Optional.IsDefined(TimeStamp))
             {
                 writer.WritePropertyName("timeStamp"u8);
                 writer.WriteStringValue(TimeStamp.Value, "O");
             }
-            if (ClusterStorageCapacityInfo != null)
+            if (Optional.IsDefined(ClusterStorageCapacityInfo))
             {
                 writer.WritePropertyName("clusterStorageCapacityInfo"u8);
                 writer.WriteObjectValue(ClusterStorageCapacityInfo);
             }
-            if (ClusterComputeCapacityInfo != null)
+            if (Optional.IsDefined(ClusterComputeCapacityInfo))
             {
                 writer.WritePropertyName("clusterComputeCapacityInfo"u8);
                 writer.WriteObjectValue(ClusterComputeCapacityInfo);
             }
-            if (!(NodeCapacityInfos is ChangeTrackingDictionary<string, HostCapacity> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(NodeCapacityInfos))
             {
                 writer.WritePropertyName("nodeCapacityInfos"u8);
                 writer.WriteStartObject();

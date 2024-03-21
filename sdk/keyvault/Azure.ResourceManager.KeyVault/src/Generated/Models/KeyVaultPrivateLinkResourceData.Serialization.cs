@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (options.Format != "W" && !(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -58,19 +58,19 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && GroupId != null)
+            if (options.Format != "W" && Optional.IsDefined(GroupId))
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
-            if (options.Format != "W" && !(RequiredMembers is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(RequiredMembers))
             {
                 writer.WritePropertyName("requiredMembers"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(RequiredZoneNames is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(RequiredZoneNames))
             {
                 writer.WritePropertyName("requiredZoneNames"u8);
                 writer.WriteStartArray();

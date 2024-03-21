@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Endpoint != null)
+            if (options.Format != "W" && Optional.IsDefined(Endpoint))
             {
                 writer.WritePropertyName("endpoint"u8);
                 writer.WriteStringValue(Endpoint);

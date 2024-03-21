@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Privileged.HasValue)
+            if (Optional.IsDefined(Privileged))
             {
                 if (Privileged != null)
                 {

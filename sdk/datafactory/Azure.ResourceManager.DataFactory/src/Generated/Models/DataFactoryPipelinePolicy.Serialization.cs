@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (ElapsedTimeMetric != null)
+            if (Optional.IsDefined(ElapsedTimeMetric))
             {
                 writer.WritePropertyName("elapsedTimeMetric"u8);
                 writer.WriteObjectValue(ElapsedTimeMetric);

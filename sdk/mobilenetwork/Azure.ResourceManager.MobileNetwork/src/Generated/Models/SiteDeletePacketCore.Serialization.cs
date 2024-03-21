@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (PacketCore != null)
+            if (Optional.IsDefined(PacketCore))
             {
                 writer.WritePropertyName("packetCore"u8);
                 JsonSerializer.Serialize(writer, PacketCore);

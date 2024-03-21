@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Grafana.Models
             }
 
             writer.WriteStartObject();
-            if (PlanId != null)
+            if (Optional.IsDefined(PlanId))
             {
                 writer.WritePropertyName("planId"u8);
                 writer.WriteStringValue(PlanId);
             }
-            if (OfferId != null)
+            if (Optional.IsDefined(OfferId))
             {
                 writer.WritePropertyName("offerId"u8);
                 writer.WriteStringValue(OfferId);
             }
-            if (PublisherId != null)
+            if (Optional.IsDefined(PublisherId))
             {
                 writer.WritePropertyName("publisherId"u8);
                 writer.WriteStringValue(PublisherId);
             }
-            if (Term != null)
+            if (Optional.IsDefined(Term))
             {
                 writer.WritePropertyName("term"u8);
                 writer.WriteObjectValue(Term);

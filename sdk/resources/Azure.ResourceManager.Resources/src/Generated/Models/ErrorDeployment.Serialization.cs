@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (DeploymentType.HasValue)
+            if (Optional.IsDefined(DeploymentType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(DeploymentType.Value.ToSerialString());
             }
-            if (DeploymentName != null)
+            if (Optional.IsDefined(DeploymentName))
             {
                 writer.WritePropertyName("deploymentName"u8);
                 writer.WriteStringValue(DeploymentName);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Sphere.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && CertificateChain != null)
+            if (options.Format != "W" && Optional.IsDefined(CertificateChain))
             {
                 writer.WritePropertyName("certificateChain"u8);
                 writer.WriteStringValue(CertificateChain);

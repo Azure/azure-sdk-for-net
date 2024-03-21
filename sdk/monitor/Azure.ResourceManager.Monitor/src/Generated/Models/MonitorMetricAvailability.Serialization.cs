@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (TimeGrain.HasValue)
+            if (Optional.IsDefined(TimeGrain))
             {
                 writer.WritePropertyName("timeGrain"u8);
                 writer.WriteStringValue(TimeGrain.Value, "P");
             }
-            if (Retention.HasValue)
+            if (Optional.IsDefined(Retention))
             {
                 writer.WritePropertyName("retention"u8);
                 writer.WriteStringValue(Retention.Value, "P");

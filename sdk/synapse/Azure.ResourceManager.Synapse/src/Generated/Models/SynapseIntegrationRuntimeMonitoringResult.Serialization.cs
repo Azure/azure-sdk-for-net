@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (!(Nodes is ChangeTrackingList<SynapseIntegrationRuntimeNodeMonitoringResult> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Nodes))
             {
                 writer.WritePropertyName("nodes"u8);
                 writer.WriteStartArray();

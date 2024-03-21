@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteNumberValue(item);
             }
             writer.WriteEndArray();
-            if (!(MonthDays is ChangeTrackingList<int> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(MonthDays))
             {
                 if (MonthDays != null)
                 {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("monthDays");
                 }
             }
-            if (!(WeekDays is ChangeTrackingList<MachineLearningDayOfWeek> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(WeekDays))
             {
                 if (WeekDays != null)
                 {

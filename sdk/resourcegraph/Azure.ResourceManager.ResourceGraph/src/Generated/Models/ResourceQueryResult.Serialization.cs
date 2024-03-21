@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             writer.WriteNumberValue(Count);
             writer.WritePropertyName("resultTruncated"u8);
             writer.WriteStringValue(ResultTruncated.ToSerialString());
-            if (SkipToken != null)
+            if (Optional.IsDefined(SkipToken))
             {
                 writer.WritePropertyName("$skipToken"u8);
                 writer.WriteStringValue(SkipToken);
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 JsonSerializer.Serialize(writer, document.RootElement);
             }
 #endif
-            if (!(Facets is ChangeTrackingList<Facet> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Facets))
             {
                 writer.WritePropertyName("facets"u8);
                 writer.WriteStartArray();

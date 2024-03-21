@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.MachineLearning
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MachineLearningWorkspaceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string workspaceName, MachineLearningWorkspaceData data, CancellationToken cancellationToken = default)
         {
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _machineLearningWorkspaceWorkspacesClientDiagnostics.CreateScope("MachineLearningWorkspaceCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MachineLearningWorkspaceResource> CreateOrUpdate(WaitUntil waitUntil, string workspaceName, MachineLearningWorkspaceData data, CancellationToken cancellationToken = default)
         {
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _machineLearningWorkspaceWorkspacesClientDiagnostics.CreateScope("MachineLearningWorkspaceCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         public virtual async Task<Response<MachineLearningWorkspaceResource>> GetAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
             using var scope = _machineLearningWorkspaceWorkspacesClientDiagnostics.CreateScope("MachineLearningWorkspaceCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         public virtual Response<MachineLearningWorkspaceResource> Get(string workspaceName, CancellationToken cancellationToken = default)
         {
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
             using var scope = _machineLearningWorkspaceWorkspacesClientDiagnostics.CreateScope("MachineLearningWorkspaceCollection.Get");
             scope.Start();
@@ -367,14 +331,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
             using var scope = _machineLearningWorkspaceWorkspacesClientDiagnostics.CreateScope("MachineLearningWorkspaceCollection.Exists");
             scope.Start();
@@ -417,14 +374,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         public virtual Response<bool> Exists(string workspaceName, CancellationToken cancellationToken = default)
         {
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
             using var scope = _machineLearningWorkspaceWorkspacesClientDiagnostics.CreateScope("MachineLearningWorkspaceCollection.Exists");
             scope.Start();
@@ -467,14 +417,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         public virtual async Task<NullableResponse<MachineLearningWorkspaceResource>> GetIfExistsAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
             using var scope = _machineLearningWorkspaceWorkspacesClientDiagnostics.CreateScope("MachineLearningWorkspaceCollection.GetIfExists");
             scope.Start();
@@ -519,14 +462,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         public virtual NullableResponse<MachineLearningWorkspaceResource> GetIfExists(string workspaceName, CancellationToken cancellationToken = default)
         {
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
             using var scope = _machineLearningWorkspaceWorkspacesClientDiagnostics.CreateScope("MachineLearningWorkspaceCollection.GetIfExists");
             scope.Start();

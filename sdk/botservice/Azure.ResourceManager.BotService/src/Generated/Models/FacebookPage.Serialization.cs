@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.BotService.Models
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (AccessToken != null)
+            if (Optional.IsDefined(AccessToken))
             {
                 writer.WritePropertyName("accessToken"u8);
                 writer.WriteStringValue(AccessToken);

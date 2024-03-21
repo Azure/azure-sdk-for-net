@@ -43,24 +43,24 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (LoggerType.HasValue)
+            if (Optional.IsDefined(LoggerType))
             {
                 writer.WritePropertyName("loggerType"u8);
                 writer.WriteStringValue(LoggerType.Value.ToString());
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Credentials is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
                 writer.WriteStartObject();
@@ -71,12 +71,12 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 writer.WriteEndObject();
             }
-            if (IsBuffered.HasValue)
+            if (Optional.IsDefined(IsBuffered))
             {
                 writer.WritePropertyName("isBuffered"u8);
                 writer.WriteBooleanValue(IsBuffered.Value);
             }
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);

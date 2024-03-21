@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (EncryptedKeyForSecureFields != null)
+            if (Optional.IsDefined(EncryptedKeyForSecureFields))
             {
                 writer.WritePropertyName("encryptedKeyForSecureFields"u8);
                 writer.WriteStringValue(EncryptedKeyForSecureFields);
             }
-            if (StartedOn != null)
+            if (Optional.IsDefined(StartedOn))
             {
                 writer.WritePropertyName("startedOn"u8);
                 writer.WriteStringValue(StartedOn);

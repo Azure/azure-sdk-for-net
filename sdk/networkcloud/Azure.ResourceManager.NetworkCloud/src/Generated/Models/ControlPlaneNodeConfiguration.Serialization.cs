@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (AdministratorConfiguration != null)
+            if (Optional.IsDefined(AdministratorConfiguration))
             {
                 writer.WritePropertyName("administratorConfiguration"u8);
                 writer.WriteObjectValue(AdministratorConfiguration);
             }
-            if (!(AvailabilityZones is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AvailabilityZones))
             {
                 writer.WritePropertyName("availabilityZones"u8);
                 writer.WriteStartArray();

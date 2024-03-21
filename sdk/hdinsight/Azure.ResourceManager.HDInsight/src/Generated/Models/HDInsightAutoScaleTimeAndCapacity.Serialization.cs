@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Time != null)
+            if (Optional.IsDefined(Time))
             {
                 writer.WritePropertyName("time"u8);
                 writer.WriteStringValue(Time);
             }
-            if (MinInstanceCount.HasValue)
+            if (Optional.IsDefined(MinInstanceCount))
             {
                 writer.WritePropertyName("minInstanceCount"u8);
                 writer.WriteNumberValue(MinInstanceCount.Value);
             }
-            if (MaxInstanceCount.HasValue)
+            if (Optional.IsDefined(MaxInstanceCount))
             {
                 writer.WritePropertyName("maxInstanceCount"u8);
                 writer.WriteNumberValue(MaxInstanceCount.Value);

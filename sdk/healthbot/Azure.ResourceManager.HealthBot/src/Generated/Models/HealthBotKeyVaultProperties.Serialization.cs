@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.HealthBot.Models
             writer.WriteStartObject();
             writer.WritePropertyName("keyName"u8);
             writer.WriteStringValue(KeyName);
-            if (KeyVersion != null)
+            if (Optional.IsDefined(KeyVersion))
             {
                 writer.WritePropertyName("keyVersion"u8);
                 writer.WriteStringValue(KeyVersion);
             }
             writer.WritePropertyName("keyVaultUri"u8);
             writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
-            if (UserIdentity != null)
+            if (Optional.IsDefined(UserIdentity))
             {
                 writer.WritePropertyName("userIdentity"u8);
                 writer.WriteStringValue(UserIdentity);

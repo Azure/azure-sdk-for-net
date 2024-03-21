@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Orbital.Models
             }
 
             writer.WriteStartObject();
-            if (!(Values is ChangeTrackingList<OrbitalAvailableContact> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Values))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();

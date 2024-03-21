@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (PackageUri != null)
+            if (Optional.IsDefined(PackageUri))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(PackageUri.AbsoluteUri);
             }
-            if (StorageAccountId != null)
+            if (Optional.IsDefined(StorageAccountId))
             {
                 writer.WritePropertyName("storageAccountId"u8);
                 writer.WriteStringValue(StorageAccountId);

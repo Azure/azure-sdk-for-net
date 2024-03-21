@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.LoadTesting.Models
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
             }
-            if (KeyUri != null)
+            if (Optional.IsDefined(KeyUri))
             {
                 writer.WritePropertyName("keyUrl"u8);
                 writer.WriteStringValue(KeyUri.AbsoluteUri);

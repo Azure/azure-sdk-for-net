@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && SupportedSourceOSVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(SupportedSourceOSVersion))
             {
                 writer.WritePropertyName("supportedSourceOsVersion"u8);
                 writer.WriteStringValue(SupportedSourceOSVersion);
             }
-            if (options.Format != "W" && !(SupportedTargetOSVersions is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedTargetOSVersions))
             {
                 writer.WritePropertyName("supportedTargetOsVersions"u8);
                 writer.WriteStartArray();

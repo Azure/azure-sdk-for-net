@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(UpgradeType.ToString());
-            if (KubernetesVersion != null)
+            if (Optional.IsDefined(KubernetesVersion))
             {
                 writer.WritePropertyName("kubernetesVersion"u8);
                 writer.WriteStringValue(KubernetesVersion);

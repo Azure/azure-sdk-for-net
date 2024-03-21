@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -28,7 +27,7 @@ namespace Azure.ResourceManager.SecurityInsights
             }
 
             writer.WriteStartObject();
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -48,19 +47,19 @@ namespace Azure.ResourceManager.SecurityInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (LogicAppResourceId != null)
+            if (Optional.IsDefined(LogicAppResourceId))
             {
                 writer.WritePropertyName("logicAppResourceId"u8);
                 writer.WriteStringValue(LogicAppResourceId);
             }
-            if (WorkflowId != null)
+            if (Optional.IsDefined(WorkflowId))
             {
                 writer.WritePropertyName("workflowId"u8);
                 writer.WriteStringValue(WorkflowId);

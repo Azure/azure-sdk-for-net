@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.ContentSafety
@@ -27,12 +26,12 @@ namespace Azure.AI.ContentSafety
             }
 
             writer.WriteStartObject();
-            if (Content != null)
+            if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteBase64StringValue(Content.ToArray(), "D");
             }
-            if (BlobUri != null)
+            if (Optional.IsDefined(BlobUri))
             {
                 writer.WritePropertyName("blobUrl"u8);
                 writer.WriteStringValue(BlobUri.AbsoluteUri);

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Available.HasValue)
+            if (Optional.IsDefined(Available))
             {
                 writer.WritePropertyName("available"u8);
                 writer.WriteBooleanValue(Available.Value);
             }
-            if (!(AvailableIPAddresses is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AvailableIPAddresses))
             {
                 writer.WritePropertyName("availableIPAddresses"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IsPlatformReserved.HasValue)
+            if (Optional.IsDefined(IsPlatformReserved))
             {
                 writer.WritePropertyName("isPlatformReserved"u8);
                 writer.WriteBooleanValue(IsPlatformReserved.Value);

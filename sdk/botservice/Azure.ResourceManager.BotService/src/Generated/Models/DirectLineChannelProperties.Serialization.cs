@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.BotService.Models
             }
 
             writer.WriteStartObject();
-            if (!(Sites is ChangeTrackingList<DirectLineSite> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Sites))
             {
                 writer.WritePropertyName("sites"u8);
                 writer.WriteStartArray();
@@ -36,17 +36,17 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ExtensionKey1 != null)
+            if (Optional.IsDefined(ExtensionKey1))
             {
                 writer.WritePropertyName("extensionKey1"u8);
                 writer.WriteStringValue(ExtensionKey1);
             }
-            if (ExtensionKey2 != null)
+            if (Optional.IsDefined(ExtensionKey2))
             {
                 writer.WritePropertyName("extensionKey2"u8);
                 writer.WriteStringValue(ExtensionKey2);
             }
-            if (DirectLineEmbedCode != null)
+            if (Optional.IsDefined(DirectLineEmbedCode))
             {
                 writer.WritePropertyName("DirectLineEmbedCode"u8);
                 writer.WriteStringValue(DirectLineEmbedCode);

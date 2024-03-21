@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Datadog.Models
             }
 
             writer.WriteStartObject();
-            if (Tool != null)
+            if (Optional.IsDefined(Tool))
             {
                 writer.WritePropertyName("tool"u8);
                 writer.WriteStringValue(Tool);
             }
-            if (ToolVersion != null)
+            if (Optional.IsDefined(ToolVersion))
             {
                 writer.WritePropertyName("toolVersion"u8);
                 writer.WriteStringValue(ToolVersion);
             }
-            if (InstallerVersion != null)
+            if (Optional.IsDefined(InstallerVersion))
             {
                 writer.WritePropertyName("installerVersion"u8);
                 writer.WriteStringValue(InstallerVersion);

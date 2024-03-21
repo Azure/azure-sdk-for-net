@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -29,27 +28,27 @@ namespace Azure.AI.OpenAI
             writer.WriteStartObject();
             writer.WritePropertyName("file"u8);
             writer.WriteBase64StringValue(AudioData.ToArray(), "D");
-            if (Filename != null)
+            if (Optional.IsDefined(Filename))
             {
                 writer.WritePropertyName("filename"u8);
                 writer.WriteStringValue(Filename);
             }
-            if (ResponseFormat.HasValue)
+            if (Optional.IsDefined(ResponseFormat))
             {
                 writer.WritePropertyName("response_format"u8);
                 writer.WriteStringValue(ResponseFormat.Value.ToString());
             }
-            if (Prompt != null)
+            if (Optional.IsDefined(Prompt))
             {
                 writer.WritePropertyName("prompt"u8);
                 writer.WriteStringValue(Prompt);
             }
-            if (Temperature.HasValue)
+            if (Optional.IsDefined(Temperature))
             {
                 writer.WritePropertyName("temperature"u8);
                 writer.WriteNumberValue(Temperature.Value);
             }
-            if (DeploymentName != null)
+            if (Optional.IsDefined(DeploymentName))
             {
                 writer.WritePropertyName("model"u8);
                 writer.WriteStringValue(DeploymentName);

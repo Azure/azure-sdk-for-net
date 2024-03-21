@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Retention != null)
+            if (options.Format != "W" && Optional.IsDefined(Retention))
             {
                 writer.WritePropertyName("retention"u8);
                 writer.WriteStringValue(Retention);
             }
-            if (options.Format != "W" && TimeGrain != null)
+            if (options.Format != "W" && Optional.IsDefined(TimeGrain))
             {
                 writer.WritePropertyName("timeGrain"u8);
                 writer.WriteStringValue(TimeGrain);

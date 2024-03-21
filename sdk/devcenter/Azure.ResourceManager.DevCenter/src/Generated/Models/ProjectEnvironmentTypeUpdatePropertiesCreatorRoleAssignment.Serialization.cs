@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             }
 
             writer.WriteStartObject();
-            if (!(Roles is ChangeTrackingDictionary<string, DevCenterEnvironmentRole> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Roles))
             {
                 writer.WritePropertyName("roles"u8);
                 writer.WriteStartObject();

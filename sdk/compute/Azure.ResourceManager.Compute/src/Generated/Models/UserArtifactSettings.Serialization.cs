@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (PackageFileName != null)
+            if (Optional.IsDefined(PackageFileName))
             {
                 writer.WritePropertyName("packageFileName"u8);
                 writer.WriteStringValue(PackageFileName);
             }
-            if (ConfigFileName != null)
+            if (Optional.IsDefined(ConfigFileName))
             {
                 writer.WritePropertyName("configFileName"u8);
                 writer.WriteStringValue(ConfigFileName);

@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -27,32 +26,32 @@ namespace Azure.AI.OpenAI
             }
 
             writer.WriteStartObject();
-            if (Sexual != null)
+            if (Optional.IsDefined(Sexual))
             {
                 writer.WritePropertyName("sexual"u8);
                 writer.WriteObjectValue(Sexual);
             }
-            if (Violence != null)
+            if (Optional.IsDefined(Violence))
             {
                 writer.WritePropertyName("violence"u8);
                 writer.WriteObjectValue(Violence);
             }
-            if (Hate != null)
+            if (Optional.IsDefined(Hate))
             {
                 writer.WritePropertyName("hate"u8);
                 writer.WriteObjectValue(Hate);
             }
-            if (SelfHarm != null)
+            if (Optional.IsDefined(SelfHarm))
             {
                 writer.WritePropertyName("self_harm"u8);
                 writer.WriteObjectValue(SelfHarm);
             }
-            if (Profanity != null)
+            if (Optional.IsDefined(Profanity))
             {
                 writer.WritePropertyName("profanity"u8);
                 writer.WriteObjectValue(Profanity);
             }
-            if (!(CustomBlocklists is ChangeTrackingList<ContentFilterBlocklistIdResult> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CustomBlocklists))
             {
                 writer.WritePropertyName("custom_blocklists"u8);
                 writer.WriteStartArray();
@@ -62,17 +61,17 @@ namespace Azure.AI.OpenAI
                 }
                 writer.WriteEndArray();
             }
-            if (Error != null)
+            if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, Error);
             }
-            if (ProtectedMaterialText != null)
+            if (Optional.IsDefined(ProtectedMaterialText))
             {
                 writer.WritePropertyName("protected_material_text"u8);
                 writer.WriteObjectValue(ProtectedMaterialText);
             }
-            if (ProtectedMaterialCode != null)
+            if (Optional.IsDefined(ProtectedMaterialCode))
             {
                 writer.WritePropertyName("protected_material_code"u8);
                 writer.WriteObjectValue(ProtectedMaterialCode);

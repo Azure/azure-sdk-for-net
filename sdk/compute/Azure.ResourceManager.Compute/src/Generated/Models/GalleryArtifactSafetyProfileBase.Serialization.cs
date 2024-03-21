@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (AllowDeletionOfReplicatedLocations.HasValue)
+            if (Optional.IsDefined(AllowDeletionOfReplicatedLocations))
             {
                 writer.WritePropertyName("allowDeletionOfReplicatedLocations"u8);
                 writer.WriteBooleanValue(AllowDeletionOfReplicatedLocations.Value);

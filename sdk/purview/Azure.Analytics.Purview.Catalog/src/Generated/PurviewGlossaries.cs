@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -136,10 +135,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='CreateGlossaryAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateGlossaryAsync(RequestContent content, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossary");
             scope.Start();
@@ -173,10 +169,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='CreateGlossary(RequestContent,RequestContext)']/*" />
         public virtual Response CreateGlossary(RequestContent content, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossary");
             scope.Start();
@@ -210,10 +203,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='CreateGlossaryCategoriesAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateGlossaryCategoriesAsync(RequestContent content, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossaryCategories");
             scope.Start();
@@ -247,10 +237,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='CreateGlossaryCategories(RequestContent,RequestContext)']/*" />
         public virtual Response CreateGlossaryCategories(RequestContent content, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossaryCategories");
             scope.Start();
@@ -284,10 +271,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='CreateGlossaryCategoryAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateGlossaryCategoryAsync(RequestContent content, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossaryCategory");
             scope.Start();
@@ -321,10 +305,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='CreateGlossaryCategory(RequestContent,RequestContext)']/*" />
         public virtual Response CreateGlossaryCategory(RequestContent content, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossaryCategory");
             scope.Start();
@@ -359,14 +340,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryCategoryAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetGlossaryCategoryAsync(string categoryGuid, RequestContext context)
         {
-            if (categoryGuid == null)
-            {
-                throw new ArgumentNullException(nameof(categoryGuid));
-            }
-            if (categoryGuid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(categoryGuid));
-            }
+            Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryCategory");
             scope.Start();
@@ -401,14 +375,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryCategory(string,RequestContext)']/*" />
         public virtual Response GetGlossaryCategory(string categoryGuid, RequestContext context)
         {
-            if (categoryGuid == null)
-            {
-                throw new ArgumentNullException(nameof(categoryGuid));
-            }
-            if (categoryGuid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(categoryGuid));
-            }
+            Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryCategory");
             scope.Start();
@@ -444,18 +411,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='UpdateGlossaryCategoryAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> UpdateGlossaryCategoryAsync(string categoryGuid, RequestContent content, RequestContext context = null)
         {
-            if (categoryGuid == null)
-            {
-                throw new ArgumentNullException(nameof(categoryGuid));
-            }
-            if (categoryGuid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(categoryGuid));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.UpdateGlossaryCategory");
             scope.Start();
@@ -491,18 +448,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='UpdateGlossaryCategory(string,RequestContent,RequestContext)']/*" />
         public virtual Response UpdateGlossaryCategory(string categoryGuid, RequestContent content, RequestContext context = null)
         {
-            if (categoryGuid == null)
-            {
-                throw new ArgumentNullException(nameof(categoryGuid));
-            }
-            if (categoryGuid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(categoryGuid));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.UpdateGlossaryCategory");
             scope.Start();
@@ -537,14 +484,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='DeleteGlossaryCategoryAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteGlossaryCategoryAsync(string categoryGuid, RequestContext context = null)
         {
-            if (categoryGuid == null)
-            {
-                throw new ArgumentNullException(nameof(categoryGuid));
-            }
-            if (categoryGuid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(categoryGuid));
-            }
+            Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.DeleteGlossaryCategory");
             scope.Start();
@@ -579,14 +519,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='DeleteGlossaryCategory(string,RequestContext)']/*" />
         public virtual Response DeleteGlossaryCategory(string categoryGuid, RequestContext context = null)
         {
-            if (categoryGuid == null)
-            {
-                throw new ArgumentNullException(nameof(categoryGuid));
-            }
-            if (categoryGuid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(categoryGuid));
-            }
+            Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.DeleteGlossaryCategory");
             scope.Start();
@@ -622,18 +555,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='PartialUpdateGlossaryCategoryAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> PartialUpdateGlossaryCategoryAsync(string categoryGuid, RequestContent content, RequestContext context = null)
         {
-            if (categoryGuid == null)
-            {
-                throw new ArgumentNullException(nameof(categoryGuid));
-            }
-            if (categoryGuid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(categoryGuid));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.PartialUpdateGlossaryCategory");
             scope.Start();
@@ -669,18 +592,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='PartialUpdateGlossaryCategory(string,RequestContent,RequestContext)']/*" />
         public virtual Response PartialUpdateGlossaryCategory(string categoryGuid, RequestContent content, RequestContext context = null)
         {
-            if (categoryGuid == null)
-            {
-                throw new ArgumentNullException(nameof(categoryGuid));
-            }
-            if (categoryGuid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(categoryGuid));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.PartialUpdateGlossaryCategory");
             scope.Start();
@@ -718,14 +631,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetRelatedCategoriesAsync(string,int?,int?,string,RequestContext)']/*" />
         public virtual async Task<Response> GetRelatedCategoriesAsync(string categoryGuid, int? limit, int? offset, string sort, RequestContext context)
         {
-            if (categoryGuid == null)
-            {
-                throw new ArgumentNullException(nameof(categoryGuid));
-            }
-            if (categoryGuid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(categoryGuid));
-            }
+            Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetRelatedCategories");
             scope.Start();
@@ -763,14 +669,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetRelatedCategories(string,int?,int?,string,RequestContext)']/*" />
         public virtual Response GetRelatedCategories(string categoryGuid, int? limit, int? offset, string sort, RequestContext context)
         {
-            if (categoryGuid == null)
-            {
-                throw new ArgumentNullException(nameof(categoryGuid));
-            }
-            if (categoryGuid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(categoryGuid));
-            }
+            Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetRelatedCategories");
             scope.Start();
@@ -808,14 +707,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetCategoryTermsAsync(string,int?,int?,string,RequestContext)']/*" />
         public virtual async Task<Response> GetCategoryTermsAsync(string categoryGuid, int? limit, int? offset, string sort, RequestContext context)
         {
-            if (categoryGuid == null)
-            {
-                throw new ArgumentNullException(nameof(categoryGuid));
-            }
-            if (categoryGuid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(categoryGuid));
-            }
+            Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetCategoryTerms");
             scope.Start();
@@ -853,14 +745,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetCategoryTerms(string,int?,int?,string,RequestContext)']/*" />
         public virtual Response GetCategoryTerms(string categoryGuid, int? limit, int? offset, string sort, RequestContext context)
         {
-            if (categoryGuid == null)
-            {
-                throw new ArgumentNullException(nameof(categoryGuid));
-            }
-            if (categoryGuid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(categoryGuid));
-            }
+            Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetCategoryTerms");
             scope.Start();
@@ -895,10 +780,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='CreateGlossaryTermAsync(RequestContent,bool?,RequestContext)']/*" />
         public virtual async Task<Response> CreateGlossaryTermAsync(RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossaryTerm");
             scope.Start();
@@ -933,10 +815,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='CreateGlossaryTerm(RequestContent,bool?,RequestContext)']/*" />
         public virtual Response CreateGlossaryTerm(RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossaryTerm");
             scope.Start();
@@ -973,14 +852,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryTermAsync(string,bool?,IEnumerable{string},RequestContext)']/*" />
         public virtual async Task<Response> GetGlossaryTermAsync(string termGuid, bool? includeTermHierarchy, IEnumerable<string> excludeRelationshipTypeList, RequestContext context)
         {
-            if (termGuid == null)
-            {
-                throw new ArgumentNullException(nameof(termGuid));
-            }
-            if (termGuid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(termGuid));
-            }
+            Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryTerm");
             scope.Start();
@@ -1017,14 +889,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryTerm(string,bool?,IEnumerable{string},RequestContext)']/*" />
         public virtual Response GetGlossaryTerm(string termGuid, bool? includeTermHierarchy, IEnumerable<string> excludeRelationshipTypeList, RequestContext context)
         {
-            if (termGuid == null)
-            {
-                throw new ArgumentNullException(nameof(termGuid));
-            }
-            if (termGuid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(termGuid));
-            }
+            Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryTerm");
             scope.Start();
@@ -1061,18 +926,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='UpdateGlossaryTermAsync(string,RequestContent,bool?,RequestContext)']/*" />
         public virtual async Task<Response> UpdateGlossaryTermAsync(string termGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
         {
-            if (termGuid == null)
-            {
-                throw new ArgumentNullException(nameof(termGuid));
-            }
-            if (termGuid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(termGuid));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.UpdateGlossaryTerm");
             scope.Start();
@@ -1109,18 +964,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='UpdateGlossaryTerm(string,RequestContent,bool?,RequestContext)']/*" />
         public virtual Response UpdateGlossaryTerm(string termGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
         {
-            if (termGuid == null)
-            {
-                throw new ArgumentNullException(nameof(termGuid));
-            }
-            if (termGuid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(termGuid));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.UpdateGlossaryTerm");
             scope.Start();
@@ -1155,14 +1000,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='DeleteGlossaryTermAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteGlossaryTermAsync(string termGuid, RequestContext context = null)
         {
-            if (termGuid == null)
-            {
-                throw new ArgumentNullException(nameof(termGuid));
-            }
-            if (termGuid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(termGuid));
-            }
+            Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.DeleteGlossaryTerm");
             scope.Start();
@@ -1197,14 +1035,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='DeleteGlossaryTerm(string,RequestContext)']/*" />
         public virtual Response DeleteGlossaryTerm(string termGuid, RequestContext context = null)
         {
-            if (termGuid == null)
-            {
-                throw new ArgumentNullException(nameof(termGuid));
-            }
-            if (termGuid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(termGuid));
-            }
+            Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.DeleteGlossaryTerm");
             scope.Start();
@@ -1241,18 +1072,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='PartialUpdateGlossaryTermAsync(string,RequestContent,bool?,RequestContext)']/*" />
         public virtual async Task<Response> PartialUpdateGlossaryTermAsync(string termGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
         {
-            if (termGuid == null)
-            {
-                throw new ArgumentNullException(nameof(termGuid));
-            }
-            if (termGuid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(termGuid));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.PartialUpdateGlossaryTerm");
             scope.Start();
@@ -1289,18 +1110,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='PartialUpdateGlossaryTerm(string,RequestContent,bool?,RequestContext)']/*" />
         public virtual Response PartialUpdateGlossaryTerm(string termGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
         {
-            if (termGuid == null)
-            {
-                throw new ArgumentNullException(nameof(termGuid));
-            }
-            if (termGuid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(termGuid));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.PartialUpdateGlossaryTerm");
             scope.Start();
@@ -1335,10 +1146,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='CreateGlossaryTermsAsync(RequestContent,bool?,RequestContext)']/*" />
         public virtual async Task<Response> CreateGlossaryTermsAsync(RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossaryTerms");
             scope.Start();
@@ -1373,10 +1181,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='CreateGlossaryTerms(RequestContent,bool?,RequestContext)']/*" />
         public virtual Response CreateGlossaryTerms(RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.CreateGlossaryTerms");
             scope.Start();
@@ -1414,14 +1219,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetEntitiesAssignedWithTermAsync(string,int?,int?,string,RequestContext)']/*" />
         public virtual async Task<Response> GetEntitiesAssignedWithTermAsync(string termGuid, int? limit, int? offset, string sort, RequestContext context)
         {
-            if (termGuid == null)
-            {
-                throw new ArgumentNullException(nameof(termGuid));
-            }
-            if (termGuid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(termGuid));
-            }
+            Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetEntitiesAssignedWithTerm");
             scope.Start();
@@ -1459,14 +1257,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetEntitiesAssignedWithTerm(string,int?,int?,string,RequestContext)']/*" />
         public virtual Response GetEntitiesAssignedWithTerm(string termGuid, int? limit, int? offset, string sort, RequestContext context)
         {
-            if (termGuid == null)
-            {
-                throw new ArgumentNullException(nameof(termGuid));
-            }
-            if (termGuid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(termGuid));
-            }
+            Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetEntitiesAssignedWithTerm");
             scope.Start();
@@ -1502,18 +1293,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='AssignTermToEntitiesAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> AssignTermToEntitiesAsync(string termGuid, RequestContent content, RequestContext context = null)
         {
-            if (termGuid == null)
-            {
-                throw new ArgumentNullException(nameof(termGuid));
-            }
-            if (termGuid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(termGuid));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.AssignTermToEntities");
             scope.Start();
@@ -1549,18 +1330,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='AssignTermToEntities(string,RequestContent,RequestContext)']/*" />
         public virtual Response AssignTermToEntities(string termGuid, RequestContent content, RequestContext context = null)
         {
-            if (termGuid == null)
-            {
-                throw new ArgumentNullException(nameof(termGuid));
-            }
-            if (termGuid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(termGuid));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.AssignTermToEntities");
             scope.Start();
@@ -1596,18 +1367,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='RemoveTermAssignmentFromEntitiesAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> RemoveTermAssignmentFromEntitiesAsync(string termGuid, RequestContent content, RequestContext context = null)
         {
-            if (termGuid == null)
-            {
-                throw new ArgumentNullException(nameof(termGuid));
-            }
-            if (termGuid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(termGuid));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.RemoveTermAssignmentFromEntities");
             scope.Start();
@@ -1643,18 +1404,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='RemoveTermAssignmentFromEntities(string,RequestContent,RequestContext)']/*" />
         public virtual Response RemoveTermAssignmentFromEntities(string termGuid, RequestContent content, RequestContext context = null)
         {
-            if (termGuid == null)
-            {
-                throw new ArgumentNullException(nameof(termGuid));
-            }
-            if (termGuid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(termGuid));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.RemoveTermAssignmentFromEntities");
             scope.Start();
@@ -1690,18 +1441,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='DeleteTermAssignmentFromEntitiesAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> DeleteTermAssignmentFromEntitiesAsync(string termGuid, RequestContent content, RequestContext context = null)
         {
-            if (termGuid == null)
-            {
-                throw new ArgumentNullException(nameof(termGuid));
-            }
-            if (termGuid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(termGuid));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.DeleteTermAssignmentFromEntities");
             scope.Start();
@@ -1737,18 +1478,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='DeleteTermAssignmentFromEntities(string,RequestContent,RequestContext)']/*" />
         public virtual Response DeleteTermAssignmentFromEntities(string termGuid, RequestContent content, RequestContext context = null)
         {
-            if (termGuid == null)
-            {
-                throw new ArgumentNullException(nameof(termGuid));
-            }
-            if (termGuid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(termGuid));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.DeleteTermAssignmentFromEntities");
             scope.Start();
@@ -1786,14 +1517,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetRelatedTermsAsync(string,int?,int?,string,RequestContext)']/*" />
         public virtual async Task<Response> GetRelatedTermsAsync(string termGuid, int? limit, int? offset, string sort, RequestContext context)
         {
-            if (termGuid == null)
-            {
-                throw new ArgumentNullException(nameof(termGuid));
-            }
-            if (termGuid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(termGuid));
-            }
+            Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetRelatedTerms");
             scope.Start();
@@ -1831,14 +1555,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetRelatedTerms(string,int?,int?,string,RequestContext)']/*" />
         public virtual Response GetRelatedTerms(string termGuid, int? limit, int? offset, string sort, RequestContext context)
         {
-            if (termGuid == null)
-            {
-                throw new ArgumentNullException(nameof(termGuid));
-            }
-            if (termGuid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(termGuid));
-            }
+            Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetRelatedTerms");
             scope.Start();
@@ -1873,14 +1590,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetGlossaryAsync(string glossaryGuid, RequestContext context)
         {
-            if (glossaryGuid == null)
-            {
-                throw new ArgumentNullException(nameof(glossaryGuid));
-            }
-            if (glossaryGuid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryGuid));
-            }
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetGlossary");
             scope.Start();
@@ -1915,14 +1625,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossary(string,RequestContext)']/*" />
         public virtual Response GetGlossary(string glossaryGuid, RequestContext context)
         {
-            if (glossaryGuid == null)
-            {
-                throw new ArgumentNullException(nameof(glossaryGuid));
-            }
-            if (glossaryGuid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryGuid));
-            }
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetGlossary");
             scope.Start();
@@ -1958,18 +1661,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='UpdateGlossaryAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> UpdateGlossaryAsync(string glossaryGuid, RequestContent content, RequestContext context = null)
         {
-            if (glossaryGuid == null)
-            {
-                throw new ArgumentNullException(nameof(glossaryGuid));
-            }
-            if (glossaryGuid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryGuid));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.UpdateGlossary");
             scope.Start();
@@ -2005,18 +1698,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='UpdateGlossary(string,RequestContent,RequestContext)']/*" />
         public virtual Response UpdateGlossary(string glossaryGuid, RequestContent content, RequestContext context = null)
         {
-            if (glossaryGuid == null)
-            {
-                throw new ArgumentNullException(nameof(glossaryGuid));
-            }
-            if (glossaryGuid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryGuid));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.UpdateGlossary");
             scope.Start();
@@ -2051,14 +1734,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='DeleteGlossaryAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteGlossaryAsync(string glossaryGuid, RequestContext context = null)
         {
-            if (glossaryGuid == null)
-            {
-                throw new ArgumentNullException(nameof(glossaryGuid));
-            }
-            if (glossaryGuid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryGuid));
-            }
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.DeleteGlossary");
             scope.Start();
@@ -2093,14 +1769,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='DeleteGlossary(string,RequestContext)']/*" />
         public virtual Response DeleteGlossary(string glossaryGuid, RequestContext context = null)
         {
-            if (glossaryGuid == null)
-            {
-                throw new ArgumentNullException(nameof(glossaryGuid));
-            }
-            if (glossaryGuid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryGuid));
-            }
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.DeleteGlossary");
             scope.Start();
@@ -2138,14 +1807,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryCategoriesAsync(string,int?,int?,string,RequestContext)']/*" />
         public virtual async Task<Response> GetGlossaryCategoriesAsync(string glossaryGuid, int? limit, int? offset, string sort, RequestContext context)
         {
-            if (glossaryGuid == null)
-            {
-                throw new ArgumentNullException(nameof(glossaryGuid));
-            }
-            if (glossaryGuid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryGuid));
-            }
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryCategories");
             scope.Start();
@@ -2183,14 +1845,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryCategories(string,int?,int?,string,RequestContext)']/*" />
         public virtual Response GetGlossaryCategories(string glossaryGuid, int? limit, int? offset, string sort, RequestContext context)
         {
-            if (glossaryGuid == null)
-            {
-                throw new ArgumentNullException(nameof(glossaryGuid));
-            }
-            if (glossaryGuid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryGuid));
-            }
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryCategories");
             scope.Start();
@@ -2228,14 +1883,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryCategoriesHeadersAsync(string,int?,int?,string,RequestContext)']/*" />
         public virtual async Task<Response> GetGlossaryCategoriesHeadersAsync(string glossaryGuid, int? limit, int? offset, string sort, RequestContext context)
         {
-            if (glossaryGuid == null)
-            {
-                throw new ArgumentNullException(nameof(glossaryGuid));
-            }
-            if (glossaryGuid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryGuid));
-            }
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryCategoriesHeaders");
             scope.Start();
@@ -2273,14 +1921,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryCategoriesHeaders(string,int?,int?,string,RequestContext)']/*" />
         public virtual Response GetGlossaryCategoriesHeaders(string glossaryGuid, int? limit, int? offset, string sort, RequestContext context)
         {
-            if (glossaryGuid == null)
-            {
-                throw new ArgumentNullException(nameof(glossaryGuid));
-            }
-            if (glossaryGuid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryGuid));
-            }
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryCategoriesHeaders");
             scope.Start();
@@ -2316,14 +1957,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetDetailedGlossaryAsync(string,bool?,RequestContext)']/*" />
         public virtual async Task<Response> GetDetailedGlossaryAsync(string glossaryGuid, bool? includeTermHierarchy, RequestContext context)
         {
-            if (glossaryGuid == null)
-            {
-                throw new ArgumentNullException(nameof(glossaryGuid));
-            }
-            if (glossaryGuid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryGuid));
-            }
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetDetailedGlossary");
             scope.Start();
@@ -2359,14 +1993,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetDetailedGlossary(string,bool?,RequestContext)']/*" />
         public virtual Response GetDetailedGlossary(string glossaryGuid, bool? includeTermHierarchy, RequestContext context)
         {
-            if (glossaryGuid == null)
-            {
-                throw new ArgumentNullException(nameof(glossaryGuid));
-            }
-            if (glossaryGuid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryGuid));
-            }
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetDetailedGlossary");
             scope.Start();
@@ -2403,18 +2030,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='PartialUpdateGlossaryAsync(string,RequestContent,bool?,RequestContext)']/*" />
         public virtual async Task<Response> PartialUpdateGlossaryAsync(string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
         {
-            if (glossaryGuid == null)
-            {
-                throw new ArgumentNullException(nameof(glossaryGuid));
-            }
-            if (glossaryGuid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryGuid));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.PartialUpdateGlossary");
             scope.Start();
@@ -2451,18 +2068,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='PartialUpdateGlossary(string,RequestContent,bool?,RequestContext)']/*" />
         public virtual Response PartialUpdateGlossary(string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
         {
-            if (glossaryGuid == null)
-            {
-                throw new ArgumentNullException(nameof(glossaryGuid));
-            }
-            if (glossaryGuid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryGuid));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.PartialUpdateGlossary");
             scope.Start();
@@ -2501,14 +2108,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryTermsAsync(string,bool?,int?,int?,string,RequestContext)']/*" />
         public virtual async Task<Response> GetGlossaryTermsAsync(string glossaryGuid, bool? includeTermHierarchy, int? limit, int? offset, string sort, RequestContext context)
         {
-            if (glossaryGuid == null)
-            {
-                throw new ArgumentNullException(nameof(glossaryGuid));
-            }
-            if (glossaryGuid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryGuid));
-            }
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryTerms");
             scope.Start();
@@ -2547,14 +2147,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryTerms(string,bool?,int?,int?,string,RequestContext)']/*" />
         public virtual Response GetGlossaryTerms(string glossaryGuid, bool? includeTermHierarchy, int? limit, int? offset, string sort, RequestContext context)
         {
-            if (glossaryGuid == null)
-            {
-                throw new ArgumentNullException(nameof(glossaryGuid));
-            }
-            if (glossaryGuid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryGuid));
-            }
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryTerms");
             scope.Start();
@@ -2592,14 +2185,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryTermHeadersAsync(string,int?,int?,string,RequestContext)']/*" />
         public virtual async Task<Response> GetGlossaryTermHeadersAsync(string glossaryGuid, int? limit, int? offset, string sort, RequestContext context)
         {
-            if (glossaryGuid == null)
-            {
-                throw new ArgumentNullException(nameof(glossaryGuid));
-            }
-            if (glossaryGuid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryGuid));
-            }
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryTermHeaders");
             scope.Start();
@@ -2637,14 +2223,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryTermHeaders(string,int?,int?,string,RequestContext)']/*" />
         public virtual Response GetGlossaryTermHeaders(string glossaryGuid, int? limit, int? offset, string sort, RequestContext context)
         {
-            if (glossaryGuid == null)
-            {
-                throw new ArgumentNullException(nameof(glossaryGuid));
-            }
-            if (glossaryGuid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryGuid));
-            }
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryTermHeaders");
             scope.Start();
@@ -2679,14 +2258,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetImportCsvOperationStatusAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetImportCsvOperationStatusAsync(string operationGuid, RequestContext context)
         {
-            if (operationGuid == null)
-            {
-                throw new ArgumentNullException(nameof(operationGuid));
-            }
-            if (operationGuid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(operationGuid));
-            }
+            Argument.AssertNotNullOrEmpty(operationGuid, nameof(operationGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetImportCsvOperationStatus");
             scope.Start();
@@ -2721,14 +2293,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetImportCsvOperationStatus(string,RequestContext)']/*" />
         public virtual Response GetImportCsvOperationStatus(string operationGuid, RequestContext context)
         {
-            if (operationGuid == null)
-            {
-                throw new ArgumentNullException(nameof(operationGuid));
-            }
-            if (operationGuid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(operationGuid));
-            }
+            Argument.AssertNotNullOrEmpty(operationGuid, nameof(operationGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetImportCsvOperationStatus");
             scope.Start();
@@ -2765,18 +2330,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='ExportGlossaryTermsAsCsvAsync(string,RequestContent,bool?,RequestContext)']/*" />
         public virtual async Task<Response> ExportGlossaryTermsAsCsvAsync(string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
         {
-            if (glossaryGuid == null)
-            {
-                throw new ArgumentNullException(nameof(glossaryGuid));
-            }
-            if (glossaryGuid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryGuid));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.ExportGlossaryTermsAsCsv");
             scope.Start();
@@ -2813,18 +2368,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='ExportGlossaryTermsAsCsv(string,RequestContent,bool?,RequestContext)']/*" />
         public virtual Response ExportGlossaryTermsAsCsv(string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
         {
-            if (glossaryGuid == null)
-            {
-                throw new ArgumentNullException(nameof(glossaryGuid));
-            }
-            if (glossaryGuid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryGuid));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.ExportGlossaryTermsAsCsv");
             scope.Start();
@@ -2862,14 +2407,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetTermsByGlossaryNameAsync(string,int?,int?,bool?,RequestContext)']/*" />
         public virtual async Task<Response> GetTermsByGlossaryNameAsync(string glossaryName, int? limit, int? offset, bool? includeTermHierarchy, RequestContext context)
         {
-            if (glossaryName == null)
-            {
-                throw new ArgumentNullException(nameof(glossaryName));
-            }
-            if (glossaryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryName));
-            }
+            Argument.AssertNotNullOrEmpty(glossaryName, nameof(glossaryName));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetTermsByGlossaryName");
             scope.Start();
@@ -2907,14 +2445,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetTermsByGlossaryName(string,int?,int?,bool?,RequestContext)']/*" />
         public virtual Response GetTermsByGlossaryName(string glossaryName, int? limit, int? offset, bool? includeTermHierarchy, RequestContext context)
         {
-            if (glossaryName == null)
-            {
-                throw new ArgumentNullException(nameof(glossaryName));
-            }
-            if (glossaryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryName));
-            }
+            Argument.AssertNotNullOrEmpty(glossaryName, nameof(glossaryName));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetTermsByGlossaryName");
             scope.Start();
@@ -2952,18 +2483,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='ImportGlossaryTermsViaCsvAsync(WaitUntil,string,RequestContent,bool?,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> ImportGlossaryTermsViaCsvAsync(WaitUntil waitUntil, string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
         {
-            if (glossaryGuid == null)
-            {
-                throw new ArgumentNullException(nameof(glossaryGuid));
-            }
-            if (glossaryGuid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryGuid));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.ImportGlossaryTermsViaCsv");
             scope.Start();
@@ -3001,18 +2522,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='ImportGlossaryTermsViaCsv(WaitUntil,string,RequestContent,bool?,RequestContext)']/*" />
         public virtual Operation<BinaryData> ImportGlossaryTermsViaCsv(WaitUntil waitUntil, string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
         {
-            if (glossaryGuid == null)
-            {
-                throw new ArgumentNullException(nameof(glossaryGuid));
-            }
-            if (glossaryGuid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryGuid));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.ImportGlossaryTermsViaCsv");
             scope.Start();
@@ -3050,18 +2561,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='ImportGlossaryTermsViaCsvByGlossaryNameAsync(WaitUntil,string,RequestContent,bool?,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> ImportGlossaryTermsViaCsvByGlossaryNameAsync(WaitUntil waitUntil, string glossaryName, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
         {
-            if (glossaryName == null)
-            {
-                throw new ArgumentNullException(nameof(glossaryName));
-            }
-            if (glossaryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(glossaryName, nameof(glossaryName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.ImportGlossaryTermsViaCsvByGlossaryName");
             scope.Start();
@@ -3099,18 +2600,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='ImportGlossaryTermsViaCsvByGlossaryName(WaitUntil,string,RequestContent,bool?,RequestContext)']/*" />
         public virtual Operation<BinaryData> ImportGlossaryTermsViaCsvByGlossaryName(WaitUntil waitUntil, string glossaryName, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
         {
-            if (glossaryName == null)
-            {
-                throw new ArgumentNullException(nameof(glossaryName));
-            }
-            if (glossaryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(glossaryName, nameof(glossaryName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.ImportGlossaryTermsViaCsvByGlossaryName");
             scope.Start();

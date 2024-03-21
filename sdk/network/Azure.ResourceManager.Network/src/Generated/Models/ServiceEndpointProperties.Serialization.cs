@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Service != null)
+            if (Optional.IsDefined(Service))
             {
                 writer.WritePropertyName("service"u8);
                 writer.WriteStringValue(Service);
             }
-            if (!(Locations is ChangeTrackingList<AzureLocation> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Locations))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());

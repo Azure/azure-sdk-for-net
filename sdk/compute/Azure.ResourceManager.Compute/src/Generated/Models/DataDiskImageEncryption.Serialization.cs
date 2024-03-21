@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             writer.WritePropertyName("lun"u8);
             writer.WriteNumberValue(Lun);
-            if (DiskEncryptionSetId != null)
+            if (Optional.IsDefined(DiskEncryptionSetId))
             {
                 writer.WritePropertyName("diskEncryptionSetId"u8);
                 writer.WriteStringValue(DiskEncryptionSetId);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (!(ThreatIntelligenceTags is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ThreatIntelligenceTags))
             {
                 writer.WritePropertyName("threatIntelligenceTags"u8);
                 writer.WriteStartArray();

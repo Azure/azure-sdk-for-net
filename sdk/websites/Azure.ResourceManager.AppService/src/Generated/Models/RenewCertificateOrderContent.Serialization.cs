@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,24 +47,24 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (KeySize.HasValue)
+            if (Optional.IsDefined(KeySize))
             {
                 writer.WritePropertyName("keySize"u8);
                 writer.WriteNumberValue(KeySize.Value);
             }
-            if (Csr != null)
+            if (Optional.IsDefined(Csr))
             {
                 writer.WritePropertyName("csr"u8);
                 writer.WriteStringValue(Csr);
             }
-            if (IsPrivateKeyExternal.HasValue)
+            if (Optional.IsDefined(IsPrivateKeyExternal))
             {
                 writer.WritePropertyName("isPrivateKeyExternal"u8);
                 writer.WriteBooleanValue(IsPrivateKeyExternal.Value);

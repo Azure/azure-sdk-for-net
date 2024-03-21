@@ -26,117 +26,117 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (DiskId != null)
+            if (Optional.IsDefined(DiskId))
             {
                 writer.WritePropertyName("diskId"u8);
                 writer.WriteStringValue(DiskId);
             }
-            if (DiskName != null)
+            if (Optional.IsDefined(DiskName))
             {
                 writer.WritePropertyName("diskName"u8);
                 writer.WriteStringValue(DiskName);
             }
-            if (ProtectionStage != null)
+            if (Optional.IsDefined(ProtectionStage))
             {
                 writer.WritePropertyName("protectionStage"u8);
                 writer.WriteStringValue(ProtectionStage);
             }
-            if (HealthErrorCode != null)
+            if (Optional.IsDefined(HealthErrorCode))
             {
                 writer.WritePropertyName("healthErrorCode"u8);
                 writer.WriteStringValue(HealthErrorCode);
             }
-            if (RpoInSeconds.HasValue)
+            if (Optional.IsDefined(RpoInSeconds))
             {
                 writer.WritePropertyName("rpoInSeconds"u8);
                 writer.WriteNumberValue(RpoInSeconds.Value);
             }
-            if (ResyncRequired != null)
+            if (Optional.IsDefined(ResyncRequired))
             {
                 writer.WritePropertyName("resyncRequired"u8);
                 writer.WriteStringValue(ResyncRequired);
             }
-            if (ResyncProgressPercentage.HasValue)
+            if (Optional.IsDefined(ResyncProgressPercentage))
             {
                 writer.WritePropertyName("resyncProgressPercentage"u8);
                 writer.WriteNumberValue(ResyncProgressPercentage.Value);
             }
-            if (ResyncDurationInSeconds.HasValue)
+            if (Optional.IsDefined(ResyncDurationInSeconds))
             {
                 writer.WritePropertyName("resyncDurationInSeconds"u8);
                 writer.WriteNumberValue(ResyncDurationInSeconds.Value);
             }
-            if (DiskCapacityInBytes.HasValue)
+            if (Optional.IsDefined(DiskCapacityInBytes))
             {
                 writer.WritePropertyName("diskCapacityInBytes"u8);
                 writer.WriteNumberValue(DiskCapacityInBytes.Value);
             }
-            if (FileSystemCapacityInBytes.HasValue)
+            if (Optional.IsDefined(FileSystemCapacityInBytes))
             {
                 writer.WritePropertyName("fileSystemCapacityInBytes"u8);
                 writer.WriteNumberValue(FileSystemCapacityInBytes.Value);
             }
-            if (SourceDataInMegaBytes.HasValue)
+            if (Optional.IsDefined(SourceDataInMegaBytes))
             {
                 writer.WritePropertyName("sourceDataInMegaBytes"u8);
                 writer.WriteNumberValue(SourceDataInMegaBytes.Value);
             }
-            if (PSDataInMegaBytes.HasValue)
+            if (Optional.IsDefined(PSDataInMegaBytes))
             {
                 writer.WritePropertyName("psDataInMegaBytes"u8);
                 writer.WriteNumberValue(PSDataInMegaBytes.Value);
             }
-            if (TargetDataInMegaBytes.HasValue)
+            if (Optional.IsDefined(TargetDataInMegaBytes))
             {
                 writer.WritePropertyName("targetDataInMegaBytes"u8);
                 writer.WriteNumberValue(TargetDataInMegaBytes.Value);
             }
-            if (DiskResized != null)
+            if (Optional.IsDefined(DiskResized))
             {
                 writer.WritePropertyName("diskResized"u8);
                 writer.WriteStringValue(DiskResized);
             }
-            if (LastRpoCalculatedOn.HasValue)
+            if (Optional.IsDefined(LastRpoCalculatedOn))
             {
                 writer.WritePropertyName("lastRpoCalculatedTime"u8);
                 writer.WriteStringValue(LastRpoCalculatedOn.Value, "O");
             }
-            if (ResyncProcessedBytes.HasValue)
+            if (Optional.IsDefined(ResyncProcessedBytes))
             {
                 writer.WritePropertyName("resyncProcessedBytes"u8);
                 writer.WriteNumberValue(ResyncProcessedBytes.Value);
             }
-            if (ResyncTotalTransferredBytes.HasValue)
+            if (Optional.IsDefined(ResyncTotalTransferredBytes))
             {
                 writer.WritePropertyName("resyncTotalTransferredBytes"u8);
                 writer.WriteNumberValue(ResyncTotalTransferredBytes.Value);
             }
-            if (ResyncLast15MinutesTransferredBytes.HasValue)
+            if (Optional.IsDefined(ResyncLast15MinutesTransferredBytes))
             {
                 writer.WritePropertyName("resyncLast15MinutesTransferredBytes"u8);
                 writer.WriteNumberValue(ResyncLast15MinutesTransferredBytes.Value);
             }
-            if (ResyncLastDataTransferOn.HasValue)
+            if (Optional.IsDefined(ResyncLastDataTransferOn))
             {
                 writer.WritePropertyName("resyncLastDataTransferTimeUTC"u8);
                 writer.WriteStringValue(ResyncLastDataTransferOn.Value, "O");
             }
-            if (ResyncStartOn.HasValue)
+            if (Optional.IsDefined(ResyncStartOn))
             {
                 writer.WritePropertyName("resyncStartTime"u8);
                 writer.WriteStringValue(ResyncStartOn.Value, "O");
             }
-            if (ProgressHealth != null)
+            if (Optional.IsDefined(ProgressHealth))
             {
                 writer.WritePropertyName("progressHealth"u8);
                 writer.WriteStringValue(ProgressHealth);
             }
-            if (ProgressStatus != null)
+            if (Optional.IsDefined(ProgressStatus))
             {
                 writer.WritePropertyName("progressStatus"u8);
                 writer.WriteStringValue(ProgressStatus);
             }
-            if (SecondsToTakeSwitchProvider.HasValue)
+            if (Optional.IsDefined(SecondsToTakeSwitchProvider))
             {
                 writer.WritePropertyName("secondsToTakeSwitchProvider"u8);
                 writer.WriteNumberValue(SecondsToTakeSwitchProvider.Value);

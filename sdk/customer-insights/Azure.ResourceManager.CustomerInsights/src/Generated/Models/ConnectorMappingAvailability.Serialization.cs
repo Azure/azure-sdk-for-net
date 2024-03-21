@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Frequency.HasValue)
+            if (Optional.IsDefined(Frequency))
             {
                 writer.WritePropertyName("frequency"u8);
                 writer.WriteStringValue(Frequency.Value.ToSerialString());

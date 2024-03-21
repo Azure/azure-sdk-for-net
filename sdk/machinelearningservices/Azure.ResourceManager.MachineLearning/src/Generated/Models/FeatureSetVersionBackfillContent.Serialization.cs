@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (FeatureWindow != null)
+            if (Optional.IsDefined(FeatureWindow))
             {
                 if (FeatureWindow != null)
                 {
@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("featureWindow");
                 }
             }
-            if (Resource != null)
+            if (Optional.IsDefined(Resource))
             {
                 writer.WritePropertyName("resource"u8);
                 writer.WriteObjectValue(Resource);
             }
-            if (!(SparkConfiguration is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SparkConfiguration))
             {
                 writer.WritePropertyName("sparkConfiguration"u8);
                 writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();

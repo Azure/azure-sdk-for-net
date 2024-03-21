@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(TargetDnsServers is ChangeTrackingList<TargetDnsServer> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(TargetDnsServers))
             {
                 writer.WritePropertyName("targetDnsServers"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Metadata is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 }
                 writer.WriteEndObject();
             }
-            if (DnsForwardingRuleState.HasValue)
+            if (Optional.IsDefined(DnsForwardingRuleState))
             {
                 writer.WritePropertyName("forwardingRuleState"u8);
                 writer.WriteStringValue(DnsForwardingRuleState.Value.ToString());

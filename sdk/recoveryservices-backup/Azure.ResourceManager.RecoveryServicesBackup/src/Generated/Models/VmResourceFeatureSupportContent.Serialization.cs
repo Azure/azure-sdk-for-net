@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (VmSize != null)
+            if (Optional.IsDefined(VmSize))
             {
                 writer.WritePropertyName("vmSize"u8);
                 writer.WriteStringValue(VmSize);
             }
-            if (VmSku != null)
+            if (Optional.IsDefined(VmSku))
             {
                 writer.WritePropertyName("vmSku"u8);
                 writer.WriteStringValue(VmSku);

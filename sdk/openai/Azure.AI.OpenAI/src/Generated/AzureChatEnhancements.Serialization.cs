@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -27,7 +26,7 @@ namespace Azure.AI.OpenAI
             }
 
             writer.WriteStartObject();
-            if (Grounding != null)
+            if (Optional.IsDefined(Grounding))
             {
                 writer.WritePropertyName("grounding"u8);
                 writer.WriteObjectValue(Grounding);

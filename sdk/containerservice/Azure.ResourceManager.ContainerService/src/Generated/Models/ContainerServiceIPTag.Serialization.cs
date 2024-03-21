@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (IPTagType != null)
+            if (Optional.IsDefined(IPTagType))
             {
                 writer.WritePropertyName("ipTagType"u8);
                 writer.WriteStringValue(IPTagType);
             }
-            if (Tag != null)
+            if (Optional.IsDefined(Tag))
             {
                 writer.WritePropertyName("tag"u8);
                 writer.WriteStringValue(Tag);

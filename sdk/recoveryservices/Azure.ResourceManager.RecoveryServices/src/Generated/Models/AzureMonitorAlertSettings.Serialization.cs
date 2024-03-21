@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
 
             writer.WriteStartObject();
-            if (AlertsForAllJobFailures.HasValue)
+            if (Optional.IsDefined(AlertsForAllJobFailures))
             {
                 writer.WritePropertyName("alertsForAllJobFailures"u8);
                 writer.WriteStringValue(AlertsForAllJobFailures.Value.ToString());

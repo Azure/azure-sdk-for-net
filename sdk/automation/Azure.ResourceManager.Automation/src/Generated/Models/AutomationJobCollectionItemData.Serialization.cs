@@ -42,34 +42,34 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Runbook != null)
+            if (options.Format != "W" && Optional.IsDefined(Runbook))
             {
                 writer.WritePropertyName("runbook"u8);
                 writer.WriteObjectValue(Runbook);
             }
-            if (options.Format != "W" && JobId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(JobId))
             {
                 writer.WritePropertyName("jobId"u8);
                 writer.WriteStringValue(JobId.Value);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 if (StartOn != null)
                 {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Automation.Models
                     writer.WriteNull("startTime");
                 }
             }
-            if (options.Format != "W" && EndOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndOn))
             {
                 if (EndOn != null)
                 {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Automation.Models
                     writer.WriteNull("endTime");
                 }
             }
-            if (options.Format != "W" && LastModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 if (LastModifiedOn != null)
                 {
@@ -105,12 +105,12 @@ namespace Azure.ResourceManager.Automation.Models
                     writer.WriteNull("lastModifiedTime");
                 }
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (RunOn != null)
+            if (Optional.IsDefined(RunOn))
             {
                 writer.WritePropertyName("runOn"u8);
                 writer.WriteStringValue(RunOn);

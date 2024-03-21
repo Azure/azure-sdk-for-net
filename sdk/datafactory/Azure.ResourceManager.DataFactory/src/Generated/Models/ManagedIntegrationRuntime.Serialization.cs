@@ -26,36 +26,36 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && State.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (ManagedVirtualNetwork != null)
+            if (Optional.IsDefined(ManagedVirtualNetwork))
             {
                 writer.WritePropertyName("managedVirtualNetwork"u8);
                 writer.WriteObjectValue(ManagedVirtualNetwork);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(IntegrationRuntimeType.ToString());
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (ComputeProperties != null)
+            if (Optional.IsDefined(ComputeProperties))
             {
                 writer.WritePropertyName("computeProperties"u8);
                 writer.WriteObjectValue(ComputeProperties);
             }
-            if (SsisProperties != null)
+            if (Optional.IsDefined(SsisProperties))
             {
                 writer.WritePropertyName("ssisProperties"u8);
                 writer.WriteObjectValue(SsisProperties);
             }
-            if (CustomerVirtualNetwork != null)
+            if (Optional.IsDefined(CustomerVirtualNetwork))
             {
                 writer.WritePropertyName("customerVirtualNetwork"u8);
                 writer.WriteObjectValue(CustomerVirtualNetwork);

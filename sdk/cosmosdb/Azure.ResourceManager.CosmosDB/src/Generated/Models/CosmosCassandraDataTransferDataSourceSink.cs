@@ -19,14 +19,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <exception cref="ArgumentNullException"> <paramref name="keyspaceName"/> or <paramref name="tableName"/> is null. </exception>
         public CosmosCassandraDataTransferDataSourceSink(string keyspaceName, string tableName)
         {
-            if (keyspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(keyspaceName));
-            }
-            if (tableName == null)
-            {
-                throw new ArgumentNullException(nameof(tableName));
-            }
+            Argument.AssertNotNull(keyspaceName, nameof(keyspaceName));
+            Argument.AssertNotNull(tableName, nameof(tableName));
 
             KeyspaceName = keyspaceName;
             TableName = tableName;

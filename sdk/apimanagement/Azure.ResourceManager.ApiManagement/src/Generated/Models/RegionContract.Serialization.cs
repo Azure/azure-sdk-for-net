@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (IsMasterRegion.HasValue)
+            if (Optional.IsDefined(IsMasterRegion))
             {
                 writer.WritePropertyName("isMasterRegion"u8);
                 writer.WriteBooleanValue(IsMasterRegion.Value);
             }
-            if (IsDeleted.HasValue)
+            if (Optional.IsDefined(IsDeleted))
             {
                 writer.WritePropertyName("isDeleted"u8);
                 writer.WriteBooleanValue(IsDeleted.Value);

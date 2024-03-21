@@ -26,19 +26,19 @@ namespace Azure.ResourceManager.Authorization.Models
             }
 
             writer.WriteStartObject();
-            if (Settings != null)
+            if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("setting"u8);
                 writer.WriteObjectValue(Settings);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("ruleType"u8);
             writer.WriteStringValue(RuleType.ToString());
-            if (Target != null)
+            if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteObjectValue(Target);

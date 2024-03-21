@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (ColumnName != null)
+            if (Optional.IsDefined(ColumnName))
             {
                 writer.WritePropertyName("columnName"u8);
 #if NET6_0_OR_GREATER
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            if (DefaultValue != null)
+            if (Optional.IsDefined(DefaultValue))
             {
                 writer.WritePropertyName("defaultValue"u8);
 #if NET6_0_OR_GREATER

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (!(Streams is ChangeTrackingList<ExtensionDataSourceStream> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Streams))
             {
                 writer.WritePropertyName("streams"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             writer.WritePropertyName("extensionName"u8);
             writer.WriteStringValue(ExtensionName);
-            if (ExtensionSettings != null)
+            if (Optional.IsDefined(ExtensionSettings))
             {
                 writer.WritePropertyName("extensionSettings"u8);
 #if NET6_0_OR_GREATER
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
 #endif
             }
-            if (!(InputDataSources is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(InputDataSources))
             {
                 writer.WritePropertyName("inputDataSources"u8);
                 writer.WriteStartArray();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);

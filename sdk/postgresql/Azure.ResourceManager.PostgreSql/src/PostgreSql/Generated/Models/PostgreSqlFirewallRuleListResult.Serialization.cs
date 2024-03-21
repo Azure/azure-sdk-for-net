@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
@@ -27,7 +26,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             }
 
             writer.WriteStartObject();
-            if (!(Value is ChangeTrackingList<PostgreSqlFirewallRuleData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (SourceDestinationType.HasValue)
+            if (Optional.IsDefined(SourceDestinationType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(SourceDestinationType.Value.ToString());
             }
-            if (PrefixType.HasValue)
+            if (Optional.IsDefined(PrefixType))
             {
                 writer.WritePropertyName("prefixType"u8);
                 writer.WriteStringValue(PrefixType.Value.ToString());
             }
-            if (!(IPPrefixValues is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(IPPrefixValues))
             {
                 writer.WritePropertyName("ipPrefixValues"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(IPGroupNames is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(IPGroupNames))
             {
                 writer.WritePropertyName("ipGroupNames"u8);
                 writer.WriteStartArray();

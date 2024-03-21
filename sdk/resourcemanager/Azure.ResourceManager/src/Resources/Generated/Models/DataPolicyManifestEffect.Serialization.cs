@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (DetailsSchema != null)
+            if (Optional.IsDefined(DetailsSchema))
             {
                 writer.WritePropertyName("detailsSchema"u8);
 #if NET6_0_OR_GREATER

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (DatabaseName != null)
+            if (Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (!(GraphNames is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(GraphNames))
             {
                 writer.WritePropertyName("graphNames"u8);
                 writer.WriteStartArray();

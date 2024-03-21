@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Dns.Models
             }
 
             writer.WriteStartObject();
-            if (Preference.HasValue)
+            if (Optional.IsDefined(Preference))
             {
                 writer.WritePropertyName("preference"u8);
                 writer.WriteNumberValue(Preference.Value);
             }
-            if (Exchange != null)
+            if (Optional.IsDefined(Exchange))
             {
                 writer.WritePropertyName("exchange"u8);
                 writer.WriteStringValue(Exchange);

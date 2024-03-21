@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (Throughput.HasValue)
+            if (Optional.IsDefined(Throughput))
             {
                 writer.WritePropertyName("throughput"u8);
                 writer.WriteNumberValue(Throughput.Value);
             }
-            if (AutoscaleSettings != null)
+            if (Optional.IsDefined(AutoscaleSettings))
             {
                 writer.WritePropertyName("autoscaleSettings"u8);
                 writer.WriteObjectValue(AutoscaleSettings);
             }
-            if (options.Format != "W" && MinimumThroughput != null)
+            if (options.Format != "W" && Optional.IsDefined(MinimumThroughput))
             {
                 writer.WritePropertyName("minimumThroughput"u8);
                 writer.WriteStringValue(MinimumThroughput);
             }
-            if (options.Format != "W" && OfferReplacePending != null)
+            if (options.Format != "W" && Optional.IsDefined(OfferReplacePending))
             {
                 writer.WritePropertyName("offerReplacePending"u8);
                 writer.WriteStringValue(OfferReplacePending);
             }
-            if (options.Format != "W" && InstantMaximumThroughput != null)
+            if (options.Format != "W" && Optional.IsDefined(InstantMaximumThroughput))
             {
                 writer.WritePropertyName("instantMaximumThroughput"u8);
                 writer.WriteStringValue(InstantMaximumThroughput);
             }
-            if (options.Format != "W" && SoftAllowedMaximumThroughput != null)
+            if (options.Format != "W" && Optional.IsDefined(SoftAllowedMaximumThroughput))
             {
                 writer.WritePropertyName("softAllowedMaximumThroughput"u8);
                 writer.WriteStringValue(SoftAllowedMaximumThroughput);

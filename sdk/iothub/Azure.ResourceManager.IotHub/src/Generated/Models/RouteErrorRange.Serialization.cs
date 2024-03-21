@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.IotHub.Models
             }
 
             writer.WriteStartObject();
-            if (Start != null)
+            if (Optional.IsDefined(Start))
             {
                 writer.WritePropertyName("start"u8);
                 writer.WriteObjectValue(Start);
             }
-            if (End != null)
+            if (Optional.IsDefined(End))
             {
                 writer.WritePropertyName("end"u8);
                 writer.WriteObjectValue(End);

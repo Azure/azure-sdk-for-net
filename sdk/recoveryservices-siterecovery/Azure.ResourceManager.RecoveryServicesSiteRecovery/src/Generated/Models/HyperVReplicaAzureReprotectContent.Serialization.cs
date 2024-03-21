@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (HyperVHostVmId != null)
+            if (Optional.IsDefined(HyperVHostVmId))
             {
                 writer.WritePropertyName("hvHostVmId"u8);
                 writer.WriteStringValue(HyperVHostVmId);
             }
-            if (VmName != null)
+            if (Optional.IsDefined(VmName))
             {
                 writer.WritePropertyName("vmName"u8);
                 writer.WriteStringValue(VmName);
             }
-            if (OSType != null)
+            if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType);
             }
-            if (VhdId != null)
+            if (Optional.IsDefined(VhdId))
             {
                 writer.WritePropertyName("vHDId"u8);
                 writer.WriteStringValue(VhdId);
             }
-            if (StorageAccountId != null)
+            if (Optional.IsDefined(StorageAccountId))
             {
                 writer.WritePropertyName("storageAccountId"u8);
                 writer.WriteStringValue(StorageAccountId);
             }
-            if (LogStorageAccountId != null)
+            if (Optional.IsDefined(LogStorageAccountId))
             {
                 writer.WritePropertyName("logStorageAccountId"u8);
                 writer.WriteStringValue(LogStorageAccountId);

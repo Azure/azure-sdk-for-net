@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (JobId != null)
+            if (Optional.IsDefined(JobId))
             {
                 writer.WritePropertyName("jobId"u8);
                 writer.WriteStringValue(JobId);
             }
-            if (JobFriendlyName != null)
+            if (Optional.IsDefined(JobFriendlyName))
             {
                 writer.WritePropertyName("jobFriendlyName"u8);
                 writer.WriteStringValue(JobFriendlyName);
             }
-            if (TargetObjectId != null)
+            if (Optional.IsDefined(TargetObjectId))
             {
                 writer.WritePropertyName("targetObjectId"u8);
                 writer.WriteStringValue(TargetObjectId);
             }
-            if (TargetObjectName != null)
+            if (Optional.IsDefined(TargetObjectName))
             {
                 writer.WritePropertyName("targetObjectName"u8);
                 writer.WriteStringValue(TargetObjectName);
             }
-            if (TargetInstanceType != null)
+            if (Optional.IsDefined(TargetInstanceType))
             {
                 writer.WritePropertyName("targetInstanceType"u8);
                 writer.WriteStringValue(TargetInstanceType);
             }
-            if (JobScenarioName != null)
+            if (Optional.IsDefined(JobScenarioName))
             {
                 writer.WritePropertyName("jobScenarioName"u8);
                 writer.WriteStringValue(JobScenarioName);

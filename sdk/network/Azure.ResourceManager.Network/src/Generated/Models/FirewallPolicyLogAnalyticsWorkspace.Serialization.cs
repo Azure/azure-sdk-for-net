@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Region != null)
+            if (Optional.IsDefined(Region))
             {
                 writer.WritePropertyName("region"u8);
                 writer.WriteStringValue(Region);
             }
-            if (WorkspaceId != null)
+            if (Optional.IsDefined(WorkspaceId))
             {
                 writer.WritePropertyName("workspaceId"u8);
                 JsonSerializer.Serialize(writer, WorkspaceId);

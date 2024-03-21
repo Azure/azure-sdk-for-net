@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (IsMultiChannelEnabled.HasValue)
+            if (Optional.IsDefined(IsMultiChannelEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsMultiChannelEnabled.Value);

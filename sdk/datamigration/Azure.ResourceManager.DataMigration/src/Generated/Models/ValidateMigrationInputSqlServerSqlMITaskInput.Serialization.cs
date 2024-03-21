@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (!(SelectedLogins is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SelectedLogins))
             {
                 writer.WritePropertyName("selectedLogins"u8);
                 writer.WriteStartArray();
@@ -47,14 +47,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (BackupFileShare != null)
+            if (Optional.IsDefined(BackupFileShare))
             {
                 writer.WritePropertyName("backupFileShare"u8);
                 writer.WriteObjectValue(BackupFileShare);
             }
             writer.WritePropertyName("backupBlobShare"u8);
             writer.WriteObjectValue(BackupBlobShare);
-            if (BackupMode.HasValue)
+            if (Optional.IsDefined(BackupMode))
             {
                 writer.WritePropertyName("backupMode"u8);
                 writer.WriteStringValue(BackupMode.Value.ToString());

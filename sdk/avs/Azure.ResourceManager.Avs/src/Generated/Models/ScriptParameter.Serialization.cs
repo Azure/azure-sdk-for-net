@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Avs.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ParameterType.HasValue)
+            if (options.Format != "W" && Avs.Optional.IsDefined(ParameterType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ParameterType.Value.ToString());
             }
-            if (Name != null)
+            if (Avs.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Avs.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Visibility.HasValue)
+            if (options.Format != "W" && Avs.Optional.IsDefined(Visibility))
             {
                 writer.WritePropertyName("visibility"u8);
                 writer.WriteStringValue(Visibility.Value.ToString());
             }
-            if (options.Format != "W" && Optional.HasValue)
+            if (options.Format != "W" && Avs.Optional.IsDefined(Optional))
             {
                 writer.WritePropertyName("optional"u8);
                 writer.WriteStringValue(Optional.Value.ToString());

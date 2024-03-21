@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (MinExecutors.HasValue)
+            if (Optional.IsDefined(MinExecutors))
             {
                 writer.WritePropertyName("minExecutors"u8);
                 writer.WriteNumberValue(MinExecutors.Value);
             }
-            if (MaxExecutors.HasValue)
+            if (Optional.IsDefined(MaxExecutors))
             {
                 writer.WritePropertyName("maxExecutors"u8);
                 writer.WriteNumberValue(MaxExecutors.Value);

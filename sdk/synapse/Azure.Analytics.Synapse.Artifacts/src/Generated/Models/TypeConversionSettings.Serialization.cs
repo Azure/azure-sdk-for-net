@@ -18,32 +18,32 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (AllowDataTruncation != null)
+            if (Optional.IsDefined(AllowDataTruncation))
             {
                 writer.WritePropertyName("allowDataTruncation"u8);
                 writer.WriteObjectValue(AllowDataTruncation);
             }
-            if (TreatBooleanAsNumber != null)
+            if (Optional.IsDefined(TreatBooleanAsNumber))
             {
                 writer.WritePropertyName("treatBooleanAsNumber"u8);
                 writer.WriteObjectValue(TreatBooleanAsNumber);
             }
-            if (DateTimeFormat != null)
+            if (Optional.IsDefined(DateTimeFormat))
             {
                 writer.WritePropertyName("dateTimeFormat"u8);
                 writer.WriteObjectValue(DateTimeFormat);
             }
-            if (DateTimeOffsetFormat != null)
+            if (Optional.IsDefined(DateTimeOffsetFormat))
             {
                 writer.WritePropertyName("dateTimeOffsetFormat"u8);
                 writer.WriteObjectValue(DateTimeOffsetFormat);
             }
-            if (TimeSpanFormat != null)
+            if (Optional.IsDefined(TimeSpanFormat))
             {
                 writer.WritePropertyName("timeSpanFormat"u8);
                 writer.WriteObjectValue(TimeSpanFormat);
             }
-            if (Culture != null)
+            if (Optional.IsDefined(Culture))
             {
                 writer.WritePropertyName("culture"u8);
                 writer.WriteObjectValue(Culture);

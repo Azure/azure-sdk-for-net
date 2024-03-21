@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (IsDefault.HasValue)
+            if (Optional.IsDefined(IsDefault))
             {
                 writer.WritePropertyName("isDefault"u8);
                 writer.WriteBooleanValue(IsDefault.Value);

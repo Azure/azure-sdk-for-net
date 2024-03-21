@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WriteStartObject();
             writer.WritePropertyName("service"u8);
             writer.WriteStringValue(Service);
-            if (!(Locations is ChangeTrackingList<AzureLocation> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Locations))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();

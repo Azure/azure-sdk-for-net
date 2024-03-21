@@ -16,12 +16,12 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (TitleField != null)
+            if (Optional.IsDefined(TitleField))
             {
                 writer.WritePropertyName("titleField"u8);
                 writer.WriteObjectValue(TitleField);
             }
-            if (!(ContentFields is ChangeTrackingList<SemanticField> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ContentFields))
             {
                 writer.WritePropertyName("prioritizedContentFields"u8);
                 writer.WriteStartArray();
@@ -31,7 +31,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(KeywordsFields is ChangeTrackingList<SemanticField> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(KeywordsFields))
             {
                 writer.WritePropertyName("prioritizedKeywordsFields"u8);
                 writer.WriteStartArray();

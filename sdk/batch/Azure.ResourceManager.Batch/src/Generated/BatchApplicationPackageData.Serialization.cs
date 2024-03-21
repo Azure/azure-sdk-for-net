@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Batch.Models;
 using Azure.ResourceManager.Models;
@@ -29,7 +28,7 @@ namespace Azure.ResourceManager.Batch
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -49,34 +48,34 @@ namespace Azure.ResourceManager.Batch
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && State.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToSerialString());
             }
-            if (options.Format != "W" && Format != null)
+            if (options.Format != "W" && Optional.IsDefined(Format))
             {
                 writer.WritePropertyName("format"u8);
                 writer.WriteStringValue(Format);
             }
-            if (options.Format != "W" && StorageUri != null)
+            if (options.Format != "W" && Optional.IsDefined(StorageUri))
             {
                 writer.WritePropertyName("storageUrl"u8);
                 writer.WriteStringValue(StorageUri.AbsoluteUri);
             }
-            if (options.Format != "W" && StorageUriExpireOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StorageUriExpireOn))
             {
                 writer.WritePropertyName("storageUrlExpiry"u8);
                 writer.WriteStringValue(StorageUriExpireOn.Value, "O");
             }
-            if (options.Format != "W" && LastActivatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastActivatedOn))
             {
                 writer.WritePropertyName("lastActivationTime"u8);
                 writer.WriteStringValue(LastActivatedOn.Value, "O");

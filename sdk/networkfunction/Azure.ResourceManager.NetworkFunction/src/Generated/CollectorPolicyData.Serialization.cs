@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkFunction.Models;
@@ -29,12 +28,12 @@ namespace Azure.ResourceManager.NetworkFunction
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -62,19 +61,19 @@ namespace Azure.ResourceManager.NetworkFunction
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (IngestionPolicy != null)
+            if (Optional.IsDefined(IngestionPolicy))
             {
                 writer.WritePropertyName("ingestionPolicy"u8);
                 writer.WriteObjectValue(IngestionPolicy);
             }
-            if (!(EmissionPolicies is ChangeTrackingList<EmissionPoliciesPropertiesFormat> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(EmissionPolicies))
             {
                 writer.WritePropertyName("emissionPolicies"u8);
                 writer.WriteStartArray();
@@ -84,7 +83,7 @@ namespace Azure.ResourceManager.NetworkFunction
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());

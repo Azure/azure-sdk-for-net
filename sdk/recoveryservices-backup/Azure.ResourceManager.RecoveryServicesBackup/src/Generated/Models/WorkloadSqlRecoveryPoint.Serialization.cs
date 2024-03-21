@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (ExtendedInfo != null)
+            if (Optional.IsDefined(ExtendedInfo))
             {
                 writer.WritePropertyName("extendedInfo"u8);
                 writer.WriteObjectValue(ExtendedInfo);
             }
-            if (RecoveryPointCreatedOn.HasValue)
+            if (Optional.IsDefined(RecoveryPointCreatedOn))
             {
                 writer.WritePropertyName("recoveryPointTimeInUTC"u8);
                 writer.WriteStringValue(RecoveryPointCreatedOn.Value, "O");
             }
-            if (RestorePointType.HasValue)
+            if (Optional.IsDefined(RestorePointType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(RestorePointType.Value.ToString());
             }
-            if (!(RecoveryPointTierDetails is ChangeTrackingList<RecoveryPointTierInformationV2> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(RecoveryPointTierDetails))
             {
                 writer.WritePropertyName("recoveryPointTierDetails"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(RecoveryPointMoveReadinessInfo is ChangeTrackingDictionary<string, RecoveryPointMoveReadinessInfo> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(RecoveryPointMoveReadinessInfo))
             {
                 writer.WritePropertyName("recoveryPointMoveReadinessInfo"u8);
                 writer.WriteStartObject();
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndObject();
             }
-            if (RecoveryPointProperties != null)
+            if (Optional.IsDefined(RecoveryPointProperties))
             {
                 writer.WritePropertyName("recoveryPointProperties"u8);
                 writer.WriteObjectValue(RecoveryPointProperties);

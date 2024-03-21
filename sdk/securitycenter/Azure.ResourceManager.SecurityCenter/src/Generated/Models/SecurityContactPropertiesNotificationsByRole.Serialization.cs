@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (!(Roles is ChangeTrackingList<SecurityAlertReceivingRole> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Roles))
             {
                 writer.WritePropertyName("roles"u8);
                 writer.WriteStartArray();

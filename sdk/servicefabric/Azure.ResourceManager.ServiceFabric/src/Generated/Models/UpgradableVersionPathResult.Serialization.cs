@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
 
             writer.WriteStartObject();
-            if (!(SupportedPath is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SupportedPath))
             {
                 writer.WritePropertyName("supportedPath"u8);
                 writer.WriteStartArray();
