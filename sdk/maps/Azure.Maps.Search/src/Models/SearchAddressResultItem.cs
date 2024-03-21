@@ -43,8 +43,16 @@ namespace Azure.Maps.Search.Models
         internal int? DetourTimeInternal { get; }
 
         /// <summary> Detour time in seconds. Only returned for calls to the Search Along Route API. </summary>
-        public TimeSpan DetourTime {
-            get { return TimeSpan.FromSeconds((double) DetourTimeInternal); }
+        public TimeSpan? DetourTime
+        {
+            get
+            {
+                if (DetourTimeInternal == null)
+                {
+                    return null;
+                }
+                return TimeSpan.FromSeconds((double)DetourTimeInternal);
+            }
         }
 
         /// <summary> A location represented as a latitude and longitude using short names &apos;lat&apos; &amp; &apos;lon&apos;. </summary>

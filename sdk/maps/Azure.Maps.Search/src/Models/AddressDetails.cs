@@ -23,8 +23,14 @@ namespace Azure.Maps.Search.Models
         internal BoundingBoxCompassNotation BoundingBoxInternal { get; }
 
         /// <summary> The bounding box of the location. </summary>
-        public GeoBoundingBox BoundingBox {
-            get {
+        public GeoBoundingBox BoundingBox
+        {
+            get
+            {
+                if (BoundingBoxInternal == null)
+                {
+                    return null;
+                }
                 String northeast = BoundingBoxInternal.NorthEast;
                 String[] northEast = northeast.Split(',');
                 double north = Convert.ToDouble(northEast[0], CultureInfo.InvariantCulture.NumberFormat);
