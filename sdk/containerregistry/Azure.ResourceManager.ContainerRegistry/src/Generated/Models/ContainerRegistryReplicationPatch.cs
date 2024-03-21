@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -64,10 +63,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The tags for the replication. </summary>
-        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary> Specifies whether the replication's regional endpoint is enabled. Requests will not be routed to a replication whose regional endpoint is disabled, however its data will continue to be synced with other replications. </summary>
-        [WirePath("properties.regionEndpointEnabled")]
         public bool? IsRegionEndpointEnabled { get; set; }
     }
 }

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Security.KeyVault.Storage;
 
 namespace Azure.Security.KeyVault.Storage.Models
 {

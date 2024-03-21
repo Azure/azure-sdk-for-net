@@ -8,11 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -118,71 +115,6 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new JobConfigurationScheduleTriggerConfig(replicaCompletionCount, cronExpression, parallelism, serializedAdditionalRawData);
         }
 
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReplicaCompletionCount), out propertyOverride);
-            if (Optional.IsDefined(ReplicaCompletionCount) || hasPropertyOverride)
-            {
-                builder.Append("  replicaCompletionCount: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"{ReplicaCompletionCount.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CronExpression), out propertyOverride);
-            if (Optional.IsDefined(CronExpression) || hasPropertyOverride)
-            {
-                builder.Append("  cronExpression: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (CronExpression.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{CronExpression}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{CronExpression}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Parallelism), out propertyOverride);
-            if (Optional.IsDefined(Parallelism) || hasPropertyOverride)
-            {
-                builder.Append("  parallelism: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"{Parallelism.Value}");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
         BinaryData IPersistableModel<JobConfigurationScheduleTriggerConfig>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<JobConfigurationScheduleTriggerConfig>)this).GetFormatFromOptions(options) : options.Format;
@@ -191,8 +123,6 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
-                case "bicep":
-                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(JobConfigurationScheduleTriggerConfig)} does not support '{options.Format}' format.");
             }
@@ -209,8 +139,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeJobConfigurationScheduleTriggerConfig(document.RootElement, options);
                     }
-                case "bicep":
-                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(JobConfigurationScheduleTriggerConfig)} does not support '{options.Format}' format.");
             }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
@@ -62,7 +61,6 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
 
         /// <summary> Resource tags. </summary>
-        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
     }
 }

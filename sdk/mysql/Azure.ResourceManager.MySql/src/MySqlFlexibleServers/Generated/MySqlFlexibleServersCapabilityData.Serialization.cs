@@ -14,7 +14,6 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.MySql;
 using Azure.ResourceManager.MySql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers

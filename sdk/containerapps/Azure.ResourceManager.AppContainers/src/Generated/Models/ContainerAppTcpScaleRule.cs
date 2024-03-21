@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -65,10 +64,8 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Metadata properties to describe tcp scale rule. </summary>
-        [WirePath("metadata")]
         public IDictionary<string, string> Metadata { get; }
         /// <summary> Authentication secrets for the tcp scale rule. </summary>
-        [WirePath("auth")]
         public IList<ContainerAppScaleRuleAuth> Auth { get; }
     }
 }

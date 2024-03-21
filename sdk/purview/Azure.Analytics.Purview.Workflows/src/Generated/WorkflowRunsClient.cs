@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 

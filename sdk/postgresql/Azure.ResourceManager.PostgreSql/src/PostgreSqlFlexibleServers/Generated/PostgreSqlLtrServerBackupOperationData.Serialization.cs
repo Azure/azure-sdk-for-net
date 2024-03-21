@@ -13,7 +13,6 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.PostgreSql;
 using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers

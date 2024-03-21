@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.AppContainers.Mocking;
 using Azure.ResourceManager.AppContainers.Models;
 using Azure.ResourceManager.Resources;

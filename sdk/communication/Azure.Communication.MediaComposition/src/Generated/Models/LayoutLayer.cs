@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.Communication.MediaComposition;
-
 namespace Azure.Communication.MediaComposition.Models
 {
     /// <summary> Configure layer to control the z-position of input groups. </summary>

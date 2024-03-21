@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -74,10 +73,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The service URI for the webhook to post notifications. </summary>
-        [WirePath("serviceUri")]
         public Uri ServiceUri { get; }
         /// <summary> Custom headers that will be added to the webhook notifications. </summary>
-        [WirePath("customHeaders")]
         public IReadOnlyDictionary<string, string> CustomHeaders { get; }
     }
 }

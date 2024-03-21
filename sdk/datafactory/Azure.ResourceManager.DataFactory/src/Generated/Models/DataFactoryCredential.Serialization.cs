@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -95,8 +94,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "ServicePrincipal": return ServicePrincipalCredential.DeserializeServicePrincipalCredential(element, options);
                     case "ManagedIdentity": return DataFactoryManagedIdentityCredentialProperties.DeserializeDataFactoryManagedIdentityCredentialProperties(element, options);
+                    case "ServicePrincipal": return ServicePrincipalCredential.DeserializeServicePrincipalCredential(element, options);
                 }
             }
             return UnknownCredential.DeserializeUnknownCredential(element, options);

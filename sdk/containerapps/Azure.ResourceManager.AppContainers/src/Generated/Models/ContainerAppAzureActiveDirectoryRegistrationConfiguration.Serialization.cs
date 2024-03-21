@@ -8,11 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -153,153 +150,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 serializedAdditionalRawData);
         }
 
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OpenIdIssuer), out propertyOverride);
-            if (Optional.IsDefined(OpenIdIssuer) || hasPropertyOverride)
-            {
-                builder.Append("  openIdIssuer: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (OpenIdIssuer.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{OpenIdIssuer}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{OpenIdIssuer}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientId), out propertyOverride);
-            if (Optional.IsDefined(ClientId) || hasPropertyOverride)
-            {
-                builder.Append("  clientId: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (ClientId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ClientId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ClientId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientSecretSettingName), out propertyOverride);
-            if (Optional.IsDefined(ClientSecretSettingName) || hasPropertyOverride)
-            {
-                builder.Append("  clientSecretSettingName: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (ClientSecretSettingName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ClientSecretSettingName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ClientSecretSettingName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientSecretCertificateThumbprint), out propertyOverride);
-            if (Optional.IsDefined(ClientSecretCertificateThumbprint) || hasPropertyOverride)
-            {
-                builder.Append("  clientSecretCertificateThumbprint: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (ClientSecretCertificateThumbprint.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ClientSecretCertificateThumbprint}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ClientSecretCertificateThumbprint}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientSecretCertificateSubjectAlternativeName), out propertyOverride);
-            if (Optional.IsDefined(ClientSecretCertificateSubjectAlternativeName) || hasPropertyOverride)
-            {
-                builder.Append("  clientSecretCertificateSubjectAlternativeName: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (ClientSecretCertificateSubjectAlternativeName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ClientSecretCertificateSubjectAlternativeName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ClientSecretCertificateSubjectAlternativeName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientSecretCertificateIssuer), out propertyOverride);
-            if (Optional.IsDefined(ClientSecretCertificateIssuer) || hasPropertyOverride)
-            {
-                builder.Append("  clientSecretCertificateIssuer: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (ClientSecretCertificateIssuer.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ClientSecretCertificateIssuer}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ClientSecretCertificateIssuer}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
         BinaryData IPersistableModel<ContainerAppAzureActiveDirectoryRegistrationConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppAzureActiveDirectoryRegistrationConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -308,8 +158,6 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
-                case "bicep":
-                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerAppAzureActiveDirectoryRegistrationConfiguration)} does not support '{options.Format}' format.");
             }
@@ -326,8 +174,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeContainerAppAzureActiveDirectoryRegistrationConfiguration(document.RootElement, options);
                     }
-                case "bicep":
-                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ContainerAppAzureActiveDirectoryRegistrationConfiguration)} does not support '{options.Format}' format.");
             }

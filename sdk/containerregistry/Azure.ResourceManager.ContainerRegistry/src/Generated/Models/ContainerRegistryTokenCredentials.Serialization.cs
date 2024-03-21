@@ -8,12 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -131,65 +127,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new ContainerRegistryTokenCredentials(certificates ?? new ChangeTrackingList<ContainerRegistryTokenCertificate>(), passwords ?? new ChangeTrackingList<ContainerRegistryTokenPassword>(), serializedAdditionalRawData);
         }
 
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Certificates), out propertyOverride);
-            if (Optional.IsCollectionDefined(Certificates) || hasPropertyOverride)
-            {
-                if (Certificates.Any() || hasPropertyOverride)
-                {
-                    builder.Append("  certificates: ");
-                    if (hasPropertyOverride)
-                    {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
-                        builder.AppendLine("[");
-                        foreach (var item in Certificates)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  certificates: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Passwords), out propertyOverride);
-            if (Optional.IsCollectionDefined(Passwords) || hasPropertyOverride)
-            {
-                if (Passwords.Any() || hasPropertyOverride)
-                {
-                    builder.Append("  passwords: ");
-                    if (hasPropertyOverride)
-                    {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
-                        builder.AppendLine("[");
-                        foreach (var item in Passwords)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  passwords: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
         BinaryData IPersistableModel<ContainerRegistryTokenCredentials>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryTokenCredentials>)this).GetFormatFromOptions(options) : options.Format;
@@ -198,8 +135,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
-                case "bicep":
-                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerRegistryTokenCredentials)} does not support '{options.Format}' format.");
             }
@@ -216,8 +151,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeContainerRegistryTokenCredentials(document.RootElement, options);
                     }
-                case "bicep":
-                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ContainerRegistryTokenCredentials)} does not support '{options.Format}' format.");
             }

@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Maps.Common;
@@ -136,7 +135,7 @@ namespace Azure.Maps.Routing
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Common.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(routeMatrixQuery);
             request.Content = content;
             return message;
@@ -601,7 +600,7 @@ namespace Azure.Maps.Routing
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Common.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(routeMatrixQuery);
             request.Content = content;
             return message;
@@ -1699,7 +1698,7 @@ namespace Azure.Maps.Routing
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Common.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(routeDirectionParameters);
             request.Content = content;
             return message;
@@ -2770,7 +2769,7 @@ namespace Azure.Maps.Routing
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Common.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(routeDirectionsBatchQueries);
             request.Content = content;
             return message;
@@ -3410,7 +3409,7 @@ namespace Azure.Maps.Routing
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Common.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(routeDirectionsBatchQueries);
             request.Content = content;
             return message;

@@ -13,7 +13,6 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources.Models;
-using Azure.ResourceManager.Search;
 
 namespace Azure.ResourceManager.Search.Models
 {

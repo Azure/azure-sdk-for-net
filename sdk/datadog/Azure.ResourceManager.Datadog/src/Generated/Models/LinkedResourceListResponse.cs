@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Datadog;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Datadog.Models

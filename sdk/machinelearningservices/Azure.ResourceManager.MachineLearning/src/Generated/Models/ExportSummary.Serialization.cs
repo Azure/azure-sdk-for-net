@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -119,8 +118,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "CSV": return CsvExportSummary.DeserializeCsvExportSummary(element, options);
                     case "Coco": return CocoExportSummary.DeserializeCocoExportSummary(element, options);
+                    case "CSV": return CsvExportSummary.DeserializeCsvExportSummary(element, options);
                     case "Dataset": return DatasetExportSummary.DeserializeDatasetExportSummary(element, options);
                 }
             }

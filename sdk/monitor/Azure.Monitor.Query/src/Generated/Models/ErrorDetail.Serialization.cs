@@ -7,8 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
-using Azure.Monitor.Query;
 
 namespace Azure.Monitor.Query.Models
 {
@@ -23,9 +21,8 @@ namespace Azure.Monitor.Query.Models
             string code = default;
             string message = default;
             string target = default;
-            string value = default;
-            IReadOnlyList<string> resources = default;
-            object additionalProperties = default;
+            IReadOnlyList<ErrorDetail> details = default;
+            IReadOnlyList<ErrorAdditionalInfo> additionalInfo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -43,42 +40,36 @@ namespace Azure.Monitor.Query.Models
                     target = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"u8))
-                {
-                    value = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("resources"u8))
+                if (property.NameEquals("details"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<ErrorDetail> array = new List<ErrorDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(DeserializeErrorDetail(item));
                     }
-                    resources = array;
+                    details = array;
                     continue;
                 }
-                if (property.NameEquals("additionalProperties"u8))
+                if (property.NameEquals("additionalInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    additionalProperties = property.Value.GetObject();
+                    List<ErrorAdditionalInfo> array = new List<ErrorAdditionalInfo>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ErrorAdditionalInfo.DeserializeErrorAdditionalInfo(item));
+                    }
+                    additionalInfo = array;
                     continue;
                 }
             }
-            return new ErrorDetail(
-                code,
-                message,
-                target,
-                value,
-                resources ?? new ChangeTrackingList<string>(),
-                additionalProperties);
+            return new ErrorDetail(code, message, target, details ?? new ChangeTrackingList<ErrorDetail>(), additionalInfo ?? new ChangeTrackingList<ErrorAdditionalInfo>());
         }
     }
 }

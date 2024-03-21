@@ -8,5 +8,4 @@ using Azure.Core;
 [assembly: CodeGenSuppressType("Azure.ResourceManager.RequestContentHelper")]
 [assembly: CodeGenSuppressType("Azure.ResourceManager.Argument")]
 [assembly: CodeGenSuppressType("Azure.ResourceManager.ChangeTrackingDictionary")]
-[assembly: CodeGenSuppressType("Azure.ResourceManager.Utf8JsonRequestContent")]
-[assembly: CodeGenSuppressType("Azure.ResourceManager.BicepSerializationHelpers")]
+[assembly: CodeGenSuppressType("Azure.ResourceManager.ModelSerializationExtensions")]
