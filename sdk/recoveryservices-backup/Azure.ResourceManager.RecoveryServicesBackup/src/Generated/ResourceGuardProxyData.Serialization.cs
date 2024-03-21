@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             var format = options.Format == "W" ? ((IPersistableModel<ResourceGuardProxyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceGuardProxyData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceGuardProxyData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             var format = options.Format == "W" ? ((IPersistableModel<ResourceGuardProxyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceGuardProxyData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceGuardProxyData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceGuardProxyData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceGuardProxyData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                         return DeserializeResourceGuardProxyData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceGuardProxyData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceGuardProxyData)} does not support reading '{options.Format}' format.");
             }
         }
 

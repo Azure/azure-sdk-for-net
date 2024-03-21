@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery
             var format = options.Format == "W" ? ((IPersistableModel<SpringBootSiteData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SpringBootSiteData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SpringBootSiteData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery
             var format = options.Format == "W" ? ((IPersistableModel<SpringBootSiteData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SpringBootSiteData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SpringBootSiteData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SpringBootSiteData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SpringBootSiteData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery
                         return DeserializeSpringBootSiteData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SpringBootSiteData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SpringBootSiteData)} does not support reading '{options.Format}' format.");
             }
         }
 
