@@ -100,6 +100,15 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
+        /// Writes a boolean plus int32 to represent a nulable int.
+        /// </summary>
+        internal static void Write(this BinaryWriter writer, int? value)
+        {
+            writer.Write(value.HasValue);
+            writer.Write(value ?? 0);
+        }
+
+        /// <summary>
         /// Reads a boolean plus int32 as a nullable int.
         /// </summary>
         internal static int? ReadNullableInt32(this BinaryReader reader)
@@ -130,13 +139,12 @@ namespace Azure.Storage.DataMovement
 
         /// <summary>
         /// Writes a boolean plus two int64s to represent a nullable DateTimeOffset.
-        /// The first long is datetime ticks and the second is offset ticks.
+        /// The first long is datetime ticks and the second is a short for offset minutes.
         /// </summary>
         internal static void Write(this BinaryWriter writer, DateTimeOffset? value)
         {
             writer.Write(value.HasValue);
-            writer.Write(value?.Ticks ?? 0L);
-            writer.Write(value?.Offset.Ticks ?? 0L);
+            writer.Write(value?.UtcTicks ?? 0L);
         }
 
         /// <summary>
@@ -151,14 +159,13 @@ namespace Azure.Storage.DataMovement
 
         /// <summary>
         /// Reads a boolean plus two int64s as a nullable DateTimeOffset.
-        /// The first long is datetime ticks and the second is offset ticks.
+        /// The first long is datetime ticks and the second is a short for offset minutes.
         /// </summary>
         internal static DateTimeOffset? ReadNullableDateTimeOffset(this BinaryReader reader)
         {
             bool hasValue = reader.ReadBoolean();
             long valueTicks = reader.ReadInt64();
-            long valueOffsetTicks = reader.ReadInt64();
-            return hasValue ? new DateTimeOffset(valueTicks, new TimeSpan(valueOffsetTicks)) : default;
+            return hasValue ? new DateTimeOffset(valueTicks, TimeSpan.Zero) : default;
         }
 
         internal static string ReadPaddedString(this BinaryReader reader, int numBytes)
