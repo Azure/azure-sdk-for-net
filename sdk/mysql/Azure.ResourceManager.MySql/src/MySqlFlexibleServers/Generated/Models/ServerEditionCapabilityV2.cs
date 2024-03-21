@@ -70,19 +70,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         }
 
         /// <summary> Server edition name. </summary>
-        [WirePath("name")]
         public string Name { get; }
         /// <summary> Default Sku name. </summary>
-        [WirePath("defaultSku")]
         public string DefaultSku { get; }
         /// <summary> Default storage size. </summary>
-        [WirePath("defaultStorageSize")]
         public int? DefaultStorageSize { get; }
         /// <summary> A list of supported storage editions. </summary>
-        [WirePath("supportedStorageEditions")]
         public IReadOnlyList<MySqlFlexibleServerStorageEditionCapability> SupportedStorageEditions { get; }
         /// <summary> A list of supported Skus. </summary>
-        [WirePath("supportedSkus")]
         public IReadOnlyList<SkuCapabilityV2> SupportedSkus { get; }
     }
 }

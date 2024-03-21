@@ -69,19 +69,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         }
 
         /// <summary> Primary user identity resource id. </summary>
-        [WirePath("primaryUserAssignedIdentityId")]
         public ResourceIdentifier PrimaryUserAssignedIdentityId { get; set; }
         /// <summary> Primary key uri. </summary>
-        [WirePath("primaryKeyURI")]
         public Uri PrimaryKeyUri { get; set; }
         /// <summary> Geo backup user identity resource id as identity can't cross region, need identity in same region as geo backup. </summary>
-        [WirePath("geoBackupUserAssignedIdentityId")]
         public ResourceIdentifier GeoBackupUserAssignedIdentityId { get; set; }
         /// <summary> Geo backup key uri as key vault can't cross region, need cmk in same region as geo backup. </summary>
-        [WirePath("geoBackupKeyURI")]
         public Uri GeoBackupKeyUri { get; set; }
         /// <summary> The key type, AzureKeyVault for enable cmk, SystemManaged for disable cmk. </summary>
-        [WirePath("type")]
         public MySqlFlexibleServerDataEncryptionType? EncryptionType { get; set; }
     }
 }

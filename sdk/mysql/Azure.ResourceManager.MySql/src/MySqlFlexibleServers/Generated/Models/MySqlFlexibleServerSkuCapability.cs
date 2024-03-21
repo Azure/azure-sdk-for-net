@@ -66,16 +66,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         }
 
         /// <summary> vCore name. </summary>
-        [WirePath("name")]
         public string Name { get; }
         /// <summary> supported vCores. </summary>
-        [WirePath("vCores")]
         public long? VCores { get; }
         /// <summary> supported IOPS. </summary>
-        [WirePath("supportedIops")]
         public long? SupportedIops { get; }
         /// <summary> supported memory per vCore in MB. </summary>
-        [WirePath("supportedMemoryPerVCoreMB")]
         public long? SupportedMemoryPerVCoreInMB { get; }
     }
 }

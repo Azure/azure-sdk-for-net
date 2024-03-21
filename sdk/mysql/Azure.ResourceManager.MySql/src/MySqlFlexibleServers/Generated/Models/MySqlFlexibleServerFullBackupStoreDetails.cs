@@ -41,7 +41,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         }
 
         /// <summary> SASUriList of storage containers where backup data is to be streamed/copied. </summary>
-        [WirePath("sasUriList")]
         public IList<string> SasUriList { get; }
     }
 }

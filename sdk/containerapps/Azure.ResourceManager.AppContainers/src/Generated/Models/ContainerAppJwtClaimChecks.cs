@@ -64,10 +64,8 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> The list of the allowed groups. </summary>
-        [WirePath("allowedGroups")]
         public IList<string> AllowedGroups { get; }
         /// <summary> The list of the allowed client applications. </summary>
-        [WirePath("allowedClientApplications")]
         public IList<string> AllowedClientApplications { get; }
     }
 }

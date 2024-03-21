@@ -64,13 +64,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         }
 
         /// <summary> High availability mode for a server. </summary>
-        [WirePath("mode")]
         public MySqlFlexibleServerHighAvailabilityMode? Mode { get; set; }
         /// <summary> The state of server high availability. </summary>
-        [WirePath("state")]
         public MySqlFlexibleServerHighAvailabilityState? State { get; }
         /// <summary> Availability zone of the standby server. </summary>
-        [WirePath("standbyAvailabilityZone")]
         public string StandbyAvailabilityZone { get; set; }
     }
 }

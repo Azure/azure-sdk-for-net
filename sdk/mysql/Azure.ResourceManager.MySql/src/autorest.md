@@ -11,7 +11,6 @@ library-name: MySql
 #mgmt-debug:
 #  show-serialized-names: true
 use-model-reader-writer: true
-enable-bicep-serialization: true
 
 batch:
   - tag: package-2020-01-01

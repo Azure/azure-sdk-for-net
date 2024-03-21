@@ -70,7 +70,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         }
 
         /// <summary> Backup Settings. </summary>
-        [WirePath("backupSettings")]
         public MySqlFlexibleServerBackupSettings BackupSettings { get; }
     }
 }

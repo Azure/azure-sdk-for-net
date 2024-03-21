@@ -60,7 +60,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         }
 
         /// <summary> server version. </summary>
-        [WirePath("name")]
         public string Name { get; }
     }
 }

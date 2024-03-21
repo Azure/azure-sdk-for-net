@@ -66,7 +66,6 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Workload Profile resource specific properties. </summary>
-        [WirePath("properties")]
         public ContainerAppWorkloadProfileStateProperties Properties { get; set; }
     }
 }

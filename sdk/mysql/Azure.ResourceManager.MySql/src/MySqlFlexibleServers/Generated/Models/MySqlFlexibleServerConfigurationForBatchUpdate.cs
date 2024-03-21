@@ -64,13 +64,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         }
 
         /// <summary> Name of the configuration. </summary>
-        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Value of the configuration. </summary>
-        [WirePath("properties.value")]
         public string Value { get; set; }
         /// <summary> Source of the configuration. </summary>
-        [WirePath("properties.source")]
         public string Source { get; set; }
     }
 }

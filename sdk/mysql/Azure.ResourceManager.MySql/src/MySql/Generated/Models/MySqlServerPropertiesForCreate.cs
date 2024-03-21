@@ -76,22 +76,16 @@ namespace Azure.ResourceManager.MySql.Models
         }
 
         /// <summary> Server version. </summary>
-        [WirePath("version")]
         public MySqlServerVersion? Version { get; set; }
         /// <summary> Enable ssl enforcement or not when connect to server. </summary>
-        [WirePath("sslEnforcement")]
         public MySqlSslEnforcementEnum? SslEnforcement { get; set; }
         /// <summary> Enforce a minimal Tls version for the server. </summary>
-        [WirePath("minimalTlsVersion")]
         public MySqlMinimalTlsVersionEnum? MinimalTlsVersion { get; set; }
         /// <summary> Status showing whether the server enabled infrastructure encryption. </summary>
-        [WirePath("infrastructureEncryption")]
         public MySqlInfrastructureEncryption? InfrastructureEncryption { get; set; }
         /// <summary> Whether or not public network access is allowed for this server. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </summary>
-        [WirePath("publicNetworkAccess")]
         public MySqlPublicNetworkAccessEnum? PublicNetworkAccess { get; set; }
         /// <summary> Storage profile of a server. </summary>
-        [WirePath("storageProfile")]
         public MySqlStorageProfile StorageProfile { get; set; }
         /// <summary> The mode to create a new server. </summary>
         internal MySqlCreateMode CreateMode { get; set; }

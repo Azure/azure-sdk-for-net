@@ -66,16 +66,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         }
 
         /// <summary> indicates whether custom window is enabled or disabled. </summary>
-        [WirePath("customWindow")]
         public string CustomWindow { get; set; }
         /// <summary> start hour for maintenance window. </summary>
-        [WirePath("startHour")]
         public int? StartHour { get; set; }
         /// <summary> start minute for maintenance window. </summary>
-        [WirePath("startMinute")]
         public int? StartMinute { get; set; }
         /// <summary> day of week for maintenance window. </summary>
-        [WirePath("dayOfWeek")]
         public int? DayOfWeek { get; set; }
     }
 }

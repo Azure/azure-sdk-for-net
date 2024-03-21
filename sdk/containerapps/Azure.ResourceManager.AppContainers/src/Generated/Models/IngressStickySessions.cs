@@ -60,7 +60,6 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Sticky Session Affinity. </summary>
-        [WirePath("affinity")]
         public Affinity? Affinity { get; set; }
     }
 }

@@ -73,10 +73,8 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Collection of diagnostic data. </summary>
-        [WirePath("value")]
         public IReadOnlyList<ContainerAppDiagnosticData> Value { get; }
         /// <summary> Link to next page of resources. </summary>
-        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

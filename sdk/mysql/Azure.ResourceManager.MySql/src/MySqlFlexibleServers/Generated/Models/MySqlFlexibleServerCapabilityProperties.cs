@@ -69,16 +69,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         }
 
         /// <summary> zone name. </summary>
-        [WirePath("zone")]
         public string Zone { get; }
         /// <summary> Supported high availability mode. </summary>
-        [WirePath("supportedHAMode")]
         public IReadOnlyList<string> SupportedHAMode { get; }
         /// <summary> supported geo backup regions. </summary>
-        [WirePath("supportedGeoBackupRegions")]
         public IReadOnlyList<string> SupportedGeoBackupRegions { get; }
         /// <summary> A list of supported flexible server editions. </summary>
-        [WirePath("supportedFlexibleServerEditions")]
         public IReadOnlyList<MySqlFlexibleServerEditionCapability> SupportedFlexibleServerEditions { get; }
     }
 }

@@ -90,37 +90,26 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         }
 
         /// <summary> Value of the configuration. </summary>
-        [WirePath("properties.value")]
         public string Value { get; set; }
         /// <summary> Current value of the configuration. </summary>
-        [WirePath("properties.currentValue")]
         public string CurrentValue { get; set; }
         /// <summary> Description of the configuration. </summary>
-        [WirePath("properties.description")]
         public string Description { get; }
         /// <summary> The link used to get the document from community or Azure site. </summary>
-        [WirePath("properties.documentationLink")]
         public string DocumentationLink { get; }
         /// <summary> Default value of the configuration. </summary>
-        [WirePath("properties.defaultValue")]
         public string DefaultValue { get; }
         /// <summary> Data type of the configuration. </summary>
-        [WirePath("properties.dataType")]
         public string DataType { get; }
         /// <summary> Allowed values of the configuration. </summary>
-        [WirePath("properties.allowedValues")]
         public string AllowedValues { get; }
         /// <summary> Source of the configuration. </summary>
-        [WirePath("properties.source")]
         public MySqlFlexibleServerConfigurationSource? Source { get; set; }
         /// <summary> If is the configuration read only. </summary>
-        [WirePath("properties.isReadOnly")]
         public MySqlFlexibleServerConfigReadOnlyState? IsReadOnly { get; }
         /// <summary> If is the configuration pending restart or not. </summary>
-        [WirePath("properties.isConfigPendingRestart")]
         public MySqlFlexibleServerConfigPendingRestartState? IsConfigPendingRestart { get; }
         /// <summary> If is the configuration dynamic. </summary>
-        [WirePath("properties.isDynamicConfig")]
         public MySqlFlexibleServerConfigDynamicState? IsDynamicConfig { get; }
     }
 }

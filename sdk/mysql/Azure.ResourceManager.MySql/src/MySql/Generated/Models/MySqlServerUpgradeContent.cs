@@ -60,7 +60,6 @@ namespace Azure.ResourceManager.MySql.Models
         }
 
         /// <summary> Represents an server storage profile. </summary>
-        [WirePath("properties.targetServerVersion")]
         public string TargetServerVersion { get; set; }
     }
 }

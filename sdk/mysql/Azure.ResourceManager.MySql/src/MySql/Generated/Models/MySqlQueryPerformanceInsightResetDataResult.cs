@@ -62,10 +62,8 @@ namespace Azure.ResourceManager.MySql.Models
         }
 
         /// <summary> Indicates result of the operation. </summary>
-        [WirePath("status")]
         public MySqlQueryPerformanceInsightResetDataResultState? Status { get; }
         /// <summary> operation message. </summary>
-        [WirePath("message")]
         public string Message { get; }
     }
 }

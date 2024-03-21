@@ -98,7 +98,6 @@ namespace Azure.ResourceManager.MySql
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("properties")]
         public BinaryData Properties { get; set; }
     }
 }

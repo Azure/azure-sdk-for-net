@@ -60,7 +60,6 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Azure file properties. </summary>
-        [WirePath("azureFile")]
         public ContainerAppAzureFileProperties AzureFile { get; set; }
     }
 }

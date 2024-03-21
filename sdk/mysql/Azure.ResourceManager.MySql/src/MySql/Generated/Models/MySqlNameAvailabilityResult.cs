@@ -64,13 +64,10 @@ namespace Azure.ResourceManager.MySql.Models
         }
 
         /// <summary> Error Message. </summary>
-        [WirePath("message")]
         public string Message { get; }
         /// <summary> Indicates whether the resource name is available. </summary>
-        [WirePath("nameAvailable")]
         public bool? IsNameAvailable { get; }
         /// <summary> Reason for name being unavailable. </summary>
-        [WirePath("reason")]
         public string Reason { get; }
     }
 }

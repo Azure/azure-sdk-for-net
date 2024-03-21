@@ -62,10 +62,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         }
 
         /// <summary> Whether or not failover to standby server when restarting a server with high availability enabled. </summary>
-        [WirePath("restartWithFailover")]
         public MySqlFlexibleServerEnableStatusEnum? RestartWithFailover { get; set; }
         /// <summary> The maximum allowed failover time in seconds. </summary>
-        [WirePath("maxFailoverSeconds")]
         public int? MaxFailoverSeconds { get; set; }
     }
 }

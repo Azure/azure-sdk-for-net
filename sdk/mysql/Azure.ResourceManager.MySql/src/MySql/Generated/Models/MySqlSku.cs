@@ -78,19 +78,14 @@ namespace Azure.ResourceManager.MySql.Models
         }
 
         /// <summary> The name of the sku, typically, tier + family + cores, e.g. B_Gen4_1, GP_Gen5_8. </summary>
-        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> The tier of the particular SKU, e.g. Basic. </summary>
-        [WirePath("tier")]
         public MySqlSkuTier? Tier { get; set; }
         /// <summary> The scale up/out capacity, representing server's compute units. </summary>
-        [WirePath("capacity")]
         public int? Capacity { get; set; }
         /// <summary> The size code, to be interpreted by resource as appropriate. </summary>
-        [WirePath("size")]
         public string Size { get; set; }
         /// <summary> The family of hardware. </summary>
-        [WirePath("family")]
         public string Family { get; set; }
     }
 }

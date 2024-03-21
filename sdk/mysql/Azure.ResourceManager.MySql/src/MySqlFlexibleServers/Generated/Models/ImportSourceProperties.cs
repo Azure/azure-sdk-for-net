@@ -66,16 +66,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         }
 
         /// <summary> Storage type of import source. </summary>
-        [WirePath("storageType")]
         public ImportSourceStorageType? StorageType { get; set; }
         /// <summary> Uri of the import source storage. </summary>
-        [WirePath("storageUrl")]
         public Uri StorageUri { get; set; }
         /// <summary> Sas token for accessing source storage. Read and list permissions are required for sas token. </summary>
-        [WirePath("sasToken")]
         public string SasToken { get; set; }
         /// <summary> Relative path of data directory in storage. </summary>
-        [WirePath("dataDirPath")]
         public string DataDirPath { get; set; }
     }
 }

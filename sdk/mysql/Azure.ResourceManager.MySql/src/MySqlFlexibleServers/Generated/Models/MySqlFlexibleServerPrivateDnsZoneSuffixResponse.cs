@@ -60,7 +60,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         }
 
         /// <summary> Represents the private DNS zone suffix. </summary>
-        [WirePath("privateDnsZoneSuffix")]
         public string PrivateDnsZoneSuffix { get; }
     }
 }

@@ -63,10 +63,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         }
 
         /// <summary> The list of server configurations. </summary>
-        [WirePath("value")]
         public IList<MySqlFlexibleServerConfigurationForBatchUpdate> Values { get; }
         /// <summary> Whether to reset all server parameters to default. </summary>
-        [WirePath("resetAllToDefault")]
         public MySqlFlexibleServerConfigurationResetAllToDefault? ResetAllToDefault { get; set; }
     }
 }

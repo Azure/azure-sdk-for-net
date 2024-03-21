@@ -60,7 +60,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         }
 
         /// <summary> Estimated no of storage containers required for resource data to be backed up. </summary>
-        [WirePath("properties.numberOfContainers")]
         public int? NumberOfContainers { get; }
     }
 }
