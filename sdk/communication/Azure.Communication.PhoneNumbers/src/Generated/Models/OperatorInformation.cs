@@ -28,6 +28,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="internationalFormat"> International format of the phone number. </param>
         /// <param name="isoCountryCode"> ISO 3166-1 two character ('alpha-2') code associated with the phone number. </param>
         /// <param name="numberType"> Type of service associated with the phone number. </param>
+        /// <param name="isoCountryCode"> ISO 3166-1 two character ('alpha-2') code associated with the phone number. </param>
         /// <param name="operatorDetails"> Represents metadata describing the operator of a phone number. </param>
         internal OperatorInformation(string phoneNumber, string nationalFormat, string internationalFormat, string isoCountryCode, OperatorNumberType? numberType, OperatorDetails operatorDetails)
         {

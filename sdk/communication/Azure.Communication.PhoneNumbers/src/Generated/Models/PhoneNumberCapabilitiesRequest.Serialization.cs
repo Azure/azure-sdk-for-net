@@ -25,6 +25,11 @@ namespace Azure.Communication.PhoneNumbers
                 writer.WritePropertyName("sms"u8);
                 writer.WriteStringValue(Sms.Value.ToString());
             }
+            if (Optional.IsDefined(TenDLCCampaignBriefId))
+            {
+                writer.WritePropertyName("tenDLCCampaignBriefId"u8);
+                writer.WriteStringValue(TenDLCCampaignBriefId);
+            }
             writer.WriteEndObject();
         }
     }

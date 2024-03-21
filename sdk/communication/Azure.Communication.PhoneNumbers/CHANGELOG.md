@@ -1,6 +1,8 @@
 # Release History
 
-## 1.3.0-beta.6 (Unreleased)
+## 1.3.0-beta.5 (Unreleased)
+
+## 2.0.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -10,12 +12,17 @@
 
 ### Other Changes
 
-## 1.3.0-beta.5 (2024-03-01)
+## 1.3.0-beta.4 (2024-02-21)
+
+### Other changes
+- Added unmerged beta releases
+
+## 1.3.0-beta.3 (2024-02-02)
 
 ### Features Added
-- Add support for number lookup
-  - Format only can be returned for no cost
-  - Additional number details can be returned for a cost
+- Added support for API version `2023-10-01-preview`, This gives us functionality for Do Not Resell Consent Changes.
+- Users will now be able to purchase from countries like `IT`, `AT`, `FR`, `NO`, `PT`. They can do so by agreeing not to resell phone numbers by setting consentToNotResellNumbers to true.
+- Added support for 10DLC changes.
 
 ## 1.3.0-beta.2 (2023-08-31)
 

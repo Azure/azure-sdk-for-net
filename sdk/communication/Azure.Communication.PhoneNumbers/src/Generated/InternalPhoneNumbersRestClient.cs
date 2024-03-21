@@ -319,7 +319,7 @@ namespace Azure.Communication.PhoneNumbers
             }
         }
 
-        internal HttpMessage CreatePurchasePhoneNumbersRequest(string searchId)
+        internal HttpMessage CreatePurchasePhoneNumbersRequest(string searchId, bool? consentToNotResellNumbers)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -333,7 +333,8 @@ namespace Azure.Communication.PhoneNumbers
             request.Headers.Add("Content-Type", "application/json");
             var model = new PhoneNumberPurchaseRequest()
             {
-                SearchId = searchId
+                SearchId = searchId,
+                ConsentToNotResellNumbers = consentToNotResellNumbers
             };
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
@@ -343,10 +344,11 @@ namespace Azure.Communication.PhoneNumbers
 
         /// <summary> Purchases phone numbers. </summary>
         /// <param name="searchId"> The search id. </param>
+        /// <param name="consentToNotResellNumbers"> The consent to not resell numbers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<PhoneNumbersPurchasePhoneNumbersHeaders>> PurchasePhoneNumbersAsync(string searchId = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<PhoneNumbersPurchasePhoneNumbersHeaders>> PurchasePhoneNumbersAsync(string searchId = null, bool? consentToNotResellNumbers = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreatePurchasePhoneNumbersRequest(searchId);
+            using var message = CreatePurchasePhoneNumbersRequest(searchId, consentToNotResellNumbers);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new PhoneNumbersPurchasePhoneNumbersHeaders(message.Response);
             switch (message.Response.Status)
@@ -360,10 +362,11 @@ namespace Azure.Communication.PhoneNumbers
 
         /// <summary> Purchases phone numbers. </summary>
         /// <param name="searchId"> The search id. </param>
+        /// <param name="consentToNotResellNumbers"> The consent to not resell numbers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<PhoneNumbersPurchasePhoneNumbersHeaders> PurchasePhoneNumbers(string searchId = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<PhoneNumbersPurchasePhoneNumbersHeaders> PurchasePhoneNumbers(string searchId = null, bool? consentToNotResellNumbers = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreatePurchasePhoneNumbersRequest(searchId);
+            using var message = CreatePurchasePhoneNumbersRequest(searchId, consentToNotResellNumbers);
             _pipeline.Send(message, cancellationToken);
             var headers = new PhoneNumbersPurchasePhoneNumbersHeaders(message.Response);
             switch (message.Response.Status)
@@ -375,7 +378,7 @@ namespace Azure.Communication.PhoneNumbers
             }
         }
 
-        internal HttpMessage CreateUpdateCapabilitiesRequest(string phoneNumber, PhoneNumberCapabilityType? calling, PhoneNumberCapabilityType? sms)
+        internal HttpMessage CreateUpdateCapabilitiesRequest(string phoneNumber, PhoneNumberCapabilityType? calling, PhoneNumberCapabilityType? sms, string tenDLCCampaignBriefId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -392,7 +395,8 @@ namespace Azure.Communication.PhoneNumbers
             var model = new PhoneNumberCapabilitiesRequest()
             {
                 Calling = calling,
-                Sms = sms
+                Sms = sms,
+                TenDLCCampaignBriefId = tenDLCCampaignBriefId
             };
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
@@ -404,16 +408,17 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="phoneNumber"> The phone number id in E.164 format. The leading plus can be either + or encoded as %2B, e.g. +11234567890. </param>
         /// <param name="calling"> Capability value for calling. </param>
         /// <param name="sms"> Capability value for SMS. </param>
+        /// <param name="tenDLCCampaignBriefId"> Campaign Brief Id to attach to a number. For adding SMS to local numbers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
-        public async Task<ResponseWithHeaders<PhoneNumbersUpdateCapabilitiesHeaders>> UpdateCapabilitiesAsync(string phoneNumber, PhoneNumberCapabilityType? calling = null, PhoneNumberCapabilityType? sms = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<PhoneNumbersUpdateCapabilitiesHeaders>> UpdateCapabilitiesAsync(string phoneNumber, PhoneNumberCapabilityType? calling = null, PhoneNumberCapabilityType? sms = null, string tenDLCCampaignBriefId = null, CancellationToken cancellationToken = default)
         {
             if (phoneNumber == null)
             {
                 throw new ArgumentNullException(nameof(phoneNumber));
             }
 
-            using var message = CreateUpdateCapabilitiesRequest(phoneNumber, calling, sms);
+            using var message = CreateUpdateCapabilitiesRequest(phoneNumber, calling, sms, tenDLCCampaignBriefId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new PhoneNumbersUpdateCapabilitiesHeaders(message.Response);
             switch (message.Response.Status)
@@ -429,16 +434,17 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="phoneNumber"> The phone number id in E.164 format. The leading plus can be either + or encoded as %2B, e.g. +11234567890. </param>
         /// <param name="calling"> Capability value for calling. </param>
         /// <param name="sms"> Capability value for SMS. </param>
+        /// <param name="tenDLCCampaignBriefId"> Campaign Brief Id to attach to a number. For adding SMS to local numbers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
-        public ResponseWithHeaders<PhoneNumbersUpdateCapabilitiesHeaders> UpdateCapabilities(string phoneNumber, PhoneNumberCapabilityType? calling = null, PhoneNumberCapabilityType? sms = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<PhoneNumbersUpdateCapabilitiesHeaders> UpdateCapabilities(string phoneNumber, PhoneNumberCapabilityType? calling = null, PhoneNumberCapabilityType? sms = null, string tenDLCCampaignBriefId = null, CancellationToken cancellationToken = default)
         {
             if (phoneNumber == null)
             {
                 throw new ArgumentNullException(nameof(phoneNumber));
             }
 
-            using var message = CreateUpdateCapabilitiesRequest(phoneNumber, calling, sms);
+            using var message = CreateUpdateCapabilitiesRequest(phoneNumber, calling, sms, tenDLCCampaignBriefId);
             _pipeline.Send(message, cancellationToken);
             var headers = new PhoneNumbersUpdateCapabilitiesHeaders(message.Response);
             switch (message.Response.Status)
@@ -599,6 +605,33 @@ namespace Azure.Communication.PhoneNumbers
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateOperatorInformationSearchRequest(IEnumerable<string> phoneNumbers)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/operatorInformation/:search", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            OperatorInformationRequest operatorInformationRequest = new OperatorInformationRequest();
+            if (phoneNumbers != null)
+            {
+                foreach (var value in phoneNumbers)
+                {
+                    operatorInformationRequest.PhoneNumbers.Add(value);
+                }
+            }
+            var model = operatorInformationRequest;
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(model);
+            request.Content = content;
             return message;
         }
 

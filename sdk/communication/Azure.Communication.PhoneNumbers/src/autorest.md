@@ -7,10 +7,10 @@ Run `dotnet msbuild /t:GenerateCode` to generate code.
 
 ``` yaml
 public-clients: true
-tag: package-phonenumber-2024-03-01-preview
+tag: package-preview-2024-01
 model-namespace: false
 require:
-    -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/b56afb26c5450157006a3a1d9be57bae429051a2/specification/communication/data-plane/PhoneNumbers/readme.md
+    -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/a443d2d3c562d91419d11bed6326b5907d38848c/specification/communication/data-plane/PhoneNumbers/readme.md
 title: Phone numbers
 payload-flattening-threshold: 3
 generation1-convenience-client: true
@@ -32,13 +32,13 @@ directive:
   transform: >
     $["x-ms-client-name"] = "twoLetterIsoCountryName";
 ```
-
+### Change naming of Error to ErrorMessage
 ``` yaml
 directive:
   from: swagger-document
-  where: $.definitions.PhoneNumberSearchResult.properties.error.x-ms-enum
+  where: "$.definitions.PhoneNumberSearchResult.properties.error"
   transform: >
-    $["name"] = "PhoneNumberSearchResultError";
+    $["x-ms-enum"].name = "ErrorMessage";
 ```
 
 ``` yaml
@@ -48,3 +48,18 @@ directive:
   transform: >
     $["format"] = "";
 ```
+
+# Removed Models
+``` yaml
+directive:
+  - remove-operation-match: /.*Reservation.*/i
+  - remove-operation: PhoneNumbers_BrowseAvailableNumbers
+  - remove-model: PhoneNumbersReservation
+  - remove-model: PhoneNumbersReservations
+  - remove-model: PhoneNumbersBrowseRequest
+  - remove-model: PhoneNumbersBrowseResult
+  - remove-model: PhoneNumberBrowseCapabilitiesRequest
+  - remove-model: PhoneNumbersReservationPurchaseRequest
+  - remove-model: Error
+  - remove-model: AvailablePhoneNumber
+  - remove-model: AvailablePhoneNumberCost

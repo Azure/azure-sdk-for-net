@@ -74,7 +74,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var phoneNumbers = new List<string> { "+12065551234", "+12065551235" };
             var capabilities = new PhoneNumberCapabilities(PhoneNumberCapabilityType.Inbound, PhoneNumberCapabilityType.Inbound);
             var cost = PhoneNumbersModelFactory.PhoneNumberCost(10, "USD", BillingFrequency.Monthly);
-            var error = PhoneNumberSearchResultError.NoError;
+            var error = ErrorMessage.NoError;
 
             var result = PhoneNumbersModelFactory.PhoneNumberSearchResult("search1", phoneNumbers, PhoneNumberType.Geographic, PhoneNumberAssignmentType.Application, capabilities, cost, DateTimeOffset.Now, 0, error);
             Assert.IsNotNull(result);
