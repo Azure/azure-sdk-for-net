@@ -8,9 +8,10 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
+using OpenTelemetry.Logs;
 using ExceptionDocument = Azure.Monitor.OpenTelemetry.LiveMetrics.Models.Exception;
 
-namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
+namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.DataCollection
 {
     /// <summary>
     /// Helper class used to convert Activity to the LiveMetrics document schema.

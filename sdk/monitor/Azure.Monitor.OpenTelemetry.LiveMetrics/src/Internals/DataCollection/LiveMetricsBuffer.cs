@@ -3,10 +3,10 @@
 
 using System.Collections.Generic;
 
-namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
+namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.DataCollection
 {
     /// <summary>
-    /// This class encapsulates metrics sent to Live Metrics.
+    /// This struct encapsulates preaggrigated metrics sent to Live Metrics.
     /// </summary>
     internal struct LiveMetricsBuffer
     {
