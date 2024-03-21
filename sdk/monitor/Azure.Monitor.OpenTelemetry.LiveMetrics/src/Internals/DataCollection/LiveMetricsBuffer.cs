@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.DataCollection
 {
     /// <summary>
-    /// This struct encapsulates preaggrigated metrics sent to Live Metrics.
+    /// This struct encapsulates pre-aggregated metrics sent to Live Metrics.
     /// </summary>
     internal struct LiveMetricsBuffer
     {
