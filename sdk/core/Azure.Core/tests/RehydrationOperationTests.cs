@@ -26,11 +26,24 @@ namespace Azure.Core.Tests
             var operation = new RehydrationOperation(pipeline, rehydrationToken);
             Assert.NotNull(operation);
             Assert.AreEqual(operationId, operation.Id);
-            Assert.Throws<InvalidOperationException>(() => operation.GetRawResponse());
-            Assert.False(operation.HasCompleted);
+            Assert.AreEqual(200, operation.GetRawResponse().Status);
+            Assert.True(operation.HasCompleted);
 
             operation.UpdateStatus();
             Assert.AreEqual(200, operation.GetRawResponse().Status);
+            Assert.True(operation.HasCompleted);
+        }
+
+        [Test]
+        public void ConstructOperationForRehydrationWithFailure()
+        {
+            HttpPipeline pipeline = CreateMockHttpPipelineWithFailure();
+            var operationId = Guid.NewGuid().ToString();
+            var rehydrationToken = new RehydrationToken(null, null, "None", $"https://management.azure.com/subscriptions/subscription-id/providers/Microsoft.Compute/locations/region/operations/{operationId}?api-version=2019-12-01", "https://test", RequestMethod.Delete, null, OperationFinalStateVia.AzureAsyncOperation.ToString());
+            var operation = new RehydrationOperation(pipeline, rehydrationToken);
+            Assert.NotNull(operation);
+            Assert.AreEqual(500, operation.GetRawResponse().Status);
+            Assert.True(operation.HasCompleted);
         }
 
         [Test]
@@ -42,12 +55,13 @@ namespace Azure.Core.Tests
             var operation = new RehydrationOperation<MockJsonModel>(pipeline, rehydrationToken);
             Assert.NotNull(operation);
             Assert.AreEqual(operationId, operation.Id);
-            Assert.Throws<InvalidOperationException>(() => operation.GetRawResponse());
-            Assert.False(operation.HasCompleted);
+            Assert.AreEqual(200, operation.GetRawResponse().Status);
+            Assert.True(operation.HasCompleted);
+            Assert.True(operation.HasValue);
+            Assert.AreEqual(ModelReaderWriter.Write(mockJsonModel).ToString(), ModelReaderWriter.Write(operation.Value).ToString());
 
             operation.UpdateStatus();
             Assert.AreEqual(200, operation.GetRawResponse().Status);
-            Assert.AreEqual(ModelReaderWriter.Write(mockJsonModel).ToString(), ModelReaderWriter.Write(operation.Value).ToString());
         }
 
         [Test]
@@ -75,7 +89,15 @@ namespace Azure.Core.Tests
             var mockResponse = new MockResponse(200);
             mockJsonModel = new MockJsonModel(1, "a");
             mockResponse.SetContent(ModelReaderWriter.Write(mockJsonModel).ToString());
-            var transport = new MockTransport(mockResponse);
+            var transport = new MockTransport(mockResponse, mockResponse);
+            var pipeline = new HttpPipeline(transport, default);
+            return pipeline;
+        }
+
+        private static HttpPipeline CreateMockHttpPipelineWithFailure()
+        {
+            var mockResponse = new MockResponse(500);
+            var transport = new MockTransport(mockResponse, mockResponse);
             var pipeline = new HttpPipeline(transport, default);
             return pipeline;
         }

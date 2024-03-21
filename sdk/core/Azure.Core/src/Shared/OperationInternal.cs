@@ -96,7 +96,7 @@ namespace Azure.Core
             _internalOperation = new OperationInternal<VoidValue>(new OperationToOperationOfTProxy(operation), clientDiagnostics, rawResponse, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy, requestMethod);
         }
 
-        private OperationInternal(OperationState finalState)
+        internal OperationInternal(OperationState finalState)
             : base(finalState.RawResponse)
         {
             _internalOperation = finalState.HasSucceeded
