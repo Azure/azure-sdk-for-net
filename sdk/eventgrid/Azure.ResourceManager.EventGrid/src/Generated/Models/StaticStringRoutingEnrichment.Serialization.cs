@@ -32,13 +32,13 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
+            writer.WritePropertyName("valueType"u8);
+            writer.WriteStringValue(ValueType.ToString());
             if (Optional.IsDefined(Key))
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
             }
-            writer.WritePropertyName("valueType"u8);
-            writer.WriteStringValue(ValueType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -78,8 +78,8 @@ namespace Azure.ResourceManager.EventGrid.Models
                 return null;
             }
             string value = default;
-            string key = default;
             StaticRoutingEnrichmentType valueType = default;
+            string key = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,14 +89,14 @@ namespace Azure.ResourceManager.EventGrid.Models
                     value = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("key"u8))
-                {
-                    key = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("valueType"u8))
                 {
                     valueType = new StaticRoutingEnrichmentType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("key"u8))
+                {
+                    key = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")

@@ -62,6 +62,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("extendedInfo"u8);
                 writer.WriteObjectValue(ExtendedInfo);
             }
+            writer.WritePropertyName("jobType"u8);
+            writer.WriteStringValue(JobType);
             if (Optional.IsDefined(EntityFriendlyName))
             {
                 writer.WritePropertyName("entityFriendlyName"u8);
@@ -97,8 +99,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("activityId"u8);
                 writer.WriteStringValue(ActivityId);
             }
-            writer.WritePropertyName("jobType"u8);
-            writer.WriteStringValue(JobType);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -142,6 +142,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             IList<JobSupportedAction> actionsInfo = default;
             IList<WorkloadErrorInfo> errorDetails = default;
             WorkloadBackupJobExtendedInfo extendedInfo = default;
+            string jobType = default;
             string entityFriendlyName = default;
             BackupManagementType? backupManagementType = default;
             string operation = default;
@@ -149,7 +150,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             DateTimeOffset? startTime = default;
             DateTimeOffset? endTime = default;
             string activityId = default;
-            string jobType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -205,6 +205,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     extendedInfo = WorkloadBackupJobExtendedInfo.DeserializeWorkloadBackupJobExtendedInfo(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("jobType"u8))
+                {
+                    jobType = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("entityFriendlyName"u8))
                 {
                     entityFriendlyName = property.Value.GetString();
@@ -250,11 +255,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 if (property.NameEquals("activityId"u8))
                 {
                     activityId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("jobType"u8))
-                {
-                    jobType = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")

@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(ResourceElementType.ToString());
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(ResourceElementType.ToString());
             if (Optional.IsDefined(DependsOnProfile))
             {
                 writer.WritePropertyName("dependsOnProfile"u8);
@@ -77,21 +77,21 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            string name = default;
             Type type = "AutoRest.CSharp.Output.Models.Types.EnumTypeValue";
+            string name = default;
             DependsOnProfile dependsOnProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("type"u8))
                 {
                     type = new Type(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("dependsOnProfile"u8))

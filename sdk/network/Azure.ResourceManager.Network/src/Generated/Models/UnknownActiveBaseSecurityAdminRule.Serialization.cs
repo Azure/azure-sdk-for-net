@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
@@ -72,8 +74,6 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -112,6 +112,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
+            EffectiveAdminRuleKind kind = "Unknown";
             string id = default;
             DateTimeOffset? commitTime = default;
             string region = default;
@@ -119,11 +120,15 @@ namespace Azure.ResourceManager.Network.Models
             string ruleCollectionDescription = default;
             IReadOnlyList<NetworkManagerSecurityGroupItem> ruleCollectionAppliesToGroups = default;
             IReadOnlyList<NetworkConfigurationGroup> ruleGroups = default;
-            EffectiveAdminRuleKind kind = "Unknown";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("kind"u8))
+                {
+                    kind = new EffectiveAdminRuleKind(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
@@ -179,11 +184,6 @@ namespace Azure.ResourceManager.Network.Models
                         array.Add(NetworkConfigurationGroup.DeserializeNetworkConfigurationGroup(item, options));
                     }
                     ruleGroups = array;
-                    continue;
-                }
-                if (property.NameEquals("kind"u8))
-                {
-                    kind = new EffectiveAdminRuleKind(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

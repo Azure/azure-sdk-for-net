@@ -52,6 +52,8 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WritePropertyName("sceneChangeDetection"u8);
                 writer.WriteBooleanValue(UseSceneChangeDetection.Value);
             }
+            writer.WritePropertyName("@odata.type"u8);
+            writer.WriteStringValue(OdataType);
             if (Optional.IsDefined(KeyFrameInterval))
             {
                 writer.WritePropertyName("keyFrameInterval"u8);
@@ -67,8 +69,6 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WritePropertyName("syncMode"u8);
                 writer.WriteStringValue(SyncMode.Value.ToString());
             }
-            writer.WritePropertyName("@odata.type"u8);
-            writer.WriteStringValue(OdataType);
             if (Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label"u8);
@@ -116,10 +116,10 @@ namespace Azure.ResourceManager.Media.Models
             IList<H264Layer> layers = default;
             H264RateControlMode? rateControlMode = default;
             bool? sceneChangeDetection = default;
+            string odataType = default;
             TimeSpan? keyFrameInterval = default;
             InputVideoStretchMode? stretchMode = default;
             VideoSyncMode? syncMode = default;
-            string odataType = default;
             string label = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -166,6 +166,11 @@ namespace Azure.ResourceManager.Media.Models
                     sceneChangeDetection = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("@odata.type"u8))
+                {
+                    odataType = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("keyFrameInterval"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -191,11 +196,6 @@ namespace Azure.ResourceManager.Media.Models
                         continue;
                     }
                     syncMode = new VideoSyncMode(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("@odata.type"u8))
-                {
-                    odataType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("label"u8))

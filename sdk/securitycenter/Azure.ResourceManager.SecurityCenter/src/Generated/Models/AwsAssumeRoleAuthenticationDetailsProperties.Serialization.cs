@@ -36,6 +36,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStringValue(AwsAssumeRoleArn);
             writer.WritePropertyName("awsExternalId"u8);
             writer.WriteStringValue(AwsExternalId);
+            writer.WritePropertyName("authenticationType"u8);
+            writer.WriteStringValue(AuthenticationType.ToString());
             if (options.Format != "W" && Optional.IsDefined(AuthenticationProvisioningState))
             {
                 writer.WritePropertyName("authenticationProvisioningState"u8);
@@ -51,8 +53,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("authenticationType"u8);
-            writer.WriteStringValue(AuthenticationType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -94,9 +94,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             string accountId = default;
             string awsAssumeRoleArn = default;
             Guid awsExternalId = default;
+            AuthenticationType authenticationType = default;
             AuthenticationProvisioningState? authenticationProvisioningState = default;
             IReadOnlyList<SecurityCenterCloudPermission> grantedPermissions = default;
-            AuthenticationType authenticationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,6 +114,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 if (property.NameEquals("awsExternalId"u8))
                 {
                     awsExternalId = property.Value.GetGuid();
+                    continue;
+                }
+                if (property.NameEquals("authenticationType"u8))
+                {
+                    authenticationType = new AuthenticationType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("authenticationProvisioningState"u8))
@@ -137,11 +142,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         array.Add(new SecurityCenterCloudPermission(item.GetString()));
                     }
                     grantedPermissions = array;
-                    continue;
-                }
-                if (property.NameEquals("authenticationType"u8))
-                {
-                    authenticationType = new AuthenticationType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

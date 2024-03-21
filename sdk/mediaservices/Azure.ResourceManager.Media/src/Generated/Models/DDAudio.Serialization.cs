@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("@odata.type"u8);
+            writer.WriteStringValue(OdataType);
             if (Optional.IsDefined(Channels))
             {
                 writer.WritePropertyName("channels"u8);
@@ -42,8 +44,6 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WritePropertyName("bitrate"u8);
                 writer.WriteNumberValue(Bitrate.Value);
             }
-            writer.WritePropertyName("@odata.type"u8);
-            writer.WriteStringValue(OdataType);
             if (Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label"u8);
@@ -87,15 +87,20 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
+            string odataType = default;
             int? channels = default;
             int? samplingRate = default;
             int? bitrate = default;
-            string odataType = default;
             string label = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("@odata.type"u8))
+                {
+                    odataType = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("channels"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -121,11 +126,6 @@ namespace Azure.ResourceManager.Media.Models
                         continue;
                     }
                     bitrate = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("@odata.type"u8))
-                {
-                    odataType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("label"u8))

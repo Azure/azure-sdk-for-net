@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
             if (Optional.IsDefined(SourceItemId))
             {
                 writer.WritePropertyName("sourceItemId"u8);
@@ -72,8 +74,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("hyperVHostId"u8);
                 writer.WriteStringValue(HyperVHostId);
             }
-            writer.WritePropertyName("instanceType"u8);
-            writer.WriteStringValue(InstanceType);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -112,6 +112,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
+            string instanceType = default;
             string sourceItemId = default;
             string generation = default;
             SiteRecoveryOSDetails osDetails = default;
@@ -120,11 +121,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             HyperVVmDiskPresenceStatus? hasFibreChannelAdapter = default;
             HyperVVmDiskPresenceStatus? hasSharedVhd = default;
             string hyperVHostId = default;
-            string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("instanceType"u8))
+                {
+                    instanceType = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("sourceItemId"u8))
                 {
                     sourceItemId = property.Value.GetString();
@@ -188,11 +193,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 if (property.NameEquals("hyperVHostId"u8))
                 {
                     hyperVHostId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("instanceType"u8))
-                {
-                    instanceType = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")

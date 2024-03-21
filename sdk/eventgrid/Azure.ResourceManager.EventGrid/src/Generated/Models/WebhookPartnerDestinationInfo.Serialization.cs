@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("endpointType"u8);
+            writer.WriteStringValue(EndpointType.ToString());
             if (Optional.IsDefined(AzureSubscriptionId))
             {
                 writer.WritePropertyName("azureSubscriptionId"u8);
@@ -42,8 +44,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            writer.WritePropertyName("endpointType"u8);
-            writer.WriteStringValue(EndpointType.ToString());
             if (Optional.IsDefined(EndpointServiceContext))
             {
                 writer.WritePropertyName("endpointServiceContext"u8);
@@ -115,10 +115,10 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
+            PartnerEndpointType endpointType = default;
             string azureSubscriptionId = default;
             string resourceGroupName = default;
             string name = default;
-            PartnerEndpointType endpointType = default;
             string endpointServiceContext = default;
             IList<ResourceMoveChangeHistory> resourceMoveChangeHistory = default;
             Uri endpointUri = default;
@@ -128,6 +128,11 @@ namespace Azure.ResourceManager.EventGrid.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("endpointType"u8))
+                {
+                    endpointType = new PartnerEndpointType(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("azureSubscriptionId"u8))
                 {
                     azureSubscriptionId = property.Value.GetString();
@@ -141,11 +146,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                 if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("endpointType"u8))
-                {
-                    endpointType = new PartnerEndpointType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("endpointServiceContext"u8))

@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("networkFunctionType"u8);
+            writer.WriteStringValue(NetworkFunctionType.ToString());
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -47,8 +49,6 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WritePropertyName("deployParameters"u8);
                 writer.WriteStringValue(DeployParameters);
             }
-            writer.WritePropertyName("networkFunctionType"u8);
-            writer.WriteStringValue(NetworkFunctionType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -87,15 +87,20 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
+            NetworkFunctionType networkFunctionType = "AutoRest.CSharp.Output.Models.Types.EnumTypeValue";
             ProvisioningState? provisioningState = default;
             VersionState? versionState = default;
             string description = default;
             string deployParameters = default;
-            NetworkFunctionType networkFunctionType = "AutoRest.CSharp.Output.Models.Types.EnumTypeValue";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("networkFunctionType"u8))
+                {
+                    networkFunctionType = new NetworkFunctionType(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -122,11 +127,6 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 if (property.NameEquals("deployParameters"u8))
                 {
                     deployParameters = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("networkFunctionType"u8))
-                {
-                    networkFunctionType = new NetworkFunctionType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

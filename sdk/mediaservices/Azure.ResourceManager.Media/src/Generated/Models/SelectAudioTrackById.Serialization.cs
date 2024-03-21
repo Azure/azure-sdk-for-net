@@ -29,13 +29,13 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             writer.WritePropertyName("trackId"u8);
             writer.WriteNumberValue(TrackId);
+            writer.WritePropertyName("@odata.type"u8);
+            writer.WriteStringValue(OdataType);
             if (Optional.IsDefined(ChannelMapping))
             {
                 writer.WritePropertyName("channelMapping"u8);
                 writer.WriteStringValue(ChannelMapping.Value.ToString());
             }
-            writer.WritePropertyName("@odata.type"u8);
-            writer.WriteStringValue(OdataType);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.Media.Models
                 return null;
             }
             long trackId = default;
-            ChannelMapping? channelMapping = default;
             string odataType = default;
+            ChannelMapping? channelMapping = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,6 +86,11 @@ namespace Azure.ResourceManager.Media.Models
                     trackId = property.Value.GetInt64();
                     continue;
                 }
+                if (property.NameEquals("@odata.type"u8))
+                {
+                    odataType = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("channelMapping"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -93,11 +98,6 @@ namespace Azure.ResourceManager.Media.Models
                         continue;
                     }
                     channelMapping = new ChannelMapping(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("@odata.type"u8))
-                {
-                    odataType = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")

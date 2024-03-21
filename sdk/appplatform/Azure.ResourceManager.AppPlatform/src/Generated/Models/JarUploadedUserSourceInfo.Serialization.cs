@@ -37,13 +37,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WritePropertyName("jvmOptions"u8);
                 writer.WriteStringValue(JvmOptions);
             }
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(UserSourceInfoType);
             if (Optional.IsDefined(RelativePath))
             {
                 writer.WritePropertyName("relativePath"u8);
                 writer.WriteStringValue(RelativePath);
             }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(UserSourceInfoType);
             if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
@@ -89,8 +89,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
             string runtimeVersion = default;
             string jvmOptions = default;
-            string relativePath = default;
             string type = default;
+            string relativePath = default;
             string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -106,14 +106,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     jvmOptions = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("relativePath"u8))
-                {
-                    relativePath = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("relativePath"u8))
+                {
+                    relativePath = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("version"u8))

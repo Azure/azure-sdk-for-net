@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.EventHubs.Models
             writer.WriteNumberValue(RateLimitThreshold);
             writer.WritePropertyName("metricId"u8);
             writer.WriteStringValue(MetricId.ToString());
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ApplicationGroupPolicyType.ToString());
+            writer.WritePropertyName("name"u8);
+            writer.WriteStringValue(Name);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.EventHubs.Models
             }
             long rateLimitThreshold = default;
             EventHubsMetricId metricId = default;
-            string name = default;
             ApplicationGroupPolicyType type = default;
+            string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -90,14 +90,14 @@ namespace Azure.ResourceManager.EventHubs.Models
                     metricId = new EventHubsMetricId(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("type"u8))
                 {
                     type = new ApplicationGroupPolicyType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")

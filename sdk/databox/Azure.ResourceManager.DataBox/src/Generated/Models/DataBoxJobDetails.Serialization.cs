@@ -42,6 +42,8 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WritePropertyName("devicePassword"u8);
                 writer.WriteStringValue(DevicePassword);
             }
+            writer.WritePropertyName("jobDetailsType"u8);
+            writer.WriteStringValue(JobDetailsType.ToSerialString());
             if (options.Format != "W" && Optional.IsCollectionDefined(JobStages))
             {
                 writer.WritePropertyName("jobStages"u8);
@@ -89,8 +91,6 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("jobDetailsType"u8);
-            writer.WriteStringValue(JobDetailsType.ToSerialString());
             if (Optional.IsDefined(Preferences))
             {
                 writer.WritePropertyName("preferences"u8);
@@ -201,6 +201,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             IReadOnlyList<DataBoxCopyProgress> copyProgress = default;
             string devicePassword = default;
+            DataBoxOrderType jobDetailsType = default;
             IReadOnlyList<DataBoxJobStage> jobStages = default;
             DataBoxContactDetails contactDetails = default;
             DataBoxShippingAddress shippingAddress = default;
@@ -208,7 +209,6 @@ namespace Azure.ResourceManager.DataBox.Models
             PackageShippingDetails returnPackage = default;
             IList<DataImportDetails> dataImportDetails = default;
             IList<DataExportDetails> dataExportDetails = default;
-            DataBoxOrderType jobDetailsType = default;
             DataBoxOrderPreferences preferences = default;
             ReverseShippingDetails reverseShippingDetails = default;
             IReadOnlyList<CopyLogDetails> copyLogDetails = default;
@@ -242,6 +242,11 @@ namespace Azure.ResourceManager.DataBox.Models
                 if (property.NameEquals("devicePassword"u8))
                 {
                     devicePassword = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("jobDetailsType"u8))
+                {
+                    jobDetailsType = property.Value.GetString().ToDataBoxOrderType();
                     continue;
                 }
                 if (property.NameEquals("jobStages"u8))
@@ -316,11 +321,6 @@ namespace Azure.ResourceManager.DataBox.Models
                         array.Add(Models.DataExportDetails.DeserializeDataExportDetails(item, options));
                     }
                     dataExportDetails = array;
-                    continue;
-                }
-                if (property.NameEquals("jobDetailsType"u8))
-                {
-                    jobDetailsType = property.Value.GetString().ToDataBoxOrderType();
                     continue;
                 }
                 if (property.NameEquals("preferences"u8))

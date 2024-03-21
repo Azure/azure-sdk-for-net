@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.PostgreSql.Models
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("createMode"u8);
+            writer.WriteStringValue(CreateMode.ToString());
             if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
@@ -57,8 +59,6 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 writer.WritePropertyName("storageProfile"u8);
                 writer.WriteObjectValue(StorageProfile);
             }
-            writer.WritePropertyName("createMode"u8);
-            writer.WriteStringValue(CreateMode.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -97,17 +97,22 @@ namespace Azure.ResourceManager.PostgreSql.Models
             {
                 return null;
             }
+            PostgreSqlCreateMode createMode = "Unknown";
             PostgreSqlServerVersion? version = default;
             PostgreSqlSslEnforcementEnum? sslEnforcement = default;
             PostgreSqlMinimalTlsVersionEnum? minimalTlsVersion = default;
             PostgreSqlInfrastructureEncryption? infrastructureEncryption = default;
             PostgreSqlPublicNetworkAccessEnum? publicNetworkAccess = default;
             PostgreSqlStorageProfile storageProfile = default;
-            PostgreSqlCreateMode createMode = "Unknown";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("createMode"u8))
+                {
+                    createMode = new PostgreSqlCreateMode(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("version"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -160,11 +165,6 @@ namespace Azure.ResourceManager.PostgreSql.Models
                         continue;
                     }
                     storageProfile = PostgreSqlStorageProfile.DeserializePostgreSqlStorageProfile(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("createMode"u8))
-                {
-                    createMode = new PostgreSqlCreateMode(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

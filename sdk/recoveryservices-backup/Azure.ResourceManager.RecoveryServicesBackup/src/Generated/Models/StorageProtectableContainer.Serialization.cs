@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("protectableContainerType"u8);
+            writer.WriteStringValue(ProtectableContainerType.ToSerialString());
             if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
@@ -37,8 +39,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType.Value.ToString());
             }
-            writer.WritePropertyName("protectableContainerType"u8);
-            writer.WriteStringValue(ProtectableContainerType.ToSerialString());
             if (Optional.IsDefined(HealthStatus))
             {
                 writer.WritePropertyName("healthStatus"u8);
@@ -87,15 +87,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
+            ProtectableContainerType protectableContainerType = default;
             string friendlyName = default;
             BackupManagementType? backupManagementType = default;
-            ProtectableContainerType protectableContainerType = default;
             string healthStatus = default;
             string containerId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("protectableContainerType"u8))
+                {
+                    protectableContainerType = property.Value.GetString().ToProtectableContainerType();
+                    continue;
+                }
                 if (property.NameEquals("friendlyName"u8))
                 {
                     friendlyName = property.Value.GetString();
@@ -108,11 +113,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         continue;
                     }
                     backupManagementType = new BackupManagementType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("protectableContainerType"u8))
-                {
-                    protectableContainerType = property.Value.GetString().ToProtectableContainerType();
                     continue;
                 }
                 if (property.NameEquals("healthStatus"u8))

@@ -34,6 +34,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
+            writer.WritePropertyName("ruleType"u8);
+            writer.WriteStringValue(RuleType);
             if (options.Format != "W" && Optional.IsDefined(ValueType))
             {
                 writer.WritePropertyName("valueType"u8);
@@ -51,8 +53,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             writer.WritePropertyName("isEnabled"u8);
             writer.WriteBooleanValue(IsEnabled);
-            writer.WritePropertyName("ruleType"u8);
-            writer.WriteStringValue(RuleType);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -92,11 +92,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             IList<string> denylistValues = default;
+            string ruleType = default;
             SecurityValueType? valueType = default;
             string displayName = default;
             string description = default;
             bool isEnabled = default;
-            string ruleType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -109,6 +109,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         array.Add(item.GetString());
                     }
                     denylistValues = array;
+                    continue;
+                }
+                if (property.NameEquals("ruleType"u8))
+                {
+                    ruleType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("valueType"u8))
@@ -133,11 +138,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 if (property.NameEquals("isEnabled"u8))
                 {
                     isEnabled = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("ruleType"u8))
-                {
-                    ruleType = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")

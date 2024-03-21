@@ -107,13 +107,13 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("objectSummary"u8);
                 writer.WriteStringValue(ObjectSummary);
             }
+            writer.WritePropertyName("resultType"u8);
+            writer.WriteStringValue(ResultType);
             if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            writer.WritePropertyName("resultType"u8);
-            writer.WriteStringValue(ResultType);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -167,8 +167,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             IReadOnlyList<ReportableException> exceptionsAndWarnings = default;
             DateTimeOffset? lastStorageUpdate = default;
             string objectSummary = default;
-            string id = default;
             string resultType = default;
+            string id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -289,14 +289,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                     objectSummary = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"u8))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("resultType"u8))
                 {
                     resultType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("id"u8))
+                {
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")

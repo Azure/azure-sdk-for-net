@@ -48,10 +48,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("serviceDataAccessAuthIdentity"u8);
                 writer.WriteStringValue(ServiceDataAccessAuthIdentity.Value.ToString());
             }
-            writer.WritePropertyName("credentials"u8);
-            writer.WriteObjectValue(Credentials);
             writer.WritePropertyName("datastoreType"u8);
             writer.WriteStringValue(DatastoreType.ToString());
+            writer.WritePropertyName("credentials"u8);
+            writer.WriteObjectValue(Credentials);
             if (Optional.IsDefined(IntellectualProperty))
             {
                 if (IntellectualProperty != null)
@@ -159,8 +159,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             string endpoint = default;
             string oneLakeWorkspaceName = default;
             MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity = default;
-            MachineLearningDatastoreCredentials credentials = default;
             DatastoreType datastoreType = default;
+            MachineLearningDatastoreCredentials credentials = default;
             IntellectualProperty intellectualProperty = default;
             bool? isDefault = default;
             string description = default;
@@ -199,14 +199,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     serviceDataAccessAuthIdentity = new MachineLearningServiceDataAccessAuthIdentity(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("credentials"u8))
-                {
-                    credentials = MachineLearningDatastoreCredentials.DeserializeMachineLearningDatastoreCredentials(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("datastoreType"u8))
                 {
                     datastoreType = new DatastoreType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("credentials"u8))
+                {
+                    credentials = MachineLearningDatastoreCredentials.DeserializeMachineLearningDatastoreCredentials(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("intellectualProperty"u8))

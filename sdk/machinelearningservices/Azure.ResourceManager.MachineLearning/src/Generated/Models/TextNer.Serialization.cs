@@ -109,6 +109,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("validationData");
                 }
             }
+            writer.WritePropertyName("taskType"u8);
+            writer.WriteStringValue(TaskType.ToString());
             if (Optional.IsDefined(LogVerbosity))
             {
                 writer.WritePropertyName("logVerbosity"u8);
@@ -126,8 +128,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("targetColumnName");
                 }
             }
-            writer.WritePropertyName("taskType"u8);
-            writer.WriteStringValue(TaskType.ToString());
             writer.WritePropertyName("trainingData"u8);
             writer.WriteObjectValue(TrainingData);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -175,9 +175,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             IList<NlpParameterSubspace> searchSpace = default;
             NlpSweepSettings sweepSettings = default;
             MachineLearningTableJobInput validationData = default;
+            TaskType taskType = default;
             MachineLearningLogVerbosity? logVerbosity = default;
             string targetColumnName = default;
-            TaskType taskType = default;
             MachineLearningTableJobInput trainingData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -257,6 +257,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     validationData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("taskType"u8))
+                {
+                    taskType = new TaskType(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("logVerbosity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -274,11 +279,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     targetColumnName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("taskType"u8))
-                {
-                    taskType = new TaskType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("trainingData"u8))

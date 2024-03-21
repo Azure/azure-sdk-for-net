@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("configurationType"u8);
+            writer.WriteStringValue(ConfigurationType.ToString());
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -57,8 +59,6 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WritePropertyName("configurationGroupSchemaResourceReference"u8);
                 writer.WriteObjectValue(ConfigurationGroupSchemaResourceReference);
             }
-            writer.WritePropertyName("configurationType"u8);
-            writer.WriteStringValue(ConfigurationType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -97,17 +97,22 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
+            ConfigurationGroupValueConfigurationType configurationType = "AutoRest.CSharp.Output.Models.Types.EnumTypeValue";
             ProvisioningState? provisioningState = default;
             string publisherName = default;
             PublisherScope? publisherScope = default;
             string configurationGroupSchemaName = default;
             string configurationGroupSchemaOfferingLocation = default;
             DeploymentResourceIdReference configurationGroupSchemaResourceReference = default;
-            ConfigurationGroupValueConfigurationType configurationType = "AutoRest.CSharp.Output.Models.Types.EnumTypeValue";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("configurationType"u8))
+                {
+                    configurationType = new ConfigurationGroupValueConfigurationType(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -148,11 +153,6 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         continue;
                     }
                     configurationGroupSchemaResourceReference = DeploymentResourceIdReference.DeserializeDeploymentResourceIdReference(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("configurationType"u8))
-                {
-                    configurationType = new ConfigurationGroupValueConfigurationType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

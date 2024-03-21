@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("taskType"u8);
+            writer.WriteStringValue(TaskType.ToString());
             if (Optional.IsDefined(LogVerbosity))
             {
                 writer.WritePropertyName("logVerbosity"u8);
@@ -44,8 +46,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("targetColumnName");
                 }
             }
-            writer.WritePropertyName("taskType"u8);
-            writer.WriteStringValue(TaskType.ToString());
             writer.WritePropertyName("trainingData"u8);
             writer.WriteObjectValue(TrainingData);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -86,14 +86,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            TaskType taskType = "Unknown";
             MachineLearningLogVerbosity? logVerbosity = default;
             string targetColumnName = default;
-            TaskType taskType = "Unknown";
             MachineLearningTableJobInput trainingData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("taskType"u8))
+                {
+                    taskType = new TaskType(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("logVerbosity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -111,11 +116,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     targetColumnName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("taskType"u8))
-                {
-                    taskType = new TaskType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("trainingData"u8))

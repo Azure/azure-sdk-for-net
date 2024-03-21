@@ -42,6 +42,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("resourceGroup"u8);
                 writer.WriteStringValue(ResourceGroup);
             }
+            writer.WritePropertyName("protectableItemType"u8);
+            writer.WriteStringValue(ProtectableItemType);
             if (Optional.IsDefined(BackupManagementType))
             {
                 writer.WritePropertyName("backupManagementType"u8);
@@ -52,8 +54,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("workloadType"u8);
                 writer.WriteStringValue(WorkloadType);
             }
-            writer.WritePropertyName("protectableItemType"u8);
-            writer.WriteStringValue(ProtectableItemType);
             if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
@@ -113,9 +113,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ResourceIdentifier virtualMachineId = default;
             string virtualMachineVersion = default;
             string resourceGroup = default;
+            string protectableItemType = "IaaSVMProtectableItem";
             string backupManagementType = default;
             string workloadType = default;
-            string protectableItemType = "IaaSVMProtectableItem";
             string friendlyName = default;
             BackupProtectionStatus? protectionState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -141,6 +141,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     resourceGroup = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("protectableItemType"u8))
+                {
+                    protectableItemType = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("backupManagementType"u8))
                 {
                     backupManagementType = property.Value.GetString();
@@ -149,11 +154,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 if (property.NameEquals("workloadType"u8))
                 {
                     workloadType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("protectableItemType"u8))
-                {
-                    protectableItemType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("friendlyName"u8))

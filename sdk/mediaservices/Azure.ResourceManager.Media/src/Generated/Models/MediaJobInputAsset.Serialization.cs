@@ -29,6 +29,8 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             writer.WritePropertyName("assetName"u8);
             writer.WriteStringValue(AssetName);
+            writer.WritePropertyName("@odata.type"u8);
+            writer.WriteStringValue(OdataType);
             if (Optional.IsCollectionDefined(Files))
             {
                 writer.WritePropertyName("files"u8);
@@ -64,8 +66,6 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("@odata.type"u8);
-            writer.WriteStringValue(OdataType);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -105,12 +105,12 @@ namespace Azure.ResourceManager.Media.Models
                 return null;
             }
             string assetName = default;
+            string odataType = default;
             IList<string> files = default;
             ClipTime start = default;
             ClipTime end = default;
             string label = default;
             IList<MediaJobInputDefinition> inputDefinitions = default;
-            string odataType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,6 +118,11 @@ namespace Azure.ResourceManager.Media.Models
                 if (property.NameEquals("assetName"u8))
                 {
                     assetName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("@odata.type"u8))
+                {
+                    odataType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("files"u8))
@@ -169,11 +174,6 @@ namespace Azure.ResourceManager.Media.Models
                         array.Add(MediaJobInputDefinition.DeserializeMediaJobInputDefinition(item, options));
                     }
                     inputDefinitions = array;
-                    continue;
-                }
-                if (property.NameEquals("@odata.type"u8))
-                {
-                    odataType = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")

@@ -30,6 +30,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStringValue(ServerName);
             writer.WritePropertyName("databaseName"u8);
             writer.WriteStringValue(DatabaseName);
+            writer.WritePropertyName("source"u8);
+            writer.WriteStringValue(Source.ToString());
             writer.WritePropertyName("workspaceId"u8);
             writer.WriteStringValue(WorkspaceId);
             writer.WritePropertyName("vmuuid"u8);
@@ -38,8 +40,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStringValue(SourceComputerId);
             writer.WritePropertyName("machineName"u8);
             writer.WriteStringValue(MachineName);
-            writer.WritePropertyName("source"u8);
-            writer.WriteStringValue(Source.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             string serverName = default;
             string databaseName = default;
+            HealthReportSource source = default;
             ResourceIdentifier workspaceId = default;
             Guid vmuuid = default;
             string sourceComputerId = default;
             string machineName = default;
-            HealthReportSource source = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,6 +97,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 if (property.NameEquals("databaseName"u8))
                 {
                     databaseName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("source"u8))
+                {
+                    source = new HealthReportSource(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("workspaceId"u8))
@@ -117,11 +122,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 if (property.NameEquals("machineName"u8))
                 {
                     machineName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("source"u8))
-                {
-                    source = new HealthReportSource(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

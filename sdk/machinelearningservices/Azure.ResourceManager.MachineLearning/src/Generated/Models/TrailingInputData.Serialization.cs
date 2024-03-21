@@ -43,6 +43,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStringValue(WindowOffset, "P");
             writer.WritePropertyName("windowSize"u8);
             writer.WriteStringValue(WindowSize, "P");
+            writer.WritePropertyName("inputDataType"u8);
+            writer.WriteStringValue(InputDataType.ToString());
             if (Optional.IsCollectionDefined(Columns))
             {
                 if (Columns != null)
@@ -73,8 +75,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("dataContext");
                 }
             }
-            writer.WritePropertyName("inputDataType"u8);
-            writer.WriteStringValue(InputDataType.ToString());
             writer.WritePropertyName("jobInputType"u8);
             writer.WriteStringValue(JobInputType.ToString());
             writer.WritePropertyName("uri"u8);
@@ -120,9 +120,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             string preprocessingComponentId = default;
             TimeSpan windowOffset = default;
             TimeSpan windowSize = default;
+            MonitoringInputDataType inputDataType = default;
             IDictionary<string, string> columns = default;
             string dataContext = default;
-            MonitoringInputDataType inputDataType = default;
             JobInputType jobInputType = default;
             Uri uri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -149,6 +149,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     windowSize = property.Value.GetTimeSpan("P");
                     continue;
                 }
+                if (property.NameEquals("inputDataType"u8))
+                {
+                    inputDataType = new MonitoringInputDataType(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("columns"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -172,11 +177,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     dataContext = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("inputDataType"u8))
-                {
-                    inputDataType = new MonitoringInputDataType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("jobInputType"u8))

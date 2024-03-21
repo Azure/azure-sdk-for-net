@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("authenticationType"u8);
+            writer.WriteStringValue(AuthenticationType.ToString());
             if (options.Format != "W" && Optional.IsDefined(AuthenticationProvisioningState))
             {
                 writer.WritePropertyName("authenticationProvisioningState"u8);
@@ -42,8 +44,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("authenticationType"u8);
-            writer.WriteStringValue(AuthenticationType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -82,13 +82,18 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
+            AuthenticationType authenticationType = "Unknown";
             AuthenticationProvisioningState? authenticationProvisioningState = default;
             IReadOnlyList<SecurityCenterCloudPermission> grantedPermissions = default;
-            AuthenticationType authenticationType = "Unknown";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("authenticationType"u8))
+                {
+                    authenticationType = new AuthenticationType(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("authenticationProvisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -110,11 +115,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         array.Add(new SecurityCenterCloudPermission(item.GetString()));
                     }
                     grantedPermissions = array;
-                    continue;
-                }
-                if (property.NameEquals("authenticationType"u8))
-                {
-                    authenticationType = new AuthenticationType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

@@ -37,6 +37,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("slackFactor"u8);
                 writer.WriteNumberValue(SlackFactor.Value);
             }
+            writer.WritePropertyName("policyType"u8);
+            writer.WriteStringValue(PolicyType.ToString());
             if (Optional.IsDefined(DelayEvaluation))
             {
                 writer.WritePropertyName("delayEvaluation"u8);
@@ -47,8 +49,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("evaluationInterval"u8);
                 writer.WriteNumberValue(EvaluationInterval.Value);
             }
-            writer.WritePropertyName("policyType"u8);
-            writer.WriteStringValue(PolicyType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             float? slackAmount = default;
             float? slackFactor = default;
+            EarlyTerminationPolicyType policyType = default;
             int? delayEvaluation = default;
             int? evaluationInterval = default;
-            EarlyTerminationPolicyType policyType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,6 +114,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     slackFactor = property.Value.GetSingle();
                     continue;
                 }
+                if (property.NameEquals("policyType"u8))
+                {
+                    policyType = new EarlyTerminationPolicyType(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("delayEvaluation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -130,11 +135,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     evaluationInterval = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("policyType"u8))
-                {
-                    policyType = new EarlyTerminationPolicyType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             JsonSerializer.Serialize(writer, Username);
             writer.WritePropertyName("password"u8);
             JsonSerializer.Serialize(writer, Password);
-            writer.WritePropertyName("url"u8);
-            JsonSerializer.Serialize(writer, Uri);
             writer.WritePropertyName("authenticationType"u8);
             writer.WriteStringValue(AuthenticationType.ToString());
+            writer.WritePropertyName("url"u8);
+            JsonSerializer.Serialize(writer, Uri);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             DataFactoryElement<string> username = default;
             DataFactorySecret password = default;
-            DataFactoryElement<string> url = default;
             WebAuthenticationType authenticationType = default;
+            DataFactoryElement<string> url = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,14 +91,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                     password = JsonSerializer.Deserialize<DataFactorySecret>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("url"u8))
-                {
-                    url = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
-                    continue;
-                }
                 if (property.NameEquals("authenticationType"u8))
                 {
                     authenticationType = new WebAuthenticationType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("url"u8))
+                {
+                    url = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (options.Format != "W")

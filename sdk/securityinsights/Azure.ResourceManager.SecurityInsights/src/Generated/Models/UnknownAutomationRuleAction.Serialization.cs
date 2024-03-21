@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("order"u8);
-            writer.WriteNumberValue(Order);
             writer.WritePropertyName("actionType"u8);
             writer.WriteStringValue(ActionType.ToString());
+            writer.WritePropertyName("order"u8);
+            writer.WriteNumberValue(Order);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -68,20 +68,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            int order = default;
             ActionType actionType = "Unknown";
+            int order = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("order"u8))
-                {
-                    order = property.Value.GetInt32();
-                    continue;
-                }
                 if (property.NameEquals("actionType"u8))
                 {
                     actionType = new ActionType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("order"u8))
+                {
+                    order = property.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")

@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("workloadItemType"u8);
+            writer.WriteStringValue(WorkloadItemType);
             if (Optional.IsDefined(BackupManagementType))
             {
                 writer.WritePropertyName("backupManagementType"u8);
@@ -37,8 +39,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("workloadType"u8);
                 writer.WriteStringValue(WorkloadType);
             }
-            writer.WritePropertyName("workloadItemType"u8);
-            writer.WriteStringValue(WorkloadItemType);
             if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
@@ -87,15 +87,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
+            string workloadItemType = "Unknown";
             string backupManagementType = default;
             string workloadType = default;
-            string workloadItemType = "Unknown";
             string friendlyName = default;
             BackupProtectionStatus? protectionState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("workloadItemType"u8))
+                {
+                    workloadItemType = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("backupManagementType"u8))
                 {
                     backupManagementType = property.Value.GetString();
@@ -104,11 +109,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 if (property.NameEquals("workloadType"u8))
                 {
                     workloadType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("workloadItemType"u8))
-                {
-                    workloadItemType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("friendlyName"u8))

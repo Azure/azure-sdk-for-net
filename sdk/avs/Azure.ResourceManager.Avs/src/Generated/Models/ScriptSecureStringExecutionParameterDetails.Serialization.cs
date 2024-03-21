@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.Avs.Models
                 writer.WritePropertyName("secureValue"u8);
                 writer.WriteStringValue(SecureValue);
             }
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ParameterType.ToString());
+            writer.WritePropertyName("name"u8);
+            writer.WriteStringValue(Name);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.Avs.Models
                 return null;
             }
             string secureValue = default;
-            string name = default;
             ScriptExecutionParameterType type = default;
+            string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,14 +86,14 @@ namespace Azure.ResourceManager.Avs.Models
                     secureValue = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("type"u8))
                 {
                     type = new ScriptExecutionParameterType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")

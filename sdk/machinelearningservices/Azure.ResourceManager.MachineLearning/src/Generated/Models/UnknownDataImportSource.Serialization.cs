@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("sourceType"u8);
+            writer.WriteStringValue(SourceType.ToString());
             if (Optional.IsDefined(Connection))
             {
                 if (Connection != null)
@@ -39,8 +41,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("connection");
                 }
             }
-            writer.WritePropertyName("sourceType"u8);
-            writer.WriteStringValue(SourceType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -79,12 +79,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            string connection = default;
             DataImportSourceType sourceType = "Unknown";
+            string connection = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("sourceType"u8))
+                {
+                    sourceType = new DataImportSourceType(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("connection"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -93,11 +98,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     connection = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("sourceType"u8))
-                {
-                    sourceType = new DataImportSourceType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

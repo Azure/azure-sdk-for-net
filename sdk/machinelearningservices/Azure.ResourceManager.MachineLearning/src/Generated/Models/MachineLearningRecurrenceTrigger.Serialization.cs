@@ -43,6 +43,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("schedule");
                 }
             }
+            writer.WritePropertyName("triggerType"u8);
+            writer.WriteStringValue(TriggerType.ToString());
             if (Optional.IsDefined(EndTime))
             {
                 if (EndTime != null)
@@ -72,8 +74,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
-            writer.WritePropertyName("triggerType"u8);
-            writer.WriteStringValue(TriggerType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -115,10 +115,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             MachineLearningRecurrenceFrequency frequency = default;
             int interval = default;
             MachineLearningRecurrenceSchedule schedule = default;
+            MachineLearningTriggerType triggerType = default;
             string endTime = default;
             string startTime = default;
             string timeZone = default;
-            MachineLearningTriggerType triggerType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,6 +141,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     schedule = MachineLearningRecurrenceSchedule.DeserializeMachineLearningRecurrenceSchedule(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("triggerType"u8))
+                {
+                    triggerType = new MachineLearningTriggerType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("endTime"u8))
@@ -166,11 +171,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (property.NameEquals("timeZone"u8))
                 {
                     timeZone = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("triggerType"u8))
-                {
-                    triggerType = new MachineLearningTriggerType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

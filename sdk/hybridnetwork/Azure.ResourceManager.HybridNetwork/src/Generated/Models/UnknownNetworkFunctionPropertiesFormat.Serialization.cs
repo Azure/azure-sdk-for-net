@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("configurationType"u8);
+            writer.WriteStringValue(ConfigurationType.ToString());
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -77,8 +79,6 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WritePropertyName("allowSoftwareUpdate"u8);
                 writer.WriteBooleanValue(AllowSoftwareUpdate.Value);
             }
-            writer.WritePropertyName("configurationType"u8);
-            writer.WriteStringValue(ConfigurationType.ToString());
             if (Optional.IsCollectionDefined(RoleOverrideValues))
             {
                 writer.WritePropertyName("roleOverrideValues"u8);
@@ -127,6 +127,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
+            NetworkFunctionConfigurationType configurationType = "AutoRest.CSharp.Output.Models.Types.EnumTypeValue";
             ProvisioningState? provisioningState = default;
             string publisherName = default;
             PublisherScope? publisherScope = default;
@@ -137,12 +138,16 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             NfviType? nfviType = default;
             ResourceIdentifier nfviId = default;
             bool? allowSoftwareUpdate = default;
-            NetworkFunctionConfigurationType configurationType = "AutoRest.CSharp.Output.Models.Types.EnumTypeValue";
             IList<string> roleOverrideValues = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("configurationType"u8))
+                {
+                    configurationType = new NetworkFunctionConfigurationType(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -215,11 +220,6 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         continue;
                     }
                     allowSoftwareUpdate = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("configurationType"u8))
-                {
-                    configurationType = new NetworkFunctionConfigurationType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("roleOverrideValues"u8))

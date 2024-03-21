@@ -32,6 +32,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("destination"u8);
                 writer.WriteStringValue(Destination);
             }
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(OutboundRuleType.ToString());
             if (Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
@@ -42,8 +44,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(OutboundRuleType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -83,9 +83,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             string destination = default;
+            OutboundRuleType type = default;
             OutboundRuleCategory? category = default;
             OutboundRuleStatus? status = default;
-            OutboundRuleType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,6 +93,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (property.NameEquals("destination"u8))
                 {
                     destination = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    type = new OutboundRuleType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("category"u8))
@@ -111,11 +116,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     status = new OutboundRuleStatus(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new OutboundRuleType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

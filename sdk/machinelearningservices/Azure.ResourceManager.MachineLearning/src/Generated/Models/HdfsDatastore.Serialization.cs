@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol);
             }
-            writer.WritePropertyName("credentials"u8);
-            writer.WriteObjectValue(Credentials);
             writer.WritePropertyName("datastoreType"u8);
             writer.WriteStringValue(DatastoreType.ToString());
+            writer.WritePropertyName("credentials"u8);
+            writer.WriteObjectValue(Credentials);
             if (Optional.IsDefined(IntellectualProperty))
             {
                 if (IntellectualProperty != null)
@@ -156,8 +156,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             string hdfsServerCertificate = default;
             string nameNodeAddress = default;
             string protocol = default;
-            MachineLearningDatastoreCredentials credentials = default;
             DatastoreType datastoreType = default;
+            MachineLearningDatastoreCredentials credentials = default;
             IntellectualProperty intellectualProperty = default;
             bool? isDefault = default;
             string description = default;
@@ -187,14 +187,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     protocol = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("credentials"u8))
-                {
-                    credentials = MachineLearningDatastoreCredentials.DeserializeMachineLearningDatastoreCredentials(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("datastoreType"u8))
                 {
                     datastoreType = new DatastoreType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("credentials"u8))
+                {
+                    credentials = MachineLearningDatastoreCredentials.DeserializeMachineLearningDatastoreCredentials(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("intellectualProperty"u8))

@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("policy"u8);
                 writer.WriteObjectValue(Policy);
             }
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ActivityType);
+            writer.WritePropertyName("name"u8);
+            writer.WriteStringValue(Name);
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
@@ -140,8 +140,8 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             ExecutePipelineActivityPolicy policy = default;
-            string name = default;
             string type = default;
+            string name = default;
             string description = default;
             PipelineActivityState? state = default;
             ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
@@ -163,14 +163,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                     policy = ExecutePipelineActivityPolicy.DeserializeExecutePipelineActivityPolicy(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("description"u8))

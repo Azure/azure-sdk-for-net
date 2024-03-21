@@ -32,13 +32,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
+            writer.WritePropertyName("nfviType"u8);
+            writer.WriteStringValue(NfviType.ToString());
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            writer.WritePropertyName("nfviType"u8);
-            writer.WriteStringValue(NfviType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -78,8 +78,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 return null;
             }
             AzureLocation? location = default;
-            string name = default;
             NfviType nfviType = default;
+            string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,14 +93,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("nfviType"u8))
                 {
                     nfviType = new NfviType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")

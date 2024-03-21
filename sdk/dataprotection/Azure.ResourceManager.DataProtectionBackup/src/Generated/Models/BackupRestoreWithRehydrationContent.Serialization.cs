@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStringValue(RehydrationPriority.ToString());
             writer.WritePropertyName("rehydrationRetentionDuration"u8);
             writer.WriteStringValue(RehydrationRetentionDuration, "P");
-            writer.WritePropertyName("recoveryPointId"u8);
-            writer.WriteStringValue(RecoveryPointId);
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
+            writer.WritePropertyName("recoveryPointId"u8);
+            writer.WriteStringValue(RecoveryPointId);
             writer.WritePropertyName("restoreTargetInfo"u8);
             writer.WriteObjectValue(RestoreTargetInfo);
             writer.WritePropertyName("sourceDataStoreType"u8);
@@ -89,8 +89,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             BackupRehydrationPriority rehydrationPriority = default;
             TimeSpan rehydrationRetentionDuration = default;
-            string recoveryPointId = default;
             string objectType = default;
+            string recoveryPointId = default;
             RestoreTargetInfoBase restoreTargetInfo = default;
             SourceDataStoreType sourceDataStoreType = default;
             ResourceIdentifier sourceResourceId = default;
@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     rehydrationRetentionDuration = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("recoveryPointId"u8))
-                {
-                    recoveryPointId = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("objectType"u8))
                 {
                     objectType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("recoveryPointId"u8))
+                {
+                    recoveryPointId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("restoreTargetInfo"u8))

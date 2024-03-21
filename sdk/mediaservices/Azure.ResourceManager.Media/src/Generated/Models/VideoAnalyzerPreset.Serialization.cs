@@ -32,6 +32,8 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WritePropertyName("insightsToExtract"u8);
                 writer.WriteStringValue(InsightsToExtract.Value.ToString());
             }
+            writer.WritePropertyName("@odata.type"u8);
+            writer.WriteStringValue(OdataType);
             if (Optional.IsDefined(AudioLanguage))
             {
                 writer.WritePropertyName("audioLanguage"u8);
@@ -53,8 +55,6 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("@odata.type"u8);
-            writer.WriteStringValue(OdataType);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.Media.Models
                 return null;
             }
             InsightsType? insightsToExtract = default;
+            string odataType = default;
             string audioLanguage = default;
             AudioAnalysisMode? mode = default;
             IDictionary<string, string> experimentalOptions = default;
-            string odataType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -109,6 +109,11 @@ namespace Azure.ResourceManager.Media.Models
                         continue;
                     }
                     insightsToExtract = new InsightsType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("@odata.type"u8))
+                {
+                    odataType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("audioLanguage"u8))
@@ -137,11 +142,6 @@ namespace Azure.ResourceManager.Media.Models
                         dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     experimentalOptions = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("@odata.type"u8))
-                {
-                    odataType = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")

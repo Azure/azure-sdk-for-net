@@ -28,6 +28,8 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
@@ -46,8 +48,6 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
+            ScriptType kind = "Unknown";
             ArmDeploymentScriptManagedIdentity identity = default;
             AzureLocation location = default;
             IDictionary<string, string> tags = default;
-            ScriptType kind = "Unknown";
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -118,6 +118,11 @@ namespace Azure.ResourceManager.Resources.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("kind"u8))
+                {
+                    kind = new ScriptType(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -144,11 +149,6 @@ namespace Azure.ResourceManager.Resources.Models
                         dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("kind"u8))
-                {
-                    kind = new ScriptType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"u8))

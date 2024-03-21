@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("protectedItemType"u8);
+            writer.WriteStringValue(ProtectedItemType);
             if (options.Format != "W" && Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
@@ -98,8 +100,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("extendedProperties"u8);
                 writer.WriteObjectValue(ExtendedProperties);
             }
-            writer.WritePropertyName("protectedItemType"u8);
-            writer.WriteStringValue(ProtectedItemType);
             if (options.Format != "W" && Optional.IsDefined(BackupManagementType))
             {
                 writer.WritePropertyName("backupManagementType"u8);
@@ -233,6 +233,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
+            string protectedItemType = default;
             string friendlyName = default;
             ResourceIdentifier virtualMachineId = default;
             string protectionStatus = default;
@@ -245,7 +246,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string protectedItemDataId = default;
             IaasVmProtectedItemExtendedInfo extendedInfo = default;
             IaasVmBackupExtendedProperties extendedProperties = default;
-            string protectedItemType = default;
             BackupManagementType? backupManagementType = default;
             BackupDataSourceType? workloadType = default;
             string containerName = default;
@@ -268,6 +268,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("protectedItemType"u8))
+                {
+                    protectedItemType = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("friendlyName"u8))
                 {
                     friendlyName = property.Value.GetString();
@@ -368,11 +373,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         continue;
                     }
                     extendedProperties = IaasVmBackupExtendedProperties.DeserializeIaasVmBackupExtendedProperties(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("protectedItemType"u8))
-                {
-                    protectedItemType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("backupManagementType"u8))

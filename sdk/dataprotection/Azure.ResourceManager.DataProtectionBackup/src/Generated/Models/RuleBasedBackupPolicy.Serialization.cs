@@ -34,6 +34,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
+            writer.WritePropertyName("objectType"u8);
+            writer.WriteStringValue(ObjectType);
             writer.WritePropertyName("datasourceTypes"u8);
             writer.WriteStartArray();
             foreach (var item in DataSourceTypes)
@@ -41,8 +43,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("objectType"u8);
-            writer.WriteStringValue(ObjectType);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -82,8 +82,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 return null;
             }
             IList<DataProtectionBasePolicyRule> policyRules = default;
-            IList<string> datasourceTypes = default;
             string objectType = default;
+            IList<string> datasourceTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -98,6 +98,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     policyRules = array;
                     continue;
                 }
+                if (property.NameEquals("objectType"u8))
+                {
+                    objectType = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("datasourceTypes"u8))
                 {
                     List<string> array = new List<string>();
@@ -106,11 +111,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         array.Add(item.GetString());
                     }
                     datasourceTypes = array;
-                    continue;
-                }
-                if (property.NameEquals("objectType"u8))
-                {
-                    objectType = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")

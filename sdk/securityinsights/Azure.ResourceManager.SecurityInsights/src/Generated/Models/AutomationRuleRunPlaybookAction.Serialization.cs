@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("actionConfiguration"u8);
                 writer.WriteObjectValue(ActionConfiguration);
             }
-            writer.WritePropertyName("order"u8);
-            writer.WriteNumberValue(Order);
             writer.WritePropertyName("actionType"u8);
             writer.WriteStringValue(ActionType.ToString());
+            writer.WritePropertyName("order"u8);
+            writer.WriteNumberValue(Order);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 return null;
             }
             AutomationRuleRunPlaybookActionProperties actionConfiguration = default;
-            int order = default;
             ActionType actionType = default;
+            int order = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -90,14 +90,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     actionConfiguration = AutomationRuleRunPlaybookActionProperties.DeserializeAutomationRuleRunPlaybookActionProperties(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("order"u8))
-                {
-                    order = property.Value.GetInt32();
-                    continue;
-                }
                 if (property.NameEquals("actionType"u8))
                 {
                     actionType = new ActionType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("order"u8))
+                {
+                    order = property.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
