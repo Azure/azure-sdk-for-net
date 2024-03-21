@@ -196,10 +196,7 @@ Description = "<description>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             BlocklistClient client = new BlocklistClient(endpoint, credential);
 
-            using RequestContent content = RequestContent.Create(new
-            {
-                blocklistName = "<blocklistName>",
-            });
+            using RequestContent content = RequestContent.Create(new object());
             Response response = client.CreateOrUpdateTextBlocklist("<Name>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -214,10 +211,7 @@ Description = "<description>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             BlocklistClient client = new BlocklistClient(endpoint, credential);
 
-            using RequestContent content = RequestContent.Create(new
-            {
-                blocklistName = "<blocklistName>",
-            });
+            using RequestContent content = RequestContent.Create(new object());
             Response response = await client.CreateOrUpdateTextBlocklistAsync("<Name>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -234,7 +228,6 @@ Description = "<description>",
 
             using RequestContent content = RequestContent.Create(new
             {
-                blocklistName = "<blocklistName>",
                 description = "<description>",
             });
             Response response = client.CreateOrUpdateTextBlocklist("<Name>", content);
@@ -254,7 +247,6 @@ Description = "<description>",
 
             using RequestContent content = RequestContent.Create(new
             {
-                blocklistName = "<blocklistName>",
                 description = "<description>",
             });
             Response response = await client.CreateOrUpdateTextBlocklistAsync("<Name>", content);

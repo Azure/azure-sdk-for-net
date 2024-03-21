@@ -47,7 +47,7 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Initializes a new instance of <see cref="RouterJobAssignment"/>. </summary>
         /// <param name="assignedAt"> Timestamp when the job was assigned to a worker in UTC. </param>
-        internal RouterJobAssignment(DateTimeOffset assignedAt)
+        public RouterJobAssignment(DateTimeOffset assignedAt)
         {
             AssignedAt = assignedAt;
         }
@@ -77,12 +77,12 @@ namespace Azure.Communication.JobRouter
         /// <summary> Id of a job assignment. </summary>
         public string AssignmentId { get; }
         /// <summary> Id of the Worker assigned to the job. </summary>
-        public string WorkerId { get; }
+        public string WorkerId { get; set; }
         /// <summary> Timestamp when the job was assigned to a worker in UTC. </summary>
-        public DateTimeOffset AssignedAt { get; }
+        public DateTimeOffset AssignedAt { get; set; }
         /// <summary> Timestamp when the job was marked as completed after being assigned in UTC. </summary>
-        public DateTimeOffset? CompletedAt { get; }
+        public DateTimeOffset? CompletedAt { get; set; }
         /// <summary> Timestamp when the job was marked as closed after being completed in UTC. </summary>
-        public DateTimeOffset? ClosedAt { get; }
+        public DateTimeOffset? ClosedAt { get; set; }
     }
 }

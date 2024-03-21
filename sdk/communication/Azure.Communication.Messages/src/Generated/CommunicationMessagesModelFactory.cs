@@ -117,7 +117,7 @@ namespace Azure.Communication.Messages
         /// <param name="name"> Template binding reference name. </param>
         /// <param name="kind"> The type discriminator describing a template parameter type. </param>
         /// <returns> A new <see cref="Messages.MessageTemplateValue"/> instance for mocking. </returns>
-        public static MessageTemplateValue MessageTemplateValue(string name = null, string kind = null)
+        public static MessageTemplateValue MessageTemplateValue(string name = null, string kind = "Unknown")
         {
             return new UnknownMessageTemplateValue(name, kind, serializedAdditionalRawData: null);
         }
@@ -128,7 +128,7 @@ namespace Azure.Communication.Messages
         /// <returns> A new <see cref="Messages.MessageTemplateText"/> instance for mocking. </returns>
         public static MessageTemplateText MessageTemplateText(string name = null, string text = null)
         {
-            return new MessageTemplateText(name, "text", serializedAdditionalRawData: null, text);
+            return new MessageTemplateText(name, MessageTemplateValueKind.Text, serializedAdditionalRawData: null, text);
         }
 
         /// <summary> Initializes a new instance of <see cref="Messages.MessageTemplateImage"/>. </summary>
@@ -141,7 +141,7 @@ namespace Azure.Communication.Messages
         {
             return new MessageTemplateImage(
                 name,
-                "image",
+                MessageTemplateValueKind.Image,
                 serializedAdditionalRawData: null,
                 uri,
                 caption,
@@ -158,7 +158,7 @@ namespace Azure.Communication.Messages
         {
             return new MessageTemplateDocument(
                 name,
-                "document",
+                MessageTemplateValueKind.Document,
                 serializedAdditionalRawData: null,
                 uri,
                 caption,
@@ -175,7 +175,7 @@ namespace Azure.Communication.Messages
         {
             return new MessageTemplateVideo(
                 name,
-                "video",
+                MessageTemplateValueKind.Video,
                 serializedAdditionalRawData: null,
                 uri,
                 caption,
@@ -189,7 +189,7 @@ namespace Azure.Communication.Messages
         /// <returns> A new <see cref="Messages.MessageTemplateQuickAction"/> instance for mocking. </returns>
         public static MessageTemplateQuickAction MessageTemplateQuickAction(string name = null, string text = null, string payload = null)
         {
-            return new MessageTemplateQuickAction(name, "quickAction", serializedAdditionalRawData: null, text, payload);
+            return new MessageTemplateQuickAction(name, MessageTemplateValueKind.QuickAction, serializedAdditionalRawData: null, text, payload);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.Channels.WhatsAppMessageTemplateItem"/>. </summary>
