@@ -41,6 +41,20 @@ namespace Azure.Storage
                         return true;
                 }
             }
+
+            // Retry select Copy Source Error Codes.
+            if (message.Response.Status >= 400 &&
+                message.Response.Headers.TryGetValue(Constants.HeaderNames.CopySourceErrorCode, out string copySourceError))
+            {
+                switch (copySourceError)
+                {
+                    case Constants.ErrorCodes.InternalError:
+                    case Constants.ErrorCodes.OperationTimedOut:
+                    case Constants.ErrorCodes.ServerBusy:
+                        return true;
+                }
+            }
+
             return base.IsRetriableResponse(message);
         }
 
