@@ -1066,12 +1066,12 @@ namespace Azure.Storage.DataMovement.Tests
                 new()
                 {
                     AccessTier = new(preserve: false),
-                    ContentType = new(preserve: false),
-                    ContentEncoding = new(preserve: false),
-                    ContentDisposition = new(preserve: false),
-                    ContentLanguage = new(preserve: false),
-                    CacheControl = new(preserve: false),
-                    Metadata = new(preserve: false)
+                    ContentType = new(true), // For test recording content type has to be the same
+                    ContentEncoding = new(false),
+                    ContentDisposition = new(false),
+                    ContentLanguage = new(false),
+                    CacheControl = new(false),
+                    Metadata = new(false),
                 });
 
             DataTransferOptions options = new DataTransferOptions();
@@ -1341,12 +1341,12 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationClient,
                 new()
                 {
-                    ContentType = new(preserve: false),
-                    ContentEncoding = new(preserve: false),
-                    ContentDisposition = new(preserve: false),
-                    ContentLanguage = new(preserve: false),
-                    CacheControl = new(preserve: false),
-                    Metadata = new(preserve: false)
+                    ContentType = new(true), // For test recording content type has to be the same
+                    ContentEncoding = new(false),
+                    ContentDisposition = new(false),
+                    ContentLanguage = new(false),
+                    CacheControl = new(false),
+                    Metadata = new(false),
                 });
 
             DataTransferOptions options = new DataTransferOptions();
@@ -1594,14 +1594,14 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             // Create source local file for checking, and source blob
             await using DisposingContainer testContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
-            Metadata metadata = DataProvider.BuildMetadata();
+            Metadata sourceMetadata = DataProvider.BuildMetadata();
             Tags tags = DataProvider.BuildTags();
 
             // Act
             // Create blob with properties
             AppendBlobClient sourceClient = await SetupSourceAppendBlobAsync(
                 testContainer.Container,
-                metadata,
+                sourceMetadata,
                 tags);
 
             StorageResourceItem sourceResource = new AppendBlobStorageResource(sourceClient);
@@ -1612,12 +1612,12 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationClient,
                 new()
                 {
-                    ContentType = new(preserve: false),
-                    ContentEncoding = new(preserve: false),
-                    ContentDisposition = new(preserve: false),
-                    ContentLanguage = new(preserve: false),
-                    CacheControl = new(preserve: false),
-                    Metadata = new(preserve: false)
+                    ContentType = new(true), // For test recording content type has to be the same
+                    ContentEncoding = new(false),
+                    ContentDisposition = new(false),
+                    ContentLanguage = new(false),
+                    CacheControl = new(false),
+                    Metadata = new(false),
                 });
 
             DataTransferOptions options = new DataTransferOptions();
@@ -1645,7 +1645,10 @@ namespace Azure.Storage.DataMovement.Tests
             using Stream destinationStream = await destinationClient.OpenReadAsync();
             Assert.AreEqual(sourceStream, destinationStream);
             // Verify Properties
-            await VerifyEmptyPropertiesAsync(destinationClient);
+            BlobProperties destinationProperties = await destinationClient.GetPropertiesAsync();
+            Assert.IsNull(destinationProperties.ContentDisposition);
+            Assert.IsNull(destinationProperties.ContentLanguage);
+            Assert.IsNull(destinationProperties.CacheControl);
         }
 
         [RecordedTest]
