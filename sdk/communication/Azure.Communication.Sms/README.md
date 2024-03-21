@@ -23,6 +23,7 @@ To create a new Communication Service, you can use the [Azure Portal][communicat
 ### Using statements
 ```C# Snippet:Azure_Communication_Sms_Tests_UsingStatements
 using System;
+using System.IO;
 using Azure.Communication.Sms;
 ```
 
@@ -64,6 +65,7 @@ var response = await smsClient.SendAsync(
     options: new SmsSendOptions(enableDeliveryReport: true) // OPTIONAL
     {
         Tag = "marketing", // custom tags
+        DeliveryReportTimeoutInSeconds = 90
     });
 foreach (SmsSendResult result in response.Value)
 {
