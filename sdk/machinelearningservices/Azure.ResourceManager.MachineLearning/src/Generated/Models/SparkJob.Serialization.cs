@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<SparkJob>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SparkJob)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SparkJob)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<SparkJob>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SparkJob)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SparkJob)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -779,7 +779,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SparkJob)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SparkJob)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -795,7 +795,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeSparkJob(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SparkJob)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SparkJob)} does not support reading '{options.Format}' format.");
             }
         }
 

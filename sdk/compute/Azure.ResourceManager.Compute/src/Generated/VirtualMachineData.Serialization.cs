@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Compute
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -713,7 +713,7 @@ namespace Azure.ResourceManager.Compute
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -729,7 +729,7 @@ namespace Azure.ResourceManager.Compute
                         return DeserializeVirtualMachineData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineData)} does not support reading '{options.Format}' format.");
             }
         }
 

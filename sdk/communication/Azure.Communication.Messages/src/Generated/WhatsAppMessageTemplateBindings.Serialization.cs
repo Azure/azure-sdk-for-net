@@ -22,7 +22,7 @@ namespace Azure.Communication.Messages.Models.Channels
             var format = options.Format == "W" ? ((IPersistableModel<WhatsAppMessageTemplateBindings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WhatsAppMessageTemplateBindings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WhatsAppMessageTemplateBindings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -91,7 +91,7 @@ namespace Azure.Communication.Messages.Models.Channels
             var format = options.Format == "W" ? ((IPersistableModel<WhatsAppMessageTemplateBindings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WhatsAppMessageTemplateBindings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WhatsAppMessageTemplateBindings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -200,7 +200,7 @@ namespace Azure.Communication.Messages.Models.Channels
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WhatsAppMessageTemplateBindings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WhatsAppMessageTemplateBindings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -216,7 +216,7 @@ namespace Azure.Communication.Messages.Models.Channels
                         return DeserializeWhatsAppMessageTemplateBindings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WhatsAppMessageTemplateBindings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WhatsAppMessageTemplateBindings)} does not support reading '{options.Format}' format.");
             }
         }
 

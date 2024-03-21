@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Automanage.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConfigurationProfileList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfigurationProfileList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfigurationProfileList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Automanage.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConfigurationProfileList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfigurationProfileList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfigurationProfileList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Automanage.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConfigurationProfileList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfigurationProfileList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Automanage.Models
                         return DeserializeConfigurationProfileList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConfigurationProfileList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfigurationProfileList)} does not support reading '{options.Format}' format.");
             }
         }
 

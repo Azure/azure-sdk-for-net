@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DevTestLabs
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabServiceRunnerData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabServiceRunnerData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabServiceRunnerData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DevTestLabs
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabServiceRunnerData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabServiceRunnerData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabServiceRunnerData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabServiceRunnerData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabServiceRunnerData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.DevTestLabs
                         return DeserializeDevTestLabServiceRunnerData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabServiceRunnerData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabServiceRunnerData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             var format = options.Format == "W" ? ((IPersistableModel<BandwidthScheduleData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BandwidthScheduleData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BandwidthScheduleData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             var format = options.Format == "W" ? ((IPersistableModel<BandwidthScheduleData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BandwidthScheduleData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BandwidthScheduleData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BandwidthScheduleData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BandwidthScheduleData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                         return DeserializeBandwidthScheduleData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BandwidthScheduleData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BandwidthScheduleData)} does not support reading '{options.Format}' format.");
             }
         }
 

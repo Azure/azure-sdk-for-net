@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ServiceBus
             var format = options.Format == "W" ? ((IPersistableModel<ServiceBusRuleData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceBusRuleData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceBusRuleData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ServiceBus
             var format = options.Format == "W" ? ((IPersistableModel<ServiceBusRuleData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceBusRuleData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceBusRuleData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.ServiceBus
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceBusRuleData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceBusRuleData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ServiceBus
                         return DeserializeServiceBusRuleData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceBusRuleData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceBusRuleData)} does not support reading '{options.Format}' format.");
             }
         }
 

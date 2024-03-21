@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Subscription.Models
             var format = options.Format == "W" ? ((IPersistableModel<AcceptOwnershipRequestProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AcceptOwnershipRequestProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AcceptOwnershipRequestProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Subscription.Models
             var format = options.Format == "W" ? ((IPersistableModel<AcceptOwnershipRequestProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AcceptOwnershipRequestProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AcceptOwnershipRequestProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Subscription.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AcceptOwnershipRequestProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AcceptOwnershipRequestProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Subscription.Models
                         return DeserializeAcceptOwnershipRequestProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AcceptOwnershipRequestProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AcceptOwnershipRequestProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

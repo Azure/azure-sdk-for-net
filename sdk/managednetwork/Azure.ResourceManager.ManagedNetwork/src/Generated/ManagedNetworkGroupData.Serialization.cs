@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ManagedNetwork
             var format = options.Format == "W" ? ((IPersistableModel<ManagedNetworkGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedNetworkGroupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedNetworkGroupData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ManagedNetwork
             var format = options.Format == "W" ? ((IPersistableModel<ManagedNetworkGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedNetworkGroupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedNetworkGroupData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.ManagedNetwork
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedNetworkGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedNetworkGroupData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.ManagedNetwork
                         return DeserializeManagedNetworkGroupData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedNetworkGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedNetworkGroupData)} does not support reading '{options.Format}' format.");
             }
         }
 

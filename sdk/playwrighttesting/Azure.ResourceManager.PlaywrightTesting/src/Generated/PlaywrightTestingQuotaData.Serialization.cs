@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
             var format = options.Format == "W" ? ((IPersistableModel<PlaywrightTestingQuotaData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PlaywrightTestingQuotaData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PlaywrightTestingQuotaData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
             var format = options.Format == "W" ? ((IPersistableModel<PlaywrightTestingQuotaData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PlaywrightTestingQuotaData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PlaywrightTestingQuotaData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PlaywrightTestingQuotaData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PlaywrightTestingQuotaData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
                         return DeserializePlaywrightTestingQuotaData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PlaywrightTestingQuotaData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PlaywrightTestingQuotaData)} does not support reading '{options.Format}' format.");
             }
         }
 

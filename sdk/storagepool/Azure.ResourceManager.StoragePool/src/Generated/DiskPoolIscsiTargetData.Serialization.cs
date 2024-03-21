@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.StoragePool
             var format = options.Format == "W" ? ((IPersistableModel<DiskPoolIscsiTargetData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiskPoolIscsiTargetData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiskPoolIscsiTargetData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.StoragePool
             var format = options.Format == "W" ? ((IPersistableModel<DiskPoolIscsiTargetData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiskPoolIscsiTargetData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiskPoolIscsiTargetData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.StoragePool
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DiskPoolIscsiTargetData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiskPoolIscsiTargetData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.StoragePool
                         return DeserializeDiskPoolIscsiTargetData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DiskPoolIscsiTargetData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiskPoolIscsiTargetData)} does not support reading '{options.Format}' format.");
             }
         }
 

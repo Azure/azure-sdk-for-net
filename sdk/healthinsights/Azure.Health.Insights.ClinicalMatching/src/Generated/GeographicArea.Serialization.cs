@@ -22,7 +22,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             var format = options.Format == "W" ? ((IPersistableModel<GeographicArea>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GeographicArea)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GeographicArea)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -55,7 +55,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             var format = options.Format == "W" ? ((IPersistableModel<GeographicArea>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GeographicArea)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GeographicArea)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -110,7 +110,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GeographicArea)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GeographicArea)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -126,7 +126,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                         return DeserializeGeographicArea(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GeographicArea)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GeographicArea)} does not support reading '{options.Format}' format.");
             }
         }
 

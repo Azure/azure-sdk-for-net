@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Billing
             var format = options.Format == "W" ? ((IPersistableModel<BillingSubscriptionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BillingSubscriptionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BillingSubscriptionData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Billing
             var format = options.Format == "W" ? ((IPersistableModel<BillingSubscriptionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BillingSubscriptionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BillingSubscriptionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -708,7 +708,7 @@ namespace Azure.ResourceManager.Billing
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BillingSubscriptionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BillingSubscriptionData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -724,7 +724,7 @@ namespace Azure.ResourceManager.Billing
                         return DeserializeBillingSubscriptionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BillingSubscriptionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BillingSubscriptionData)} does not support reading '{options.Format}' format.");
             }
         }
 

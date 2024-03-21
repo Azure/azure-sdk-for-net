@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<WebClientCertificateAuthentication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebClientCertificateAuthentication)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebClientCertificateAuthentication)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<WebClientCertificateAuthentication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebClientCertificateAuthentication)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebClientCertificateAuthentication)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WebClientCertificateAuthentication)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebClientCertificateAuthentication)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeWebClientCertificateAuthentication(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WebClientCertificateAuthentication)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebClientCertificateAuthentication)} does not support reading '{options.Format}' format.");
             }
         }
 

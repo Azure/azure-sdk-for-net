@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlServerPropertiesForRestore>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PostgreSqlServerPropertiesForRestore)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlServerPropertiesForRestore)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlServerPropertiesForRestore>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PostgreSqlServerPropertiesForRestore)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlServerPropertiesForRestore)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PostgreSqlServerPropertiesForRestore)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlServerPropertiesForRestore)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                         return DeserializePostgreSqlServerPropertiesForRestore(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PostgreSqlServerPropertiesForRestore)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlServerPropertiesForRestore)} does not support reading '{options.Format}' format.");
             }
         }
 

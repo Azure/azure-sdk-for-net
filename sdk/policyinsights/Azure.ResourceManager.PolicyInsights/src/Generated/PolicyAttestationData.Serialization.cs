@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.PolicyInsights
             var format = options.Format == "W" ? ((IPersistableModel<PolicyAttestationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicyAttestationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyAttestationData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.PolicyInsights
             var format = options.Format == "W" ? ((IPersistableModel<PolicyAttestationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicyAttestationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyAttestationData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PolicyAttestationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyAttestationData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.PolicyInsights
                         return DeserializePolicyAttestationData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PolicyAttestationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyAttestationData)} does not support reading '{options.Format}' format.");
             }
         }
 

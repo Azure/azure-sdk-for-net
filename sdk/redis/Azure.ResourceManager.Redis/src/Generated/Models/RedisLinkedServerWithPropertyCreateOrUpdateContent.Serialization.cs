@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Redis.Models
             var format = options.Format == "W" ? ((IPersistableModel<RedisLinkedServerWithPropertyCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RedisLinkedServerWithPropertyCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisLinkedServerWithPropertyCreateOrUpdateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Redis.Models
             var format = options.Format == "W" ? ((IPersistableModel<RedisLinkedServerWithPropertyCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RedisLinkedServerWithPropertyCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisLinkedServerWithPropertyCreateOrUpdateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Redis.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RedisLinkedServerWithPropertyCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisLinkedServerWithPropertyCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Redis.Models
                         return DeserializeRedisLinkedServerWithPropertyCreateOrUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RedisLinkedServerWithPropertyCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisLinkedServerWithPropertyCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlFlexibleServerConfigurationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlFlexibleServerConfigurationData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlFlexibleServerConfigurationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlFlexibleServerConfigurationData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MySqlFlexibleServerConfigurationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlFlexibleServerConfigurationData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                         return DeserializeMySqlFlexibleServerConfigurationData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MySqlFlexibleServerConfigurationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlFlexibleServerConfigurationData)} does not support reading '{options.Format}' format.");
             }
         }
 

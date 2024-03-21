@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.VoiceServices
             var format = options.Format == "W" ? ((IPersistableModel<VoiceServicesCommunicationsGatewayData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VoiceServicesCommunicationsGatewayData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VoiceServicesCommunicationsGatewayData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.VoiceServices
             var format = options.Format == "W" ? ((IPersistableModel<VoiceServicesCommunicationsGatewayData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VoiceServicesCommunicationsGatewayData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VoiceServicesCommunicationsGatewayData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.VoiceServices
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VoiceServicesCommunicationsGatewayData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VoiceServicesCommunicationsGatewayData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.VoiceServices
                         return DeserializeVoiceServicesCommunicationsGatewayData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VoiceServicesCommunicationsGatewayData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VoiceServicesCommunicationsGatewayData)} does not support reading '{options.Format}' format.");
             }
         }
 

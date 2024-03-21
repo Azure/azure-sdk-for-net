@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<HybridContainerServiceVirtualNetworkProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridContainerServiceVirtualNetworkProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridContainerServiceVirtualNetworkProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<HybridContainerServiceVirtualNetworkProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridContainerServiceVirtualNetworkProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridContainerServiceVirtualNetworkProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HybridContainerServiceVirtualNetworkProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridContainerServiceVirtualNetworkProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                         return DeserializeHybridContainerServiceVirtualNetworkProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HybridContainerServiceVirtualNetworkProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridContainerServiceVirtualNetworkProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceVirtualNetworkValidationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServiceVirtualNetworkValidationContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceVirtualNetworkValidationContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceVirtualNetworkValidationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServiceVirtualNetworkValidationContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceVirtualNetworkValidationContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppServiceVirtualNetworkValidationContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceVirtualNetworkValidationContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeAppServiceVirtualNetworkValidationContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppServiceVirtualNetworkValidationContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceVirtualNetworkValidationContent)} does not support reading '{options.Format}' format.");
             }
         }
 

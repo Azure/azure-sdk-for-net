@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.HealthBot
             var format = options.Format == "W" ? ((IPersistableModel<HealthBotData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HealthBotData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HealthBotData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.HealthBot
             var format = options.Format == "W" ? ((IPersistableModel<HealthBotData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HealthBotData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HealthBotData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.HealthBot
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HealthBotData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HealthBotData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.HealthBot
                         return DeserializeHealthBotData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HealthBotData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HealthBotData)} does not support reading '{options.Format}' format.");
             }
         }
 

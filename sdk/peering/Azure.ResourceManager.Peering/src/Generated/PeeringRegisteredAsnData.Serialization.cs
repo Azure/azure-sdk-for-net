@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Peering
             var format = options.Format == "W" ? ((IPersistableModel<PeeringRegisteredAsnData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PeeringRegisteredAsnData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PeeringRegisteredAsnData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Peering
             var format = options.Format == "W" ? ((IPersistableModel<PeeringRegisteredAsnData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PeeringRegisteredAsnData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PeeringRegisteredAsnData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Peering
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PeeringRegisteredAsnData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PeeringRegisteredAsnData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Peering
                         return DeserializePeeringRegisteredAsnData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PeeringRegisteredAsnData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PeeringRegisteredAsnData)} does not support reading '{options.Format}' format.");
             }
         }
 

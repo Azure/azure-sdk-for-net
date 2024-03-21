@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Billing.Models
             var format = options.Format == "W" ? ((IPersistableModel<BillingSubscriptionValidateMoveEligibilityError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BillingSubscriptionValidateMoveEligibilityError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BillingSubscriptionValidateMoveEligibilityError)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Billing.Models
             var format = options.Format == "W" ? ((IPersistableModel<BillingSubscriptionValidateMoveEligibilityError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BillingSubscriptionValidateMoveEligibilityError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BillingSubscriptionValidateMoveEligibilityError)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Billing.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BillingSubscriptionValidateMoveEligibilityError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BillingSubscriptionValidateMoveEligibilityError)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Billing.Models
                         return DeserializeBillingSubscriptionValidateMoveEligibilityError(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BillingSubscriptionValidateMoveEligibilityError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BillingSubscriptionValidateMoveEligibilityError)} does not support reading '{options.Format}' format.");
             }
         }
 

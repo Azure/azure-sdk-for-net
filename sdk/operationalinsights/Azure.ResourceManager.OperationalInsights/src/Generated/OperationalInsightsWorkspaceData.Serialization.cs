@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.OperationalInsights
             var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsWorkspaceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationalInsightsWorkspaceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationalInsightsWorkspaceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.OperationalInsights
             var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsWorkspaceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationalInsightsWorkspaceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationalInsightsWorkspaceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OperationalInsightsWorkspaceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationalInsightsWorkspaceData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.OperationalInsights
                         return DeserializeOperationalInsightsWorkspaceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OperationalInsightsWorkspaceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationalInsightsWorkspaceData)} does not support reading '{options.Format}' format.");
             }
         }
 

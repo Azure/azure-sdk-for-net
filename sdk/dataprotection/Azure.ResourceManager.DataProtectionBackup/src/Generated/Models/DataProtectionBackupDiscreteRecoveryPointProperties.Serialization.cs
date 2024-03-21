@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupDiscreteRecoveryPointProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataProtectionBackupDiscreteRecoveryPointProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataProtectionBackupDiscreteRecoveryPointProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupDiscreteRecoveryPointProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataProtectionBackupDiscreteRecoveryPointProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataProtectionBackupDiscreteRecoveryPointProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataProtectionBackupDiscreteRecoveryPointProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataProtectionBackupDiscreteRecoveryPointProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeDataProtectionBackupDiscreteRecoveryPointProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataProtectionBackupDiscreteRecoveryPointProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataProtectionBackupDiscreteRecoveryPointProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

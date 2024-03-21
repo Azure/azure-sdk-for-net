@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<PccRuleConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PccRuleConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PccRuleConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<PccRuleConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PccRuleConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PccRuleConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PccRuleConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PccRuleConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                         return DeserializePccRuleConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PccRuleConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PccRuleConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

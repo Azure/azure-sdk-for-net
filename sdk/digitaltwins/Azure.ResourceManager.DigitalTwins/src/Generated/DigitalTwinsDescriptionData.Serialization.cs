@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DigitalTwins
             var format = options.Format == "W" ? ((IPersistableModel<DigitalTwinsDescriptionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DigitalTwinsDescriptionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DigitalTwinsDescriptionData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.DigitalTwins
             var format = options.Format == "W" ? ((IPersistableModel<DigitalTwinsDescriptionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DigitalTwinsDescriptionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DigitalTwinsDescriptionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.DigitalTwins
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DigitalTwinsDescriptionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DigitalTwinsDescriptionData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.DigitalTwins
                         return DeserializeDigitalTwinsDescriptionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DigitalTwinsDescriptionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DigitalTwinsDescriptionData)} does not support reading '{options.Format}' format.");
             }
         }
 

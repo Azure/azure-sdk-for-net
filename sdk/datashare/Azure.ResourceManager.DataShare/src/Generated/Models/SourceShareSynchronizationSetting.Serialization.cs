@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataShare.Models
             var format = options.Format == "W" ? ((IPersistableModel<SourceShareSynchronizationSetting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SourceShareSynchronizationSetting)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SourceShareSynchronizationSetting)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataShare.Models
             var format = options.Format == "W" ? ((IPersistableModel<SourceShareSynchronizationSetting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SourceShareSynchronizationSetting)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SourceShareSynchronizationSetting)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SourceShareSynchronizationSetting)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SourceShareSynchronizationSetting)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataShare.Models
                         return DeserializeSourceShareSynchronizationSetting(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SourceShareSynchronizationSetting)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SourceShareSynchronizationSetting)} does not support reading '{options.Format}' format.");
             }
         }
 

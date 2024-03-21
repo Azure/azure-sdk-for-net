@@ -22,7 +22,7 @@ namespace Azure.AI.OpenAI.Assistants
             var format = options.Format == "W" ? ((IPersistableModel<RunStepDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RunStepDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RunStepDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.AI.OpenAI.Assistants
             var format = options.Format == "W" ? ((IPersistableModel<RunStepDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RunStepDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RunStepDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -86,7 +86,7 @@ namespace Azure.AI.OpenAI.Assistants
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RunStepDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RunStepDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -102,7 +102,7 @@ namespace Azure.AI.OpenAI.Assistants
                         return DeserializeRunStepDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RunStepDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RunStepDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

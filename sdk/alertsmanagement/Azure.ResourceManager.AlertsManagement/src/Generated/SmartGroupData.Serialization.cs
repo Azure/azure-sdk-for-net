@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.AlertsManagement
             var format = options.Format == "W" ? ((IPersistableModel<SmartGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SmartGroupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SmartGroupData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.AlertsManagement
             var format = options.Format == "W" ? ((IPersistableModel<SmartGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SmartGroupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SmartGroupData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SmartGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SmartGroupData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.AlertsManagement
                         return DeserializeSmartGroupData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SmartGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SmartGroupData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Reservations
             var format = options.Format == "W" ? ((IPersistableModel<ReservationOrderData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReservationOrderData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReservationOrderData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Reservations
             var format = options.Format == "W" ? ((IPersistableModel<ReservationOrderData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReservationOrderData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReservationOrderData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.Reservations
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReservationOrderData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReservationOrderData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.Reservations
                         return DeserializeReservationOrderData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReservationOrderData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReservationOrderData)} does not support reading '{options.Format}' format.");
             }
         }
 

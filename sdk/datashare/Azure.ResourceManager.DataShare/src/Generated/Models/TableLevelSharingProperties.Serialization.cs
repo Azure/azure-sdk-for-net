@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataShare.Models
             var format = options.Format == "W" ? ((IPersistableModel<TableLevelSharingProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TableLevelSharingProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TableLevelSharingProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DataShare.Models
             var format = options.Format == "W" ? ((IPersistableModel<TableLevelSharingProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TableLevelSharingProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TableLevelSharingProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TableLevelSharingProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TableLevelSharingProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.DataShare.Models
                         return DeserializeTableLevelSharingProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TableLevelSharingProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TableLevelSharingProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

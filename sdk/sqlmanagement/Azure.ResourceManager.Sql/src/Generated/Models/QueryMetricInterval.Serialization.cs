@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<QueryMetricInterval>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QueryMetricInterval)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QueryMetricInterval)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<QueryMetricInterval>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QueryMetricInterval)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QueryMetricInterval)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Sql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(QueryMetricInterval)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QueryMetricInterval)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeQueryMetricInterval(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QueryMetricInterval)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QueryMetricInterval)} does not support reading '{options.Format}' format.");
             }
         }
 

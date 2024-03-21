@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ApiManagement
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementPortalSignInSettingData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementPortalSignInSettingData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementPortalSignInSettingData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ApiManagement
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementPortalSignInSettingData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementPortalSignInSettingData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementPortalSignInSettingData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementPortalSignInSettingData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementPortalSignInSettingData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ApiManagement
                         return DeserializeApiManagementPortalSignInSettingData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementPortalSignInSettingData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementPortalSignInSettingData)} does not support reading '{options.Format}' format.");
             }
         }
 

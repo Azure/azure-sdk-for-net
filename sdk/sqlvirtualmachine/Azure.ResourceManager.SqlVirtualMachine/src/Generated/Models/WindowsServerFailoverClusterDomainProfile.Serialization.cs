@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             var format = options.Format == "W" ? ((IPersistableModel<WindowsServerFailoverClusterDomainProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WindowsServerFailoverClusterDomainProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WindowsServerFailoverClusterDomainProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             var format = options.Format == "W" ? ((IPersistableModel<WindowsServerFailoverClusterDomainProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WindowsServerFailoverClusterDomainProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WindowsServerFailoverClusterDomainProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WindowsServerFailoverClusterDomainProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WindowsServerFailoverClusterDomainProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                         return DeserializeWindowsServerFailoverClusterDomainProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WindowsServerFailoverClusterDomainProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WindowsServerFailoverClusterDomainProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

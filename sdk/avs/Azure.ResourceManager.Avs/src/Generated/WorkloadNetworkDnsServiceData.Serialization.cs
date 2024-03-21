@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Avs
             var format = options.Format == "W" ? ((IPersistableModel<WorkloadNetworkDnsServiceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkloadNetworkDnsServiceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkloadNetworkDnsServiceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Avs
             var format = options.Format == "W" ? ((IPersistableModel<WorkloadNetworkDnsServiceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkloadNetworkDnsServiceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkloadNetworkDnsServiceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Avs
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WorkloadNetworkDnsServiceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkloadNetworkDnsServiceData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Avs
                         return DeserializeWorkloadNetworkDnsServiceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WorkloadNetworkDnsServiceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkloadNetworkDnsServiceData)} does not support reading '{options.Format}' format.");
             }
         }
 

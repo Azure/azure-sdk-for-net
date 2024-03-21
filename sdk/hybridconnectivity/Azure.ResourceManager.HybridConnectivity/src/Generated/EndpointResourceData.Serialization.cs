@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             var format = options.Format == "W" ? ((IPersistableModel<EndpointResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EndpointResourceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EndpointResourceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             var format = options.Format == "W" ? ((IPersistableModel<EndpointResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EndpointResourceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EndpointResourceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EndpointResourceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EndpointResourceData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                         return DeserializeEndpointResourceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EndpointResourceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EndpointResourceData)} does not support reading '{options.Format}' format.");
             }
         }
 

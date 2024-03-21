@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             var format = options.Format == "W" ? ((IPersistableModel<MaintenanceConfigurationAssignmentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MaintenanceConfigurationAssignmentData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MaintenanceConfigurationAssignmentData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             var format = options.Format == "W" ? ((IPersistableModel<MaintenanceConfigurationAssignmentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MaintenanceConfigurationAssignmentData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MaintenanceConfigurationAssignmentData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MaintenanceConfigurationAssignmentData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MaintenanceConfigurationAssignmentData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                         return DeserializeMaintenanceConfigurationAssignmentData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MaintenanceConfigurationAssignmentData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MaintenanceConfigurationAssignmentData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlVmAutoPatchingSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlVmAutoPatchingSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlVmAutoPatchingSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlVmAutoPatchingSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlVmAutoPatchingSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlVmAutoPatchingSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SqlVmAutoPatchingSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlVmAutoPatchingSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                         return DeserializeSqlVmAutoPatchingSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SqlVmAutoPatchingSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlVmAutoPatchingSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

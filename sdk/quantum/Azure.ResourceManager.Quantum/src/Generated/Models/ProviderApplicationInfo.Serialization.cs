@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Quantum.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProviderApplicationInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProviderApplicationInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProviderApplicationInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Quantum.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProviderApplicationInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProviderApplicationInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProviderApplicationInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Quantum.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ProviderApplicationInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProviderApplicationInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Quantum.Models
                         return DeserializeProviderApplicationInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProviderApplicationInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProviderApplicationInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

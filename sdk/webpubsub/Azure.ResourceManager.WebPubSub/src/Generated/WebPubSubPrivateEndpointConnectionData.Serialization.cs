@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.WebPubSub
             var format = options.Format == "W" ? ((IPersistableModel<WebPubSubPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebPubSubPrivateEndpointConnectionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebPubSubPrivateEndpointConnectionData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.WebPubSub
             var format = options.Format == "W" ? ((IPersistableModel<WebPubSubPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebPubSubPrivateEndpointConnectionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebPubSubPrivateEndpointConnectionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.WebPubSub
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WebPubSubPrivateEndpointConnectionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebPubSubPrivateEndpointConnectionData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.WebPubSub
                         return DeserializeWebPubSubPrivateEndpointConnectionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WebPubSubPrivateEndpointConnectionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebPubSubPrivateEndpointConnectionData)} does not support reading '{options.Format}' format.");
             }
         }
 

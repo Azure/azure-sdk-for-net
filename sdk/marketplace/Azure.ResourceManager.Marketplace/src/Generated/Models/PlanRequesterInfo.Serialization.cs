@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<PlanRequesterInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PlanRequesterInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PlanRequesterInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<PlanRequesterInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PlanRequesterInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PlanRequesterInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PlanRequesterInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PlanRequesterInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                         return DeserializePlanRequesterInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PlanRequesterInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PlanRequesterInfo)} does not support reading '{options.Format}' format.");
             }
         }
 
