@@ -60,7 +60,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The subject or username associated with the request context that generated the event. </summary>
-        [WirePath("name")]
         public string Name { get; }
     }
 }

@@ -60,7 +60,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The CPU configuration in terms of number of cores required for the run. </summary>
-        [WirePath("cpu")]
         public int? Cpu { get; set; }
     }
 }

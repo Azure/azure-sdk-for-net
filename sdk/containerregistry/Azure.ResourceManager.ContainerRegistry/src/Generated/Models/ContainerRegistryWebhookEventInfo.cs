@@ -60,7 +60,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The event ID. </summary>
-        [WirePath("id")]
         public Guid? Id { get; }
     }
 }

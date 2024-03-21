@@ -8,8 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -139,104 +137,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new ContainerRegistryPolicies(quarantinePolicy, trustPolicy, retentionPolicy, exportPolicy, serializedAdditionalRawData);
         }
 
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            if (propertyOverrides != null)
-            {
-                TransformFlattenedOverrides(bicepOptions, propertyOverrides);
-            }
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QuarantinePolicy), out propertyOverride);
-            if (Optional.IsDefined(QuarantinePolicy) || hasPropertyOverride)
-            {
-                builder.Append("  quarantinePolicy: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    BicepSerializationHelpers.AppendChildObject(builder, QuarantinePolicy, options, 2, false, "  quarantinePolicy: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TrustPolicy), out propertyOverride);
-            if (Optional.IsDefined(TrustPolicy) || hasPropertyOverride)
-            {
-                builder.Append("  trustPolicy: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    BicepSerializationHelpers.AppendChildObject(builder, TrustPolicy, options, 2, false, "  trustPolicy: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RetentionPolicy), out propertyOverride);
-            if (Optional.IsDefined(RetentionPolicy) || hasPropertyOverride)
-            {
-                builder.Append("  retentionPolicy: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    BicepSerializationHelpers.AppendChildObject(builder, RetentionPolicy, options, 2, false, "  retentionPolicy: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExportPolicy), out propertyOverride);
-            if (Optional.IsDefined(ExportPolicy) || hasPropertyOverride)
-            {
-                builder.Append("  exportPolicy: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    BicepSerializationHelpers.AppendChildObject(builder, ExportPolicy, options, 2, false, "  exportPolicy: ");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        private void TransformFlattenedOverrides(BicepModelReaderWriterOptions bicepOptions, IDictionary<string, string> propertyOverrides)
-        {
-            foreach (var item in propertyOverrides.ToList())
-            {
-                switch (item.Key)
-                {
-                    case "QuarantineStatus":
-                        Dictionary<string, string> propertyDictionary = new Dictionary<string, string>();
-                        propertyDictionary.Add("Status", item.Value);
-                        bicepOptions.ParameterOverrides.Add(QuarantinePolicy, propertyDictionary);
-                        break;
-                    case "ExportStatus":
-                        Dictionary<string, string> propertyDictionary0 = new Dictionary<string, string>();
-                        propertyDictionary0.Add("Status", item.Value);
-                        bicepOptions.ParameterOverrides.Add(ExportPolicy, propertyDictionary0);
-                        break;
-                    default:
-                        continue;
-                }
-            }
-        }
-
         BinaryData IPersistableModel<ContainerRegistryPolicies>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryPolicies>)this).GetFormatFromOptions(options) : options.Format;
@@ -245,8 +145,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
-                case "bicep":
-                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerRegistryPolicies)} does not support '{options.Format}' format.");
             }
@@ -263,8 +161,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeContainerRegistryPolicies(document.RootElement, options);
                     }
-                case "bicep":
-                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ContainerRegistryPolicies)} does not support '{options.Format}' format.");
             }

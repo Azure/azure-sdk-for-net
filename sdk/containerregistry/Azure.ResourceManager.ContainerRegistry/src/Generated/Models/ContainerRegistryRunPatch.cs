@@ -60,7 +60,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The value that indicates whether archiving is enabled or not. </summary>
-        [WirePath("isArchiveEnabled")]
         public bool? IsArchiveEnabled { get; set; }
     }
 }

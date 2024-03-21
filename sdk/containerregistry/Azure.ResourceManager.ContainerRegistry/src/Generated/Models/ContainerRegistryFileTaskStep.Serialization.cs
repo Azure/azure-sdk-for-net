@@ -8,8 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -186,164 +184,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 values ?? new ChangeTrackingList<ContainerRegistryTaskOverridableValue>());
         }
 
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TaskFilePath), out propertyOverride);
-            if (Optional.IsDefined(TaskFilePath) || hasPropertyOverride)
-            {
-                builder.Append("  taskFilePath: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (TaskFilePath.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{TaskFilePath}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{TaskFilePath}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ValuesFilePath), out propertyOverride);
-            if (Optional.IsDefined(ValuesFilePath) || hasPropertyOverride)
-            {
-                builder.Append("  valuesFilePath: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (ValuesFilePath.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ValuesFilePath}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ValuesFilePath}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Values), out propertyOverride);
-            if (Optional.IsCollectionDefined(Values) || hasPropertyOverride)
-            {
-                if (Values.Any() || hasPropertyOverride)
-                {
-                    builder.Append("  values: ");
-                    if (hasPropertyOverride)
-                    {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
-                        builder.AppendLine("[");
-                        foreach (var item in Values)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  values: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContainerRegistryTaskStepType), out propertyOverride);
-            builder.Append("  type: ");
-            if (hasPropertyOverride)
-            {
-                builder.AppendLine($"{propertyOverride}");
-            }
-            else
-            {
-                builder.AppendLine($"'{ContainerRegistryTaskStepType.ToString()}'");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BaseImageDependencies), out propertyOverride);
-            if (Optional.IsCollectionDefined(BaseImageDependencies) || hasPropertyOverride)
-            {
-                if (BaseImageDependencies.Any() || hasPropertyOverride)
-                {
-                    builder.Append("  baseImageDependencies: ");
-                    if (hasPropertyOverride)
-                    {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
-                        builder.AppendLine("[");
-                        foreach (var item in BaseImageDependencies)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  baseImageDependencies: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContextPath), out propertyOverride);
-            if (Optional.IsDefined(ContextPath) || hasPropertyOverride)
-            {
-                builder.Append("  contextPath: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (ContextPath.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ContextPath}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ContextPath}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContextAccessToken), out propertyOverride);
-            if (Optional.IsDefined(ContextAccessToken) || hasPropertyOverride)
-            {
-                builder.Append("  contextAccessToken: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (ContextAccessToken.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ContextAccessToken}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ContextAccessToken}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
         BinaryData IPersistableModel<ContainerRegistryFileTaskStep>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryFileTaskStep>)this).GetFormatFromOptions(options) : options.Format;
@@ -352,8 +192,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
-                case "bicep":
-                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerRegistryFileTaskStep)} does not support '{options.Format}' format.");
             }
@@ -370,8 +208,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeContainerRegistryFileTaskStep(document.RootElement, options);
                     }
-                case "bicep":
-                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ContainerRegistryFileTaskStep)} does not support '{options.Format}' format.");
             }

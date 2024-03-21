@@ -63,10 +63,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The username for a container registry. </summary>
-        [WirePath("username")]
         public string Username { get; }
         /// <summary> The list of passwords for a container registry. </summary>
-        [WirePath("passwords")]
         public IReadOnlyList<ContainerRegistryTokenPassword> Passwords { get; }
     }
 }

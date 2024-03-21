@@ -77,7 +77,6 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <summary> The resource of private endpoint. </summary>
         internal WritableSubResource PrivateEndpoint { get; set; }
         /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.privateEndpoint.id")]
         public ResourceIdentifier PrivateEndpointId
         {
             get => PrivateEndpoint is null ? default : PrivateEndpoint.Id;
@@ -90,10 +89,8 @@ namespace Azure.ResourceManager.ContainerRegistry
         }
 
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
-        [WirePath("properties.privateLinkServiceConnectionState")]
         public ContainerRegistryPrivateLinkServiceConnectionState ConnectionState { get; set; }
         /// <summary> The provisioning state of private endpoint connection resource. </summary>
-        [WirePath("properties.provisioningState")]
         public ContainerRegistryProvisioningState? ProvisioningState { get; }
     }
 }
