@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.MobileNetwork
             var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkSimData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MobileNetworkSimData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MobileNetworkSimData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.MobileNetwork
             var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkSimData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MobileNetworkSimData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MobileNetworkSimData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MobileNetworkSimData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MobileNetworkSimData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.MobileNetwork
                         return DeserializeMobileNetworkSimData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MobileNetworkSimData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MobileNetworkSimData)} does not support reading '{options.Format}' format.");
             }
         }
 
