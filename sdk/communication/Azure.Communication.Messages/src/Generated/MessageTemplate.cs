@@ -63,8 +63,16 @@ namespace Azure.Communication.Messages
         /// <summary> Initializes a new instance of <see cref="MessageTemplate"/>. </summary>
         /// <param name="name"> Name of the template. </param>
         /// <param name="language"> The template's language, in the ISO 639 format, consist of a two-letter language code followed by an optional two-letter country code, e.g., 'en' or 'en_US'. </param>
-        /// <param name="values"> The template values. </param>
-        /// <param name="bindings"> The binding object to link values to the template specific locations. </param>
+        /// <param name="values">
+        /// The template values.
+        /// Please note <see cref="MessageTemplateValue"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MessageTemplateDocument"/>, <see cref="MessageTemplateImage"/>, <see cref="MessageTemplateLocation"/>, <see cref="MessageTemplateQuickAction"/>, <see cref="MessageTemplateText"/> and <see cref="MessageTemplateVideo"/>.
+        /// </param>
+        /// <param name="bindings">
+        /// The binding object to link values to the template specific locations
+        /// Please note <see cref="MessageTemplateBindings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="WhatsAppMessageTemplateBindings"/>.
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MessageTemplate(string name, string language, IList<MessageTemplateValue> values, MessageTemplateBindings bindings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
