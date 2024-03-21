@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Data.SchemaRegistry;
 
 namespace Azure.Data.SchemaRegistry.Models
 {

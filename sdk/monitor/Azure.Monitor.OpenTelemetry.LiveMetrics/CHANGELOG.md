@@ -8,6 +8,9 @@
 
 ### Bugs Fixed
 
+* Fix for "Comitted Memory" not updating.
+  ([#42760](https://github.com/Azure/azure-sdk-for-net/pull/42760))
+
 ### Other Changes
 
 ## 1.0.0-beta.3 (2024-03-08)
